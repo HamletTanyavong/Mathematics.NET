@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{91DB0FE7-BAA4-4D16-8A39-65332DD53662}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.SourceGenerators", "src\Mathematics.NET.SourceGenerators\Mathematics.NET.SourceGenerators.csproj", "{557642D0-685A-4846-AD31-DC764692E853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.SourceGenerators", "src\Mathematics.NET.SourceGenerators\Mathematics.NET.SourceGenerators.csproj", "{557642D0-685A-4846-AD31-DC764692E853}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
