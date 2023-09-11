@@ -44,5 +44,15 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     public T Real => _real;
     public T Imaginary => _imaginary;
 
+    public static Complex<T> operator +(Complex<T> z, Complex<T> w) => new(z._real + w._real, z._imaginary + w._imaginary);
+
+    public static Complex<T> operator -(Complex<T> z, Complex<T> w) => new(z._real - w._real, z._imaginary - w._imaginary);
+
+    public static Complex<T> operator *(Complex<T> z, Complex<T> w)
+        => new(z._real * w._real - z._imaginary * w._imaginary, z._real * w._imaginary + w._real * z._imaginary);
+
+    public static Complex<T> operator /(Complex<T> z, Complex<T> w)
+        => throw new NotImplementedException();
+
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 }
