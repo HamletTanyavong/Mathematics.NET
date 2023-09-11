@@ -41,7 +41,9 @@ public interface IComplex<T, U>
     where T : IComplex<T, U>
     where U : INumber<U>
 {
+    /// <summary>The real part of the complex number</summary>
     public U Real { get; }
+    /// <summary>The imaginary part of the complex number</summary>
     public virtual U Imaginary => U.Zero;
     static abstract T Conjugate(T z);
 }
