@@ -29,6 +29,8 @@ using System.Numerics;
 
 namespace Mathematics.NET.Core;
 
+/// <summary>Represents a complex number</summary>
+/// <typeparam name="T">A type that implements <see cref="INumber{TSelf}"/></typeparam>
 public readonly struct Complex<T> : IComplex<Complex<T>, T>
     where T : INumber<T>
 {
