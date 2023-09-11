@@ -39,4 +39,5 @@ public interface IComplex<T, U>
 {
     public U Real { get; }
     public virtual U Imaginary => U.Zero;
+    static abstract T Conjugate(T z);
 }
