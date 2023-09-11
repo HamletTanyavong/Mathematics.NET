@@ -1,4 +1,4 @@
-﻿// <copyright file="ComplexNumberTests.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,28 +29,28 @@ namespace Mathematics.NET.Tests.Core;
 
 [TestClass]
 [TestCategory("Core"), TestCategory("Complex Number")]
-public sealed class ComplexNumberTests
+public sealed class ComplexTests
 {
     [TestMethod]
     [DataRow(1, 2, 1, -2)]
-    public void Conjugate_ComplexNumberOfInt32_ReturnsConjugate(int inReal, int inImaginary, int outReal, int outImaginary)
+    public void Conjugate_ComplexOfInt32_ReturnsConjugate(int inReal, int inImaginary, int outReal, int outImaginary)
     {
-        ComplexNumber<int> input = new(inReal, inImaginary);
-        ComplexNumber<int> expected = new(outReal, outImaginary);
+        Complex<int> input = new(inReal, inImaginary);
+        Complex<int> expected = new(outReal, outImaginary);
 
-        var actual = ComplexNumber<int>.Conjugate(input);
+        var actual = Complex<int>.Conjugate(input);
 
         Assert.AreEqual(expected, actual);
     }
 
     [TestMethod]
     [DataRow(1.2, 2.3, 1.2, -2.3)]
-    public void Conjugate_ComplexNumberOfDouble_ReturnsConjugate(double inReal, double inImaginary, double outReal, double outImaginary)
+    public void Conjugate_ComplexOfDouble_ReturnsConjugate(double inReal, double inImaginary, double outReal, double outImaginary)
     {
-        ComplexNumber<double> input = new(inReal, inImaginary);
-        ComplexNumber<double> expected = new(outReal, outImaginary);
+        Complex<double> input = new(inReal, inImaginary);
+        Complex<double> expected = new(outReal, outImaginary);
 
-        var actual = ComplexNumber<double>.Conjugate(input);
+        var actual = Complex<double>.Conjugate(input);
 
         Assert.AreEqual(expected, actual);
     }
