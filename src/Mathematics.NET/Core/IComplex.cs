@@ -34,6 +34,10 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="INumber{TSelf}"/></typeparam>
 public interface IComplex<T, U>
+    : IAdditionOperation<T, T>,
+      IDivisionOperation<T, T>,
+      IMultiplicationOperation<T, T>,
+      ISubtractionOperation<T, T>
     where T : IComplex<T, U>
     where U : INumber<U>
 {
