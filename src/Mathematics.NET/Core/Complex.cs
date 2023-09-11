@@ -1,4 +1,4 @@
-﻿// <copyright file="ComplexNumber.cs" company="Mathematics.NET">
+﻿// <copyright file="Complex.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,13 +29,13 @@ using System.Numerics;
 
 namespace Mathematics.NET.Core;
 
-public readonly struct ComplexNumber<T> : IComplex<ComplexNumber<T>, T>
+public readonly struct Complex<T> : IComplex<Complex<T>, T>
     where T : INumber<T>
 {
     private readonly T _real;
     private readonly T _imaginary;
 
-    public ComplexNumber(T real, T imaginary)
+    public Complex(T real, T imaginary)
     {
         _real = real;
         _imaginary = imaginary;
