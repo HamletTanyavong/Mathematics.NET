@@ -83,6 +83,28 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow(0, 0, 6, 6)]
+    [DataRow(1.23, 45.678, 14, 14)]
+    [DataRow(1.23, 45.678, 13, 13)]
+    [DataRow(1.23, 45.678, 9, 7)]
+    [DataRow(1.23, 45.678, 6, 6)]
+    [DataRow(1.23, 45.678, 1, 0)]
+    [DataRow(0, 1.2345, 6, 4)]
+    [DataRow(1.2345, 0, 6, 1)]
+    [DataRow(1.2345, 0, 6, 1)]
+    [DataRow(1.2345, 0, 7, 7)]
+    [DataRow(1.2345, 0, 8, 8)]
+    public void TryFormat_ComplexOfDoubleWithShortDestinationSpan_ReturnsCorrectNumberOfCharsWritten(double inReal, double inImaginary, int length, int expected)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+
+        Span<char> span = new char[length];
+        _ = z.TryFormat(span, out int actual, null, null);
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(1.2, 2.3, 10, null, "(1.2, 2.3)")]
     [DataRow(1.23, 3.4567, 14, "ALL", "(1.23, 3.4567)")]
     [DataRow(4.537, 2.3, 5, "RE", "4.537")]
