@@ -45,6 +45,11 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public Real<T> Re => _real;
 
+    // Constants
+
+    public static Real<T> Zero => T.Zero;
+    public static Real<T> One => T.One;
+
     // Operators
 
     public static Real<T> operator -(Real<T> value) => -value._real;
