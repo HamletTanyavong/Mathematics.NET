@@ -38,7 +38,8 @@ public interface IComplex<T, U>
       IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
-      ISubtractionOperation<T, T>
+      ISubtractionOperation<T, T>,
+      ISpanFormattable
     where T : IComplex<T, U>
     where U : IFloatingPointIeee754<U>
 {
