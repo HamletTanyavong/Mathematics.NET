@@ -42,4 +42,18 @@ public sealed class ComplexTests
 
         Assert.AreEqual(expected, actual);
     }
+
+    [TestMethod]
+    [DataRow(1, 1, 0, Math.PI / 2)]
+    [DataRow(1, -1, -Math.PI / 2, 0)]
+    [DataRow(-1, 1, Math.PI / 2, Math.PI)]
+    [DataRow(-1, -1, -Math.PI, -Math.PI / 2)]
+    public void Phase_ComplexOfDouble_ReturnsAngleInCorrectQuadrant(double inReal, double inImaginary, double min, double max)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+
+        var actual = z.Phase.Value;
+
+        Assert.IsTrue(min <= actual && actual <= max);
+    }
 }
