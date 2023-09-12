@@ -54,6 +54,11 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     public Real<T> Re => _real;
     public Real<T> Im => _imaginary;
 
+    // Constants
+
+    public static Complex<T> Zero => new(Real<T>.Zero, Real<T>.Zero);
+    public static Complex<T> One => new(Real<T>.One, Real<T>.Zero);
+
     // Operators
 
     public static Complex<T> operator -(Complex<T> z) => new(-z._real, -z._imaginary);

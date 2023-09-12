@@ -46,5 +46,9 @@ public interface IComplex<T, U>
     public Real<U> Re { get; }
     /// <summary>The imaginary part of the complex number</summary>
     public virtual Real<U> Im => Real<U>.Zero;
+    /// <summary>Reprsents zero for the type</summary>
+    static abstract T Zero { get; }
+    /// <summary>Represents one for the type</summary>
+    static abstract T One { get; }
     static abstract T Conjugate(T z);
 }
