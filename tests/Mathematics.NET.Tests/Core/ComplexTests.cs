@@ -83,6 +83,32 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow(0, 0, 6)]
+    [DataRow(1.23, 2.34, 12)]
+    public void TryFormat_ComplexOfDoubleWithAdequateDestinationLength_ReturnsTrue(double inReal, double inImaginary, int length)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+
+        Span<char> span = new char[length];
+        var actual = z.TryFormat(span, out int _, null, null);
+
+        Assert.IsTrue(actual);
+    }
+
+    [TestMethod]
+    [DataRow(0, 0, 5)]
+    [DataRow(1.23, 2.34, 11)]
+    public void TryFormat_ComplexOfDoubleWithInadequateDestinationLength_ReturnsFalse(double inReal, double inImaginary, int length)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+
+        Span<char> span = new char[length];
+        var actual = z.TryFormat(span, out int _, null, null);
+
+        Assert.IsFalse(actual);
+    }
+
+    [TestMethod]
     [DataRow(0, 0, 6, 6)]
     [DataRow(1.23, 45.678, 14, 14)]
     [DataRow(1.23, 45.678, 13, 13)]
