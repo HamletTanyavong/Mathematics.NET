@@ -43,8 +43,8 @@ public interface IComplex<T, U>
     where U : IFloatingPointIeee754<U>
 {
     /// <summary>The real part of the complex number</summary>
-    public U Real { get; }
+    public Real<U> Re { get; }
     /// <summary>The imaginary part of the complex number</summary>
-    public virtual U Imaginary => U.Zero;
+    public virtual Real<U> Im => Real<U>.Zero;
     static abstract T Conjugate(T z);
 }
