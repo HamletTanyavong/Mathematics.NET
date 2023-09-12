@@ -72,7 +72,7 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     // Methods
 
-    public static Real<T> Conjugate(Real<T> z) => throw new NotImplementedException();
+    public static Real<T> Conjugate(Real<T> x) => x;
 
     // Implicit operators
 
