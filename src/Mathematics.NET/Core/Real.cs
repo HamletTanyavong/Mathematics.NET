@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0032
+
 using System.Numerics;
 
 namespace Mathematics.NET.Core;
