@@ -46,6 +46,10 @@ public interface IComplex<T, U>
     public Real<U> Re { get; }
     /// <summary>The imaginary part of the complex number</summary>
     public virtual Real<U> Im => Real<U>.Zero;
+    /// <summary>The magnitude of the complex number in polar coordinates</summary>
+    public virtual Real<U> Magnitude => U.Hypot(Re.Value, Im.Value);
+    /// <summary>The phase of the complex number in polar coordinates</summary>
+    public virtual Real<U> Phase => U.Atan2(Im.Value, Re.Value);
     /// <summary>Reprsents zero for the type</summary>
     static abstract T Zero { get; }
     /// <summary>Represents one for the type</summary>
