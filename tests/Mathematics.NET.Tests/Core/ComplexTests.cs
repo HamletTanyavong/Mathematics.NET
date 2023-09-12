@@ -69,6 +69,20 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 4.567, null, "(1.23, 4.567)")]
+    [DataRow(24.56, 9.23, "ALL", "(24.56, 9.23)")]
+    [DataRow(62.151, 27, "RE", "62.151")]
+    [DataRow(7.345, 124.841, "IM", "124.841")]
+    public void ToString_ComplexOfDouble_ReturnsString(double inReal, double inImaginary, string? format, string expected)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+
+        var actual = z.ToString(format, null);
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(1.2, 2.3, 10, null, "(1.2, 2.3)")]
     [DataRow(1.23, 3.4567, 14, "ALL", "(1.23, 3.4567)")]
     [DataRow(4.537, 2.3, 5, "RE", "4.537")]
