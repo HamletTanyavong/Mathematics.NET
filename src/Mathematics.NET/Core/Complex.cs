@@ -34,8 +34,8 @@ namespace Mathematics.NET.Core;
 public readonly struct Complex<T> : IComplex<Complex<T>, T>
     where T : IFloatingPointIeee754<T>
 {
-    private readonly T _real;
-    private readonly T _imaginary;
+    private readonly Real<T> _real;
+    private readonly Real<T> _imaginary;
 
     public Complex(T real, T imaginary)
     {
@@ -43,8 +43,12 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         _imaginary = imaginary;
     }
 
-    public T Real => _real;
-    public T Imaginary => _imaginary;
+    // Complex number properties
+
+    public Real<T> Re => _real;
+    public Real<T> Im => _imaginary;
+
+    // Operators
 
     public static Complex<T> operator -(Complex<T> z) => new(-z._real, -z._imaginary);
 
@@ -57,6 +61,8 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public static Complex<T> operator /(Complex<T> z, Complex<T> w)
         => throw new NotImplementedException();
+
+    // Methods
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 }
