@@ -44,6 +44,17 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow(3, 4, 5)]
+    public void Magnitude_ComplexOfDouble_ReturnsMagnitude(double inReal, double inImaginary, double expected)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+
+        var actual = z.Magnitude.Value;
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(1, 1, 0, Math.PI / 2)]
     [DataRow(1, -1, -Math.PI / 2, 0)]
     [DataRow(-1, 1, Math.PI / 2, Math.PI)]
