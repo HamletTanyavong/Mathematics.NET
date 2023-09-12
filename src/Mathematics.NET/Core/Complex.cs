@@ -133,23 +133,33 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
             destination[charsCurrentlyWritten++] = '(';
 
             bool tryFormatSucceeded = _real.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
-            if (!tryFormatSucceeded)
+            charsCurrentlyWritten += tryFormatCharsWritten;
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
             {
                 charsWritten = charsCurrentlyWritten;
                 return false;
             }
-            charsCurrentlyWritten += tryFormatCharsWritten;
 
             destination[charsCurrentlyWritten++] = ',';
-            destination[charsCurrentlyWritten++] = ' ';
-
-            tryFormatSucceeded = _imaginary.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
-            if (!tryFormatSucceeded)
+            if (destination.Length < charsCurrentlyWritten + 1)
             {
                 charsWritten = charsCurrentlyWritten;
                 return false;
             }
+            destination[charsCurrentlyWritten++] = ' ';
+            if (destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            tryFormatSucceeded = _imaginary.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
             charsCurrentlyWritten += tryFormatCharsWritten;
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
 
             destination[charsCurrentlyWritten++] = ')';
 
