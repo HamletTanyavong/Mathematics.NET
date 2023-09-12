@@ -40,17 +40,17 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     public static readonly Real<T> One = T.One;
     public static readonly Real<T> NaN = T.NaN;
 
-    private readonly T _real;
+    private readonly T _value;
 
     public Real(T real)
     {
-        _real = real;
+        _value = real;
     }
 
     // Real number properties
 
-    public Real<T> Re => _real;
-    public T Value => _real;
+    public Real<T> Re => _value;
+    public T Value => _value;
 
     // Constants
 
@@ -60,11 +60,11 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     // Operators
 
-    public static Real<T> operator -(Real<T> value) => -value._real;
-    public static Real<T> operator +(Real<T> left, Real<T> right) => left._real + right._real;
-    public static Real<T> operator -(Real<T> left, Real<T> right) => left._real - right._real;
-    public static Real<T> operator *(Real<T> left, Real<T> right) => left._real * right._real;
-    public static Real<T> operator /(Real<T> left, Real<T> right) => left._real / right._real;
+    public static Real<T> operator -(Real<T> value) => -value._value;
+    public static Real<T> operator +(Real<T> left, Real<T> right) => left._value + right._value;
+    public static Real<T> operator -(Real<T> left, Real<T> right) => left._value - right._value;
+    public static Real<T> operator *(Real<T> left, Real<T> right) => left._value * right._value;
+    public static Real<T> operator /(Real<T> left, Real<T> right) => left._value / right._value;
 
     // Methods
 
