@@ -30,9 +30,9 @@ using System.Numerics;
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a complex number</summary>
-/// <typeparam name="T">A type that implements <see cref="INumber{TSelf}"/></typeparam>
+/// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
 public readonly struct Complex<T> : IComplex<Complex<T>, T>
-    where T : INumber<T>
+    where T : IFloatingPointIeee754<T>
 {
     private readonly T _real;
     private readonly T _imaginary;
