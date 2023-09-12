@@ -32,18 +32,6 @@ namespace Mathematics.NET.Tests.Core;
 public sealed class ComplexTests
 {
     [TestMethod]
-    [DataRow(1, 2, 1, -2)]
-    public void Conjugate_ComplexOfInt32_ReturnsConjugate(int inReal, int inImaginary, int outReal, int outImaginary)
-    {
-        Complex<int> input = new(inReal, inImaginary);
-        Complex<int> expected = new(outReal, outImaginary);
-
-        var actual = Complex<int>.Conjugate(input);
-
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod]
     [DataRow(1.2, 2.3, 1.2, -2.3)]
     public void Conjugate_ComplexOfDouble_ReturnsConjugate(double inReal, double inImaginary, double outReal, double outImaginary)
     {
