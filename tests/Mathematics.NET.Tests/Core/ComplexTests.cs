@@ -48,12 +48,12 @@ public sealed class ComplexTests
     [DataRow(1, -1, -Math.PI / 2, 0)]
     [DataRow(-1, 1, Math.PI / 2, Math.PI)]
     [DataRow(-1, -1, -Math.PI, -Math.PI / 2)]
-    public void Phase_ComplexOfDouble_ReturnsAngleInCorrectQuadrant(double inReal, double inImaginary, double min, double max)
+    public void Phase_ComplexOfDouble_ReturnsAngleInCorrectQuadrant(double inReal, double inImaginary, double expectedMin, double expectedMax)
     {
         Complex<double> z = new(inReal, inImaginary);
 
         var actual = z.Phase.Value;
 
-        Assert.IsTrue(min <= actual && actual <= max);
+        Assert.IsTrue(expectedMin <= actual && actual <= expectedMax);
     }
 }
