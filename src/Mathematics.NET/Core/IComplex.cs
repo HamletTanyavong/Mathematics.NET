@@ -54,6 +54,7 @@ public interface IComplex<T, U>
     static abstract T Zero { get; }
     /// <summary>Represents one for the type</summary>
     static abstract T One { get; }
+    static abstract T NaN { get; }
     static abstract T Conjugate(T z);
     static abstract implicit operator T(U x);
 }
