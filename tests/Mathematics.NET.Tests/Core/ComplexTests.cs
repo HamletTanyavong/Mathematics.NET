@@ -67,4 +67,19 @@ public sealed class ComplexTests
 
         Assert.IsTrue(expectedMin <= actual && actual <= expectedMax);
     }
+
+    [TestMethod]
+    [DataRow(1.2, 2.3, 10, null, "(1.2, 2.3)")]
+    [DataRow(1.23, 3.4567, 14, "ALL", "(1.23, 3.4567)")]
+    [DataRow(4.537, 2.3, 5, "RE", "4.537")]
+    [DataRow(1.2, 7, 1, "IM", "7")]
+    public void TryFormat_ComplexOfDouble_ReturnsSpanOfCharacters(double inReal, double inImaginary, int length, string? format, string expected)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+
+        Span<char> actual = new char[length];
+        _ = z.TryFormat(actual, out int _, format, null);
+
+        CollectionAssert.AreEqual(expected.ToArray(), actual.ToArray());
+    }
 }
