@@ -39,6 +39,7 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     public static readonly Complex<T> Zero = new(Real<T>.Zero, Real<T>.Zero);
     public static readonly Complex<T> One = new(Real<T>.One, Real<T>.Zero);
     public static readonly Complex<T> ImUnit = new(Real<T>.Zero, Real<T>.One);
+    public static readonly Complex<T> NaN = new(Real<T>.NaN, Real<T>.NaN);
 
     private readonly Real<T> _real;
     private readonly Real<T> _imaginary;
@@ -66,6 +67,7 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     static Complex<T> IComplex<Complex<T>, T>.Zero => Zero;
     static Complex<T> IComplex<Complex<T>, T>.One => One;
+    static Complex<T> IComplex<Complex<T>, T>.NaN => NaN;
 
     // Operators
 
