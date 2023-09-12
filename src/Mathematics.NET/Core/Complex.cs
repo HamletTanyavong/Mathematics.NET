@@ -90,7 +90,30 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     // Formatting
 
-    public string ToString(string? format, IFormatProvider? formatProvider) => throw new NotImplementedException();
+    public override string ToString() => ToString(null, null);
+
+    public string ToString(string? format, IFormatProvider? formatProvider)
+    {
+        format = string.IsNullOrEmpty(format) ? "ALL" : format.ToUpperInvariant();
+        formatProvider ??= NumberFormatInfo.InvariantInfo;
+
+        if (format is "ALL")
+        {
+            return string.Format(formatProvider, "({0}, {1})", _real, _imaginary);
+        }
+        else if (format is "RE")
+        {
+            return string.Format(formatProvider, "{0}", _real);
+        }
+        else if (format is "IM")
+        {
+            return string.Format(formatProvider, "{0}", _imaginary);
+        }
+        else
+        {
+            throw new FormatException($"The \"{format}\" format is not supported.");
+        }
+    }
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
