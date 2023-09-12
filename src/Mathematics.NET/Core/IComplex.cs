@@ -34,7 +34,8 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
 public interface IComplex<T, U>
-    : IAdditionOperation<T, T>,
+    : INegationOperation<T, T>,
+      IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
       ISubtractionOperation<T, T>
