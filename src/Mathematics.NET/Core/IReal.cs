@@ -36,4 +36,6 @@ public interface IReal<T, U> : IComplex<T, U>
     where T : IReal<T, U>
     where U : IFloatingPointIeee754<U>
 {
+    /// <summary>The backing value of the type</summary>
+    U Value { get; }
 }
