@@ -36,6 +36,9 @@ namespace Mathematics.NET.Core;
 public readonly struct Real<T> : IReal<Real<T>, T>
     where T : IFloatingPointIeee754<T>
 {
+    public static readonly Real<T> Zero = T.Zero;
+    public static readonly Real<T> One = T.One;
+
     private readonly T _real;
 
     public Real(T real)
@@ -50,8 +53,8 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     // Constants
 
-    public static Real<T> Zero => T.Zero;
-    public static Real<T> One => T.One;
+    static Real<T> IComplex<Real<T>, T>.Zero => Zero;
+    static Real<T> IComplex<Real<T>, T>.One => One;
 
     // Operators
 
