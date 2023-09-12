@@ -76,4 +76,8 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     // Methods
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
+
+    // Implicit Operators
+
+    public static implicit operator Complex<T>(T x) => new(x);
 }
