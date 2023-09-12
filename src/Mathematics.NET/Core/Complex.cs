@@ -27,6 +27,7 @@
 
 #pragma warning disable IDE0032
 
+using System.Globalization;
 using System.Numerics;
 
 namespace Mathematics.NET.Core;
@@ -86,6 +87,65 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     // Methods
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
+
+    // Formatting
+
+    public string ToString(string? format, IFormatProvider? formatProvider) => throw new NotImplementedException();
+
+    public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
+    {
+        format = format.IsEmpty ? "ALL" : format.ToString().ToUpperInvariant();
+        provider ??= NumberFormatInfo.InvariantInfo;
+
+        if (format is "ALL")
+        {
+            // There are a minimum of 6 characters for "(0, 0)".
+            int charsCurrentlyWritten = 0;
+            if (destination.Length < 6)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            destination[charsCurrentlyWritten++] = '(';
+
+            bool tryFormatSucceeded = _real.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
+            if (!tryFormatSucceeded)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+            charsCurrentlyWritten += tryFormatCharsWritten;
+
+            destination[charsCurrentlyWritten++] = ',';
+            destination[charsCurrentlyWritten++] = ' ';
+
+            tryFormatSucceeded = _imaginary.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
+            if (!tryFormatSucceeded)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+            charsCurrentlyWritten += tryFormatCharsWritten;
+
+            destination[charsCurrentlyWritten++] = ')';
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
+        }
+        else if (format is "RE")
+        {
+            return _real.TryFormat(destination, out charsWritten, null, provider);
+        }
+        else if (format is "IM")
+        {
+            return _imaginary.TryFormat(destination, out charsWritten, null, provider);
+        }
+        else
+        {
+            throw new FormatException($"The \"{format}\" format is not supported.");
+        }
+    }
 
     // Implicit Operators
 

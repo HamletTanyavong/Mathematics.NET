@@ -74,6 +74,13 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public static Real<T> Conjugate(Real<T> x) => x;
 
+    // Formatting
+
+    public string ToString(string? format, IFormatProvider? formatProvider) => throw new NotImplementedException();
+
+    public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
+        => _value.TryFormat(destination, out charsWritten, null, provider);
+
     // Implicit operators
 
     public static implicit operator Real<T>(T x) => new(x);
