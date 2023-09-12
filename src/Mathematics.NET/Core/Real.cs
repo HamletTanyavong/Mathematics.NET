@@ -39,6 +39,8 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     public static readonly Real<T> Zero = T.Zero;
     public static readonly Real<T> One = T.One;
     public static readonly Real<T> NaN = T.NaN;
+    public static readonly Real<T> NegativeInfinity = T.NegativeInfinity;
+    public static readonly Real<T> PositiveInfinity = T.PositiveInfinity;
 
     private readonly T _value;
 
@@ -57,6 +59,8 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     static Real<T> IComplex<Real<T>, T>.Zero => Zero;
     static Real<T> IComplex<Real<T>, T>.One => One;
     static Real<T> IComplex<Real<T>, T>.NaN => NaN;
+    static Real<T> IReal<Real<T>, T>.NegativeInfinity => NegativeInfinity;
+    static Real<T> IReal<Real<T>, T>.PositiveInfinity => PositiveInfinity;
 
     // Operators
 
