@@ -46,6 +46,7 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     // Real number properties
 
     public Real<T> Re => _real;
+    public T Value => _real;
 
     // Constants
 
