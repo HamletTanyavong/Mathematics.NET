@@ -37,7 +37,13 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     private readonly Real<T> _real;
     private readonly Real<T> _imaginary;
 
-    public Complex(T real, T imaginary)
+    public Complex(Real<T> real)
+    {
+        _real = real;
+        _imaginary = T.Zero;
+    }
+
+    public Complex(Real<T> real, Real<T> imaginary)
     {
         _real = real;
         _imaginary = imaginary;
