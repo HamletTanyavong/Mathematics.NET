@@ -36,6 +36,10 @@ namespace Mathematics.NET.Core;
 public readonly struct Complex<T> : IComplex<Complex<T>, T>
     where T : IFloatingPointIeee754<T>
 {
+    public static readonly Complex<T> Zero = new(Real<T>.Zero, Real<T>.Zero);
+    public static readonly Complex<T> One = new(Real<T>.One, Real<T>.Zero);
+    public static readonly Complex<T> ImUnit = new(Real<T>.Zero, Real<T>.One);
+
     private readonly Real<T> _real;
     private readonly Real<T> _imaginary;
 
@@ -60,8 +64,8 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     // Constants
 
-    public static Complex<T> Zero => new(Real<T>.Zero, Real<T>.Zero);
-    public static Complex<T> One => new(Real<T>.One, Real<T>.Zero);
+    static Complex<T> IComplex<Complex<T>, T>.Zero => Zero;
+    static Complex<T> IComplex<Complex<T>, T>.One => One;
 
     // Operators
 
