@@ -79,7 +79,7 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is Real<T> other && Equals(other);
 
-    public bool Equals(Real<T> value) => _value.Equals(value);
+    public bool Equals(Real<T> value) => _value.Equals(value._value);
 
     public override int GetHashCode() => HashCode.Combine(_value);
 
