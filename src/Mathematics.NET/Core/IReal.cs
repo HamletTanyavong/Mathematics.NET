@@ -32,7 +32,10 @@ namespace Mathematics.NET.Core;
 /// <summary>Defines support for real numbers</summary>
 /// <typeparam name="T">A type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
-public interface IReal<T, U> : IComplex<T, U>
+public interface IReal<T, U>
+    : IComplex<T, U>,
+      IComparable,
+      IComparable<T>
     where T : IReal<T, U>
     where U : IFloatingPointIeee754<U>
 {

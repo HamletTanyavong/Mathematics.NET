@@ -83,6 +83,25 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public override int GetHashCode() => HashCode.Combine(_value);
 
+    // Comparison
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is null)
+        {
+            return 1;
+        }
+
+        if (obj is Real<T> value)
+        {
+            return _value.CompareTo(value._value);
+        }
+
+        throw new ArgumentException("Argument is not a real number");
+    }
+
+    public int CompareTo(Real<T> value) => _value.CompareTo(value._value);
+
     // Formatting
 
     public override string ToString() => ToString(null, null);
