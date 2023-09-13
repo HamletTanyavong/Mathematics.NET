@@ -88,6 +88,10 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 
+    // Equality
+
+    public bool Equals(Complex<T> value) => _real.Equals(value.Re) && _imaginary.Equals(value.Im);
+
     // Formatting
 
     public override string ToString() => ToString(null, null);

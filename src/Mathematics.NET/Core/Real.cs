@@ -74,6 +74,10 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public static Real<T> Conjugate(Real<T> x) => x;
 
+    // Equality
+
+    public bool Equals(Real<T> value) => _value.Equals(value);
+
     // Formatting
 
     public override string ToString() => ToString(null, null);
