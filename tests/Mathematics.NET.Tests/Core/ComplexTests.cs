@@ -44,6 +44,20 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow(1, 2, 2, 1, 0.8, 0.6)]
+    [DataRow(1, 2, 3, 4, 0.44, 0.08)]
+    public void Division_ComplexOfDoubles_ReturnsComplexOfDouble(double dividendRe, double dividendIm, double divisorRe, double divisorIm, double expectedRe, double expectedIm)
+    {
+        Complex<double> dividend = new(dividendRe, dividendIm);
+        Complex<double> divisor = new(divisorRe, divisorIm);
+        Complex<double> expected = new(expectedRe, expectedIm);
+
+        var actual = dividend / divisor;
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(3, 4, 5)]
     public void Magnitude_ComplexOfDouble_ReturnsMagnitude(double inReal, double inImaginary, double expected)
     {
