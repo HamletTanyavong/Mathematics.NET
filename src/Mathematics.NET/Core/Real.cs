@@ -91,7 +91,7 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public override string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? formatProvider) => string.Format(formatProvider, "{0}", _value);
+    public string ToString(string? format, IFormatProvider? provider) => string.Format(provider, "{0}", _value.ToString(format, provider));
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
         => _value.TryFormat(destination, out charsWritten, null, provider);

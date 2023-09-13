@@ -105,22 +105,22 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public override string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? formatProvider)
+    public string ToString(string? format, IFormatProvider? provider)
     {
         format = string.IsNullOrEmpty(format) ? "ALL" : format.ToUpperInvariant();
-        formatProvider ??= NumberFormatInfo.InvariantInfo;
+        provider ??= NumberFormatInfo.InvariantInfo;
 
         if (format is "ALL")
         {
-            return string.Format(formatProvider, "({0}, {1})", _real, _imaginary);
+            return string.Format(provider, "({0}, {1})", _real.ToString(null, provider), _imaginary.ToString(null, provider));
         }
         else if (format is "RE")
         {
-            return string.Format(formatProvider, "{0}", _real);
+            return string.Format(provider, "{0}", _real.ToString(null, provider));
         }
         else if (format is "IM")
         {
-            return string.Format(formatProvider, "{0}", _imaginary);
+            return string.Format(provider, "{0}", _imaginary.ToString(null, provider));
         }
         else
         {
