@@ -71,10 +71,6 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     public static Real<T> operator *(Real<T> left, Real<T> right) => left._value * right._value;
     public static Real<T> operator /(Real<T> left, Real<T> right) => left._value / right._value;
 
-    // Methods
-
-    public static Real<T> Conjugate(Real<T> x) => x;
-
     // Equality
 
     public static bool operator ==(Real<T> left, Real<T> right) => left._value == right._value;
@@ -95,6 +91,10 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
         => _value.TryFormat(destination, out charsWritten, null, provider);
+
+    // Methods
+
+    public static Real<T> Conjugate(Real<T> x) => x;
 
     // Implicit operators
 
