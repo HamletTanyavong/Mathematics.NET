@@ -85,6 +85,11 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     // Comparison
 
+    public static bool operator <(Real<T> left, Real<T> right) => left._value < right._value;
+    public static bool operator >(Real<T> left, Real<T> right) => left._value > right._value;
+    public static bool operator <=(Real<T> left, Real<T> right) => left._value <= right._value;
+    public static bool operator >=(Real<T> left, Real<T> right) => left._value >= right._value;
+
     public int CompareTo(object? obj)
     {
         if (obj is null)
