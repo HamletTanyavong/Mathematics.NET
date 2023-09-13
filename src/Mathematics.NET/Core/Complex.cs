@@ -85,10 +85,6 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     public static Complex<T> operator /(Complex<T> z, Complex<T> w)
         => throw new NotImplementedException();
 
-    // Methods
-
-    public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
-
     // Equality
 
     public static bool operator ==(Complex<T> left, Complex<T> right) => left.Re == right.Re && left.Im == right.Im;
@@ -192,6 +188,10 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
             throw new FormatException($"The \"{format}\" format is not supported.");
         }
     }
+
+    // Methods
+
+    public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 
     // Implicit Operators
 
