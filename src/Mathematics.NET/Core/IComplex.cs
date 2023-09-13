@@ -60,6 +60,11 @@ public interface IComplex<T, U>
     static abstract T One { get; }
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
+    /// <summary>Compute the complex conjugate of the number</summary>
+    /// <param name="z">A complex number</param>
+    /// <returns>The complex conjugate</returns>
     static abstract T Conjugate(T z);
+    /// <summary>Convert a value of type <see cref="IFloatingPointIeee754{TSelf}"/> to one of type <typeparamref name="T"/></summary>
+    /// <param name="x">The value to convert</param>
     static abstract implicit operator T(U x);
 }
