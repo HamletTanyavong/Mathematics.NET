@@ -27,6 +27,7 @@
 
 #pragma warning disable IDE0032
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
 
@@ -90,7 +91,15 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     // Equality
 
+    public static bool operator ==(Complex<T> left, Complex<T> right) => left.Re == right.Re && left.Im == right.Im;
+
+    public static bool operator !=(Complex<T> left, Complex<T> right) => left.Re != right.Re || left.Im != right.Im;
+
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Complex<T> other && Equals(other);
+
     public bool Equals(Complex<T> value) => _real.Equals(value.Re) && _imaginary.Equals(value.Im);
+
+    public override int GetHashCode() => HashCode.Combine(_real, _imaginary);
 
     // Formatting
 

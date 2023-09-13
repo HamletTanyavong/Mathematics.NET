@@ -27,6 +27,7 @@
 
 #pragma warning disable IDE0032
 
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 namespace Mathematics.NET.Core;
@@ -76,7 +77,15 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     // Equality
 
+    public static bool operator ==(Real<T> left, Real<T> right) => left._value == right._value;
+
+    public static bool operator !=(Real<T> left, Real<T> right) => left._value != right._value;
+
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Real<T> other && Equals(other);
+
     public bool Equals(Real<T> value) => _value.Equals(value);
+
+    public override int GetHashCode() => HashCode.Combine(_value);
 
     // Formatting
 
