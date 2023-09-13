@@ -43,4 +43,20 @@ public static class Precision
 
     /// <summary>Machine epsilon for double-precision floating-point numbers according to the variant definition</summary>
     public const double DblEpsilonVariant = 2.22044604925031308e-16;
+
+    public static bool AreApproximatelyEqual<T>(T left, T right, T epsilon)
+        where T : IBinaryFloatingPointIeee754<T>
+        => T.Abs(left - right) <= epsilon * T.Max(T.Abs(left), T.Abs(right));
+
+    public static bool AreEssentiallyEqual<T>(T left, T right, T epsilon)
+        where T : IBinaryFloatingPointIeee754<T>
+        => T.Abs(left - right) <= epsilon * T.Min(T.Abs(left), T.Abs(right));
+
+    public static bool IsDefinitelyGreaterThan<T>(this T number, T value, T epsilon)
+        where T : IBinaryFloatingPointIeee754<T>
+        => number - value > epsilon * T.Max(T.Abs(number), T.Abs(value));
+
+    public static bool IsDefinitelyLessThan<T>(this T number, T value, T epsilon)
+        where T : IBinaryFloatingPointIeee754<T>
+        => value - number > epsilon * T.Max(T.Abs(number), T.Abs(value));
 }
