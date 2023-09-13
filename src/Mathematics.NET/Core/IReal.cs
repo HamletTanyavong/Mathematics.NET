@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Numerics;
+using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.Core;
 
@@ -34,6 +35,7 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
 public interface IReal<T, U>
     : IComplex<T, U>,
+      IInequalityRelations<T, bool>,
       IComparable,
       IComparable<T>
     where T : IReal<T, U>
