@@ -27,6 +27,7 @@
 
 using System.Numerics;
 using Mathematics.NET.Core.Operations;
+using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.Core;
 
@@ -39,6 +40,7 @@ public interface IComplex<T, U>
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
       ISubtractionOperation<T, T>,
+      IEqualityRelation<T, bool>,
       IEquatable<T>,
       ISpanFormattable
     where T : IComplex<T, U>
