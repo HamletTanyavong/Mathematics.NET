@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Applicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Tests", "tests\Mathematics.NET.Tests\Mathematics.NET.Tests.csproj", "{A608C0E2-D431-45E9-AD05-A49115BE59AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.Benchmarks", "tests\Mathematics.NET.Benchmarks\Mathematics.NET.Benchmarks.csproj", "{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks", "tests\Mathematics.NET.Benchmarks\Mathematics.NET.Benchmarks.csproj", "{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
