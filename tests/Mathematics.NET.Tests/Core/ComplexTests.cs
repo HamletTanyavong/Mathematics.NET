@@ -50,11 +50,13 @@ public sealed class ComplexTests
     {
         Complex<double> dividend = new(dividendRe, dividendIm);
         Complex<double> divisor = new(divisorRe, divisorIm);
-        Complex<double> expected = new(expectedRe, expectedIm);
 
-        var actual = dividend / divisor;
+        var actualResult = dividend / divisor;
+        var actualRe = actualResult.Re.Value;
+        var actualIm = actualResult.Im.Value;
 
-        Assert.AreEqual(expected, actual);
+        Assert.AreEqual(expectedRe, actualRe, 1e-15);
+        Assert.AreEqual(expectedIm, actualIm, 1e-15);
     }
 
     [TestMethod]
