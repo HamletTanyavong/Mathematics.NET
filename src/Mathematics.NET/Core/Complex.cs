@@ -30,6 +30,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Mathematics.NET.Core;
 
@@ -106,6 +107,7 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         return new(reResult, imResult);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void DivisionHelper(T x, T y, T maxW, T minW, out T real, out T imaginary)
     {
         var ratio = minW / maxW;
