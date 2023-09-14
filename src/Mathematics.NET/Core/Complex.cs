@@ -83,8 +83,44 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     public static Complex<T> operator *(Complex<T> z, Complex<T> w)
         => new(z._real * w._real - z._imaginary * w._imaginary, z._real * w._imaginary + w._real * z._imaginary);
 
+    // From Michael Baudin and Robert L. Smith
     public static Complex<T> operator /(Complex<T> z, Complex<T> w)
-        => throw new NotImplementedException();
+    {
+        var zRe = z._real.Value;
+        var zIm = z._imaginary.Value;
+        var wRe = w._real.Value;
+        var wIm = w._imaginary.Value;
+
+        T reResult;
+        T imResult;
+        if (T.Abs(wIm) <= T.Abs(wRe))
+        {
+            DivisionHelper(zRe, zIm, wRe, wIm, out reResult, out imResult);
+        }
+        else
+        {
+            DivisionHelper(zIm, zRe, wIm, wRe, out reResult, out imResult);
+            imResult = -imResult;
+        }
+
+        return new(reResult, imResult);
+    }
+
+    private static void DivisionHelper(T x, T y, T maxW, T minW, out T real, out T imaginary)
+    {
+        var ratio = minW / maxW;
+        var scale = T.One / (maxW + minW * ratio);
+        if (ratio != T.Zero)
+        {
+            real = (x + y * ratio) * scale;
+            imaginary = (y - x * ratio) * scale;
+        }
+        else
+        {
+            real = (x + minW * (y / maxW)) * scale;
+            imaginary = (y - minW * (x / maxW)) * scale;
+        }
+    }
 
     // Equality
 
