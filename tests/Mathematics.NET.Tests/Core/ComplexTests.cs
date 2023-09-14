@@ -46,6 +46,8 @@ public sealed class ComplexTests
     [TestMethod]
     [DataRow(1, 2, 2, 1, 0.8, 0.6)]
     [DataRow(1, 2, 3, 4, 0.44, 0.08)]
+    [DataRow(2, 1.5, 5, 3, 0.4264705882352942, 0.04411764705882351)]
+    [DataRow(5, 3.5, 7, 0, 0.7142857142857142, 0.5)]
     public void Division_ComplexOfDoubles_ReturnsComplexOfDouble(double dividendRe, double dividendIm, double divisorRe, double divisorIm, double expectedRe, double expectedIm)
     {
         Complex<double> dividend = new(dividendRe, dividendIm);
