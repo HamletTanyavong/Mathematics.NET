@@ -43,6 +43,7 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     public static readonly Complex<T> One = new(Real<T>.One, Real<T>.Zero);
     public static readonly Complex<T> ImaginaryOne = new(Real<T>.Zero, Real<T>.One);
     public static readonly Complex<T> NaN = new(Real<T>.NaN, Real<T>.NaN);
+    public static readonly Complex<T> Infinity = new(Real<T>.PositiveInfinity, Real<T>.PositiveInfinity);
 
     private readonly Real<T> _real;
     private readonly Real<T> _imaginary;
