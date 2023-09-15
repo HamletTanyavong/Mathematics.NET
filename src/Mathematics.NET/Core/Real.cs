@@ -120,6 +120,15 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public static Real<T> Conjugate(Real<T> x) => x;
 
+    public static Real<T> Reciprocate(Real<T> x)
+    {
+        if (x._value == T.Zero)
+        {
+            return PositiveInfinity;
+        }
+        return T.One / x;
+    }
+
     // Implicit operators
 
     public static implicit operator Real<T>(T x) => new(x);
