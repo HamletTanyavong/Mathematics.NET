@@ -140,6 +140,33 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow("(0,0)", 0, 0)]
+    [DataRow(" (0, 0) ", 0, 0)]
+    [DataRow("(1.23, 3.456)", 1.23, 3.456)]
+    [DataRow("( 1.23 , 3.45 )", 1.23, 3.45)]
+    public void TryParse_SpanOfChar_ReturnsComplexOfDouble(string s, double expectedRe, double expectedIm)
+    {
+
+        Complex<double> expected = new(expectedRe, expectedIm);
+
+        _ = Complex<double>.TryParse(s.AsSpan(), null, out Complex<double> actual);
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    [DataRow("(,)")]
+    [DataRow("(0,,0)")]
+    [DataRow("0,0)")]
+    [DataRow("(0,0")]
+    public void TryParse_SpanOfChar_ReturnsFalse(string s)
+    {
+        var actual = Complex<double>.TryParse(s.AsSpan(), null, out _);
+
+        Assert.IsFalse(actual);
+    }
+
+    [TestMethod]
     [DataRow(0, 0, 6, 6)]
     [DataRow(1.23, 45.678, 14, 14)]
     [DataRow(1.23, 45.678, 13, 13)]
