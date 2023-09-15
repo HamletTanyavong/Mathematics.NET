@@ -138,7 +138,7 @@ public sealed class ComplexTests
     [DataRow(1.2345, 0, 6, 1)]
     [DataRow(1.2345, 0, 7, 7)]
     [DataRow(1.2345, 0, 8, 8)]
-    public void TryFormat_ComplexOfDoubleWithShortDestinationSpan_ReturnsCorrectNumberOfCharsWritten(double inReal, double inImaginary, int length, int expected)
+    public void TryFormat_ComplexOfDoubleWithInadequateDestinationLength_ReturnsCorrectNumberOfCharsWritten(double inReal, double inImaginary, int length, int expected)
     {
         Complex<double> z = new(inReal, inImaginary);
 
