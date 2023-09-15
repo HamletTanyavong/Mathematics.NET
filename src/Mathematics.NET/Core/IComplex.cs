@@ -60,7 +60,7 @@ public interface IComplex<T, U>
     static abstract T One { get; }
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
-    /// <summary>Compute the complex conjugate of the number</summary>
+    /// <summary>Compute the complex conjugate of a number</summary>
     /// <param name="z">A complex number</param>
     /// <returns>The complex conjugate</returns>
     static abstract T Conjugate(T z);
