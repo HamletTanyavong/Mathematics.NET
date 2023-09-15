@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexDivisionBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,17 +25,24 @@
 // SOFTWARE.
 // </copyright>
 
-#if RELEASE
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Running;
-using Mathematics.NET.Benchmarks.Core.Complex;
+namespace Mathematics.NET.Benchmarks.Core.Complex;
 
-var benchmarkSwitcher = new BenchmarkSwitcher(new[]
+[MemoryDiagnoser]
+public class ComplexDivisionBenchmarks
 {
-    typeof(ComplexDivisionBenchmarks)
-});
+    public Complex<double> Z { get; set; }
+    public Complex<double> W { get; set; }
 
-benchmarkSwitcher.Run(args, new DebugInProcessConfig());
-#else
-Console.WriteLine("Must be in release mode to run benchmarks");
-#endif
+    [GlobalSetup]
+    public void GlobalSetup()
+    {
+        Z = new(1.23, 2.34);
+        W = new(4.56, 3.45);
+    }
+
+    [Benchmark]
+    public Complex<double> ComplexDivision_WithAggressiveInlining()
+    {
+        return Z / W;
+    }
+}
