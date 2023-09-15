@@ -87,6 +87,19 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow(2, 0, 0.5, 0)]
+    [DataRow(1.5, 2.5, 1.76470588235294117e-1, -2.94117647058823529e-1)]
+    public void Reciprocate_ComplexOfDouble_ReturnsReciprocal(double inReal, double inImaginary, double expectedRe, double expectedIm)
+    {
+        Complex<double> z = new(inReal, inImaginary);
+        Complex<double> expected = new(expectedRe, expectedIm);
+
+        var actual = Complex<double>.Reciprocate(z);
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 4.567, null, "(1.23, 4.567)")]
     [DataRow(24.56, 9.23, "ALL", "(24.56, 9.23)")]
     [DataRow(62.151, 27, "RE", "62.151")]

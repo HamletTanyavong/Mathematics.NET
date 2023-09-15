@@ -233,6 +233,31 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 
+    public static Complex<T> Reciprocate(Complex<T> w)
+    {
+        if (w._real == T.Zero && w._imaginary == T.Zero)
+        {
+            return Infinity;
+        }
+
+        var re = w._real.Value;
+        var im = w._imaginary.Value;
+
+        T reResult;
+        T imResult;
+        if (T.Abs(im) <= T.Abs(re))
+        {
+            DivisionHelper(T.One, T.Zero, re, im, out reResult, out imResult);
+        }
+        else
+        {
+            DivisionHelper(T.Zero, T.One, im, re, out reResult, out imResult);
+            imResult = -imResult;
+        }
+
+        return new(reResult, imResult);
+    }
+
     // Implicit Operators
 
     public static implicit operator Complex<T>(T x) => new(x);
