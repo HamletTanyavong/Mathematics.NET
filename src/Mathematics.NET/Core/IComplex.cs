@@ -63,9 +63,37 @@ public interface IComplex<T, U>
     static abstract T One { get; }
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
+    /// <summary>Parse a string into a value</summary>
+    /// <param name="s">The string to parse</param>
+    /// <param name="style">The number style</param>
+    /// <param name="provider">The culture-specific formatting information about the string</param>
+    /// <returns>The parse result</returns>
+    /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="s" /> is <c>null</c></exception>
     static abstract T Parse(string s, NumberStyles style, IFormatProvider? provider);
+    /// <summary>Parse a span of characters into a value</summary>
+    /// <param name="s">The span of characters to parse</param>
+    /// <param name="style">The number style</param>
+    /// <param name="provider">The culture-specific formatting information about the span of characters</param>
+    /// <returns>The parse result</returns>
+    /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="s" /> is <c>null</c></exception>
     static abstract T Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider);
+    /// <summary>Try to parse a string into a value</summary>
+    /// <param name="s">The string to parse</param>
+    /// <param name="style">The number style</param>
+    /// <param name="provider">The culture-specific formatting information about the string</param>
+    /// <param name="result">The result of the parse or a default value if the parse was unsuccessful</param>
+    /// <returns><c>True</c> if the parse was successful; otherwise, <c>false</c></returns>
+    /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     static abstract bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out T result);
+    /// <summary>Try to parse a span of characters into a value</summary>
+    /// <param name="s">The span of characters to parse</param>
+    /// <param name="style">The number style</param>
+    /// <param name="provider">The culture-specific formatting information about the span of characters</param>
+    /// <param name="result">The result of the parse or a default value if the parse was unsuccessful</param>
+    /// <returns><c>True</c> if the parse was successful; otherwise, <c>false</c></returns>
+    /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     static abstract bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out T result);
     /// <summary>Compute the complex conjugate of a number</summary>
     /// <param name="z">A complex number</param>
