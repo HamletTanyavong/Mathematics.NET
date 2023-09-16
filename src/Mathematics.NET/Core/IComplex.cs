@@ -51,18 +51,30 @@ public interface IComplex<T, U>
 {
     /// <summary>The real part of the complex number</summary>
     public Real<U> Re { get; }
+
     /// <summary>The imaginary part of the complex number</summary>
     public virtual Real<U> Im => Real<U>.Zero;
+
     /// <summary>The magnitude of the complex number in polar coordinates</summary>
     public virtual Real<U> Magnitude => U.Hypot(Re.Value, Im.Value);
+
     /// <summary>The phase of the complex number in polar coordinates</summary>
     public virtual Real<U> Phase => U.Atan2(Im.Value, Re.Value);
+
     /// <summary>Reprsents zero for the type</summary>
     static abstract T Zero { get; }
+
     /// <summary>Represents one for the type</summary>
     static abstract T One { get; }
+
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
+
+    /// <summary>Compute the complex conjugate of a number</summary>
+    /// <param name="z">A complex number</param>
+    /// <returns>The complex conjugate</returns>
+    static abstract T Conjugate(T z);
+
     /// <summary>Parse a string into a value</summary>
     /// <param name="s">The string to parse</param>
     /// <param name="style">The number style</param>
@@ -71,6 +83,7 @@ public interface IComplex<T, U>
     /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     /// <exception cref="ArgumentNullException"><paramref name="s" /> is <c>null</c></exception>
     static abstract T Parse(string s, NumberStyles style, IFormatProvider? provider);
+
     /// <summary>Parse a span of characters into a value</summary>
     /// <param name="s">The span of characters to parse</param>
     /// <param name="style">The number style</param>
@@ -79,6 +92,12 @@ public interface IComplex<T, U>
     /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     /// <exception cref="ArgumentNullException"><paramref name="s" /> is <c>null</c></exception>
     static abstract T Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider);
+
+    /// <summary>Compute the reciprocal of a number</summary>
+    /// <param name="z">A complex number</param>
+    /// <returns>The reciprocal</returns>
+    static abstract T Reciprocate(T z);
+
     /// <summary>Try to parse a string into a value</summary>
     /// <param name="s">The string to parse</param>
     /// <param name="style">The number style</param>
@@ -87,6 +106,7 @@ public interface IComplex<T, U>
     /// <returns><c>True</c> if the parse was successful; otherwise, <c>false</c></returns>
     /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     static abstract bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out T result);
+
     /// <summary>Try to parse a span of characters into a value</summary>
     /// <param name="s">The span of characters to parse</param>
     /// <param name="style">The number style</param>
@@ -95,14 +115,7 @@ public interface IComplex<T, U>
     /// <returns><c>True</c> if the parse was successful; otherwise, <c>false</c></returns>
     /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     static abstract bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out T result);
-    /// <summary>Compute the complex conjugate of a number</summary>
-    /// <param name="z">A complex number</param>
-    /// <returns>The complex conjugate</returns>
-    static abstract T Conjugate(T z);
-    /// <summary>Compute the reciprocal of a number</summary>
-    /// <param name="z">A complex number</param>
-    /// <returns>The reciprocal</returns>
-    static abstract T Reciprocate(T z);
+
     /// <summary>Convert a value of type <see cref="IFloatingPointIeee754{TSelf}"/> to one of type <typeparamref name="T"/></summary>
     /// <param name="x">The value to convert</param>
     static abstract implicit operator T(U x);
