@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.Core.Relations;
@@ -42,7 +44,8 @@ public interface IComplex<T, U>
       ISubtractionOperation<T, T>,
       IEqualityRelation<T, bool>,
       IEquatable<T>,
-      ISpanFormattable
+      ISpanFormattable,
+      ISpanParsable<T>
     where T : IComplex<T, U>
     where U : IFloatingPointIeee754<U>
 {
@@ -60,6 +63,10 @@ public interface IComplex<T, U>
     static abstract T One { get; }
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
+    static abstract T Parse(string s, NumberStyles style, IFormatProvider? provider);
+    static abstract T Parse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider);
+    static abstract bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out T result);
+    static abstract bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out T result);
     /// <summary>Compute the complex conjugate of a number</summary>
     /// <param name="z">A complex number</param>
     /// <returns>The complex conjugate</returns>

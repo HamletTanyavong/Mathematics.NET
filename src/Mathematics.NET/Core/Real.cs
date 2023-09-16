@@ -28,6 +28,7 @@
 #pragma warning disable IDE0032
 
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 
 namespace Mathematics.NET.Core;
@@ -115,6 +116,58 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
         => _value.TryFormat(destination, out charsWritten, null, provider);
+
+    // Parsing
+
+    public static Real<T> Parse(string s, IFormatProvider? provider) => T.Parse(s, provider);
+
+    public static Real<T> Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => T.Parse(s, provider);
+
+    public static Real<T> Parse(string s, NumberStyles style, IFormatProvider? provider)
+        => T.Parse(s, style, provider);
+
+    public static Real<T> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
+        => T.Parse(s, style, provider);
+
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Real<T> result)
+    {
+        var succeeded = T.TryParse(s, provider, out T? number);
+        result = number!;
+        return succeeded;
+    }
+
+    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Real<T> result)
+    {
+        var succeeded = T.TryParse(s, provider, out T? number);
+        result = number!;
+        return succeeded;
+    }
+
+    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Real<T> result)
+    {
+        if (s is null)
+        {
+            result = T.Zero;
+            return false;
+        }
+
+        var succeeded = T.TryParse((ReadOnlySpan<char>)s, style, NumberFormatInfo.GetInstance(provider), out T? number);
+        result = number!;
+        return succeeded;
+    }
+
+    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Real<T> result)
+    {
+        if (s.IsEmpty)
+        {
+            result = T.Zero;
+            return false;
+        }
+
+        var succeeded = T.TryParse(s, style, NumberFormatInfo.GetInstance(provider), out T? number);
+        result = number!;
+        return succeeded;
+    }
 
     // Methods
 
