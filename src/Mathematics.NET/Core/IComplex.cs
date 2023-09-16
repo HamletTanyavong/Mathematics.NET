@@ -90,6 +90,11 @@ public interface IComplex<T, U>
     /// <returns><c>true</c> if the value is not a number; otherwise, <c>false</c></returns>
     static abstract bool IsNaN(T z);
 
+    /// <summary>Check if a value is zero</summary>
+    /// <param name="z">The value to check</param>
+    /// <returns><c>true</c> if the value is zero; otherwise, <c>false</c></returns>
+    static abstract bool IsZero(T z);
+
     /// <summary>Parse a string into a value</summary>
     /// <param name="s">The string to parse</param>
     /// <param name="style">The number style</param>
