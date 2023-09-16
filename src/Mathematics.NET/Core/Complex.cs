@@ -229,6 +229,69 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         }
     }
 
+    // Parsing
+
+    public static Complex<T> Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+
+    public static Complex<T> Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+
+    public static Complex<T> Parse(string s, NumberStyles style, IFormatProvider? provider)
+    {
+        if (s is null)
+        {
+            throw new ArgumentNullException("Cannot parse null string");
+        }
+        return Parse((ReadOnlySpan<char>)s, style, provider);
+    }
+
+    public static Complex<T> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
+    {
+        if (!TryParse(s, style, provider, out Complex<T> result))
+        {
+            return Infinity;
+        }
+        return result;
+    }
+
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Complex<T> result)
+        => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+
+    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Complex<T> result)
+        => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
+
+    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Complex<T> result)
+        => TryParse((ReadOnlySpan<char>)s, style, provider, out result);
+
+    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Complex<T> result)
+    {
+        s = s.Trim();
+        int openParenthesis = s.IndexOf('(');
+        int split = s.IndexOf(',');
+        int closeParenthesis = s.IndexOf(')');
+
+        // There a minimum of 5 characters for "(0,0)".
+        if (s.Length < 5 || openParenthesis == -1 || split == -1 || closeParenthesis == -1 || openParenthesis > split || openParenthesis > closeParenthesis || split > closeParenthesis)
+        {
+            result = Zero;
+            return false;
+        }
+
+        if (!Real<T>.TryParse(s.Slice(openParenthesis + 1, split - 1), style, provider, out Real<T> real))
+        {
+            result = Zero;
+            return false;
+        }
+
+        if (!Real<T>.TryParse(s.Slice(split + 1, closeParenthesis - split - 1), style, provider, out Real<T> imaginary))
+        {
+            result = Zero;
+            return false;
+        }
+
+        result = new(real, imaginary);
+        return true;
+    }
+
     // Methods
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
