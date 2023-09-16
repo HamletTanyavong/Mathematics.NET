@@ -75,6 +75,21 @@ public interface IComplex<T, U>
     /// <returns>The complex conjugate</returns>
     static abstract T Conjugate(T z);
 
+    /// <summary>Check if a value is finite</summary>
+    /// <param name="z">The value to check</param>
+    /// <returns><c>true</c> if the value is finite; otherwise, <c>false</c></returns>
+    static abstract bool IsFinite(T z);
+
+    /// <summary>Check if a value is infinity</summary>
+    /// <param name="z">The value to check</param>
+    /// <returns><c>true</c> if the value is infinity; otherwise, <c>false</c></returns>
+    static abstract bool IsInfinity(T z);
+
+    /// <summary>Checks if a value is not a number</summary>
+    /// <param name="z">The value to check</param>
+    /// <returns><c>true</c> if the value is not a number; otherwise, <c>false</c></returns>
+    static abstract bool IsNaN(T z);
+
     /// <summary>Parse a string into a value</summary>
     /// <param name="s">The string to parse</param>
     /// <param name="style">The number style</param>

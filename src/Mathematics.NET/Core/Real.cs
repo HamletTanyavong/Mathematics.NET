@@ -190,6 +190,12 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public static Real<T> Conjugate(Real<T> x) => x;
 
+    public static bool IsFinite(Real<T> x) => T.IsFinite(x._value);
+
+    public static bool IsInfinity(Real<T> x) => T.IsInfinity(x._value);
+
+    public static bool IsNaN(Real<T> x) => T.IsNaN(x._value);
+
     public static Real<T> Reciprocate(Real<T> x)
     {
         if (x._value == T.Zero)
