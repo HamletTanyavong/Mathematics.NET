@@ -43,8 +43,10 @@ public interface IReal<T, U>
 {
     /// <summary>The backing value of the type</summary>
     U Value { get; }
+
     /// <summary>Represents negative infinty for the type</summary>
     static abstract T NegativeInfinity { get; }
+
     /// <summary>Represents positive infinity for the type</summary>
     static abstract T PositiveInfinity { get; }
 }
