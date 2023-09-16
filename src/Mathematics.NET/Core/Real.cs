@@ -196,6 +196,10 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public static bool IsNaN(Real<T> x) => T.IsNaN(x._value);
 
+    public static bool IsNegativeInfinity(Real<T> x) => T.IsNegativeInfinity(x._value);
+
+    public static bool IsPositiveInfinity(Real<T> x) => T.IsPositiveInfinity(x._value);
+
     public static Real<T> Reciprocate(Real<T> x)
     {
         if (x._value == T.Zero)
