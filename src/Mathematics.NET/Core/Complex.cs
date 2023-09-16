@@ -317,6 +317,8 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public static bool IsNaN(Complex<T> z) => !IsInfinity(z) && !IsFinite(z);
 
+    public static bool IsZero(Complex<T> z) => Real<T>.IsZero(z._real) && Real<T>.IsZero(z._imaginary);
+
     public static Complex<T> Reciprocate(Complex<T> z)
     {
         if (z._real == T.Zero && z._imaginary == T.Zero)
