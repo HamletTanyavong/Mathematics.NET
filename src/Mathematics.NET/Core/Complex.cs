@@ -61,7 +61,9 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         _imaginary = imaginary;
     }
 
+    //
     // Complex number properties
+    //
 
     public Real<T> Re => _real;
     public Real<T> Im => _imaginary;
@@ -69,13 +71,17 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
     public Real<T> Magnitude => T.Hypot(_real.Value, _imaginary.Value);
     public Real<T> Phase => T.Atan2(_imaginary.Value, _real.Value);
 
+    //
     // Constants
+    //
 
     static Complex<T> IComplex<Complex<T>, T>.Zero => Zero;
     static Complex<T> IComplex<Complex<T>, T>.One => One;
     static Complex<T> IComplex<Complex<T>, T>.NaN => NaN;
 
+    //
     // Operators
+    //
 
     public static Complex<T> operator -(Complex<T> z) => new(-z._real, -z._imaginary);
 
@@ -126,7 +132,9 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         }
     }
 
+    //
     // Equality
+    //
 
     public static bool operator ==(Complex<T> left, Complex<T> right) => left.Re == right.Re && left.Im == right.Im;
 
@@ -138,7 +146,9 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public override int GetHashCode() => HashCode.Combine(_real, _imaginary);
 
+    //
     // Formatting
+    //
 
     public override string ToString() => ToString(null, null);
 
@@ -230,7 +240,9 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         }
     }
 
+    //
     // Parsing
+    //
 
     public static Complex<T> Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
@@ -293,7 +305,9 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         return true;
     }
 
+    //
     // Methods
+    //
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 
@@ -322,7 +336,9 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
         return new(reResult, imResult);
     }
 
+    //
     // Implicit Operators
+    //
 
     public static implicit operator Complex<T>(T x) => new(x);
 }
