@@ -317,15 +317,15 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public static bool IsNaN(Complex<T> z) => !IsInfinity(z) && !IsFinite(z);
 
-    public static Complex<T> Reciprocate(Complex<T> w)
+    public static Complex<T> Reciprocate(Complex<T> z)
     {
-        if (w._real == T.Zero && w._imaginary == T.Zero)
+        if (z._real == T.Zero && z._imaginary == T.Zero)
         {
             return Infinity;
         }
 
-        var re = w._real.Value;
-        var im = w._imaginary.Value;
+        var re = z._real.Value;
+        var im = z._imaginary.Value;
 
         T reResult;
         T imResult;
