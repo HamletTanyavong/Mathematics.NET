@@ -52,12 +52,16 @@ public readonly struct Real<T> : IReal<Real<T>, T>
         _value = real;
     }
 
+    //
     // Real number properties
+    //
 
     public Real<T> Re => _value;
     public T Value => _value;
 
+    //
     // Constants
+    //
 
     static Real<T> IComplex<Real<T>, T>.Zero => Zero;
     static Real<T> IComplex<Real<T>, T>.One => One;
@@ -65,7 +69,9 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     static Real<T> IReal<Real<T>, T>.NegativeInfinity => NegativeInfinity;
     static Real<T> IReal<Real<T>, T>.PositiveInfinity => PositiveInfinity;
 
+    //
     // Operators
+    //
 
     public static Real<T> operator -(Real<T> value) => -value._value;
     public static Real<T> operator +(Real<T> left, Real<T> right) => left._value + right._value;
@@ -73,7 +79,9 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     public static Real<T> operator *(Real<T> left, Real<T> right) => left._value * right._value;
     public static Real<T> operator /(Real<T> left, Real<T> right) => left._value / right._value;
 
+    //
     // Equality
+    //
 
     public static bool operator ==(Real<T> left, Real<T> right) => left._value == right._value;
 
@@ -85,7 +93,9 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public override int GetHashCode() => HashCode.Combine(_value);
 
+    //
     // Comparison
+    //
 
     public static bool operator <(Real<T> left, Real<T> right) => left._value < right._value;
     public static bool operator >(Real<T> left, Real<T> right) => left._value > right._value;
@@ -109,7 +119,9 @@ public readonly struct Real<T> : IReal<Real<T>, T>
 
     public int CompareTo(Real<T> value) => _value.CompareTo(value._value);
 
+    //
     // Formatting
+    //
 
     public override string ToString() => ToString(null, null);
 
@@ -118,7 +130,9 @@ public readonly struct Real<T> : IReal<Real<T>, T>
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
         => _value.TryFormat(destination, out charsWritten, null, provider);
 
+    //
     // Parsing
+    //
 
     public static Real<T> Parse(string s, IFormatProvider? provider) => T.Parse(s, provider);
 
@@ -170,7 +184,9 @@ public readonly struct Real<T> : IReal<Real<T>, T>
         return succeeded;
     }
 
+    //
     // Methods
+    //
 
     public static Real<T> Conjugate(Real<T> x) => x;
 
@@ -183,7 +199,9 @@ public readonly struct Real<T> : IReal<Real<T>, T>
         return T.One / x;
     }
 
+    //
     // Implicit operators
+    //
 
     public static implicit operator Real<T>(T x) => new(x);
 }
