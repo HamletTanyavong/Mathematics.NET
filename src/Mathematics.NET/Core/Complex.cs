@@ -311,6 +311,12 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 
+    public static bool IsFinite(Complex<T> z) => Real<T>.IsFinite(z._real) && Real<T>.IsFinite(z._imaginary);
+
+    public static bool IsInfinity(Complex<T> z) => Real<T>.IsInfinity(z._real) || Real<T>.IsInfinity(z._imaginary);
+
+    public static bool IsNaN(Complex<T> z) => !IsInfinity(z) && !IsFinite(z);
+
     public static Complex<T> Reciprocate(Complex<T> w)
     {
         if (w._real == T.Zero && w._imaginary == T.Zero)
