@@ -25,17 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0032
-
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a complex number</summary>
 /// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
+[Serializable]
+[StructLayout(LayoutKind.Sequential)]
 public readonly struct Complex<T> : IComplex<Complex<T>, T>
     where T : IFloatingPointIeee754<T>
 {
