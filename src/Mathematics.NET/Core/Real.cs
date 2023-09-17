@@ -36,7 +36,9 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Real<T> : IReal<Real<T>, T>
+public readonly struct Real<T>
+    : IReal<Real<T>, T>,
+      IDifferentiableFunctions<Real<T>, T>
     where T : IFloatingPointIeee754<T>
 {
     public static readonly Real<T> Zero = T.Zero;
@@ -210,6 +212,74 @@ public readonly struct Real<T> : IReal<Real<T>, T>
         }
         return T.One / x;
     }
+
+    //
+    // IDifferentiableFunctions interface
+    //
+
+    // Exponential functions
+
+    public static Real<T> Exp(Real<T> x) => T.Exp(x._value);
+
+    public static Real<T> Exp2(Real<T> x) => T.Exp2(x._value);
+
+    public static Real<T> Exp10(Real<T> x) => T.Exp10(x._value);
+
+    // Hyperbolic functions
+
+    public static Real<T> Acosh(Real<T> x) => T.Acosh(x._value);
+
+    public static Real<T> Asinh(Real<T> x) => T.Asinh(x._value);
+
+    public static Real<T> Atanh(Real<T> x) => T.Atanh(x._value);
+
+    public static Real<T> Cosh(Real<T> x) => T.Cosh(x._value);
+
+    public static Real<T> Sinh(Real<T> x) => T.Sinh(x._value);
+
+    public static Real<T> Tanh(Real<T> x) => T.Tanh(x._value);
+
+    // Logarithmic functions
+
+    public static Real<T> Ln(Real<T> x) => T.Log(x._value);
+
+    public static Real<T> Log(Real<T> x, Real<T> b) => T.Log(x._value, b._value);
+
+    public static Real<T> Log2(Real<T> x) => T.Log2(x._value);
+
+    public static Real<T> Log10(Real<T> x) => T.Log10(x._value);
+
+    // Power functions
+
+    public static Real<T> Pow(Real<T> x, Real<T> y) => T.Pow(x._value, y._value);
+
+    // Root functions
+
+    public static Real<T> Cbrt(Real<T> x) => T.Cbrt(x._value);
+
+    public static Real<T> Hypot(Real<T> x, Real<T> y) => T.Hypot(x._value, y._value);
+
+    public static Real<T> NthRoot(Real<T> x, int n) => T.RootN(x._value, n);
+
+    public static Real<T> Root(Real<T> x, Real<T> y) => T.Exp(y._value * T.Log(x._value));
+
+    public static Real<T> Sqrt(Real<T> x) => T.Sqrt(x._value);
+
+    // Trigonometric functions
+
+    public static Real<T> Acos(Real<T> x) => T.Acos(x._value);
+
+    public static Real<T> Asin(Real<T> x) => T.Asin(x._value);
+
+    public static Real<T> Atan(Real<T> x) => T.Atan(x._value);
+
+    public static Real<T> Atan2(Real<T> y, Real<T> x) => T.Atan2(y._value, x._value);
+
+    public static Real<T> Cos(Real<T> x) => T.Cos(x._value);
+
+    public static Real<T> Sin(Real<T> x) => T.Sin(x._value);
+
+    public static Real<T> Tan(Real<T> x) => T.Tan(x._value);
 
     //
     // Implicit operators

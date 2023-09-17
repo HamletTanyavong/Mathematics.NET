@@ -37,7 +37,9 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Complex<T> : IComplex<Complex<T>, T>
+public readonly struct Complex<T>
+    : IComplex<Complex<T>, T>,
+      IDifferentiableFunctions<Complex<T>, T>
     where T : IFloatingPointIeee754<T>
 {
     public static readonly Complex<T> Zero = new(Real<T>.Zero, Real<T>.Zero);
@@ -346,6 +348,72 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
         return new(reResult, imResult);
     }
+
+    //
+    // IDifferentiableFunctions interface
+    //
+
+    // Exponential functions
+
+    public static Complex<T> Exp(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Exp2(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Exp10(Complex<T> z) => throw new NotImplementedException();
+
+    // Hyperbolic functions
+
+    public static Complex<T> Acosh(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Asinh(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Atanh(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Cosh(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Sinh(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Tanh(Complex<T> z) => throw new NotImplementedException();
+
+    // Logarithmic functions
+
+    public static Complex<T> Ln(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Log(Complex<T> z, Complex<T> b) => throw new NotImplementedException();
+
+    public static Complex<T> Log2(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Log10(Complex<T> z) => throw new NotImplementedException();
+
+    // Power functions
+
+    public static Complex<T> Pow(Complex<T> z, Complex<T> w) => throw new NotImplementedException();
+
+    // Root functions
+
+    public static Complex<T> Cbrt(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Hypot(Complex<T> z, Complex<T> w) => throw new NotImplementedException();
+
+    public static Complex<T> NthRoot(Complex<T> z, int n) => throw new NotImplementedException();
+
+    public static Complex<T> Root(Complex<T> z, Complex<T> w) => throw new NotImplementedException();
+
+    public static Complex<T> Sqrt(Complex<T> z) => throw new NotImplementedException();
+
+    // Trigonometric functions
+
+    public static Complex<T> Acos(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Asin(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Atan(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Cos(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Sin(Complex<T> z) => throw new NotImplementedException();
+
+    public static Complex<T> Tan(Complex<T> z) => throw new NotImplementedException();
 
     //
     // Implicit Operators
