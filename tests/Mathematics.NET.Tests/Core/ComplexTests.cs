@@ -146,7 +146,6 @@ public sealed class ComplexTests
     [DataRow("( 1.23 , 3.45 )", 1.23, 3.45)]
     public void TryParse_SpanOfChar_ReturnsComplexOfDouble(string s, double expectedRe, double expectedIm)
     {
-
         Complex<double> expected = new(expectedRe, expectedIm);
 
         _ = Complex<double>.TryParse(s.AsSpan(), null, out Complex<double> actual);
