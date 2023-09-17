@@ -311,6 +311,9 @@ public readonly struct Complex<T> : IComplex<Complex<T>, T>
 
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 
+    public static Complex<T> FromPolarForm(Real<T> magnitude, Real<T> phase)
+        => new(magnitude * T.Cos(phase.Value), magnitude * T.Sin(phase.Value));
+
     public static bool IsFinite(Complex<T> z) => Real<T>.IsFinite(z._real) && Real<T>.IsFinite(z._imaginary);
 
     public static bool IsInfinity(Complex<T> z) => Real<T>.IsInfinity(z._real) || Real<T>.IsInfinity(z._imaginary);
