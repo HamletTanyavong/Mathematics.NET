@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="SystemComplexAbsVsComplexAbs.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,18 +25,32 @@
 // SOFTWARE.
 // </copyright>
 
-#if RELEASE
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Running;
-using Mathematics.NET.Benchmarks.Core.Complex;
+namespace Mathematics.NET.Benchmarks.Core.Complex;
 
-var benchmarkSwitcher = new BenchmarkSwitcher(new[]
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
+public class SystemComplexAbsVsComplexAbs
 {
-    typeof(ComplexDivisionBenchmarks),
-    typeof(SystemComplexAbsVsComplexAbs)
-});
+    public System.Numerics.Complex Z { get; set; }
+    public Complex<double> W { get; set; }
 
-benchmarkSwitcher.Run(args, new DebugInProcessConfig());
-#else
-Console.WriteLine("Must be in release mode to run benchmarks");
-#endif
+    [GlobalSetup]
+    public void GlobalSetup()
+    {
+        Z = new(4, 5);
+        W = new(4, 5);
+    }
+
+    [Benchmark(Baseline = true)]
+    public Real<double> SystemComplexAbs()
+    {
+        return System.Numerics.Complex.Abs(Z);
+    }
+
+    [Benchmark]
+    public Real<double> ComplexAbs()
+    {
+        return Complex<double>.Abs(W);
+    }
+}
