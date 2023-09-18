@@ -7,6 +7,9 @@
 /src/Application/
 *.runsettings
 
+ # Temporary
+/src/Mathematics.NET.SourceGenerators/
+
 # User-specific files
 *.rsuser
 *.suo
