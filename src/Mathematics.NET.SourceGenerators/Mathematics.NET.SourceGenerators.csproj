@@ -6,6 +6,7 @@
     <LangVersion>latest</LangVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Platforms>x64</Platforms>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.CodeAnalysis" />
+    <Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
   </ItemGroup>
 
 </Project>
