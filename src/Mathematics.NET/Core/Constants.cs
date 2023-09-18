@@ -30,34 +30,34 @@ namespace Mathematics.NET.Core;
 /// <summary>Common mathematical constants</summary>
 public static class Constants
 {
-    /// <summary>Represents the natural logarithmic base, e</summary>
+    /// <summary>Represents the natural logarithmic base, $ e $</summary>
     public const double E = 2.71828182845904523;
-    /// <summary>Represents the ratio of the circumference of a circle to its diameter, π</summary>
+    /// <summary>Represents the ratio of the circumference of a circle to its diameter, $ π $</summary>
     public const double Pi = 3.14159265358979323;
-    /// <summary>Represents π/2</summary>
+    /// <summary>Represents $ π/2 $</summary>
     public const double PiHalf = 1.57079632679489661;
-    /// <summary>Represents π squared</summary>
+    /// <summary>Represents $ π^2 $</summary>
     public const double PiSquared = 9.86960440108935861;
-    /// <summary>Represents 2π</summary>
+    /// <summary>Represents $ 2π $</summary>
     public const double Tau = 6.28318530717958647;
-    /// <summary>Represents the Euler-Mascheroni constant, γ</summary>
+    /// <summary>Represents the Euler-Mascheroni constant, $ \gamma $</summary>
     public const double EulerMascheroni = 5.77215664901532860e-1;
-    /// <summary>Represents the golden ratio, φ</summary>
+    /// <summary>Represents the golden ratio, $ \phi $</summary>
     public const double GoldenRatio = 1.61803398874989484;
-    /// <summary>Represents the natural logarithm of 2</summary>
+    /// <summary>Represents the natural logarithm of 2, $ \ln(2) $</summary>
     public const double Ln2 = 6.93147180559945309e-1;
-    /// <summary>Represents the natural logarithm of 3</summary>
+    /// <summary>Represents the natural logarithm of 3, $ \ln(3) $</summary>
     public const double Ln3 = 1.09861228866810969;
-    /// <summary>Represents the natural logarithm of 4</summary>
+    /// <summary>Represents the natural logarithm of 4, $ \ln(4) $</summary>
     public const double Ln4 = 1.38629436111989061;
-    /// <summary>Represents the natural logarithm of 5</summary>
+    /// <summary>Represents the natural logarithm of 5, $ \ln(5) $</summary>
     public const double Ln5 = 1.60943791243410037;
-    /// <summary>Represents the natural logarithm of 10</summary>
+    /// <summary>Represents the natural logarithm of 10, $ \ln(10) $</summary>
     public const double Ln10 = 2.30258509299404568;
-    /// <summary>Represents the square root of 2</summary>
+    /// <summary>Represents the square root of 2, $ \sqrt{2} $</summary>
     public const double Sqrt2 = 1.41421356237309504;
-    /// <summary>Represents the square root of 3</summary>
+    /// <summary>Represents the square root of 3, $ \sqrt{3} $</summary>
     public const double Sqrt3 = 1.73205080756887729;
-    /// <summary>Represents the square root of 5</summary>
+    /// <summary>Represents the square root of 5, $ \sqrt{5} $</summary>
     public const double Sqrt5 = 2.23606797749978969;
 }
