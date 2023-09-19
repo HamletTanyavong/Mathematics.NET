@@ -311,6 +311,41 @@ public readonly struct Complex<T>
     // Methods
     //
 
+    public static Real<T> Abs(Complex<T> z) => Hypot(z._real.Value, z._imaginary.Value);
+
+    private static T Hypot(T x, T y)
+    {
+        // Factor out the larger value to avoid possible overflow
+        x = T.Abs(x);
+        y = T.Abs(y);
+
+        T small, large;
+        if (x < y)
+        {
+            small = x;
+            large = y;
+        }
+        else
+        {
+            small = y;
+            large = x;
+        }
+
+        if (small == T.Zero)
+        {
+            return large;
+        }
+        else if (T.IsPositiveInfinity(large) && !T.IsNaN(small))
+        {
+            return T.PositiveInfinity;
+        }
+        else
+        {
+            T ratio = small / large;
+            return large * T.Sqrt(T.One + ratio * ratio);
+        }
+    }
+
     public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
 
     public static Complex<T> FromPolarForm(Real<T> magnitude, Real<T> phase)

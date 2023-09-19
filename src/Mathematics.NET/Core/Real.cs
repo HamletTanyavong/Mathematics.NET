@@ -190,6 +190,8 @@ public readonly struct Real<T>
     // Methods
     //
 
+    public static Real<T> Abs(Real<T> x) => T.Abs(x._value);
+
     public static Real<T> Conjugate(Real<T> x) => x;
 
     public static bool IsFinite(Real<T> x) => T.IsFinite(x._value);
