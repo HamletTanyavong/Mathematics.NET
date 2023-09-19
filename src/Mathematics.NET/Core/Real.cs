@@ -194,6 +194,8 @@ public readonly struct Real<T>
 
     public static Real<T> Conjugate(Real<T> x) => x;
 
+    public static Real<T> Hypot(Real<T> x, Real<T> y) => T.Hypot(x._value, y._value);
+
     public static bool IsFinite(Real<T> x) => T.IsFinite(x._value);
 
     public static bool IsInfinity(Real<T> x) => T.IsInfinity(x._value);
@@ -258,8 +260,6 @@ public readonly struct Real<T>
     // Root functions
 
     public static Real<T> Cbrt(Real<T> x) => T.Cbrt(x._value);
-
-    public static Real<T> Hypot(Real<T> x, Real<T> y) => T.Hypot(x._value, y._value);
 
     public static Real<T> NthRoot(Real<T> x, int n) => T.RootN(x._value, n);
 
