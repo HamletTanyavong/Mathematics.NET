@@ -87,8 +87,6 @@ public interface IDifferentiableFunctions<T, U>
 
     static abstract T Cbrt(T x);
 
-    static abstract T Hypot(T x, T y);
-
     static abstract T NthRoot(T x, int n);
 
     static abstract T Root(T x, T r);
