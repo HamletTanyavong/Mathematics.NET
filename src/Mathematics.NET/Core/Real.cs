@@ -43,6 +43,8 @@ public readonly struct Real<T>
 {
     public static readonly Real<T> Zero = T.Zero;
     public static readonly Real<T> One = T.One;
+    public static readonly Real<T> OneHalf = T.Parse("0.5", null);
+
     public static readonly Real<T> NaN = T.NaN;
     public static readonly Real<T> NegativeInfinity = T.NegativeInfinity;
     public static readonly Real<T> PositiveInfinity = T.PositiveInfinity;

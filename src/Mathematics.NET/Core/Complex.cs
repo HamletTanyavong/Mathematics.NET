@@ -390,7 +390,11 @@ public readonly struct Complex<T>
 
     // Exponential functions
 
-    public static Complex<T> Exp(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Exp(Complex<T> z)
+    {
+        Real<T> expReal = Real<T>.Exp(z._real);
+        return new(expReal * Real<T>.Cos(z._imaginary), expReal * Real<T>.Sin(z._imaginary));
+    }
 
     public static Complex<T> Exp2(Complex<T> z) => throw new NotImplementedException();
 
@@ -444,9 +448,23 @@ public readonly struct Complex<T>
 
     public static Complex<T> Atan(Complex<T> z) => throw new NotImplementedException();
 
-    public static Complex<T> Cos(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Cos(Complex<T> z)
+    {
+        Real<T> p = Real<T>.Exp(z._imaginary);
+        Real<T> q = Real<T>.One / p;
+        Real<T> sinh = (p - q) * Real<T>.OneHalf;
+        Real<T> cosh = (p + q) * Real<T>.OneHalf;
+        return new(Real<T>.Cos(z._real) * cosh, -Real<T>.Sin(z._real) * sinh);
+    }
 
-    public static Complex<T> Sin(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Sin(Complex<T> z)
+    {
+        Real<T> p = Real<T>.Exp(z._imaginary);
+        Real<T> q = Real<T>.One / p;
+        Real<T> sinh = (p - q) * Real<T>.OneHalf;
+        Real<T> cosh = (p + q) * Real<T>.OneHalf;
+        return new(Real<T>.Sin(z._real) * cosh, Real<T>.Cos(z._real) * sinh);
+    }
 
     public static Complex<T> Tan(Complex<T> z) => throw new NotImplementedException();
 
