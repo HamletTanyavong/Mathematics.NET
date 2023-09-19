@@ -70,6 +70,11 @@ public interface IComplex<T, U>
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
 
+    /// <summary>Compute the absolute value of a number</summary>
+    /// <param name="z">A complex number</param>
+    /// <returns>The absolute value</returns>
+    static abstract Real<U> Abs(T z);
+
     /// <summary>Compute the complex conjugate of a number</summary>
     /// <param name="z">A complex number</param>
     /// <returns>The complex conjugate</returns>
