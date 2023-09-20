@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Numerics;
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.Core;
@@ -36,6 +37,8 @@ namespace Mathematics.NET.Core;
 public interface IReal<T, U>
     : IComplex<T, U>,
       IInequalityRelations<T, bool>,
+      IDecrementOperation<T>,
+      IIncrementOperation<T>,
       IComparable,
       IComparable<T>,
       IMinMaxValue<T>

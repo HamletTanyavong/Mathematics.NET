@@ -83,6 +83,8 @@ public readonly struct Real<T>
     //
 
     public static Real<T> operator -(Real<T> value) => -value._value;
+    public static Real<T> operator --(Real<T> value) => value._value - One;
+    public static Real<T> operator ++(Real<T> value) => value._value + One;
     public static Real<T> operator +(Real<T> left, Real<T> right) => left._value + right._value;
     public static Real<T> operator -(Real<T> left, Real<T> right) => left._value - right._value;
     public static Real<T> operator *(Real<T> left, Real<T> right) => left._value * right._value;
