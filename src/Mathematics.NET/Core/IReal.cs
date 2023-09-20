@@ -37,7 +37,8 @@ public interface IReal<T, U>
     : IComplex<T, U>,
       IInequalityRelations<T, bool>,
       IComparable,
-      IComparable<T>
+      IComparable<T>,
+      IMinMaxValue<T>
     where T : IReal<T, U>
     where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
 {

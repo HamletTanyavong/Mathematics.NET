@@ -45,6 +45,9 @@ public readonly struct Real<T>
     public static readonly Real<T> One = T.One;
     public static readonly Real<T> OneHalf = T.Parse("0.5", null);
 
+    public static readonly Real<T> MaxValue = T.MaxValue;
+    public static readonly Real<T> MinValue = T.MinValue;
+
     public static readonly Real<T> NaN = T.NaN;
     public static readonly Real<T> NegativeInfinity = T.NegativeInfinity;
     public static readonly Real<T> PositiveInfinity = T.PositiveInfinity;
@@ -70,6 +73,8 @@ public readonly struct Real<T>
     static Real<T> IComplex<Real<T>, T>.Zero => Zero;
     static Real<T> IComplex<Real<T>, T>.One => One;
     static Real<T> IComplex<Real<T>, T>.NaN => NaN;
+    static Real<T> IMinMaxValue<Real<T>>.MaxValue => MaxValue;
+    static Real<T> IMinMaxValue<Real<T>>.MinValue => MinValue;
     static Real<T> IReal<Real<T>, T>.NegativeInfinity => NegativeInfinity;
     static Real<T> IReal<Real<T>, T>.PositiveInfinity => PositiveInfinity;
 
