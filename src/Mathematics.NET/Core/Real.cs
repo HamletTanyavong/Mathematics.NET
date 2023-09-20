@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a real number</summary>
-/// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
+/// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct Real<T>
