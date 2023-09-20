@@ -1,4 +1,4 @@
-﻿// <copyright file="SystemComplexAbsVsComplexAbs.cs" company="Mathematics.NET">
+﻿// <copyright file="SystemComplexAbsVsComplexAbsBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,7 +30,7 @@ namespace Mathematics.NET.Benchmarks.Core.Complex;
 [MemoryDiagnoser]
 [RankColumn]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class SystemComplexAbsVsComplexAbs
+public class SystemComplexAbsVsComplexAbsBenchmarks
 {
     public System.Numerics.Complex Z { get; set; }
     public Complex<double> W { get; set; }

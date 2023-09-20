@@ -35,7 +35,7 @@ var benchmarkSwitcher = new BenchmarkSwitcher(new[]
 {
     typeof(ComplexDivisionBenchmarks),
     typeof(RealvsDouble),
-    typeof(SystemComplexAbsVsComplexAbs)
+    typeof(SystemComplexAbsVsComplexAbsBenchmarks)
 });
 
 benchmarkSwitcher.Run(args, new DebugInProcessConfig());
