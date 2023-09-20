@@ -52,6 +52,51 @@ public readonly struct Real<T>
     public static readonly Real<T> NegativeInfinity = T.NegativeInfinity;
     public static readonly Real<T> PositiveInfinity = T.PositiveInfinity;
 
+    /// <inheritdoc cref="Constants.E" />
+    public static readonly Real<T> E = T.CreateTruncating(Constants.E);
+
+    /// <inheritdoc cref="Constants.Pi" />
+    public static readonly Real<T> Pi = T.CreateTruncating(Constants.Pi);
+
+    /// <inheritdoc cref="Constants.PiOverTwo" />
+    public static readonly Real<T> PiOverTwo = T.CreateTruncating(Constants.PiOverTwo);
+
+    /// <inheritdoc cref="Constants.PiSquared" />
+    public static readonly Real<T> PiSquared = T.CreateTruncating(Constants.PiSquared);
+
+    /// <inheritdoc cref="Constants.Tau" />
+    public static readonly Real<T> Tau = T.CreateTruncating(Constants.Tau);
+
+    /// <inheritdoc cref="Constants.EulerMascheroni" />
+    public static readonly Real<T> EulerMascheroni = T.CreateTruncating(Constants.EulerMascheroni);
+
+    /// <inheritdoc cref="Constants.GoldenRatio" />
+    public static readonly Real<T> GoldenRatio = T.CreateTruncating(Constants.GoldenRatio);
+
+    /// <inheritdoc cref="Constants.Ln2" />
+    public static readonly Real<T> Ln2 = T.CreateTruncating(Constants.Ln2);
+
+    /// <inheritdoc cref="Constants.Ln10" />
+    public static readonly Real<T> Ln10 = T.CreateTruncating(Constants.Ln10);
+
+    /// <inheritdoc cref="Constants.Sqrt2" />
+    public static readonly Real<T> Sqrt2 = T.CreateTruncating(Constants.Sqrt2);
+
+    /// <inheritdoc cref="Constants.Sqrt3" />
+    public static readonly Real<T> Sqrt3 = T.CreateTruncating(Constants.Sqrt3);
+
+    /// <inheritdoc cref="Constants.Sqrt5" />
+    public static readonly Real<T> Sqrt5 = T.CreateTruncating(Constants.Sqrt5);
+
+    /// <inheritdoc cref="Constants.ZetaOf2" />
+    public static readonly Real<T> ZetaOf2 = T.CreateTruncating(Constants.ZetaOf2);
+
+    /// <inheritdoc cref="Constants.ZetaOf3" />
+    public static readonly Real<T> ZetaOf3 = T.CreateTruncating(Constants.ZetaOf3);
+
+    /// <inheritdoc cref="Constants.ZetaOf4" />
+    public static readonly Real<T> ZetaOf4 = T.CreateTruncating(Constants.ZetaOf4);
+
     private readonly T _value;
 
     public Real(T real)
@@ -77,6 +122,24 @@ public readonly struct Real<T>
     static Real<T> IMinMaxValue<Real<T>>.MinValue => MinValue;
     static Real<T> IReal<Real<T>, T>.NegativeInfinity => NegativeInfinity;
     static Real<T> IReal<Real<T>, T>.PositiveInfinity => PositiveInfinity;
+
+    // IConstants interface
+
+    static Real<T> IConstants<Real<T>, T>.E => E;
+    static Real<T> IConstants<Real<T>, T>.Pi => Pi;
+    static Real<T> IConstants<Real<T>, T>.PiOverTwo => PiOverTwo;
+    static Real<T> IConstants<Real<T>, T>.PiSquared => PiSquared;
+    static Real<T> IConstants<Real<T>, T>.Tau => Tau;
+    static Real<T> IConstants<Real<T>, T>.EulerMascheroni => EulerMascheroni;
+    static Real<T> IConstants<Real<T>, T>.GoldenRatio => GoldenRatio;
+    static Real<T> IConstants<Real<T>, T>.Ln2 => Ln2;
+    static Real<T> IConstants<Real<T>, T>.Ln10 => Ln10;
+    static Real<T> IConstants<Real<T>, T>.Sqrt2 => Sqrt2;
+    static Real<T> IConstants<Real<T>, T>.Sqrt3 => Sqrt3;
+    static Real<T> IConstants<Real<T>, T>.Sqrt5 => Sqrt5;
+    static Real<T> IConstants<Real<T>, T>.ZetaOf2 => ZetaOf2;
+    static Real<T> IConstants<Real<T>, T>.ZetaOf3 => ZetaOf3;
+    static Real<T> IConstants<Real<T>, T>.ZetaOf4 => ZetaOf4;
 
     //
     // Operators
