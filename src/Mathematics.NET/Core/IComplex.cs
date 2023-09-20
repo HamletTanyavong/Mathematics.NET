@@ -67,6 +67,9 @@ public interface IComplex<T, U>
     /// <summary>Represents one for the type</summary>
     static abstract T One { get; }
 
+    /// <summary>Represents two for the type</summary>
+    static abstract T Two { get; }
+
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
 
