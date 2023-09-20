@@ -416,7 +416,7 @@ public readonly struct Complex<T>
 
     // Logarithmic functions
 
-    public static Complex<T> Ln(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Ln(Complex<T> z) => new(Real<T>.Ln(Abs(z)), Real<T>.Atan2(z._imaginary, z._real));
 
     public static Complex<T> Log(Complex<T> z, Complex<T> b) => throw new NotImplementedException();
 
