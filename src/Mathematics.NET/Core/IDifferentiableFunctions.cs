@@ -32,8 +32,7 @@ namespace Mathematics.NET.Core;
 /// <summary>Defines support for common differentiable functions</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
-public interface IDifferentiableFunctions<T, U>
-    : IComplex<T, U>
+public interface IDifferentiableFunctions<T, U> : IComplex<T, U>
     where T : IDifferentiableFunctions<T, U>
     where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
 {
