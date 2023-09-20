@@ -117,6 +117,7 @@ public readonly struct Real<T>
 
     static Real<T> IComplex<Real<T>, T>.Zero => Zero;
     static Real<T> IComplex<Real<T>, T>.One => One;
+    static Real<T> IComplex<Real<T>, T>.Two => Two;
     static Real<T> IComplex<Real<T>, T>.NaN => NaN;
     static Real<T> IMinMaxValue<Real<T>>.MaxValue => MaxValue;
     static Real<T> IMinMaxValue<Real<T>>.MinValue => MinValue;

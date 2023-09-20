@@ -86,6 +86,7 @@ public readonly struct Complex<T>
 
     static Complex<T> IComplex<Complex<T>, T>.Zero => Zero;
     static Complex<T> IComplex<Complex<T>, T>.One => One;
+    static Complex<T> IComplex<Complex<T>, T>.Two => Two;
     static Complex<T> IComplex<Complex<T>, T>.NaN => NaN;
 
     //
