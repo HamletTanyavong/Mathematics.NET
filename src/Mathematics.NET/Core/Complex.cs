@@ -42,10 +42,11 @@ public readonly struct Complex<T>
       IDifferentiableFunctions<Complex<T>, T>
     where T : IFloatingPointIeee754<T>, IMinMaxValue<T>
 {
+    private static readonly Complex<T> s_im = new(Real<T>.Zero, Real<T>.One);
+
     public static readonly Complex<T> Zero = new(Real<T>.Zero, Real<T>.Zero);
     public static readonly Complex<T> One = new(Real<T>.One, Real<T>.Zero);
     public static readonly Complex<T> Two = new(Real<T>.Two, Real<T>.Zero);
-    public static readonly Complex<T> ImaginaryOne = new(Real<T>.Zero, Real<T>.One);
     public static readonly Complex<T> NaN = new(Real<T>.NaN, Real<T>.NaN);
     public static readonly Complex<T> Infinity = new(Real<T>.PositiveInfinity, Real<T>.PositiveInfinity);
 
@@ -442,7 +443,7 @@ public readonly struct Complex<T>
 
     public static Complex<T> Asin(Complex<T> z) => throw new NotImplementedException();
 
-    public static Complex<T> Atan(Complex<T> z) => ImaginaryOne / Two * Ln((ImaginaryOne + z) / (ImaginaryOne - z));
+    public static Complex<T> Atan(Complex<T> z) => s_im / Two * Ln((s_im + z) / (s_im - z));
 
     public static Complex<T> Cos(Complex<T> z)
     {
