@@ -60,4 +60,10 @@ public static class Constants
     public const double Sqrt3 = 1.73205080756887729;
     /// <summary>Represents the square root of 5, $ \sqrt{5} $</summary>
     public const double Sqrt5 = 2.23606797749978969;
+    /// <summary>Represents the solution to the Basel problem, $ \zeta(2) = \pi^2/6 $</summary>
+    public const double ZetaOf2 = 1.64493406684822643;
+    /// <summary>Represents Apéry's constant, $ \zeta(3) $</summary>
+    public const double ZetaOf3 = 1.20205690315959428;
+    /// <summary>Represents $ \zeta(4) = \pi^4/90 $</summary>
+    public const double ZetaOf4 = 1.08232323371113819;
 }
