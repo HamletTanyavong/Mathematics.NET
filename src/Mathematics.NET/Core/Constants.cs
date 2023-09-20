@@ -35,7 +35,7 @@ public static class Constants
     /// <summary>Represents the ratio of the circumference of a circle to its diameter, $ π $</summary>
     public const double Pi = 3.14159265358979323;
     /// <summary>Represents $ π/2 $</summary>
-    public const double PiHalf = 1.57079632679489661;
+    public const double PiOverTwo = 1.57079632679489661;
     /// <summary>Represents $ π^2 $</summary>
     public const double PiSquared = 9.86960440108935861;
     /// <summary>Represents $ 2π $</summary>
