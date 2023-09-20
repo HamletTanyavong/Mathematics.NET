@@ -39,7 +39,7 @@ namespace Mathematics.NET.Core;
 public readonly struct Real<T>
     : IReal<Real<T>, T>,
       IDifferentiableFunctions<Real<T>, T>
-    where T : IFloatingPointIeee754<T>
+    where T : IFloatingPointIeee754<T>, IMinMaxValue<T>
 {
     public static readonly Real<T> Zero = T.Zero;
     public static readonly Real<T> One = T.One;
