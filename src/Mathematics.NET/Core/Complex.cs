@@ -450,8 +450,8 @@ public readonly struct Complex<T>
     {
         Real<T> p = Real<T>.Exp(z._imaginary);
         Real<T> q = Real<T>.One / p;
-        Real<T> sinh = (p - q) * Real<T>.OneHalf;
-        Real<T> cosh = (p + q) * Real<T>.OneHalf;
+        Real<T> sinh = (p - q) / Real<T>.Two;
+        Real<T> cosh = (p + q) / Real<T>.Two;
         return new(Real<T>.Cos(z._real) * cosh, -Real<T>.Sin(z._real) * sinh);
     }
 
@@ -459,8 +459,8 @@ public readonly struct Complex<T>
     {
         Real<T> p = Real<T>.Exp(z._imaginary);
         Real<T> q = Real<T>.One / p;
-        Real<T> sinh = (p - q) * Real<T>.OneHalf;
-        Real<T> cosh = (p + q) * Real<T>.OneHalf;
+        Real<T> sinh = (p - q) / Real<T>.Two;
+        Real<T> cosh = (p + q) / Real<T>.Two;
         return new(Real<T>.Sin(z._real) * cosh, Real<T>.Cos(z._real) * sinh);
     }
 
