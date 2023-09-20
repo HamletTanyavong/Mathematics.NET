@@ -60,6 +60,20 @@ public sealed class ComplexTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, 1.37591078602063, 3.356559207392595e-1)]
+    public void Atan_ComplexOfDouble_ReturnsComplexOfDouble(double inReal, double inImaginary, double expectedRe, double expectedIm)
+    {
+        Complex<double> input = new(inReal, inImaginary);
+
+        var actualResult = Complex<double>.Atan(input);
+        var actualRe = actualResult.Re.Value;
+        var actualIm = actualResult.Im.Value;
+
+        Assert.AreEqual(expectedRe, actualRe, 1e-15);
+        Assert.AreEqual(expectedIm, actualIm, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.2, 2.3, 1.2, -2.3)]
     public void Conjugate_ComplexOfDouble_ReturnsConjugate(double inReal, double inImaginary, double outReal, double outImaginary)
     {
