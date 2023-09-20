@@ -252,10 +252,7 @@ public readonly struct Complex<T>
 
     public static Complex<T> Parse(string s, NumberStyles style, IFormatProvider? provider)
     {
-        if (s is null)
-        {
-            throw new ArgumentNullException("Cannot parse null string");
-        }
+        ArgumentNullException.ThrowIfNull(s);
         return Parse((ReadOnlySpan<char>)s, style, provider);
     }
 
