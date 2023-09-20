@@ -39,7 +39,7 @@ public interface IReal<T, U>
       IComparable,
       IComparable<T>
     where T : IReal<T, U>
-    where U : IFloatingPointIeee754<U>
+    where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     /// <summary>The backing value of the type</summary>
     U Value { get; }

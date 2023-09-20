@@ -35,7 +35,7 @@ namespace Mathematics.NET.Core;
 public interface IDifferentiableFunctions<T, U>
     : IComplex<T, U>
     where T : IDifferentiableFunctions<T, U>
-    where U : IFloatingPointIeee754<U>
+    where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     //
     // Exponential functions

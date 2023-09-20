@@ -47,7 +47,7 @@ public interface IComplex<T, U>
       ISpanFormattable,
       ISpanParsable<T>
     where T : IComplex<T, U>
-    where U : IFloatingPointIeee754<U>
+    where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     /// <summary>The real part of the complex number</summary>
     public Real<U> Re { get; }

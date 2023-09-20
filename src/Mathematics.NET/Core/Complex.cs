@@ -40,7 +40,7 @@ namespace Mathematics.NET.Core;
 public readonly struct Complex<T>
     : IComplex<Complex<T>, T>,
       IDifferentiableFunctions<Complex<T>, T>
-    where T : IFloatingPointIeee754<T>
+    where T : IFloatingPointIeee754<T>, IMinMaxValue<T>
 {
     public static readonly Complex<T> Zero = new(Real<T>.Zero, Real<T>.Zero);
     public static readonly Complex<T> One = new(Real<T>.One, Real<T>.Zero);
