@@ -39,6 +39,7 @@ public interface IReal<T, U>
       IInequalityRelations<T, bool>,
       IDecrementOperation<T>,
       IIncrementOperation<T>,
+      IConstants<T, U>,
       IComparable,
       IComparable<T>,
       IMinMaxValue<T>
