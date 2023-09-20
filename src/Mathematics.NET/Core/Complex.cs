@@ -432,8 +432,6 @@ public readonly struct Complex<T>
 
     public static Complex<T> Cbrt(Complex<T> z) => throw new NotImplementedException();
 
-    public static Complex<T> Hypot(Complex<T> z, Complex<T> w) => throw new NotImplementedException();
-
     public static Complex<T> NthRoot(Complex<T> z, int n) => throw new NotImplementedException();
 
     public static Complex<T> Root(Complex<T> z, Complex<T> w) => throw new NotImplementedException();
