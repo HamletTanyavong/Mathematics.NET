@@ -32,6 +32,34 @@ namespace Mathematics.NET.Tests.Core;
 public sealed class ComplexTests
 {
     [TestMethod]
+    [DataRow(1.23, 2.34, 1.114564084931578, -1.686112230652994)]
+    public void Acos_ComplexOfDouble_ReturnsComplexOfDouble(double inReal, double inImaginary, double expectedRe, double expectedIm)
+    {
+        Complex<double> input = new(inReal, inImaginary);
+
+        var actualResult = Complex<double>.Acos(input);
+        var actualRe = actualResult.Re.Value;
+        var actualIm = actualResult.Im.Value;
+
+        Assert.AreEqual(expectedRe, actualRe, 1e-15);
+        Assert.AreEqual(expectedIm, actualIm, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 4.562322418633185e-1, 1.686112230652994)]
+    public void Asin_ComplexOfDouble_ReturnsComplexOfDouble(double inReal, double inImaginary, double expectedRe, double expectedIm)
+    {
+        Complex<double> input = new(inReal, inImaginary);
+
+        var actualResult = Complex<double>.Asin(input);
+        var actualRe = actualResult.Re.Value;
+        var actualIm = actualResult.Im.Value;
+
+        Assert.AreEqual(expectedRe, actualRe, 1e-15);
+        Assert.AreEqual(expectedIm, actualIm, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.2, 2.3, 1.2, -2.3)]
     public void Conjugate_ComplexOfDouble_ReturnsConjugate(double inReal, double inImaginary, double outReal, double outImaginary)
     {
