@@ -44,6 +44,11 @@ public readonly struct Complex<T>
 {
     private static readonly Complex<T> s_im = new(Real<T>.Zero, Real<T>.One);
 
+    // For computing Asin and Acos
+    private static readonly Real<T> s_asinOverflowThreshold = Real<T>.Sqrt(Real<T>.MaxValue) / Real<T>.Two;
+    private static readonly Real<T> s_threeOverFour = T.CreateTruncating(0.75);
+    private static readonly Real<T> s_threeOverTwo = T.CreateTruncating(1.5);
+
     public static readonly Complex<T> Zero = new(Real<T>.Zero, Real<T>.Zero);
     public static readonly Complex<T> One = new(Real<T>.One, Real<T>.Zero);
     public static readonly Complex<T> Two = new(Real<T>.Two, Real<T>.Zero);
@@ -439,9 +444,127 @@ public readonly struct Complex<T>
 
     // Trigonometric functions
 
-    public static Complex<T> Acos(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Acos(Complex<T> z)
+    {
+        AsinInternal(Real<T>.Abs(z._real), Real<T>.Abs(z._imaginary), out Real<T> b, out Real<T> bPrime, out Real<T> v);
 
-    public static Complex<T> Asin(Complex<T> z) => throw new NotImplementedException();
+        Real<T> u;
+        if (bPrime < Real<T>.Zero)
+        {
+            u = Real<T>.Acos(b);
+        }
+        else
+        {
+            u = Real<T>.Atan(Real<T>.One / bPrime);
+        }
+
+        if (z._real < Real<T>.Zero)
+        {
+            u = Real<T>.Pi - u;
+        }
+        if (z._imaginary > Real<T>.Zero)
+        {
+            v = -v;
+        }
+
+        return new(u, v);
+    }
+
+    public static Complex<T> Asin(Complex<T> z)
+    {
+        AsinInternal(Real<T>.Abs(z._real), Real<T>.Abs(z._imaginary), out Real<T> b, out Real<T> bPrime, out Real<T> v);
+
+        Real<T> u;
+        if (bPrime < Real<T>.Zero)
+        {
+            u = Real<T>.Asin(b);
+        }
+        else
+        {
+            u = Real<T>.Atan(bPrime);
+        }
+
+        if (z._real < Real<T>.Zero)
+        {
+            u = -u;
+        }
+        if (z._imaginary < Real<T>.Zero)
+        {
+            v = -v;
+        }
+
+        return new(u, v);
+    }
+
+    public static void AsinInternal(Real<T> x, Real<T> y, out Real<T> b, out Real<T> bPrime, out Real<T> v)
+    {
+        // This is the same method described by Hull, Fairgrieve, and Tang in "Implementing the Complex
+        // ArcSine and Arccosine Functions Using Exception Handling" that is used in System.Numerics.Complex.
+        if (x > s_asinOverflowThreshold || y > s_asinOverflowThreshold)
+        {
+            b = -Real<T>.One;
+            bPrime = x / y;
+
+            Real<T> small, big;
+            if (x < y)
+            {
+                small = x;
+                big = y;
+            }
+            else
+            {
+                small = y;
+                big = x;
+            }
+            Real<T> ratio = small / big;
+            v = Real<T>.Ln2 + Real<T>.Ln(big) + Real<T>.Ln(ratio * ratio + Real<T>.One) / Real<T>.Two;
+        }
+        else
+        {
+            Real<T> r = Hypot((x + Real<T>.One).Value, y.Value);
+            Real<T> s = Hypot((x - Real<T>.One).Value, y.Value);
+
+            Real<T> a = (r + s) / Real<T>.Two;
+            b = x / a;
+
+            if (b > s_threeOverFour)
+            {
+                if (x <= Real<T>.One)
+                {
+                    Real<T> amx = (y * y / (r + (x + Real<T>.One)) + (s + (Real<T>.One - x))) / Real<T>.Two;
+                    bPrime = x / Real<T>.Sqrt((a + x) * amx);
+                }
+                else
+                {
+                    Real<T> t = (Real<T>.One / (r + (x + Real<T>.One)) + Real<T>.One / (s + (x - Real<T>.One))) / Real<T>.Two;
+                    bPrime = x / y / Real<T>.Sqrt((a + x) * t);
+                }
+            }
+            else
+            {
+                bPrime = -Real<T>.One;
+            }
+
+            if (a < s_threeOverTwo)
+            {
+                if (x < Real<T>.One)
+                {
+                    Real<T> t = (Real<T>.One / (r + (x + Real<T>.One)) + Real<T>.One / (s + (Real<T>.One - x))) / Real<T>.Two;
+                    Real<T> am1 = y * y * t;
+                    v = Real<T>.Ln(am1 + y * Real<T>.Sqrt(t * (a + Real<T>.One)) + Real<T>.One);
+                }
+                else
+                {
+                    Real<T> am1 = (y * y / (r + (x + Real<T>.One)) + (s + (x - Real<T>.One))) / Real<T>.Two;
+                    v = Real<T>.Ln(am1 + Real<T>.Sqrt(am1 * (a + Real<T>.One)) + Real<T>.One);
+                }
+            }
+            else
+            {
+                v = Real<T>.Ln(a + Real<T>.Sqrt((a - Real<T>.One) * (a + Real<T>.One)));
+            }
+        }
+    }
 
     public static Complex<T> Atan(Complex<T> z) => s_im / Two * Ln((s_im + z) / (s_im - z));
 
