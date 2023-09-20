@@ -496,7 +496,7 @@ public readonly struct Complex<T>
         return new(u, v);
     }
 
-    public static void AsinInternal(Real<T> x, Real<T> y, out Real<T> b, out Real<T> bPrime, out Real<T> v)
+    private static void AsinInternal(Real<T> x, Real<T> y, out Real<T> b, out Real<T> bPrime, out Real<T> v)
     {
         // This is the same method described by Hull, Fairgrieve, and Tang in "Implementing the Complex
         // ArcSine and Arccosine Functions Using Exception Handling" that is used in System.Numerics.Complex.
