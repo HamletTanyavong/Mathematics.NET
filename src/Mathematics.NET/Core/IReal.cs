@@ -32,7 +32,7 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Defines support for real numbers</summary>
 /// <typeparam name="T">A type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/></typeparam>
+/// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
 public interface IReal<T, U>
     : IComplex<T, U>,
       IInequalityRelations<T, bool>,
