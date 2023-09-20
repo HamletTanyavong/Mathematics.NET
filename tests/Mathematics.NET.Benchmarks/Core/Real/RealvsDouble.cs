@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="RealvsDouble.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,20 +25,42 @@
 // SOFTWARE.
 // </copyright>
 
-#if RELEASE
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Running;
-using Mathematics.NET.Benchmarks.Core.Complex;
-using Mathematics.NET.Benchmarks.Core.Real;
+namespace Mathematics.NET.Benchmarks.Core.Real;
 
-var benchmarkSwitcher = new BenchmarkSwitcher(new[]
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
+public class RealvsDouble
 {
-    typeof(ComplexDivisionBenchmarks),
-    typeof(RealvsDouble),
-    typeof(SystemComplexAbsVsComplexAbs)
-});
+    public Real<double> XReal { get; set; }
+    public double XDouble { get; set; }
 
-benchmarkSwitcher.Run(args, new DebugInProcessConfig());
-#else
-Console.WriteLine("Must be in release mode to run benchmarks");
-#endif
+    [GlobalSetup]
+    public void GlobalSetup()
+    {
+        XReal = Math.PI;
+        XDouble = Math.PI;
+    }
+
+    [Benchmark(Baseline = true)]
+    public double AdditionsWithDouble()
+    {
+        double result = 0;
+        for (int i = 0; i < 100_000; i++)
+        {
+            result += XDouble;
+        }
+        return result;
+    }
+
+    [Benchmark]
+    public Real<double> AdditionsWithReal()
+    {
+        Real<double> result = 0.0;
+        for (int i = 0; i < 100_000; i++)
+        {
+            result += XReal;
+        }
+        return result;
+    }
+}
