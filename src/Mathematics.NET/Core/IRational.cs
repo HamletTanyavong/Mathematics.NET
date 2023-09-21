@@ -38,4 +38,14 @@ public interface IRational<T, U, V> : IReal<T, V>
     where U : IBinaryInteger<U>, IMinMaxValue<U>
     where V : IFloatingPointIeee754<V>, IMinMaxValue<V>
 {
+    /// <summary>Get the numerator of the rational number</summary>
+    U Num { get; }
+
+    /// <summary>Get the denominator of the rational number</summary>
+    U Den { get; }
+
+    /// <summary>Reduce a rational number</summary>
+    /// <param name="x">The value to reduce</param>
+    /// <returns>A reduced fraction if the number was reducible; otherwise, itself</returns>
+    static abstract T Reduce(T x);
 }
