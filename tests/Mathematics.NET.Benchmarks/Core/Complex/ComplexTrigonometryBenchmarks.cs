@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexTrigonometryBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,21 +25,48 @@
 // SOFTWARE.
 // </copyright>
 
-#if RELEASE
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Running;
-using Mathematics.NET.Benchmarks.Core.Complex;
-using Mathematics.NET.Benchmarks.Core.Real;
+namespace Mathematics.NET.Benchmarks.Core.Complex;
 
-var benchmarkSwitcher = new BenchmarkSwitcher(new[]
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
+public class ComplexTrigonometryBenchmarks
 {
-    typeof(ComplexDivisionBenchmarks),
-    typeof(ComplexTrigonometryBenchmarks),
-    typeof(RealvsDouble),
-    typeof(SystemComplexAbsVsComplexAbsBenchmarks)
-});
+    public Complex<double> Z { get; set; }
+    public Complex<double> ImOverTwo { get; set; }
 
-benchmarkSwitcher.Run(args, new DebugInProcessConfig());
-#else
-Console.WriteLine("Must be in release mode to run benchmarks");
-#endif
+    public System.Numerics.Complex W { get; set; }
+
+    [GlobalSetup]
+    public void GlobalSetup()
+    {
+        Z = new(1.23, 2.34);
+        ImOverTwo = Math<double>.Im / Complex<double>.Two;
+
+        W = new(1.23, 2.34);
+    }
+
+    [Benchmark(Baseline = true)]
+    public System.Numerics.Complex Atan_System()
+    {
+        return System.Numerics.Complex.Atan(W);
+    }
+
+    [Benchmark]
+    public Complex<double> Atan_MathNET()
+    {
+        return Complex<double>.Atan(Z);
+    }
+
+    //[Benchmark]
+    public Complex<double> Atan_WithoutConstImOverTwo()
+    {
+        return Math<double>.Im / Complex<double>.Two * Complex<double>.Ln((Math<double>.Im + Z) / (Math<double>.Im - Z));
+    }
+
+    //[Benchmark]
+    public Complex<double> Atan_WithConstImOverTwo()
+    {
+        return ImOverTwo * Complex<double>.Ln((Math<double>.Im + Z) / (Math<double>.Im - Z));
+    }
+}
