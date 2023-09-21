@@ -48,12 +48,6 @@ public interface IReal<T, U>
     /// <summary>The backing value of the type</summary>
     U Value { get; }
 
-    /// <summary>Represents negative infinty for the type</summary>
-    static abstract T NegativeInfinity { get; }
-
-    /// <summary>Represents positive infinity for the type</summary>
-    static abstract T PositiveInfinity { get; }
-
     /// <summary>Check if a value is negative infinity</summary>
     /// <param name="x">The value to check</param>
     /// <returns><c>true</c> if the value is negative infinity; otherwise, <c>false</c></returns>
