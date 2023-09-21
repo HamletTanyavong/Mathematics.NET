@@ -46,6 +46,7 @@ public readonly struct Complex<T>
     private static readonly Complex<T> s_imOverTwo = new(Real<T>.Zero, Real<T>.One / Real<T>.Two);
 
     private static readonly Complex<T> s_oneOverTwo = new(Real<T>.One / Real<T>.Two, Real<T>.Zero);
+    private static readonly Complex<T> s_three = Real<T>.Three;
 
     // For computing Asin and Acos
     private static readonly Real<T> s_asinOverflowThreshold = Real<T>.Sqrt(Real<T>.MaxValue) / Real<T>.Two;
