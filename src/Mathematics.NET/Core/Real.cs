@@ -336,8 +336,6 @@ public readonly struct Real<T>
 
     public static Real<T> Cbrt(Real<T> x) => T.Cbrt(x._value);
 
-    public static Real<T> NthRoot(Real<T> x, int n) => T.RootN(x._value, n);
-
     public static Real<T> Root(Real<T> x, Real<T> y) => T.Exp(y._value * T.Log(x._value));
 
     public static Real<T> Sqrt(Real<T> x) => T.Sqrt(x._value);
