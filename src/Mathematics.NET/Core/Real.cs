@@ -122,8 +122,6 @@ public readonly struct Real<T>
     static Real<T> IComplex<Real<T>, T>.NaN => NaN;
     static Real<T> IMinMaxValue<Real<T>>.MaxValue => MaxValue;
     static Real<T> IMinMaxValue<Real<T>>.MinValue => MinValue;
-    static Real<T> IReal<Real<T>, T>.NegativeInfinity => NegativeInfinity;
-    static Real<T> IReal<Real<T>, T>.PositiveInfinity => PositiveInfinity;
 
     // IConstants interface
 
