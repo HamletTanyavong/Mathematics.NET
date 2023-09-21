@@ -601,4 +601,8 @@ public readonly struct Complex<T>
     //
 
     public static implicit operator Complex<T>(T x) => new(x);
+
+    /// <summary>Convert a value of type <see cref="Real{T}"/> to one of type <see cref="Complex{T}"/></summary>
+    /// <param name="x">The value to convert</param>
+    public static implicit operator Complex<T>(Real<T> x) => new(x);
 }
