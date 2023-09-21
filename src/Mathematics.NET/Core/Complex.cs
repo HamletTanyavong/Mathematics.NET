@@ -43,6 +43,7 @@ public readonly struct Complex<T>
     where T : IFloatingPointIeee754<T>, IMinMaxValue<T>
 {
     private static readonly Complex<T> s_im = new(Real<T>.Zero, Real<T>.One);
+    private static readonly Complex<T> s_imOverTwo = s_im / Two;
 
     // For computing Asin and Acos
     private static readonly Real<T> s_asinOverflowThreshold = Real<T>.Sqrt(Real<T>.MaxValue) / Real<T>.Two;
@@ -568,7 +569,7 @@ public readonly struct Complex<T>
         }
     }
 
-    public static Complex<T> Atan(Complex<T> z) => s_im / Two * Ln((s_im + z) / (s_im - z));
+    public static Complex<T> Atan(Complex<T> z) => s_imOverTwo * Ln((s_im + z) / (s_im - z));
 
     public static Complex<T> Cos(Complex<T> z)
     {
