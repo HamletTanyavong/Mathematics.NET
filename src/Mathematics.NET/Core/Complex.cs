@@ -406,9 +406,9 @@ public readonly struct Complex<T>
         return new(expReal * Real<T>.Cos(z._imaginary), expReal * Real<T>.Sin(z._imaginary));
     }
 
-    public static Complex<T> Exp2(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Exp2(Complex<T> z) => Exp(Real<T>.Ln2 * z);
 
-    public static Complex<T> Exp10(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Exp10(Complex<T> z) => Exp(Real<T>.Ln10 * z);
 
     // Hyperbolic functions
 
@@ -430,23 +430,23 @@ public readonly struct Complex<T>
 
     public static Complex<T> Ln(Complex<T> z) => new(Real<T>.Ln(Abs(z)), Real<T>.Atan2(z._imaginary, z._real));
 
-    public static Complex<T> Log(Complex<T> z, Complex<T> b) => throw new NotImplementedException();
+    public static Complex<T> Log(Complex<T> z, Complex<T> b) => Ln(z) / Ln(b);
 
-    public static Complex<T> Log2(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Log2(Complex<T> z) => Ln(z) / Ln(Real<T>.Ln2);
 
-    public static Complex<T> Log10(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Log10(Complex<T> z) => Ln(z) / Ln(Real<T>.Ln10);
 
     // Power functions
 
-    public static Complex<T> Pow(Complex<T> z, Complex<T> w) => throw new NotImplementedException();
+    public static Complex<T> Pow(Complex<T> z, Complex<T> w) => Exp(w * Ln(z));
 
     // Root functions
 
-    public static Complex<T> Cbrt(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Cbrt(Complex<T> z) => Exp(Ln(z) / s_three);
 
     public static Complex<T> NthRoot(Complex<T> z, int n) => throw new NotImplementedException();
 
-    public static Complex<T> Root(Complex<T> z, Complex<T> w) => throw new NotImplementedException();
+    public static Complex<T> Root(Complex<T> z, Complex<T> w) => Exp(Ln(z) / w);
 
     public static Complex<T> Sqrt(Complex<T> z) => throw new NotImplementedException();
 
