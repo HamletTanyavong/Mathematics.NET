@@ -86,8 +86,6 @@ public interface IDifferentiableFunctions<T, U> : IComplex<T, U>
 
     static abstract T Cbrt(T x);
 
-    static abstract T NthRoot(T x, int n);
-
     static abstract T Root(T x, T r);
 
     static abstract T Sqrt(T x);
