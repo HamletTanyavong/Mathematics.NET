@@ -322,7 +322,7 @@ public readonly struct Complex<T>
     // Methods
     //
 
-    public static Real<T> Abs(Complex<T> z) => Hypot(z._real.Value, z._imaginary.Value);
+    public static Complex<T> Abs(Complex<T> z) => Hypot(z._real.Value, z._imaginary.Value);
 
     private static T Hypot(T x, T y)
     {
@@ -429,7 +429,7 @@ public readonly struct Complex<T>
 
     // Logarithmic functions
 
-    public static Complex<T> Ln(Complex<T> z) => new(Real<T>.Ln(Abs(z)), Real<T>.Atan2(z._imaginary, z._real));
+    public static Complex<T> Ln(Complex<T> z) => new(Real<T>.Ln(Hypot(z._real.Value, z._imaginary.Value)), Real<T>.Atan2(z._imaginary, z._real));
 
     public static Complex<T> Log(Complex<T> z, Complex<T> b) => Ln(z) / Ln(b);
 
