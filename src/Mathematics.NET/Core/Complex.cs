@@ -417,11 +417,13 @@ public readonly struct Complex<T>
 
     public static Complex<T> Atanh(Complex<T> z) => s_oneOverTwo * Ln((One + z) / (One - z));
 
-    public static Complex<T> Cosh(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Cosh(Complex<T> z)
+        => new(Real<T>.Cosh(z._real) * Real<T>.Cos(z._imaginary), Real<T>.Sinh(z._real) * Real<T>.Sin(z._imaginary));
 
-    public static Complex<T> Sinh(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Sinh(Complex<T> z)
+        => new(Real<T>.Sinh(z._real) * Real<T>.Cos(z._imaginary), Real<T>.Cosh(z._real) * Real<T>.Sin(z._imaginary));
 
-    public static Complex<T> Tanh(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Tanh(Complex<T> z) => Sinh(z) / Cosh(z);
 
     // Logarithmic functions
 
