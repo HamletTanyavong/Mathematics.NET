@@ -45,6 +45,7 @@ public readonly struct Real<T>
     public static readonly Real<T> One = T.One;
     public static readonly Real<T> Two = T.One + T.One;
     public static readonly Real<T> Three = T.One + Two;
+    public static readonly Real<T> Four = T.CreateTruncating(4.0);
 
     public static readonly Real<T> MaxValue = T.MaxValue;
     public static readonly Real<T> MinValue = T.MinValue;

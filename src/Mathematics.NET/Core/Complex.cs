@@ -47,6 +47,7 @@ public readonly struct Complex<T>
 
     private static readonly Complex<T> s_oneOverTwo = new(Real<T>.One / Real<T>.Two, Real<T>.Zero);
     private static readonly Complex<T> s_three = Real<T>.Three;
+    private static readonly Real<T> s_four = Real<T>.Four;
 
     // For computing Asin and Acos
     private static readonly Real<T> s_asinOverflowThreshold = Real<T>.Sqrt(Real<T>.MaxValue) / Real<T>.Two;
@@ -594,7 +595,25 @@ public readonly struct Complex<T>
         return new(Real<T>.Sin(z._real) * cosh, Real<T>.Cos(z._real) * sinh);
     }
 
-    public static Complex<T> Tan(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Tan(Complex<T> z)
+    {
+        Real<T> x2 = Real<T>.Two * z._real;
+        Real<T> y2 = Real<T>.Two * z._imaginary;
+        Real<T> p = Real<T>.Exp(y2);
+        Real<T> q = Real<T>.One / p;
+        Real<T> cosh = (p + q) / Real<T>.Two;
+        if (Real<T>.Abs(z._imaginary) <= s_four)
+        {
+            Real<T> sinh = (p - q) / Real<T>.Two;
+            Real<T> D = Real<T>.Cos(x2) + cosh;
+            return new(Real<T>.Sin(x2) / D, sinh / D);
+        }
+        else
+        {
+            Real<T> D = Real<T>.One + Real<T>.Cos(x2) / cosh;
+            return new(Real<T>.Sin(x2) / cosh / D, Real<T>.Tanh(y2) / D);
+        }
+    }
 
     //
     // Implicit Operators
