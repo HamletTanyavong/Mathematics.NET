@@ -45,18 +45,18 @@ public readonly struct Complex<T>
     private static readonly Complex<T> s_im = new(Real<T>.Zero, Real<T>.One);
     private static readonly Complex<T> s_imOverTwo = new(Real<T>.Zero, Real<T>.One / Real<T>.Two);
 
-    private static readonly Complex<T> s_oneOverTwo = new(Real<T>.One / Real<T>.Two, Real<T>.Zero);
-    private static readonly Complex<T> s_three = Real<T>.Three;
-    private static readonly Real<T> s_four = Real<T>.Four;
+    private static readonly Complex<T> s_oneOverTwo = T.CreateTruncating(0.5);
+    private static readonly Complex<T> s_three = T.CreateTruncating(3.0);
+    private static readonly Real<T> s_four = T.CreateTruncating(4.0);
 
     // For computing Asin and Acos
     private static readonly Real<T> s_asinOverflowThreshold = Real<T>.Sqrt(Real<T>.MaxValue) / Real<T>.Two;
     private static readonly Real<T> s_threeOverFour = T.CreateTruncating(0.75);
     private static readonly Real<T> s_threeOverTwo = T.CreateTruncating(1.5);
 
-    public static readonly Complex<T> Zero = new(Real<T>.Zero, Real<T>.Zero);
-    public static readonly Complex<T> One = new(Real<T>.One, Real<T>.Zero);
-    public static readonly Complex<T> Two = new(Real<T>.Two, Real<T>.Zero);
+    public static readonly Complex<T> Zero = Real<T>.Zero;
+    public static readonly Complex<T> One = Real<T>.One;
+    public static readonly Complex<T> Two = Real<T>.Two;
 
     public static readonly Complex<T> NaN = new(Real<T>.NaN, Real<T>.NaN);
     public static readonly Complex<T> Infinity = new(Real<T>.PositiveInfinity, Real<T>.PositiveInfinity);
