@@ -45,6 +45,8 @@ public readonly struct Complex<T>
     private static readonly Complex<T> s_im = new(Real<T>.Zero, Real<T>.One);
     private static readonly Complex<T> s_imOverTwo = s_im / Two;
 
+    private static readonly Complex<T> s_oneOverTwo = One / Two;
+
     // For computing Asin and Acos
     private static readonly Real<T> s_asinOverflowThreshold = Real<T>.Sqrt(Real<T>.MaxValue) / Real<T>.Two;
     private static readonly Real<T> s_threeOverFour = T.CreateTruncating(0.75);
@@ -409,11 +411,11 @@ public readonly struct Complex<T>
 
     // Hyperbolic functions
 
-    public static Complex<T> Acosh(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Acosh(Complex<T> z) => Ln(z + Sqrt(z * z - One));
 
-    public static Complex<T> Asinh(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Asinh(Complex<T> z) => Ln(z + Sqrt(z * z + One));
 
-    public static Complex<T> Atanh(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Atanh(Complex<T> z) => s_oneOverTwo * Ln((One + z) / (One - z));
 
     public static Complex<T> Cosh(Complex<T> z) => throw new NotImplementedException();
 
