@@ -449,7 +449,7 @@ public readonly struct Complex<T>
 
     public static Complex<T> Root(Complex<T> z, Complex<T> w) => Exp(Ln(z) / w);
 
-    public static Complex<T> Sqrt(Complex<T> z) => throw new NotImplementedException();
+    public static Complex<T> Sqrt(Complex<T> z) => Exp(s_oneOverTwo * Ln(z));
 
     // Trigonometric functions
 
