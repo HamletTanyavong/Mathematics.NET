@@ -289,6 +289,48 @@ public readonly struct Real<T>
         return T.One / x;
     }
 
+    public static bool TryConvertFromChecked<V>(V value, out Real<T> result)
+        where V : INumberBase<V>
+    {
+        result = T.CreateChecked(value);
+        return true;
+    }
+
+    public static bool TryConvertFromSaturating<V>(V value, out Real<T> result)
+        where V : INumberBase<V>
+    {
+        result = T.CreateSaturating(value);
+        return true;
+    }
+
+    public static bool TryConvertFromTruncating<V>(V value, out Real<T> result)
+        where V : INumberBase<V>
+    {
+        result = T.CreateTruncating(value);
+        return true;
+    }
+
+    public static bool TryConvertToChecked<V>(Real<T> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
+    {
+        result = V.CreateChecked(value._value);
+        return true;
+    }
+
+    public static bool TryConvertToSaturating<V>(Real<T> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
+    {
+        result = V.CreateSaturating(value._value);
+        return true;
+    }
+
+    public static bool TryConvertToTruncating<V>(Real<T> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
+    {
+        result = V.CreateTruncating(value._value);
+        return true;
+    }
+
     //
     // IDifferentiableFunctions interface
     //
