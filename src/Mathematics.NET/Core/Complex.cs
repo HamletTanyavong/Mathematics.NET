@@ -395,6 +395,55 @@ public readonly struct Complex<T>
         return new(reResult, imResult);
     }
 
+    // We will only consider the real part of complex numbers for these conversions.
+
+    public static bool TryConvertFromChecked<V>(V value, out Complex<T> result)
+        where V : INumberBase<V>
+    {
+        result = T.CreateChecked(value);
+        return true;
+    }
+
+    public static bool TryConvertFromSaturating<V>(V value, out Complex<T> result)
+        where V : INumberBase<V>
+    {
+        result = T.CreateSaturating(value);
+        return true;
+    }
+
+    public static bool TryConvertFromTruncating<V>(V value, out Complex<T> result)
+        where V : INumberBase<V>
+    {
+        result = T.CreateTruncating(value);
+        return true;
+    }
+
+    public static bool TryConvertToChecked<V>(Complex<T> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
+    {
+        if (value._imaginary == Real<T>.Zero)
+        {
+            throw new OverflowException();
+        }
+
+        result = V.CreateChecked(value._real.Value);
+        return true;
+    }
+
+    public static bool TryConvertToSaturating<V>(Complex<T> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
+    {
+        result = V.CreateSaturating(value._real.Value);
+        return true;
+    }
+
+    public static bool TryConvertToTruncating<V>(Complex<T> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
+    {
+        result = V.CreateTruncating(value._real.Value);
+        return true;
+    }
+
     //
     // IDifferentiableFunctions interface
     //
