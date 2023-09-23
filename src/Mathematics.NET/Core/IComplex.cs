@@ -266,5 +266,5 @@ public interface IComplex<T, U>
 
     /// <summary>Convert a value of type <see cref="IFloatingPointIeee754{TSelf}"/> to one of type <typeparamref name="T"/></summary>
     /// <param name="x">The value to convert</param>
-    static abstract implicit operator T(U x);
+    static virtual implicit operator T(U x) => T.CreateTruncating(x);
 }
