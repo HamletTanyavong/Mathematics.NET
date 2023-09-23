@@ -28,6 +28,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.Core.Relations;
 
@@ -83,6 +84,75 @@ public interface IComplex<T, U>
     /// <returns>The complex conjugate</returns>
     static abstract T Conjugate(T z);
 
+    /// <summary>Convert a value to one of the current type, and throw and overflow exception if the value falls outside the representable range.</summary>
+    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <returns>The result of the conversion</returns>
+    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="V"/> are not supported.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static virtual T CreateChecked<V>(V value)
+        where V : INumberBase<V>
+    {
+        T? result;
+
+        if (typeof(V) == typeof(T))
+        {
+            result = (T)(object)value;
+        }
+        else if (!T.TryConvertFromChecked(value, out result))
+        {
+            throw new NotSupportedException();
+        }
+
+        return result;
+    }
+
+    /// <summary>Convert a value to one of the current type, and saturate values that fall outside the representable range.</summary>
+    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <returns>The result of the conversion</returns>
+    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="V"/> are not supported.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static virtual T CreateSaturating<V>(V value)
+        where V : INumberBase<V>
+    {
+        T? result;
+
+        if (typeof(V) == typeof(T))
+        {
+            result = (T)(object)value;
+        }
+        else if (!T.TryConvertFromSaturating(value, out result))
+        {
+            throw new NotSupportedException();
+        }
+
+        return result;
+    }
+
+    /// <summary>Convert a value to one of another type, and truncate values that fall outside of the representable range.</summary>
+    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <returns>The result of the conversion</returns>
+    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="V"/> are not supported.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static virtual T CreateTruncating<V>(V value)
+        where V : INumberBase<V>
+    {
+        T? result;
+
+        if (typeof(V) == typeof(T))
+        {
+            result = (T)(object)value;
+        }
+        else if (!T.TryConvertFromTruncating(value, out result))
+        {
+            throw new NotSupportedException();
+        }
+
+        return result;
+    }
+
     /// <summary>Check if a value is finite</summary>
     /// <param name="z">The value to check</param>
     /// <returns><c>true</c> if the value is finite; otherwise, <c>false</c></returns>
@@ -125,6 +195,56 @@ public interface IComplex<T, U>
     /// <param name="z">A complex number</param>
     /// <returns>The reciprocal</returns>
     static abstract T Reciprocate(T z);
+
+    /// <summary>Try to convert a value to one of the current type, and throw and overflow exception if the value falls outside the representable range.</summary>
+    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <param name="result">The result of the conversion</param>
+    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <exception cref="OverflowException">The value is not representable by the type <typeparamref name="T"/>.</exception>
+    protected static abstract bool TryConvertFromChecked<V>(V value, [MaybeNullWhen(false)] out T result)
+        where V : INumberBase<V>;
+
+    /// <summary>Try to convert a value to one of the current type, and saturate values that fall outside the representable range.</summary>
+    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <param name="result">The result of the conversion</param>
+    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    protected static abstract bool TryConvertFromSaturating<V>(V value, [MaybeNullWhen(false)] out T result)
+        where V : INumberBase<V>;
+
+    /// <summary>Try to convert a value to one of the current type, and truncate values that fall outside the representable range.</summary>
+    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <param name="result">The result of the conversion</param>
+    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    protected static abstract bool TryConvertFromTruncating<V>(V value, [MaybeNullWhen(false)] out T result)
+        where V : INumberBase<V>;
+
+    /// <summary>Try to convert a value to one of another type, and throw and overflow exception if the value falls outside the representable range.</summary>
+    /// <typeparam name="V">The target type</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <param name="result">The result of the conversion</param>
+    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <exception cref="OverflowException">The value is not representable by the type <typeparamref name="V"/>.</exception>
+    protected static abstract bool TryConvertToChecked<V>(T value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>;
+
+    /// <summary>Try to convert a value to one of another type, and saturate values that fall outside of the representable range.</summary>
+    /// <typeparam name="V">The target type</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <param name="result">The result of the conversion</param>
+    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    protected static abstract bool TryConvertToSaturating<V>(T value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>;
+
+    /// <summary>Try to convert a value to one of another type, and truncate values that fall outside of the representable range.</summary>
+    /// <typeparam name="V">The target type</typeparam>
+    /// <param name="value">The value to convert</param>
+    /// <param name="result">The result of the conversion</param>
+    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    protected static abstract bool TryConvertToTruncating<V>(T value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>;
 
     /// <summary>Try to parse a string into a value</summary>
     /// <param name="s">The string to parse</param>
