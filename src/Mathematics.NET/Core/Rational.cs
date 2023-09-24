@@ -264,7 +264,110 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         format = format.IsEmpty ? "MINIMAL" : format.ToString().ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
-        throw new NotImplementedException();
+        if (format is "MINIMAL")
+        {
+            int charsCurrentlyWritten = 0;
+
+            bool tryFormatSucceeded;
+            int tryFormatCharsWritten;
+
+            if (_numerator == T.Zero)
+            {
+                if (destination.Length < 1)
+                {
+                    charsWritten = charsCurrentlyWritten;
+                    return false;
+                }
+
+                charsWritten = 1;
+                destination[0] = '0';
+                return true;
+            }
+
+            if (_denominator == T.One)
+            {
+                if (destination.Length < 1)
+                {
+                    charsWritten = charsCurrentlyWritten;
+                    return false;
+                }
+
+                tryFormatSucceeded = _numerator.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
+                charsCurrentlyWritten += tryFormatCharsWritten;
+                if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+                {
+                    charsWritten = charsCurrentlyWritten;
+                    return false;
+                }
+
+                charsWritten = charsCurrentlyWritten;
+                return true;
+            }
+
+            return TryFormatAllInternal(_numerator, _denominator, destination, out charsWritten, provider);
+        }
+        else if (format is "ALL")
+        {
+            return TryFormatAllInternal(_numerator, _denominator, destination, out charsWritten, provider);
+        }
+        else
+        {
+            throw new FormatException($"The \"{format}\" format is not supported.");
+        }
+
+        static bool TryFormatAllInternal(T num, T den, Span<char> destination, out int charsWritten, IFormatProvider? provider)
+        {
+            var charsCurrentlyWritten = 0;
+
+            // There are a minimum of 7 characters for "(0 / 0)"
+            if (destination.Length < 7)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            destination[charsCurrentlyWritten++] = '(';
+
+            bool tryFormatSucceeded = num.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
+            charsCurrentlyWritten += tryFormatCharsWritten;
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            destination[charsCurrentlyWritten++] = ' ';
+            if (destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+            destination[charsCurrentlyWritten++] = '/';
+            if (destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+            destination[charsCurrentlyWritten++] = ' ';
+            if (destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            tryFormatSucceeded = den.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
+            charsCurrentlyWritten += tryFormatCharsWritten;
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            destination[charsCurrentlyWritten++] = ')';
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
+        }
     }
 
     //
