@@ -31,4 +31,15 @@ namespace Mathematics.NET.Tests.Core;
 [TestCategory("Core"), TestCategory("Rational Number")]
 public sealed class RationalTests
 {
+    [TestMethod]
+    [DataRow(3, 4, 7)]
+    public void TryFormat_RationalOfIntAndDoubleWithAdequateDestinationLength_ReturnsTrue(int inNum, int inDen, int length)
+    {
+        Rational<int, double> p = new(inNum, inDen);
+
+        Span<char> span = new char[length];
+        var actual = p.TryFormat(span, out int _, null, null);
+
+        Assert.IsTrue(actual);
+    }
 }
