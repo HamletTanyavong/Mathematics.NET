@@ -226,7 +226,7 @@ public interface IComplex<T, U>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
     /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
-    /// <exception cref="OverflowException">The value is not representable by the type <typeparamref name="V"/>.</exception>
+    /// <exception cref="OverflowException">The value is not representable by the target type.</exception>
     protected static abstract bool TryConvertToChecked<V>(T value, [MaybeNullWhen(false)] out V result)
         where V : INumberBase<V>;
 
