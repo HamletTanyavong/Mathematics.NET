@@ -83,7 +83,7 @@ public readonly struct Complex<T>
     public Real<T> Re => _real;
     public Real<T> Im => _imaginary;
 
-    public Real<T> Magnitude => T.Hypot(_real.Value, _imaginary.Value);
+    public Real<T> Magnitude => Hypot(_real.Value, _imaginary.Value);
     public Real<T> Phase => T.Atan2(_imaginary.Value, _real.Value);
 
     //
