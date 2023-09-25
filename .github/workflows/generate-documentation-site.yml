@@ -3,6 +3,9 @@
 name: Generate Ducumentation for Mathematics.NET
 
 on:
+  push:
+    branches:
+    - main
   workflow_dispatch:
 
 permissions:
