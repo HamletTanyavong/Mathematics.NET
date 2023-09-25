@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{91DB0FE7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.SourceGenerators", "src\Mathematics.NET.SourceGenerators\Mathematics.NET.SourceGenerators.csproj", "{557642D0-685A-4846-AD31-DC764692E853}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Application\Application.csproj", "{173526DA-4560-4D64-81EF-5D757A44FBFA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Tests", "tests\Mathematics.NET.Tests\Mathematics.NET.Tests.csproj", "{A608C0E2-D431-45E9-AD05-A49115BE59AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks", "tests\Mathematics.NET.Benchmarks\Mathematics.NET.Benchmarks.csproj", "{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}"
@@ -31,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\generate-gh-pages.yml = .github\workflows\generate-gh-pages.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.DevApp", "src\Mathematics.NET.DevApp\Mathematics.NET.DevApp.csproj", "{89C3482F-0027-483E-AAD7-5E12453915B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +46,6 @@ Global
 		{557642D0-685A-4846-AD31-DC764692E853}.Debug|x64.Build.0 = Debug|x64
 		{557642D0-685A-4846-AD31-DC764692E853}.Release|x64.ActiveCfg = Release|x64
 		{557642D0-685A-4846-AD31-DC764692E853}.Release|x64.Build.0 = Release|x64
-		{173526DA-4560-4D64-81EF-5D757A44FBFA}.Debug|x64.ActiveCfg = Debug|x64
-		{173526DA-4560-4D64-81EF-5D757A44FBFA}.Debug|x64.Build.0 = Debug|x64
-		{173526DA-4560-4D64-81EF-5D757A44FBFA}.Release|x64.ActiveCfg = Release|x64
-		{173526DA-4560-4D64-81EF-5D757A44FBFA}.Release|x64.Build.0 = Release|x64
 		{A608C0E2-D431-45E9-AD05-A49115BE59AB}.Debug|x64.ActiveCfg = Debug|x64
 		{A608C0E2-D431-45E9-AD05-A49115BE59AB}.Debug|x64.Build.0 = Debug|x64
 		{A608C0E2-D431-45E9-AD05-A49115BE59AB}.Release|x64.ActiveCfg = Release|x64
@@ -58,6 +54,10 @@ Global
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}.Debug|x64.Build.0 = Debug|x64
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}.Release|x64.ActiveCfg = Release|x64
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}.Release|x64.Build.0 = Release|x64
+		{89C3482F-0027-483E-AAD7-5E12453915B3}.Debug|x64.ActiveCfg = Debug|x64
+		{89C3482F-0027-483E-AAD7-5E12453915B3}.Debug|x64.Build.0 = Debug|x64
+		{89C3482F-0027-483E-AAD7-5E12453915B3}.Release|x64.ActiveCfg = Release|x64
+		{89C3482F-0027-483E-AAD7-5E12453915B3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,10 +65,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{558EB964-1CE7-4786-9656-6EEC36A7072E} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 		{557642D0-685A-4846-AD31-DC764692E853} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
-		{173526DA-4560-4D64-81EF-5D757A44FBFA} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 		{A608C0E2-D431-45E9-AD05-A49115BE59AB} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{1B32D7FF-257B-49BB-B495-D64E5E6C4C82} = {9EB26D49-7E18-4404-BDCB-D26B827C4A22}
+		{89C3482F-0027-483E-AAD7-5E12453915B3} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D9282-B1D9-42EC-A6A0-C1970012ED73}

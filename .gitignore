@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # Manually-added items
-/src/Application/
+/src/Mathematics.NET.DevApp/*.cs
 *.runsettings
 
  # Temporary
