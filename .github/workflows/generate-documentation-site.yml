@@ -1,6 +1,6 @@
 # Generate documentation for Mathematics.NET
 
-name: Generate Ducumentation for Mathematics.NET
+name: generate-pages
 
 on:
   push:
