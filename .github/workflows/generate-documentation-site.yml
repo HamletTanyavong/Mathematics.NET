@@ -1,9 +1,18 @@
-# Generate the documentation site for Mathematics.NET
+# Generate documentation for Mathematics.NET
 
-name: Generate Ducumentation Site for Mathematics.NET
+name: Generate Ducumentation for Mathematics.NET
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   publish-docs:
