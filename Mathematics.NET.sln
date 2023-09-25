@@ -25,6 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Tests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks", "tests\Mathematics.NET.Benchmarks\Mathematics.NET.Benchmarks.csproj", "{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9EB26D49-7E18-4404-BDCB-D26B827C4A22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B32D7FF-257B-49BB-B495-D64E5E6C4C82}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\generate-gh-pages.yml = .github\workflows\generate-gh-pages.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +68,7 @@ Global
 		{173526DA-4560-4D64-81EF-5D757A44FBFA} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 		{A608C0E2-D431-45E9-AD05-A49115BE59AB} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
+		{1B32D7FF-257B-49BB-B495-D64E5E6C4C82} = {9EB26D49-7E18-4404-BDCB-D26B827C4A22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D9282-B1D9-42EC-A6A0-C1970012ED73}
