@@ -324,6 +324,11 @@ public readonly struct Complex<T>
 
     public static Complex<T> Abs(Complex<T> z) => Hypot(z._real.Value, z._imaginary.Value);
 
+    public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
+
+    public static Complex<T> FromPolarForm(Real<T> magnitude, Real<T> phase)
+        => new(magnitude * T.Cos(phase.Value), magnitude * T.Sin(phase.Value));
+
     private static T Hypot(T x, T y)
     {
         // Factor out the larger value to avoid possible overflow
@@ -356,11 +361,6 @@ public readonly struct Complex<T>
             return large * T.Sqrt(T.One + ratio * ratio);
         }
     }
-
-    public static Complex<T> Conjugate(Complex<T> z) => new(z._real, -z._imaginary);
-
-    public static Complex<T> FromPolarForm(Real<T> magnitude, Real<T> phase)
-        => new(magnitude * T.Cos(phase.Value), magnitude * T.Sin(phase.Value));
 
     public static bool IsFinite(Complex<T> z) => Real<T>.IsFinite(z._real) && Real<T>.IsFinite(z._imaginary);
 
