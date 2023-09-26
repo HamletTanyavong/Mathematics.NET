@@ -32,6 +32,19 @@ namespace Mathematics.NET.Tests.Core;
 public sealed class RationalTests
 {
     [TestMethod]
+    [DataRow(2, 4, 5, 3, 13, 6)]
+    public void Add_TwoRationalsOfIntAndDouble_ReturnsReducedSum(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
+    {
+        Rational<int, double> a = new(inANum, inADen);
+        Rational<int, double> b = new(inBNum, inBDen);
+        Rational<int, double> expected = new(expectedNum, expectedDen);
+
+        var actual = a + b;
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(6, 8, 3, 4)]
     public void Reduce_RationalOfIntAndDouble_ReturnsReducedFraction(int inNum, int inDen, int expectedNum, int expectedDen)
     {
