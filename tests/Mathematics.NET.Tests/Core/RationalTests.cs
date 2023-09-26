@@ -32,6 +32,18 @@ namespace Mathematics.NET.Tests.Core;
 public sealed class RationalTests
 {
     [TestMethod]
+    [DataRow(6, 8, 3, 4)]
+    public void Reduce_RationalOfIntAndDouble_ReturnsReducedFraction(int inNum, int inDen, int expectedNum, int expectedDen)
+    {
+        Rational<int, double> p = new(inNum, inDen);
+        Rational<int, double> expected = new(expectedNum, expectedDen);
+
+        var actual = p.Reduce();
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(3, 4, 7)]
     public void TryFormat_RationalOfIntAndDoubleWithAdequateDestinationLength_ReturnsTrue(int inNum, int inDen, int length)
     {
