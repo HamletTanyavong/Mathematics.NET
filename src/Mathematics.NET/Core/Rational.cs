@@ -34,12 +34,12 @@ using System.Runtime.InteropServices;
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a rational number</summary>
-/// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
+/// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
 /// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
-    where T : IBinaryInteger<T>, IMinMaxValue<T>
+    where T : IBinaryInteger<T>
     where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     private static U s_ten = U.Exp10(U.One);
@@ -48,12 +48,12 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     public static readonly Rational<T, U> One = T.One;
     public static readonly Rational<T, U> Two = T.One + T.One;
 
-    public static readonly Rational<T, U> MaxValue = T.MaxValue;
-    public static readonly Rational<T, U> MinValue = T.MinValue;
+    public static readonly Rational<T, U> MaxValue = T.CreateSaturating(U.MaxValue);
+    public static readonly Rational<T, U> MinValue = T.CreateSaturating(U.MinValue);
 
     public static readonly Rational<T, U> NaN = new(T.Zero, T.Zero);
-    public static readonly Rational<T, U> NegativeInfinity = new(T.MinValue, T.Zero);
-    public static readonly Rational<T, U> PositiveInfinity = new(T.MaxValue, T.Zero);
+    public static readonly Rational<T, U> NegativeInfinity = new(-T.One, T.Zero);
+    public static readonly Rational<T, U> PositiveInfinity = new(T.One, T.Zero);
 
     private readonly T _numerator;
     private readonly T _denominator;
@@ -467,9 +467,9 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
 
     public static bool IsZero(Rational<T, U> x) => T.IsZero(x._numerator);
 
-    public static bool IsNegativeInfinity(Rational<T, U> x) => x._numerator == T.MinValue && T.IsZero(x._denominator);
+    public static bool IsNegativeInfinity(Rational<T, U> x) => x._numerator == -T.One && T.IsZero(x._denominator);
 
-    public static bool IsPositiveInfinity(Rational<T, U> x) => x._numerator == T.MaxValue && T.IsZero(x._denominator);
+    public static bool IsPositiveInfinity(Rational<T, U> x) => x._numerator == T.One && T.IsZero(x._denominator);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T LCM(T p, T q)
