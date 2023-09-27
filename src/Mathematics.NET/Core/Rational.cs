@@ -125,6 +125,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         var lcm = LCM(x._denominator, y._denominator);
         return new(lcm / x._denominator * x._numerator + lcm / y._denominator * y._numerator, lcm);
     }
+
     public static Rational<T, U> operator -(Rational<T, U> x, Rational<T, U> y)
     {
         var lcm = LCM(x._denominator, y._denominator);
