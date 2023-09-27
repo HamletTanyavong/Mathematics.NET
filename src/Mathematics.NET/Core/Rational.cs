@@ -123,13 +123,17 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     public static Rational<T, U> operator +(Rational<T, U> x, Rational<T, U> y)
     {
         var lcm = LCM(x._denominator, y._denominator);
-        return new(lcm / x._denominator * x._numerator + lcm / y._denominator * y._numerator, lcm);
+        var num = lcm / x._denominator * x._numerator + lcm / y._denominator * y._numerator;
+        var gcd = GCD(num, lcm);
+        return new(num / gcd, lcm / gcd);
     }
 
     public static Rational<T, U> operator -(Rational<T, U> x, Rational<T, U> y)
     {
         var lcm = LCM(x._denominator, y._denominator);
-        return new(lcm / x._denominator * x._numerator - lcm / y._denominator * y._numerator, lcm);
+        var num = lcm / x._denominator * x._numerator - lcm / y._denominator * y._numerator;
+        var gcd = GCD(num, lcm);
+        return new(num / gcd, lcm / gcd);
     }
 
     public static Rational<T, U> operator *(Rational<T, U> x, Rational<T, U> y)
