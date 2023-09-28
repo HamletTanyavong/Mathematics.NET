@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\generate-documentation-site.yml = .github\workflows\generate-documentation-site.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.DevApp", "src\Mathematics.NET.DevApp\Mathematics.NET.DevApp.csproj", "{89C3482F-0027-483E-AAD7-5E12453915B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.DevApp", "src\Mathematics.NET.DevApp\Mathematics.NET.DevApp.csproj", "{89C3482F-0027-483E-AAD7-5E12453915B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
