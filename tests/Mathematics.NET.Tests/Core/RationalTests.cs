@@ -35,11 +35,11 @@ public sealed class RationalTests
     [DataRow(2, 4, 5, 3, 13, 6)]
     public void Add_TwoRationalsOfIntAndDouble_ReturnsReducedSum(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
     {
-        Rational<int, double> a = new(inANum, inADen);
-        Rational<int, double> b = new(inBNum, inBDen);
+        Rational<int, double> x = new(inANum, inADen);
+        Rational<int, double> y = new(inBNum, inBDen);
         Rational<int, double> expected = new(expectedNum, expectedDen);
 
-        var actual = a + b;
+        var actual = x + y;
 
         Assert.AreEqual(expected, actual);
     }
