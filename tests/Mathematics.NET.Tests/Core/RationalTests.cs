@@ -45,6 +45,14 @@ public sealed class RationalTests
     }
 
     [TestMethod]
+    public void Divide_RationalOfIntAndDoubleByZero_ReturnsNaN()
+    {
+        var actual = Rational<int, double>.One / Rational<int, double>.Zero;
+
+        Assert.AreEqual(Rational<int, double>.NaN, actual);
+    }
+
+    [TestMethod]
     [DataRow(2, 3, 4, 8, 1, 3)]
     public void Multiply_TwoRationalsOfIntAndDouble_ReturnsReducedProduct(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
     {
