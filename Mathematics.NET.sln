@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9EB2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B32D7FF-257B-49BB-B495-D64E5E6C4C82}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\generate-gh-pages.yml = .github\workflows\generate-gh-pages.yml
+		.github\workflows\generate-documentation-site.yml = .github\workflows\generate-documentation-site.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.DevApp", "src\Mathematics.NET.DevApp\Mathematics.NET.DevApp.csproj", "{89C3482F-0027-483E-AAD7-5E12453915B3}"
