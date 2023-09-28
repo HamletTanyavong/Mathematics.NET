@@ -45,6 +45,19 @@ public sealed class RationalTests
     }
 
     [TestMethod]
+    [DataRow(2, 3, 4, 8, 1, 3)]
+    public void Multiply_TwoRationalsOfIntAndDouble_ReturnsReducedProduct(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
+    {
+        Rational<int, double> x = new(inANum, inADen);
+        Rational<int, double> y = new(inBNum, inBDen);
+        Rational<int, double> expected = new(expectedNum, expectedDen);
+
+        var actual = x * y;
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(6, 8, 3, 4)]
     public void Reduce_RationalOfIntAndDouble_ReturnsReducedFraction(int inNum, int inDen, int expectedNum, int expectedDen)
     {
