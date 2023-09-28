@@ -3,4 +3,4 @@
 - name: Get Started
   items:
   - name: Installation
-    href: getstarted/installation.md
+    href: get_started/installation.md
