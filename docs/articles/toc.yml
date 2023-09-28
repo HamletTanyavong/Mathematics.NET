@@ -4,3 +4,7 @@
   items:
   - name: Installation
     href: get_started/installation.md
+- name: Fundamentals
+  items:
+  - name: Numeric Types
+    href: fundamentals/numeric-types.md
