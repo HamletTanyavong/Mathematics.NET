@@ -274,7 +274,6 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
             int charsCurrentlyWritten = 0;
 
             bool tryFormatSucceeded;
-            int tryFormatCharsWritten;
 
             if (_numerator == T.Zero)
             {
@@ -297,7 +296,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
                     return false;
                 }
 
-                tryFormatSucceeded = _numerator.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
+                tryFormatSucceeded = _numerator.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
                 charsCurrentlyWritten += tryFormatCharsWritten;
                 if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
                 {
