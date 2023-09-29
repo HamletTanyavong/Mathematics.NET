@@ -4,7 +4,7 @@ Mathematics.NET is available to download from [nuget](https://www.nuget.org/pack
 
 # [Package Reference](#tab/package-reference)
 
-To use Mathematics.NET in you project, add the following line to your .csproj file:
+To use Mathematics.NET in your project, add the following line to your .csproj file:
 ```xml
 <PackageReference Include="Physics.NET.Mathematics" Version="" />
 ```
