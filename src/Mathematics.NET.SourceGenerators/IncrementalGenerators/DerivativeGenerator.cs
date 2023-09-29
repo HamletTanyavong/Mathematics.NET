@@ -37,7 +37,7 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var provider = context.SyntaxProvider
-            .CreateSyntaxProvider(CouldBeEquationAttribute, GetFunctionOrNull)
+            .CreateSyntaxProvider(CouldBeEquationAttribute, GetEquationOrNull)
             .Where(syntax => syntax is not null);
         var compilation = context.CompilationProvider.Combine(provider.Collect());
         context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Left, source.Right!));
@@ -46,7 +46,7 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
     private static bool CouldBeEquationAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
         => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "Equation" or "EquationAttribute";
 
-    private static MethodInformation? GetFunctionOrNull(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+    private static MethodInformation? GetEquationOrNull(GeneratorSyntaxContext context, CancellationToken cancellationToken)
     {
         // The method syntax will not be null if attribute syntax is not null since the attribute can only be applied to methods.
         var attribute = (AttributeSyntax)context.Node;
