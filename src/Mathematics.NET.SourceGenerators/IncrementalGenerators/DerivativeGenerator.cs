@@ -44,7 +44,7 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
     private static bool CouldBeEquationAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
         => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "Equation" or "EquationAttribute";
 
-    public static MethodInformation? GetFunctionOrNull(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+    private static MethodInformation? GetFunctionOrNull(GeneratorSyntaxContext context, CancellationToken cancellationToken)
     {
         // The method syntax will not be null if attribute syntax is not null since the attribute can only be applied to methods.
         var attribute = (AttributeSyntax)context.Node;
