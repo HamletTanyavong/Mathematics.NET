@@ -32,4 +32,7 @@ namespace Mathematics.NET.SourceGenerators.IncrementalGenerators;
 public sealed class DerivativeGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context) => throw new NotImplementedException();
+
+    private static bool CouldBeFunctionAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
+        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "Function" or "FunctionAttribute";
 }
