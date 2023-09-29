@@ -5,7 +5,34 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
+    <Title>Mathematics.NET</Title>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>Hamlet Tanyavong</Authors>
+    <Description>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</Description>
+    <PackageTags>mathematics; math; maths</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageProjectUrl>https://mathematics.hamlettanyavong.com</PackageProjectUrl>
+    <Copyright>Copyright (c) 2023 Hamlet Tanyavong</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/HamletTanyavong/Mathematics.NET</RepositoryUrl>
+    <PackageReleaseNotes>This project is in alpha and is not yet ready for release.</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
+    <PackageId>Physics.NET.Mathematics</PackageId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Mathematics.NET.SourceGenerators\Mathematics.NET.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
