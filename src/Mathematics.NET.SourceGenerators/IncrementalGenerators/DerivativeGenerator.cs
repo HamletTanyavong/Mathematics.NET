@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Collections.Immutable;
 using Mathematics.NET.SourceGenerators.Models;
 
 namespace Mathematics.NET.SourceGenerators.IncrementalGenerators;
@@ -39,6 +40,7 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
             .CreateSyntaxProvider(CouldBeEquationAttribute, GetFunctionOrNull)
             .Where(syntax => syntax is not null);
         var compilation = context.CompilationProvider.Combine(provider.Collect());
+        context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Left, source.Right!));
     }
 
     private static bool CouldBeEquationAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
@@ -49,5 +51,9 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
         // The method syntax will not be null if attribute syntax is not null since the attribute can only be applied to methods.
         var attribute = (AttributeSyntax)context.Node;
         return new(attribute, (MethodDeclarationSyntax)attribute.Parent!.Parent!);
+    }
+
+    private void GenerateCode(SourceProductionContext context, Compilation compilation, ImmutableArray<MethodInformation> methodInformation)
+    {
     }
 }
