@@ -49,7 +49,7 @@ public class SystemComplexAbsVsComplexAbsBenchmarks
     }
 
     [Benchmark]
-    public Real<double> ComplexAbs()
+    public Complex<double> ComplexAbs()
     {
         return Complex<double>.Abs(W);
     }
