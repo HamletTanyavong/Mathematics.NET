@@ -36,12 +36,12 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var provider = context.SyntaxProvider
-            .CreateSyntaxProvider(CouldBeFunctionAttribute, GetFunctionOrNull)
+            .CreateSyntaxProvider(CouldBeEquationAttribute, GetFunctionOrNull)
             .Where(syntax => syntax is not null);
     }
 
-    private static bool CouldBeFunctionAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
-        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "Function" or "FunctionAttribute";
+    private static bool CouldBeEquationAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
+        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "Equation" or "EquationAttribute";
 
     public static MethodInformation? GetFunctionOrNull(GeneratorSyntaxContext context, CancellationToken cancellationToken)
     {
