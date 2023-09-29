@@ -33,11 +33,23 @@ public class ComplexDivisionBenchmarks
     public Complex<double> Z { get; set; }
     public Complex<double> W { get; set; }
 
+    public System.Numerics.Complex X { get; set; }
+    public System.Numerics.Complex Y { get; set; }
+
     [GlobalSetup]
     public void GlobalSetup()
     {
         Z = new(1.23, 2.34);
         W = new(4.56, 3.45);
+
+        X = new(1.23, 2.34);
+        Y = new(4.56, 3.45);
+    }
+
+    [Benchmark(Baseline = true)]
+    public System.Numerics.Complex SystemDivision()
+    {
+        return X / Y;
     }
 
     [Benchmark]
