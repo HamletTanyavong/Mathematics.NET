@@ -38,6 +38,7 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
         var provider = context.SyntaxProvider
             .CreateSyntaxProvider(CouldBeEquationAttribute, GetFunctionOrNull)
             .Where(syntax => syntax is not null);
+        var compilation = context.CompilationProvider.Combine(provider.Collect());
     }
 
     private static bool CouldBeEquationAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
