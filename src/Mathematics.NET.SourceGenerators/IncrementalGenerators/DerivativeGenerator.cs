@@ -25,14 +25,28 @@
 // SOFTWARE.
 // </copyright>
 
+using Mathematics.NET.SourceGenerators.Models;
+
 namespace Mathematics.NET.SourceGenerators.IncrementalGenerators;
 
 /// <summary>A generator for calculating derivatives</summary>
 [Generator]
 public sealed class DerivativeGenerator : IIncrementalGenerator
 {
-    public void Initialize(IncrementalGeneratorInitializationContext context) => throw new NotImplementedException();
+    public void Initialize(IncrementalGeneratorInitializationContext context)
+    {
+        var provider = context.SyntaxProvider
+            .CreateSyntaxProvider(CouldBeFunctionAttribute, GetFunctionOrNull)
+            .Where(syntax => syntax is not null);
+    }
 
     private static bool CouldBeFunctionAttribute(SyntaxNode syntaxNode, CancellationToken cancellationToken)
         => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "Function" or "FunctionAttribute";
+
+    public static MethodInformation? GetFunctionOrNull(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+    {
+        // The method syntax will not be null if attribute syntax is not null since the attribute can only be applied to methods.
+        var attribute = (AttributeSyntax)context.Node;
+        return new(attribute, (MethodDeclarationSyntax)attribute.Parent!.Parent!);
+    }
 }
