@@ -38,4 +38,21 @@ public static class Extensions
             _ => null
         };
     }
+
+    public static MethodDeclarationSyntax? RemoveEquationAttribute(this MethodDeclarationSyntax methodDeclarationSyntax)
+    {
+        var equationAttributeNode = methodDeclarationSyntax
+            .DescendantNodes()
+            .OfType<AttributeSyntax>()
+            .First(syntax => syntax.Name.GetValue() is "Equation" or "EquationAttribute");
+
+        if (equationAttributeNode.Parent!.ChildNodes().Count() > 1)
+        {
+            return methodDeclarationSyntax.RemoveNode(equationAttributeNode, SyntaxRemoveOptions.KeepNoTrivia);
+        }
+        else
+        {
+            return methodDeclarationSyntax.RemoveNode(equationAttributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia);
+        }
+    }
 }
