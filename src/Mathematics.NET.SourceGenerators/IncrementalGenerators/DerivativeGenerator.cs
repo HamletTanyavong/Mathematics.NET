@@ -38,7 +38,7 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
     {
         var provider = context.SyntaxProvider
             .CreateSyntaxProvider(CouldBeEquationAttribute, GetEquationOrNull)
-            .Where(syntax => syntax is not null);
+            .Where(info => info is not null);
         var compilation = context.CompilationProvider.Combine(provider.Collect());
         context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Left, source.Right!));
     }
