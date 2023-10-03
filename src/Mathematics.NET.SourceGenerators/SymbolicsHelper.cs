@@ -54,11 +54,11 @@ public static class SymbolicsHelper
 
     private static ExpressionSyntax DifCos(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
     {
-        var sinNameSyntax = memberAccessExpressionSyntax
+        var cosNameSyntax = memberAccessExpressionSyntax
             .DescendantNodes()
             .OfType<IdentifierNameSyntax>()
             .First(x => x.Identifier.ValueText == "Cos");
-        var newExpression = memberAccessExpressionSyntax.ReplaceNode(sinNameSyntax, IdentifierName("Sin"));
+        var newExpression = memberAccessExpressionSyntax.ReplaceNode(cosNameSyntax, IdentifierName("Sin"));
         return BinaryExpression(
             SyntaxKind.MultiplyExpression,
             PrefixUnaryExpression(
@@ -69,7 +69,6 @@ public static class SymbolicsHelper
             InvocationExpression(
                 newExpression,
                 argumentListSyntax));
-
     }
 
     private static ExpressionSyntax DifSin(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
