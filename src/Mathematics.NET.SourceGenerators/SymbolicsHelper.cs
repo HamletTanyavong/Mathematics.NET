@@ -43,6 +43,8 @@ public static class SymbolicsHelper
         };
     }
 
+    // Mathematical functions
+
     private static ExpressionSyntax DifCos(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
     {
         var sinNameSyntax = memberAccessExpressionSyntax
