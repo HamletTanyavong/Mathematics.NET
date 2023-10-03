@@ -33,6 +33,13 @@ namespace Mathematics.NET.SourceGenerators;
 public static class SymbolicsHelper
 {
     private static InvocationExpressionSyntax DifSin(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
+    public static IEnumerable<MemberAccessExpressionSyntax> ExtractDerivativeExpressionList(IEnumerable<SyntaxNode> syntaxNodes)
+    {
+        return syntaxNodes
+            .OfType<MemberAccessExpressionSyntax>()
+            .Where(x => x.Name.Identifier.ValueText == "Dif");
+    }
+
     public static ExpressionSyntax? TakeDerivative(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
     {
         return memberAccessExpressionSyntax.Name.Identifier.ValueText switch
