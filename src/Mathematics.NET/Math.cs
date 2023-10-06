@@ -88,4 +88,11 @@ public static class Math<T> where T : IFloatingPointIeee754<T>, IMinMaxValue<T>
 
     /// <inheritdoc cref="Constants.ZetaOf4"/>
     public static Real<T> ZetaOf4 => Real<T>.ZetaOf4;
+
+    //
+    // Methods
+    //
+
+    // TODO: Account for fractional derivatives
+    public static Real<T> Dif(Func<Real<T>, Real<T>> function, (Real<T> X, int N) args) => throw new NotImplementedException();
 }
