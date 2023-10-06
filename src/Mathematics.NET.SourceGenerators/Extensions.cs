@@ -39,7 +39,8 @@ public static class Extensions
         };
     }
 
-    public static MethodDeclarationSyntax? RemoveEquationAttribute(this MethodDeclarationSyntax methodDeclarationSyntax)
+    // TODO: Determine if every equation should/will have an attribute to remove.
+    public static MethodDeclarationSyntax RemoveEquationAttribute(this MethodDeclarationSyntax methodDeclarationSyntax)
     {
         var equationAttributeNode = methodDeclarationSyntax
             .DescendantNodes()
@@ -48,11 +49,11 @@ public static class Extensions
 
         if (equationAttributeNode.Parent!.ChildNodes().Count() > 1)
         {
-            return methodDeclarationSyntax.RemoveNode(equationAttributeNode, SyntaxRemoveOptions.KeepNoTrivia);
+            return methodDeclarationSyntax.RemoveNode(equationAttributeNode, SyntaxRemoveOptions.KeepNoTrivia)!;
         }
         else
         {
-            return methodDeclarationSyntax.RemoveNode(equationAttributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia);
+            return methodDeclarationSyntax.RemoveNode(equationAttributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia)!;
         }
     }
 }
