@@ -50,6 +50,15 @@ public static class SymbolicsHelper
         };
     }
 
+    private static ExpressionSyntax? GetDifferentiableExpression(ArgumentSyntax argumentSyntax)
+    {
+        return argumentSyntax.Expression switch
+        {
+            SimpleLambdaExpressionSyntax simpleLambdaExpressionSyntax => simpleLambdaExpressionSyntax.ExpressionBody,
+            _ => null
+        };
+    }
+
     // Mathematical functions
 
     private static ExpressionSyntax DifCos(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
