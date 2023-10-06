@@ -26,7 +26,9 @@
 // </copyright>
 
 using System.Collections.Immutable;
+using System.Text;
 using Mathematics.NET.SourceGenerators.Models;
+using Mathematics.NET.SourceGenerators.SourceBuilders;
 
 namespace Mathematics.NET.SourceGenerators.IncrementalGenerators;
 
@@ -55,5 +57,7 @@ public sealed class DerivativeGenerator : IIncrementalGenerator
 
     private void GenerateCode(SourceProductionContext context, Compilation compilation, ImmutableArray<MethodInformation> methodInformation)
     {
+        var derivatives = new DerivativesBuilder(compilation, methodInformation);
+        context.AddSource("Equations.g.cs", derivatives.GenerateSource().GetText(Encoding.UTF8).ToString());
     }
 }
