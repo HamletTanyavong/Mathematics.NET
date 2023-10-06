@@ -32,20 +32,49 @@ namespace Mathematics.NET.SourceGenerators;
 
 public static class SymbolicsHelper
 {
-    private static InvocationExpressionSyntax DifSin(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
-    public static IEnumerable<MemberAccessExpressionSyntax> ExtractDerivativeExpressionList(IEnumerable<SyntaxNode> syntaxNodes)
+    // TODO: Reduce mathematical expressions after taking derivatives
+    public static MethodDeclarationSyntax TransformEquation(MethodDeclarationSyntax methodDeclarationSyntax)
     {
-        return syntaxNodes
-            .OfType<MemberAccessExpressionSyntax>()
-            .Where(x => x.Name.Identifier.ValueText == "Dif");
+        MethodDeclarationSyntax transformation = methodDeclarationSyntax;
+        while (CanTakeInnerDerivatives(transformation, out var derivativeExpressions))
+        {
+            foreach (var derivativeExpression in derivativeExpressions)
+            {
+                var flattenedDerivativeExpression = ComputeDerivative(derivativeExpression);
+                transformation = transformation.ReplaceNode(derivativeExpression.Parent!, flattenedDerivativeExpression ?? derivativeExpression);
+            }
+        }
+        return transformation;
     }
 
-    public static ExpressionSyntax? TakeDerivative(MemberAccessExpressionSyntax memberAccessExpressionSyntax, ArgumentListSyntax argumentListSyntax)
+    // We want to resolve the innermost derivative first, so we choose the derivative
+    // expression with no other derivative expressions present in its descendant nodes.
+    private static bool CanTakeInnerDerivatives(MethodDeclarationSyntax syntaxNode, out IEnumerable<MemberAccessExpressionSyntax> derivatives)
     {
-        return memberAccessExpressionSyntax.Name.Identifier.ValueText switch
+        var descendantNodes = syntaxNode.DescendantNodes();
+        derivatives = descendantNodes
+            .OfType<MemberAccessExpressionSyntax>()
+            .Where(x => x.Name.Identifier.ValueText == "Dif" && !x
+                .DescendantNodes()
+                .OfType<MemberAccessExpressionSyntax>()
+                .Any(x => x.Name.Identifier.ValueText == "Dif"));
+        return derivatives.Count() > 0;
+    }
+
+    // TODO: Account for higher order derivatives
+    // TODO: Take into account differentiating with respect to multiple variables
+    private static ExpressionSyntax? ComputeDerivative(MemberAccessExpressionSyntax memberAccessExpressionSyntax)
+    {
+        // memberAccessExpressionSyntax is the Dif expression extracted
+        var invocationExpression = (InvocationExpressionSyntax)memberAccessExpressionSyntax.Parent!;
+
+        var derivativeExpression = (InvocationExpressionSyntax)GetDifferentiableExpression(invocationExpression.ArgumentList.Arguments[0])!;
+        var method = (MemberAccessExpressionSyntax)derivativeExpression.Expression;
+        var args = derivativeExpression.ArgumentList;
+        return method.Name.Identifier.ValueText switch
         {
-            "Cos" => DifCos(memberAccessExpressionSyntax, argumentListSyntax),
-            "Sin" => DifSin(memberAccessExpressionSyntax, argumentListSyntax),
+            "Cos" => DifCos(method, args),
+            "Sin" => DifSin(method, args),
             _ => null
         };
     }
