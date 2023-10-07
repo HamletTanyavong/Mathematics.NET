@@ -29,10 +29,11 @@ using System.Numerics;
 
 namespace Mathematics.NET.Core;
 
+/// <summary>Extension methods for Mathematics.NET</summary>
 public static class Extensions
 {
-    public static Rational<T, U> Reduce<T, U>(this Rational<T, U> r)
+    /// <inheritdoc cref="IRational{T, U}.Reduce(T)" />
+    public static Rational<T> Reduce<T>(this Rational<T> r)
         where T : IBinaryInteger<T>
-        where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Rational<T, U>.Reduce(r);
+        => Rational<T>.Reduce(r);
 }

@@ -35,25 +35,20 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Represents a rational number</summary>
 /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
+public readonly struct Rational<T> : IRational<Rational<T>, T>
     where T : IBinaryInteger<T>
-    where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
 {
-    private static U s_ten = U.Exp10(U.One);
+    public static readonly Rational<T> Zero = T.Zero;
+    public static readonly Rational<T> One = T.One;
 
-    public static readonly Rational<T, U> Zero = T.Zero;
-    public static readonly Rational<T, U> One = T.One;
-    public static readonly Rational<T, U> Two = T.One + T.One;
+    public static readonly Rational<T> MaxValue = T.CreateSaturating(double.MaxValue);
+    public static readonly Rational<T> MinValue = T.CreateSaturating(double.MinValue);
 
-    public static readonly Rational<T, U> MaxValue = T.CreateSaturating(U.MaxValue);
-    public static readonly Rational<T, U> MinValue = T.CreateSaturating(U.MinValue);
-
-    public static readonly Rational<T, U> NaN = new(T.Zero, T.Zero);
-    public static readonly Rational<T, U> NegativeInfinity = new(-T.One, T.Zero);
-    public static readonly Rational<T, U> PositiveInfinity = new(T.One, T.Zero);
+    public static readonly Rational<T> NaN = new(T.Zero, T.Zero);
+    public static readonly Rational<T> NegativeInfinity = new(-T.One, T.Zero);
+    public static readonly Rational<T> PositiveInfinity = new(T.One, T.Zero);
 
     private readonly T _numerator;
     private readonly T _denominator;
@@ -96,31 +91,30 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     public T Num => _numerator;
     public T Den => _denominator;
 
-    public Real<U> Re => (U)this;
-    public U Value => (U)this;
+    public Real Re => (Real)this;
+    public double Value => (double)this;
 
     //
     // Constants
     //
 
-    static Rational<T, U> IComplex<Rational<T, U>, U>.Zero => Zero;
-    static Rational<T, U> IComplex<Rational<T, U>, U>.One => One;
-    static Rational<T, U> IComplex<Rational<T, U>, U>.Two => Zero;
-    static Rational<T, U> IComplex<Rational<T, U>, U>.NaN => NaN;
-    static Rational<T, U> IMinMaxValue<Rational<T, U>>.MaxValue => MaxValue;
-    static Rational<T, U> IMinMaxValue<Rational<T, U>>.MinValue => MinValue;
+    static Rational<T> IComplex<Rational<T>>.Zero => Zero;
+    static Rational<T> IComplex<Rational<T>>.One => One;
+    static Rational<T> IComplex<Rational<T>>.NaN => NaN;
+    static Rational<T> IMinMaxValue<Rational<T>>.MaxValue => MaxValue;
+    static Rational<T> IMinMaxValue<Rational<T>>.MinValue => MinValue;
 
     //
     // Operators
     //
 
-    public static Rational<T, U> operator -(Rational<T, U> x) => x + One;
+    public static Rational<T> operator -(Rational<T> x) => x + One;
 
-    public static Rational<T, U> operator --(Rational<T, U> x) => new(x._numerator, x._denominator);
+    public static Rational<T> operator --(Rational<T> x) => new(x._numerator, x._denominator);
 
-    public static Rational<T, U> operator ++(Rational<T, U> x) => new(x._numerator, x._denominator);
+    public static Rational<T> operator ++(Rational<T> x) => new(x._numerator, x._denominator);
 
-    public static Rational<T, U> operator +(Rational<T, U> x, Rational<T, U> y)
+    public static Rational<T> operator +(Rational<T> x, Rational<T> y)
     {
         var lcm = LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator + lcm / y._denominator * y._numerator;
@@ -128,7 +122,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         return new(num / gcd, lcm / gcd);
     }
 
-    public static Rational<T, U> operator -(Rational<T, U> x, Rational<T, U> y)
+    public static Rational<T> operator -(Rational<T> x, Rational<T> y)
     {
         var lcm = LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator - lcm / y._denominator * y._numerator;
@@ -136,7 +130,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         return new(num / gcd, lcm / gcd);
     }
 
-    public static Rational<T, U> operator *(Rational<T, U> x, Rational<T, U> y)
+    public static Rational<T> operator *(Rational<T> x, Rational<T> y)
     {
         var num = x._numerator * y._numerator;
         var den = x._denominator * y._denominator;
@@ -144,7 +138,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         return new(num / gcd, den / gcd);
     }
 
-    public static Rational<T, U> operator /(Rational<T, U> x, Rational<T, U> y)
+    public static Rational<T> operator /(Rational<T> x, Rational<T> y)
     {
         if (y._denominator == T.Zero)
         {
@@ -161,19 +155,19 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     // Equality
     //
 
-    public static bool operator ==(Rational<T, U> left, Rational<T, U> right)
+    public static bool operator ==(Rational<T> left, Rational<T> right)
     {
         return left._numerator == right._numerator && left._denominator == right._denominator;
     }
 
-    public static bool operator !=(Rational<T, U> left, Rational<T, U> right)
+    public static bool operator !=(Rational<T> left, Rational<T> right)
     {
         return left._numerator != right._numerator || left._denominator != right._denominator;
     }
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Rational<T, U> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Rational<T> other && Equals(other);
 
-    public bool Equals(Rational<T, U> value)
+    public bool Equals(Rational<T> value)
     {
         return _numerator.Equals(value._numerator) && _denominator.Equals(value._denominator);
     }
@@ -184,22 +178,22 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     // Comparison
     //
 
-    public static bool operator <(Rational<T, U> x, Rational<T, U> y)
+    public static bool operator <(Rational<T> x, Rational<T> y)
     {
         return x._numerator * y._denominator < y._numerator * x._denominator;
     }
 
-    public static bool operator >(Rational<T, U> x, Rational<T, U> y)
+    public static bool operator >(Rational<T> x, Rational<T> y)
     {
         return x._numerator * y._denominator > y._numerator * x._denominator;
     }
 
-    public static bool operator <=(Rational<T, U> x, Rational<T, U> y)
+    public static bool operator <=(Rational<T> x, Rational<T> y)
     {
         return x._numerator * y._denominator <= y._numerator * x._denominator;
     }
 
-    public static bool operator >=(Rational<T, U> x, Rational<T, U> y)
+    public static bool operator >=(Rational<T> x, Rational<T> y)
     {
         return x._numerator * y._denominator >= y._numerator * x._denominator;
     }
@@ -211,7 +205,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
             return 1;
         }
 
-        if (obj is Rational<T, U> other)
+        if (obj is Rational<T> other)
         {
             return CompareTo(other);
         }
@@ -219,7 +213,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         throw new ArgumentException("Argument is not a rational number");
     }
 
-    public int CompareTo(Rational<T, U> value)
+    public int CompareTo(Rational<T> value)
     {
         if (this < value)
         {
@@ -378,35 +372,35 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     // Parsing
     //
 
-    public static Rational<T, U> Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+    public static Rational<T> Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-    public static Rational<T, U> Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+    public static Rational<T> Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-    public static Rational<T, U> Parse(string s, NumberStyles style, IFormatProvider? provider)
+    public static Rational<T> Parse(string s, NumberStyles style, IFormatProvider? provider)
     {
         ArgumentNullException.ThrowIfNull(s);
         return Parse((ReadOnlySpan<char>)s, style, provider);
     }
 
-    public static Rational<T, U> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
+    public static Rational<T> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
     {
-        if (!TryParse(s, style, provider, out Rational<T, U> result))
+        if (!TryParse(s, style, provider, out Rational<T> result))
         {
             return NaN;
         }
         return result;
     }
 
-    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Rational<T, U> result)
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Rational<T> result)
         => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Rational<T, U> result)
+    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Rational<T> result)
         => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Rational<T, U> result)
+    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Rational<T> result)
         => TryParse((ReadOnlySpan<char>)s, style, provider, out result);
 
-    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Rational<T, U> result)
+    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Rational<T> result)
     {
         s = s.Trim();
         int openParenthesis = s.IndexOf('(');
@@ -440,9 +434,9 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     // Methods
     //
 
-    public static Rational<T, U> Abs(Rational<T, U> x) => new(T.Abs(x._numerator), T.Abs(x._denominator));
+    public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), T.Abs(x._denominator));
 
-    public static Rational<T, U> Conjugate(Rational<T, U> x) => x;
+    public static Rational<T> Conjugate(Rational<T> x) => x;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T GCD(T p, T q)
@@ -463,17 +457,17 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         return p | q;
     }
 
-    public static bool IsFinite(Rational<T, U> x) => !T.IsZero(x._denominator);
+    public static bool IsFinite(Rational<T> x) => !T.IsZero(x._denominator);
 
-    public static bool IsInfinity(Rational<T, U> x) => T.IsZero(x._denominator);
+    public static bool IsInfinity(Rational<T> x) => T.IsZero(x._denominator);
 
-    public static bool IsNaN(Rational<T, U> x) => T.IsZero(x._numerator) && T.IsZero(x._denominator);
+    public static bool IsNaN(Rational<T> x) => T.IsZero(x._numerator) && T.IsZero(x._denominator);
 
-    public static bool IsZero(Rational<T, U> x) => T.IsZero(x._numerator);
+    public static bool IsZero(Rational<T> x) => T.IsZero(x._numerator);
 
-    public static bool IsNegativeInfinity(Rational<T, U> x) => x._numerator == -T.One && T.IsZero(x._denominator);
+    public static bool IsNegativeInfinity(Rational<T> x) => x._numerator == -T.One && T.IsZero(x._denominator);
 
-    public static bool IsPositiveInfinity(Rational<T, U> x) => x._numerator == T.One && T.IsZero(x._denominator);
+    public static bool IsPositiveInfinity(Rational<T> x) => x._numerator == T.One && T.IsZero(x._denominator);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T LCM(T p, T q)
@@ -496,7 +490,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         return holdP / (p | q) * holdQ;
     }
 
-    public static Rational<T, U> Reciprocate(Rational<T, U> x)
+    public static Rational<T> Reciprocate(Rational<T> x)
     {
         if (x._numerator == T.Zero)
         {
@@ -505,7 +499,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         return new(x._denominator, x._numerator);
     }
 
-    public static Rational<T, U> Reduce(Rational<T, U> x)
+    public static Rational<T> Reduce(Rational<T> x)
     {
         var gcd = GCD(x._numerator, x._denominator);
         if (gcd == T.One)
@@ -515,17 +509,12 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         return new(x._numerator / gcd, x._denominator / gcd);
     }
 
-    public static bool TryConvertFromChecked<V>(V value, out Rational<T, U> result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromChecked<U>(U value, out Rational<T> result)
+        where U : INumberBase<U>
     {
-        if (V.IsInteger(value))
+        if (Real.TryConvertFromChecked(value, out var intermediateResult))
         {
-            result = T.CreateChecked(value);
-            return true;
-        }
-        else if (value is IFloatingPointIeee754<U> floatingPointNumber)
-        {
-            result = (Rational<T, U>)(U)floatingPointNumber;
+            result = (Rational<T>)intermediateResult;
             return true;
         }
         else
@@ -535,17 +524,12 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         }
     }
 
-    public static bool TryConvertFromSaturating<V>(V value, out Rational<T, U> result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromSaturating<U>(U value, out Rational<T> result)
+        where U : INumberBase<U>
     {
-        if (V.IsInteger(value))
+        if (Real.TryConvertFromSaturating(value, out var intermediateResult))
         {
-            result = T.CreateSaturating(value);
-            return true;
-        }
-        else if (value is IFloatingPointIeee754<U> floatingPointNumber)
-        {
-            result = (Rational<T, U>)(U)floatingPointNumber;
+            result = (Rational<T>)intermediateResult;
             return true;
         }
         else
@@ -555,17 +539,12 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         }
     }
 
-    public static bool TryConvertFromTruncating<V>(V value, out Rational<T, U> result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromTruncating<U>(U value, out Rational<T> result)
+        where U : INumberBase<U>
     {
-        if (V.IsInteger(value))
+        if (Real.TryConvertFromTruncating(value, out var intermediateResult))
         {
-            result = T.CreateTruncating(value);
-            return true;
-        }
-        else if (value is IFloatingPointIeee754<U> floatingPointNumber)
-        {
-            result = (Rational<T, U>)(U)floatingPointNumber;
+            result = (Rational<T>)intermediateResult;
             return true;
         }
         else
@@ -575,24 +554,24 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
         }
     }
 
-    public static bool TryConvertToChecked<V>(Rational<T, U> value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToChecked<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateChecked(checked((U)value));
+        result = U.CreateChecked(checked(double.CreateChecked(value._numerator) / double.CreateChecked(value._denominator)));
         return true;
     }
 
-    public static bool TryConvertToSaturating<V>(Rational<T, U> value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToSaturating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateSaturating(U.CreateSaturating(value._numerator) / U.CreateSaturating(value._denominator));
+        result = U.CreateSaturating(double.CreateSaturating(value._numerator) / double.CreateSaturating(value._denominator));
         return true;
     }
 
-    public static bool TryConvertToTruncating<V>(Rational<T, U> value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToTruncating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateTruncating(U.CreateTruncating(value._numerator) / U.CreateTruncating(value._denominator));
+        result = U.CreateTruncating(double.CreateTruncating(value._numerator) / double.CreateTruncating(value._denominator));
         return true;
     }
 
@@ -600,35 +579,40 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     // Implicit operators
     //
 
-    public static implicit operator Rational<T, U>(T p) => new(p);
+    public static implicit operator Rational<T>(T p) => new(p);
 
     //
     // Explicit operators
     //
 
     // TODO: Find a better implementation
-    public static explicit operator Rational<T, U>(U x)
+    public static explicit operator Rational<T>(Real x)
     {
-        if (U.IsNaN(x) || U.IsInfinity(x))
+        var value = x.Value;
+        if (double.IsNaN(value) || double.IsInfinity(value))
         {
             return NaN;
         }
 
-        var n = U.Zero;
-        while (x != U.Floor(x))
+        var n = 0.0;
+        while (x != double.Floor(value))
         {
-            x *= s_ten;
+            x *= 10.0;
             n++;
         }
 
-        T num = T.CreateChecked(x);
-        T den = T.CreateChecked(U.Pow(s_ten, n));
+        T num = T.CreateChecked(value);
+        T den = T.CreateChecked(Math.Pow(10.0, n));
         var gcd = GCD(num, den);
 
         return new(num / gcd, den / gcd);
     }
 
-    public static explicit operator checked U(Rational<T, U> x) => checked(U.CreateChecked(x._numerator) / U.CreateChecked(x._denominator));
+    public static explicit operator checked Real(Rational<T> x) => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
 
-    public static explicit operator U(Rational<T, U> x) => U.CreateChecked(x._numerator) / U.CreateChecked(x._denominator);
+    public static explicit operator Real(Rational<T> x) => double.CreateSaturating(x._numerator) / double.CreateSaturating(x._denominator);
+
+    public static explicit operator checked double(Rational<T> x) => double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator);
+
+    public static explicit operator double(Rational<T> x) => double.CreateSaturating(x._numerator) / double.CreateSaturating(x._denominator);
 }

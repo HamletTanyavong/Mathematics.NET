@@ -25,16 +25,12 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Numerics;
-
 namespace Mathematics.NET.Core;
 
 /// <summary>Defines support for common mathematical constants</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
-public interface IConstants<T, U> : IComplex<T, U>
-    where T : IConstants<T, U>
-    where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
+public interface IConstants<T> : IComplex<T>
+    where T : IConstants<T>
 {
     /// <inheritdoc cref="Constants.E" />
     static abstract T E { get; }

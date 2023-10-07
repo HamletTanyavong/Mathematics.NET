@@ -32,11 +32,9 @@ namespace Mathematics.NET.Core;
 /// <summary>Defines support for rational numbers</summary>
 /// <typeparam name="T">A type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
-/// <typeparam name="V">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
-public interface IRational<T, U, V> : IReal<T, V>
-    where T : IRational<T, U, V>
+public interface IRational<T, U> : IReal<T>
+    where T : IRational<T, U>
     where U : IBinaryInteger<U>
-    where V : IFloatingPointIeee754<V>, IMinMaxValue<V>
 {
     /// <summary>Get the numerator of the rational number</summary>
     U Num { get; }

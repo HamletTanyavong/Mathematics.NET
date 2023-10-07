@@ -36,71 +36,69 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Real<T>
-    : IReal<Real<T>, T>,
-      IConstants<Real<T>, T>,
-      IDifferentiableFunctions<Real<T>, T>
-    where T : IFloatingPointIeee754<T>, IMinMaxValue<T>
+public readonly struct Real
+    : IReal<Real>,
+      IConstants<Real>,
+      IDifferentiableFunctions<Real>
 {
-    public static readonly Real<T> Zero = T.Zero;
-    public static readonly Real<T> One = T.One;
-    public static readonly Real<T> Two = T.One + T.One;
+    public static readonly Real Zero = 0.0;
+    public static readonly Real One = 1.0;
 
-    public static readonly Real<T> MaxValue = T.MaxValue;
-    public static readonly Real<T> MinValue = T.MinValue;
+    public static readonly Real MaxValue = double.MaxValue;
+    public static readonly Real MinValue = double.MinValue;
 
-    public static readonly Real<T> NaN = T.NaN;
-    public static readonly Real<T> NegativeInfinity = T.NegativeInfinity;
-    public static readonly Real<T> PositiveInfinity = T.PositiveInfinity;
+    public static readonly Real NaN = double.NaN;
+    public static readonly Real NegativeInfinity = double.NegativeInfinity;
+    public static readonly Real PositiveInfinity = double.PositiveInfinity;
 
     /// <inheritdoc cref="Constants.E" />
-    public static readonly Real<T> E = T.CreateTruncating(Constants.E);
+    public static readonly Real E = Constants.E;
 
     /// <inheritdoc cref="Constants.Pi" />
-    public static readonly Real<T> Pi = T.CreateTruncating(Constants.Pi);
+    public static readonly Real Pi = Constants.Pi;
 
     /// <inheritdoc cref="Constants.PiOverTwo" />
-    public static readonly Real<T> PiOverTwo = T.CreateTruncating(Constants.PiOverTwo);
+    public static readonly Real PiOverTwo = Constants.PiOverTwo;
 
     /// <inheritdoc cref="Constants.PiSquared" />
-    public static readonly Real<T> PiSquared = T.CreateTruncating(Constants.PiSquared);
+    public static readonly Real PiSquared = Constants.PiSquared;
 
     /// <inheritdoc cref="Constants.Tau" />
-    public static readonly Real<T> Tau = T.CreateTruncating(Constants.Tau);
+    public static readonly Real Tau = Constants.Tau;
 
     /// <inheritdoc cref="Constants.EulerMascheroni" />
-    public static readonly Real<T> EulerMascheroni = T.CreateTruncating(Constants.EulerMascheroni);
+    public static readonly Real EulerMascheroni = Constants.EulerMascheroni;
 
     /// <inheritdoc cref="Constants.GoldenRatio" />
-    public static readonly Real<T> GoldenRatio = T.CreateTruncating(Constants.GoldenRatio);
+    public static readonly Real GoldenRatio = Constants.GoldenRatio;
 
     /// <inheritdoc cref="Constants.Ln2" />
-    public static readonly Real<T> Ln2 = T.CreateTruncating(Constants.Ln2);
+    public static readonly Real Ln2 = Constants.Ln2;
 
     /// <inheritdoc cref="Constants.Ln10" />
-    public static readonly Real<T> Ln10 = T.CreateTruncating(Constants.Ln10);
+    public static readonly Real Ln10 = Constants.Ln10;
 
     /// <inheritdoc cref="Constants.Sqrt2" />
-    public static readonly Real<T> Sqrt2 = T.CreateTruncating(Constants.Sqrt2);
+    public static readonly Real Sqrt2 = Constants.Sqrt2;
 
     /// <inheritdoc cref="Constants.Sqrt3" />
-    public static readonly Real<T> Sqrt3 = T.CreateTruncating(Constants.Sqrt3);
+    public static readonly Real Sqrt3 = Constants.Sqrt3;
 
     /// <inheritdoc cref="Constants.Sqrt5" />
-    public static readonly Real<T> Sqrt5 = T.CreateTruncating(Constants.Sqrt5);
+    public static readonly Real Sqrt5 = Constants.Sqrt5;
 
     /// <inheritdoc cref="Constants.ZetaOf2" />
-    public static readonly Real<T> ZetaOf2 = T.CreateTruncating(Constants.ZetaOf2);
+    public static readonly Real ZetaOf2 = Constants.ZetaOf2;
 
     /// <inheritdoc cref="Constants.ZetaOf3" />
-    public static readonly Real<T> ZetaOf3 = T.CreateTruncating(Constants.ZetaOf3);
+    public static readonly Real ZetaOf3 = Constants.ZetaOf3;
 
     /// <inheritdoc cref="Constants.ZetaOf4" />
-    public static readonly Real<T> ZetaOf4 = T.CreateTruncating(Constants.ZetaOf4);
+    public static readonly Real ZetaOf4 = Constants.ZetaOf4;
 
-    private readonly T _value;
+    private readonly double _value;
 
-    public Real(T real)
+    public Real(double real)
     {
         _value = real;
     }
@@ -109,61 +107,60 @@ public readonly struct Real<T>
     // Real number properties
     //
 
-    public Real<T> Re => _value;
-    public T Value => _value;
+    public Real Re => _value;
+    public double Value => _value;
 
     //
     // Constants
     //
 
-    static Real<T> IComplex<Real<T>, T>.Zero => Zero;
-    static Real<T> IComplex<Real<T>, T>.One => One;
-    static Real<T> IComplex<Real<T>, T>.Two => Two;
-    static Real<T> IComplex<Real<T>, T>.NaN => NaN;
-    static Real<T> IMinMaxValue<Real<T>>.MaxValue => MaxValue;
-    static Real<T> IMinMaxValue<Real<T>>.MinValue => MinValue;
+    static Real IComplex<Real>.Zero => Zero;
+    static Real IComplex<Real>.One => One;
+    static Real IComplex<Real>.NaN => NaN;
+    static Real IMinMaxValue<Real>.MaxValue => MaxValue;
+    static Real IMinMaxValue<Real>.MinValue => MinValue;
 
     // IConstants interface
 
-    static Real<T> IConstants<Real<T>, T>.E => E;
-    static Real<T> IConstants<Real<T>, T>.Pi => Pi;
-    static Real<T> IConstants<Real<T>, T>.PiOverTwo => PiOverTwo;
-    static Real<T> IConstants<Real<T>, T>.PiSquared => PiSquared;
-    static Real<T> IConstants<Real<T>, T>.Tau => Tau;
-    static Real<T> IConstants<Real<T>, T>.EulerMascheroni => EulerMascheroni;
-    static Real<T> IConstants<Real<T>, T>.GoldenRatio => GoldenRatio;
-    static Real<T> IConstants<Real<T>, T>.Ln2 => Ln2;
-    static Real<T> IConstants<Real<T>, T>.Ln10 => Ln10;
-    static Real<T> IConstants<Real<T>, T>.Sqrt2 => Sqrt2;
-    static Real<T> IConstants<Real<T>, T>.Sqrt3 => Sqrt3;
-    static Real<T> IConstants<Real<T>, T>.Sqrt5 => Sqrt5;
-    static Real<T> IConstants<Real<T>, T>.ZetaOf2 => ZetaOf2;
-    static Real<T> IConstants<Real<T>, T>.ZetaOf3 => ZetaOf3;
-    static Real<T> IConstants<Real<T>, T>.ZetaOf4 => ZetaOf4;
+    static Real IConstants<Real>.E => E;
+    static Real IConstants<Real>.Pi => Pi;
+    static Real IConstants<Real>.PiOverTwo => PiOverTwo;
+    static Real IConstants<Real>.PiSquared => PiSquared;
+    static Real IConstants<Real>.Tau => Tau;
+    static Real IConstants<Real>.EulerMascheroni => EulerMascheroni;
+    static Real IConstants<Real>.GoldenRatio => GoldenRatio;
+    static Real IConstants<Real>.Ln2 => Ln2;
+    static Real IConstants<Real>.Ln10 => Ln10;
+    static Real IConstants<Real>.Sqrt2 => Sqrt2;
+    static Real IConstants<Real>.Sqrt3 => Sqrt3;
+    static Real IConstants<Real>.Sqrt5 => Sqrt5;
+    static Real IConstants<Real>.ZetaOf2 => ZetaOf2;
+    static Real IConstants<Real>.ZetaOf3 => ZetaOf3;
+    static Real IConstants<Real>.ZetaOf4 => ZetaOf4;
 
     //
     // Operators
     //
 
-    public static Real<T> operator -(Real<T> value) => -value._value;
-    public static Real<T> operator --(Real<T> value) => value._value - One;
-    public static Real<T> operator ++(Real<T> value) => value._value + One;
-    public static Real<T> operator +(Real<T> left, Real<T> right) => left._value + right._value;
-    public static Real<T> operator -(Real<T> left, Real<T> right) => left._value - right._value;
-    public static Real<T> operator *(Real<T> left, Real<T> right) => left._value * right._value;
-    public static Real<T> operator /(Real<T> left, Real<T> right) => left._value / right._value;
+    public static Real operator -(Real value) => -value._value;
+    public static Real operator --(Real value) => value._value - One;
+    public static Real operator ++(Real value) => value._value + One;
+    public static Real operator +(Real left, Real right) => left._value + right._value;
+    public static Real operator -(Real left, Real right) => left._value - right._value;
+    public static Real operator *(Real left, Real right) => left._value * right._value;
+    public static Real operator /(Real left, Real right) => left._value / right._value;
 
     //
     // Equality
     //
 
-    public static bool operator ==(Real<T> left, Real<T> right) => left._value == right._value;
+    public static bool operator ==(Real left, Real right) => left._value == right._value;
 
-    public static bool operator !=(Real<T> left, Real<T> right) => left._value != right._value;
+    public static bool operator !=(Real left, Real right) => left._value != right._value;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Real<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Real other && Equals(other);
 
-    public bool Equals(Real<T> value) => _value.Equals(value._value);
+    public bool Equals(Real value) => _value.Equals(value._value);
 
     public override int GetHashCode() => HashCode.Combine(_value);
 
@@ -171,10 +168,10 @@ public readonly struct Real<T>
     // Comparison
     //
 
-    public static bool operator <(Real<T> left, Real<T> right) => left._value < right._value;
-    public static bool operator >(Real<T> left, Real<T> right) => left._value > right._value;
-    public static bool operator <=(Real<T> left, Real<T> right) => left._value <= right._value;
-    public static bool operator >=(Real<T> left, Real<T> right) => left._value >= right._value;
+    public static bool operator <(Real left, Real right) => left._value < right._value;
+    public static bool operator >(Real left, Real right) => left._value > right._value;
+    public static bool operator <=(Real left, Real right) => left._value <= right._value;
+    public static bool operator >=(Real left, Real right) => left._value >= right._value;
 
     public int CompareTo(object? obj)
     {
@@ -183,7 +180,7 @@ public readonly struct Real<T>
             return 1;
         }
 
-        if (obj is Real<T> value)
+        if (obj is Real value)
         {
             return _value.CompareTo(value._value);
         }
@@ -191,7 +188,7 @@ public readonly struct Real<T>
         throw new ArgumentException("Argument is not a real number");
     }
 
-    public int CompareTo(Real<T> value) => _value.CompareTo(value._value);
+    public int CompareTo(Real value) => _value.CompareTo(value._value);
 
     //
     // Formatting
@@ -208,53 +205,53 @@ public readonly struct Real<T>
     // Parsing
     //
 
-    public static Real<T> Parse(string s, IFormatProvider? provider) => T.Parse(s, provider);
+    public static Real Parse(string s, IFormatProvider? provider) => double.Parse(s, provider);
 
-    public static Real<T> Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => T.Parse(s, provider);
+    public static Real Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => double.Parse(s, provider);
 
-    public static Real<T> Parse(string s, NumberStyles style, IFormatProvider? provider)
-        => T.Parse(s, style, provider);
+    public static Real Parse(string s, NumberStyles style, IFormatProvider? provider)
+        => double.Parse(s, style, provider);
 
-    public static Real<T> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
-        => T.Parse(s, style, provider);
+    public static Real Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
+        => double.Parse(s, style, provider);
 
-    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Real<T> result)
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Real result)
     {
-        var succeeded = T.TryParse(s, provider, out T? number);
-        result = number!;
+        var succeeded = double.TryParse(s, provider, out double number);
+        result = number;
         return succeeded;
     }
 
-    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Real<T> result)
+    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Real result)
     {
-        var succeeded = T.TryParse(s, provider, out T? number);
-        result = number!;
+        var succeeded = double.TryParse(s, provider, out double number);
+        result = number;
         return succeeded;
     }
 
-    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Real<T> result)
+    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Real result)
     {
         if (s is null)
         {
-            result = T.Zero;
+            result = 0.0;
             return false;
         }
 
-        var succeeded = T.TryParse((ReadOnlySpan<char>)s, style, NumberFormatInfo.GetInstance(provider), out T? number);
-        result = number!;
+        var succeeded = double.TryParse((ReadOnlySpan<char>)s, style, NumberFormatInfo.GetInstance(provider), out double number);
+        result = number;
         return succeeded;
     }
 
-    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Real<T> result)
+    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Real result)
     {
         if (s.IsEmpty)
         {
-            result = T.Zero;
+            result = 0.0;
             return false;
         }
 
-        var succeeded = T.TryParse(s, style, NumberFormatInfo.GetInstance(provider), out T? number);
-        result = number!;
+        var succeeded = double.TryParse(s, style, NumberFormatInfo.GetInstance(provider), out double number);
+        result = number;
         return succeeded;
     }
 
@@ -262,72 +259,72 @@ public readonly struct Real<T>
     // Methods
     //
 
-    public static Real<T> Abs(Real<T> x) => T.Abs(x._value);
+    public static Real Abs(Real x) => Math.Abs(x._value);
 
-    public static Real<T> Conjugate(Real<T> x) => x;
+    public static Real Conjugate(Real x) => x;
 
-    public static Real<T> Hypot(Real<T> x, Real<T> y) => T.Hypot(x._value, y._value);
+    public static Real Hypot(Real x, Real y) => double.Hypot(x._value, y._value);
 
-    public static bool IsFinite(Real<T> x) => T.IsFinite(x._value);
+    public static bool IsFinite(Real x) => double.IsFinite(x._value);
 
-    public static bool IsInfinity(Real<T> x) => T.IsInfinity(x._value);
+    public static bool IsInfinity(Real x) => double.IsInfinity(x._value);
 
-    public static bool IsNaN(Real<T> x) => T.IsNaN(x._value);
+    public static bool IsNaN(Real x) => double.IsNaN(x._value);
 
-    public static bool IsZero(Real<T> x) => T.IsZero(x._value);
+    public static bool IsZero(Real x) => x._value == 0.0;
 
-    public static bool IsNegativeInfinity(Real<T> x) => T.IsNegativeInfinity(x._value);
+    public static bool IsNegativeInfinity(Real x) => double.IsNegativeInfinity(x._value);
 
-    public static bool IsPositiveInfinity(Real<T> x) => T.IsPositiveInfinity(x._value);
+    public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
-    public static Real<T> Reciprocate(Real<T> x)
+    public static Real Reciprocate(Real x)
     {
-        if (x._value == T.Zero)
+        if (x._value == 0.0)
         {
             return PositiveInfinity;
         }
-        return T.One / x;
+        return 1.0 / x;
     }
 
-    public static bool TryConvertFromChecked<V>(V value, out Real<T> result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromChecked<U>(U value, out Real result)
+        where U : INumberBase<U>
     {
-        result = T.CreateChecked(value);
+        result = double.CreateChecked(value);
         return true;
     }
 
-    public static bool TryConvertFromSaturating<V>(V value, out Real<T> result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromSaturating<U>(U value, out Real result)
+        where U : INumberBase<U>
     {
-        result = T.CreateSaturating(value);
+        result = double.CreateSaturating(value);
         return true;
     }
 
-    public static bool TryConvertFromTruncating<V>(V value, out Real<T> result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromTruncating<U>(U value, out Real result)
+        where U : INumberBase<U>
     {
-        result = T.CreateTruncating(value);
+        result = double.CreateTruncating(value);
         return true;
     }
 
-    public static bool TryConvertToChecked<V>(Real<T> value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToChecked<U>(Real value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateChecked(value._value);
+        result = U.CreateChecked(value._value);
         return true;
     }
 
-    public static bool TryConvertToSaturating<V>(Real<T> value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToSaturating<U>(Real value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateSaturating(value._value);
+        result = U.CreateSaturating(value._value);
         return true;
     }
 
-    public static bool TryConvertToTruncating<V>(Real<T> value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToTruncating<U>(Real value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateTruncating(value._value);
+        result = U.CreateTruncating(value._value);
         return true;
     }
 
@@ -337,67 +334,67 @@ public readonly struct Real<T>
 
     // Exponential functions
 
-    public static Real<T> Exp(Real<T> x) => T.Exp(x._value);
+    public static Real Exp(Real x) => Math.Exp(x._value);
 
-    public static Real<T> Exp2(Real<T> x) => T.Exp2(x._value);
+    public static Real Exp2(Real x) => double.Exp2(x._value);
 
-    public static Real<T> Exp10(Real<T> x) => T.Exp10(x._value);
+    public static Real Exp10(Real x) => double.Exp10(x._value);
 
     // Hyperbolic functions
 
-    public static Real<T> Acosh(Real<T> x) => T.Acosh(x._value);
+    public static Real Acosh(Real x) => Math.Acosh(x._value);
 
-    public static Real<T> Asinh(Real<T> x) => T.Asinh(x._value);
+    public static Real Asinh(Real x) => Math.Asinh(x._value);
 
-    public static Real<T> Atanh(Real<T> x) => T.Atanh(x._value);
+    public static Real Atanh(Real x) => Math.Atanh(x._value);
 
-    public static Real<T> Cosh(Real<T> x) => T.Cosh(x._value);
+    public static Real Cosh(Real x) => Math.Cosh(x._value);
 
-    public static Real<T> Sinh(Real<T> x) => T.Sinh(x._value);
+    public static Real Sinh(Real x) => Math.Sinh(x._value);
 
-    public static Real<T> Tanh(Real<T> x) => T.Tanh(x._value);
+    public static Real Tanh(Real x) => Math.Tanh(x._value);
 
     // Logarithmic functions
 
-    public static Real<T> Ln(Real<T> x) => T.Log(x._value);
+    public static Real Ln(Real x) => Math.Log(x._value);
 
-    public static Real<T> Log(Real<T> x, Real<T> b) => T.Log(x._value, b._value);
+    public static Real Log(Real x, Real b) => Math.Log(x._value, b._value);
 
-    public static Real<T> Log2(Real<T> x) => T.Log2(x._value);
+    public static Real Log2(Real x) => Math.Log2(x._value);
 
-    public static Real<T> Log10(Real<T> x) => T.Log10(x._value);
+    public static Real Log10(Real x) => Math.Log10(x._value);
 
     // Power functions
 
-    public static Real<T> Pow(Real<T> x, Real<T> y) => T.Pow(x._value, y._value);
+    public static Real Pow(Real x, Real y) => Math.Pow(x._value, y._value);
 
     // Root functions
 
-    public static Real<T> Cbrt(Real<T> x) => T.Cbrt(x._value);
+    public static Real Cbrt(Real x) => Math.Cbrt(x._value);
 
-    public static Real<T> Root(Real<T> x, Real<T> y) => T.Exp(y._value * T.Log(x._value));
+    public static Real Root(Real x, Real y) => Math.Exp(Math.Log(x._value) / y._value);
 
-    public static Real<T> Sqrt(Real<T> x) => T.Sqrt(x._value);
+    public static Real Sqrt(Real x) => Math.Sqrt(x._value);
 
     // Trigonometric functions
 
-    public static Real<T> Acos(Real<T> x) => T.Acos(x._value);
+    public static Real Acos(Real x) => Math.Acos(x._value);
 
-    public static Real<T> Asin(Real<T> x) => T.Asin(x._value);
+    public static Real Asin(Real x) => Math.Asin(x._value);
 
-    public static Real<T> Atan(Real<T> x) => T.Atan(x._value);
+    public static Real Atan(Real x) => Math.Atan(x._value);
 
-    public static Real<T> Atan2(Real<T> y, Real<T> x) => T.Atan2(y._value, x._value);
+    public static Real Atan2(Real y, Real x) => Math.Atan2(y._value, x._value);
 
-    public static Real<T> Cos(Real<T> x) => T.Cos(x._value);
+    public static Real Cos(Real x) => Math.Cos(x._value);
 
-    public static Real<T> Sin(Real<T> x) => T.Sin(x._value);
+    public static Real Sin(Real x) => Math.Sin(x._value);
 
-    public static Real<T> Tan(Real<T> x) => T.Tan(x._value);
+    public static Real Tan(Real x) => Math.Tan(x._value);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator Real<T>(T x) => new(x);
+    public static implicit operator Real(double x) => new(x);
 }

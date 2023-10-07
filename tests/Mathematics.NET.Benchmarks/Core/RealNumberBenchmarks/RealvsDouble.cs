@@ -1,4 +1,4 @@
-﻿// <copyright file="ComplexTrigonometryBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="RealvsDouble.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,48 +25,42 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Benchmarks.Core.Complex;
+namespace Mathematics.NET.Benchmarks.Core.RealNumberBenchmarks;
 
 [MemoryDiagnoser]
 [RankColumn]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class ComplexTrigonometryBenchmarks
+public class RealvsDouble
 {
-    public Complex<double> Z { get; set; }
-    public Complex<double> ImOverTwo { get; set; }
-
-    public System.Numerics.Complex W { get; set; }
+    public Real XReal { get; set; }
+    public double XDouble { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        Z = new(1.23, 2.34);
-        ImOverTwo = Math<double>.Im / Complex<double>.Two;
-
-        W = new(1.23, 2.34);
+        XReal = Math.PI;
+        XDouble = Math.PI;
     }
 
     [Benchmark(Baseline = true)]
-    public System.Numerics.Complex Atan_System()
+    public double AdditionsWithDouble()
     {
-        return System.Numerics.Complex.Atan(W);
+        double result = 0;
+        for (int i = 0; i < 100_000; i++)
+        {
+            result += XDouble;
+        }
+        return result;
     }
 
     [Benchmark]
-    public Complex<double> Atan_MathNET()
+    public Real AdditionsWithReal()
     {
-        return Complex<double>.Atan(Z);
-    }
-
-    //[Benchmark]
-    public Complex<double> Atan_WithoutConstImOverTwo()
-    {
-        return Math<double>.Im / Complex<double>.Two * Complex<double>.Ln((Math<double>.Im + Z) / (Math<double>.Im - Z));
-    }
-
-    //[Benchmark]
-    public Complex<double> Atan_WithConstImOverTwo()
-    {
-        return ImOverTwo * Complex<double>.Ln((Math<double>.Im + Z) / (Math<double>.Im - Z));
+        Real result = 0.0;
+        for (int i = 0; i < 100_000; i++)
+        {
+            result += XReal;
+        }
+        return result;
     }
 }

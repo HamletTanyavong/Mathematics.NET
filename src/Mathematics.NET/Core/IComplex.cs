@@ -36,8 +36,7 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Defines support for complex numbers</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
-public interface IComplex<T, U>
+public interface IComplex<T>
     : IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
@@ -47,29 +46,25 @@ public interface IComplex<T, U>
       IEquatable<T>,
       ISpanFormattable,
       ISpanParsable<T>
-    where T : IComplex<T, U>
-    where U : IFloatingPointIeee754<U>, IMinMaxValue<U>
+    where T : IComplex<T>
 {
     /// <summary>The real part of the complex number</summary>
-    public Real<U> Re { get; }
+    public Real Re { get; }
 
     /// <summary>The imaginary part of the complex number</summary>
-    public virtual Real<U> Im => Real<U>.Zero;
+    public virtual Real Im => Real.Zero;
 
     /// <summary>The magnitude of the complex number in polar coordinates</summary>
-    public virtual Real<U> Magnitude => U.Hypot(Re.Value, Im.Value);
+    public virtual Real Magnitude => Real.Hypot(Re, Im);
 
     /// <summary>The phase of the complex number in polar coordinates</summary>
-    public virtual Real<U> Phase => U.Atan2(Im.Value, Re.Value);
+    public virtual Real Phase => Real.Atan2(Im, Re);
 
     /// <summary>Reprsents zero for the type</summary>
     static abstract T Zero { get; }
 
     /// <summary>Represents one for the type</summary>
     static abstract T One { get; }
-
-    /// <summary>Represents two for the type</summary>
-    static abstract T Two { get; }
 
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
@@ -85,17 +80,17 @@ public interface IComplex<T, U>
     static abstract T Conjugate(T z);
 
     /// <summary>Convert a value to one of the current type, and throw and overflow exception if the value falls outside the representable range.</summary>
-    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <returns>The result of the conversion</returns>
-    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="V"/> are not supported.</exception>
+    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="U"/> are not supported.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static virtual T CreateChecked<V>(V value)
-        where V : INumberBase<V>
+    static virtual T CreateChecked<U>(U value)
+        where U : INumberBase<U>
     {
         T? result;
 
-        if (typeof(V) == typeof(T))
+        if (typeof(U) == typeof(T))
         {
             result = (T)(object)value;
         }
@@ -108,17 +103,17 @@ public interface IComplex<T, U>
     }
 
     /// <summary>Convert a value to one of the current type, and saturate values that fall outside the representable range.</summary>
-    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <returns>The result of the conversion</returns>
-    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="V"/> are not supported.</exception>
+    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="U"/> are not supported.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static virtual T CreateSaturating<V>(V value)
-        where V : INumberBase<V>
+    static virtual T CreateSaturating<U>(U value)
+        where U : INumberBase<U>
     {
         T? result;
 
-        if (typeof(V) == typeof(T))
+        if (typeof(U) == typeof(T))
         {
             result = (T)(object)value;
         }
@@ -131,17 +126,17 @@ public interface IComplex<T, U>
     }
 
     /// <summary>Convert a value to one of another type, and truncate values that fall outside of the representable range.</summary>
-    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <returns>The result of the conversion</returns>
-    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="V"/> are not supported.</exception>
+    /// <exception cref="NotSupportedException">Conversions from the type <typeparamref name="U"/> are not supported.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static virtual T CreateTruncating<V>(V value)
-        where V : INumberBase<V>
+    static virtual T CreateTruncating<U>(U value)
+        where U : INumberBase<U>
     {
         T? result;
 
-        if (typeof(V) == typeof(T))
+        if (typeof(U) == typeof(T))
         {
             result = (T)(object)value;
         }
@@ -197,54 +192,54 @@ public interface IComplex<T, U>
     static abstract T Reciprocate(T z);
 
     /// <summary>Try to convert a value to one of the current type, and throw and overflow exception if the value falls outside the representable range.</summary>
-    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
     /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
     /// <exception cref="OverflowException">The value is not representable by the type <typeparamref name="T"/>.</exception>
-    protected static abstract bool TryConvertFromChecked<V>(V value, [MaybeNullWhen(false)] out T result)
-        where V : INumberBase<V>;
+    protected static abstract bool TryConvertFromChecked<U>(U value, [MaybeNullWhen(false)] out T result)
+        where U : INumberBase<U>;
 
     /// <summary>Try to convert a value to one of the current type, and saturate values that fall outside the representable range.</summary>
-    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
     /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
-    protected static abstract bool TryConvertFromSaturating<V>(V value, [MaybeNullWhen(false)] out T result)
-        where V : INumberBase<V>;
+    protected static abstract bool TryConvertFromSaturating<U>(U value, [MaybeNullWhen(false)] out T result)
+        where U : INumberBase<U>;
 
     /// <summary>Try to convert a value to one of the current type, and truncate values that fall outside the representable range.</summary>
-    /// <typeparam name="V">The type from which to convert</typeparam>
+    /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
     /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
-    protected static abstract bool TryConvertFromTruncating<V>(V value, [MaybeNullWhen(false)] out T result)
-        where V : INumberBase<V>;
+    protected static abstract bool TryConvertFromTruncating<U>(U value, [MaybeNullWhen(false)] out T result)
+        where U : INumberBase<U>;
 
     /// <summary>Try to convert a value to one of another type, and throw and overflow exception if the value falls outside the representable range.</summary>
-    /// <typeparam name="V">The target type</typeparam>
+    /// <typeparam name="U">The target type</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
     /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
     /// <exception cref="OverflowException">The value is not representable by the target type.</exception>
-    protected static abstract bool TryConvertToChecked<V>(T value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>;
+    protected static abstract bool TryConvertToChecked<U>(T value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>;
 
     /// <summary>Try to convert a value to one of another type, and saturate values that fall outside of the representable range.</summary>
-    /// <typeparam name="V">The target type</typeparam>
+    /// <typeparam name="U">The target type</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
     /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
-    protected static abstract bool TryConvertToSaturating<V>(T value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>;
+    protected static abstract bool TryConvertToSaturating<U>(T value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>;
 
     /// <summary>Try to convert a value to one of another type, and truncate values that fall outside of the representable range.</summary>
-    /// <typeparam name="V">The target type</typeparam>
+    /// <typeparam name="U">The target type</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
     /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
-    protected static abstract bool TryConvertToTruncating<V>(T value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>;
+    protected static abstract bool TryConvertToTruncating<U>(T value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>;
 
     /// <summary>Try to parse a string into a value</summary>
     /// <param name="s">The string to parse</param>
@@ -266,5 +261,5 @@ public interface IComplex<T, U>
 
     /// <summary>Convert a value of type <see cref="IFloatingPointIeee754{TSelf}"/> to one of type <typeparamref name="T"/></summary>
     /// <param name="x">The value to convert</param>
-    static virtual implicit operator T(U x) => T.CreateTruncating(x);
+    static virtual implicit operator T(double x) => T.CreateSaturating(x);
 }

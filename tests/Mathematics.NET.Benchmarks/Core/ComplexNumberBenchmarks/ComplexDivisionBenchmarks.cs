@@ -1,4 +1,4 @@
-﻿// <copyright file="SystemComplexAbsVsComplexAbsBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexDivisionBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,32 +25,36 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Benchmarks.Core.Complex;
+namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 
 [MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class SystemComplexAbsVsComplexAbsBenchmarks
+public class ComplexDivisionBenchmarks
 {
-    public System.Numerics.Complex Z { get; set; }
-    public Complex<double> W { get; set; }
+    public ComplexNumber Z { get; set; }
+    public ComplexNumber W { get; set; }
+
+    public Complex X { get; set; }
+    public Complex Y { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        Z = new(4, 5);
-        W = new(4, 5);
+        Z = new(1.23, 2.34);
+        W = new(4.56, 3.45);
+
+        X = new(1.23, 2.34);
+        Y = new(4.56, 3.45);
     }
 
     [Benchmark(Baseline = true)]
-    public Real<double> SystemComplexAbs()
+    public Complex SystemDivision()
     {
-        return System.Numerics.Complex.Abs(Z);
+        return X / Y;
     }
 
     [Benchmark]
-    public Complex<double> ComplexAbs()
+    public ComplexNumber ComplexDivision_WithAggressiveInlining()
     {
-        return Complex<double>.Abs(W);
+        return Z / W;
     }
 }

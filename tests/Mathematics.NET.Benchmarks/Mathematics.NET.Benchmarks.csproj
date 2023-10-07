@@ -20,6 +20,7 @@
     <Using Include="BenchmarkDotNet.Attributes" />
     <Using Include="BenchmarkDotNet.Order" />
     <Using Include="Mathematics.NET.Core" />
+    <Using Include="System.Numerics" />
   </ItemGroup>
 
 </Project>

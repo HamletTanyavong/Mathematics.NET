@@ -1,4 +1,4 @@
-﻿// <copyright file="RealvsDouble.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexTrigonometryBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,42 +25,48 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Benchmarks.Core.Real;
+namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 
 [MemoryDiagnoser]
 [RankColumn]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class RealvsDouble
+public class ComplexTrigonometryBenchmarks
 {
-    public Real<double> XReal { get; set; }
-    public double XDouble { get; set; }
+    public ComplexNumber Z { get; set; }
+    public ComplexNumber ImOverTwo { get; set; }
+
+    public Complex W { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        XReal = Math.PI;
-        XDouble = Math.PI;
+        Z = new(1.23, 2.34);
+        ImOverTwo = Mathematics.Im / ComplexNumber.Two;
+
+        W = new(1.23, 2.34);
     }
 
     [Benchmark(Baseline = true)]
-    public double AdditionsWithDouble()
+    public Complex Atan_System()
     {
-        double result = 0;
-        for (int i = 0; i < 100_000; i++)
-        {
-            result += XDouble;
-        }
-        return result;
+        return Complex.Atan(W);
     }
 
     [Benchmark]
-    public Real<double> AdditionsWithReal()
+    public ComplexNumber Atan_MathNET()
     {
-        Real<double> result = 0.0;
-        for (int i = 0; i < 100_000; i++)
-        {
-            result += XReal;
-        }
-        return result;
+        return ComplexNumber.Atan(Z);
+    }
+
+    //[Benchmark]
+    public ComplexNumber Atan_WithoutConstImOverTwo()
+    {
+        return Mathematics.Im / ComplexNumber.Two * ComplexNumber.Ln((Mathematics.Im + Z) / (Mathematics.Im - Z));
+    }
+
+    //[Benchmark]
+    public ComplexNumber Atan_WithConstImOverTwo()
+    {
+        return ImOverTwo * ComplexNumber.Ln((Mathematics.Im + Z) / (Mathematics.Im - Z));
     }
 }

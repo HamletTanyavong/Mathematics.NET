@@ -33,11 +33,11 @@ public sealed class RationalTests
 {
     [TestMethod]
     [DataRow(2, 4, 5, 3, 13, 6)]
-    public void Add_TwoRationalsOfIntAndDouble_ReturnsReducedSum(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
+    public void Add_TwoRationalsOfInt_ReturnsReducedSum(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
     {
-        Rational<int, double> x = new(inANum, inADen);
-        Rational<int, double> y = new(inBNum, inBDen);
-        Rational<int, double> expected = new(expectedNum, expectedDen);
+        Rational<int> x = new(inANum, inADen);
+        Rational<int> y = new(inBNum, inBDen);
+        Rational<int> expected = new(expectedNum, expectedDen);
 
         var actual = x + y;
 
@@ -45,20 +45,20 @@ public sealed class RationalTests
     }
 
     [TestMethod]
-    public void Divide_RationalOfIntAndDoubleByZero_ReturnsNaN()
+    public void Divide_RationalOfIntByZero_ReturnsNaN()
     {
-        var actual = Rational<int, double>.One / Rational<int, double>.Zero;
+        var actual = Rational<int>.One / Rational<int>.Zero;
 
-        Assert.AreEqual(Rational<int, double>.NaN, actual);
+        Assert.AreEqual(Rational<int>.NaN, actual);
     }
 
     [TestMethod]
     [DataRow(2, 3, 4, 8, 1, 3)]
-    public void Multiply_TwoRationalsOfIntAndDouble_ReturnsReducedProduct(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
+    public void Multiply_TwoRationalsOfInt_ReturnsReducedProduct(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
     {
-        Rational<int, double> x = new(inANum, inADen);
-        Rational<int, double> y = new(inBNum, inBDen);
-        Rational<int, double> expected = new(expectedNum, expectedDen);
+        Rational<int> x = new(inANum, inADen);
+        Rational<int> y = new(inBNum, inBDen);
+        Rational<int> expected = new(expectedNum, expectedDen);
 
         var actual = x * y;
 
@@ -67,10 +67,10 @@ public sealed class RationalTests
 
     [TestMethod]
     [DataRow(6, 8, 3, 4)]
-    public void Reduce_RationalOfIntAndDouble_ReturnsReducedFraction(int inNum, int inDen, int expectedNum, int expectedDen)
+    public void Reduce_RationalOfInt_ReturnsReducedFraction(int inNum, int inDen, int expectedNum, int expectedDen)
     {
-        Rational<int, double> p = new(inNum, inDen);
-        Rational<int, double> expected = new(expectedNum, expectedDen);
+        Rational<int> p = new(inNum, inDen);
+        Rational<int> expected = new(expectedNum, expectedDen);
 
         var actual = p.Reduce();
 
@@ -79,9 +79,9 @@ public sealed class RationalTests
 
     [TestMethod]
     [DataRow(3, 4, 7)]
-    public void TryFormat_RationalOfIntAndDoubleWithAdequateDestinationLength_ReturnsTrue(int inNum, int inDen, int length)
+    public void TryFormat_RationalOfIntWithAdequateDestinationLength_ReturnsTrue(int inNum, int inDen, int length)
     {
-        Rational<int, double> p = new(inNum, inDen);
+        Rational<int> p = new(inNum, inDen);
 
         Span<char> span = new char[length];
         var actual = p.TryFormat(span, out int _, null, null);
