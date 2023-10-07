@@ -199,7 +199,7 @@ public readonly struct Real<T>
 
     public override string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? provider) => string.Format(provider, "{0}", _value.ToString(format, provider));
+    public string ToString(string? format, IFormatProvider? provider) => string.Format(provider, "{0}", _value);
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
         => _value.TryFormat(destination, out charsWritten, null, provider);
