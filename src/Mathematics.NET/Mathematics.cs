@@ -1,4 +1,4 @@
-﻿// <copyright file="Math.cs" company="Mathematics.NET">
+﻿// <copyright file="Mathematics.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,74 +25,72 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Numerics;
 using Mathematics.NET.Core;
 
 namespace Mathematics.NET;
 
 /// <summary>Provides Mathematics.NET functionality</summary>
-/// <typeparam name="T">A type that implements <see cref="IFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/></typeparam>
 /// <remarks>
 /// This class contains constants and static methods for general mathematical purposes. Complicated mathematical operations may be found in their respective classes, and a list of all available operations can be found in the <see href="https://mathematics.hamlettanyavong.com/api/index.html">documentation</see>.
 /// </remarks>
-public static class Math<T> where T : IFloatingPointIeee754<T>, IMinMaxValue<T>
+public static class Mathematics
 {
     //
     // Constants
     //
 
     /// <summary>Represents the imaginary unit, $ i $</summary>
-    public static Complex<T> Im => new(Real<T>.Zero, Real<T>.One);
+    public static ComplexNumber Im => new(Real.Zero, Real.One);
 
     /// <inheritdoc cref="Constants.E"/>
-    public static Real<T> E => Real<T>.E;
+    public static Real E => Real.E;
 
     /// <inheritdoc cref="Constants.Pi"/>
-    public static Real<T> Pi => Real<T>.Pi;
+    public static Real Pi => Real.Pi;
 
     /// <inheritdoc cref="Constants.PiOverTwo"/>
-    public static Real<T> PiOverTwo => Real<T>.PiOverTwo;
+    public static Real PiOverTwo => Real.PiOverTwo;
 
     /// <inheritdoc cref="Constants.PiSquared"/>
-    public static Real<T> PiSquared => Real<T>.PiSquared;
+    public static Real PiSquared => Real.PiSquared;
 
     /// <inheritdoc cref="Constants.Tau"/>
-    public static Real<T> Tau => Real<T>.Tau;
+    public static Real Tau => Real.Tau;
 
     /// <inheritdoc cref="Constants.EulerMascheroni"/>
-    public static Real<T> EulerMascheroni => Real<T>.EulerMascheroni;
+    public static Real EulerMascheroni => Real.EulerMascheroni;
 
     /// <inheritdoc cref="Constants.GoldenRatio"/>
-    public static Real<T> GoldenRatio => Real<T>.GoldenRatio;
+    public static Real GoldenRatio => Real.GoldenRatio;
 
     /// <inheritdoc cref="Constants.Ln2"/>
-    public static Real<T> Ln2 => Real<T>.Ln2;
+    public static Real Ln2 => Real.Ln2;
 
     /// <inheritdoc cref="Constants.Ln10"/>
-    public static Real<T> Ln10 => Real<T>.Ln10;
+    public static Real Ln10 => Real.Ln10;
 
     /// <inheritdoc cref="Constants.Sqrt2"/>
-    public static Real<T> Sqrt2 => Real<T>.Sqrt2;
+    public static Real Sqrt2 => Real.Sqrt2;
 
     /// <inheritdoc cref="Constants.Sqrt3"/>
-    public static Real<T> Sqrt3 => Real<T>.Sqrt3;
+    public static Real Sqrt3 => Real.Sqrt3;
 
     /// <inheritdoc cref="Constants.Sqrt5"/>
-    public static Real<T> Sqrt5 => Real<T>.Sqrt5;
+    public static Real Sqrt5 => Real.Sqrt5;
 
     /// <inheritdoc cref="Constants.ZetaOf2"/>
-    public static Real<T> ZetaOf2 => Real<T>.ZetaOf2;
+    public static Real ZetaOf2 => Real.ZetaOf2;
 
     /// <inheritdoc cref="Constants.ZetaOf3"/>
-    public static Real<T> ZetaOf3 => Real<T>.ZetaOf3;
+    public static Real ZetaOf3 => Real.ZetaOf3;
 
     /// <inheritdoc cref="Constants.ZetaOf4"/>
-    public static Real<T> ZetaOf4 => Real<T>.ZetaOf4;
+    public static Real ZetaOf4 => Real.ZetaOf4;
 
     //
     // Methods
     //
 
     // TODO: Account for fractional derivatives
-    public static Real<T> Dif(Func<Real<T>, Real<T>> function, (Real<T> X, int N) args) => throw new NotImplementedException();
+    public static Real Dif(Func<Real, Real> function, (Real X, int N) args) => throw new NotImplementedException();
 }

@@ -28,7 +28,7 @@
 #if RELEASE
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
-using Mathematics.NET.Benchmarks.Core.Complex;
+using Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 using Mathematics.NET.Benchmarks.Core.Real;
 
 var benchmarkSwitcher = new BenchmarkSwitcher(new[]
