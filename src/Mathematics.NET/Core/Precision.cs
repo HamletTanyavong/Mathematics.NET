@@ -44,6 +44,16 @@ public static class Precision
     /// <summary>Machine epsilon for double-precision floating-point numbers according to the variant definition</summary>
     public const double DblEpsilonVariant = 2.22044604925031308e-16;
 
+    // This is the value given by 2^-149
+    /// <summary>The minimum positive value that single-precision numbers can represent</summary>
+    /// <remarks>This is equivalent to <see cref="float.Epsilon"/></remarks>
+    public const double FltMinPositive = 1.40129846432481707e-45;
+
+    // This is the value given by 2^-1074
+    /// <summary>The minimum positive value that double-precision numbers can represent</summary>
+    /// <remarks>This is equivalent to <see cref="double.Epsilon"/></remarks>
+    public const double DblMinPositive = 4.94065645841246544e-324;
+
     public static bool AreApproximatelyEqual<T>(T left, T right, T epsilon)
         where T : IBinaryFloatingPointIeee754<T>
         => T.Abs(left - right) <= epsilon * T.Max(T.Abs(left), T.Abs(right));
