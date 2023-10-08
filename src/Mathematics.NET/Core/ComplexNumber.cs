@@ -387,50 +387,50 @@ public readonly struct ComplexNumber
 
     // We will only consider the real part of complex numbers for these conversions.
 
-    public static bool TryConvertFromChecked<V>(V value, out ComplexNumber result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromChecked<U>(U value, out ComplexNumber result)
+        where U : INumberBase<U>
     {
         result = double.CreateChecked(value);
         return true;
     }
 
-    public static bool TryConvertFromSaturating<V>(V value, out ComplexNumber result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromSaturating<U>(U value, out ComplexNumber result)
+        where U : INumberBase<U>
     {
         result = double.CreateSaturating(value);
         return true;
     }
 
-    public static bool TryConvertFromTruncating<V>(V value, out ComplexNumber result)
-        where V : INumberBase<V>
+    public static bool TryConvertFromTruncating<U>(U value, out ComplexNumber result)
+        where U : INumberBase<U>
     {
         result = double.CreateTruncating(value);
         return true;
     }
 
-    public static bool TryConvertToChecked<V>(ComplexNumber value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToChecked<U>(ComplexNumber value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
         if (value._imaginary == Real.Zero)
         {
             throw new OverflowException();
         }
 
-        result = V.CreateChecked(value._real.Value);
+        result = U.CreateChecked(value._real.Value);
         return true;
     }
 
-    public static bool TryConvertToSaturating<V>(ComplexNumber value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToSaturating<U>(ComplexNumber value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateSaturating(value._real.Value);
+        result = U.CreateSaturating(value._real.Value);
         return true;
     }
 
-    public static bool TryConvertToTruncating<V>(ComplexNumber value, [MaybeNullWhen(false)] out V result)
-        where V : INumberBase<V>
+    public static bool TryConvertToTruncating<U>(ComplexNumber value, [MaybeNullWhen(false)] out U result)
+        where U : INumberBase<U>
     {
-        result = V.CreateTruncating(value._real.Value);
+        result = U.CreateTruncating(value._real.Value);
         return true;
     }
 
