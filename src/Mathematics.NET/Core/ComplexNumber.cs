@@ -1,4 +1,4 @@
-﻿// <copyright file="Cmplx.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexNumber.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
