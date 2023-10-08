@@ -43,6 +43,15 @@ public readonly struct ComplexNumber
     private static readonly ComplexNumber s_im = new(Real.Zero, Real.One);
     private static readonly ComplexNumber s_imOverTwo = new(Real.Zero, Real.One / 2.0);
 
+    // For division and reciprocal
+
+    // double.MaxValue / 2.0;
+    private const double s_upper = 8.98846567431157854e307;
+    // 2.0 * Precision.DblMinPositive / (Precision.DblEpsilonVariant * Precision.DblEpsilonVariant)
+    private const double s_lower = 2.00416836000897277e-292;
+    // 2.0 / (Precision.DblEpsilonVariant * Precision.DblEpsilonVariant)
+    private const double s_scale = 4.05648192073033408e31;
+
     // For computing Asin and Acos
     private static readonly Real s_asinOverflowThreshold = Real.Sqrt(Real.MaxValue) / 2.0;
 
@@ -101,40 +110,103 @@ public readonly struct ComplexNumber
     // From Michael Baudin and Robert L. Smith
     public static ComplexNumber operator /(ComplexNumber z, ComplexNumber w)
     {
-        var zRe = z._real.Value;
-        var zIm = z._imaginary.Value;
-        var wRe = w._real.Value;
-        var wIm = w._imaginary.Value;
+        var a = z._real.Value;
+        var b = z._imaginary.Value;
+        var c = w._real.Value;
+        var d = w._imaginary.Value;
 
-        double reResult;
-        double imResult;
-        if (Math.Abs(wIm) <= Math.Abs(wRe))
+        Max(Math.Abs(a), Math.Abs(b), out var maxAB);
+        Max(Math.Abs(c), Math.Abs(d), out var maxCD);
+        var scale = 1.0;
+
+        if (maxAB > s_upper)
         {
-            DivisionHelper(zRe, zIm, wRe, wIm, out reResult, out imResult);
+            a /= 2.0;
+            b /= 2.0;
+            scale *= 2.0;
+        }
+        if (maxCD > s_upper)
+        {
+            c /= 2.0;
+            d /= 2.0;
+            scale /= 2.0;
+        }
+
+        if (maxAB < s_lower)
+        {
+            a *= s_scale;
+            b *= s_scale;
+            scale /= s_scale;
+        }
+        if (maxCD < s_lower)
+        {
+            c *= s_scale;
+            d *= s_scale;
+            scale *= s_scale;
+        }
+
+        double re, im;
+        if (Math.Abs(d) <= Math.Abs(c))
+        {
+            DivisionInternal(a, b, c, d, out re, out im);
         }
         else
         {
-            DivisionHelper(zIm, zRe, wIm, wRe, out reResult, out imResult);
-            imResult = -imResult;
+            DivisionInternal(b, a, d, c, out re, out im);
+            im = -im;
         }
 
-        return new(reResult, imResult);
+        return new(scale * re, scale * im);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void DivisionHelper(double x, double y, double maxW, double minW, out double real, out double imaginary)
+    private static void Max(double a, double b, out double max) => max = a < b ? b : a;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void MinMax(double a, double b, out double minab, out double maxab)
     {
-        var ratio = minW / maxW;
-        var scale = 1.0 / (maxW + minW * ratio);
-        if (ratio != 0.0)
+        if (a < b)
         {
-            real = (x + y * ratio) * scale;
-            imaginary = (y - x * ratio) * scale;
+            minab = a;
+            maxab = b;
         }
         else
         {
-            real = (x + minW * (y / maxW)) * scale;
-            imaginary = (y - minW * (x / maxW)) * scale;
+            minab = b;
+            maxab = a;
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void DivisionInternal(double a, double b, double c, double d, out double re, out double im)
+    {
+        double u, v;
+        u = d / c;
+        v = 1.0 / (c + d * u);
+        ComputeComponent(a, b, c, d, u, v, out re);
+        a = -a;
+        ComputeComponent(b, a, c, d, u, v, out im);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void ComputeComponent(double a, double b, double c, double d, double u, double v, out double component)
+    {
+        double bu;
+        if (u != 0.0)
+        {
+            bu = b * u;
+            if (bu != 0.0)
+            {
+                component = (a + bu) * v;
+            }
+            else
+            {
+                component = a * v + b * v * u;
+            }
+        }
+        else
+        {
+            component = (a + d * (b / c)) * v;
         }
     }
 
@@ -367,22 +439,39 @@ public readonly struct ComplexNumber
             return Infinity;
         }
 
+        var scale = 1.0;
+
         var re = z._real.Value;
         var im = z._imaginary.Value;
 
-        double reResult;
-        double imResult;
+        Max(Math.Abs(re), Math.Abs(im), out var max);
+
+        if (max > s_upper)
+        {
+            re /= 2.0;
+            im /= 2.0;
+            scale /= 2.0;
+        }
+
+        if (max < s_lower)
+        {
+            re *= s_scale;
+            im *= s_scale;
+            scale *= s_scale;
+        }
+
+        double outRe, outIm;
         if (Math.Abs(im) <= Math.Abs(re))
         {
-            DivisionHelper(1.0, 0.0, re, im, out reResult, out imResult);
+            DivisionInternal(1.0, 0.0, re, im, out outRe, out outIm);
         }
         else
         {
-            DivisionHelper(0.0, 1.0, im, re, out reResult, out imResult);
-            imResult = -imResult;
+            DivisionInternal(0.0, 1.0, im, re, out outRe, out outIm);
+            outIm = -outIm;
         }
 
-        return new(reResult, imResult);
+        return new(scale * outRe, scale * outIm);
     }
 
     // We will only consider the real part of complex numbers for these conversions.
