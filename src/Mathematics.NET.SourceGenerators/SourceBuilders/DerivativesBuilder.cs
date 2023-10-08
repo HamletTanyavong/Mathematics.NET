@@ -71,7 +71,9 @@ public sealed class DerivativesBuilder
                 SingletonList<MemberDeclarationSyntax>(
                     FileScopedNamespaceDeclaration(
                         QualifiedName(
-                            IdentifierName(_assemblyName),
+                            QualifiedName(
+                                IdentifierName(_assemblyName),
+                                IdentifierName("Generated")),
                             IdentifierName("Mathematics")))
                     .WithMembers(
                         SingletonList<MemberDeclarationSyntax>(
