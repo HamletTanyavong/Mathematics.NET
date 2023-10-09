@@ -52,9 +52,6 @@ public readonly struct ComplexNumber
     // 2.0 / (Precision.DblEpsilonVariant * Precision.DblEpsilonVariant)
     private const double s_scale = 4.05648192073033408e31;
 
-    // For computing Asin and Acos
-    private static readonly Real s_asinOverflowThreshold = Real.Sqrt(Real.MaxValue) / 2.0;
-
     public static readonly ComplexNumber Zero = Real.Zero;
     public static readonly ComplexNumber One = Real.One;
 
@@ -581,23 +578,23 @@ public readonly struct ComplexNumber
 
     public static ComplexNumber Acos(ComplexNumber z)
     {
-        AsinInternal(Real.Abs(z._real), Real.Abs(z._imaginary), out Real b, out Real bPrime, out Real v);
+        AsinInternal(Math.Abs(z._real.Value), Math.Abs(z._imaginary.Value), out double b, out double bPrime, out double v);
 
-        Real u;
-        if (bPrime < Real.Zero)
+        double u;
+        if (bPrime < 0.0)
         {
-            u = Real.Acos(b);
+            u = Math.Acos(b);
         }
         else
         {
-            u = Real.Atan(Real.One / bPrime);
+            u = Math.Atan(1.0 / bPrime);
         }
 
-        if (z._real < Real.Zero)
+        if (z._real < 0.0)
         {
-            u = Real.Pi - u;
+            u = Constants.Pi - u;
         }
-        if (z._imaginary > Real.Zero)
+        if (z._imaginary > 0.0)
         {
             v = -v;
         }
@@ -607,23 +604,23 @@ public readonly struct ComplexNumber
 
     public static ComplexNumber Asin(ComplexNumber z)
     {
-        AsinInternal(Real.Abs(z._real), Real.Abs(z._imaginary), out Real b, out Real bPrime, out Real v);
+        AsinInternal(Math.Abs(z._real.Value), Math.Abs(z._imaginary.Value), out double b, out double bPrime, out double v);
 
-        Real u;
-        if (bPrime < Real.Zero)
+        double u;
+        if (bPrime < 0.0)
         {
-            u = Real.Asin(b);
+            u = Math.Asin(b);
         }
         else
         {
-            u = Real.Atan(bPrime);
+            u = Math.Atan(bPrime);
         }
 
-        if (z._real < Real.Zero)
+        if (z._real < 0.0)
         {
             u = -u;
         }
-        if (z._imaginary < Real.Zero)
+        if (z._imaginary < 0.0)
         {
             v = -v;
         }
@@ -631,16 +628,21 @@ public readonly struct ComplexNumber
         return new(u, v);
     }
 
-    private static void AsinInternal(Real x, Real y, out Real b, out Real bPrime, out Real v)
+    private static void AsinInternal(double x, double y, out double b, out double bPrime, out double v)
     {
         // This is the same method described by Hull, Fairgrieve, and Tang in "Implementing the Complex
         // ArcSine and Arccosine Functions Using Exception Handling" that is used in System.Numerics.Complex.
-        if (x > s_asinOverflowThreshold || y > s_asinOverflowThreshold)
+        //
+        // https://www.researchgate.net/profile/Ping_Tang3/publication/220493330_Implementing_the_Complex_Arcsine_and_Arccosine_Functions_Using_Exception_Handling/links/55b244b208ae9289a085245d.pdf
+
+        const double overflowThreshold = 6.70390396497129854e153;
+
+        if (x > overflowThreshold || y > overflowThreshold)
         {
-            b = -Real.One;
+            b = -1.0;
             bPrime = x / y;
 
-            Real small, big;
+            double small, big;
             if (x < y)
             {
                 small = x;
@@ -651,53 +653,70 @@ public readonly struct ComplexNumber
                 small = y;
                 big = x;
             }
-            Real ratio = small / big;
-            v = Real.Ln2 + Real.Ln(big) + Real.Ln(ratio * ratio + Real.One) / 2.0;
+            double ratio = small / big;
+            v = Constants.Ln2 + Math.Log(big) + 0.5 * Log1P(ratio * ratio);
         }
         else
         {
-            Real r = Hypot((x + Real.One).Value, y.Value);
-            Real s = Hypot((x - Real.One).Value, y.Value);
+            double r = Hypot(x + 1.0, y);
+            double s = Hypot(x - 1.0, y);
 
-            Real a = (r + s) / 2.0;
+            double a = (r + s) * 0.5;
             b = x / a;
 
             if (b > 0.75)
             {
-                if (x <= Real.One)
+                if (x <= 1.0)
                 {
-                    Real amx = (y * y / (r + (x + Real.One)) + (s + (Real.One - x))) / 2.0;
-                    bPrime = x / Real.Sqrt((a + x) * amx);
+                    double amx = (y * y / (r + (x + 1.0)) + (s + (1.0 - x))) * 0.5;
+                    bPrime = x / Math.Sqrt((a + x) * amx);
                 }
                 else
                 {
-                    Real t = (Real.One / (r + (x + Real.One)) + Real.One / (s + (x - Real.One))) / 2.0;
-                    bPrime = x / y / Real.Sqrt((a + x) * t);
+                    double t = (1.0 / (r + (x + 1.0)) + 1.0 / (s + (x - 1.0))) * 0.5;
+                    bPrime = x / y / Math.Sqrt((a + x) * t);
                 }
             }
             else
             {
-                bPrime = -Real.One;
+                bPrime = -1.0;
             }
 
             if (a < 1.5)
             {
-                if (x < Real.One)
+                if (x < 1.0)
                 {
-                    Real t = (Real.One / (r + (x + Real.One)) + Real.One / (s + (Real.One - x))) / 2.0;
-                    Real am1 = y * y * t;
-                    v = Real.Ln(am1 + y * Real.Sqrt(t * (a + Real.One)) + Real.One);
+                    double t = (1.0 / (r + (x + 1.0)) + 1.0 / (s + (1.0 - x))) * 0.5;
+                    double am1 = y * y * t;
+                    v = Log1P(am1 + y * Math.Sqrt(t * (a + 1.0)));
                 }
                 else
                 {
-                    Real am1 = (y * y / (r + (x + Real.One)) + (s + (x - Real.One))) / 2.0;
-                    v = Real.Ln(am1 + Real.Sqrt(am1 * (a + Real.One)) + Real.One);
+                    double am1 = (y * y / (r + (x + 1.0)) + (s + (x - 1.0))) * 0.5;
+                    v = Log1P(am1 + Math.Sqrt(am1 * (a + 1.0)));
                 }
             }
             else
             {
-                v = Real.Ln(a + Real.Sqrt((a - Real.One) * (a + Real.One)));
+                v = Math.Log(a + Math.Sqrt((a - 1.0) * (a + 1.0)));
             }
+        }
+    }
+
+    private static double Log1P(double x)
+    {
+        double xp1 = 1.0 + x;
+        if (xp1 == 1.0)
+        {
+            return x;
+        }
+        else if (x < 0.75)
+        {
+            return x * Math.Log(xp1) / (xp1 - 1.0);
+        }
+        else
+        {
+            return Math.Log(xp1);
         }
     }
 
