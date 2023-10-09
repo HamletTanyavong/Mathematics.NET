@@ -150,22 +150,22 @@ public interface IComplex<T>
 
     /// <summary>Check if a value is finite</summary>
     /// <param name="z">The value to check</param>
-    /// <returns><c>true</c> if the value is finite; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the value is finite; otherwise, <see langword="false"/></returns>
     static abstract bool IsFinite(T z);
 
     /// <summary>Check if a value is infinity</summary>
     /// <param name="z">The value to check</param>
-    /// <returns><c>true</c> if the value is infinity; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the value is infinity; otherwise, <see langword="false"/></returns>
     static abstract bool IsInfinity(T z);
 
     /// <summary>Checks if a value is not a number</summary>
     /// <param name="z">The value to check</param>
-    /// <returns><c>true</c> if the value is not a number; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the value is not a number; otherwise, <see langword="false"/></returns>
     static abstract bool IsNaN(T z);
 
     /// <summary>Check if a value is zero</summary>
     /// <param name="z">The value to check</param>
-    /// <returns><c>true</c> if the value is zero; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the value is zero; otherwise, <see langword="false"/></returns>
     static abstract bool IsZero(T z);
 
     /// <summary>Parse a string into a value</summary>
@@ -195,7 +195,7 @@ public interface IComplex<T>
     /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
-    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise, <see langword="false"/></returns>
     /// <exception cref="OverflowException">The value is not representable by the type <typeparamref name="T"/>.</exception>
     protected static abstract bool TryConvertFromChecked<U>(U value, [MaybeNullWhen(false)] out T result)
         where U : INumberBase<U>;
@@ -204,7 +204,7 @@ public interface IComplex<T>
     /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
-    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise, <see langword="false"/></returns>
     protected static abstract bool TryConvertFromSaturating<U>(U value, [MaybeNullWhen(false)] out T result)
         where U : INumberBase<U>;
 
@@ -212,7 +212,7 @@ public interface IComplex<T>
     /// <typeparam name="U">The type from which to convert</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
-    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise, <see langword="false"/></returns>
     protected static abstract bool TryConvertFromTruncating<U>(U value, [MaybeNullWhen(false)] out T result)
         where U : INumberBase<U>;
 
@@ -220,7 +220,7 @@ public interface IComplex<T>
     /// <typeparam name="U">The target type</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
-    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise, <see langword="false"/></returns>
     /// <exception cref="OverflowException">The value is not representable by the target type.</exception>
     protected static abstract bool TryConvertToChecked<U>(T value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>;
@@ -229,7 +229,7 @@ public interface IComplex<T>
     /// <typeparam name="U">The target type</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
-    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise, <see langword="false"/></returns>
     protected static abstract bool TryConvertToSaturating<U>(T value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>;
 
@@ -237,7 +237,7 @@ public interface IComplex<T>
     /// <typeparam name="U">The target type</typeparam>
     /// <param name="value">The value to convert</param>
     /// <param name="result">The result of the conversion</param>
-    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise, <see langword="false"/></returns>
     protected static abstract bool TryConvertToTruncating<U>(T value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>;
 
@@ -246,7 +246,7 @@ public interface IComplex<T>
     /// <param name="style">The number style</param>
     /// <param name="provider">The culture-specific formatting information about the string</param>
     /// <param name="result">The result of the parse or a default value if the parse was unsuccessful</param>
-    /// <returns><c>True</c> if the parse was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the parse was successful; otherwise, <see langword="false"/></returns>
     /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     static abstract bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out T result);
 
@@ -255,7 +255,7 @@ public interface IComplex<T>
     /// <param name="style">The number style</param>
     /// <param name="provider">The culture-specific formatting information about the span of characters</param>
     /// <param name="result">The result of the parse or a default value if the parse was unsuccessful</param>
-    /// <returns><c>True</c> if the parse was successful; otherwise, <c>false</c></returns>
+    /// <returns><see langword="true"/> if the parse was successful; otherwise, <see langword="false"/></returns>
     /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     static abstract bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out T result);
 
