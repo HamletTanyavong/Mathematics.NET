@@ -188,10 +188,9 @@ public readonly struct ComplexNumber
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void ComputeComponent(double a, double b, double c, double d, double u, double v, out double component)
     {
-        double bu;
         if (u != 0.0)
         {
-            bu = b * u;
+            var bu = b * u;
             if (bu != 0.0)
             {
                 component = (a + bu) * v;
