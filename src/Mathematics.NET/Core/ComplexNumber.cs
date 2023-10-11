@@ -177,9 +177,8 @@ public readonly struct ComplexNumber
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void DivisionInternal(double a, double b, double c, double d, out double re, out double im)
     {
-        double u, v;
-        u = d / c;
-        v = 1.0 / (c + d * u);
+        var u = d / c;
+        var v = 1.0 / (c + d * u);
         ComputeComponent(a, b, c, d, u, v, out re);
         a = -a;
         ComputeComponent(b, a, c, d, u, v, out im);
