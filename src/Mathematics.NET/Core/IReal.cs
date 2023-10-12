@@ -55,4 +55,18 @@ public interface IReal<T>
     /// <param name="x">The value to check</param>
     /// <returns><c>true</c> if the value is positive infinity; otherwise, <c>false</c></returns>
     static abstract bool IsPositiveInfinity(T x);
+
+    /// <summary>Find which of two numbers is greater than the other</summary>
+    /// <remarks>If any of the values are <c>NaN</c>, then <c>NaN</c> is returned</remarks>
+    /// <param name="x">The first value</param>
+    /// <param name="y">The second value</param>
+    /// <returns>The greater of the two values</returns>
+    static abstract T Max(T x, T y);
+
+    /// <summary>Find which of two numbers is less than the other</summary>
+    /// <remarks>If any of the values are <c>NaN</c>, then <c>NaN</c> is returned</remarks>
+    /// <param name="x">The first value</param>
+    /// <param name="y">The second value</param>
+    /// <returns>The lesser of the two values</returns>
+    static abstract T Min(T x, T y);
 }
