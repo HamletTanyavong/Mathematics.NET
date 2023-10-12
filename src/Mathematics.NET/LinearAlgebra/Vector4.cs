@@ -37,9 +37,7 @@ namespace Mathematics.NET.LinearAlgebra;
 /// <summary>Represents a vector with four components</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct Vector4<T>
-    : IOneDimensionalArrayRepresentable<Vector4<T>, T>,
-      IFormattable
+public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
     where T : IComplex<T>
 {
     /// <summary>The first element of the vector</summary>
