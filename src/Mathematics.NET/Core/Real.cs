@@ -276,6 +276,10 @@ public readonly struct Real
 
     public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
+    public static Real Max(Real x, Real y) => Math.Max(x._value, y._value);
+
+    public static Real Min(Real x, Real y) => Math.Min(x._value, y._value);
+
     public static Real Reciprocate(Real x)
     {
         if (x._value == 0.0)
