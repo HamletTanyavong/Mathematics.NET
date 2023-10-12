@@ -490,6 +490,23 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return holdP / (p | q) * holdQ;
     }
 
+    // TODO: Find a better implementation for Max and Min
+    public static Rational<T> Max(Rational<T> x, Rational<T> y)
+    {
+        var u = x.Reduce();
+        var v = y.Reduce();
+
+        return u._numerator * v._denominator >= v._numerator * u._denominator ? x : y;
+    }
+
+    public static Rational<T> Min(Rational<T> x, Rational<T> y)
+    {
+        var u = x.Reduce();
+        var v = y.Reduce();
+
+        return u._numerator * v._denominator <= v._numerator * u._denominator ? x : y;
+    }
+
     public static Rational<T> Reciprocate(Rational<T> x)
     {
         if (x._numerator == T.Zero)
