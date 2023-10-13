@@ -56,4 +56,9 @@ public interface IOneDimensionalArrayRepresentable<T, U>
     /// <summary>Compute the $ L^2 $-norm of the vector</summary>
     /// <returns>The norm</returns>
     Real Norm();
+
+    /// <summary>Normalize a given vector</summary>
+    /// <param name="vector">The vector to normalize</param>
+    /// <returns>The normalized vector</returns>
+    T Normalize();
 }
