@@ -192,4 +192,32 @@ public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
 
     public static T InnerProduct(Vector4<T> left, Vector4<T> right)
         => T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3 + T.Conjugate(left.X4) * right.X4;
+
+    public Real Norm()
+    {
+        Span<Real> components = stackalloc Real[4];
+
+        components[0] = (T.Conjugate(X1) * X1).Re;
+        components[1] = (T.Conjugate(X2) * X2).Re;
+        components[2] = (T.Conjugate(X3) * X3).Re;
+        components[3] = (T.Conjugate(X4) * X4).Re;
+
+        Real max = components[0];
+        for (int i = 1; i < 4; i++)
+        {
+            if (components[i] > max)
+            {
+                max = components[i];
+            }
+        }
+
+        Real partialSum = Real.Zero;
+        var maxSquared = max * max;
+        partialSum += components[0] / maxSquared;
+        partialSum += components[1] / maxSquared;
+        partialSum += components[2] / maxSquared;
+        partialSum += components[3] / maxSquared;
+
+        return max * Real.Sqrt(partialSum);
+    }
 }

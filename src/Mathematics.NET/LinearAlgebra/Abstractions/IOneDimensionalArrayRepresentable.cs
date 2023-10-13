@@ -52,4 +52,8 @@ public interface IOneDimensionalArrayRepresentable<T, U>
     /// <param name="index">An index</param>
     /// <returns>The element at the index</returns>
     U this[int index] { get; set; }
+
+    /// <summary>Compute the $ L^2 $-norm of the vector</summary>
+    /// <returns>The norm</returns>
+    Real Norm();
 }

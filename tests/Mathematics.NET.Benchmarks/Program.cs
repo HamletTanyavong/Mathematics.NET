@@ -30,11 +30,13 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 using Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 using Mathematics.NET.Benchmarks.Core.RealNumberBenchmarks;
+using Mathematics.NET.Benchmarks.LinearAlgebra;
 
 var benchmarkSwitcher = new BenchmarkSwitcher(new[]
 {
     typeof(ComplexDivisionBenchmarks),
     typeof(ComplexTrigonometryBenchmarks),
+    typeof(NormBenchmarks),
     typeof(RealvsDouble),
     typeof(SystemComplexAbsVsComplexAbsBenchmarks)
 });
