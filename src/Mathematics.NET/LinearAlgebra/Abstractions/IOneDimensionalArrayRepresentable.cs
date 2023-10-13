@@ -57,8 +57,7 @@ public interface IOneDimensionalArrayRepresentable<T, U>
     /// <returns>The norm</returns>
     Real Norm();
 
-    /// <summary>Normalize a given vector</summary>
-    /// <param name="vector">The vector to normalize</param>
+    /// <summary>Normalize the vector</summary>
     /// <returns>The normalized vector</returns>
     T Normalize();
 }
