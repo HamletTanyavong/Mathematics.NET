@@ -84,7 +84,7 @@ public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
     {
         if ((uint)index >= 4)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new IndexOutOfRangeException();
         }
 
         return GetElementUnsafe(ref vector, index);
@@ -103,7 +103,7 @@ public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
     {
         if ((uint)index >= 4)
         {
-            throw new ArgumentOutOfRangeException();
+            throw new IndexOutOfRangeException();
         }
 
         Vector4<T> result = vector;
