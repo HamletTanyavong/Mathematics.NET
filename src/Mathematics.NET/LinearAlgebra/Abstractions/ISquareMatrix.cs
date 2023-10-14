@@ -48,6 +48,11 @@ public interface ISquareMatrix<T, U>
     /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="NaM"/></returns>
     T Inverse();
 
+    /// <summary>Check if a value is not a matrix</summary>
+    /// <param name="matrix">The value to check</param>
+    /// <returns><see langword="true"/> if the value is not a matrix; otherwise, <see langword="false"/></returns>
+    static abstract bool IsNaM(T matrix);
+
     /// <summary>Compute the trace of the matrix</summary>
     /// <returns>The trace</returns>
     U Trace();
