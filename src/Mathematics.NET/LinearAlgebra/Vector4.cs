@@ -173,7 +173,7 @@ public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
         && X3.Equals(value.X3)
         && X4.Equals(value.X4);
 
-    public override int GetHashCode() => HashCode.Combine(X1, X2, X3, X4);
+    public override readonly int GetHashCode() => HashCode.Combine(X1, X2, X3, X4);
 
     //
     // Formatting
