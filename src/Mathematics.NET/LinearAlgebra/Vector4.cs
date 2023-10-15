@@ -197,10 +197,10 @@ public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
     {
         Span<Real> components = stackalloc Real[4];
 
-        components[0] = (T.Conjugate(X1) * X1).Re;
-        components[1] = (T.Conjugate(X2) * X2).Re;
-        components[2] = (T.Conjugate(X3) * X3).Re;
-        components[3] = (T.Conjugate(X4) * X4).Re;
+        components[0] = (X1 * T.Conjugate(X1)).Re;
+        components[1] = (X2 * T.Conjugate(X2)).Re;
+        components[2] = (X3 * T.Conjugate(X3)).Re;
+        components[3] = (X4 * T.Conjugate(X4)).Re;
 
         Real max = components[0];
         for (int i = 1; i < 4; i++)
@@ -211,7 +211,7 @@ public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
             }
         }
 
-        Real partialSum = Real.Zero;
+        var partialSum = Real.Zero;
         var maxSquared = max * max;
         partialSum += components[0] / maxSquared;
         partialSum += components[1] / maxSquared;
