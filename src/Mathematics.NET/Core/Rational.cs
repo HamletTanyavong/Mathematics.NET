@@ -438,6 +438,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Conjugate(Rational<T> x) => x;
 
+    public static Rational<T> FromDouble(double x) => (Rational<T>)x;
+
     public static Rational<T> FromReal(Real x) => (Rational<T>)x;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -605,9 +607,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     //
 
     // TODO: Find a better implementation
-    public static explicit operator Rational<T>(Real x)
+    public static explicit operator Rational<T>(double x)
     {
-        var value = x.Value;
+        var value = x;
         if (double.IsNaN(value) || double.IsInfinity(value))
         {
             return NaN;
@@ -626,6 +628,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
         return new(num / gcd, den / gcd);
     }
+
+    public static explicit operator Rational<T>(Real x) => (Rational<T>)x.Value;
 
     public static explicit operator checked Real(Rational<T> x) => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
 
