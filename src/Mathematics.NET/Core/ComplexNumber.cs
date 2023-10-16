@@ -383,6 +383,8 @@ public readonly struct ComplexNumber
 
     public static ComplexNumber Conjugate(ComplexNumber z) => new(z._real, -z._imaginary);
 
+    public static ComplexNumber FromDouble(double x) => new(x);
+
     public static ComplexNumber FromPolarForm(Real magnitude, Real phase)
         => new(magnitude * Math.Cos(phase.Value), magnitude * Math.Sin(phase.Value));
 

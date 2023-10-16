@@ -262,6 +262,8 @@ public readonly struct Real
 
     public static Real Conjugate(Real x) => x;
 
+    public static Real FromDouble(double x) => new(x);
+
     public static Real FromReal(Real x) => x;
 
     public static Real Hypot(Real x, Real y) => double.Hypot(x._value, y._value);
