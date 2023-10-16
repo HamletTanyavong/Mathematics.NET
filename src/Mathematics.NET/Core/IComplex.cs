@@ -148,6 +148,12 @@ public interface IComplex<T>
         return result;
     }
 
+    /// <summary>Create an instance of type <typeparamref name="T"/> from one of type <see cref="Real"/></summary>
+    /// <remarks>If the value to convert from is also of type <see cref="Real"/>, return itself</remarks>
+    /// <param name="x">A value of type <see cref="Real"/></param>
+    /// <returns>An instance of type <typeparamref name="T"/> created from <paramref name="x"/></returns>
+    static abstract T FromReal(Real x);
+
     /// <summary>Check if a value is finite</summary>
     /// <param name="z">The value to check</param>
     /// <returns><see langword="true"/> if the value is finite; otherwise, <see langword="false"/></returns>
@@ -262,4 +268,9 @@ public interface IComplex<T>
     /// <summary>Convert a value of type <see cref="IFloatingPointIeee754{TSelf}"/> to one of type <typeparamref name="T"/></summary>
     /// <param name="x">The value to convert</param>
     static virtual implicit operator T(double x) => T.CreateSaturating(x);
+
+    /// <summary>Convert a value of type <see cref="Real"/> to one of type <typeparamref name="T"/></summary>
+    /// <remarks>If the type to convert from is also <see cref="Real"/>, return itself</remarks>
+    /// <param name="x">The value to convert</param>
+    static virtual implicit operator T(Real x) => T.FromReal(x);
 }
