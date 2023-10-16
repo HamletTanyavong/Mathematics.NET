@@ -223,7 +223,7 @@ public struct Vector4<T> : IOneDimensionalArrayRepresentable<Vector4<T>, T>
 
     public Vector4<T> Normalize()
     {
-        var norm = Norm().Value;
+        var norm = Norm();
         return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
     }
 }
