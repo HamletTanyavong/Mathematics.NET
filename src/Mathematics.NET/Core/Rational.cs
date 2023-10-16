@@ -438,6 +438,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Conjugate(Rational<T> x) => x;
 
+    public static Rational<T> FromReal(Real x) => (Rational<T>)x;
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T GCD(T p, T q)
     {

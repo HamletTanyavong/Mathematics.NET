@@ -386,6 +386,8 @@ public readonly struct ComplexNumber
     public static ComplexNumber FromPolarForm(Real magnitude, Real phase)
         => new(magnitude * Math.Cos(phase.Value), magnitude * Math.Sin(phase.Value));
 
+    public static ComplexNumber FromReal(Real x) => new(x);
+
     private static double Hypot(double x, double y)
     {
         // Factor out the larger value to avoid possible overflow
