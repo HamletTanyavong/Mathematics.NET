@@ -293,6 +293,8 @@ public readonly struct Real
         return 1.0 / x;
     }
 
+    public static int Sign(Real x) => Math.Sign(x._value);
+
     public static bool TryConvertFromChecked<U>(U value, out Real result)
         where U : INumberBase<U>
     {

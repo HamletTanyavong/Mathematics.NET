@@ -530,6 +530,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(x._numerator / gcd, x._denominator / gcd);
     }
 
+    public static int Sign(Rational<T> x)
+    {
+        if (x == Rational<T>.Zero)
+        {
+            return 0;
+        }
+        return x._numerator > T.Zero ? 1 : -1;
+    }
+
     public static bool TryConvertFromChecked<U>(U value, out Rational<T> result)
         where U : INumberBase<U>
     {
