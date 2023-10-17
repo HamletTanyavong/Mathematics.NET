@@ -29,6 +29,7 @@ using System.Text;
 
 namespace Mathematics.NET;
 
+/// <summary>A class containing Mathematics.NET extension methods</summary>
 public static class Extensions
 {
     /// <summary>Remove specified characters from the end of a string being built by a string builder</summary>
