@@ -314,12 +314,9 @@ public struct Matrix3x3<T>
 
     public Matrix3x3<T> Transpose()
     {
-        Unsafe.SkipInit(out Matrix3x3<T> result);
-
-        result.E11 = E11; result.E12 = E21; result.E13 = E31;
-        result.E21 = E12; result.E22 = E22; result.E23 = E32;
-        result.E31 = E13; result.E32 = E23; result.E33 = E33;
-
-        return result;
+        return new(
+            E11, E21, E31,
+            E12, E22, E32,
+            E13, E23, E33);
     }
 }
