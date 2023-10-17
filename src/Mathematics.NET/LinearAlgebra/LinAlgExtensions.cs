@@ -1,4 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="Mathematics.NET">
+﻿// <copyright file="LinAlgExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,7 +32,8 @@ using Mathematics.NET.Core;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-public static class Extensions
+/// <summary>A class containing linear algebra extension methods</summary>
+public static class LinAlgExtensions
 {
     /// <summary>Create a new <see cref="Span2D{T}"/> over a 4x4 matrix of <typeparamref name="T"/> numbers</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
