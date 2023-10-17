@@ -25,8 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
-
 namespace Mathematics.NET;
 
 /// <summary>Provides Mathematics.NET functionality</summary>

@@ -43,4 +43,9 @@
     <ProjectReference Include="..\Mathematics.NET.SourceGenerators\Mathematics.NET.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="CommunityToolkit.HighPerformance" />
+    <Using Include="Mathematics.NET.Core" />
+  </ItemGroup>
+
 </Project>

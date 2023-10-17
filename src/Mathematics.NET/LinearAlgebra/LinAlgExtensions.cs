@@ -27,8 +27,6 @@
 
 using System.Runtime.CompilerServices;
 using System.Text;
-using CommunityToolkit.HighPerformance;
-using Mathematics.NET.Core;
 
 namespace Mathematics.NET.LinearAlgebra;
 
