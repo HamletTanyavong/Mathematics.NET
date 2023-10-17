@@ -314,14 +314,71 @@ public struct Matrix4x4<T>
                d * (e * jo_kn - f * io_km + g * in_jm);
     }
 
+    // TODO: Optimize
     public Matrix4x4<T> Inverse()
     {
-        var det = Determinant();
+        T a = E11, b = E12, c = E13, d = E14;
+        T e = E21, f = E22, g = E23, h = E24;
+        T i = E31, j = E32, k = E33, l = E34;
+        T m = E41, n = E42, o = E43, p = E44;
+
+        T kp_lo = k * p - l * o;
+        T jp_ln = j * p - l * n;
+        T jo_kn = j * o - k * n;
+        T ip_lm = i * p - l * m;
+        T io_km = i * o - k * m;
+        T in_jm = i * n - j * m;
+
+        T a11 = f * kp_lo - g * jp_ln + h * jo_kn;
+        T a12 = -(e * kp_lo - g * ip_lm + h * io_km);
+        T a13 = e * jp_ln - f * ip_lm + h * in_jm;
+        T a14 = -(e * jo_kn - f * io_km + g * in_jm);
+
+        T det = a * a11 + b * a12 + c * a13 + d * a14;
+
         if (det == T.Zero)
         {
             return NaM;
         }
-        throw new NotImplementedException();
+
+        T invDet = T.One / det;
+        Matrix4x4<T> result;
+
+        result.E11 = a11 * invDet;
+        result.E21 = a12 * invDet;
+        result.E31 = a13 * invDet;
+        result.E41 = a14 * invDet;
+
+        result.E12 = -(b * kp_lo - c * jp_ln + d * jo_kn) * invDet;
+        result.E22 = (a * kp_lo - c * ip_lm + d * io_km) * invDet;
+        result.E32 = -(a * jp_ln - b * ip_lm + d * in_jm) * invDet;
+        result.E42 = (a * jo_kn - b * io_km + c * in_jm) * invDet;
+
+        T gp_ho = g * p - h * o;
+        T fp_hn = f * p - h * n;
+        T fo_gn = f * o - g * n;
+        T ep_hm = e * p - h * m;
+        T eo_gm = e * o - g * m;
+        T en_fm = e * n - f * m;
+
+        result.E13 = (b * gp_ho - c * fp_hn + d * fo_gn) * invDet;
+        result.E23 = -(a * gp_ho - c * ep_hm + d * eo_gm) * invDet;
+        result.E33 = (a * fp_hn - b * ep_hm + d * en_fm) * invDet;
+        result.E43 = -(a * fo_gn - b * eo_gm + c * en_fm) * invDet;
+
+        T gl_hk = g * l - h * k;
+        T fl_hj = f * l - h * j;
+        T fk_gj = f * k - g * j;
+        T el_hi = e * l - h * i;
+        T ek_gi = e * k - g * i;
+        T ej_fi = e * j - f * i;
+
+        result.E14 = -(b * gl_hk - c * fl_hj + d * fk_gj) * invDet;
+        result.E24 = (a * gl_hk - c * el_hi + d * ek_gi) * invDet;
+        result.E34 = -(a * fl_hj - b * el_hi + d * ej_fi) * invDet;
+        result.E44 = (a * fk_gj - b * ek_gi + c * ej_fi) * invDet;
+
+        return result;
     }
 
     public static bool IsNaM(Matrix4x4<T> matrix)
