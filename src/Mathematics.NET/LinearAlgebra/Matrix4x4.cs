@@ -35,6 +35,8 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
+/// <summary>Represents a 4x4 matrix</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public struct Matrix4x4<T>
     : ITwoDimensionalArrayRepresentable<Matrix4x4<T>, T>,
