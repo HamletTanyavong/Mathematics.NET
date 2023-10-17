@@ -38,6 +38,22 @@ public static class LinAlg
     /// <param name="matrix">A matrix</param>
     /// <param name="method">A QR decomposition method</param>
     /// <returns>The eigenvalues of the given matrix</returns>
+    /// <example>
+    /// Suppose we want to find the eigenvalues of a 2x2 matrix. We can write the following to get them:
+    /// <code language="cs">
+    /// Span2D&lt;ComplexNumber&gt; matrix = new ComplexNumber[2, 2]
+    /// {
+    ///     { new(1, 2), new(2, 3) },
+    ///     { new(1, -2), new(3, 5) }
+    /// }
+    /// var eigvals = LinAlg.EigVals(matrix, LinAlg.QRGramSchmidt);
+    /// </code>
+    /// This method returns a span of the eigenvalues which we can use for other computations. We can also specify the number of
+    /// iterations as well if the values do not converge quickly enough. To display the result in the console, write
+    /// <code language="cs">
+    /// Console.WriteLine(eigvals.ToDisplayString());
+    /// </code>
+    /// </example>
     public static Span<T> EigVals<T>(Span2D<T> matrix, QRDecompositionMethod<T> method, int iterations = 10)
         where T : IComplex<T>
     {
