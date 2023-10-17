@@ -386,13 +386,10 @@ public struct Matrix4x4<T>
 
     public Matrix4x4<T> Transpose()
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
-
-        result.E11 = E11; result.E12 = E21; result.E13 = E31; result.E14 = E41;
-        result.E21 = E12; result.E22 = E22; result.E23 = E32; result.E24 = E42;
-        result.E31 = E13; result.E32 = E23; result.E33 = E33; result.E34 = E43;
-        result.E41 = E14; result.E42 = E24; result.E43 = E34; result.E44 = E44;
-
-        return result;
+        return new(
+            E11, E21, E31, E41,
+            E12, E22, E32, E42,
+            E13, E23, E33, E43,
+            E14, E24, E34, E44);
     }
 }
