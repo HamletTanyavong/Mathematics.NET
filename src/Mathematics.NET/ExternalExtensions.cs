@@ -1,4 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="Mathematics.NET">
+﻿// <copyright file="ExternalExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,8 +29,8 @@ using System.Text;
 
 namespace Mathematics.NET;
 
-/// <summary>A class containing Mathematics.NET extension methods</summary>
-public static class Extensions
+/// <summary>A class containing extension methods for external .NET objects</summary>
+public static class ExternalExtensions
 {
     /// <summary>Remove specified characters from the end of a string being built by a string builder</summary>
     /// <param name="builder">A string builder instance</param>
