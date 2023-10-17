@@ -275,9 +275,9 @@ public struct Matrix4x4<T>
                 string value = j != 3 ? $"{strings[i, j]}, " : strings[i, j];
                 builder.Append(value.PadRight(maxElementLength));
             }
-            Extensions.CloseGroup(builder, newlineChars);
+            LinAlgExtensions.CloseGroup(builder, newlineChars);
         }
-        Extensions.CloseGroup(builder, newlineChars, true);
+        LinAlgExtensions.CloseGroup(builder, newlineChars, true);
         return string.Format(provider, builder.ToString());
     }
 
