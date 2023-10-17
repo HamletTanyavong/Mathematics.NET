@@ -294,9 +294,24 @@ public struct Matrix4x4<T>
             T.Zero, T.Zero, T.Zero, e44);
     }
 
-    public T Determinant()
+    public readonly T Determinant()
     {
-        throw new NotImplementedException();
+        T a = E11, b = E12, c = E13, d = E14;
+        T e = E21, f = E22, g = E23, h = E24;
+        T i = E31, j = E32, k = E33, l = E34;
+        T m = E41, n = E42, o = E43, p = E44;
+
+        T kp_lo = k * p - l * o;
+        T jp_ln = j * p - l * n;
+        T jo_kn = j * o - k * n;
+        T ip_lm = i * p - l * m;
+        T io_km = i * o - k * m;
+        T in_jm = i * n - j * m;
+
+        return a * (f * kp_lo - g * jp_ln + h * jo_kn) -
+               b * (e * kp_lo - g * ip_lm + h * io_km) +
+               c * (e * jp_ln - f * ip_lm + h * in_jm) -
+               d * (e * jo_kn - f * io_km + g * in_jm);
     }
 
     public Matrix4x4<T> Inverse()
