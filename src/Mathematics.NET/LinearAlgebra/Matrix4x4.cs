@@ -334,13 +334,12 @@ public struct Matrix4x4<T>
         T a14 = -(e * jo_kn - f * io_km + g * in_jm);
 
         T det = a * a11 + b * a12 + c * a13 + d * a14;
-
         if (det == T.Zero)
         {
             return NaM;
         }
-
         T invDet = T.One / det;
+
         Matrix4x4<T> result;
 
         result.E11 = a11 * invDet;
