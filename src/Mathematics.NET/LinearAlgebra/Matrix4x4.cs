@@ -113,7 +113,7 @@ public struct Matrix4x4<T>
         {
             if ((uint)row >= 4)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new IndexOutOfRangeException();
             }
 
             ref Vector4<T> vrow = ref Unsafe.Add(ref Unsafe.As<T, Vector4<T>>(ref E11), row);
