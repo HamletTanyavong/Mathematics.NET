@@ -264,8 +264,8 @@ public struct Matrix4x4<T>
             }
         }
 
-        var trimLength = Environment.NewLine.Length;
         StringBuilder builder = new();
+        var newlineChars = Environment.NewLine.ToCharArray();
         builder.Append('[');
         for (int i = 0; i < 4; i++)
         {
@@ -275,11 +275,9 @@ public struct Matrix4x4<T>
                 string value = j != 3 ? $"{strings[i, j]}, " : strings[i, j];
                 builder.Append(value.PadRight(maxElementLength));
             }
-            builder.Remove(builder.Length - trimLength, trimLength);
-            builder.Append($"],{Environment.NewLine}");
+            Extensions.CloseGroup(builder, newlineChars);
         }
-        builder.Remove(builder.Length - trimLength - 1, trimLength + 1); // Trim last comma
-        builder.Append(']');
+        Extensions.CloseGroup(builder, newlineChars, true);
         return string.Format(provider, builder.ToString());
     }
 
