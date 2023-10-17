@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Runtime.CompilerServices;
+using System.Text;
 using CommunityToolkit.HighPerformance;
 using Mathematics.NET.Core;
 
@@ -42,5 +43,98 @@ public static class Extensions
         where T : IComplex<T>
     {
         return new Span2D<T>(Unsafe.AsPointer(ref matrix.E11), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
+    }
+
+    /// <summary>Get the string representation of this <see cref="Span{T}"/> object</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <param name="span">The span to format</param>
+    /// <param name="format">The format to use</param>
+    /// <param name="provider">The provider to use to format the value</param>
+    /// <returns>A string representation of this object</returns>
+    public static string ToDisplayString<T>(this Span<T> span, string? format = null, IFormatProvider? provider = null)
+        where T : IComplex<T>
+    {
+        var count = span.Length;
+
+        var maxElementLength = 0;
+        Span<string> strings = new string[count];
+        for (int i = 0; i < count; i++)
+        {
+            var s = span[i].ToString(format, provider);
+            strings[i] = s;
+            var length = s.Length + 2;
+            if (maxElementLength < length)
+            {
+                maxElementLength = length;
+            }
+        }
+
+        StringBuilder builder = new();
+        builder.Append('[');
+        for (int i = 0; i < count; i++)
+        {
+            string value = i != count - 1 ? $"{strings[i]}, " : strings[i];
+            builder.Append(value.PadRight(maxElementLength));
+        }
+        builder.Append(']');
+        return string.Format(provider, builder.ToString());
+    }
+
+    /// <summary>Get the string representation of this <see cref="Span2D{T}"/> object</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <param name="span">The span to format</param>
+    /// <param name="format">The format to use</param>
+    /// <param name="provider">The provider to use to format the value</param>
+    /// <returns>A string representation of this object</returns>
+    public static string ToDisplayString<T>(this Span2D<T> span, string? format = null, IFormatProvider? provider = null)
+        where T : IComplex<T>
+    {
+        var rows = span.Height;
+        var cols = span.Width;
+
+        Span2D<string> strings = new string[rows, cols];
+        var maxElementLength = 0;
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                var s = span[i, j].ToString(format, provider);
+                strings[i, j] = s;
+                var length = s.Length + 2;
+                if (maxElementLength < length)
+                {
+                    maxElementLength = length;
+                }
+            }
+        }
+
+        StringBuilder builder = new();
+        var newlineChars = Environment.NewLine.ToCharArray();
+        builder.Append('[');
+        for (int i = 0; i < rows; i++)
+        {
+            builder.Append(i != 0 ? " [" : "[");
+            for (int j = 0; j < cols; j++)
+            {
+                var value = j != cols - 1 ? $"{strings[i, j]}, " : strings[i, j];
+                builder.Append(value.PadRight(maxElementLength));
+            }
+            CloseGroup(builder, newlineChars);
+        }
+        CloseGroup(builder, newlineChars, true);
+        return string.Format(provider, builder.ToString());
+    }
+
+    internal static void CloseGroup(StringBuilder builder, char[]? unwantedChars, bool isEnd = false)
+    {
+        builder.TrimEnd(unwantedChars);
+        if (!isEnd)
+        {
+            builder.AppendLine("]");
+        }
+        else
+        {
+            builder.Append(']');
+        }
     }
 }
