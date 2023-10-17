@@ -381,7 +381,7 @@ public struct Matrix4x4<T>
     }
 
     public static bool IsNaM(Matrix4x4<T> matrix)
-        => matrix.E11 == T.NaN && matrix.E22 == T.NaN && matrix.E33 == T.NaN && matrix.E44 == T.NaN;
+        => T.IsNaN(matrix.E11) && T.IsNaN(matrix.E22) && T.IsNaN(matrix.E33) && T.IsNaN(matrix.E44);
 
     public T Trace() => E11 + E22 + E33 + E44;
 
