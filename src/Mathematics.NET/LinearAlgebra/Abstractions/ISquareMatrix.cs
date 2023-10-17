@@ -25,8 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
-
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for square matrices</summary>

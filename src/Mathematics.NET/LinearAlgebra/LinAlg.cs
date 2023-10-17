@@ -26,9 +26,7 @@
 // </copyright>
 
 using System.Runtime.CompilerServices;
-using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Enumerables;
-using Mathematics.NET.Core;
 
 namespace Mathematics.NET.LinearAlgebra;
 

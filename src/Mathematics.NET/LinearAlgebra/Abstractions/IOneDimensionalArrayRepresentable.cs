@@ -25,7 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.Core.Relations;
 
