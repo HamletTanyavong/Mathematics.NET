@@ -69,4 +69,15 @@ public interface IReal<T>
     /// <param name="y">The second value</param>
     /// <returns>The lesser of the two values</returns>
     static abstract T Min(T x, T y);
+
+    /// <summary>Find the sign of a real number</summary>
+    /// <param name="x">The value to check</param>
+    /// <returns>
+    /// A number indicating the sign of the value:<br/><br/>
+    /// <b>1</b> if the value is greater than zero<br/>
+    /// <b>0</b> if the value is greater than zero<br/>
+    /// <b>-1</b> if the value is less than zero
+    /// </returns>
+    /// <exception cref="ArithmeticException">An overflow or underflow has occurred</exception>
+    static abstract int Sign(T x);
 }
