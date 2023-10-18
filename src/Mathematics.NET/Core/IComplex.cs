@@ -72,7 +72,7 @@ public interface IComplex<T>
     /// <summary>Compute the absolute value of a number</summary>
     /// <param name="z">A complex number</param>
     /// <returns>The absolute value</returns>
-    static abstract T Abs(T z);
+    static virtual Real Abs(T z) => Real.Hypot(z.Re, z.Im);
 
     /// <summary>Compute the complex conjugate of a number</summary>
     /// <param name="z">A complex number</param>

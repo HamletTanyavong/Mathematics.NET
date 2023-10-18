@@ -42,6 +42,11 @@ public interface IRational<T, U> : IReal<T>
     /// <summary>Get the denominator of the rational number</summary>
     U Den { get; }
 
+    /// <summary>Compute the absolute value of a number</summary>
+    /// <param name="x">A rational number</param>
+    /// <returns>The absolute value</returns>
+    static new abstract T Abs(T x);
+
     /// <summary>Reduce a rational number</summary>
     /// <param name="x">The value to reduce</param>
     /// <returns>A reduced fraction if the number was reducible; otherwise, itself</returns>
