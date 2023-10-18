@@ -36,6 +36,7 @@ var benchmarkSwitcher = new BenchmarkSwitcher(new[]
 {
     typeof(ComplexDivisionBenchmarks),
     typeof(ComplexTrigonometryBenchmarks),
+    typeof(MatrixMultiplyByScalarBenchmarks),
     typeof(NormBenchmarks),
     typeof(RealvsDouble),
     typeof(SystemComplexAbsVsComplexAbsBenchmarks)
