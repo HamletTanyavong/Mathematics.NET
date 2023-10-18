@@ -27,6 +27,8 @@
 
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Enumerables;
+using CommunityToolkit.HighPerformance.Helpers;
+using Mathematics.NET.Core.ParallelActions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
@@ -101,6 +103,15 @@ public static class LinAlg
         }
         return result;
     }
+
+    /// <summary>Multiply a matrix by a scalar in parallel</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <param name="scalar">A scalar</param>
+    /// <param name="matrix">A matrix</param>
+    /// <remarks>This process overwrites the original matrix.</remarks>
+    public static void MatMulByScalarParallel<T>(T scalar, Memory2D<T> matrix)
+        where T : IComplex<T>
+        => ParallelHelper.ForEach(matrix, new MultiplyByScalarAction<T>(scalar));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static Real Norm<T>(RefEnumerable<T> vector)
