@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # Manually-added items
-/src/Mathematics.NET.DevApp/*.cs
+/src/Mathematics.NET.DevApp/
 *.runsettings
 
 # User-specific files
