@@ -1,0 +1,17 @@
+# Check that the only branch that can merge to "main" is "dev"
+
+name: "Check Branch"
+
+on:
+  pull_request:
+
+jobs:
+  check-branch:
+    name: "Check Branch"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Branch
+        if: github.base_ref == 'main' && github.head_ref != 'dev'
+        run: |
+          echo "ERROR: Can only merge to main branch from dev branch"
+          exit 1
