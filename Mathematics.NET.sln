@@ -28,11 +28,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9EB2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B32D7FF-257B-49BB-B495-D64E5E6C4C82}"
 	ProjectSection(SolutionItems) = preProject
+		branch-enforcer.yml = branch-enforcer.yml
 		.github\workflows\codeql.yml = .github\workflows\codeql.yml
 		.github\workflows\generate-documentation-site.yml = .github\workflows\generate-documentation-site.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.DevApp", "src\Mathematics.NET.DevApp\Mathematics.NET.DevApp.csproj", "{89C3482F-0027-483E-AAD7-5E12453915B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Renderer", "src\Mathematics.NET.Renderer\Mathematics.NET.Renderer.csproj", "{94744B01-DD3C-4623-992F-19C5CC2B475B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +63,10 @@ Global
 		{89C3482F-0027-483E-AAD7-5E12453915B3}.Debug|x64.Build.0 = Debug|x64
 		{89C3482F-0027-483E-AAD7-5E12453915B3}.Release|x64.ActiveCfg = Release|x64
 		{89C3482F-0027-483E-AAD7-5E12453915B3}.Release|x64.Build.0 = Release|x64
+		{94744B01-DD3C-4623-992F-19C5CC2B475B}.Debug|x64.ActiveCfg = Debug|x64
+		{94744B01-DD3C-4623-992F-19C5CC2B475B}.Debug|x64.Build.0 = Debug|x64
+		{94744B01-DD3C-4623-992F-19C5CC2B475B}.Release|x64.ActiveCfg = Release|x64
+		{94744B01-DD3C-4623-992F-19C5CC2B475B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +78,7 @@ Global
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{1B32D7FF-257B-49BB-B495-D64E5E6C4C82} = {9EB26D49-7E18-4404-BDCB-D26B827C4A22}
 		{89C3482F-0027-483E-AAD7-5E12453915B3} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
+		{94744B01-DD3C-4623-992F-19C5CC2B475B} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D9282-B1D9-42EC-A6A0-C1970012ED73}
