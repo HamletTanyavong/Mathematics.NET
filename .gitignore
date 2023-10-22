@@ -5,6 +5,7 @@
 
 # Manually-added items
 /src/Mathematics.NET.DevApp/*
+!/src/Mathematics.NET.DevApp/Mathematics.NET.DevApp.csproj
 !/src/Mathematics.NET.DevApp/Program.cs
 *.runsettings
 
