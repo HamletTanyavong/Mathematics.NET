@@ -43,7 +43,7 @@ public static class LinAlg
     /// <example>
     /// Suppose we want to find the eigenvalues of a 2x2 matrix. We can write the following to get them:
     /// <code language="cs">
-    /// Span2D&lt;ComplexNumber&gt; matrix = new ComplexNumber[2, 2]
+    /// Span2D&lt;Complex&gt; matrix = new Complex[2, 2]
     /// {
     ///     { new(1, 2), new(2, 3) },
     ///     { new(1, -2), new(3, 5) }

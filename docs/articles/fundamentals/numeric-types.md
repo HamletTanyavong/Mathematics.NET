@@ -2,7 +2,7 @@
 
 There are three numeric types that can be used to represent complex, real, and rational numbers in Mathematics.NET.
 
-All Mathematics.NET numbers implement the [IComplex\<T\>](https://mathematics.hamlettanyavong.com/api/Mathematics.NET.Core.IComplex-1.html) interface. Particularly useful is the fact that, unlike .NET runtime's [INumberBase\<T\>](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), `IComplex<T>` defines the `Conjugate` method; this is helpful in avoiding code duplication for calculations involving complex and real numbers.
+All Mathematics.NET numbers implement the `IComplex<T>` interface. Particularly useful is the fact that, unlike .NET runtime's [INumberBase\<T\>](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), `IComplex<T>` defines the `Conjugate` method; this is helpful in avoiding code duplication for calculations involving complex and real numbers.
 
 ## Floating-Point Types
 
@@ -10,13 +10,15 @@ Floating-point Mathematics.NET numbers are backed by the [double](https://github
 
 ### Complex Numbers
 
+The type that represents complex numbers in this package shares the same name with the one defined in `System.Numerics.Complex`. Therefore, if we wish to use this library with `System.Numerics`, we need to create an alias to resolve the ambigious reference. Adding the line `using Complex = Mathematics.NET.Core.Complex;` should suffice.
+
 To create a complex number, we can write
 ```csharp
-ComplexNumber z = new(3, 4);
+Complex z = new(3, 4);
 ```
 This represents the number $ z = 3+i4 $. We can also specify only one number to create a complex number with no imaginary part
 ```csharp
-ComplexNumber z = 3;
+Complex z = 3;
 ```
 which represents $ z = 3 $.
 
