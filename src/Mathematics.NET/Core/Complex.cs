@@ -1,4 +1,4 @@
-﻿// <copyright file="ComplexNumber.cs" company="Mathematics.NET">
+﻿// <copyright file="Complex.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -36,12 +36,12 @@ namespace Mathematics.NET.Core;
 /// <summary>Represents a complex number</summary>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct ComplexNumber
-    : IComplex<ComplexNumber>,
-      IDifferentiableFunctions<ComplexNumber>
+public readonly struct Complex
+    : IComplex<Complex>,
+      IDifferentiableFunctions<Complex>
 {
-    private static readonly ComplexNumber s_im = new(Real.Zero, Real.One);
-    private static readonly ComplexNumber s_imOverTwo = new(Real.Zero, Real.One / 2.0);
+    private static readonly Complex s_im = new(Real.Zero, Real.One);
+    private static readonly Complex s_imOverTwo = new(Real.Zero, Real.One / 2.0);
 
     // For division and reciprocal
 
@@ -52,22 +52,22 @@ public readonly struct ComplexNumber
     // 2.0 / (Precision.DblEpsilonVariant * Precision.DblEpsilonVariant)
     private const double s_scale = 4.05648192073033408e31;
 
-    public static readonly ComplexNumber Zero = Real.Zero;
-    public static readonly ComplexNumber One = Real.One;
+    public static readonly Complex Zero = Real.Zero;
+    public static readonly Complex One = Real.One;
 
-    public static readonly ComplexNumber NaN = new(Real.NaN, Real.NaN);
-    public static readonly ComplexNumber Infinity = new(Real.PositiveInfinity, Real.PositiveInfinity);
+    public static readonly Complex NaN = new(Real.NaN, Real.NaN);
+    public static readonly Complex Infinity = new(Real.PositiveInfinity, Real.PositiveInfinity);
 
     private readonly Real _real;
     private readonly Real _imaginary;
 
-    public ComplexNumber(Real real)
+    public Complex(Real real)
     {
         _real = real;
         _imaginary = 0.0;
     }
 
-    public ComplexNumber(Real real, Real imaginary)
+    public Complex(Real real, Real imaginary)
     {
         _real = real;
         _imaginary = imaginary;
@@ -87,25 +87,25 @@ public readonly struct ComplexNumber
     // Constants
     //
 
-    static ComplexNumber IComplex<ComplexNumber>.Zero => Zero;
-    static ComplexNumber IComplex<ComplexNumber>.One => One;
-    static ComplexNumber IComplex<ComplexNumber>.NaN => NaN;
+    static Complex IComplex<Complex>.Zero => Zero;
+    static Complex IComplex<Complex>.One => One;
+    static Complex IComplex<Complex>.NaN => NaN;
 
     //
     // Operators
     //
 
-    public static ComplexNumber operator -(ComplexNumber z) => new(-z._real, -z._imaginary);
+    public static Complex operator -(Complex z) => new(-z._real, -z._imaginary);
 
-    public static ComplexNumber operator +(ComplexNumber z, ComplexNumber w) => new(z._real + w._real, z._imaginary + w._imaginary);
+    public static Complex operator +(Complex z, Complex w) => new(z._real + w._real, z._imaginary + w._imaginary);
 
-    public static ComplexNumber operator -(ComplexNumber z, ComplexNumber w) => new(z._real - w._real, z._imaginary - w._imaginary);
+    public static Complex operator -(Complex z, Complex w) => new(z._real - w._real, z._imaginary - w._imaginary);
 
-    public static ComplexNumber operator *(ComplexNumber z, ComplexNumber w)
+    public static Complex operator *(Complex z, Complex w)
         => new(z._real * w._real - z._imaginary * w._imaginary, z._real * w._imaginary + w._real * z._imaginary);
 
     // From Michael Baudin and Robert L. Smith
-    public static ComplexNumber operator /(ComplexNumber z, ComplexNumber w)
+    public static Complex operator /(Complex z, Complex w)
     {
         var a = z._real.Value;
         var b = z._imaginary.Value;
@@ -209,13 +209,13 @@ public readonly struct ComplexNumber
     // Equality
     //
 
-    public static bool operator ==(ComplexNumber left, ComplexNumber right) => left.Re == right.Re && left.Im == right.Im;
+    public static bool operator ==(Complex left, Complex right) => left.Re == right.Re && left.Im == right.Im;
 
-    public static bool operator !=(ComplexNumber left, ComplexNumber right) => left.Re != right.Re || left.Im != right.Im;
+    public static bool operator !=(Complex left, Complex right) => left.Re != right.Re || left.Im != right.Im;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is ComplexNumber other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Complex other && Equals(other);
 
-    public bool Equals(ComplexNumber value) => _real.Equals(value.Re) && _imaginary.Equals(value.Im);
+    public bool Equals(Complex value) => _real.Equals(value.Re) && _imaginary.Equals(value.Im);
 
     public override int GetHashCode() => HashCode.Combine(_real, _imaginary);
 
@@ -317,35 +317,35 @@ public readonly struct ComplexNumber
     // Parsing
     //
 
-    public static ComplexNumber Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+    public static Complex Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-    public static ComplexNumber Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+    public static Complex Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-    public static ComplexNumber Parse(string s, NumberStyles style, IFormatProvider? provider)
+    public static Complex Parse(string s, NumberStyles style, IFormatProvider? provider)
     {
         ArgumentNullException.ThrowIfNull(s);
         return Parse((ReadOnlySpan<char>)s, style, provider);
     }
 
-    public static ComplexNumber Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
+    public static Complex Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
     {
-        if (!TryParse(s, style, provider, out ComplexNumber result))
+        if (!TryParse(s, style, provider, out Complex result))
         {
             return Infinity;
         }
         return result;
     }
 
-    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out ComplexNumber result)
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Complex result)
         => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out ComplexNumber result)
+    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Complex result)
         => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out ComplexNumber result)
+    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Complex result)
         => TryParse((ReadOnlySpan<char>)s, style, provider, out result);
 
-    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out ComplexNumber result)
+    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Complex result)
     {
         s = s.Trim();
         int openParenthesis = s.IndexOf('(');
@@ -379,16 +379,16 @@ public readonly struct ComplexNumber
     // Methods
     //
 
-    public static ComplexNumber Abs(ComplexNumber z) => Hypot(z._real.Value, z._imaginary.Value);
+    public static Complex Abs(Complex z) => Hypot(z._real.Value, z._imaginary.Value);
 
-    public static ComplexNumber Conjugate(ComplexNumber z) => new(z._real, -z._imaginary);
+    public static Complex Conjugate(Complex z) => new(z._real, -z._imaginary);
 
-    public static ComplexNumber FromDouble(double x) => new(x);
+    public static Complex FromDouble(double x) => new(x);
 
-    public static ComplexNumber FromPolarForm(Real magnitude, Real phase)
+    public static Complex FromPolarForm(Real magnitude, Real phase)
         => new(magnitude * Math.Cos(phase.Value), magnitude * Math.Sin(phase.Value));
 
-    public static ComplexNumber FromReal(Real x) => new(x);
+    public static Complex FromReal(Real x) => new(x);
 
     private static double Hypot(double x, double y)
     {
@@ -423,15 +423,15 @@ public readonly struct ComplexNumber
         }
     }
 
-    public static bool IsFinite(ComplexNumber z) => Real.IsFinite(z._real) && Real.IsFinite(z._imaginary);
+    public static bool IsFinite(Complex z) => Real.IsFinite(z._real) && Real.IsFinite(z._imaginary);
 
-    public static bool IsInfinity(ComplexNumber z) => Real.IsInfinity(z._real) || Real.IsInfinity(z._imaginary);
+    public static bool IsInfinity(Complex z) => Real.IsInfinity(z._real) || Real.IsInfinity(z._imaginary);
 
-    public static bool IsNaN(ComplexNumber z) => !IsInfinity(z) && !IsFinite(z);
+    public static bool IsNaN(Complex z) => !IsInfinity(z) && !IsFinite(z);
 
-    public static bool IsZero(ComplexNumber z) => Real.IsZero(z._real) && Real.IsZero(z._imaginary);
+    public static bool IsZero(Complex z) => Real.IsZero(z._real) && Real.IsZero(z._imaginary);
 
-    public static ComplexNumber Reciprocate(ComplexNumber z)
+    public static Complex Reciprocate(Complex z)
     {
         if (z._real == 0.0 && z._imaginary == 0.0)
         {
@@ -475,28 +475,28 @@ public readonly struct ComplexNumber
 
     // We will only consider the real part of complex numbers for these conversions.
 
-    public static bool TryConvertFromChecked<U>(U value, out ComplexNumber result)
+    public static bool TryConvertFromChecked<U>(U value, out Complex result)
         where U : INumberBase<U>
     {
         result = double.CreateChecked(value);
         return true;
     }
 
-    public static bool TryConvertFromSaturating<U>(U value, out ComplexNumber result)
+    public static bool TryConvertFromSaturating<U>(U value, out Complex result)
         where U : INumberBase<U>
     {
         result = double.CreateSaturating(value);
         return true;
     }
 
-    public static bool TryConvertFromTruncating<U>(U value, out ComplexNumber result)
+    public static bool TryConvertFromTruncating<U>(U value, out Complex result)
         where U : INumberBase<U>
     {
         result = double.CreateTruncating(value);
         return true;
     }
 
-    public static bool TryConvertToChecked<U>(ComplexNumber value, [MaybeNullWhen(false)] out U result)
+    public static bool TryConvertToChecked<U>(Complex value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
         if (value._imaginary == Real.Zero)
@@ -508,14 +508,14 @@ public readonly struct ComplexNumber
         return true;
     }
 
-    public static bool TryConvertToSaturating<U>(ComplexNumber value, [MaybeNullWhen(false)] out U result)
+    public static bool TryConvertToSaturating<U>(Complex value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
         result = U.CreateSaturating(value._real.Value);
         return true;
     }
 
-    public static bool TryConvertToTruncating<U>(ComplexNumber value, [MaybeNullWhen(false)] out U result)
+    public static bool TryConvertToTruncating<U>(Complex value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
         result = U.CreateTruncating(value._real.Value);
@@ -528,57 +528,57 @@ public readonly struct ComplexNumber
 
     // Exponential functions
 
-    public static ComplexNumber Exp(ComplexNumber z)
+    public static Complex Exp(Complex z)
     {
         Real expReal = Real.Exp(z._real);
         return new(expReal * Real.Cos(z._imaginary), expReal * Real.Sin(z._imaginary));
     }
 
-    public static ComplexNumber Exp2(ComplexNumber z) => Exp(Real.Ln2 * z);
+    public static Complex Exp2(Complex z) => Exp(Real.Ln2 * z);
 
-    public static ComplexNumber Exp10(ComplexNumber z) => Exp(Real.Ln10 * z);
+    public static Complex Exp10(Complex z) => Exp(Real.Ln10 * z);
 
     // Hyperbolic functions
 
-    public static ComplexNumber Acosh(ComplexNumber z) => Ln(z + Sqrt(z * z - One));
+    public static Complex Acosh(Complex z) => Ln(z + Sqrt(z * z - One));
 
-    public static ComplexNumber Asinh(ComplexNumber z) => Ln(z + Sqrt(z * z + One));
+    public static Complex Asinh(Complex z) => Ln(z + Sqrt(z * z + One));
 
-    public static ComplexNumber Atanh(ComplexNumber z) => 0.5 * Ln((One + z) / (One - z));
+    public static Complex Atanh(Complex z) => 0.5 * Ln((One + z) / (One - z));
 
-    public static ComplexNumber Cosh(ComplexNumber z)
+    public static Complex Cosh(Complex z)
         => new(Real.Cosh(z._real) * Real.Cos(z._imaginary), Real.Sinh(z._real) * Real.Sin(z._imaginary));
 
-    public static ComplexNumber Sinh(ComplexNumber z)
+    public static Complex Sinh(Complex z)
         => new(Real.Sinh(z._real) * Real.Cos(z._imaginary), Real.Cosh(z._real) * Real.Sin(z._imaginary));
 
-    public static ComplexNumber Tanh(ComplexNumber z) => Sinh(z) / Cosh(z);
+    public static Complex Tanh(Complex z) => Sinh(z) / Cosh(z);
 
     // Logarithmic functions
 
-    public static ComplexNumber Ln(ComplexNumber z) => new(Real.Ln(Hypot(z._real.Value, z._imaginary.Value)), Real.Atan2(z._imaginary, z._real));
+    public static Complex Ln(Complex z) => new(Real.Ln(Hypot(z._real.Value, z._imaginary.Value)), Real.Atan2(z._imaginary, z._real));
 
-    public static ComplexNumber Log(ComplexNumber z, ComplexNumber b) => Ln(z) / Ln(b);
+    public static Complex Log(Complex z, Complex b) => Ln(z) / Ln(b);
 
-    public static ComplexNumber Log2(ComplexNumber z) => Ln(z) / Ln(Real.Ln2);
+    public static Complex Log2(Complex z) => Ln(z) / Ln(Real.Ln2);
 
-    public static ComplexNumber Log10(ComplexNumber z) => Ln(z) / Ln(Real.Ln10);
+    public static Complex Log10(Complex z) => Ln(z) / Ln(Real.Ln10);
 
     // Power functions
 
-    public static ComplexNumber Pow(ComplexNumber z, ComplexNumber w) => Exp(w * Ln(z));
+    public static Complex Pow(Complex z, Complex w) => Exp(w * Ln(z));
 
     // Root functions
 
-    public static ComplexNumber Cbrt(ComplexNumber z) => Exp(Ln(z) / 3.0);
+    public static Complex Cbrt(Complex z) => Exp(Ln(z) / 3.0);
 
-    public static ComplexNumber Root(ComplexNumber z, ComplexNumber w) => Exp(Ln(z) / w);
+    public static Complex Root(Complex z, Complex w) => Exp(Ln(z) / w);
 
-    public static ComplexNumber Sqrt(ComplexNumber z) => Exp(0.5 * Ln(z));
+    public static Complex Sqrt(Complex z) => Exp(0.5 * Ln(z));
 
     // Trigonometric functions
 
-    public static ComplexNumber Acos(ComplexNumber z)
+    public static Complex Acos(Complex z)
     {
         AsinInternal(Math.Abs(z._real.Value), Math.Abs(z._imaginary.Value), out double b, out double bPrime, out double v);
 
@@ -604,7 +604,7 @@ public readonly struct ComplexNumber
         return new(u, v);
     }
 
-    public static ComplexNumber Asin(ComplexNumber z)
+    public static Complex Asin(Complex z)
     {
         AsinInternal(Math.Abs(z._real.Value), Math.Abs(z._imaginary.Value), out double b, out double bPrime, out double v);
 
@@ -722,9 +722,9 @@ public readonly struct ComplexNumber
         }
     }
 
-    public static ComplexNumber Atan(ComplexNumber z) => s_imOverTwo * Ln((s_im + z) / (s_im - z));
+    public static Complex Atan(Complex z) => s_imOverTwo * Ln((s_im + z) / (s_im - z));
 
-    public static ComplexNumber Cos(ComplexNumber z)
+    public static Complex Cos(Complex z)
     {
         Real p = Real.Exp(z._imaginary);
         Real q = Real.One / p;
@@ -733,7 +733,7 @@ public readonly struct ComplexNumber
         return new(Real.Cos(z._real) * cosh, -Real.Sin(z._real) * sinh);
     }
 
-    public static ComplexNumber Sin(ComplexNumber z)
+    public static Complex Sin(Complex z)
     {
         Real p = Real.Exp(z._imaginary);
         Real q = Real.One / p;
@@ -742,7 +742,7 @@ public readonly struct ComplexNumber
         return new(Real.Sin(z._real) * cosh, Real.Cos(z._real) * sinh);
     }
 
-    public static ComplexNumber Tan(ComplexNumber z)
+    public static Complex Tan(Complex z)
     {
         Real x2 = 2.0 * z._real;
         Real y2 = 2.0 * z._imaginary;
@@ -766,9 +766,9 @@ public readonly struct ComplexNumber
     // Implicit Operators
     //
 
-    public static implicit operator ComplexNumber(double x) => new(x);
+    public static implicit operator Complex(double x) => new(x);
 
-    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="ComplexNumber"/></summary>
+    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="Complex"/></summary>
     /// <param name="x">The value to convert</param>
-    public static implicit operator ComplexNumber(Real x) => new(x);
+    public static implicit operator Complex(Real x) => new(x);
 }

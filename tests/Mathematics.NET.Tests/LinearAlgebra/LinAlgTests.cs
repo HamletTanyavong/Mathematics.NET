@@ -40,7 +40,7 @@ public sealed class LinAlgTests
     {
         yield return new[]
         {
-            new ComplexNumber[2, 2]
+            new Complex[2, 2]
             {
                 { new(1, 2), new(2, 3) },
                 { new(1, -2), new(3, 5) }
@@ -65,7 +65,7 @@ public sealed class LinAlgTests
 
     [TestMethod]
     [DynamicData(nameof(GetComplexInputs), DynamicDataSourceType.Method)]
-    public void QRGramSchmidt_MatrixOfComplex_ReturnsQRDecompositionOfMatrix(ComplexNumber[,] matrix)
+    public void QRGramSchmidt_MatrixOfComplex_ReturnsQRDecompositionOfMatrix(Complex[,] matrix)
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 
     [TestMethod]

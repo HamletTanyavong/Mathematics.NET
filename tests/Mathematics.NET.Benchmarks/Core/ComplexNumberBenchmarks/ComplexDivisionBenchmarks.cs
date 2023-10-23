@@ -30,11 +30,11 @@ namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 [MemoryDiagnoser]
 public class ComplexDivisionBenchmarks
 {
-    public ComplexNumber Z { get; set; }
-    public ComplexNumber W { get; set; }
+    public Complex Z { get; set; }
+    public Complex W { get; set; }
 
-    public Complex X { get; set; }
-    public Complex Y { get; set; }
+    public SystemComplex X { get; set; }
+    public SystemComplex Y { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -47,13 +47,13 @@ public class ComplexDivisionBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Complex SystemDivision()
+    public SystemComplex SystemDivision()
     {
         return X / Y;
     }
 
     [Benchmark]
-    public ComplexNumber ComplexDivision_WithAggressiveInlining()
+    public Complex ComplexDivision_WithAggressiveInlining()
     {
         return Z / W;
     }

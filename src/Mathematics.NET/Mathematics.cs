@@ -38,7 +38,7 @@ public static class Mathematics
     //
 
     /// <summary>Represents the imaginary unit, $ i $</summary>
-    public static ComplexNumber Im => new(Real.Zero, Real.One);
+    public static Complex Im => new(Real.Zero, Real.One);
 
     /// <inheritdoc cref="Constants.E"/>
     public static Real E => Real.E;
