@@ -39,6 +39,8 @@ public struct Matrix3x3<T>
       ISquareMatrix<Matrix3x3<T>, T>
     where T : IComplex<T>
 {
+    private static readonly Matrix3x3<T> s_identity = CreateDiagonal(T.One, T.One, T.One);
+
     public const int Components = 9;
     public const int E1Components = 3;
     public const int E2Components = 3;
@@ -82,6 +84,7 @@ public struct Matrix3x3<T>
     static int IArrayRepresentable<T>.Components => Components;
     static int ITwoDimensionalArrayRepresentable<Matrix3x3<T>, T>.E1Components => E1Components;
     static int ITwoDimensionalArrayRepresentable<Matrix3x3<T>, T>.E2Components => E2Components;
+    static Matrix3x3<T> ISquareMatrix<Matrix3x3<T>, T>.Identity => s_identity;
     static Matrix3x3<T> ISquareMatrix<Matrix3x3<T>, T>.NaM => NaM;
 
     //

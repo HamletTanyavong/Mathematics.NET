@@ -34,6 +34,9 @@ public interface ISquareMatrix<T, U>
     where T : ITwoDimensionalArrayRepresentable<T, U>
     where U : IComplex<U>
 {
+    /// <summary>Gets the multiplicative identiy matrix</summary>
+    static abstract T Identity { get; }
+
     /// <summary>Represents a value that is not a matrix</summary>
     /// <remarks>This result will be returned when trying to invert a singular matrix</remarks>
     static abstract T NaM { get; }

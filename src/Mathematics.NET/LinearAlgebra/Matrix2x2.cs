@@ -39,6 +39,8 @@ public struct Matrix2x2<T>
       ISquareMatrix<Matrix2x2<T>, T>
     where T : IComplex<T>
 {
+    private static readonly Matrix2x2<T> s_identity = CreateDiagonal(T.One, T.One);
+
     public const int Components = 4;
     public const int E1Components = 2;
     public const int E2Components = 2;
@@ -67,6 +69,7 @@ public struct Matrix2x2<T>
     static int IArrayRepresentable<T>.Components => Components;
     static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E1Components => E1Components;
     static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E2Components => E2Components;
+    static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.Identity => s_identity;
     static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.NaM => NaM;
 
     //
@@ -97,7 +100,6 @@ public struct Matrix2x2<T>
             vrow = temp;
         }
     }
-
 
     //
     // Operators

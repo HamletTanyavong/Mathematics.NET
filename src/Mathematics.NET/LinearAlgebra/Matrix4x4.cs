@@ -41,6 +41,8 @@ public struct Matrix4x4<T>
       ISquareMatrix<Matrix4x4<T>, T>
     where T : IComplex<T>
 {
+    private static readonly Matrix4x4<T> s_identity = CreateDiagonal(T.One, T.One, T.One, T.One);
+
     public const int Components = 16;
     public const int E1Components = 4;
     public const int E2Components = 4;
@@ -101,6 +103,7 @@ public struct Matrix4x4<T>
     static int IArrayRepresentable<T>.Components => Components;
     static int ITwoDimensionalArrayRepresentable<Matrix4x4<T>, T>.E1Components => E1Components;
     static int ITwoDimensionalArrayRepresentable<Matrix4x4<T>, T>.E2Components => E2Components;
+    static Matrix4x4<T> ISquareMatrix<Matrix4x4<T>, T>.Identity => s_identity;
     static Matrix4x4<T> ISquareMatrix<Matrix4x4<T>, T>.NaM => NaM;
 
     //
