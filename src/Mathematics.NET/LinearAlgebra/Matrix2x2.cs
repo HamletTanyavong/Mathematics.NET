@@ -27,6 +27,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -34,6 +35,7 @@ namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 2x2 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+[StructLayout(LayoutKind.Sequential)]
 public struct Matrix2x2<T>
     : ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>,
       ISquareMatrix<Matrix2x2<T>, T>
