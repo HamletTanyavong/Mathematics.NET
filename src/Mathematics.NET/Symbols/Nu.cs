@@ -1,4 +1,4 @@
-﻿// <copyright file="IOneDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="Nu.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,13 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Relations;
+namespace Mathematics.NET.Symbols;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
-
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IOneDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<U>,
-      IEqualityRelation<T, bool>,
-      IFormattable
-    where T : IOneDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
+/// <summary>Represents the Greek letter nu, $ \nu $</summary>
+public readonly struct Nu : ISymbol
 {
-    /// <summary>The number of components in the one-dimensional array</summary>
-    static abstract int E1Components { get; }
+    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    public const string DisplayString = "nu";
 
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
-    U this[int index] { get; set; }
+    static string ISymbol.DisplayString => DisplayString;
 }

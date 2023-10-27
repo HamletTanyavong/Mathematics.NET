@@ -27,6 +27,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -34,11 +35,12 @@ namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 3x3 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-public struct Matrix3x3<T>
-    : ITwoDimensionalArrayRepresentable<Matrix3x3<T>, T>,
-      ISquareMatrix<Matrix3x3<T>, T>
+[StructLayout(LayoutKind.Sequential)]
+public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     where T : IComplex<T>
 {
+    private static readonly Matrix3x3<T> s_identity = CreateDiagonal(T.One, T.One, T.One);
+
     public const int Components = 9;
     public const int E1Components = 3;
     public const int E2Components = 3;
@@ -82,7 +84,8 @@ public struct Matrix3x3<T>
     static int IArrayRepresentable<T>.Components => Components;
     static int ITwoDimensionalArrayRepresentable<Matrix3x3<T>, T>.E1Components => E1Components;
     static int ITwoDimensionalArrayRepresentable<Matrix3x3<T>, T>.E2Components => E2Components;
-    static Matrix3x3<T> ISquareMatrix<Matrix3x3<T>, T>.NaM => NaM;
+    static Matrix3x3<T> ISquareMatrix<Matrix3x3<T>, T>.Identity => s_identity;
+    static Matrix3x3<T> IMatrix<Matrix3x3<T>, T>.NaM => NaM;
 
     //
     // Indexer

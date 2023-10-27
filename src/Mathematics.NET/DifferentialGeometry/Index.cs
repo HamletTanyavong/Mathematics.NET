@@ -1,4 +1,4 @@
-﻿// <copyright file="IOneDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="Index.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,25 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Relations;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.Symbols;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IOneDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<U>,
-      IEqualityRelation<T, bool>,
-      IFormattable
-    where T : IOneDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
+/// <summary>Represents a tensor index</summary>
+/// <typeparam name="T">An index position</typeparam>
+/// <typeparam name="U">A symbol</typeparam>
+public struct Index<T, U> : IIndex
+    where T : IIndexPosition
+    where U : ISymbol
 {
-    /// <summary>The number of components in the one-dimensional array</summary>
-    static abstract int E1Components { get; }
+    public static IIndex Instance => new Index<T, U>();
 
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
-    U this[int index] { get; set; }
+    //
+    // Formatting
+    //
+
+    public override string ToString() => ToString(null, null);
+
+    public string ToString(string? format, IFormatProvider? provider) => $"{T.DisplayString} {U.DisplayString}";
 }

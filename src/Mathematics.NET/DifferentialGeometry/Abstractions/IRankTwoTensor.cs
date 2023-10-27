@@ -1,4 +1,4 @@
-﻿// <copyright file="IOneDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="IRankTwoTensor.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,27 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Relations;
+using Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays</summary>
+/// <summary>Defines support for rank-two tensors</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IOneDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<U>,
-      IEqualityRelation<T, bool>,
-      IFormattable
-    where T : IOneDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
+/// <typeparam name="U">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+/// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="W">An index</typeparam>
+/// <typeparam name="X">An index</typeparam>
+public interface IRankTwoTensor<T, U, V, W, X> : ITwoDimensionalArrayRepresentable<T, V>
+    where T : IRankTwoTensor<T, U, V, W, X>
+    where U : ISquareMatrix<U, V>
+    where V : IComplex<V>
+    where W : IIndex
+    where X : IIndex
 {
-    /// <summary>The number of components in the one-dimensional array</summary>
-    static abstract int E1Components { get; }
+    /// <summary>Get the indices associated with this rank two tensor</summary>
+    IIndex[] Indices { get; }
 
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
-    U this[int index] { get; set; }
+    /// <summary>Convert a value that implements <see cref="IMatrix{T, U}"/> to one of type <typeparamref name="T"/></summary>
+    /// <param name="input">The value to convert</param>
+    static abstract implicit operator T(U input);
 }

@@ -27,6 +27,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -34,11 +35,12 @@ namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 2x2 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-public struct Matrix2x2<T>
-    : ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>,
-      ISquareMatrix<Matrix2x2<T>, T>
+[StructLayout(LayoutKind.Sequential)]
+public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     where T : IComplex<T>
 {
+    private static readonly Matrix2x2<T> s_identity = CreateDiagonal(T.One, T.One);
+
     public const int Components = 4;
     public const int E1Components = 2;
     public const int E2Components = 2;
@@ -67,7 +69,8 @@ public struct Matrix2x2<T>
     static int IArrayRepresentable<T>.Components => Components;
     static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E1Components => E1Components;
     static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E2Components => E2Components;
-    static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.NaM => NaM;
+    static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.Identity => s_identity;
+    static Matrix2x2<T> IMatrix<Matrix2x2<T>, T>.NaM => NaM;
 
     //
     // Indexer
@@ -97,7 +100,6 @@ public struct Matrix2x2<T>
             vrow = temp;
         }
     }
-
 
     //
     // Operators

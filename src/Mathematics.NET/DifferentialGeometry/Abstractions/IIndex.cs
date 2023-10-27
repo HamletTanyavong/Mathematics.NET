@@ -1,4 +1,4 @@
-﻿// <copyright file="IOneDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="IIndex.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Relations;
+namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
-
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IOneDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<U>,
-      IEqualityRelation<T, bool>,
-      IFormattable
-    where T : IOneDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
+/// <summary>Defines support for tensor indices</summary>
+public interface IIndex : IFormattable
 {
-    /// <summary>The number of components in the one-dimensional array</summary>
-    static abstract int E1Components { get; }
-
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
-    U this[int index] { get; set; }
+    /// <summary>Gets an instance of this struct</summary>
+    static abstract IIndex Instance { get; }
 }

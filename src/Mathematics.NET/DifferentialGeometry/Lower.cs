@@ -1,4 +1,4 @@
-﻿// <copyright file="IOneDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="Lower.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,15 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Relations;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IOneDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<U>,
-      IEqualityRelation<T, bool>,
-      IFormattable
-    where T : IOneDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
+/// <summary>Represents a lower index position</summary>
+public readonly struct Lower : IIndexPosition
 {
-    /// <summary>The number of components in the one-dimensional array</summary>
-    static abstract int E1Components { get; }
+    /// <inheritdoc cref="IIndexPosition.DisplayString"/>
+    public const string DisplayString = "Lower";
 
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
-    U this[int index] { get; set; }
+    static string IIndexPosition.DisplayString => DisplayString;
 }

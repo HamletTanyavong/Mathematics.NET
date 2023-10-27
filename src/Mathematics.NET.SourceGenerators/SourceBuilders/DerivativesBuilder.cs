@@ -38,9 +38,9 @@ public sealed class DerivativesBuilder
     private readonly string _assemblyName;
     private readonly ImmutableArray<MethodInformation> _methodInformation;
 
-    public DerivativesBuilder(Compilation compilationUnitSyntax, ImmutableArray<MethodInformation> methodInformation)
+    public DerivativesBuilder(Compilation compilation, ImmutableArray<MethodInformation> methodInformation)
     {
-        _assemblyName = compilationUnitSyntax.AssemblyName!;
+        _assemblyName = compilation.AssemblyName!;
         _methodInformation = methodInformation;
     }
 

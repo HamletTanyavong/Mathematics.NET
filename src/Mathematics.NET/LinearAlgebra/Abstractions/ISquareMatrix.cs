@@ -28,28 +28,22 @@
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for square matrices</summary>
-/// <typeparam name="T">A type that implements <see cref="ITwoDimensionalArrayRepresentable{T, U}"/></typeparam>
+/// <typeparam name="T">A type that implements <see cref="IMatrix{T, U}"/></typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ISquareMatrix<T, U>
-    where T : ITwoDimensionalArrayRepresentable<T, U>
+public interface ISquareMatrix<T, U> : IMatrix<T, U>
+    where T : ISquareMatrix<T, U>
     where U : IComplex<U>
 {
-    /// <summary>Represents a value that is not a matrix</summary>
-    /// <remarks>This result will be returned when trying to invert a singular matrix</remarks>
-    static abstract T NaM { get; }
+    /// <summary>Gets the multiplicative identiy matrix</summary>
+    static abstract T Identity { get; }
 
     /// <summary>Compute the determinant of the matrix</summary>
     /// <returns>The determinant</returns>
     U Determinant();
 
     /// <summary>Compute the inverse of the matrix</summary>
-    /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="NaM"/></returns>
+    /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="IMatrix{T, U}.NaM"/></returns>
     T Inverse();
-
-    /// <summary>Check if a value is not a matrix</summary>
-    /// <param name="matrix">The value to check</param>
-    /// <returns><see langword="true"/> if the value is not a matrix; otherwise, <see langword="false"/></returns>
-    static abstract bool IsNaM(T matrix);
 
     /// <summary>Compute the trace of the matrix</summary>
     /// <returns>The trace</returns>
