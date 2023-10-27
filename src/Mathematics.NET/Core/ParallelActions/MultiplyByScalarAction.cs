@@ -42,6 +42,8 @@ public readonly struct MultiplyByScalarAction<T> : IRefAction<T>
         _factor = factor;
     }
 
+    /// <summary>Executes the action on an item of type <typeparamref name="T"/></summary>
+    /// <param name="item">The item</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Invoke(ref T item) => item *= _factor;
 }
