@@ -1,4 +1,4 @@
-﻿// <copyright file="ITwoDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="IMatrix.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,29 +25,31 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Relations;
+using Mathematics.NET.Core.Operations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by two-dimensional arrays</summary>
+/// <summary>Defines support for matrices</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ITwoDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<U>,
-      IEqualityRelation<T, bool>,
-      IFormattable
-    where T : ITwoDimensionalArrayRepresentable<T, U>
+public interface IMatrix<T, U>
+    : ITwoDimensionalArrayRepresentable<T, U>,
+      IAdditionOperation<T, T>,
+      ISubtractionOperation<T, T>,
+      IMultiplicationOperation<T, T>
+    where T : IMatrix<T, U>
     where U : IComplex<U>
 {
-    /// <summary>The number of rows in the array</summary>
-    static abstract int E1Components { get; }
+    /// <summary>Represents a value that is not a matrix</summary>
+    /// <remarks>This will be returned, for instance, when trying to invert a singular matrix</remarks>
+    static abstract T NaM { get; }
 
-    /// <summary>The number of columns in the array</summary>
-    static abstract int E2Components { get; }
+    /// <summary>Check if a value is not a matrix</summary>
+    /// <param name="matrix">The value to check</param>
+    /// <returns><see langword="true"/> if the value is not a matrix; otherwise, <see langword="false"/></returns>
+    static abstract bool IsNaM(T matrix);
 
-    /// <summary>Get the element at the specified row and column</summary>
-    /// <param name="row">The row</param>
-    /// <param name="column">The column</param>
-    /// <returns>The element at the specified row and column</returns>
-    U this[int row, int column] { get; set; }
+    /// <summary>Compute the transpose of the matrix</summary>
+    /// <returns>The transpose</returns>
+    T Transpose();
 }

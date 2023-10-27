@@ -36,9 +36,7 @@ namespace Mathematics.NET.LinearAlgebra;
 /// <summary>Represents a 2x2 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix2x2<T>
-    : ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>,
-      ISquareMatrix<Matrix2x2<T>, T>
+public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     where T : IComplex<T>
 {
     private static readonly Matrix2x2<T> s_identity = CreateDiagonal(T.One, T.One);
@@ -72,7 +70,7 @@ public struct Matrix2x2<T>
     static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E1Components => E1Components;
     static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E2Components => E2Components;
     static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.Identity => s_identity;
-    static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.NaM => NaM;
+    static Matrix2x2<T> IMatrix<Matrix2x2<T>, T>.NaM => NaM;
 
     //
     // Indexer
