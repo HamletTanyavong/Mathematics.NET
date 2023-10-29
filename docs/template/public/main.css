@@ -13,55 +13,6 @@
   height: 50px;
 }
 
-/* Interactive Card */
-
-#interactive-card {
-  position: relative;
-  text-align: center;
-}
-
-  #interactive-card > .flare,
-  #overlay {
-    position: absolute;
-    transition: ease-out;
-    transition-duration: 250ms;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  #interactive-card:hover > #overlay,
-  #interactive-card:hover > .flare {
-    opacity: 1;
-  }
-
-#overlay {
-  width: 100%;
-  height: 100%;
-}
-
-#circle-one {
-  background-color: #ffffff80;
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-}
-
-#circle-two {
-  background-color: #ffd70040;
-  width: 64px;
-  height: 64px;
-  border-radius: 32px;
-}
-
-#circle-three {
-  background-color: #86cefa20;
-  width: 128px;
-  height: 128px;
-  border-radius: 64px;
-}
-
-/* Common */
-
 body {
   background-color: var(--bg-color-primary);
 }
