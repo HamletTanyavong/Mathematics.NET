@@ -140,7 +140,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> operator /(Rational<T> x, Rational<T> y)
     {
-        if (y._denominator == T.Zero)
+        if (y._numerator == T.Zero)
         {
             return NaN;
         }
@@ -248,6 +248,21 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public string ToString(string? format, IFormatProvider? provider)
     {
+        if (IsNaN(this))
+        {
+            return "NaN";
+        }
+
+        if (IsPositiveInfinity(this))
+        {
+            return "∞";
+        }
+
+        if (IsNegativeInfinity(this))
+        {
+            return "-∞";
+        }
+
         format = string.IsNullOrEmpty(format) ? "MINIMAL" : format.ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
@@ -271,6 +286,45 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
+        if (IsNaN(this))
+        {
+            if (destination.Length < 3)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            "NaN".CopyTo(destination);
+            charsWritten = 3;
+            return true;
+        }
+
+        if (IsPositiveInfinity(this))
+        {
+            if (destination.Length < 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            destination[0] = '∞';
+            charsWritten = 1;
+            return true;
+        }
+
+        if (IsNegativeInfinity(this))
+        {
+            if (destination.Length < 2)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            "-∞".CopyTo(destination);
+            charsWritten = 2;
+            return true;
+        }
+
         format = format.IsEmpty ? "MINIMAL" : format.ToString().ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
@@ -288,8 +342,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
                     return false;
                 }
 
-                charsWritten = 1;
                 destination[0] = '0';
+                charsWritten = 1;
                 return true;
             }
 
