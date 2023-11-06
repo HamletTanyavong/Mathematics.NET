@@ -260,7 +260,11 @@ public readonly struct Real
 
     public static Real Abs(Real x) => Math.Abs(x._value);
 
+    public static Real Ceiling(Real x) => Math.Ceiling(x._value);
+
     public static Real Conjugate(Real x) => x;
+
+    public static Real Floor(Real x) => Math.Floor(x._value);
 
     public static Real FromDouble(double x) => new(x);
 

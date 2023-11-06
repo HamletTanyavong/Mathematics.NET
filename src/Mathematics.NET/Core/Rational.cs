@@ -436,7 +436,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), T.Abs(x._denominator));
 
+    public static Rational<T> Ceiling(Rational<T> x)
+    {
+        var (quotient, remainder) = T.DivRem(x._numerator, x._denominator);
+        return remainder == T.Zero ? quotient : quotient + T.One;
+    }
+
     public static Rational<T> Conjugate(Rational<T> x) => x;
+
+    public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
     public static Rational<T> FromDouble(double x) => (Rational<T>)x;
 
