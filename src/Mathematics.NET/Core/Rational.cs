@@ -151,6 +151,17 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(num / gcd, den / gcd);
     }
 
+    public static Rational<T> operator %(Rational<T> x, Rational<T> y)
+    {
+        if (y._denominator == T.Zero)
+        {
+            return NaN;
+        }
+
+        var q = x / y;
+        return T.DivRem(q._numerator, q._denominator).Remainder;
+    }
+
     //
     // Equality
     //

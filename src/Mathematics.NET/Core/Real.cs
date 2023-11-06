@@ -148,6 +148,7 @@ public readonly struct Real
     public static Real operator -(Real left, Real right) => left._value - right._value;
     public static Real operator *(Real left, Real right) => left._value * right._value;
     public static Real operator /(Real left, Real right) => left._value / right._value;
+    public static Real operator %(Real left, Real right) => left._value % right._value;
 
     //
     // Equality

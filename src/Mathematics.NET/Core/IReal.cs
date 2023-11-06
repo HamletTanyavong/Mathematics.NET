@@ -35,6 +35,7 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">A type that implements the interface</typeparam>
 public interface IReal<T>
     : IComplex<T>,
+      IModuloOperation<T, T>,
       IInequalityRelations<T, bool>,
       IDecrementOperation<T>,
       IIncrementOperation<T>,
