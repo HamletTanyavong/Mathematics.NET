@@ -169,94 +169,94 @@ public record class GradientTape
 
     public Variable Add(Variable x, Variable y)
     {
-        _nodes.Add(new(Real.One, Real.One, x.Index, y.Index));
+        _nodes.Add(new(Real.One, Real.One, x._index, y._index));
         return new(_nodes.Count - 1, x.Value + y.Value);
     }
 
     public Variable Add(Real c, Variable x)
     {
-        _nodes.Add(new(Real.One, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c + x.Value);
     }
 
     public Variable Add(Variable x, Real c)
     {
-        _nodes.Add(new(Real.One, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value + c);
     }
 
     public Variable Divide(Variable x, Variable y)
     {
         var u = Real.One / y.Value;
-        _nodes.Add(new(Real.One / y.Value, -x.Value * u * u, x.Index, y.Index));
+        _nodes.Add(new(Real.One / y.Value, -x.Value * u * u, x._index, y._index));
         return new(_nodes.Count - 1, x.Value * u);
     }
 
     public Variable Divide(Real c, Variable x)
     {
         var u = Real.One / x.Value;
-        _nodes.Add(new(-c.Value * u * u, x.Index, _nodes.Count));
+        _nodes.Add(new(-c.Value * u * u, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value * u);
     }
 
     public Variable Divide(Variable x, Real c)
     {
         var u = Real.One / c.Value;
-        _nodes.Add(new(u, x.Index, _nodes.Count));
+        _nodes.Add(new(u, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value * u);
     }
 
     public Variable Modulo(Variable x, Variable y)
     {
-        _nodes.Add(new(Real.One, x.Value * Real.Floor(x.Value / y.Value), x.Index, y.Index));
+        _nodes.Add(new(Real.One, x.Value * Real.Floor(x.Value / y.Value), x._index, y._index));
         return new(_nodes.Count - 1, x.Value % y.Value);
     }
 
     public Variable Modulo(Real c, Variable x)
     {
-        _nodes.Add(new(c * Real.Floor(c / x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(c * Real.Floor(c / x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, c % x.Value);
     }
 
     public Variable Modulo(Variable x, Real c)
     {
-        _nodes.Add(new(Real.One, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value % c);
     }
 
     public Variable Multiply(Variable x, Variable y)
     {
-        _nodes.Add(new(y.Value, x.Value, x.Index, y.Index));
+        _nodes.Add(new(y.Value, x.Value, x._index, y._index));
         return new(_nodes.Count - 1, x.Value * y.Value);
     }
 
     public Variable Multiply(Real c, Variable x)
     {
-        _nodes.Add(new(c, x.Index, _nodes.Count));
+        _nodes.Add(new(c, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c * x.Value);
     }
 
     public Variable Multiply(Variable x, Real c)
     {
-        _nodes.Add(new(c, x.Index, _nodes.Count));
+        _nodes.Add(new(c, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value * c);
     }
 
     public Variable Subtract(Variable x, Variable y)
     {
-        _nodes.Add(new(Real.One, -Real.One, x.Index, y.Index));
+        _nodes.Add(new(Real.One, -Real.One, x._index, y._index));
         return new(_nodes.Count - 1, x.Value - y.Value);
     }
 
     public Variable Subtract(Real c, Variable x)
     {
-        _nodes.Add(new(-Real.One, x.Index, _nodes.Count));
+        _nodes.Add(new(-Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c - x.Value);
     }
 
     public Variable Subtract(Variable x, Real c)
     {
-        _nodes.Add(new(Real.One, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value - c);
     }
 
@@ -269,21 +269,21 @@ public record class GradientTape
     public Variable Exp(Variable x)
     {
         var exp = Real.Exp(x.Value);
-        _nodes.Add(new(exp, x.Index, _nodes.Count));
+        _nodes.Add(new(exp, x._index, _nodes.Count));
         return new(_nodes.Count - 1, exp);
     }
 
     public Variable Exp2(Variable x)
     {
         var exp2 = Real.Exp2(x.Value);
-        _nodes.Add(new(Real.Ln2 * exp2, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.Ln2 * exp2, x._index, _nodes.Count));
         return new(_nodes.Count - 1, exp2);
     }
 
     public Variable Exp10(Variable x)
     {
         var exp10 = Real.Exp10(x.Value);
-        _nodes.Add(new(Real.Ln10 * exp10, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.Ln10 * exp10, x._index, _nodes.Count));
         return new(_nodes.Count - 1, exp10);
     }
 
@@ -291,38 +291,38 @@ public record class GradientTape
 
     public Variable Acosh(Variable x)
     {
-        _nodes.Add(new(Real.One / (Complex.Sqrt(x.Value - Real.One) * Complex.Sqrt(x.Value + Real.One)).Re, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / (Complex.Sqrt(x.Value - Real.One) * Complex.Sqrt(x.Value + Real.One)).Re, x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Acosh(x.Value));
     }
 
     public Variable Asinh(Variable x)
     {
-        _nodes.Add(new(Real.One / Real.Sqrt(x.Value * x.Value + Real.One), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / Real.Sqrt(x.Value * x.Value + Real.One), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Asinh(x.Value));
     }
 
     public Variable Atanh(Variable x)
     {
-        _nodes.Add(new(Real.One / (Real.One - x.Value * x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / (Real.One - x.Value * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Atanh(x.Value));
     }
 
     public Variable Cosh(Variable x)
     {
-        _nodes.Add(new(Real.Sinh(x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.Sinh(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Cosh(x.Value));
     }
 
     public Variable Sinh(Variable x)
     {
-        _nodes.Add(new(Real.Cosh(x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.Cosh(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Sinh(x.Value));
     }
 
     public Variable Tanh(Variable x)
     {
         var u = Real.One / Real.Cosh(x.Value);
-        _nodes.Add(new(u * u, x.Index, _nodes.Count));
+        _nodes.Add(new(u * u, x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Tanh(x.Value));
     }
 
@@ -330,26 +330,26 @@ public record class GradientTape
 
     public Variable Ln(Variable x)
     {
-        _nodes.Add(new(Real.One / x.Value, x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / x.Value, x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Ln(x.Value));
     }
 
     public Variable Log(Variable x, Variable b)
     {
         var lnB = Real.Ln(b.Value);
-        _nodes.Add(new(Real.One / (x.Value * lnB), -Real.Ln(x.Value) / (b.Value * lnB * lnB), x.Index, b.Index));
+        _nodes.Add(new(Real.One / (x.Value * lnB), -Real.Ln(x.Value) / (b.Value * lnB * lnB), x._index, b._index));
         return new(_nodes.Count - 1, Real.Log(x.Value, b.Value));
     }
 
     public Variable Log2(Variable x)
     {
-        _nodes.Add(new(Real.One / (Real.Ln2 * x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / (Real.Ln2 * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Log2(x.Value));
     }
 
     public Variable Log10(Variable x)
     {
-        _nodes.Add(new(Real.One / (Real.Ln10 * x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / (Real.Ln10 * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Log10(x.Value));
     }
 
@@ -358,7 +358,7 @@ public record class GradientTape
     public Variable Pow(Variable x, Variable y)
     {
         var pow = Real.Pow(x.Value, y.Value);
-        _nodes.Add(new(y.Value * Real.Pow(x.Value, y.Value - Real.One), Real.Ln(x.Value) * pow, x.Index, y.Index));
+        _nodes.Add(new(y.Value * Real.Pow(x.Value, y.Value - Real.One), Real.Ln(x.Value) * pow, x._index, y._index));
         return new(_nodes.Count - 1, pow);
     }
 
@@ -367,21 +367,21 @@ public record class GradientTape
     public Variable Cbrt(Variable x)
     {
         var cbrt = Real.Cbrt(x.Value);
-        _nodes.Add(new(Real.One / (3.0 * cbrt * cbrt), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / (3.0 * cbrt * cbrt), x._index, _nodes.Count));
         return new(_nodes.Count - 1, cbrt);
     }
 
     public Variable Root(Variable x, Variable n)
     {
         var root = Real.Root(x.Value, n.Value);
-        _nodes.Add(new(root / (n.Value * x.Value), -Real.Ln(x.Value) * root / (n.Value * n.Value), x.Index, n.Index));
+        _nodes.Add(new(root / (n.Value * x.Value), -Real.Ln(x.Value) * root / (n.Value * n.Value), x._index, n._index));
         return new(_nodes.Count - 1, root);
     }
 
     public Variable Sqrt(Variable x)
     {
         var sqrt = Real.Sqrt(x.Value);
-        _nodes.Add(new(0.5 / sqrt, x.Index, _nodes.Count));
+        _nodes.Add(new(0.5 / sqrt, x._index, _nodes.Count));
         return new(_nodes.Count - 1, sqrt);
     }
 
@@ -389,45 +389,45 @@ public record class GradientTape
 
     public Variable Acos(Variable x)
     {
-        _nodes.Add(new(-Real.One / Real.Sqrt(Real.One - x.Value * x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(-Real.One / Real.Sqrt(Real.One - x.Value * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Acos(x.Value));
     }
 
     public Variable Asin(Variable x)
     {
-        _nodes.Add(new(Real.One / Real.Sqrt(Real.One - x.Value * x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / Real.Sqrt(Real.One - x.Value * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Asin(x.Value));
     }
 
     public Variable Atan(Variable x)
     {
-        _nodes.Add(new(Real.One / (Real.One + x.Value * x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.One / (Real.One + x.Value * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Atan(x.Value));
     }
 
     public Variable Atan2(Variable y, Variable x)
     {
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-        _nodes.Add(new(-x.Value * u, y.Value * u, y.Index, x.Index));
+        _nodes.Add(new(-x.Value * u, y.Value * u, y._index, x._index));
         return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
     }
 
     public Variable Cos(Variable x)
     {
-        _nodes.Add(new(-Real.Sin(x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(-Real.Sin(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Cos(x.Value));
     }
 
     public Variable Sin(Variable x)
     {
-        _nodes.Add(new(Real.Cos(x.Value), x.Index, _nodes.Count));
+        _nodes.Add(new(Real.Cos(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Sin(x.Value));
     }
 
     public Variable Tan(Variable x)
     {
         var sec = Real.One / Real.Cos(x.Value);
-        _nodes.Add(new(sec * sec, x.Index, _nodes.Count));
+        _nodes.Add(new(sec * sec, x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Tan(x.Value));
     }
 }

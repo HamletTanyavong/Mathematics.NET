@@ -30,15 +30,15 @@ namespace Mathematics.NET.AutoDiff;
 /// <summary>Represents a variable used in reverse-mode automatic differentiation</summary>
 public readonly record struct Variable
 {
-    internal Variable(int index, Real value)
-    {
-        Index = index;
-        Value = value;
-    }
-
     /// <summary>The index of the variable</summary>
-    public readonly int Index;
+    internal readonly int _index;
 
     /// <summary>The value of the variable</summary>
     public readonly Real Value;
+
+    internal Variable(int index, Real value)
+    {
+        _index = index;
+        Value = value;
+    }
 }
