@@ -35,6 +35,7 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">A type that implements the interface</typeparam>
 public interface IReal<T>
     : IComplex<T>,
+      IModuloOperation<T, T>,
       IInequalityRelations<T, bool>,
       IDecrementOperation<T>,
       IIncrementOperation<T>,
@@ -45,6 +46,16 @@ public interface IReal<T>
 {
     /// <summary>The backing value of the type</summary>
     double Value { get; }
+
+    /// <summary>Compute the ceiling function of a value</summary>
+    /// <param name="x">A value</param>
+    /// <returns>The smallest integer greater than or equal to the value</returns>
+    static abstract T Ceiling(T x);
+
+    /// <summary>Compute the floor function of a value</summary>
+    /// <param name="x">A value</param>
+    /// <returns>The largest integer less than or equal to the value</returns>
+    static abstract T Floor(T x);
 
     /// <summary>Check if a value is negative infinity</summary>
     /// <param name="x">The value to check</param>

@@ -140,7 +140,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> operator /(Rational<T> x, Rational<T> y)
     {
-        if (y._denominator == T.Zero)
+        if (y._numerator == T.Zero)
         {
             return NaN;
         }
@@ -149,6 +149,17 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         var den = x._denominator * y._numerator;
         var gcd = GCD(num, den);
         return new(num / gcd, den / gcd);
+    }
+
+    public static Rational<T> operator %(Rational<T> x, Rational<T> y)
+    {
+        if (y._denominator == T.Zero)
+        {
+            return NaN;
+        }
+
+        var q = x / y;
+        return T.DivRem(q._numerator, q._denominator).Remainder;
     }
 
     //
@@ -237,6 +248,21 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public string ToString(string? format, IFormatProvider? provider)
     {
+        if (IsNaN(this))
+        {
+            return "NaN";
+        }
+
+        if (IsPositiveInfinity(this))
+        {
+            return "∞";
+        }
+
+        if (IsNegativeInfinity(this))
+        {
+            return "-∞";
+        }
+
         format = string.IsNullOrEmpty(format) ? "MINIMAL" : format.ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
@@ -260,6 +286,45 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
+        if (IsNaN(this))
+        {
+            if (destination.Length < 3)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            "NaN".CopyTo(destination);
+            charsWritten = 3;
+            return true;
+        }
+
+        if (IsPositiveInfinity(this))
+        {
+            if (destination.Length < 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            destination[0] = '∞';
+            charsWritten = 1;
+            return true;
+        }
+
+        if (IsNegativeInfinity(this))
+        {
+            if (destination.Length < 2)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            "-∞".CopyTo(destination);
+            charsWritten = 2;
+            return true;
+        }
+
         format = format.IsEmpty ? "MINIMAL" : format.ToString().ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
@@ -277,8 +342,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
                     return false;
                 }
 
-                charsWritten = 1;
                 destination[0] = '0';
+                charsWritten = 1;
                 return true;
             }
 
@@ -436,7 +501,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), T.Abs(x._denominator));
 
+    public static Rational<T> Ceiling(Rational<T> x)
+    {
+        var (quotient, remainder) = T.DivRem(x._numerator, x._denominator);
+        return remainder == T.Zero ? quotient : quotient + T.One;
+    }
+
     public static Rational<T> Conjugate(Rational<T> x) => x;
+
+    public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
     public static Rational<T> FromDouble(double x) => (Rational<T>)x;
 
