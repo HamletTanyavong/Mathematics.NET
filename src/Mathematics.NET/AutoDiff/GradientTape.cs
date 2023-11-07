@@ -86,7 +86,7 @@ public record class GradientTape
 
     /// <summary>Print the nodes of the gradient tape to the console</summary>
     /// <param name="limit">The total number of nodes to print</param>
-    public void PrintNodes(int limit = 100)
+    public void PrintNodes(CancellationToken cancellationToken, int limit = 100)
     {
         const string tab = "    ";
 
@@ -96,20 +96,34 @@ public record class GradientTape
         int i = 0;
         while (i < Math.Min(_variableCount, limit))
         {
+            CheckForCancellation(cancellationToken);
             node = nodeSpan[i];
             Console.WriteLine($"Root Node {i}:");
             Console.WriteLine($"{tab}Weights: [{node.DX}, {node.DY}]");
             Console.WriteLine($"{tab}Parents: [{node.PX}, {node.PY}]");
             i++;
         }
+
+        CheckForCancellation(cancellationToken);
         Console.WriteLine();
+
         while (i < Math.Min(nodeSpan.Length, limit))
         {
+            CheckForCancellation(cancellationToken);
             node = nodeSpan[i];
             Console.WriteLine($"Node {i}:");
             Console.WriteLine($"{tab}Weights: [{node.DX}, {node.DY}]");
             Console.WriteLine($"{tab}Parents: [{node.PX}, {node.PY}]");
             i++;
+        }
+
+        static void CheckForCancellation(CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                Console.WriteLine("Print node operation cancelled");
+                cancellationToken.ThrowIfCancellationRequested();
+            }
         }
     }
 
