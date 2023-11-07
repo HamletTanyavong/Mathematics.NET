@@ -1,5 +1,7 @@
 <div align="center">
-    <img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/images/logo/mathematics.net.png" alt="Mathematics.NET Logo">
+    <a href="https://mathematics.hamlettanyavong.com">
+        <img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/images/logo/mathematics.net.png" alt="Mathematics.NET Logo">
+    </a>
     <h1>Mathematics.NET</h1>
     <p>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</p>
 </div>
