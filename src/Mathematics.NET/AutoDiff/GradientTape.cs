@@ -133,6 +133,11 @@ public record class GradientTape
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulation(out ReadOnlySpan<Real> gradients, double seed = 1.0)
     {
+        if (_variableCount == 0)
+        {
+            throw new Exception("Gradient tape contains no nodes");
+        }
+
         ReadOnlySpan<Node> nodesAsSpan = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodesAsSpan);
 
