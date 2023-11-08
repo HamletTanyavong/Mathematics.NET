@@ -66,6 +66,8 @@ namespace Mathematics.NET.AutoDiff;
 /// <summary>Represents a gradient tape</summary>
 public record class GradientTape
 {
+    // TODO: Measure performance with Stack<Node> instead of List<Node>
+    // TODO: Consider using array pools or something similar
     private List<Node> _nodes;
     private int _variableCount;
 
@@ -74,17 +76,28 @@ public record class GradientTape
         _nodes = new();
     }
 
-    /// <summary>Get the number of nodes on the gradient tape</summary>
+    /// <summary>Get the number of nodes on the gradient tape.</summary>
     public int NodeCount => _nodes.Count;
 
-    /// <summary>Get the number of variables that are being tracked</summary>
+    /// <summary>Get the number of variables that are being tracked.</summary>
     public int VariableCount => _variableCount;
 
     //
     // Methods
     //
 
-    /// <summary>Print the nodes of the gradient tape to the console</summary>
+    /// <summary>Create a variable for the gradient tape to track.</summary>
+    /// <param name="seed">A seed value</param>
+    /// <returns>A variable</returns>
+    public Variable CreateVariable(Real seed)
+    {
+        _nodes.Add(new(_variableCount));
+        Variable variable = new(_variableCount++, seed);
+        return variable;
+    }
+
+    /// <summary>Print the nodes of the gradient tape to the console.</summary>
+    /// <param name="cancellationToken">A cancellation token</param>
     /// <param name="limit">The total number of nodes to print</param>
     public void PrintNodes(CancellationToken cancellationToken, int limit = 100)
     {
@@ -127,7 +140,7 @@ public record class GradientTape
         }
     }
 
-    /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradients</summary>
+    /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradients.</summary>
     /// <param name="gradients">The gradients</param>
     /// <param name="seed">A seed value</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
@@ -135,13 +148,13 @@ public record class GradientTape
     {
         if (_variableCount == 0)
         {
-            throw new Exception("Gradient tape contains no nodes");
+            throw new Exception("Gradient tape contains no root nodes");
         }
 
-        ReadOnlySpan<Node> nodesAsSpan = CollectionsMarshal.AsSpan(_nodes);
-        ref var start = ref MemoryMarshal.GetReference(nodesAsSpan);
+        ReadOnlySpan<Node> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ref var start = ref MemoryMarshal.GetReference(nodes);
 
-        var length = nodesAsSpan.Length;
+        var length = nodes.Length;
         Span<Real> partialGradients = new Real[length];
         partialGradients[length - 1] = seed;
 
@@ -155,17 +168,6 @@ public record class GradientTape
         }
 
         gradients = partialGradients[.._variableCount];
-    }
-
-    /// <summary>Create a variable for the gradient tape to track</summary>
-    /// <param name="seed">A seed value</param>
-    /// <returns>A variable</returns>
-    public Variable CreateVariable(Real seed)
-    {
-        _nodes.Add(new(_variableCount));
-        Variable variable = new(_variableCount, seed);
-        _variableCount++;
-        return variable;
     }
 
     //
