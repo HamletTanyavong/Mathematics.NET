@@ -41,4 +41,6 @@ public readonly record struct Variable
         _index = index;
         Value = value;
     }
+
+    public override string ToString() => Value.ToString();
 }
