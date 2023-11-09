@@ -174,24 +174,40 @@ public record class GradientTape
     // Basic operations
     //
 
+    /// <summary>Add two variables</summary>
+    /// <param name="x">The first variable</param>
+    /// <param name="y">The second variable</param>
+    /// <returns>A variable</returns>
     public Variable Add(Variable x, Variable y)
     {
         _nodes.Add(new(Real.One, Real.One, x._index, y._index));
         return new(_nodes.Count - 1, x.Value + y.Value);
     }
 
+    /// <summary>Add a real value and a variable</summary>
+    /// <param name="c">A real value</param>
+    /// <param name="x">A variable</param>
+    /// <returns>A variable</returns>
     public Variable Add(Real c, Variable x)
     {
         _nodes.Add(new(Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c + x.Value);
     }
 
+    /// <summary>Add a variable and a real value</summary>
+    /// <param name="x">A variable</param>
+    /// <param name="c">A real value</param>
+    /// <returns>A variable</returns>
     public Variable Add(Variable x, Real c)
     {
         _nodes.Add(new(Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value + c);
     }
 
+    /// <summary>Divide two variables</summary>
+    /// <param name="x">A dividend</param>
+    /// <param name="y">A divisor</param>
+    /// <returns>A variable</returns>
     public Variable Divide(Variable x, Variable y)
     {
         var u = Real.One / y.Value;
@@ -199,6 +215,10 @@ public record class GradientTape
         return new(_nodes.Count - 1, x.Value * u);
     }
 
+    /// <summary>Divide a real value by a variable</summary>
+    /// <param name="c">A real dividend</param>
+    /// <param name="x">A variable divisor</param>
+    /// <returns>A variable</returns>
     public Variable Divide(Real c, Variable x)
     {
         var u = Real.One / x.Value;
@@ -206,6 +226,10 @@ public record class GradientTape
         return new(_nodes.Count - 1, x.Value * u);
     }
 
+    /// <summary>Divide a variable by a real value</summary>
+    /// <param name="x">A variable dividend</param>
+    /// <param name="c">A real divisor</param>
+    /// <returns>A variable</returns>
     public Variable Divide(Variable x, Real c)
     {
         var u = Real.One / c.Value;
@@ -213,54 +237,90 @@ public record class GradientTape
         return new(_nodes.Count - 1, x.Value * u);
     }
 
+    /// <summary>Compute the modulo of a variable given a divisor</summary>
+    /// <param name="x">A dividend</param>
+    /// <param name="y">A divisor</param>
+    /// <returns><paramref name="x"/> mod <paramref name="y"/></returns>
     public Variable Modulo(Variable x, Variable y)
     {
         _nodes.Add(new(Real.One, x.Value * Real.Floor(x.Value / y.Value), x._index, y._index));
         return new(_nodes.Count - 1, x.Value % y.Value);
     }
 
+    /// <summary>Compute the modulo of a real value given a divisor</summary>
+    /// <param name="c">A real dividend</param>
+    /// <param name="x">A variable divisor</param>
+    /// <returns><paramref name="c"/> mod <paramref name="x"/></returns>
     public Variable Modulo(Real c, Variable x)
     {
         _nodes.Add(new(c * Real.Floor(c / x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, c % x.Value);
     }
 
+    /// <summary>Compute the modulo of a variable given a divisor</summary>
+    /// <param name="x">A variable dividend</param>
+    /// <param name="c">A real divisor</param>
+    /// <returns><paramref name="x"/> mod <paramref name="c"/></returns>
     public Variable Modulo(Variable x, Real c)
     {
         _nodes.Add(new(Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value % c);
     }
 
+    /// <summary>Multiply two variables</summary>
+    /// <param name="x">The first variable</param>
+    /// <param name="y">The second variable</param>
+    /// <returns>A variable</returns>
     public Variable Multiply(Variable x, Variable y)
     {
         _nodes.Add(new(y.Value, x.Value, x._index, y._index));
         return new(_nodes.Count - 1, x.Value * y.Value);
     }
 
+    /// <summary>Multiply a real value by a variable</summary>
+    /// <param name="c">A real value</param>
+    /// <param name="x">A variable</param>
+    /// <returns>A variable</returns>
     public Variable Multiply(Real c, Variable x)
     {
         _nodes.Add(new(c, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c * x.Value);
     }
 
+    /// <summary>Multiply a variable by a real value</summary>
+    /// <param name="x">A variable</param>
+    /// <param name="c">A real value</param>
+    /// <returns>A variable</returns>
     public Variable Multiply(Variable x, Real c)
     {
         _nodes.Add(new(c, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value * c);
     }
 
+    /// <summary>Subract two variables</summary>
+    /// <param name="x">The first variable</param>
+    /// <param name="y">The second variable</param>
+    /// <returns>A variable</returns>
     public Variable Subtract(Variable x, Variable y)
     {
         _nodes.Add(new(Real.One, -Real.One, x._index, y._index));
         return new(_nodes.Count - 1, x.Value - y.Value);
     }
 
+    /// <summary>Subtract a variable from a real value</summary>
+    /// <param name="c">A real value</param>
+    /// <param name="x">A variable</param>
+    /// <returns>A variable</returns>
     public Variable Subtract(Real c, Variable x)
     {
         _nodes.Add(new(-Real.One, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c - x.Value);
     }
 
+    /// <summary>Subtract a real value from a variable</summary>
+    /// <param name="x">A variable</param>
+    /// <param name="c">A real value</param>
+    /// <returns>A variable</returns>
     public Variable Subtract(Variable x, Real c)
     {
         _nodes.Add(new(Real.One, x._index, _nodes.Count));
@@ -273,6 +333,7 @@ public record class GradientTape
 
     // Exponential functions
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp(T)"/>
     public Variable Exp(Variable x)
     {
         var exp = Real.Exp(x.Value);
@@ -280,6 +341,7 @@ public record class GradientTape
         return new(_nodes.Count - 1, exp);
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp2(T)"/>
     public Variable Exp2(Variable x)
     {
         var exp2 = Real.Exp2(x.Value);
@@ -287,6 +349,7 @@ public record class GradientTape
         return new(_nodes.Count - 1, exp2);
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp10(T)"/>
     public Variable Exp10(Variable x)
     {
         var exp10 = Real.Exp10(x.Value);
@@ -296,36 +359,42 @@ public record class GradientTape
 
     // Hyperbolic functions
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Acosh(T)"/>
     public Variable Acosh(Variable x)
     {
         _nodes.Add(new(Real.One / (Complex.Sqrt(x.Value - Real.One) * Complex.Sqrt(x.Value + Real.One)).Re, x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Acosh(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Asinh(T)"/>
     public Variable Asinh(Variable x)
     {
         _nodes.Add(new(Real.One / Real.Sqrt(x.Value * x.Value + Real.One), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Asinh(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Atanh(T)"/>
     public Variable Atanh(Variable x)
     {
         _nodes.Add(new(Real.One / (Real.One - x.Value * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Atanh(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cosh(T)"/>
     public Variable Cosh(Variable x)
     {
         _nodes.Add(new(Real.Sinh(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Cosh(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sinh(T)"/>
     public Variable Sinh(Variable x)
     {
         _nodes.Add(new(Real.Cosh(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Sinh(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Tanh(T)"/>
     public Variable Tanh(Variable x)
     {
         var u = Real.One / Real.Cosh(x.Value);
@@ -335,12 +404,14 @@ public record class GradientTape
 
     // Logarithmic functions
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Ln(T)"/>
     public Variable Ln(Variable x)
     {
         _nodes.Add(new(Real.One / x.Value, x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Ln(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log(T, T)"/>
     public Variable Log(Variable x, Variable b)
     {
         var lnB = Real.Ln(b.Value);
@@ -348,12 +419,14 @@ public record class GradientTape
         return new(_nodes.Count - 1, Real.Log(x.Value, b.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log2(T)"/>
     public Variable Log2(Variable x)
     {
         _nodes.Add(new(Real.One / (Real.Ln2 * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Log2(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log10(T)"/>
     public Variable Log10(Variable x)
     {
         _nodes.Add(new(Real.One / (Real.Ln10 * x.Value), x._index, _nodes.Count));
@@ -362,6 +435,7 @@ public record class GradientTape
 
     // Power functions
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     public Variable Pow(Variable x, Variable y)
     {
         var pow = Real.Pow(x.Value, y.Value);
@@ -371,6 +445,7 @@ public record class GradientTape
 
     // Root functions
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cbrt(T)"/>
     public Variable Cbrt(Variable x)
     {
         var cbrt = Real.Cbrt(x.Value);
@@ -378,6 +453,7 @@ public record class GradientTape
         return new(_nodes.Count - 1, cbrt);
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Root(T, T)"/>
     public Variable Root(Variable x, Variable n)
     {
         var root = Real.Root(x.Value, n.Value);
@@ -385,6 +461,7 @@ public record class GradientTape
         return new(_nodes.Count - 1, root);
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sqrt(T)"/>
     public Variable Sqrt(Variable x)
     {
         var sqrt = Real.Sqrt(x.Value);
@@ -394,18 +471,21 @@ public record class GradientTape
 
     // Trigonometric functions
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Acos(T)"/>
     public Variable Acos(Variable x)
     {
         _nodes.Add(new(-Real.One / Real.Sqrt(Real.One - x.Value * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Acos(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Asin(T)"/>
     public Variable Asin(Variable x)
     {
         _nodes.Add(new(Real.One / Real.Sqrt(Real.One - x.Value * x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Asin(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Atan(T)"/>
     public Variable Atan(Variable x)
     {
         _nodes.Add(new(Real.One / (Real.One + x.Value * x.Value), x._index, _nodes.Count));
@@ -419,18 +499,21 @@ public record class GradientTape
         return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cos(T)"/>
     public Variable Cos(Variable x)
     {
         _nodes.Add(new(-Real.Sin(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Cos(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sin(T)"/>
     public Variable Sin(Variable x)
     {
         _nodes.Add(new(Real.Cos(x.Value), x._index, _nodes.Count));
         return new(_nodes.Count - 1, Real.Sin(x.Value));
     }
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Tan(T)"/>
     public Variable Tan(Variable x)
     {
         var sec = Real.One / Real.Cos(x.Value);
