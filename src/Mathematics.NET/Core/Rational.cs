@@ -612,6 +612,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return x._numerator > T.Zero ? 1 : -1;
     }
 
+    public static Real ToReal(Rational<T> x)
+        => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
+
     public static bool TryConvertFromChecked<U>(U value, out Rational<T> result)
         where U : INumberBase<U>
     {
@@ -715,7 +718,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static explicit operator checked Real(Rational<T> x) => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
 
-    public static explicit operator Real(Rational<T> x) => double.CreateSaturating(x._numerator) / double.CreateSaturating(x._denominator);
+    public static explicit operator Real(Rational<T> x) => ToReal(x);
 
     public static explicit operator checked double(Rational<T> x) => double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator);
 

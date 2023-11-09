@@ -91,4 +91,10 @@ public interface IReal<T>
     /// </returns>
     /// <exception cref="ArithmeticException">An overflow or underflow has occurred</exception>
     static abstract int Sign(T x);
+
+    /// <summary>Create a real number from a type that implements <typeparamref name="T"/></summary>
+    /// <param name="x">A type that implements <typeparamref name="T"/></param>
+    /// <returns>A real value</returns>
+    /// <exception cref="OverflowException">Thrown when the value cannot be converted to the type <see cref="Real"/></exception>
+    static abstract Real ToReal(T x);
 }

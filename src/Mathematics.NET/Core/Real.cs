@@ -300,6 +300,8 @@ public readonly struct Real
 
     public static int Sign(Real x) => Math.Sign(x._value);
 
+    public static Real ToReal(Real x) => x;
+
     public static bool TryConvertFromChecked<U>(U value, out Real result)
         where U : INumberBase<U>
     {
