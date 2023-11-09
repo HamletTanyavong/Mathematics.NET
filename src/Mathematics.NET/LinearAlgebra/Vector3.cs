@@ -178,6 +178,18 @@ public struct Vector3<T> : IVector<Vector3<T>, T>
     // Methods
     //
 
+    /// <summary>Compute the cross product of two vectors.</summary>
+    /// <param name="left">The first vector</param>
+    /// <param name="right">The second vector</param>
+    /// <returns>The cross product</returns>
+    public static Vector3<T> Cross(Vector3<T> left, Vector3<T> right)
+    {
+        return new(
+            left.X2 * right.X3 - left.X3 * right.X2,
+            left.X3 * right.X1 - left.X1 * right.X3,
+            left.X1 * right.X2 - left.X2 * right.X1);
+    }
+
     public static T InnerProduct(Vector3<T> left, Vector3<T> right)
         => T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3;
 
