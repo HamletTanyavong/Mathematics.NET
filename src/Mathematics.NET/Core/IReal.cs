@@ -47,6 +47,12 @@ public interface IReal<T>
     /// <summary>The backing value of the type</summary>
     double Value { get; }
 
+    /// <summary>Compute a quadrant-aware arctangent given two values</summary>
+    /// <param name="y">The first value</param>
+    /// <param name="x">The second value</param>
+    /// <returns>An angle</returns>
+    static abstract Real Atan2(T y, T x);
+
     /// <summary>Compute the ceiling function of a value</summary>
     /// <param name="x">A value</param>
     /// <returns>The smallest integer greater than or equal to the value</returns>
@@ -91,4 +97,10 @@ public interface IReal<T>
     /// </returns>
     /// <exception cref="ArithmeticException">An overflow or underflow has occurred</exception>
     static abstract int Sign(T x);
+
+    /// <summary>Create a real number from a type that implements <typeparamref name="T"/></summary>
+    /// <param name="x">A type that implements <typeparamref name="T"/></param>
+    /// <returns>A real value</returns>
+    /// <exception cref="OverflowException">Thrown when the value cannot be converted to the type <see cref="Real"/></exception>
+    static abstract Real ToReal(T x);
 }

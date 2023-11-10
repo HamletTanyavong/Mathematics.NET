@@ -194,12 +194,16 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         return string.Format(provider, builder.ToString());
     }
 
+    /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
+    /// <param name="e11">The $ e_{11} $ component</param>
+    /// <param name="e22">The $ e_{22} $ component</param>
+    /// <returns>A diagonal matrix</returns>
     public static Matrix2x2<T> CreateDiagonal(T e11, T e22)
         => new(e11, T.Zero, T.Zero, e22);
 
     public readonly T Determinant() => E11 * E22 - E12 * E21;
 
-    public Matrix2x2<T> Inverse()
+    public readonly Matrix2x2<T> Inverse()
     {
         var det = Determinant();
         if (det == T.Zero)
@@ -214,7 +218,7 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     public static bool IsNaM(Matrix2x2<T> matrix)
         => T.IsNaN(matrix.E11) && T.IsNaN(matrix.E22);
 
-    public T Trace() => E11 + E22;
+    public readonly T Trace() => E11 + E22;
 
-    public Matrix2x2<T> Transpose() => new(E11, E21, E12, E22);
+    public readonly Matrix2x2<T> Transpose() => new(E11, E21, E12, E22);
 }

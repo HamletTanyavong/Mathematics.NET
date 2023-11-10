@@ -285,6 +285,12 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     // Methods
     //
 
+    /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
+    /// <param name="e11">The $ e_{11} $ component</param>
+    /// <param name="e22">The $ e_{22} $ component</param>
+    /// <param name="e33">The $ e_{33} $ component</param>
+    /// <param name="e44">The $ e_{44} $ component</param>
+    /// <returns>A diagonal matrix</returns>
     public static Matrix4x4<T> CreateDiagonal(T e11, T e22, T e33, T e44)
     {
         return new(
@@ -315,7 +321,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     }
 
     // TODO: Optimize
-    public Matrix4x4<T> Inverse()
+    public readonly Matrix4x4<T> Inverse()
     {
         T a = E11, b = E12, c = E13, d = E14;
         T e = E21, f = E22, g = E23, h = E24;
@@ -383,9 +389,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     public static bool IsNaM(Matrix4x4<T> matrix)
         => T.IsNaN(matrix.E11) && T.IsNaN(matrix.E22) && T.IsNaN(matrix.E33) && T.IsNaN(matrix.E44);
 
-    public T Trace() => E11 + E22 + E33 + E44;
+    public readonly T Trace() => E11 + E22 + E33 + E44;
 
-    public Matrix4x4<T> Transpose()
+    public readonly Matrix4x4<T> Transpose()
     {
         return new(
             E11, E21, E31, E41,

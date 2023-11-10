@@ -153,7 +153,7 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
     public static T InnerProduct(Vector2<T> left, Vector2<T> right)
         => T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2;
 
-    public Real Norm()
+    public readonly Real Norm()
     {
         var x0 = (X1 * T.Conjugate(X1)).Re;
         var x1 = (X2 * T.Conjugate(X2)).Re;
@@ -164,7 +164,7 @@ public struct Vector2<T> : IVector<Vector2<T>, T>
         return max * Real.Sqrt(x0 / maxSquared + x1 / maxSquared);
     }
 
-    public Vector2<T> Normalize()
+    public readonly Vector2<T> Normalize()
     {
         var norm = Norm();
         return new(X1 / norm, X2 / norm);

@@ -501,6 +501,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), T.Abs(x._denominator));
 
+    public static Real Atan2(Rational<T> y, Rational<T> x) => Real.Atan2(ToReal(y), ToReal(x));
+
     public static Rational<T> Ceiling(Rational<T> x)
     {
         var (quotient, remainder) = T.DivRem(x._numerator, x._denominator);
@@ -612,6 +614,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return x._numerator > T.Zero ? 1 : -1;
     }
 
+    public static Real ToReal(Rational<T> x)
+        => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
+
     public static bool TryConvertFromChecked<U>(U value, out Rational<T> result)
         where U : INumberBase<U>
     {
@@ -715,7 +720,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static explicit operator checked Real(Rational<T> x) => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
 
-    public static explicit operator Real(Rational<T> x) => double.CreateSaturating(x._numerator) / double.CreateSaturating(x._denominator);
+    public static explicit operator Real(Rational<T> x) => ToReal(x);
 
     public static explicit operator checked double(Rational<T> x) => double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator);
 

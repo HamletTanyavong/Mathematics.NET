@@ -192,7 +192,7 @@ public struct Vector4<T> : IVector<Vector4<T>, T>
     public static T InnerProduct(Vector4<T> left, Vector4<T> right)
         => T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3 + T.Conjugate(left.X4) * right.X4;
 
-    public Real Norm()
+    public readonly Real Norm()
     {
         Span<Real> components = stackalloc Real[4];
 
@@ -220,7 +220,7 @@ public struct Vector4<T> : IVector<Vector4<T>, T>
         return max * Real.Sqrt(partialSum);
     }
 
-    public Vector4<T> Normalize()
+    public readonly Vector4<T> Normalize()
     {
         var norm = Norm();
         return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);

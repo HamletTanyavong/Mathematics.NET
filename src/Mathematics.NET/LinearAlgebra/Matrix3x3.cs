@@ -247,6 +247,11 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     // Methods
     //
 
+    /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
+    /// <param name="e11">The $ e_{11} $ component</param>
+    /// <param name="e22">The $ e_{22} $ component</param>
+    /// <param name="e33">The $ e_{33} $ component</param>
+    /// <returns>A diagonal matrix</returns>
     public static Matrix3x3<T> CreateDiagonal(T e11, T e22, T e33)
     {
         return new(
@@ -268,7 +273,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return a * ei_fh - b * di_fg + c * dh_eg;
     }
 
-    public Matrix3x3<T> Inverse()
+    public readonly Matrix3x3<T> Inverse()
     {
         T a = E11, b = E12, c = E13;
         T d = E21, e = E22, f = E23;
@@ -313,9 +318,9 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     public static bool IsNaM(Matrix3x3<T> matrix)
         => T.IsNaN(matrix.E11) && T.IsNaN(matrix.E22) && T.IsNaN(matrix.E33);
 
-    public T Trace() => E11 + E22 + E33;
+    public readonly T Trace() => E11 + E22 + E33;
 
-    public Matrix3x3<T> Transpose()
+    public readonly Matrix3x3<T> Transpose()
     {
         return new(
             E11, E21, E31,
