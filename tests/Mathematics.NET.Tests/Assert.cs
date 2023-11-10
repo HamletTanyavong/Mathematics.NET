@@ -29,20 +29,26 @@ using CommunityToolkit.HighPerformance;
 
 namespace Mathematics.NET.Tests;
 
+/// <summary>Assert helpers for Mathemtics.NET</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 public sealed class Assert<T>
     where T : IComplex<T>
 {
-    public static void AreApproximatelyEqual(T expected, T actual, Real delta)
+    /// <summary>Assert that two values are approximately equal.</summary>
+    /// <param name="expected">The expected value</param>
+    /// <param name="actual">The actual value</param>
+    /// <param name="epsilon">A margin of error</param>
+    public static void AreApproximatelyEqual(T expected, T actual, Real epsilon)
     {
         if (T.IsNaN(expected) && T.IsNaN(actual) || T.IsInfinity(expected) && T.IsInfinity(actual))
         {
             return;
         }
 
-        if (!Precision.AreApproximatelyEqual(expected, actual, delta))
+        if (!Precision.AreApproximatelyEqual(expected, actual, epsilon))
         {
             Assert.Fail($$"""
-                Actual value does not fall within the specifed margin of error, {{delta}}:
+                Actual value does not fall within the specifed margin of error, {{epsilon}}:
 
                 Expected: {{expected}}
                 Actual: {{actual}}
@@ -50,7 +56,41 @@ public sealed class Assert<T>
         }
     }
 
-    public static void ElementsAreApproximatelyEqual(Span2D<T> expected, Span2D<T> actual, Real delta)
+    /// <summary>Assert that the elements in two read-only spans are approximately equal.</summary>
+    /// <param name="expected">A read-only span of expected values</param>
+    /// <param name="actual">A read-only span of actual values</param>
+    /// <param name="epsilon">A margin of error</param>
+    public static void ElementsAreApproximatelyEqual(ReadOnlySpan<T> expected, ReadOnlySpan<T> actual, Real epsilon)
+    {
+        if (expected.Length != actual.Length)
+        {
+            Assert.Fail($"Length of the actual array, {actual.Length}, does not match the length of the expected array, {expected.Length}");
+        }
+
+        for (int i = 0; i < expected.Length; i++)
+        {
+            if (T.IsNaN(expected[i]) && T.IsNaN(actual[i]) || T.IsInfinity(expected[i]) && T.IsInfinity(actual[i]))
+            {
+                continue;
+            }
+
+            if (!Precision.AreApproximatelyEqual(expected[i], actual[i], epsilon))
+            {
+                Assert.Fail($$"""
+                    Actual value at index {{i}} does not fall within the specified margin of error, {{epsilon}}
+
+                    Expected: {{expected[i]}}
+                    Actual: {{actual[i]}}
+                    """);
+            }
+        }
+    }
+
+    /// <summary>Assert that the elements in two 2D, read-only spans are approximately equal.</summary>
+    /// <param name="expected">A 2D, read-only span of expected values</param>
+    /// <param name="actual">A 2D, read-only span of actual values</param>
+    /// <param name="epsilon">A margin of error</param>
+    public static void ElementsAreApproximatelyEqual(ReadOnlySpan2D<T> expected, ReadOnlySpan2D<T> actual, Real epsilon)
     {
         if (expected.Height != actual.Height || expected.Width != actual.Width)
         {
@@ -66,10 +106,10 @@ public sealed class Assert<T>
                     continue;
                 }
 
-                if (!Precision.AreApproximatelyEqual(expected[i, j], actual[i, j], delta))
+                if (!Precision.AreApproximatelyEqual(expected[i, j], actual[i, j], epsilon))
                 {
                     Assert.Fail($$"""
-                        Actual value at row {{i}} and column {{j}} does not fall within the specifed margin of error, {{delta}}:
+                        Actual value at row {{i}} and column {{j}} does not fall within the specifed margin of error, {{epsilon}}:
 
                         Expected: {{expected[i, j]}}
                         Actual: {{actual[i, j]}}
