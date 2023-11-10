@@ -496,7 +496,7 @@ public record class GradientTape
     public Variable Atan2(Variable y, Variable x)
     {
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-        _nodes.Add(new(-x.Value * u, y.Value * u, y._index, x._index));
+        _nodes.Add(new(x.Value * u, -y.Value * u, y._index, x._index));
         return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
     }
 
