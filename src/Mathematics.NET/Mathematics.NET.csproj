@@ -11,7 +11,7 @@
     <PackageIcon>mathematics.net.png</PackageIcon>
     <Authors>Hamlet Tanyavong</Authors>
     <Description>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</Description>
-    <PackageTags>mathematics; math; maths</PackageTags>
+    <PackageTags>mathematics; math; rational; autodiff; tensors;</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
