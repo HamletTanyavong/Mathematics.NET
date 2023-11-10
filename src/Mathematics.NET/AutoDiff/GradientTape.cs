@@ -155,19 +155,19 @@ public record class GradientTape
         ref var start = ref MemoryMarshal.GetReference(nodes);
 
         var length = nodes.Length;
-        Span<Real> partialGradients = new Real[length];
-        partialGradients[length - 1] = seed;
+        Span<Real> gradientSpan = new Real[length];
+        gradientSpan[length - 1] = seed;
 
         for (int i = length - 1; i >= _variableCount; i--)
         {
             var node = Unsafe.Add(ref start, i);
-            var partialGradient = partialGradients[i];
+            var gradient = gradientSpan[i];
 
-            partialGradients[node.PX] += partialGradient * node.DX;
-            partialGradients[node.PY] += partialGradient * node.DY;
+            gradientSpan[node.PX] += gradient * node.DX;
+            gradientSpan[node.PY] += gradient * node.DY;
         }
 
-        gradients = partialGradients[.._variableCount];
+        gradients = gradientSpan[.._variableCount];
     }
 
     //
