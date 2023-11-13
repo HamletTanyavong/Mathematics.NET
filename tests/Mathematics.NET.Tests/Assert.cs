@@ -26,6 +26,7 @@
 // </copyright>
 
 using CommunityToolkit.HighPerformance;
+using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.Tests;
 
@@ -53,6 +54,28 @@ public sealed class Assert<T>
                 Expected: {{expected}}
                 Actual: {{actual}}
                 """);
+        }
+    }
+
+    /// <summary>Assert that the elements in vector are approximately equal.</summary>
+    /// <typeparam name="S">A vector</typeparam>
+    /// <param name="expected">The expected vector</param>
+    /// <param name="actual">The actual vector</param>
+    /// <param name="epsilon">A margin of error</param>
+    public static void AreApproximatelyEqual<S>(IVector<S, T> expected, IVector<S, T> actual, Real epsilon)
+        where S : IVector<S, T>
+    {
+        for (int i = 0; i < S.E1Components; i++)
+        {
+            if (!Precision.AreApproximatelyEqual(expected[i], actual[i], epsilon))
+            {
+                Assert.Fail($$"""
+                    Actual value at index {{i}} does not fall within the specified margin of error, {{epsilon}}
+
+                    Expected: {{expected[i]}}
+                    Actual: {{actual[i]}}
+                    """);
+            }
         }
     }
 
