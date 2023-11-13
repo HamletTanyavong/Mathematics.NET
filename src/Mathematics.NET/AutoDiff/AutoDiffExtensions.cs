@@ -136,4 +136,21 @@ public static class AutoDiffExtensions
 
         return partialSum;
     }
+
+    /// <summary>Compute the gradient of a scalar function using reverse-mode automatic differentiation: $ \nabla f(\textbf{x}) $.</summary>
+    /// <param name="tape">A gradient tape</param>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the gradient</param>
+    /// <returns>The gradient of the scalar function</returns>
+    public static Vector3<Real> Gradient(
+        this GradientTape tape,
+        Func<GradientTape, VariableVector3, Variable> f,
+        VariableVector3 x)
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out var gradients);
+
+        return new(gradients[0], gradients[1], gradients[2]);
+    }
 }
