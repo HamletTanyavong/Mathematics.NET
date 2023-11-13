@@ -85,4 +85,23 @@ public static class AutoDiffExtensions
             dfx[2] - dfz[0],
             dfy[0] - dfx[1]);
     }
+
+    /// <summary>Compute the derivative of a scalar function along a particular direction: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
+    /// <param name="tape">A gradient tape</param>
+    /// <param name="v">A direction</param>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the directional derivative</param>
+    /// <returns>The directional derivative</returns>
+    public static Real DirectionalDerivative(
+        this GradientTape tape,
+        Vector3<Real> v,
+        Func<GradientTape, VariableVector3, Variable> f,
+        VariableVector3 x)
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out var gradients);
+
+        return gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+    }
 }
