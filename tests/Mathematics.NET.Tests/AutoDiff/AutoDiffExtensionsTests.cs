@@ -67,6 +67,18 @@ public sealed class AutoDiffExtensionsTests
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
+    [DataRow(1.23, 0.66, 2.34, 0.3987010509910668)]
+    public void Divergence_VectorField_ReturnsDivergence(double x, double y, double z, double expected)
+    {
+        var u = _tape.CreateVariableVector(x, y, z);
+
+        var actual = _tape.Divergence(FX, FY, FZ, u);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
     //
     // Helpers
     //
