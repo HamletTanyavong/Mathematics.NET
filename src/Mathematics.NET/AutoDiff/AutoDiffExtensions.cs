@@ -154,7 +154,7 @@ public static class AutoDiffExtensions
         return new(gradients[0], gradients[1], gradients[2]);
     }
 
-    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation.</summary>
+    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
     /// <param name="tape">A gradient tape</param>
     /// <param name="fx">The first function</param>
     /// <param name="fy">The second function</param>
