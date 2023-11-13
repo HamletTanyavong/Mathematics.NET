@@ -79,6 +79,19 @@ public sealed class AutoDiffExtensionsTests
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
+    [DataRow(1.23, 0.66, 2.34, -0.824313594924351, -0.1302345967828155, 0.2382974299363869)]
+    public void Gradient_ScalarFunction_ReturnsGradient(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
+    {
+        var u = _tape.CreateVariableVector(x, y, z);
+        Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
+
+        var actual = _tape.Gradient(F, u);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
     //
     // Helpers
     //
