@@ -104,7 +104,21 @@ public sealed class AutoDiffExtensionsTests
 
         var actual = _tape.Jacobian(FX, FY, FZ, u);
 
-        Assert<Real>.ElementsAreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
+    [DataRow(1.23, 0.66, 2.34, 0.23, 1.57, -1.71, -1.255693707530136, 0.0218797487246842, 4.842981131678516)]
+    public void JVP_R3VectorFunctionAndVector_ReturnsJVP(double x, double y, double z, double vx, double vy, double vz, double expectedX, double expectedY, double expectedZ)
+    {
+        var u = _tape.CreateVariableVector(x, y, z);
+        Vector3<Real> v = new(vx, vy, vz);
+        Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
+
+        var actual = _tape.JVP(FX, FY, FZ, u, v);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     //
