@@ -56,7 +56,7 @@ public static class AutoDiffExtensions
     // Vector calculus
     //
 
-    /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation</summary>
+    /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation: $ \nabla\times\textbf{F} $.</summary>
     /// <param name="tape">A gradient tape</param>
     /// <param name="fx">The x-component of the vector field</param>
     /// <param name="fy">The y-component of the vector field</param>
