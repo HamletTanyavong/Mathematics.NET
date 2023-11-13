@@ -185,7 +185,7 @@ public static class AutoDiffExtensions
         return result;
     }
 
-    /// <summary>Compute the Jacobian-vector product of a vector function and a vector using reverse-mode automatic differentiation: $ \left(\nabla^\text{T}f_i(\textbf{x})\right)\textbf{v} $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <summary>Compute the Jacobian-vector product of a vector function and a vector using reverse-mode automatic differentiation.</summary>
     /// <param name="tape">A gradient tape</param>
     /// <param name="fx">The first function</param>
     /// <param name="fy">The second function</param>
