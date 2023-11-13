@@ -104,4 +104,35 @@ public static class AutoDiffExtensions
 
         return gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
     }
+
+    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ \nabla\cdot\textbf{F} $.</summary>
+    /// <param name="tape">A gradient tape</param>
+    /// <param name="fx">The x-component of the vector field</param>
+    /// <param name="fy">The y-component of the vector field</param>
+    /// <param name="fz">The z-component of the vector field</param>
+    /// <param name="x">The point at which to compute the divergence</param>
+    /// <returns>The divergence of the vector field</returns>
+    public static Real Divergence(
+        this GradientTape tape,
+        Func<GradientTape, VariableVector3, Variable> fx,
+        Func<GradientTape, VariableVector3, Variable> fy,
+        Func<GradientTape, VariableVector3, Variable> fz,
+        VariableVector3 x)
+    {
+        var partialSum = Real.Zero;
+
+        _ = fx(tape, x);
+        tape.ReverseAccumulation(out var gradients);
+        partialSum += gradients[0];
+
+        _ = fy(tape, x);
+        tape.ReverseAccumulation(out gradients);
+        partialSum += gradients[1];
+
+        _ = fz(tape, x);
+        tape.ReverseAccumulation(out gradients);
+        partialSum += gradients[2];
+
+        return partialSum;
+    }
 }
