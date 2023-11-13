@@ -92,6 +92,21 @@ public sealed class AutoDiffExtensionsTests
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
+    public void Jacobian_R3VectorFunction_ReturnsJacobian()
+    {
+        var u = _tape.CreateVariableVector(1.23, 0.66, 2.34);
+        Matrix3x3<Real> expected = new(
+            0.775330615737715, -0.5778557672605755, 0.3080621020764366,
+            0.2431083191631576, 0.2431083191631576, 0.2431083191631576,
+            1.450186648348945, 2.197252497498402, -0.6197378839098056);
+
+        var actual = _tape.Jacobian(FX, FY, FZ, u);
+
+        Assert<Real>.ElementsAreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
     //
     // Helpers
     //
