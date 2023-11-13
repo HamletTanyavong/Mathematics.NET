@@ -71,7 +71,7 @@ public sealed class GradientTapeTests
 
         var actual = ComputeGradients(_tape.Add, left, right);
 
-        Assert<Real>.ElementsAreApproximatelyEqual(expected, actual, 1e-16);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
 
     [TestMethod]

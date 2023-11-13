@@ -83,7 +83,7 @@ public sealed class Assert<T>
     /// <param name="expected">A read-only span of expected values</param>
     /// <param name="actual">A read-only span of actual values</param>
     /// <param name="epsilon">A margin of error</param>
-    public static void ElementsAreApproximatelyEqual(ReadOnlySpan<T> expected, ReadOnlySpan<T> actual, Real epsilon)
+    public static void AreApproximatelyEqual(ReadOnlySpan<T> expected, ReadOnlySpan<T> actual, Real epsilon)
     {
         if (expected.Length != actual.Length)
         {
@@ -114,7 +114,7 @@ public sealed class Assert<T>
     /// <param name="expected">The expected matrix</param>
     /// <param name="actual">The actual matrix</param>
     /// <param name="epsilon">A margin of error</param>
-    public static void ElementsAreApproximatelyEqual<S>(IMatrix<S, T> expected, IMatrix<S, T> actual, Real epsilon)
+    public static void AreApproximatelyEqual<S>(IMatrix<S, T> expected, IMatrix<S, T> actual, Real epsilon)
         where S : IMatrix<S, T>
     {
         for (int i = 0; i < S.E1Components; i++)
@@ -138,7 +138,7 @@ public sealed class Assert<T>
     /// <param name="expected">A 2D, read-only span of expected values</param>
     /// <param name="actual">A 2D, read-only span of actual values</param>
     /// <param name="epsilon">A margin of error</param>
-    public static void ElementsAreApproximatelyEqual(ReadOnlySpan2D<T> expected, ReadOnlySpan2D<T> actual, Real epsilon)
+    public static void AreApproximatelyEqual(ReadOnlySpan2D<T> expected, ReadOnlySpan2D<T> actual, Real epsilon)
     {
         if (expected.Height != actual.Height || expected.Width != actual.Width)
         {

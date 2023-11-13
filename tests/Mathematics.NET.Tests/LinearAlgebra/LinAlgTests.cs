@@ -81,6 +81,6 @@ public sealed class LinAlgTests
 
         var actual = LinAlg.MatMul(Q, R);
 
-        Assert<T>.ElementsAreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<T>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 }
