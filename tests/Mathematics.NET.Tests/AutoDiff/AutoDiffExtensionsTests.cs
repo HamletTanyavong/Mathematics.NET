@@ -121,6 +121,20 @@ public sealed class AutoDiffExtensionsTests
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
+    [DataRow(0.23, 1.57, -1.71, 1.23, 0.66, 2.34, -1.919813065970865, -3.508528536106042, 1.512286126049506)]
+    public void VJP_VectorAndR3VectorFunction_ReturnsVJP(double vx, double vy, double vz, double x, double y, double z, double expectedX, double expectedY, double expectedZ)
+    {
+        var u = _tape.CreateVariableVector(x, y, z);
+        Vector3<Real> v = new(vx, vy, vz);
+        Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
+
+        var actual = _tape.VJP(v, FX, FY, FZ, u);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
     //
     // Helpers
     //
