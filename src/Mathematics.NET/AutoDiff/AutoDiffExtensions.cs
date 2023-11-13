@@ -184,4 +184,37 @@ public static class AutoDiffExtensions
 
         return result;
     }
+
+    /// <summary>Compute the Jacobian-vector product of a vector function and a vector using reverse-mode automatic differentiation: $ \left(\nabla^\text{T}f_i(\textbf{x})\right)\textbf{v} $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <param name="tape">A gradient tape</param>
+    /// <param name="fx">The first function</param>
+    /// <param name="fy">The second function</param>
+    /// <param name="fz">The third function</param>
+    /// <param name="x">The point at which to compute the Jacobian-vector product</param>
+    /// <param name="v">A vector</param>
+    /// <returns>The Jacobian-vector product of the vector function and vector</returns>
+    public static Vector3<Real> JVP(
+        this GradientTape tape,
+        Func<GradientTape, VariableVector3, Variable> fx,
+        Func<GradientTape, VariableVector3, Variable> fy,
+        Func<GradientTape, VariableVector3, Variable> fz,
+        VariableVector3 x,
+        Vector3<Real> v)
+    {
+        Vector3<Real> result = new();
+
+        _ = fx(tape, x);
+        tape.ReverseAccumulation(out var gradients);
+        result[0] = gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+
+        _ = fy(tape, x);
+        tape.ReverseAccumulation(out gradients);
+        result[1] = gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+
+        _ = fz(tape, x);
+        tape.ReverseAccumulation(out gradients);
+        result[2] = gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+
+        return result;
+    }
 }
