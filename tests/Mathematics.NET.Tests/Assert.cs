@@ -109,6 +109,31 @@ public sealed class Assert<T>
         }
     }
 
+    /// <summary>Assert that the elements in a matrix are approximately equal.</summary>
+    /// <typeparam name="S">A matrix</typeparam>
+    /// <param name="expected">The expected matrix</param>
+    /// <param name="actual">The actual matrix</param>
+    /// <param name="epsilon">A margin of error</param>
+    public static void ElementsAreApproximatelyEqual<S>(IMatrix<S, T> expected, IMatrix<S, T> actual, Real epsilon)
+        where S : IMatrix<S, T>
+    {
+        for (int i = 0; i < S.E1Components; i++)
+        {
+            for (int j = 0; j < S.E2Components; j++)
+            {
+                if (!Precision.AreApproximatelyEqual(expected[i, j], actual[i, j], epsilon))
+                {
+                    Assert.Fail($$"""
+                        Actual value at row {{i}} and column {{j}} does not fall within the specifed margin of error, {{epsilon}}:
+
+                        Expected: {{expected[i, j]}}
+                        Actual: {{actual[i, j]}}
+                        """);
+                }
+            }
+        }
+    }
+
     /// <summary>Assert that the elements in two 2D, read-only spans are approximately equal.</summary>
     /// <param name="expected">A 2D, read-only span of expected values</param>
     /// <param name="actual">A 2D, read-only span of actual values</param>
