@@ -56,7 +56,9 @@ public static class AutoDiffExtensions
     // Vector calculus
     //
 
-    /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation: $ \nabla\times\textbf{F} $.</summary>
+    // TODO: Improve performance; perhaps see if caching is possible for some of these methods
+
+    /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation: $ (\nabla\times\textbf{F})(\textbf{x}) $.</summary>
     /// <param name="tape">A gradient tape</param>
     /// <param name="fx">The x-component of the vector field</param>
     /// <param name="fy">The y-component of the vector field</param>
@@ -70,7 +72,6 @@ public static class AutoDiffExtensions
         Func<GradientTape, VariableVector3, Variable> fz,
         VariableVector3 x)
     {
-        // TODO: Improve performance; perhaps see if caching is possible
         _ = fx(tape, x);
         tape.ReverseAccumulation(out var dfx);
 
@@ -86,7 +87,7 @@ public static class AutoDiffExtensions
             dfy[0] - dfx[1]);
     }
 
-    /// <summary>Compute the derivative of a scalar function along a particular direction: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
+    /// <summary>Compute the derivative of a scalar function along a particular direction using reverse-mode automatic differentiation: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
     /// <param name="tape">A gradient tape</param>
     /// <param name="v">A direction</param>
     /// <param name="f">A scalar function</param>
@@ -105,7 +106,7 @@ public static class AutoDiffExtensions
         return gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
     }
 
-    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ \nabla\cdot\textbf{F} $.</summary>
+    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
     /// <param name="tape">A gradient tape</param>
     /// <param name="fx">The x-component of the vector field</param>
     /// <param name="fy">The y-component of the vector field</param>
