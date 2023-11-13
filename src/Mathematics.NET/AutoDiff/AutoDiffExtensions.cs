@@ -217,4 +217,37 @@ public static class AutoDiffExtensions
 
         return result;
     }
+
+    /// <summary>Compute the vector-Jacobian product of a vector and a vector function using reverse-mode automatic differentiation.</summary>
+    /// <param name="tape">A gradient tape</param>
+    /// <param name="fx">The first function</param>
+    /// <param name="fy">The second function</param>
+    /// <param name="fz">The third function</param>
+    /// <param name="x">The point at which to compute the vector-Jacobian product</param>
+    /// <param name="v">A vector</param>
+    /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
+    public static Vector3<Real> VJP(
+        this GradientTape tape,
+        Vector3<Real> v,
+        Func<GradientTape, VariableVector3, Variable> fx,
+        Func<GradientTape, VariableVector3, Variable> fy,
+        Func<GradientTape, VariableVector3, Variable> fz,
+        VariableVector3 x)
+    {
+        Span<Real> hold = stackalloc Real[3];
+
+        _ = fx(tape, x);
+        tape.ReverseAccumulation(out var gradients, v.X1.Value);
+        hold[0] += gradients[0]; hold[1] += gradients[1]; hold[2] += gradients[2];
+
+        _ = fy(tape, x);
+        tape.ReverseAccumulation(out gradients, v.X2.Value);
+        hold[0] += gradients[0]; hold[1] += gradients[1]; hold[2] += gradients[2];
+
+        _ = fz(tape, x);
+        tape.ReverseAccumulation(out gradients, v.X3.Value);
+        hold[0] += gradients[0]; hold[1] += gradients[1]; hold[2] += gradients[2];
+
+        return new(hold[0], hold[1], hold[2]);
+    }
 }
