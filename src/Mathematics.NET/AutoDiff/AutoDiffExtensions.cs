@@ -153,4 +153,35 @@ public static class AutoDiffExtensions
 
         return new(gradients[0], gradients[1], gradients[2]);
     }
+
+    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation.</summary>
+    /// <param name="tape">A gradient tape</param>
+    /// <param name="fx">The first function</param>
+    /// <param name="fy">The second function</param>
+    /// <param name="fz">The third function</param>
+    /// <param name="x">The point at which to compute the Jacobian</param>
+    /// <returns>The Jacobian of the vector function</returns>
+    public static Matrix3x3<Real> Jacobian(
+        this GradientTape tape,
+        Func<GradientTape, VariableVector3, Variable> fx,
+        Func<GradientTape, VariableVector3, Variable> fy,
+        Func<GradientTape, VariableVector3, Variable> fz,
+        VariableVector3 x)
+    {
+        Matrix3x3<Real> result = new();
+
+        _ = fx(tape, x);
+        tape.ReverseAccumulation(out var gradients);
+        result[0, 0] = gradients[0]; result[0, 1] = gradients[1]; result[0, 2] = gradients[2];
+
+        _ = fy(tape, x);
+        tape.ReverseAccumulation(out gradients);
+        result[1, 0] = gradients[0]; result[1, 1] = gradients[1]; result[1, 2] = gradients[2];
+
+        _ = fz(tape, x);
+        tape.ReverseAccumulation(out gradients);
+        result[2, 0] = gradients[0]; result[2, 1] = gradients[1]; result[2, 2] = gradients[2];
+
+        return result;
+    }
 }
