@@ -25,9 +25,12 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Runtime.InteropServices;
+
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a node on a gradient tape</summary>
+[StructLayout(LayoutKind.Sequential)]
 internal readonly record struct Node
 {
     /// <summary>The derivative of the left component of the binary operation</summary>
