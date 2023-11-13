@@ -54,9 +54,32 @@ public sealed class AutoDiffExtensionsTests
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
+    [DataRow(0.23, 1.57, -1.71, 1.23, 0.66, 2.34, -0.801549048972843)]
+    public void DirectionalDerivative_ScalarFunctionAndDirection_ReturnsDirectionalDerivative(double vx, double vy, double vz, double x, double y, double z, double expected)
+    {
+        var u = _tape.CreateVariableVector(x, y, z);
+        Vector3<Real> v = new(vx, vy, vz);
+
+        var actual = _tape.DirectionalDerivative(v, F, u);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
     //
     // Helpers
     //
+
+    // f(x, y, z) = Cos(x) / ((x + y) * Sin(z))
+    public static Variable F(GradientTape tape, VariableVector3 x)
+    {
+        return tape.Divide(
+            tape.Cos(x.X1),
+            tape.Multiply(
+                tape.Add(x.X1, x.X2),
+                tape.Sin(x.X3)));
+    }
 
     // f(x, y, z) = Sin(x) * (Cos(y) + Sqrt(z))
     public static Variable FX(GradientTape tape, VariableVector3 x)
