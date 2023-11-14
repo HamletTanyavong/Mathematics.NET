@@ -29,10 +29,6 @@ namespace Mathematics.NET.Core.Attributes;
 
 /// <summary>Indicates that a method represents a mathematical operation</summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public class OperationAttribute : FunctionAttribute
+public class OperationAttribute(uint arity, string name) : FunctionAttribute(arity, name)
 {
-    public OperationAttribute(uint arity, string name)
-        : base(arity, name)
-    {
-    }
 }

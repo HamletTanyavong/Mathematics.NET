@@ -29,15 +29,9 @@ namespace Mathematics.NET.Core.Attributes;
 
 /// <summary>Indicates that a method represents a mathematical relation</summary>
 [AttributeUsage(AttributeTargets.Method)]
-public class RelationAttribute : Attribute
+public class RelationAttribute(uint arity, string name) : Attribute
 {
-    public RelationAttribute(uint arity, string name)
-    {
-        Arity = arity;
-        Name = name;
-    }
+    public uint Arity { get; } = arity;
 
-    public uint Arity { get; }
-
-    public string Name { get; }
+    public string Name { get; } = name;
 }

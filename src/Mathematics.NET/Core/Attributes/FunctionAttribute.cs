@@ -29,10 +29,6 @@ namespace Mathematics.NET.Core.Attributes;
 
 /// <summary>Indicates that a method represents a mathematical function</summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public class FunctionAttribute : RelationAttribute
+public class FunctionAttribute(uint arity, string name) : RelationAttribute(arity, name)
 {
-    public FunctionAttribute(uint arity, string name)
-        : base(arity, name)
-    {
-    }
 }
