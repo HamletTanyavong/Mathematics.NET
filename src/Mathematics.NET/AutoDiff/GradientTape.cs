@@ -73,7 +73,7 @@ public record class GradientTape
 
     public GradientTape()
     {
-        _nodes = new();
+        _nodes = [];
     }
 
     /// <summary>Get the number of nodes on the gradient tape.</summary>

@@ -32,15 +32,10 @@ namespace Mathematics.NET.Core.ParallelActions;
 
 /// <summary>An action for multiplying items by a scalar</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-public readonly struct MultiplyByScalarAction<T> : IRefAction<T>
+public readonly struct MultiplyByScalarAction<T>(T factor) : IRefAction<T>
     where T : IComplex<T>
 {
-    private readonly T _factor;
-
-    public MultiplyByScalarAction(T factor)
-    {
-        _factor = factor;
-    }
+    private readonly T _factor = factor;
 
     /// <summary>Executes the action on an item of type <typeparamref name="T"/></summary>
     /// <param name="item">The item</param>

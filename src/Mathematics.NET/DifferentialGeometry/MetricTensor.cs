@@ -41,7 +41,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="W">The first index</typeparam>
 /// <typeparam name="X">The second index</typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct MetricTensor<T, U, V, W, X>
+public struct MetricTensor<T, U, V, W, X>(T matrix)
     : IRankTwoTensor<MetricTensor<T, U, V, W, X>, T, U, Index<V, W>, Index<V, X>>,
       IAdditionOperation<MetricTensor<T, U, V, W, X>, RankTwoTensor<T, U, Index<V, W>, Index<V, X>>>,
       ISubtractionOperation<MetricTensor<T, U, V, W, X>, RankTwoTensor<T, U, Index<V, W>, Index<V, X>>>
@@ -53,12 +53,7 @@ public struct MetricTensor<T, U, V, W, X>
 {
     public static readonly MetricTensor<T, U, V, W, X> Euclidean = T.Identity;
 
-    private T _matrix;
-
-    public MetricTensor(T matrix)
-    {
-        _matrix = matrix;
-    }
+    private T _matrix = matrix;
 
     //
     // IRankTwoTensor interface

@@ -36,7 +36,11 @@ namespace Mathematics.NET.LinearAlgebra;
 /// <summary>Represents a 4x4 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
+public struct Matrix4x4<T>(
+    T e11, T e12, T e13, T e14,
+    T e21, T e22, T e23, T e24,
+    T e31, T e32, T e33, T e34,
+    T e41, T e42, T e43, T e44) : ISquareMatrix<Matrix4x4<T>, T>
     where T : IComplex<T>
 {
     private static readonly Matrix4x4<T> s_identity = CreateDiagonal(T.One, T.One, T.One, T.One);
@@ -47,52 +51,25 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
 
     public static readonly Matrix4x4<T> NaM = CreateDiagonal(T.NaN, T.NaN, T.NaN, T.NaN);
 
-    public T E11;
-    public T E12;
-    public T E13;
-    public T E14;
+    public T E11 = e11;
+    public T E12 = e12;
+    public T E13 = e13;
+    public T E14 = e14;
 
-    public T E21;
-    public T E22;
-    public T E23;
-    public T E24;
+    public T E21 = e21;
+    public T E22 = e22;
+    public T E23 = e23;
+    public T E24 = e24;
 
-    public T E31;
-    public T E32;
-    public T E33;
-    public T E34;
+    public T E31 = e31;
+    public T E32 = e32;
+    public T E33 = e33;
+    public T E34 = e34;
 
-    public T E41;
-    public T E42;
-    public T E43;
-    public T E44;
-
-    public Matrix4x4(
-        T e11, T e12, T e13, T e14,
-        T e21, T e22, T e23, T e24,
-        T e31, T e32, T e33, T e34,
-        T e41, T e42, T e43, T e44)
-    {
-        E11 = e11;
-        E12 = e12;
-        E13 = e13;
-        E14 = e14;
-
-        E21 = e21;
-        E22 = e22;
-        E23 = e23;
-        E24 = e24;
-
-        E31 = e31;
-        E32 = e32;
-        E33 = e33;
-        E34 = e34;
-
-        E41 = e41;
-        E42 = e42;
-        E43 = e43;
-        E44 = e44;
-    }
+    public T E41 = e41;
+    public T E42 = e42;
+    public T E43 = e43;
+    public T E44 = e44;
 
     //
     // Constants
