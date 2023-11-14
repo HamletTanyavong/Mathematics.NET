@@ -8,3 +8,7 @@
   items:
   - name: Numeric Types
     href: fundamentals/numeric-types.md
+- name: Automatic Differentiation
+  items:
+  - name: First-Order, Reverse-Mode Automatic Differentiation
+    href: autodiff/first-order-reverse-mode.md
