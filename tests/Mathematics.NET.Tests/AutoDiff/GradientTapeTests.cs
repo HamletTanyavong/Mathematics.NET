@@ -379,6 +379,19 @@ public sealed class GradientTapeTests
     }
 
     [TestMethod]
+    [DataRow(1.23, -1)]
+    public void Negate_Variable_ReturnsNegation(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+        _ = _tape.Negate(x);
+        _tape.ReverseAccumulation(out var gradients);
+
+        var actual = gradients[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 3.088081166620949, 0.3360299854573856)]
     public void Pow_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {

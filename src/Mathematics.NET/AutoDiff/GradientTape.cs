@@ -331,6 +331,15 @@ public record class GradientTape
     // Other operations
     //
 
+    /// <summary>Negate a variable</summary>
+    /// <param name="x">A variable</param>
+    /// <returns>Minus one times the variable</returns>
+    public Variable Negate(Variable x)
+    {
+        _nodes.Add(new(-Real.One, x._index, _nodes.Count));
+        return new(_nodes.Count - 1, -x.Value);
+    }
+
     // Exponential functions
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp(T)"/>
