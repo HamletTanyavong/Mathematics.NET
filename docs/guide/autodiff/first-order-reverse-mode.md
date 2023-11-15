@@ -11,7 +11,7 @@ using Mathematics.NET.AutoDiff;
 GradientTape tape = new();
 var x = tape.CreateVariable(1.23);
 ```
-We also have to pass in an initial value—the point at which the gradients are calculated—to the variable creation method. If we wanted to multiple variables, we can simply write
+We also have to pass in an initial value—the point at which the gradients are calculated—to the variable creation method. If we want to track multiple variables, we can simply write
 ```csharp
 GradientTape tape = new();
 var x = tape.CreateVariable(1.23);
@@ -26,23 +26,23 @@ Once we are satisfied, we may use these in our equations.
 
 ## Single-Variable Equations
 
-Suppose we wanted to compute the derivative of the function
+Suppose we want to compute the derivative of the function
 $$
-    f(x) = \frac{\sin(x)\ln(x)}{e^{-x}}\quad\text{for }x<0\tag{1}
+    f(x) = \frac{\sin(x)\ln(x)}{e^{-x}}\quad\text{for }x<0 \tag{1}
 $$
 at the point $ x=1.23 $. We can write
 ```csharp
-var result =
-    tape.Divide(
-        tape.Multiply(
-            tape.Sin(x),
-            tape.Ln(x)),
-        tape.Exp(
-            tape.Multiply(
-                -Real.One,
-                x)));
+using Mathematics.NET.AutoDiff;
+
+GradientTape tape = new();
+var x = tape.CreateVariable(1.23);
+
+var result = tape.Divide(
+    tape.Multiply(tape.Sin(x), tape.Ln(x)),
+    tape.Exp(
+        tape.Multiply(-Real.One, x)));
 ```
-which will give us the value of the function at our specified value. At this point, the derivative has not been calculated, but we are, however, able to examine the nodes which have been added to our tape. We can use the method `PrintNodes()` to examine our nodes.
+which will give us the value of the function at our specified point. At this moment, the derivative has not been calculated, but we are, however, able to examine the nodes which have been added to our tape. We can use the method `PrintNodes` to examine our nodes.
 ```csharp
 tape.PrintNodes(CancellationToken.None);
 ```
@@ -76,7 +76,6 @@ Node 6:
     Parents: [3, 5]
 ```
 The root node represents the variable we are currently tracking. Nodes from unary operations will provide one weight and parent, while nodes from binary operations will provide two weights and parents. This may be helpful when we want to determine which node came from which operation. (For performance reasons, the names of these methods are not tracked.) Below is a graph representation of the nodes on our gradient tape:
-
 ```mermaid
 graph BT
     x[w₀: x]
@@ -97,7 +96,7 @@ graph BT
     expnegx -- adj(w₅) = adj(w₆) ∂w₆/∂w₅ --> divide
     divide -- adj(f) = adj(w₆) = 1 (seed) --> function["f(x)"]
 ```
-We can then calculate the gradient of our function by using the `ReverseAccumulation()` method.
+We can then calculate the gradient of our function by using the `ReverseAccumulation` method.
 ```csharp
 tape.ReverseAccumulation(out var gradients);
 ```
@@ -112,15 +111,10 @@ using Mathematics.NET.AutoDiff;
 GradientTape tape = new();
 var x = tape.CreateVariable(1.23);
 
-var result =
-    tape.Divide(
-        tape.Multiply(
-            tape.Sin(x),
-            tape.Ln(x)),
-        tape.Exp(
-            tape.Multiply(
-                -Real.One,
-                x)));
+var result = tape.Divide(
+    tape.Multiply(tape.Sin(x), tape.Ln(x)),
+    tape.Exp(
+        tape.Multiply(-Real.One, x)));
 
 // Optional: examine the nodes on the gradient tape
 tape.PrintNodes();
@@ -132,3 +126,102 @@ Console.WriteLine("Value: {0}", result);
 // The derivative of the function with respect to x at the point x = 1.23: 3.525753368769319
 Console.WriteLine("Derivative: {0}", gradients[0]);
 ```
+
+## Multivariable Equations
+
+The multivariable case is as simple as the single variable case; we only need to track more variables on our gradient tape.
+```csharp
+using Mathematics.NET.AutoDiff;
+
+GradientTape tape = new();
+var x = tape.CreateVariable(1.23);
+var y = tape.CreateVariable(0.66);
+var z = tape.CreateVariable(2.34);
+```
+Now, if we wanted to compute the gradient of the function
+$$
+    f(x,y,z) = \frac{\cos(x)}{(x+y)\sin(z)} \tag{2}
+$$
+at the points we have chosen, $ x=1.23 $, $ y=0.66 $, and $ z=2.34 $, we can write
+```csharp
+var result = tape.Divide(
+    tape.Cos(x.X1),
+    tape.Multiply(
+        tape.Add(x.X1, x.X2),
+        tape.Sin(x.X3)));
+```
+If we want to examine the nodes, we can use the `PrintNodes` method that we have already encountered.
+```
+Root Node 0:
+    Weights: [0, 0]
+    Parents: [0, 0]
+Root Node 1:
+    Weights: [0, 0]
+    Parents: [1, 1]
+Root Node 2:
+    Weights: [0, 0]
+    Parents: [2, 2]
+
+Node 3:
+    Weights: [-0.9424888019316975, 0]
+    Parents: [0, 3]
+Node 4:
+    Weights: [1, 1]
+    Parents: [0, 1]
+Node 5:
+    Weights: [-0.695563326462902, 0]
+    Parents: [2, 5]
+Node 6:
+    Weights: [0.7184647930691263, 1.8900000000000001]
+    Parents: [4, 5]
+Node 7:
+    Weights: [0.7364320899293144, -0.18126788958785509]
+    Parents: [3, 6]
+```
+Notice that there are now three root nodes, each representing the variables $ x $, $ y $, and $ z $, respectively. Here is a graph representation of our nodes:
+```mermaid
+graph BT
+    x[w₀: x]
+    y[w₁: y]
+    z[w₂: z]
+    cos(w₃: cos)
+    add(w₄: add)
+    sin(w₅: sin)
+    mul(w₆: mul)
+    div(w₇: div)
+
+    x -- adj(w₀ᵃ) = adj(w₃) ∂w₃/∂w₀ --> cos
+    x -- adj(w₀ᵇ) = adj(w₄) ∂w₄/∂w₀ --> add
+    y -- adj(w₁) = adj(w₄) ∂w₄/∂w₁ --> add
+    z -- adj(w₂) = adj(w₅) ∂w₅/∂w₂ --> sin
+    cos -- adj(w₃) = adj(w₇) ∂w₇/∂w₃ --> div
+    add -- adj(w₄) = adj(w₆) ∂w₆/∂w₄ --> mul
+    sin -- adj(w₅) = adj(w₆) ∂w₆/∂w₅ --> mul
+    mul -- adj(w₆) = adj(w₇) ∂w₇/∂w₆ --> div
+    div -- adj(f) = adj(w₇) = 1 (seed) --> function["f(x, y, z)"]
+```
+As before, we can use the `ReverseAccumulation` to get our gradients
+```csharp
+tape.ReverseAccumulation(out var gradients);
+```
+and print them to the console with
+```csharp
+using Mathematics.NET.LinearAlgebra;
+
+// code
+
+Console.WriteLine(gradients.ToDisplayString());
+```
+This will print the following to the console:
+```
+[-0.8243135949243512,  -0.13023459678281554, 0.2382974299363868    ]
+```
+which, for clarity, is
+$$
+\begin{align} \tag{3}
+    \frac{\partial}{\partial x}f(x,y,z) &   =-\frac{\csc(z)}{x+y}\left(\frac{\cos(x)}{x+y}+\sin(x)\right) = -0.8243135949243512 \\
+    \frac{\partial}{\partial y}f(x,y,z) &   =-\frac{\cos(x)\csc(x)}{(x+y)^2} = -0.13023459678281554 \\
+    \frac{\partial}{\partial z}f(x,y,z) &   =-\frac{\cos(x)\cot(z)\csc(z)}{x+y} = 0.2382974299363868
+\end{align}
+$$
+at our specified points.
