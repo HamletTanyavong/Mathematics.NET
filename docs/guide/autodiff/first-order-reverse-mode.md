@@ -28,7 +28,7 @@ Once we are satisfied, we may use these in our equations.
 
 Suppose we want to compute the derivative of the function
 $$
-    f(x) = \frac{\sin(x)\ln(x)}{e^{-x}}\quad\text{for }x<0 \tag{1}
+    f(x) = \frac{\sin(x)\ln(x)}{e^{-x}}\quad\text{for }x>0 \tag{1}
 $$
 at the point $ x=1.23 $. We can write
 ```csharp
@@ -225,3 +225,57 @@ $$
 \end{align}
 $$
 at our specified points.
+
+### Variable Vectors
+
+Instead of tracking $ x $, $ y $, and $ z $ individually, we can create a vector of variables.
+```csharp
+tape.CreateVariableVector(1.23, 0.66, 2.34);
+```
+We can use this to calculate, for example, a Jacobian-vector product with the vector functions
+$$
+\begin{align} \tag{4}
+    f_1(\textbf{x}) &   =\sin(x_1)(\cos(x_2)+\sqrt{x_3})    \\
+    f_2(\textbf{x}) &   =\sqrt{x_1+x_2+x_3} \\
+    f_3(\textbf{x}) &   =\sinh\left(\frac{e^xy}{z}\right)
+\end{align}
+$$
+and the vector $ \textbf{v} = (0.23, 1.57, -1.71) $ for $ x_1,x_2,x_3>0 $.
+```
+using Mathematics.NET.AutoDiff;
+
+GradientTape tape = new();
+var x = tape.CreateVariableVector(1.23, 0.66, 2.34);
+Vector3<Real> v = new(0.23, 1.57, -1.71);
+
+var result = tape.JVP(F1, F2, F3, x, v);
+
+Console.WriteLine(result);
+
+// f(x, y, z) = Sin(x) * (Cos(y) + Sqrt(z))
+static Variable F1(GradientTape tape, VariableVector3 x)
+{
+    return tape.Multiply(
+        tape.Sin(x.X1),
+        tape.Add(tape.Cos(x.X2), tape.Sqrt(x.X3)));
+}
+
+// f(x, y, z) = Sqrt(x + y + z)
+static Variable F2(GradientTape tape, VariableVector3 x)
+{
+    return tape.Sqrt(
+        tape.Add(
+            tape.Add(x.X1, x.X2),
+            x.X3));
+}
+
+// f(x, y, z) = Sinh(Exp(x) * y / z)
+static Variable F3(GradientTape tape, VariableVector3 x)
+{
+    return tape.Sinh(
+        tape.Multiply(
+            tape.Exp(x.X1),
+            tape.Divide(x.X2, x.X3)));
+}
+```
+Note that this time, we do not call the method `ReverseAccumulation`. This should give us the following result: `(-1.2556937075301358, 0.021879748724684178, 4.842981131678516)`.
