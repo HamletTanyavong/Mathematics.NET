@@ -8,12 +8,12 @@ Gradient tapes keep track of operations for autodiff; unlike forward-mode autodi
 ```csharp
 using Mathematics.NET.AutoDiff;
 
-GradientTape tape = new();
+GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
 ```
 We also have to pass in an initial value—the point at which the gradients are calculated—to the variable creation method. If we want to track multiple variables, we can simply write
 ```csharp
-GradientTape tape = new();
+GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
 var y = tape.CreateVariable(0.66);
 // Add more variables as needed
@@ -34,7 +34,7 @@ at the point $ x=1.23 $. We can write
 ```csharp
 using Mathematics.NET.AutoDiff;
 
-GradientTape tape = new();
+GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
 
 var result = tape.Divide(
@@ -108,7 +108,7 @@ The correct value for the derivative should be `3.525753368769319`. The complete
 ```csharp
 using Mathematics.NET.AutoDiff;
 
-GradientTape tape = new();
+GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
 
 var result = tape.Divide(
@@ -133,7 +133,7 @@ The multivariable case is as simple as the single variable case; we only need to
 ```csharp
 using Mathematics.NET.AutoDiff;
 
-GradientTape tape = new();
+GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
 var y = tape.CreateVariable(0.66);
 var z = tape.CreateVariable(2.34);
@@ -244,7 +244,7 @@ and the vector $ \textbf{v} = (0.23, 1.57, -1.71) $ for $ x_1,x_2,x_3>0 $.
 ```
 using Mathematics.NET.AutoDiff;
 
-GradientTape tape = new();
+GradientTape<Real> tape = new();
 var x = tape.CreateVariableVector(1.23, 0.66, 2.34);
 Vector3<Real> v = new(0.23, 1.57, -1.71);
 
@@ -279,3 +279,60 @@ static Variable F3(GradientTape tape, VariableVector3 x)
 }
 ```
 Note that this time, we do not call the method `ReverseAccumulation`. This should give us the following result: `(-1.2556937075301358, 0.021879748724684178, 4.842981131678516)`.
+
+## Complex Variables
+
+We can also work with complex numbers and complex derivatives by specifying `Complex` as a type parameter when we create our gradient tape. Suppose we want to find the gradient of the function:
+$$
+    f(z,w)  =   \cos(\sin(z)\sqrt{w}) \tag{5}
+$$
+at the points $ z=1.23+i2.34 $ and $ w=-0.66+i0.23 $. We can write
+```csharp
+using Mathematics.NET.AutoDiff;
+
+GradientTape<Complex> tape = new();
+var z = tape.CreateVariable(new(1.23, 2.34));
+var w = tape.CreateVariable(new(-0.66, 0.23));
+
+var result = tape.Cos(
+    tape.Multiply(
+        tape.Sin(z),
+        tape.Sqrt(w)));
+
+// Optional: examine the nodes on the gradient tape
+tape.PrintNodes(CancellationToken.None);
+Console.WriteLine();
+
+tape.ReverseAccumulation(out var gradients);
+
+// The value of the function at the point z = 1.23 + i2.34 and w = -0.66 + i0.23
+Console.WriteLine("Value: {0}", result);
+// The gradients of the function: ∂f/∂z and ∂f/∂w, respectively
+Console.WriteLine("Gradients: {0}", gradients.ToDisplayString());
+
+```
+which is almost the exact same code we would have written in the real case. (Note that some methods such as `Atan2` are not available for complex gradient tapes.) This should output the following to the console:
+```
+Root Node 0:
+    Weights: [(0, 0), (0, 0)]
+    Parents: [0, 0]
+Root Node 1:
+    Weights: [(0, 0), (0, 0)]
+    Parents: [1, 1]
+
+Node 2:
+    Weights: [(1.7509986221653533, -4.84670574511495), (0, 0)]
+    Parents: [0, 2]
+Node 3:
+    Weights: [(0.09980501743235655, -0.5896861208610882), (0, 0)]
+    Parents: [1, 3]
+Node 4:
+    Weights: [(0.13951299258538988, 0.8242959875555208), (4.937493465463717, 1.7188022913039218)]
+    Parents: [2, 3]
+Node 5:
+    Weights: [(24.762656886395174, -27.774291395591305), (0, 0)]
+    Parents: [4, 5]
+
+Value: (27.784322505370138, 24.753716703326287)
+Gradients: [(126.28638563049401, -98.74954259806483),  (-38.801295827094066, -109.6878698782088)  ]
+```
