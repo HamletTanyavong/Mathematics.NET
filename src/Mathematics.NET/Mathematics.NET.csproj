@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
     <Title>Mathematics.NET</Title>
-    <Version>0.1.0-alpha.4</Version>
+    <Version>0.1.0-alpha.5</Version>
     <PackageIcon>mathematics.net.png</PackageIcon>
     <Authors>Hamlet Tanyavong</Authors>
     <Description>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</Description>
