@@ -1,4 +1,4 @@
-﻿// <copyright file="GradientTapeTests.cs" company="Mathematics.NET">
+﻿// <copyright file="GradientTapeOfRealTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,11 +32,11 @@ namespace Mathematics.NET.Tests.AutoDiff;
 
 [TestClass]
 [TestCategory("AutoDiff"), TestCategory("Gradient Tape")]
-public sealed class GradientTapeTests
+public sealed class GradientTapeOfRealTests
 {
-    private GradientTape _tape;
+    private GradientTape<Real> _tape;
 
-    public GradientTapeTests()
+    public GradientTapeOfRealTests()
     {
         _tape = new();
     }
@@ -76,7 +76,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 1)]
-    public void Add_RealAndVariable_ReturnsGradient(double left, double right, double expected)
+    public void Add_ConstantAndVariable_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Add(left, x);
@@ -89,7 +89,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 1)]
-    public void Add_VariableAndReal_ReturnsGradient(double left, double right, double expected)
+    public void Add_VariableAndConstant_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Add(x, right);
@@ -214,7 +214,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, -0.2246329169406093)]
-    public void Divide_RealAndVariable_ReturnsGradient(double left, double right, double expected)
+    public void Divide_ConstantAndVariable_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Divide(left, x);
@@ -227,7 +227,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 0.4273504273504274)]
-    public void Divide_VariableAndReal_ReturnsGradient(double left, double right, double expected)
+    public void Divide_VariableAndConstant_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Divide(x, right);
@@ -316,7 +316,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 0)]
-    public void Modulo_RealAndVariable_ReturnsGradient(double left, double right, double expected)
+    public void Modulo_ConstantAndVariable_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Modulo(left, x);
@@ -329,7 +329,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 1)]
-    public void Modulo_VariableAndReal_ReturnsGradient(double left, double right, double expected)
+    public void Modulo_VariableAndConstant_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Modulo(x, right);
@@ -354,7 +354,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 1.23)]
-    public void Multiply_RealAndVariable_ReturnsGradient(double left, double right, double expected)
+    public void Multiply_ConstantAndVariable_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Multiply(left, x);
@@ -367,7 +367,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 2.34)]
-    public void Multiply_VariableAndReal_ReturnsGradient(double left, double right, double expected)
+    public void Multiply_VariableAndConstant_ReturnsGradient(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Multiply(x, right);
@@ -456,7 +456,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, -1)]
-    public void Subtract_RealAndVariable_ReturnsGradients(double left, double right, double expected)
+    public void Subtract_ConstantAndVariable_ReturnsGradients(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Subtract(left, x);
@@ -469,7 +469,7 @@ public sealed class GradientTapeTests
 
     [TestMethod]
     [DataRow(1.23, 2.34, 1)]
-    public void Subtract_VariableAndReal_ReturnsGradients(double left, double right, double expected)
+    public void Subtract_VariableAndConstant_ReturnsGradients(double left, double right, double expected)
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Subtract(x, right);
@@ -502,7 +502,7 @@ public sealed class GradientTapeTests
     // Helpers
     //
 
-    private Real ComputeGradient(Func<Variable, Variable> function, Real input)
+    private Real ComputeGradient(Func<Variable<Real>, Variable<Real>> function, Real input)
     {
         var x = _tape.CreateVariable(input);
         _ = function(x);
@@ -510,7 +510,7 @@ public sealed class GradientTapeTests
         return gradients[0];
     }
 
-    private Real[] ComputeGradients(Func<Variable, Variable, Variable> function, Real left, Real right)
+    private Real[] ComputeGradients(Func<Variable<Real>, Variable<Real>, Variable<Real>> function, Real left, Real right)
     {
         var x = _tape.CreateVariable(left);
         var y = _tape.CreateVariable(right);

@@ -1,4 +1,4 @@
-﻿// <copyright file="AutoDiffExtensionsTests.cs" company="Mathematics.NET">
+﻿// <copyright file="AutoDiffExtensionsOfRealTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -31,12 +31,12 @@ using Mathematics.NET.LinearAlgebra;
 namespace Mathematics.NET.Tests.AutoDiff;
 
 [TestClass]
-[TestCategory("AutoDiff")]
-public sealed class AutoDiffExtensionsTests
+[TestCategory("AutoDiff"), TestCategory("Real Number")]
+public sealed class AutoDiffExtensionsOfRealTests
 {
-    private GradientTape _tape;
+    private GradientTape<Real> _tape;
 
-    public AutoDiffExtensionsTests()
+    public AutoDiffExtensionsOfRealTests()
     {
         _tape = new();
     }
@@ -140,7 +140,7 @@ public sealed class AutoDiffExtensionsTests
     //
 
     // f(x, y, z) = Cos(x) / ((x + y) * Sin(z))
-    public static Variable F(GradientTape tape, VariableVector3 x)
+    public static Variable<Real> F(GradientTape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Divide(
             tape.Cos(x.X1),
@@ -150,7 +150,7 @@ public sealed class AutoDiffExtensionsTests
     }
 
     // f(x, y, z) = Sin(x) * (Cos(y) + Sqrt(z))
-    public static Variable FX(GradientTape tape, VariableVector3 x)
+    public static Variable<Real> FX(GradientTape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Multiply(
             tape.Sin(x.X1),
@@ -160,7 +160,7 @@ public sealed class AutoDiffExtensionsTests
     }
 
     // f(x, y, z) = Sqrt(x + y + z)
-    public static Variable FY(GradientTape tape, VariableVector3 x)
+    public static Variable<Real> FY(GradientTape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Sqrt(
             tape.Add(
@@ -171,7 +171,7 @@ public sealed class AutoDiffExtensionsTests
     }
 
     // f(x, y, z) = Sinh(Exp(x) * y / z)
-    public static Variable FZ(GradientTape tape, VariableVector3 x)
+    public static Variable<Real> FZ(GradientTape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Sinh(
             tape.Multiply(
