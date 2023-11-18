@@ -33,6 +33,7 @@ using System.Runtime.InteropServices;
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a real number</summary>
+/// <param name="real">The value of the number</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct Real(double real)
