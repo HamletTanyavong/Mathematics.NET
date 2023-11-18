@@ -200,6 +200,34 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(2.34, 1.23, 0.334835801674179, -0.1760034342133505)]
+    public void CustomOperation_Binary_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
+    {
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
+        _ = _tape.CustomOperation(x, y, Real.Atan2, (x, y) => x.Value * u, (x, y) => -y.Value * u);
+        _tape.ReverseAccumulation(out var actual);
+
+        var expected = new Real[2] { expectedLeft, expectedRight };
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0.3342377271245026)]
+    public void CustomOperation_Unary_ReturnsGradient(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+        _ = _tape.CustomOperation(x, Real.Sin, Real.Cos);
+        _tape.ReverseAccumulation(out var gradients);
+
+        var actual = gradients[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 0.4273504273504274, -0.2246329169406093)]
     public void Divide_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
