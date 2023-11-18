@@ -135,8 +135,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = ComputeGradients(_tape.Atan2, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-15);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
