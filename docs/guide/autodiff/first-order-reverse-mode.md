@@ -309,7 +309,6 @@ tape.ReverseAccumulation(out var gradients);
 Console.WriteLine("Value: {0}", result);
 // The gradients of the function: ∂f/∂z and ∂f/∂w, respectively
 Console.WriteLine("Gradients: {0}", gradients.ToDisplayString());
-
 ```
 which is almost the exact same code we would have written in the real case. (Note that some methods such as `Atan2` are not available for complex gradient tapes.) This should output the following to the console:
 ```
@@ -336,3 +335,32 @@ Node 5:
 Value: (27.784322505370138, 24.753716703326287)
 Gradients: [(126.28638563049401, -98.74954259806483),  (-38.801295827094066, -109.6878698782088)  ]
 ```
+
+## Custom Operations
+
+If there is a function we need that is not provided in the class, we are still able to use it for our gradient tape provided we know its derivative. Suppose, for example, we did not have the `Sin` method. Since we know its derivative is `Cos`, we could write the following:
+```csharp
+GradientTape tape = new();
+var x = tape.CreateVariable(1.23);
+
+var result = tape.CustomOperation(
+    x,                 // Our variable
+    x => Real.Sin(x),  // The function
+    x => Real.Cos(x)); // The derivative of the function
+
+tape.ReverseAccumulation(out var gradients);
+Console.WriteLine("Value: {0}", result);
+Console.WriteLine("Gradient: {0}", gradients.ToDisplayString());
+```
+For custom binary operations, we can write
+```csharp
+_ = tape.CustomOperation(
+    x,
+    y,
+    (x, y) => // f(x, y)
+    (x, y) => // ∂f/∂x
+    (x, y) => // ∂f/∂y
+);
+```
+> [!NOTE]
+> Using variables in loops is not recommended since each iteration will add a node to the tape. If the derivative of the operation is known ahead of time, it may be possible to avoid this problem by using custom operations.
