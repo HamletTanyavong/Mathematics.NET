@@ -512,7 +512,7 @@ public record class GradientTape<T>
     /// <inheritdoc cref="IReal{T}.Atan2(T, T)"/>
     public Variable<Real> Atan2(Variable<Real> y, Variable<Real> x)
     {
-        var u = T.One / (x.Value * x.Value + y.Value * y.Value);
+        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
         _nodes.Add(new(x.Value * u, -y.Value * u, y._index, x._index));
         return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
     }
