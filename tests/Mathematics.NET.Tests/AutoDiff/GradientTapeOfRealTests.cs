@@ -67,7 +67,7 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 1, 1)]
     public void Add_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Add, left, right);
 
@@ -131,7 +131,7 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 0.334835801674179, -0.1760034342133505)]
     public void Atan2_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Atan2, left, right);
 
@@ -209,7 +209,7 @@ public sealed class GradientTapeOfRealTests
         _ = _tape.CustomOperation(x, y, Real.Atan2, (x, y) => x.Value * u, (x, y) => -y.Value * u);
         _tape.ReverseAccumulation(out var actual);
 
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -231,12 +231,11 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 0.4273504273504274, -0.2246329169406093)]
     public void Divide_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Divide, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-15);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -305,12 +304,11 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 0.9563103467806, -0.1224030239537303)]
     public void Log_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Log, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-15);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -335,10 +333,11 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 1, 0)]
     public void Modulo_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
+        Real[] expected = [expectedLeft, expectedRight];
+
         var actual = ComputeGradients(_tape.Modulo, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-15);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -371,12 +370,11 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 2.34, 1.23)]
     public void Multiply_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Multiply, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-16);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-16);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
 
     [TestMethod]
@@ -422,24 +420,22 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 3.088081166620949, 0.3360299854573856)]
     public void Pow_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Pow, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-15);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [DataRow(1.23, 2.34, 0.3795771135606888, -0.04130373687338086)]
     public void Root_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Root, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-15);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -473,12 +469,11 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 1, -1)]
     public void Subtract_TwoVariables_ReturnsGradients(double left, double right, double expectedLeft, double expectedRight)
     {
-        var expected = new Real[2] { expectedLeft, expectedRight };
+        Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradients(_tape.Subtract, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expectedLeft, actual[0], 1e-16);
-        Assert<Real>.AreApproximatelyEqual(expectedRight, actual[1], 1e-16);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
 
     [TestMethod]
