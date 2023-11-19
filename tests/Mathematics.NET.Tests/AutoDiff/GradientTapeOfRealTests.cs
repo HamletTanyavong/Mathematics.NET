@@ -200,11 +200,11 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
-    [DataRow(2.34, 1.23, 0.334835801674179, -0.1760034342133505)]
+    [DataRow(1.23, 2.34, -0.1760034342133505, 0.334835801674179)]
     public void CustomOperation_Binary_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        var x = _tape.CreateVariable(left);
-        var y = _tape.CreateVariable(right);
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
         _ = _tape.CustomOperation(x, y, Real.Atan2, (x, y) => x.Value * u, (x, y) => -y.Value * u);
         _tape.ReverseAccumulation(out var actual);
