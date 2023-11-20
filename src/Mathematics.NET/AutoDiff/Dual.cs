@@ -34,11 +34,11 @@ namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a dual number</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <param name="value">The primal part of the dual number</param>
-/// <param name="diff">The tangent part of the dual number</param>
+/// <param name="d0">The primal part of the dual number</param>
+/// <param name="d1">The tangent part of the dual number</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Dual<T>(T value, T diff)
+public readonly struct Dual<T>(T d0, T d1)
     : IAdditionOperation<Dual<T>, Dual<T>>,
       IDivisionOperation<Dual<T>, Dual<T>>,
       IMultiplicationOperation<Dual<T>, Dual<T>>,
@@ -49,8 +49,8 @@ public readonly struct Dual<T>(T value, T diff)
       IFormattable
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
-    private readonly T _d0 = value;
-    private readonly T _d1 = diff;
+    private readonly T _d0 = d0;
+    private readonly T _d1 = d1;
 
     public Dual(T value) : this(value, T.Zero) { }
 
@@ -251,7 +251,7 @@ public readonly struct Dual<T>(T value, T diff)
     /// <param name="x">A dual number</param>
     /// <param name="f">A function</param>
     /// <param name="df">The derivative of the function</param>
-    /// <returns></returns>
+    /// <returns>A dual number</returns>
     public static Dual<T> CustomOperation(Dual<T> x, Func<T, T> f, Func<T, T> df) => new(f(x._d0), x._d1 * df(x._d0));
 
     /// <summary>Perform forward-mode autodiff using a custom binary operation</summary>
@@ -260,7 +260,7 @@ public readonly struct Dual<T>(T value, T diff)
     /// <param name="f">A function</param>
     /// <param name="dfx">The derivative of the function with respect to the left variable</param>
     /// <param name="dfy">The derivative of the function with respect to the right variable</param>
-    /// <returns></returns>
+    /// <returns>A dual number</returns>
     public static Dual<T> CustomOperation(Dual<T> x, Dual<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
 }
