@@ -1,4 +1,4 @@
-﻿// <copyright file="AutoDiffExtensionsOfRealTests.cs" company="Mathematics.NET">
+﻿// <copyright file="GradientTapeExtensionsOfRealTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,11 +32,11 @@ namespace Mathematics.NET.Tests.AutoDiff;
 
 [TestClass]
 [TestCategory("AutoDiff"), TestCategory("Real Number")]
-public sealed class AutoDiffExtensionsOfRealTests
+public sealed class GradientTapeExtensionsOfRealTests
 {
     private GradientTape<Real> _tape;
 
-    public AutoDiffExtensionsOfRealTests()
+    public GradientTapeExtensionsOfRealTests()
     {
         _tape = new();
     }
