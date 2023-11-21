@@ -28,6 +28,8 @@
 namespace Mathematics.NET.Core.Attributes;
 
 /// <summary>Indicates that a method represents a mathematical operation</summary>
+/// <param name="arity">The arity of the operation</param>
+/// <param name="name">The name of the operation</param>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public class OperationAttribute(uint arity, string name) : FunctionAttribute(arity, name)
 {

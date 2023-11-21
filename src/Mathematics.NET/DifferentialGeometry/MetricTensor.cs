@@ -40,6 +40,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="V">An index position</typeparam>
 /// <typeparam name="W">The first index</typeparam>
 /// <typeparam name="X">The second index</typeparam>
+/// <param name="matrix">A backing matrix</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct MetricTensor<T, U, V, W, X>(T matrix)
     : IRankTwoTensor<MetricTensor<T, U, V, W, X>, T, U, Index<V, W>, Index<V, X>>,

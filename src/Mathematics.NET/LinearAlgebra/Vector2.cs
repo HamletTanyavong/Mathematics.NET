@@ -35,6 +35,8 @@ namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a vector with two components</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <param name="x1">The $ x_1 $ component</param>
+/// <param name="x2">The $ x_2 $ component</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
     where T : IComplex<T>

@@ -247,14 +247,14 @@ public readonly struct Dual<T>(T d0, T d1)
     // Custom operations
     //
 
-    /// <summary>Perform forward-mode autodiff using a custom unary operation</summary>
+    /// <summary>Perform forward-mode autodiff using a custom unary operation.</summary>
     /// <param name="x">A dual number</param>
     /// <param name="f">A function</param>
     /// <param name="df">The derivative of the function</param>
     /// <returns>A dual number</returns>
     public static Dual<T> CustomOperation(Dual<T> x, Func<T, T> f, Func<T, T> df) => new(f(x._d0), x._d1 * df(x._d0));
 
-    /// <summary>Perform forward-mode autodiff using a custom binary operation</summary>
+    /// <summary>Perform forward-mode autodiff using a custom binary operation.</summary>
     /// <param name="x">A variable</param>
     /// <param name="y">A variable</param>
     /// <param name="f">A function</param>

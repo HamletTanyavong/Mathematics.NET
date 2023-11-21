@@ -32,6 +32,7 @@ namespace Mathematics.NET.Core.ParallelActions;
 
 /// <summary>An action for multiplying items by a scalar</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <param name="factor">The factor by which to multiply items</param>
 public readonly struct MultiplyByScalarAction<T>(T factor) : IRefAction<T>
     where T : IComplex<T>
 {
