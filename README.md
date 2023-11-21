@@ -13,7 +13,6 @@
 
 ## About
 
-Mathematics.NET provides custom types for complex, real, and rational numbers as well as other mathematical objects such as vectors, matrices, and tensors.[^1] Mathematics.NET also supports automatic differentiation.[^2]
+Mathematics.NET provides custom types for complex, real, and rational numbers as well as other mathematical objects such as vectors, matrices, and tensors.[^1] Mathematics.NET also supports first-order, forward and reverse-mode automatic differentiation.
 
 [^1]: Please visit the [documentation site](https://mathematics.hamlettanyavong.com) for detailed information.
-[^2]: So far, only first-order, reverse-mode automatic differentiation is supported; first-order, forward-mode, as well as second-order forward and reverse-modes are planned features.
