@@ -28,19 +28,21 @@
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a variable used in reverse-mode automatic differentiation</summary>
-public readonly record struct Variable
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+public readonly record struct Variable<T>
+    where T : IComplex<T>
 {
     /// <summary>The index of the variable</summary>
     internal readonly int _index;
 
     /// <summary>The value of the variable</summary>
-    public readonly Real Value;
+    public readonly T Value;
 
-    internal Variable(int index, Real value)
+    internal Variable(int index, T value)
     {
         _index = index;
         Value = value;
     }
 
-    public override string ToString() => Value.ToString();
+    public override string ToString() => $"{Value}";
 }

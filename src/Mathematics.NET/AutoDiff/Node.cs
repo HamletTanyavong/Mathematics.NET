@@ -25,15 +25,20 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Runtime.InteropServices;
+
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a node on a gradient tape</summary>
-internal readonly record struct Node
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+[StructLayout(LayoutKind.Sequential)]
+internal readonly record struct Node<T>
+    where T : IComplex<T>
 {
     /// <summary>The derivative of the left component of the binary operation</summary>
-    public readonly Real DX;
+    public readonly T DX;
     /// <summary>The derivative of the right component of the binary operation</summary>
-    public readonly Real DY;
+    public readonly T DY;
 
     /// <summary>The parent index of the left node</summary>
     public readonly int PX;
@@ -42,23 +47,23 @@ internal readonly record struct Node
 
     public Node(int index)
     {
-        DX = Real.Zero;
-        DY = Real.Zero;
+        DX = T.Zero;
+        DY = T.Zero;
 
         PX = index;
         PY = index;
     }
 
-    public Node(Real dx, int px, int py)
+    public Node(T dx, int px, int py)
     {
         DX = dx;
-        DY = Real.Zero;
+        DY = T.Zero;
 
         PX = px;
         PY = py;
     }
 
-    public Node(Real dx, Real dy, int px, int py)
+    public Node(T dx, T dy, int px, int py)
     {
         DX = dx;
         DY = dy;

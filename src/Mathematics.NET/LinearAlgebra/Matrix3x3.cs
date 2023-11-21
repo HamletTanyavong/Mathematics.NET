@@ -35,8 +35,20 @@ namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 3x3 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <param name="e11">The $ e_{11} $ component</param>
+/// <param name="e12">The $ e_{12} $ component</param>
+/// <param name="e13">The $ e_{13} $ component</param>
+/// <param name="e21">The $ e_{21} $ component</param>
+/// <param name="e22">The $ e_{22} $ component</param>
+/// <param name="e23">The $ e_{23} $ component</param>
+/// <param name="e31">The $ e_{31} $ component</param>
+/// <param name="e32">The $ e_{32} $ component</param>
+/// <param name="e33">The $ e_{33} $ component</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
+public struct Matrix3x3<T>(
+    T e11, T e12, T e13,
+    T e21, T e22, T e23,
+    T e31, T e32, T e33) : ISquareMatrix<Matrix3x3<T>, T>
     where T : IComplex<T>
 {
     private static readonly Matrix3x3<T> s_identity = CreateDiagonal(T.One, T.One, T.One);
@@ -47,35 +59,17 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
 
     public static readonly Matrix3x3<T> NaM = CreateDiagonal(T.NaN, T.NaN, T.NaN);
 
-    public T E11;
-    public T E12;
-    public T E13;
+    public T E11 = e11;
+    public T E12 = e12;
+    public T E13 = e13;
 
-    public T E21;
-    public T E22;
-    public T E23;
+    public T E21 = e21;
+    public T E22 = e22;
+    public T E23 = e23;
 
-    public T E31;
-    public T E32;
-    public T E33;
-
-    public Matrix3x3(
-        T e11, T e12, T e13,
-        T e21, T e22, T e23,
-        T e31, T e32, T e33)
-    {
-        E11 = e11;
-        E12 = e12;
-        E13 = e13;
-
-        E21 = e21;
-        E22 = e22;
-        E23 = e23;
-
-        E31 = e31;
-        E32 = e32;
-        E33 = e33;
-    }
+    public T E31 = e31;
+    public T E32 = e32;
+    public T E33 = e33;
 
     //
     // Constants

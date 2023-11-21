@@ -33,9 +33,10 @@ using System.Runtime.InteropServices;
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a real number</summary>
+/// <param name="real">The value of the number</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Real
+public readonly struct Real(double real)
     : IReal<Real>,
       IConstants<Real>,
       IDifferentiableFunctions<Real>
@@ -95,12 +96,7 @@ public readonly struct Real
     /// <inheritdoc cref="Constants.ZetaOf4" />
     public static readonly Real ZetaOf4 = Constants.ZetaOf4;
 
-    private readonly double _value;
-
-    public Real(double real)
-    {
-        _value = real;
-    }
+    private readonly double _value = real;
 
     //
     // Real number properties

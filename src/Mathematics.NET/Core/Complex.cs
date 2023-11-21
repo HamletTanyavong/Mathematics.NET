@@ -34,9 +34,11 @@ using System.Runtime.InteropServices;
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a complex number</summary>
+/// <param name="real">The real part of the complex number</param>
+/// <param name="imaginary">The imaginary part of the complex number</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Complex
+public readonly struct Complex(Real real, Real imaginary)
     : IComplex<Complex>,
       IDifferentiableFunctions<Complex>
 {
@@ -58,20 +60,10 @@ public readonly struct Complex
     public static readonly Complex NaN = new(Real.NaN, Real.NaN);
     public static readonly Complex Infinity = new(Real.PositiveInfinity, Real.PositiveInfinity);
 
-    private readonly Real _real;
-    private readonly Real _imaginary;
+    private readonly Real _real = real;
+    private readonly Real _imaginary = imaginary;
 
-    public Complex(Real real)
-    {
-        _real = real;
-        _imaginary = 0.0;
-    }
-
-    public Complex(Real real, Real imaginary)
-    {
-        _real = real;
-        _imaginary = imaginary;
-    }
+    public Complex(Real real) : this(real, 0.0) { }
 
     //
     // Complex number properties

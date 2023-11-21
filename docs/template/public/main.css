@@ -1,11 +1,13 @@
 :root, [data-bs-theme="dark"] {
   --bg-color-primary: #161616;
   --bg-color-secondary: #082424;
+  --bg-color-highlight: #a8e8e8;
 }
 
 [data-bs-theme="light"] {
   --bg-color-primary: #e4e4e4;
-  --bg-color-secondary: #b4f8f8;
+  --bg-color-secondary: #a8e8e8;
+  --bg-color-highlight: #082424;
 }
 
 #logo {
@@ -125,4 +127,38 @@ a {
 
   .dropdown-menu a:hover {
     text-decoration: none;
+  }
+
+/* Mermaid */
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
+  svg[id^='mermaid-'] {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: inherit !important;
+  }
+
+  svg[id^='mermaid-'] .node * {
+    stroke-width: 0px !important;
+    fill: var(--bg-color-secondary) !important;
+  }
+
+  svg[id^='mermaid-'] .label * {
+    color: var(--bg-color-highlight) !important;
+  }
+
+  svg[id^='mermaid-'] .flowchart-link {
+    stroke: var(--bg-color-highlight) !important;
+  }
+
+  svg[id^='mermaid-'] .edge-thickness-normal {
+    stroke-width: 1px !important;
+  }
+
+  svg[id^='mermaid-'] .edgeLabel {
+    background-color: var(--bg-color-primary) !important;
+    padding: 1rem 0rem !important;
   }

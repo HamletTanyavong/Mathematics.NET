@@ -1,4 +1,4 @@
-﻿// <copyright file="OperationAttribute.cs" company="Mathematics.NET">
+﻿// <copyright file="Buffer3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,12 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Core.Attributes;
+#pragma warning disable IDE0051
 
-/// <summary>Indicates that a method represents a mathematical operation</summary>
-/// <param name="arity">The arity of the operation</param>
-/// <param name="name">The name of the operation</param>
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public class OperationAttribute(uint arity, string name) : FunctionAttribute(arity, name)
+using System.Runtime.CompilerServices;
+
+namespace Mathematics.NET.Core.Buffers;
+
+/// <summary>Represents a buffer of 3 Mathematics.NET numbers</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+[InlineArray(3)]
+internal struct Buffer3<T>
+    where T : IComplex<T>, IDifferentiableFunctions<T>
 {
+    private T _element;
 }

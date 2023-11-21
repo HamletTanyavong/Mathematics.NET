@@ -35,25 +35,21 @@ namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a vector with three components</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <param name="x1">The $ x_1 $ component</param>
+/// <param name="x2">The $ x_2 $ component</param>
+/// <param name="x3">The $ x_3 $ component</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Vector3<T> : IVector<Vector3<T>, T>
+public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     where T : IComplex<T>
 {
     /// <summary>The first element of the vector</summary>
-    public T X1;
+    public T X1 = x1;
 
     /// <summary>The second element of the vector</summary>
-    public T X2;
+    public T X2 = x2;
 
     /// <summary>The third element of the vector</summary>
-    public T X3;
-
-    public Vector3(T x1, T x2, T x3)
-    {
-        X1 = x1;
-        X2 = x2;
-        X3 = x3;
-    }
+    public T X3 = x3;
 
     //
     // IArrayRepresentable & relevant interfaces
@@ -195,11 +191,10 @@ public struct Vector3<T> : IVector<Vector3<T>, T>
 
     public readonly Real Norm()
     {
-        Span<Real> components = stackalloc Real[3];
-
-        components[0] = (X1 * T.Conjugate(X1)).Re;
-        components[1] = (X2 * T.Conjugate(X2)).Re;
-        components[2] = (X3 * T.Conjugate(X3)).Re;
+        Span<Real> components = [
+            (X1 * T.Conjugate(X1)).Re,
+            (X2 * T.Conjugate(X2)).Re,
+            (X3 * T.Conjugate(X3)).Re];
 
         Real max = components[0];
         for (int i = 1; i < 3; i++)

@@ -17,5 +17,5 @@ Please have [Visual Studio Code](https://code.visualstudio.com/) installed as we
 ```
 To get a specific version of Mathematics.NET, use, for example,
 ```csharp
-#r "nuget: Physics.NET.Mathematics, 0.1.0-alpha.1"
+#r "nuget: Physics.NET.Mathematics, *-*"
 ```

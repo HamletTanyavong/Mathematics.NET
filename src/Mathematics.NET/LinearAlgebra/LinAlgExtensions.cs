@@ -44,6 +44,20 @@ public static class LinAlgExtensions
         return new Span2D<T>(Unsafe.AsPointer(ref matrix.E11), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
     }
 
+    /// <summary>Get the string representation of this <see cref="ReadOnlySpan{T}"/> object</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <param name="readOnlySpan">The read-only span to format</param>
+    /// <param name="format">The format to use</param>
+    /// <param name="provider">The provider to use to format the value</param>
+    /// <returns>A string representation of this object</returns>
+    public static string ToDisplayString<T>(this ReadOnlySpan<T> readOnlySpan, string? format = null, IFormatProvider? provider = null)
+        where T : IComplex<T>
+    {
+        Span<T> span = new T[readOnlySpan.Length];
+        readOnlySpan.CopyTo(span);
+        return span.ToDisplayString(format, provider);
+    }
+
     /// <summary>Get the string representation of this <see cref="Span{T}"/> object</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
     /// <param name="span">The span to format</param>

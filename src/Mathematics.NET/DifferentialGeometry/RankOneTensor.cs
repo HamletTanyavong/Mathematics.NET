@@ -37,8 +37,9 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="T">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="V">An index</typeparam>
+/// <param name="vector">A backing vector</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct RankOneTensor<T, U, V>
+public struct RankOneTensor<T, U, V>(T vector)
     : IRankOneTensor<RankOneTensor<T, U, V>, T, U, V>,
       IAdditionOperation<RankOneTensor<T, U, V>, RankOneTensor<T, U, V>>,
       ISubtractionOperation<RankOneTensor<T, U, V>, RankOneTensor<T, U, V>>
@@ -46,12 +47,7 @@ public struct RankOneTensor<T, U, V>
     where U : IComplex<U>
     where V : IIndex
 {
-    private T _vector;
-
-    public RankOneTensor(T vector)
-    {
-        _vector = vector;
-    }
+    private T _vector = vector;
 
     //
     // IArrayRepresentable & relevant interfaces

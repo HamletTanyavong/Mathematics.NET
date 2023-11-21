@@ -38,8 +38,9 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="V">The first index</typeparam>
 /// <typeparam name="W">The second index</typeparam>
+/// <param name="matrix">A backing matrix</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct RankTwoTensor<T, U, V, W>
+public struct RankTwoTensor<T, U, V, W>(T matrix)
     : IRankTwoTensor<RankTwoTensor<T, U, V, W>, T, U, V, W>,
       IAdditionOperation<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, W>>,
       ISubtractionOperation<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, W>>
@@ -48,12 +49,7 @@ public struct RankTwoTensor<T, U, V, W>
     where V : IIndex
     where W : IIndex
 {
-    private T _matrix;
-
-    public RankTwoTensor(T matrix)
-    {
-        _matrix = matrix;
-    }
+    private T _matrix = matrix;
 
     //
     // IRankTwoTensor interface

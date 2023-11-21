@@ -67,7 +67,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         if (q == T.Zero)
         {
             _numerator = T.Zero;
-            _denominator = T.Zero;
+            _denominator = T.One;
         }
         else
         {
@@ -542,7 +542,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static bool IsNaN(Rational<T> x) => T.IsZero(x._numerator) && T.IsZero(x._denominator);
 
-    public static bool IsZero(Rational<T> x) => T.IsZero(x._numerator);
+    public static bool IsZero(Rational<T> x) => T.IsZero(x._numerator) && x._denominator == T.One;
 
     public static bool IsNegativeInfinity(Rational<T> x) => x._numerator == -T.One && T.IsZero(x._denominator);
 
