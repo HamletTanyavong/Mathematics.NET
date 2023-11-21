@@ -25,7 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.AutoDiff;
@@ -237,11 +236,11 @@ public static class AutoDiffExtensions
 
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using reverse-mode automatic differentiation.</summary>
     /// <param name="tape">A gradient tape</param>
+    /// <param name="v">A vector</param>
     /// <param name="fx">The first function</param>
     /// <param name="fy">The second function</param>
     /// <param name="fz">The third function</param>
     /// <param name="x">The point at which to compute the vector-Jacobian product</param>
-    /// <param name="v">A vector</param>
     /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static unsafe Vector3<T> VJP<T>(
@@ -253,21 +252,20 @@ public static class AutoDiffExtensions
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
-        Buffer3<T> buffer = default;
-        Span<T> span = buffer;
+        Vector3<T> result = new();
 
         _ = fx(tape, x);
         tape.ReverseAccumulation(out var gradients, v.X1);
-        span[0] += gradients[0]; span[1] += gradients[1]; span[2] += gradients[2];
+        result[0] += gradients[0]; result[1] += gradients[1]; result[2] += gradients[2];
 
         _ = fy(tape, x);
         tape.ReverseAccumulation(out gradients, v.X2);
-        span[0] += gradients[0]; span[1] += gradients[1]; span[2] += gradients[2];
+        result[0] += gradients[0]; result[1] += gradients[1]; result[2] += gradients[2];
 
         _ = fz(tape, x);
         tape.ReverseAccumulation(out gradients, v.X3);
-        span[0] += gradients[0]; span[1] += gradients[1]; span[2] += gradients[2];
+        result[0] += gradients[0]; result[1] += gradients[1]; result[2] += gradients[2];
 
-        return new(span[0], span[1], span[2]);
+        return new(result[0], result[1], result[2]);
     }
 }
