@@ -1,6 +1,6 @@
 # First-Order, Reverse-Mode Automatic Differentiation
 
-Support for first-order, reverse-mode automatic differentiation (autodiff) is provided by the @Mathematics.NET.AutoDiff.GradientTape class.
+Support for first-order, reverse-mode automatic differentiation (autodiff) is provided by the `GradientTape` class.
 
 ## Gradient tapes
 
@@ -28,7 +28,7 @@ Once we are satisfied, we may use these in our equations.
 
 Suppose we want to compute the derivative of the function
 $$
-    f(x) = \frac{\sin(x)\ln(x)}{e^{-x}}\quad\text{for }x>0 \tag{1}
+    f(x) = \frac{\sin(x)\ln(x)}{e^{-x}}\quad\text{for }x>0
 $$
 at the point $ x=1.23 $. We can write
 ```csharp
@@ -140,7 +140,7 @@ var z = tape.CreateVariable(2.34);
 ```
 Now, if we wanted to compute the gradient of the function
 $$
-    f(x,y,z) = \frac{\cos(x)}{(x+y)\sin(z)} \tag{2}
+    f(x,y,z) = \frac{\cos(x)}{(x+y)\sin(z)}
 $$
 at the points we have chosen, $ x=1.23 $, $ y=0.66 $, and $ z=2.34 $, we can write
 ```csharp
@@ -218,7 +218,7 @@ This will print the following to the console:
 ```
 which, for clarity, is
 $$
-\begin{align} \tag{3}
+\begin{align}
     \frac{\partial}{\partial x}f(x,y,z) &   =-\frac{\csc(z)}{x+y}\left(\frac{\cos(x)}{x+y}+\sin(x)\right) = -0.8243135949243512 \\
     \frac{\partial}{\partial y}f(x,y,z) &   =-\frac{\cos(x)\csc(x)}{(x+y)^2} = -0.13023459678281554 \\
     \frac{\partial}{\partial z}f(x,y,z) &   =-\frac{\cos(x)\cot(z)\csc(z)}{x+y} = 0.2382974299363868
@@ -234,7 +234,7 @@ tape.CreateVariableVector(1.23, 0.66, 2.34);
 ```
 We can use this to calculate, for example, a Jacobian-vector product with the vector functions
 $$
-\begin{align} \tag{4}
+\begin{align}
     f_1(\textbf{x}) &   =\sin(x_1)(\cos(x_2)+\sqrt{x_3})    \\
     f_2(\textbf{x}) &   =\sqrt{x_1+x_2+x_3} \\
     f_3(\textbf{x}) &   =\sinh\left(\frac{e^xy}{z}\right)
@@ -284,7 +284,7 @@ Note that this time, we do not call the method `ReverseAccumulation`. This shoul
 
 We can also work with complex numbers and complex derivatives by specifying `Complex` as a type parameter when we create our gradient tape. Suppose we want to find the gradient of the function:
 $$
-    f(z,w)  =   \cos(\sin(z)\sqrt{w}) \tag{5}
+    f(z,w)  =   \cos(\sin(z)\sqrt{w})
 $$
 at the points $ z=1.23+i2.34 $ and $ w=-0.66+i0.23 $. We can write
 ```csharp
