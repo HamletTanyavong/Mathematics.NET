@@ -263,4 +263,13 @@ public readonly struct Dual<T>(T d0, T d1)
     /// <returns>A dual number</returns>
     public static Dual<T> CustomOperation(Dual<T> x, Dual<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
+
+    //
+    // Explicit operators
+    //
+
+    /// <summary>Convert a value of type <see cref="double"/> to one of type <see cref="Dual{T}"/></summary>
+    /// <remarks>The tangent part of the converted value will be zero.</remarks>
+    /// <param name="x">The value to convert</param>
+    public static explicit operator Dual<T>(double x) => new(x);
 }
