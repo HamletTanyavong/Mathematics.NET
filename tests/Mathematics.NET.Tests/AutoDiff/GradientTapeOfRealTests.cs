@@ -69,7 +69,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Add, left, right);
+        var actual = ComputeGradient(_tape.Add, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
@@ -133,7 +133,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Atan2, left, right);
+        var actual = ComputeGradient(_tape.Atan2, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -233,7 +233,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Divide, left, right);
+        var actual = ComputeGradient(_tape.Divide, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -306,7 +306,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Log, left, right);
+        var actual = ComputeGradient(_tape.Log, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -335,7 +335,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Modulo, left, right);
+        var actual = ComputeGradient(_tape.Modulo, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -372,7 +372,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Multiply, left, right);
+        var actual = ComputeGradient(_tape.Multiply, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
@@ -422,7 +422,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Pow, left, right);
+        var actual = ComputeGradient(_tape.Pow, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -433,7 +433,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Root, left, right);
+        var actual = ComputeGradient(_tape.Root, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -471,7 +471,7 @@ public sealed class GradientTapeOfRealTests
     {
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradients(_tape.Subtract, left, right);
+        var actual = ComputeGradient(_tape.Subtract, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
@@ -528,16 +528,16 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
         _ = function(x);
-        _tape.ReverseAccumulation(out var gradients);
-        return gradients[0];
+        _tape.ReverseAccumulation(out var gradient);
+        return gradient[0];
     }
 
-    private Real[] ComputeGradients(Func<Variable<Real>, Variable<Real>, Variable<Real>> function, Real left, Real right)
+    private Real[] ComputeGradient(Func<Variable<Real>, Variable<Real>, Variable<Real>> function, Real left, Real right)
     {
         var x = _tape.CreateVariable(left);
         var y = _tape.CreateVariable(right);
         _ = function(x, y);
-        _tape.ReverseAccumulation(out var gradients);
-        return gradients.ToArray();
+        _tape.ReverseAccumulation(out var gradient);
+        return gradient.ToArray();
     }
 }
