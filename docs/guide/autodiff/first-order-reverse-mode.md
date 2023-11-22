@@ -200,7 +200,7 @@ graph BT
     mul -- adj(w₆) = adj(w₇) ∂w₇/∂w₆ --> div
     div -- adj(f) = adj(w₇) = 1 (seed) --> function["f(x, y, z)"]
 ```
-As before, we can use the `ReverseAccumulation` to get our gradients
+As before, we can use `ReverseAccumulation` to get our gradients
 ```csharp
 tape.ReverseAccumulation(out var gradients);
 ```
