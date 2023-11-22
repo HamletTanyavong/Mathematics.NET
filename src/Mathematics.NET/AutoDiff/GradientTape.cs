@@ -142,15 +142,16 @@ public record class GradientTape<T>
         }
     }
 
-    /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradients.</summary>
-    /// <param name="gradients">The gradients</param>
+    /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradient.</summary>
+    /// <param name="gradients">The gradient</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulation(out ReadOnlySpan<T> gradients)
         => ReverseAccumulation(out gradients, T.One);
 
-    /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradients.</summary>
-    /// <param name="gradients">The gradients</param>
+    /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradient.</summary>
+    /// <param name="gradients">The gradient</param>
     /// <param name="seed">A seed value</param>
+    /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulation(out ReadOnlySpan<T> gradients, T seed)
     {
