@@ -32,7 +32,7 @@ namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a Hessian tape</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-public record class HessianTape<T>
+public record class HessianTape<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
     private List<HessianNode<T>> _nodes;
@@ -43,19 +43,14 @@ public record class HessianTape<T>
         _nodes = [];
     }
 
-    /// <summary>Get the number of nodes on the gradient tape.</summary>
     public int NodeCount => _nodes.Count;
 
-    /// <summary>Get the number of variables that are being tracked.</summary>
     public int VariableCount => _variableCount;
 
     //
     // Methods
     //
 
-    /// <summary>Create a variable for the gradient tape to track.</summary>
-    /// <param name="seed">A seed value</param>
-    /// <returns>A variable</returns>
     public Variable<T> CreateVariable(T seed)
     {
         _nodes.Add(new(_variableCount));
@@ -63,9 +58,6 @@ public record class HessianTape<T>
         return variable;
     }
 
-    /// <summary>Print the nodes of the gradient tape to the console.</summary>
-    /// <param name="cancellationToken">A cancellation token</param>
-    /// <param name="limit">The total number of nodes to print</param>
     public void PrintNodes(CancellationToken cancellationToken, int limit = 100)
     {
         const string tab = "    ";
@@ -109,9 +101,6 @@ public record class HessianTape<T>
         }
     }
 
-    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient.</summary>
-    /// <param name="gradient">The gradient</param>
-    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulation(out ReadOnlySpan<T> gradient)
         => ReverseAccumulation(out gradient, T.One);
@@ -131,10 +120,6 @@ public record class HessianTape<T>
     public void ReverseAccumulation(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulation(out gradient, out hessian, T.One);
 
-    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient.</summary>
-    /// <param name="gradient">The gradient</param>
-    /// <param name="seed">A seed value</param>
-    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulation(out ReadOnlySpan<T> gradient, T seed)
     {
@@ -296,28 +281,24 @@ public record class HessianTape<T>
     // Basic operations
     //
 
-    /// <inheritdoc cref="GradientTape{T}.Add(Variable{T}, Variable{T})"/>
     public Variable<T> Add(Variable<T> x, Variable<T> y)
     {
         _nodes.Add(new(T.One, T.Zero, T.Zero, T.One, T.Zero, x._index, y._index));
         return new(_nodes.Count - 1, x.Value + y.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Add(T, Variable{T})"/>
     public Variable<T> Add(T c, Variable<T> x)
     {
         _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c + x.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Add(Variable{T}, T)"/>
     public Variable<T> Add(Variable<T> x, T c)
     {
         _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value + c);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Divide(Variable{T}, Variable{T})"/>
     public Variable<T> Divide(Variable<T> x, Variable<T> y)
     {
         var n = T.One / y.Value;
@@ -326,7 +307,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, x.Value * n);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Divide(T, Variable{T})"/>
     public Variable<T> Divide(T c, Variable<T> x)
     {
         var n = T.One / x.Value;
@@ -335,7 +315,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, c * n);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Divide(Variable{T}, T)"/>
     public Variable<T> Divide(Variable<T> x, T c)
     {
         var n = T.One / c;
@@ -343,63 +322,54 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, x.Value * n);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Modulo(Variable{Real}, Variable{Real})"/>
     public Variable<Real> Modulo(Variable<Real> x, Variable<Real> y)
     {
         _nodes.Add(new(T.One, T.Zero, T.Zero, x.Value * Real.Floor(x.Value / y.Value), T.Zero, x._index, y._index));
         return new(_nodes.Count - 1, x.Value % y.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Modulo(Real, Variable{Real})"/>
     public Variable<Real> Modulo(Real c, Variable<Real> x)
     {
         _nodes.Add(new(c.Value * Real.Floor(c.Value / x.Value), T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c % x.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Modulo(Variable{Real}, Real)"/>
     public Variable<Real> Modulo(Variable<Real> x, Real c)
     {
         _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value % c);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Multiply(Variable{T}, Variable{T})"/>
     public Variable<T> Multiply(Variable<T> x, Variable<T> y)
     {
         _nodes.Add(new(y.Value, T.Zero, T.One, x.Value, T.Zero, x._index, y._index));
         return new(_nodes.Count - 1, x.Value * y.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Multiply(T, Variable{T})"/>
     public Variable<T> Multiply(T c, Variable<T> x)
     {
         _nodes.Add(new(c, T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c * x.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Multiply(Variable{T}, T)"/>
     public Variable<T> Multiply(Variable<T> x, T c)
     {
         _nodes.Add(new(c, T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, x.Value * c);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Subtract(Variable{T}, Variable{T})"/>
     public Variable<T> Subtract(Variable<T> x, Variable<T> y)
     {
         _nodes.Add(new(T.One, T.Zero, T.Zero, -T.One, T.Zero, x._index, y._index));
         return new(_nodes.Count - 1, x.Value - y.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Subtract(T, Variable{T})"/>
     public Variable<T> Subtract(T c, Variable<T> x)
     {
         _nodes.Add(new(-T.One, T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c - x.Value);
     }
 
-    /// <inheritdoc cref="GradientTape{T}.Subtract(Variable{T}, T)"/>
     public Variable<T> Subtract(Variable<T> x, T c)
     {
         _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
@@ -410,7 +380,6 @@ public record class HessianTape<T>
     // Other operations
     //
 
-    /// <inheritdoc cref="GradientTape{T}.Negate(Variable{T})"/>
     public Variable<T> Negate(Variable<T> x)
     {
         _nodes.Add(new(-T.One, T.Zero, x._index, _nodes.Count));
@@ -419,7 +388,6 @@ public record class HessianTape<T>
 
     // Exponential functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp(T)"/>
     public Variable<T> Exp(Variable<T> x)
     {
         var exp = T.Exp(x.Value);
@@ -427,7 +395,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, exp);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp2(T)"/>
     public Variable<T> Exp2(Variable<T> x)
     {
         var exp2 = T.Exp2(x.Value);
@@ -436,7 +403,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, exp2);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp10(T)"/>
     public Variable<T> Exp10(Variable<T> x)
     {
         var exp10 = T.Exp10(x.Value);
@@ -447,7 +413,6 @@ public record class HessianTape<T>
 
     // Hyperbolic functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Acosh(T)"/>
     public Variable<T> Acosh(Variable<T> x)
     {
         var u = x.Value - T.One;
@@ -456,7 +421,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Acosh(x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Asinh(T)"/>
     public Variable<T> Asinh(Variable<T> x)
     {
         var u = T.One + x.Value * x.Value;
@@ -464,7 +428,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Asinh(x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Atanh(T)"/>
     public Variable<T> Atanh(Variable<T> x)
     {
         var df = T.One / (T.One - x.Value * x.Value);
@@ -472,7 +435,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Atanh(x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cosh(T)"/>
     public Variable<T> Cosh(Variable<T> x)
     {
         var cosh = T.Cosh(x.Value);
@@ -480,7 +442,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, cosh);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sinh(T)"/>
     public Variable<T> Sinh(Variable<T> x)
     {
         var sinh = T.Sinh(x.Value);
@@ -488,7 +449,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, sinh);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Tanh(T)"/>
     public Variable<T> Tanh(Variable<T> x)
     {
         var tanh = T.Tanh(x.Value);
@@ -500,7 +460,6 @@ public record class HessianTape<T>
 
     // Logarithmic functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Ln(T)"/>
     public Variable<T> Ln(Variable<T> x)
     {
         var df = T.One / x.Value;
@@ -508,7 +467,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Ln(x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log(T, T)"/>
     public Variable<T> Log(Variable<T> x, Variable<T> b)
     {
         var lnx = T.Ln(x.Value);
@@ -519,7 +477,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Log(x.Value, b.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log2(T)"/>
     public Variable<T> Log2(Variable<T> x)
     {
         var u = T.One / x.Value;
@@ -528,7 +485,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Log2(x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log10(T)"/>
     public Variable<T> Log10(Variable<T> x)
     {
         var u = T.One / x.Value;
@@ -539,7 +495,6 @@ public record class HessianTape<T>
 
     // Power functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     public Variable<T> Pow(Variable<T> x, Variable<T> n)
     {
         var pow = T.Pow(x.Value, n.Value);
@@ -559,7 +514,6 @@ public record class HessianTape<T>
 
     // Root functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cbrt(T)"/>
     public Variable<T> Cbrt(Variable<T> x)
     {
         var cbrt = T.Cbrt(x.Value);
@@ -568,7 +522,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, cbrt);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Root(T, T)"/>
     public Variable<T> Root(Variable<T> x, Variable<T> n)
     {
         var root = T.Root(x.Value, n.Value);
@@ -589,7 +542,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, root);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sqrt(T)"/>
     public Variable<T> Sqrt(Variable<T> x)
     {
         var sqrt = T.Sqrt(x.Value);
@@ -600,7 +552,6 @@ public record class HessianTape<T>
 
     // Trigonometric functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cos(T)"/>
     public Variable<T> Cos(Variable<T> x)
     {
         var cos = T.Cos(x.Value);
@@ -608,7 +559,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, cos);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Acos(T)"/>
     public Variable<T> Acos(Variable<T> x)
     {
         var u = T.One - x.Value * x.Value;
@@ -616,7 +566,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Acos(x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Asin(T)"/>
     public Variable<T> Asin(Variable<T> x)
     {
         var u = T.One - x.Value * x.Value;
@@ -624,7 +573,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Asin(x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Atan(T)"/>
     public Variable<T> Atan(Variable<T> x)
     {
         var df = T.One / (T.One + x.Value * x.Value);
@@ -632,7 +580,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, T.Asin(x.Value));
     }
 
-    /// <inheritdoc cref="IReal{T}.Atan2(T, T)"/>
     public Variable<Real> Atan2(Variable<Real> y, Variable<Real> x)
     {
         var u = y.Value * y.Value;
@@ -651,7 +598,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sin(T)"/>
     public Variable<T> Sin(Variable<T> x)
     {
         var sin = T.Sin(x.Value);
@@ -659,7 +605,6 @@ public record class HessianTape<T>
         return new(_nodes.Count - 1, sin);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Tan(T)"/>
     public Variable<T> Tan(Variable<T> x)
     {
         var tan = T.Tan(x.Value);
