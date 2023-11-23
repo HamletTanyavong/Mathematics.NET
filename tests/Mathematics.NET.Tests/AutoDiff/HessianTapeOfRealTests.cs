@@ -122,7 +122,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Add(left, x);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -148,7 +148,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Add(x, right);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -378,7 +378,7 @@ public sealed class HessianTapeOfRealTests
 
         Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
 
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian.ToArray();
 
@@ -408,7 +408,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
         _ = _tape.CustomOperation(x, Real.Sin, Real.Cos, x => -Real.Sin(x));
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -456,7 +456,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Divide(left, x);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -482,7 +482,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Divide(x, right);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -660,7 +660,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Modulo(left, x);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -686,7 +686,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Modulo(x, right);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -734,7 +734,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Multiply(left, x);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -760,7 +760,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Multiply(x, right);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -926,7 +926,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Subtract(left, x);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
@@ -952,7 +952,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Subtract(x, right);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
 
         var actual = hessian[0, 0];
 
