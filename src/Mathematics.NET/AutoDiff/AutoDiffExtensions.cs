@@ -36,23 +36,23 @@ public static class AutoDiffExtensions
     // Variable creation
     //
 
-    /// <summary>Create a three-element vector from a seed vector of length three</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <summary>Create a three-element vector from a seed vector of length three.</summary>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x">A three-element vector of seed values</param>
     /// <returns>A variable vector of length three</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    public static VariableVector3<T> CreateVariableVector<T>(this GradientTape<T> tape, Vector3<T> x)
+    public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, Vector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3));
 
-    /// <summary>Create a three-element vector from seed values</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <summary>Create a three-element vector from seed values.</summary>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x1Seed">The first seed value</param>
     /// <param name="x2Seed">The second seed value</param>
     /// <param name="x3Seed">The third seed value</param>
     /// <returns>A variable vector of length three</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    public static VariableVector3<T> CreateVariableVector<T>(this GradientTape<T> tape, T x1Seed, T x2Seed, T x3Seed)
+    public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed));
 
@@ -71,10 +71,10 @@ public static class AutoDiffExtensions
     /// <returns>The curl of the vector field</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static Vector3<T> Curl<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -101,9 +101,9 @@ public static class AutoDiffExtensions
     /// <returns>The directional derivative</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static T DirectionalDerivative<T>(
-        this GradientTape<T> tape,
+        this ITape<T> tape,
         Vector3<T> v,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> f,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> f,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -123,10 +123,10 @@ public static class AutoDiffExtensions
     /// <returns>The divergence of the vector field</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static T Divergence<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -154,8 +154,8 @@ public static class AutoDiffExtensions
     /// <returns>The gradient of the scalar function</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static Vector3<T> Gradient<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> f,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> f,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -175,10 +175,10 @@ public static class AutoDiffExtensions
     /// <returns>The Jacobian of the vector function</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static Matrix3x3<T> Jacobian<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -209,10 +209,10 @@ public static class AutoDiffExtensions
     /// <returns>The Jacobian-vector product of the vector function and vector</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static Vector3<T> JVP<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x,
         Vector3<T> v)
         where T : IComplex<T>, IDifferentiableFunctions<T>
@@ -244,11 +244,11 @@ public static class AutoDiffExtensions
     /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static unsafe Vector3<T> VJP<T>(
-        this GradientTape<T> tape,
+        this ITape<T> tape,
         Vector3<T> v,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
