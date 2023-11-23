@@ -227,6 +227,22 @@ public static class AutoDiffExtensions
         return result;
     }
 
+    /// <summary>Compute the Laplacian of a scalar function using reverse-mode automatic differentiation: $ \nabla^2f $.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the Laplacian</param>
+    /// <returns>The Laplacian of the scalar function</returns>
+    public static T Laplacian<T>(this HessianTape<T> tape, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return hessian[0, 0] + hessian[1, 1] + hessian[2, 2];
+    }
+
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
