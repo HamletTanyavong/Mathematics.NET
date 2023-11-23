@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using CommunityToolkit.HighPerformance;
 using Mathematics.NET.AutoDiff;
 
 namespace Mathematics.NET.Tests.AutoDiff;
@@ -542,7 +543,7 @@ public sealed class HessianTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
         _ = function(x);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
         return hessian[0, 0];
     }
 
@@ -551,7 +552,7 @@ public sealed class HessianTapeOfRealTests
         var x = _tape.CreateVariable(left);
         var y = _tape.CreateVariable(right);
         _ = function(x, y);
-        _tape.ReverseAccumulation(out var _, out var hessian);
+        _tape.ReverseAccumulation(out ReadOnlySpan2D<Real> hessian);
         return hessian.ToArray();
     }
 }
