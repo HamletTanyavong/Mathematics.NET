@@ -109,17 +109,99 @@ public record class HessianTape<T>
         }
     }
 
+    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient.</summary>
+    /// <param name="gradient">The gradient</param>
+    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void ReverseAccumulation(out ReadOnlySpan<T> gradient)
+        => ReverseAccumulation(out gradient, T.One);
+
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
+    /// <param name="hessian">The Hessian</param>
+    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void ReverseAccumulation(out ReadOnlySpan2D<T> hessian)
+        => ReverseAccumulation(out hessian, T.One);
+
+    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
     /// <param name="gradient">The gradient</param>
     /// <param name="hessian">The Hessian</param>
+    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulation(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulation(out gradient, out hessian, T.One);
 
+    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient.</summary>
+    /// <param name="gradient">The gradient</param>
+    /// <param name="seed">A seed value</param>
+    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void ReverseAccumulation(out ReadOnlySpan<T> gradient, T seed)
+    {
+        if (_variableCount == 0)
+        {
+            throw new Exception("Hessian tape contains no root nodes");
+        }
+
+        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ref var start = ref MemoryMarshal.GetReference(nodes);
+        var length = nodes.Length;
+
+        Span<T> gradientSpan = new T[length];
+        gradientSpan[length - 1] = seed;
+
+        for (int i = length - 1; i >= _variableCount; i--)
+        {
+            var node = Unsafe.Add(ref start, i);
+            var gradientElement = gradientSpan[i];
+
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            gradientSpan[node.PY] += gradientElement * node.DY;
+        }
+
+        gradient = gradientSpan[.._variableCount];
+    }
+
+    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
+    /// <param name="hessian">The Hessian</param>
+    /// <param name="seed">A seed value</param>
+    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void ReverseAccumulation(out ReadOnlySpan2D<T> hessian, T seed)
+    {
+        if (_variableCount == 0)
+        {
+            throw new Exception("Hessian tape contains no root nodes");
+        }
+
+        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ref var start = ref MemoryMarshal.GetReference(nodes);
+        var length = nodes.Length;
+
+        Span<T> gradientSpan = new T[length];
+        gradientSpan[length - 1] = seed;
+
+        Span2D<T> hessianSpan = new T[length, length];
+
+        for (int i = length - 1; i >= _variableCount; i--)
+        {
+            var node = Unsafe.Add(ref start, i);
+            var gradientElement = gradientSpan[i];
+
+            EdgePush(hessianSpan, ref node, i);
+            Accumulate(hessianSpan, ref node, gradientElement);
+
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            gradientSpan[node.PY] += gradientElement * node.DY;
+        }
+
+        hessian = hessianSpan.Slice(0, 0, _variableCount, _variableCount);
+    }
+
     // The following method uses the edge-pushing algorithm outlined by Gower and Mello: https://arxiv.org/pdf/2007.15040.pdf.
     // TODO: use newer variations/versions of this algorithm since they are more performant
 
-    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
+    /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
     /// <param name="gradient">The gradient</param>
     /// <param name="hessian">The Hessian</param>
     /// <param name="seed">A seed value</param>
