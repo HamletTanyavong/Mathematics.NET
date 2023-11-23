@@ -123,6 +123,19 @@ public sealed class GradientTapeExtensionsOfRealTests
 
     [TestMethod]
     [TestCategory("Vector Calculus")]
+    [DataRow(1.23, 0.66, 2.34, 1.471507039061705)]
+    public void Laplacian_ScalarFunction_ReturnsLaplacian(double x, double y, double z, double expected)
+    {
+        HessianTape<Real> tape = new();
+        var u = tape.CreateVariableVector(x, y, z);
+
+        var actual = tape.Laplacian(F, u);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
     [DataRow(0.23, 1.57, -1.71, 1.23, 0.66, 2.34, -1.919813065970865, -3.508528536106042, 1.512286126049506)]
     public void VJP_VectorAndR3VectorFunction_ReturnsVJP(double vx, double vy, double vz, double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
@@ -140,7 +153,7 @@ public sealed class GradientTapeExtensionsOfRealTests
     //
 
     // f(x, y, z) = Cos(x) / ((x + y) * Sin(z))
-    public static Variable<Real> F(GradientTape<Real> tape, VariableVector3<Real> x)
+    private static Variable<Real> F(ITape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Divide(
             tape.Cos(x.X1),
@@ -150,7 +163,7 @@ public sealed class GradientTapeExtensionsOfRealTests
     }
 
     // f(x, y, z) = Sin(x) * (Cos(y) + Sqrt(z))
-    public static Variable<Real> FX(GradientTape<Real> tape, VariableVector3<Real> x)
+    private static Variable<Real> FX(ITape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Multiply(
             tape.Sin(x.X1),
@@ -160,7 +173,7 @@ public sealed class GradientTapeExtensionsOfRealTests
     }
 
     // f(x, y, z) = Sqrt(x + y + z)
-    public static Variable<Real> FY(GradientTape<Real> tape, VariableVector3<Real> x)
+    private static Variable<Real> FY(ITape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Sqrt(
             tape.Add(
@@ -171,7 +184,7 @@ public sealed class GradientTapeExtensionsOfRealTests
     }
 
     // f(x, y, z) = Sinh(Exp(x) * y / z)
-    public static Variable<Real> FZ(GradientTape<Real> tape, VariableVector3<Real> x)
+    private static Variable<Real> FZ(ITape<Real> tape, VariableVector3<Real> x)
     {
         return tape.Sinh(
             tape.Multiply(

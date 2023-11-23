@@ -36,23 +36,23 @@ public static class AutoDiffExtensions
     // Variable creation
     //
 
-    /// <summary>Create a three-element vector from a seed vector of length three</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <summary>Create a three-element vector from a seed vector of length three.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x">A three-element vector of seed values</param>
     /// <returns>A variable vector of length three</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    public static VariableVector3<T> CreateVariableVector<T>(this GradientTape<T> tape, Vector3<T> x)
+    public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, Vector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3));
 
-    /// <summary>Create a three-element vector from seed values</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <summary>Create a three-element vector from seed values.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x1Seed">The first seed value</param>
     /// <param name="x2Seed">The second seed value</param>
     /// <param name="x3Seed">The third seed value</param>
     /// <returns>A variable vector of length three</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    public static VariableVector3<T> CreateVariableVector<T>(this GradientTape<T> tape, T x1Seed, T x2Seed, T x3Seed)
+    public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed));
 
@@ -63,18 +63,18 @@ public static class AutoDiffExtensions
     // TODO: Improve performance; perhaps see if caching is possible for some of these methods
 
     /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation: $ (\nabla\times\textbf{F})(\textbf{x}) $.</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="fx">The x-component of the vector field</param>
     /// <param name="fy">The y-component of the vector field</param>
     /// <param name="fz">The z-component of the vector field</param>
     /// <param name="x">The point at which to compute the curl</param>
     /// <returns>The curl of the vector field</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static Vector3<T> Curl<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -94,17 +94,13 @@ public static class AutoDiffExtensions
     }
 
     /// <summary>Compute the derivative of a scalar function along a particular direction using reverse-mode automatic differentiation: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="v">A direction</param>
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the directional derivative</param>
     /// <returns>The directional derivative</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    public static T DirectionalDerivative<T>(
-        this GradientTape<T> tape,
-        Vector3<T> v,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> f,
-        VariableVector3<T> x)
+    public static T DirectionalDerivative<T>(this ITape<T> tape, Vector3<T> v, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);
@@ -115,18 +111,18 @@ public static class AutoDiffExtensions
     }
 
     /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="fx">The x-component of the vector field</param>
     /// <param name="fy">The y-component of the vector field</param>
     /// <param name="fz">The z-component of the vector field</param>
     /// <param name="x">The point at which to compute the divergence</param>
     /// <returns>The divergence of the vector field</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static T Divergence<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -148,15 +144,12 @@ public static class AutoDiffExtensions
     }
 
     /// <summary>Compute the gradient of a scalar function using reverse-mode automatic differentiation: $ \nabla f(\textbf{x}) $.</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the gradient</param>
     /// <returns>The gradient of the scalar function</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    public static Vector3<T> Gradient<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> f,
-        VariableVector3<T> x)
+    public static Vector3<T> Gradient<T>(this ITape<T> tape, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);
@@ -167,18 +160,18 @@ public static class AutoDiffExtensions
     }
 
     /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="fx">The first function</param>
     /// <param name="fy">The second function</param>
     /// <param name="fz">The third function</param>
     /// <param name="x">The point at which to compute the Jacobian</param>
     /// <returns>The Jacobian of the vector function</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static Matrix3x3<T> Jacobian<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
@@ -200,19 +193,19 @@ public static class AutoDiffExtensions
     }
 
     /// <summary>Compute the Jacobian-vector product of a vector function and a vector using reverse-mode automatic differentiation.</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="fx">The first function</param>
     /// <param name="fy">The second function</param>
     /// <param name="fz">The third function</param>
     /// <param name="x">The point at which to compute the Jacobian-vector product</param>
     /// <param name="v">A vector</param>
     /// <returns>The Jacobian-vector product of the vector function and vector</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     public static Vector3<T> JVP<T>(
-        this GradientTape<T> tape,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        this ITape<T> tape,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x,
         Vector3<T> v)
         where T : IComplex<T>, IDifferentiableFunctions<T>
@@ -234,21 +227,37 @@ public static class AutoDiffExtensions
         return result;
     }
 
+    /// <summary>Compute the Laplacian of a scalar function using reverse-mode automatic differentiation: $ \nabla^2f $.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the Laplacian</param>
+    /// <returns>The Laplacian of the scalar function</returns>
+    public static T Laplacian<T>(this HessianTape<T> tape, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return hessian[0, 0] + hessian[1, 1] + hessian[2, 2];
+    }
+
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using reverse-mode automatic differentiation.</summary>
-    /// <param name="tape">A gradient tape</param>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="v">A vector</param>
     /// <param name="fx">The first function</param>
     /// <param name="fy">The second function</param>
     /// <param name="fz">The third function</param>
     /// <param name="x">The point at which to compute the vector-Jacobian product</param>
     /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    public static unsafe Vector3<T> VJP<T>(
-        this GradientTape<T> tape,
+    public static Vector3<T> VJP<T>(
+        this ITape<T> tape,
         Vector3<T> v,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<GradientTape<T>, VariableVector3<T>, Variable<T>> fz,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
+        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
         VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {

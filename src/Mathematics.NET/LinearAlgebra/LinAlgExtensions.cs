@@ -93,6 +93,20 @@ public static class LinAlgExtensions
         return string.Format(provider, builder.ToString());
     }
 
+    /// <summary>Get the string representation of this <see cref="ReadOnlySpan2D{T}"/></summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <param name="readOnlySpan2D">A 2D read-only span to format</param>
+    /// <param name="format">The format to use</param>
+    /// <param name="provider">The provider to use to format the value</param>
+    /// <returns>A string representation of this object</returns>
+    public static string ToDisplayString<T>(this ReadOnlySpan2D<T> readOnlySpan2D, string? format = null, IFormatProvider? provider = null)
+        where T : IComplex<T>
+    {
+        Span2D<T> span = new T[readOnlySpan2D.Width, readOnlySpan2D.Height];
+        readOnlySpan2D.CopyTo(span);
+        return span.ToDisplayString(format, provider);
+    }
+
     /// <summary>Get the string representation of this <see cref="Span2D{T}"/> object</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
     /// <param name="span">The span to format</param>

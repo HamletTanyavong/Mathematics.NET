@@ -133,15 +133,15 @@ public sealed class DualVector3OfRealTests
     // Helpers
     //
 
-    public static Dual<Real> F(DualVector3<Real> x)
+    private static Dual<Real> F(DualVector3<Real> x)
         => Cos(x.X1) / ((x.X1 + x.X2) * Sin(x.X3));
 
-    public static Dual<Real> FX(DualVector3<Real> x)
+    private static Dual<Real> FX(DualVector3<Real> x)
         => Sin(x.X1) * (Cos(x.X2) + Sqrt(x.X3));
 
-    public static Dual<Real> FY(DualVector3<Real> x)
+    private static Dual<Real> FY(DualVector3<Real> x)
         => Sqrt(x.X1 + x.X2 + x.X3);
 
-    public static Dual<Real> FZ(DualVector3<Real> x)
+    private static Dual<Real> FZ(DualVector3<Real> x)
         => Sinh(Exp(x.X1) * x.X2 / x.X3);
 }
