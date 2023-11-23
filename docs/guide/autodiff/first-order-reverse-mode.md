@@ -98,11 +98,11 @@ graph BT
 ```
 We can then calculate the gradient of our function by using the `ReverseAccumulation` method.
 ```csharp
-tape.ReverseAccumulation(out var gradients);
+tape.ReverseAccumulation(out var gradient);
 ```
 Since this is a single variable equation, we can access the first element of `gradients` to get our result.
 ```csharp
-Console.WriteLine(gradients[0]);
+Console.WriteLine(gradient[0]);
 ```
 The correct value for the derivative should be `3.525753368769319`. The complete code looks as follows:
 ```csharp
@@ -119,12 +119,12 @@ var result = tape.Divide(
 // Optional: examine the nodes on the gradient tape
 tape.PrintNodes();
 
-tape.ReverseAccumulation(out var gradients);
+tape.ReverseAccumulation(out var gradient);
 
 // The value of the function at the point x = 1.23: 0.6675110878078776
 Console.WriteLine("Value: {0}", result);
 // The derivative of the function with respect to x at the point x = 1.23: 3.525753368769319
-Console.WriteLine("Derivative: {0}", gradients[0]);
+Console.WriteLine("Derivative: {0}", gradient[0]);
 ```
 
 ## Multivariable Equations
@@ -202,7 +202,7 @@ graph BT
 ```
 As before, we can use `ReverseAccumulation` to get our gradients
 ```csharp
-tape.ReverseAccumulation(out var gradients);
+tape.ReverseAccumulation(out var gradient);
 ```
 and print them to the console with
 ```csharp
@@ -210,7 +210,7 @@ using Mathematics.NET.LinearAlgebra;
 
 // code
 
-Console.WriteLine(gradients.ToDisplayString());
+Console.WriteLine(gradient.ToDisplayString());
 ```
 This will print the following to the console:
 ```
@@ -303,12 +303,12 @@ var result = tape.Cos(
 tape.PrintNodes(CancellationToken.None);
 Console.WriteLine();
 
-tape.ReverseAccumulation(out var gradients);
+tape.ReverseAccumulation(out var gradient);
 
 // The value of the function at the point z = 1.23 + i2.34 and w = -0.66 + i0.23
 Console.WriteLine("Value: {0}", result);
-// The gradients of the function: ∂f/∂z and ∂f/∂w, respectively
-Console.WriteLine("Gradients: {0}", gradients.ToDisplayString());
+// The gradient of the function: ∂f/∂z and ∂f/∂w, respectively
+Console.WriteLine("Gradient: {0}", gradient.ToDisplayString());
 ```
 which is almost the exact same code we would have written in the real case. (Note that some methods such as `Atan2` are not available for complex gradient tapes.) This should output the following to the console:
 ```
@@ -333,7 +333,7 @@ Node 5:
     Parents: [4, 5]
 
 Value: (27.784322505370138, 24.753716703326287)
-Gradients: [(126.28638563049401, -98.74954259806483),  (-38.801295827094066, -109.6878698782088)  ]
+Gradient: [(126.28638563049401, -98.74954259806483),  (-38.801295827094066, -109.6878698782088)  ]
 ```
 
 ## Custom Operations
@@ -348,9 +348,9 @@ var result = tape.CustomOperation(
     x => Real.Sin(x),  // The function
     x => Real.Cos(x)); // The derivative of the function
 
-tape.ReverseAccumulation(out var gradients);
+tape.ReverseAccumulation(out var gradient);
 Console.WriteLine("Value: {0}", result);
-Console.WriteLine("Gradient: {0}", gradients.ToDisplayString());
+Console.WriteLine("Gradient: {0}", gradient.ToDisplayString());
 ```
 For custom binary operations, we can write
 ```csharp
