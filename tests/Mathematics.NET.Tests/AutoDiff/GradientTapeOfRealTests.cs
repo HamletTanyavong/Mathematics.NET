@@ -405,7 +405,7 @@ public sealed class GradientTapeOfRealTests
 
     [TestMethod]
     [DataRow(1.23, -1)]
-    public void Negate_Variable_ReturnsNegation(double input, double expected)
+    public void Negate_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Negate, input);
 
