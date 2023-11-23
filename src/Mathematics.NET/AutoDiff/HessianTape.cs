@@ -348,7 +348,7 @@ public record class HessianTape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp2(T)"/>
     public Variable<T> Exp2(Variable<T> x)
     {
-        var exp2 = T.Exp(x.Value);
+        var exp2 = T.Exp2(x.Value);
         var df = Real.Ln2 * exp2;
         _nodes.Add(new(df, Real.Ln2 * df, x._index, _nodes.Count));
         return new(_nodes.Count - 1, exp2);
@@ -357,7 +357,7 @@ public record class HessianTape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp10(T)"/>
     public Variable<T> Exp10(Variable<T> x)
     {
-        var exp10 = T.Exp(x.Value);
+        var exp10 = T.Exp10(x.Value);
         var df = Real.Ln10 * exp10;
         _nodes.Add(new(df, Real.Ln10 * df, x._index, _nodes.Count));
         return new(_nodes.Count - 1, exp10);
@@ -493,15 +493,15 @@ public record class HessianTape<T>
         var lnx = T.Ln(x.Value);
         var u = T.One / n.Value;
         var v = T.One / x.Value;
-        var w = u * u;
+        var uu = u * u;
         var dfx = u * v * root;
-        var dfn = -lnx * root * w;
+        var dfn = -lnx * root * uu;
         _nodes.Add(new(
             dfx,
-            (n.Value - T.One) * v * root,
-            -(dfx * u + lnx * w),
+            (uu - u) * root * v * v,
+            -root * (lnx * u + T.One) * v * uu,
             dfn,
-            -(2.0 * u + lnx * w) * dfn,
+            -(2.0 * u + lnx * uu) * dfn,
             x._index,
             n._index));
         return new(_nodes.Count - 1, root);
@@ -555,7 +555,7 @@ public record class HessianTape<T>
     {
         var u = y.Value * y.Value;
         var v = x.Value * x.Value;
-        var a = T.One / (u + v);
+        var a = Real.One / (u + v);
         var b = a * a;
         var dfyy = -2.0 * x.Value * b * y.Value;
         _nodes.Add(new(
