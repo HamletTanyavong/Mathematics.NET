@@ -36,7 +36,7 @@ using Mathematics.NET.Core;
 HessianTape<Real> tape = new();
 var x = tape.CreateVariableVector(1.23, 0.66, 0.23);
 
-// f(x, y, z) = cos(x) / ((x + y) * sin(z))
+// f(r, θ, ϕ) = cos(r) / ((r + θ) * sin(ϕ))
 _ = tape.Divide(
         tape.Cos(x.X1),
         tape.Multiply(

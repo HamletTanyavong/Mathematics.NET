@@ -19,6 +19,7 @@ at the points $ x=1.23 $ and $ y=2.34 $.
 with respect to $ x $. We must write
 ```csharp
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.Core;
 // Add the following line to avoid having to type Dual<Real> every time we want to use a function.
 using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Core.Real>;
 
@@ -57,6 +58,7 @@ $$
 with the vector $ v=(0.23,1.57,-1.71) $ at our points $ x_1=1.23 $, $ x_2=0.66 $, and $ x_3=2.34 $ by writing
 ```csharp
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.Core;
 using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Core.Real>;
 
 DualVector3<Real> x = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
