@@ -2,7 +2,7 @@
 
 Support for first-order, reverse-mode automatic differentiation (autodiff) is provided by the `GradientTape` class.
 
-## Gradient tapes
+## Gradient Tapes
 
 Gradient tapes keep track of operations for autodiff; unlike forward-mode autodiff, tracking is required since gradients have to be calculated in reverse order. To begin using reverse-mode autodiff, we must create a gradient tape and assign it variables to track. These variables will be passed into and returned from methods that will compute the local gradients for us and record them on the tape.
 ```csharp
