@@ -143,17 +143,18 @@ public record class GradientTape<T>
     }
 
     /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradient.</summary>
-    /// <param name="gradients">The gradient</param>
+    /// <param name="gradient">The gradient</param>
+    /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradients)
-        => ReverseAccumulation(out gradients, T.One);
+    public void ReverseAccumulation(out ReadOnlySpan<T> gradient)
+        => ReverseAccumulation(out gradient, T.One);
 
     /// <summary>Perform reverse accumulation on the gradient tape and output the resulting gradient.</summary>
-    /// <param name="gradients">The gradient</param>
+    /// <param name="gradient">The gradient</param>
     /// <param name="seed">A seed value</param>
     /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradients, T seed)
+    public void ReverseAccumulation(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
         {
@@ -170,13 +171,13 @@ public record class GradientTape<T>
         for (int i = length - 1; i >= _variableCount; i--)
         {
             var node = Unsafe.Add(ref start, i);
-            var gradient = gradientSpan[i];
+            var gradientElement = gradientSpan[i];
 
-            gradientSpan[node.PX] += gradient * node.DX;
-            gradientSpan[node.PY] += gradient * node.DY;
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            gradientSpan[node.PY] += gradientElement * node.DY;
         }
 
-        gradients = gradientSpan[.._variableCount];
+        gradient = gradientSpan[.._variableCount];
     }
 
     //
