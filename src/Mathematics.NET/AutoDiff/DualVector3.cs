@@ -37,7 +37,7 @@ namespace Mathematics.NET.AutoDiff;
 [StructLayout(LayoutKind.Sequential)]
 public record struct DualVector3<T, U>
     where T : IDual<T, U>
-    where U : IComplex<U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
 {
     /// <summary>The first element of the vector</summary>
     public T X1;
