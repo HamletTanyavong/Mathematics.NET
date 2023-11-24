@@ -346,9 +346,9 @@ public sealed class HessianTapeOfRealTests
             (y, x) => -y.Value * u,
             (y, x) => Real.Zero); // Not of interest
 
-        _tape.ReverseAccumulation(out ReadOnlySpan<Real> actual);
-
         Real[] expected = [expectedLeft, expectedRight];
+
+        _tape.ReverseAccumulation(out ReadOnlySpan<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
