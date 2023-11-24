@@ -122,6 +122,8 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public HyperDual<T> WithSeed(T seed) => new(new(_d0.D0, seed));
 
+    public HyperDual<T> WithSeed(T e1Seed, T e2Seed) => new(new(_d0.D0, e1Seed), new(e2Seed));
+
     // Exponential functions
 
     public static HyperDual<T> Exp(HyperDual<T> x)
