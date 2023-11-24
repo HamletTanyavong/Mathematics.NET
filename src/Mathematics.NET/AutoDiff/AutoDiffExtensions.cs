@@ -233,7 +233,7 @@ public static class AutoDiffExtensions
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the Laplacian</param>
     /// <returns>The Laplacian of the scalar function</returns>
-    public static T Laplacian<T>(this HessianTape<T> tape, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+    public static T Laplacian<T>(this HessianTape<T> tape, Func<HessianTape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);
