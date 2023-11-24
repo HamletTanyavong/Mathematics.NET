@@ -245,6 +245,20 @@ public record struct DualVector3<T, U>
         return new(fx(seed).D1, fy(seed).D1, fz(seed).D1);
     }
 
+    /// <summary>Compute the Laplacian of a scalar function using forward-mode automatic differentiation:  $ \nabla^2f $.</summary>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the gradient</param>
+    /// <returns>The gradient of the scalar function</returns>
+    public static U Laplacian(Func<DualVector3<HyperDual<U>, U>, HyperDual<U>> f, DualVector3<HyperDual<U>, U> x)
+    {
+        ReadOnlySpan<DualVector3<HyperDual<U>, U>> seeds = [
+            new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One, U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One, U.One))];
+
+        return f(seeds[0]).D2 + f(seeds[1]).D2 + f(seeds[2]).D2;
+    }
+
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using forward-mode automatic differentiation.</summary>
     /// <param name="v">A vector</param>
     /// <param name="fx">The first function</param>
