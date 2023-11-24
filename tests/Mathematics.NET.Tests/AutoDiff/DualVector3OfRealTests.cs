@@ -40,10 +40,10 @@ public sealed class DualVector3OfRealTests
     [DataRow(1.23, 0.66, 2.34, 1.954144178335244, -1.142124546272508, 0.820964086423733)]
     public void Curl_VectorField_ReturnsCurl(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
-        DualVector3<Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+        DualVector3<Dual<Real>, Real> u = new((Dual<Real>)x, (Dual<Real>)y, (Dual<Real>)z);
         Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
 
-        var actual = DualVector3<Real>.Curl(FX, FY, FZ, u);
+        var actual = DualVector3<Dual<Real>, Real>.Curl(FX, FY, FZ, u);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -53,10 +53,10 @@ public sealed class DualVector3OfRealTests
     [DataRow(0.23, 1.57, -1.71, 1.23, 0.66, 2.34, -0.801549048972843)]
     public void DirectionalDerivative_ScalarFunctionAndDirection_ReturnsDirectionalDerivative(double vx, double vy, double vz, double x, double y, double z, double expected)
     {
-        DualVector3<Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+        DualVector3<Dual<Real>, Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
         Vector3<Real> v = new(vx, vy, vz);
 
-        var actual = DualVector3<Real>.DirectionalDerivative(v, F, u);
+        var actual = DualVector3<Dual<Real>, Real>.DirectionalDerivative(v, F, u);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -66,9 +66,9 @@ public sealed class DualVector3OfRealTests
     [DataRow(1.23, 0.66, 2.34, 0.3987010509910668)]
     public void Divergence_VectorField_ReturnsDivergence(double x, double y, double z, double expected)
     {
-        DualVector3<Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+        DualVector3<Dual<Real>, Real> u = new((Dual<Real>)x, (Dual<Real>)y, (Dual<Real>)z);
 
-        var actual = DualVector3<Real>.Divergence(FX, FY, FZ, u);
+        var actual = DualVector3<Dual<Real>, Real>.Divergence(FX, FY, FZ, u);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -78,25 +78,26 @@ public sealed class DualVector3OfRealTests
     [DataRow(1.23, 0.66, 2.34, -0.824313594924351, -0.1302345967828155, 0.2382974299363869)]
     public void Gradient_ScalarFunction_ReturnsGradient(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
-        DualVector3<Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+        DualVector3<Dual<Real>, Real> u = new((Dual<Real>)x, (Dual<Real>)y, (Dual<Real>)z);
         Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
 
-        var actual = DualVector3<Real>.Gradient(F, u);
+        var actual = DualVector3<Dual<Real>, Real>.Gradient(F, u);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [TestCategory("Vector Calculus")]
-    public void Jacobian_R3VectorFunction_ReturnsJacobian()
+    [DataRow(1.23, 0.66, 2.34)]
+    public void Jacobian_R3VectorFunction_ReturnsJacobian(double x, double y, double z)
     {
-        DualVector3<Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+        DualVector3<Dual<Real>, Real> u = new((Dual<Real>)x, (Dual<Real>)y, (Dual<Real>)z);
         Matrix3x3<Real> expected = new(
             0.775330615737715, -0.5778557672605755, 0.3080621020764366,
             0.2431083191631576, 0.2431083191631576, 0.2431083191631576,
             1.450186648348945, 2.197252497498402, -0.6197378839098056);
 
-        var actual = DualVector3<Real>.Jacobian(FX, FY, FZ, u);
+        var actual = DualVector3<Dual<Real>, Real>.Jacobian(FX, FY, FZ, u);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -106,11 +107,11 @@ public sealed class DualVector3OfRealTests
     [DataRow(1.23, 0.66, 2.34, 0.23, 1.57, -1.71, -1.255693707530136, 0.0218797487246842, 4.842981131678516)]
     public void JVP_R3VectorFunctionAndVector_ReturnsJVP(double x, double y, double z, double vx, double vy, double vz, double expectedX, double expectedY, double expectedZ)
     {
-        DualVector3<Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+        DualVector3<Dual<Real>, Real> u = new((Dual<Real>)x, (Dual<Real>)y, (Dual<Real>)z);
         Vector3<Real> v = new(vx, vy, vz);
         Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
 
-        var actual = DualVector3<Real>.JVP(FX, FY, FZ, u, v);
+        var actual = DualVector3<Dual<Real>, Real>.JVP(FX, FY, FZ, u, v);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -120,11 +121,11 @@ public sealed class DualVector3OfRealTests
     [DataRow(0.23, 1.57, -1.71, 1.23, 0.66, 2.34, -1.919813065970865, -3.508528536106042, 1.512286126049506)]
     public void VJP_VectorAndR3VectorFunction_ReturnsVJP(double vx, double vy, double vz, double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
-        DualVector3<Real> u = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+        DualVector3<Dual<Real>, Real> u = new((Dual<Real>)x, (Dual<Real>)y, (Dual<Real>)z);
         Vector3<Real> v = new(vx, vy, vz);
         Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
 
-        var actual = DualVector3<Real>.VJP(v, FX, FY, FZ, u);
+        var actual = DualVector3<Dual<Real>, Real>.VJP(v, FX, FY, FZ, u);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -133,15 +134,15 @@ public sealed class DualVector3OfRealTests
     // Helpers
     //
 
-    private static Dual<Real> F(DualVector3<Real> x)
+    private static Dual<Real> F(DualVector3<Dual<Real>, Real> x)
         => Cos(x.X1) / ((x.X1 + x.X2) * Sin(x.X3));
 
-    private static Dual<Real> FX(DualVector3<Real> x)
+    private static Dual<Real> FX(DualVector3<Dual<Real>, Real> x)
         => Sin(x.X1) * (Cos(x.X2) + Sqrt(x.X3));
 
-    private static Dual<Real> FY(DualVector3<Real> x)
+    private static Dual<Real> FY(DualVector3<Dual<Real>, Real> x)
         => Sqrt(x.X1 + x.X2 + x.X3);
 
-    private static Dual<Real> FZ(DualVector3<Real> x)
+    private static Dual<Real> FZ(DualVector3<Dual<Real>, Real> x)
         => Sinh(Exp(x.X1) * x.X2 / x.X3);
 }
