@@ -51,6 +51,17 @@ public interface IDual<T, U>
     /// <summary>Represents the tangent part of the dual number</summary>
     U D1 { get; }
 
+    /// <summary>Create an instance of the type with a specified value.</summary>
+    /// <param name="value">A value</param>
+    /// <returns>An instance of the type</returns>
+    static abstract T CreateVariable(U value);
+
+    /// <summary>Create an instance of the type with a specified value and seed.</summary>
+    /// <param name="value">A value</param>
+    /// <param name="seed">A seed</param>
+    /// <returns>An instance of the type</returns>
+    static abstract T CreateVariable(U value, U seed);
+
     /// <summary>Create a seeded instance of this type</summary>
     /// <param name="seed">The seed value</param>
     /// <returns>A seeded value</returns>

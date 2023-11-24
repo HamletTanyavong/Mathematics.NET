@@ -113,6 +113,10 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     // Other operations
     //
 
+    public static Dual<T> CreateVariable(T value) => new(value, T.Zero);
+
+    public static Dual<T> CreateVariable(T value, T seed) => new(value, seed);
+
     public Dual<T> WithSeed(T seed) => new(_d0, seed);
 
     // Exponential functions
