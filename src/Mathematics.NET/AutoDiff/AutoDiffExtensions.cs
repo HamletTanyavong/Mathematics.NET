@@ -159,6 +159,25 @@ public static class AutoDiffExtensions
         return new(gradients[0], gradients[1], gradients[2]);
     }
 
+    /// <summary>Compute the Hessian of a scaler function using reverse-mode automatic differentiation.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the gradient</param>
+    /// <returns>The Hessian of the scalar function</returns>
+    public static Matrix3x3<T> Hessian<T>(this HessianTape<T> tape, Func<HessianTape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return new(
+            hessian[0, 0], hessian[0, 1], hessian[0, 2],
+            hessian[1, 0], hessian[1, 1], hessian[1, 2],
+            hessian[2, 0], hessian[2, 1], hessian[2, 2]);
+    }
+
     /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>

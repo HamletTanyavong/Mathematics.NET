@@ -94,6 +94,22 @@ public sealed class TapeExtensionsOfRealTests
 
     [TestMethod]
     [TestCategory("Vector Calculus")]
+    public void Hessian_ScalarFunction_ReturnsHessian()
+    {
+        HessianTape<Real> tape = new();
+        var u = tape.CreateVariableVector(1.23, 0.66, 2.34);
+        Matrix3x3<Real> expected = new(
+            0.6261461305189455, 0.5050519532842152, -0.7980381386329245,
+            0.5050519532842152, 0.1378143881299635, -0.1260832962626385,
+            -0.7980381386329245, -0.1260832962626385, 0.707546520412796);
+
+        var actual = tape.Hessian(F, u);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [TestCategory("Vector Calculus")]
     public void Jacobian_R3VectorFunction_ReturnsJacobian()
     {
         var u = _tape.CreateVariableVector(1.23, 0.66, 2.34);
