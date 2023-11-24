@@ -120,7 +120,7 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     /// <returns>An instance of the type</returns>
     public static HyperDual<T> CreateVariable(T value, T e1Seed, T e2Seed) => new(new(value, e1Seed), new(e2Seed));
 
-    public HyperDual<T> WithSeed(T seed) => new(_d0, new(seed));
+    public HyperDual<T> WithSeed(T seed) => new(new(_d0.D0, seed));
 
     // Exponential functions
 
