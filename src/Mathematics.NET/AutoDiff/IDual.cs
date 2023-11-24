@@ -43,7 +43,7 @@ public interface IDual<T, U>
       IEquatable<T>,
       IDifferentiableFunctions<T>
     where T : IDual<T, U>
-    where U : IComplex<U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
 {
     /// <summary>Represents the primal part of the dual number</summary>
     U D0 { get; }
