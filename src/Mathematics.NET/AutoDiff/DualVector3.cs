@@ -256,7 +256,7 @@ public record struct DualVector3<T, U>
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One, U.One), x.X3.WithSeed(U.Zero)),
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One, U.One))];
 
-        return f(seeds[0]).D2 + f(seeds[1]).D2 + f(seeds[2]).D2;
+        return f(seeds[0]).D3 + f(seeds[1]).D3 + f(seeds[2]).D3;
     }
 
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using forward-mode automatic differentiation.</summary>

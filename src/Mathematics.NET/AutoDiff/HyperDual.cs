@@ -44,14 +44,17 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public HyperDual(Dual<T> value) : this(value, new(T.Zero)) { }
 
-    /// <summary>Represents the primal part of the dual number</summary>
+    /// <summary>Represents the primal part of the hyper-dual number</summary>
     public T D0 => _d0.D0;
 
-    /// <summary>Represents the first tangent part of the dual number</summary>
+    /// <summary>Represents the first tangent part of the hyper-dual number</summary>
     public T D1 => _d0.D1;
 
-    /// <summary>Represents the second tangent part of the dual number</summary>
-    public T D2 => _d1.D1;
+    /// <summary>Represents the second tangent part of the hyper-dual number</summary>
+    public T D2 => _d1.D0;
+
+    /// <summary>Represents the third tangent part, the cross term, of a hyper-dual number</summary>
+    public T D3 => _d1.D1;
 
     //
     // Operators
