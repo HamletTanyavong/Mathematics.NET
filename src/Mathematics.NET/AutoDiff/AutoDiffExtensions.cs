@@ -33,7 +33,7 @@ namespace Mathematics.NET.AutoDiff;
 public static class AutoDiffExtensions
 {
     //
-    // Variable creation
+    // Variable vector creation
     //
 
     /// <summary>Create a three-element vector from a seed vector of length three.</summary>
