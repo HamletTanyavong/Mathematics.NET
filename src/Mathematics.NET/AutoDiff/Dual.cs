@@ -235,4 +235,11 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     /// <returns>A dual number</returns>
     public static Dual<T> CustomOperation(Dual<T> x, Dual<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
+
+    //
+    // Dual vector creation
+    //
+
+    public static DualVector3<Dual<T>, T> CreateDualVector(Dual<T> x1Seed, Dual<T> x2Seed, Dual<T> x3Seed)
+        => new(x1Seed, x2Seed, x3Seed);
 }

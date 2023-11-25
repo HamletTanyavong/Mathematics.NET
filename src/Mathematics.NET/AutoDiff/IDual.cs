@@ -51,6 +51,13 @@ public interface IDual<T, U>
     /// <summary>Represents the tangent part of the dual number</summary>
     U D1 { get; }
 
+    /// <summary>Create a vector from seed values.</summary>
+    /// <param name="x1Seed">The first seed value</param>
+    /// <param name="x2Seed">The second seed value</param>
+    /// <param name="x3Seed">The third seed value</param>
+    /// <returns>A dual vector of length three</returns>
+    static abstract DualVector3<T, U> CreateDualVector(T x1Seed, T x2Seed, T x3Seed);
+
     /// <summary>Create an instance of the type with a specified value.</summary>
     /// <param name="value">A value</param>
     /// <returns>An instance of the type</returns>

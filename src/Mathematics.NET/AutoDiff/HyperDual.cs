@@ -249,4 +249,11 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
         Func<Dual<T>, Dual<T>, Dual<T>> dfx,
         Func<Dual<T>, Dual<T>, Dual<T>> dfy)
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
+
+    //
+    // Dual vector creation
+    //
+
+    public static DualVector3<HyperDual<T>, T> CreateDualVector(HyperDual<T> x1Seed, HyperDual<T> x2Seed, HyperDual<T> x3Seed)
+        => new(x1Seed, x2Seed, x3Seed);
 }
