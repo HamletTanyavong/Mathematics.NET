@@ -222,4 +222,31 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
         var sec = T.One / Dual<T>.Cos(x._d0);
         return new(Dual<T>.Tan(x._d0), x._d1 * sec * sec);
     }
+
+    //
+    // Custom operations
+    //
+
+    /// <summary>Perform forward-mode autodiff using a custom unary operation.</summary>
+    /// <param name="x">A hyper-dual number</param>
+    /// <param name="f">A function</param>
+    /// <param name="df">The derivative of the function</param>
+    /// <returns>A hyper-dual number</returns>
+    public static HyperDual<T> CustomOperation(HyperDual<T> x, Func<Dual<T>, Dual<T>> f, Func<Dual<T>, Dual<T>> df)
+        => new(f(x._d0), x._d1 * df(x._d0));
+
+    /// <summary>Perform forward-mode autodiff using a custom binary operation.</summary>
+    /// <param name="x">A variable</param>
+    /// <param name="y">A variable</param>
+    /// <param name="f">A function</param>
+    /// <param name="dfx">The derivative of the function with respect to the left variable</param>
+    /// <param name="dfy">The derivative of the function with respect to the right variable</param>
+    /// <returns>A hyper-dual number</returns>
+    public static HyperDual<T> CustomOperation(
+        HyperDual<T> x,
+        HyperDual<T> y,
+        Func<Dual<T>, Dual<T>, Dual<T>> f,
+        Func<Dual<T>, Dual<T>, Dual<T>> dfx,
+        Func<Dual<T>, Dual<T>, Dual<T>> dfy)
+        => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
 }
