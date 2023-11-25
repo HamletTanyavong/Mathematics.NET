@@ -6,7 +6,7 @@ Support for first-order, forward-mode autodiff is provided by the `HyperDual<T>`
 
 Suppose we wanted to find the second derivative of the complex function
 $$
-    f(z,w) = \sin(\tan{z}*\log{w})
+    f(z,w) = \sin(\tan{z}\log{w})
 $$
 with respect to $ z $, at the points $ z=1.23+i0.66 $ and $ w=2.34-i0.25 $. We can do so by writing
 ```csharp
