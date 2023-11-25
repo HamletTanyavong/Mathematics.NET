@@ -7,6 +7,7 @@ Support for first-order, reverse-mode automatic differentiation (autodiff) is pr
 Gradient tapes keep track of operations for autodiff; unlike forward-mode autodiff, tracking is required since gradients have to be calculated in reverse order. To begin using reverse-mode autodiff, we must create a gradient tape and assign it variables to track. These variables will be passed into and returned from methods that will compute the local gradients for us and record them on the tape.
 ```csharp
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.Core;
 
 GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
@@ -33,6 +34,7 @@ $$
 at the point $ x=1.23 $. We can write
 ```csharp
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.Core;
 
 GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
@@ -107,6 +109,7 @@ Console.WriteLine(gradient[0]);
 The correct value for the derivative should be `3.525753368769319`. The complete code looks as follows:
 ```csharp
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.Core;
 
 GradientTape<Real> tape = new();
 var x = tape.CreateVariable(1.23);
@@ -289,6 +292,7 @@ $$
 at the points $ z=1.23+i2.34 $ and $ w=-0.66+i0.23 $. We can write
 ```csharp
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.Core;
 
 GradientTape<Complex> tape = new();
 var z = tape.CreateVariable(new(1.23, 2.34));

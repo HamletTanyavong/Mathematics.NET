@@ -29,7 +29,7 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Defines support for common differentiable functions</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
-public interface IDifferentiableFunctions<T> : IComplex<T>
+public interface IDifferentiableFunctions<T>
     where T : IDifferentiableFunctions<T>
 {
     //

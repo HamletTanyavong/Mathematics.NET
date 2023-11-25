@@ -33,19 +33,19 @@ namespace Mathematics.NET.AutoDiff;
 public static class AutoDiffExtensions
 {
     //
-    // Variable creation
+    // Variable vector creation
     //
 
-    /// <summary>Create a three-element vector from a seed vector of length three.</summary>
+    /// <summary>Create a dual vector from a seed vector.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x">A three-element vector of seed values</param>
+    /// <param name="x">A vector of seed values</param>
     /// <returns>A variable vector of length three</returns>
     public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, Vector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3));
 
-    /// <summary>Create a three-element vector from seed values.</summary>
+    /// <summary>Create a vector from seed values.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x1Seed">The first seed value</param>
@@ -159,6 +159,25 @@ public static class AutoDiffExtensions
         return new(gradients[0], gradients[1], gradients[2]);
     }
 
+    /// <summary>Compute the Hessian of a scaler function using reverse-mode automatic differentiation.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the gradient</param>
+    /// <returns>The Hessian of the scalar function</returns>
+    public static Matrix3x3<T> Hessian<T>(this HessianTape<T> tape, Func<HessianTape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return new(
+            hessian[0, 0], hessian[0, 1], hessian[0, 2],
+            hessian[1, 0], hessian[1, 1], hessian[1, 2],
+            hessian[2, 0], hessian[2, 1], hessian[2, 2]);
+    }
+
     /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
@@ -233,7 +252,7 @@ public static class AutoDiffExtensions
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the Laplacian</param>
     /// <returns>The Laplacian of the scalar function</returns>
-    public static T Laplacian<T>(this HessianTape<T> tape, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+    public static T Laplacian<T>(this HessianTape<T> tape, Func<HessianTape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);

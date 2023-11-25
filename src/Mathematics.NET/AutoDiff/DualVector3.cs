@@ -34,20 +34,22 @@ namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a vector of three dual numbers for use in forward-mode automatic differentiation</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public record struct DualVector3<T>
-    where T : IComplex<T>, IDifferentiableFunctions<T>
+public record struct DualVector3<T, U>
+    where T : IDual<T, U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
 {
     /// <summary>The first element of the vector</summary>
-    public Dual<T> X1;
+    public T X1;
 
     /// <summary>The second element of the vector</summary>
-    public Dual<T> X2;
+    public T X2;
 
     /// <summary>The third element of the vector</summary>
-    public Dual<T> X3;
+    public T X3;
 
-    public DualVector3(Dual<T> x1, Dual<T> x2, Dual<T> x3)
+    public DualVector3(T x1, T x2, T x3)
     {
         X1 = x1;
         X2 = x2;
@@ -66,7 +68,7 @@ public record struct DualVector3<T>
 
     // Get
 
-    internal static T GetElement(DualVector3<T> vector, int index)
+    internal static T GetElement(DualVector3<T, U> vector, int index)
     {
         if ((uint)index >= 3)
         {
@@ -77,31 +79,31 @@ public record struct DualVector3<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T GetElementUnsafe(ref DualVector3<T> vector, int index)
+    private static T GetElementUnsafe(ref DualVector3<T, U> vector, int index)
     {
         Debug.Assert(index is >= 0 and < 3);
-        return Unsafe.Add(ref Unsafe.As<DualVector3<T>, T>(ref vector), index);
+        return Unsafe.Add(ref Unsafe.As<DualVector3<T, U>, T>(ref vector), index);
     }
 
     // Set
 
-    internal static DualVector3<T> WithElement(DualVector3<T> vector, int index, T value)
+    internal static DualVector3<T, U> WithElement(DualVector3<T, U> vector, int index, T value)
     {
         if ((uint)index >= 3)
         {
             throw new IndexOutOfRangeException();
         }
 
-        DualVector3<T> result = vector;
+        DualVector3<T, U> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref DualVector3<T> vector, int index, T value)
+    private static void SetElementUnsafe(ref DualVector3<T, U> vector, int index, T value)
     {
         Debug.Assert(index is >= 0 and < 3);
-        Unsafe.Add(ref Unsafe.As<DualVector3<T>, T>(ref vector), index) = value;
+        Unsafe.Add(ref Unsafe.As<DualVector3<T, U>, T>(ref vector), index) = value;
     }
 
     //
@@ -109,7 +111,7 @@ public record struct DualVector3<T>
     //
 
     /// <inheritdoc cref="Vector3{T}.Cross(Vector3{T}, Vector3{T})"/>
-    public static DualVector3<T> Cross(DualVector3<T> left, DualVector3<T> right)
+    public static DualVector3<T, U> Cross(DualVector3<T, U> left, DualVector3<T, U> right)
     {
         return new(
             left.X2 * right.X3 - left.X3 * right.X2,
@@ -127,20 +129,20 @@ public record struct DualVector3<T>
     /// <param name="fz">The z-component of the vector field</param>
     /// <param name="x">The point at which to compute the curl</param>
     /// <returns>The curl of the vector field</returns>
-    public static Vector3<T> Curl(
-        Func<DualVector3<T>, Dual<T>> fx,
-        Func<DualVector3<T>, Dual<T>> fy,
-        Func<DualVector3<T>, Dual<T>> fz,
-        DualVector3<T> x)
+    public static Vector3<U> Curl(
+        Func<DualVector3<T, U>, T> fx,
+        Func<DualVector3<T, U>, T> fy,
+        Func<DualVector3<T, U>, T> fz,
+        DualVector3<T, U> x)
     {
-        ReadOnlySpan<DualVector3<T>> seeds = [
-            new(new(x.X1.D0, Real.One), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.One), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.One))];
+        ReadOnlySpan<DualVector3<T, U>> seeds = [
+            new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One))];
 
-        ReadOnlySpan<T> dfx = [fx(seeds[0]).D1, fx(seeds[1]).D1, fx(seeds[2]).D1];
-        ReadOnlySpan<T> dfy = [fy(seeds[0]).D1, fy(seeds[1]).D1, fy(seeds[2]).D1];
-        ReadOnlySpan<T> dfz = [fz(seeds[0]).D1, fz(seeds[1]).D1, fz(seeds[2]).D1];
+        ReadOnlySpan<U> dfx = [fx(seeds[0]).D1, fx(seeds[1]).D1, fx(seeds[2]).D1];
+        ReadOnlySpan<U> dfy = [fy(seeds[0]).D1, fy(seeds[1]).D1, fy(seeds[2]).D1];
+        ReadOnlySpan<U> dfz = [fz(seeds[0]).D1, fz(seeds[1]).D1, fz(seeds[2]).D1];
 
         return new(
             dfz[1] - dfy[2],
@@ -153,15 +155,15 @@ public record struct DualVector3<T>
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the directional derivative</param>
     /// <returns>A directional derivative</returns>
-    public static T DirectionalDerivative(
-        Vector3<T> v,
-        Func<DualVector3<T>, Dual<T>> f,
-        DualVector3<T> x)
+    public static U DirectionalDerivative(
+        Vector3<U> v,
+        Func<DualVector3<T, U>, T> f,
+        DualVector3<T, U> x)
     {
-        ReadOnlySpan<DualVector3<T>> seeds = [
-            new(new(x.X1.D0, v.X1), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, v.X2), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.Zero), new(x.X3.D0, v.X3))];
+        ReadOnlySpan<DualVector3<T, U>> seeds = [
+            new(x.X1.WithSeed(v.X1), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(v.X2), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(v.X3))];
 
         return f(seeds[0]).D1 + f(seeds[1]).D1 + f(seeds[2]).D1;
     }
@@ -172,16 +174,16 @@ public record struct DualVector3<T>
     /// <param name="fz">The z-component of the vector field</param>
     /// <param name="x">The point at which to compute the divergence</param>
     /// <returns>The divergence of the vector field</returns>
-    public static T Divergence(
-        Func<DualVector3<T>, Dual<T>> fx,
-        Func<DualVector3<T>, Dual<T>> fy,
-        Func<DualVector3<T>, Dual<T>> fz,
-        DualVector3<T> x)
+    public static U Divergence(
+        Func<DualVector3<T, U>, T> fx,
+        Func<DualVector3<T, U>, T> fy,
+        Func<DualVector3<T, U>, T> fz,
+        DualVector3<T, U> x)
     {
-        ReadOnlySpan<DualVector3<T>> seeds = [
-            new(new(x.X1.D0, Real.One), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.One), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.One))];
+        ReadOnlySpan<DualVector3<T, U>> seeds = [
+            new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One))];
 
         return fx(seeds[0]).D1 + fy(seeds[1]).D1 + fz(seeds[2]).D1;
     }
@@ -190,14 +192,43 @@ public record struct DualVector3<T>
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the gradient</param>
     /// <returns>The gradient of the scalar function</returns>
-    public static Vector3<T> Gradient(Func<DualVector3<T>, Dual<T>> f, DualVector3<T> x)
+    public static Vector3<U> Gradient(Func<DualVector3<T, U>, T> f, DualVector3<T, U> x)
     {
-        ReadOnlySpan<DualVector3<T>> seeds = [
-            new(new(x.X1.D0, Real.One), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.One), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.One))];
+        ReadOnlySpan<DualVector3<T, U>> seeds = [
+            new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One))];
 
         return new(f(seeds[0]).D1, f(seeds[1]).D1, f(seeds[2]).D1);
+    }
+
+    /// <summary>Compute the Hessian of a scalar function using forward-mode automatic differentiation.</summary>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the gradient</param>
+    /// <returns>The Hessian of the scalar function</returns>
+    public static Matrix3x3<U> Hessian(Func<DualVector3<HyperDual<U>, U>, HyperDual<U>> f, DualVector3<HyperDual<U>, U> x)
+    {
+        ReadOnlySpan<DualVector3<HyperDual<U>, U>> seeds = [
+            new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One))];
+
+        Matrix3x3<U> result = new();
+
+        result[0, 0] = f(new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero))).D3;
+        result[1, 1] = f(new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One, U.One), x.X3.WithSeed(U.Zero))).D3;
+        result[2, 2] = f(new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One, U.One))).D3;
+
+        var e12 = f(new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero, U.One), x.X3.WithSeed(U.Zero)));
+        result[0, 1] = e12.D3; result[1, 0] = e12.D3;
+
+        var e13 = f(new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero, U.One)));
+        result[0, 2] = e13.D3; result[2, 0] = e13.D3;
+
+        var e23 = f(new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero, U.One)));
+        result[1, 2] = e23.D3; result[2, 1] = e23.D3;
+
+        return result;
     }
 
     /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
@@ -206,18 +237,18 @@ public record struct DualVector3<T>
     /// <param name="fz">The third function</param>
     /// <param name="x">The point at which to compute the Jacobian</param>
     /// <returns>The Jacobian of the vector function</returns>
-    public static Matrix3x3<T> Jacobian(
-        Func<DualVector3<T>, Dual<T>> fx,
-        Func<DualVector3<T>, Dual<T>> fy,
-        Func<DualVector3<T>, Dual<T>> fz,
-        DualVector3<T> x)
+    public static Matrix3x3<U> Jacobian(
+        Func<DualVector3<T, U>, T> fx,
+        Func<DualVector3<T, U>, T> fy,
+        Func<DualVector3<T, U>, T> fz,
+        DualVector3<T, U> x)
     {
-        ReadOnlySpan<DualVector3<T>> seeds = [
-            new(new(x.X1.D0, Real.One), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.One), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.One))];
+        ReadOnlySpan<DualVector3<T, U>> seeds = [
+            new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One))];
 
-        Matrix3x3<T> result = new();
+        Matrix3x3<U> result = new();
 
         result[0, 0] = fx(seeds[0]).D1; result[0, 1] = fx(seeds[1]).D1; result[0, 2] = fx(seeds[2]).D1;
         result[1, 0] = fy(seeds[0]).D1; result[1, 1] = fy(seeds[1]).D1; result[1, 2] = fy(seeds[2]).D1;
@@ -233,15 +264,29 @@ public record struct DualVector3<T>
     /// <param name="x">The point at which to compute the Jacobian-vector product</param>
     /// <param name="v">A vector</param>
     /// <returns>The Jacobian-vector product of the vector function and vector</returns>
-    public static Vector3<T> JVP(
-        Func<DualVector3<T>, Dual<T>> fx,
-        Func<DualVector3<T>, Dual<T>> fy,
-        Func<DualVector3<T>, Dual<T>> fz,
-        DualVector3<T> x,
-        Vector3<T> v)
+    public static Vector3<U> JVP(
+        Func<DualVector3<T, U>, T> fx,
+        Func<DualVector3<T, U>, T> fy,
+        Func<DualVector3<T, U>, T> fz,
+        DualVector3<T, U> x,
+        Vector3<U> v)
     {
-        DualVector3<T> seed = new(new(x.X1.D0, v.X1), new(x.X2.D0, v.X2), new(x.X3.D0, v.X3));
+        DualVector3<T, U> seed = new(x.X1.WithSeed(v.X1), x.X2.WithSeed(v.X2), x.X3.WithSeed(v.X3));
         return new(fx(seed).D1, fy(seed).D1, fz(seed).D1);
+    }
+
+    /// <summary>Compute the Laplacian of a scalar function using forward-mode automatic differentiation:  $ \nabla^2f $.</summary>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the gradient</param>
+    /// <returns>The gradient of the scalar function</returns>
+    public static U Laplacian(Func<DualVector3<HyperDual<U>, U>, HyperDual<U>> f, DualVector3<HyperDual<U>, U> x)
+    {
+        ReadOnlySpan<DualVector3<HyperDual<U>, U>> seeds = [
+            new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One, U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One, U.One))];
+
+        return f(seeds[0]).D3 + f(seeds[1]).D3 + f(seeds[2]).D3;
     }
 
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using forward-mode automatic differentiation.</summary>
@@ -251,19 +296,19 @@ public record struct DualVector3<T>
     /// <param name="fz">The third function</param>
     /// <param name="x">The point at which to compute the vector-Jacobian product</param>
     /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
-    public static Vector3<T> VJP(
-        Vector3<T> v,
-        Func<DualVector3<T>, Dual<T>> fx,
-        Func<DualVector3<T>, Dual<T>> fy,
-        Func<DualVector3<T>, Dual<T>> fz,
-        DualVector3<T> x)
+    public static Vector3<U> VJP(
+        Vector3<U> v,
+        Func<DualVector3<T, U>, T> fx,
+        Func<DualVector3<T, U>, T> fy,
+        Func<DualVector3<T, U>, T> fz,
+        DualVector3<T, U> x)
     {
-        ReadOnlySpan<DualVector3<T>> seeds = [
-            new(new(x.X1.D0, Real.One), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.One), new(x.X3.D0, Real.Zero)),
-            new(new(x.X1.D0, Real.Zero), new(x.X2.D0, Real.Zero), new(x.X3.D0, Real.One))];
+        ReadOnlySpan<DualVector3<T, U>> seeds = [
+            new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One))];
 
-        Vector3<T> result = new();
+        Vector3<U> result = new();
 
         result[0] = v.X1 * fx(seeds[0]).D1 + v.X2 * fy(seeds[0]).D1 + v.X3 * fz(seeds[0]).D1;
         result[1] = v.X1 * fx(seeds[1]).D1 + v.X2 * fy(seeds[1]).D1 + v.X3 * fz(seeds[1]).D1;

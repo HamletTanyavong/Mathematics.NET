@@ -27,8 +27,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using Mathematics.NET.Core.Operations;
-using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.AutoDiff;
 
@@ -38,15 +36,7 @@ namespace Mathematics.NET.AutoDiff;
 /// <param name="d1">The tangent part of the dual number</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Dual<T>(T d0, T d1)
-    : IAdditionOperation<Dual<T>, Dual<T>>,
-      IDivisionOperation<Dual<T>, Dual<T>>,
-      IMultiplicationOperation<Dual<T>, Dual<T>>,
-      INegationOperation<Dual<T>, Dual<T>>,
-      ISubtractionOperation<Dual<T>, Dual<T>>,
-      IEqualityRelation<Dual<T>, bool>,
-      IEquatable<Dual<T>>,
-      IFormattable
+public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
     private readonly T _d0 = d0;
@@ -54,7 +44,6 @@ public readonly struct Dual<T>(T d0, T d1)
 
     public Dual(T value) : this(value, T.Zero) { }
 
-    /// <summary>Represents the primal part of the dual number</summary>
     public readonly T D0 => _d0;
 
     /// <summary>Represents the tangent part of the dual number</summary>
@@ -89,7 +78,7 @@ public readonly struct Dual<T>(T d0, T d1)
 
     public static Dual<T> operator /(T c, Dual<T> x) => new(c / x._d0, -x._d1 * c / (x._d0 * x._d0));
 
-    public static Dual<T> operator /(Dual<T> x, T c) => new(x._d0 / c, x._d1 * c / (c * c));
+    public static Dual<T> operator /(Dual<T> x, T c) => new(x._d0 / c, x._d1 / c);
 
     public static Dual<Real> Modulo(Dual<Real> x, Dual<Real> y)
     {
@@ -124,23 +113,26 @@ public readonly struct Dual<T>(T d0, T d1)
     // Other operations
     //
 
+    public static Dual<T> CreateVariable(T value) => new(value, T.Zero);
+
+    public static Dual<T> CreateVariable(T value, T seed) => new(value, seed);
+
+    public Dual<T> WithSeed(T seed) => new(_d0, seed);
+
     // Exponential functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp(T)"/>
     public static Dual<T> Exp(Dual<T> x)
     {
         var exp = T.Exp(x._d0);
         return new(exp, x._d1 * exp);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp2(T)"/>
     public static Dual<T> Exp2(Dual<T> x)
     {
         var exp2 = T.Exp2(x._d0);
         return new(exp2, Real.Ln2 * x._d1 * exp2);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp10(T)"/>
     public static Dual<T> Exp10(Dual<T> x)
     {
         var exp10 = T.Exp10(x._d0);
@@ -149,25 +141,19 @@ public readonly struct Dual<T>(T d0, T d1)
 
     // Hyperbolic functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Acosh(T)"/>
     public static Dual<T> Acosh(Dual<T> x)
         => new(T.Acosh(x._d0), x._d1 / (T.Sqrt(x._d0 - T.One) * T.Sqrt(x._d0 + T.One)));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Asinh(T)"/>
     public static Dual<T> Asinh(Dual<T> x)
         => new(T.Asinh(x._d0), x._d1 / T.Sqrt(x._d0 * x._d0 + T.One));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Atanh(T)"/>
     public static Dual<T> Atanh(Dual<T> x)
         => new(T.Atanh(x._d0), x._d1 / (T.One - x._d0 * x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cosh(T)"/>
     public static Dual<T> Cosh(Dual<T> x) => new(T.Cosh(x._d0), x._d1 * T.Sinh(x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sinh(T)"/>
     public static Dual<T> Sinh(Dual<T> x) => new(T.Sinh(x._d0), x._d1 * T.Cosh(x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Tanh(T)"/>
     public static Dual<T> Tanh(Dual<T> x)
     {
         var u = T.One / T.Cosh(x._d0);
@@ -176,36 +162,28 @@ public readonly struct Dual<T>(T d0, T d1)
 
     // Logarithmic functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Ln(T)"/>
     public static Dual<T> Ln(Dual<T> x) => new(T.Ln(x._d0), x._d1 / x._d0);
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log(T, T)"/>
     public static Dual<T> Log(Dual<T> x, Dual<T> b) => Ln(x) / Ln(b);
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log2(T)"/>
     public static Dual<T> Log2(Dual<T> x) => new(T.Log2(x._d0), x._d1 / (Real.Ln2 * x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Log10(T)"/>
     public static Dual<T> Log10(Dual<T> x) => new(T.Log10(x._d0), x._d1 / (Real.Ln10 * x._d0));
 
     // Power functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     public static Dual<T> Pow(Dual<T> x, Dual<T> y) => Exp(y * Ln(x));
 
     // Root functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cbrt(T)"/>
     public static Dual<T> Cbrt(Dual<T> x)
     {
         var cbrt = T.Cbrt(x._d0);
         return new(cbrt, x._d1 / (3.0 * cbrt * cbrt));
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Root(T, T)"/>
     public static Dual<T> Root(Dual<T> x, Dual<T> n) => Exp(Ln(x) / n);
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sqrt(T)"/>
     public static Dual<T> Sqrt(Dual<T> x)
     {
         var sqrt = T.Sqrt(x._d0);
@@ -214,13 +192,10 @@ public readonly struct Dual<T>(T d0, T d1)
 
     // Trigonometric functions
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Acos(T)"/>
     public static Dual<T> Acos(Dual<T> x) => new(T.Acos(x._d0), -x._d1 / T.Sqrt(T.One - x._d0 * x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Asin(T)"/>
     public static Dual<T> Asin(Dual<T> x) => new(T.Asin(x._d0), x._d1 / T.Sqrt(T.One - x._d0 * x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Atan(T)"/>
     public static Dual<T> Atan(Dual<T> x) => new(T.Atan(x._d0), x._d1 / (T.One + x._d0 * x._d0));
 
     /// <inheritdoc cref="IReal{T}.Atan2(T, T)"/>
@@ -230,13 +205,10 @@ public readonly struct Dual<T>(T d0, T d1)
         return new(Real.Atan2(y._d0, x._d0), (y._d1 * x._d0 - x._d1 * y._d0) * u);
     }
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Cos(T)"/>
     public static Dual<T> Cos(Dual<T> x) => new(T.Cos(x._d0), -x._d1 * T.Sin(x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Sin(T)"/>
     public static Dual<T> Sin(Dual<T> x) => new(T.Sin(x._d0), x._d1 * T.Cos(x._d0));
 
-    /// <inheritdoc cref="IDifferentiableFunctions{T}.Tan(T)"/>
     public static Dual<T> Tan(Dual<T> x)
     {
         var sec = T.One / T.Cos(x._d0);
@@ -265,11 +237,9 @@ public readonly struct Dual<T>(T d0, T d1)
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
 
     //
-    // Explicit operators
+    // Dual vector creation
     //
 
-    /// <summary>Convert a value of type <see cref="double"/> to one of type <see cref="Dual{T}"/></summary>
-    /// <remarks>The tangent part of the converted value will be zero.</remarks>
-    /// <param name="x">The value to convert</param>
-    public static explicit operator Dual<T>(double x) => new(x);
+    public static DualVector3<Dual<T>, T> CreateDualVector(Dual<T> x1Seed, Dual<T> x2Seed, Dual<T> x3Seed)
+        => new(x1Seed, x2Seed, x3Seed);
 }
