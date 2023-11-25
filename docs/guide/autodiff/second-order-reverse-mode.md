@@ -1,6 +1,6 @@
 # Second-Order, Reverse Mode Automatic Differentiation
 
-Support for first-order, reverse-mode automatic differentiation (autodiff) is provided by the `HessianTape` class.
+Support for first-order, reverse-mode autodiff is provided by the `HessianTape` class.
 
 ## Hessian Tapes
 
@@ -26,7 +26,7 @@ $$
 $$
 Note that, in the future, we will not have to do this manually since there will be a method made specifically to compute Laplacians in spherical coordinates. For now, if we wanted to compute the Laplacian of the function
 $$
-    f(x,y,z) = \frac{\cos(x)}{(x+y)\sin(z)}
+    f(r,\theta,\phi) = \frac{\cos(r)}{(r+\theta)\sin(\phi)}
 $$
 we can write
 ```csharp

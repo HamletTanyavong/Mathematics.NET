@@ -1,6 +1,6 @@
 # First-Order, Forward Mode Automatic Differentiation
 
-Support for first-order, forward-mode autodiff is provided by the `Dual<T>` class.
+Support for first-order, forward-mode autodiff is provided by the `Dual<T>` type.
 
 ## Dual Numbers
 
@@ -9,8 +9,13 @@ Forward-mode autodiff can be performed through the use of dual numbers which kee
 Dual<Real> x = new(1.23, 1.0);
 Dual<Real> y = new(2.34);
 ```
-The primal part represents the point at which we want to compute our derivative while the tangent part holds the information about our derivative. When we create a dual number with a tangent part, we specify a value that will be used as the seed, and it is important to know that the value of the derivative changes proportionally with this value.
+The primal part represents the point at which we want to compute our derivative while the tangent part holds the information about our derivative. When we create a dual number with a tangent part, we specify a value that will be used as the seed, and it is important to know that the value of the derivative changes proportionally with this value. We could also write, equivalently,
+```csharp
+using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Core.Real>;
 
+var x = CreateVariable(1.23, 1.0);
+var y = CreateVariable(2.34);
+```
 Suppose we want to compute the partial derivative of the function
 $$
     f(x,y) = \frac{\sin(x + y)e^{-y}}{x^2+y^2+1}
@@ -23,8 +28,8 @@ using Mathematics.NET.Core;
 // Add the following line to avoid having to type Dual<Real> every time we want to use a function.
 using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Core.Real>;
 
-Dual<Real> x = new(1.23, 1.0);
-Dual<Real> y = new(2.34);
+Dual<Real> x = CreateVariable(1.23, 1.0);
+Dual<Real> y = CreateVariable(2.34);
 
 var result = Sin(x + y) * Exp(-y) / (x * x + y * y + 1);
 
@@ -32,8 +37,8 @@ Console.WriteLine("∂f/∂x: {0}", result);
 ```
 Notice that we set the seed for the variable of interest, $ x $, to 1 while the seed for the variable we do not care about, $ y $, was set to 0. If we had set both to 1.0, then we would have computed the total derivative of the function instead. To compute the partial derivative of our function with respect to $ y $, we write
 ```csharp
-Dual<Real> x = new(1.23);
-Dual<Real> y = new(2.34, 1.0);
+Dual<Real> x = CreateVariable(1.23);
+Dual<Real> y = CreateVariable(2.34, 1.0);
 ```
 with the tangent part of the variable of interest set to 1 and the other to 0. Doing this will print the following to the console:
 ```
@@ -41,11 +46,20 @@ with the tangent part of the variable of interest set to 1 and the other to 0. D
 ∂f/∂y: (-0.005009285670379789, -0.003024626925238263)
 ```
 
+### Total Derivative
+
+To get the total derivate of a function, set the seeds for each variable to `1.0`;
+```csharp
+Dual<Real> x = CreateVariable(1.23, 1.0);
+Dual<Real> y = CreateVariable(2.34, 1.0);
+// Repeat for each variable present
+```
+
 ## Dual Vectors
 
 We can create dual vectors to help us keep track of multiple dual numbers.
 ```csharp
-DualVector3<Real> x = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+DualVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
 ```
 We can use this to compute the vector-Jacobian product of the vector functions
 $$
@@ -61,7 +75,7 @@ using Mathematics.NET.AutoDiff;
 using Mathematics.NET.Core;
 using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Core.Real>;
 
-DualVector3<Real> x = new((Dual<Real>)1.23, (Dual<Real>)0.66, (Dual<Real>)2.34);
+DualVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
 Vector3<Real> v = new(0.23, 1.57, -1.71);
 
 var result = DualVector3<Real>.VJP(
