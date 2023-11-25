@@ -34,6 +34,7 @@ namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a vector of three dual numbers for use in forward-mode automatic differentiation</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public record struct DualVector3<T, U>
     where T : IDual<T, U>

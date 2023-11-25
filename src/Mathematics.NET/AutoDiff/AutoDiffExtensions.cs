@@ -36,16 +36,16 @@ public static class AutoDiffExtensions
     // Variable vector creation
     //
 
-    /// <summary>Create a three-element vector from a seed vector of length three.</summary>
+    /// <summary>Create a dual vector from a seed vector.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x">A three-element vector of seed values</param>
+    /// <param name="x">A vector of seed values</param>
     /// <returns>A variable vector of length three</returns>
     public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, Vector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3));
 
-    /// <summary>Create a three-element vector from seed values.</summary>
+    /// <summary>Create a vector from seed values.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x1Seed">The first seed value</param>

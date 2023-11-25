@@ -32,6 +32,7 @@ namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Defines support for dual numbers</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
 public interface IDual<T, U>
     : IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
