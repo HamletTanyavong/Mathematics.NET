@@ -32,7 +32,7 @@ namespace Mathematics.NET.Tests.AutoDiff;
 
 [TestClass]
 [TestCategory("AutoDiff"), TestCategory("Real Number")]
-public sealed class DualVector3OfRealTests
+public sealed class DualVector3OfDualOfRealTests
 {
     [TestMethod]
     [TestCategory("Vector Calculus")]
@@ -111,18 +111,6 @@ public sealed class DualVector3OfRealTests
         Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
 
         var actual = DualVector3<Dual<Real>, Real>.JVP(FX, FY, FZ, u, v);
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [TestCategory("Vector Calculus")]
-    [DataRow(1.23, 0.66, 2.34, 1.471507039061705)]
-    public void Laplacian_ScalarFunction_ReturnsLaplacian(double x, double y, double z, double expected)
-    {
-        DualVector3<HyperDual<Real>, Real> u = new(HyperDual<Real>.CreateVariable(x), HyperDual<Real>.CreateVariable(y), HyperDual<Real>.CreateVariable(z));
-
-        var actual = DualVector3<HyperDual<Real>, Real>.Laplacian(F, u);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
