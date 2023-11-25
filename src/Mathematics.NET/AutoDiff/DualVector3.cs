@@ -201,6 +201,35 @@ public record struct DualVector3<T, U>
         return new(f(seeds[0]).D1, f(seeds[1]).D1, f(seeds[2]).D1);
     }
 
+    /// <summary>Compute the Hessian of a scalar function using forward-mode automatic differentiation.</summary>
+    /// <param name="f">A scalar function</param>
+    /// <param name="x">The point at which to compute the gradient</param>
+    /// <returns>The Hessian of the scalar function</returns>
+    public static Matrix3x3<U> Hessian(Func<DualVector3<HyperDual<U>, U>, HyperDual<U>> f, DualVector3<HyperDual<U>, U> x)
+    {
+        ReadOnlySpan<DualVector3<HyperDual<U>, U>> seeds = [
+            new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero)),
+            new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One))];
+
+        Matrix3x3<U> result = new();
+
+        result[0, 0] = f(new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero))).D3;
+        result[1, 1] = f(new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One, U.One), x.X3.WithSeed(U.Zero))).D3;
+        result[2, 2] = f(new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.One, U.One))).D3;
+
+        var e12 = f(new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero, U.One), x.X3.WithSeed(U.Zero)));
+        result[0, 1] = e12.D3; result[1, 0] = e12.D3;
+
+        var e13 = f(new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero), x.X3.WithSeed(U.Zero, U.One)));
+        result[0, 2] = e13.D3; result[2, 0] = e13.D3;
+
+        var e23 = f(new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One), x.X3.WithSeed(U.Zero, U.One)));
+        result[1, 2] = e23.D3; result[2, 1] = e23.D3;
+
+        return result;
+    }
+
     /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
     /// <param name="fx">The first function</param>
     /// <param name="fy">The second function</param>
