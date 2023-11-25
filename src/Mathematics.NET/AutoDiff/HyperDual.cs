@@ -85,7 +85,7 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public static HyperDual<T> operator /(T c, HyperDual<T> x) => new(c / x._d0, -x._d1 * c / (x._d0 * x._d0));
 
-    public static HyperDual<T> operator /(HyperDual<T> x, T c) => new(x._d0 / c, x._d1 * c / (c * c));
+    public static HyperDual<T> operator /(HyperDual<T> x, T c) => new(x._d0 / c, x._d1 / c);
 
     //
     // Equality

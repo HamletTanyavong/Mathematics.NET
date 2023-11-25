@@ -78,7 +78,7 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
 
     public static Dual<T> operator /(T c, Dual<T> x) => new(c / x._d0, -x._d1 * c / (x._d0 * x._d0));
 
-    public static Dual<T> operator /(Dual<T> x, T c) => new(x._d0 / c, x._d1 * c / (c * c));
+    public static Dual<T> operator /(Dual<T> x, T c) => new(x._d0 / c, x._d1 * c);
 
     public static Dual<Real> Modulo(Dual<Real> x, Dual<Real> y)
     {
