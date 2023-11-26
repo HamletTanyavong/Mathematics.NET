@@ -129,14 +129,6 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
             left.X3 - right.X3);
     }
 
-    public static Vector3<T> operator *(Vector3<T> left, Vector3<T> right)
-    {
-        return new(
-            left.X1 * right.X1,
-            left.X2 * right.X2,
-            left.X3 * right.X3);
-    }
-
     //
     // Equality
     //
