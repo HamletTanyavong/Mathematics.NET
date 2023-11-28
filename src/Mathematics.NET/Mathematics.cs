@@ -84,11 +84,4 @@ public static class Mathematics
 
     /// <inheritdoc cref="Constants.ZetaOf4"/>
     public static Real ZetaOf4 => Real.ZetaOf4;
-
-    //
-    // Methods
-    //
-
-    // TODO: Account for fractional derivatives
-    public static Real Dif(Func<Real, Real> function, (Real X, int N) args) => throw new NotImplementedException();
 }
