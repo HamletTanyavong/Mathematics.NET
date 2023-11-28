@@ -37,5 +37,5 @@ namespace Mathematics.NET.Core.Buffers;
 internal struct Buffer3<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
-    private T _element;
+    private T _element0;
 }
