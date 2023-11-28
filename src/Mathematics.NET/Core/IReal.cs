@@ -73,6 +73,13 @@ public interface IReal<T>
     /// <returns><c>true</c> if the value is positive infinity; otherwise, <c>false</c></returns>
     static abstract bool IsPositiveInfinity(T x);
 
+    /// <summary>Linearly interpolate between two points</summary>
+    /// <param name="start">The start point</param>
+    /// <param name="end">The end point</param>
+    /// <param name="weight">The weight</param>
+    /// <returns>The interpolated value</returns>
+    static abstract T Lerp(T start, T end, T weight);
+
     /// <summary>Find which of two numbers is greater than the other</summary>
     /// <remarks>If any of the values are <c>NaN</c>, then <c>NaN</c> is returned</remarks>
     /// <param name="x">The first value</param>

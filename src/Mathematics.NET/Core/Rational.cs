@@ -569,6 +569,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return holdP / (p | q) * holdQ;
     }
 
+    public static Rational<T> Lerp(Rational<T> start, Rational<T> end, Rational<T> weight) => start + (end - start) * weight;
+
     // TODO: Find a better implementation for Max and Min
     public static Rational<T> Max(Rational<T> x, Rational<T> y)
     {

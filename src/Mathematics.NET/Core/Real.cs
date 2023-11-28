@@ -281,6 +281,8 @@ public readonly struct Real(double real)
 
     public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
+    public static Real Lerp(Real start, Real end, Real weight) => start + (end - start) * weight;
+
     public static Real Max(Real x, Real y) => Math.Max(x._value, y._value);
 
     public static Real Min(Real x, Real y) => Math.Min(x._value, y._value);
