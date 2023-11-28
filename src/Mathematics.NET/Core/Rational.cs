@@ -509,6 +509,26 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return remainder == T.Zero ? quotient : quotient + T.One;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Rational<T> Clamp(Rational<T> value, Rational<T> min, Rational<T> max)
+    {
+        if (min > max)
+        {
+            throw new ArgumentException("Minimum value must be less than or equal to maximum value");
+        }
+
+        if (value < min)
+        {
+            return min;
+        }
+        else if (value > max)
+        {
+            return max;
+        }
+
+        return value;
+    }
+
     public static Rational<T> Conjugate(Rational<T> x) => x;
 
     public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;

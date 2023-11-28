@@ -58,6 +58,13 @@ public interface IReal<T>
     /// <returns>The smallest integer greater than or equal to the value</returns>
     static abstract T Ceiling(T x);
 
+    /// <summary>Clamp a value to an inclusive range</summary>
+    /// <param name="value">A value</param>
+    /// <param name="min">The lower bound</param>
+    /// <param name="max">The upper bound</param>
+    /// <returns>The clamped value</returns>
+    static abstract T Clamp(T value, T min, T max);
+
     /// <summary>Compute the floor function of a value</summary>
     /// <param name="x">A value</param>
     /// <returns>The largest integer less than or equal to the value</returns>

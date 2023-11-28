@@ -28,6 +28,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
@@ -258,6 +259,8 @@ public readonly struct Real(double real)
     public static Real Abs(Real x) => Math.Abs(x._value);
 
     public static Real Ceiling(Real x) => Math.Ceiling(x._value);
+
+    public static Real Clamp(Real value, Real min, Real max) => Math.Clamp(value._value, min._value, max._value);
 
     public static Real Conjugate(Real x) => x;
 
