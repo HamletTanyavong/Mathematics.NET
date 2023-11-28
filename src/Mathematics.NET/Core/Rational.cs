@@ -536,6 +536,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return p | q;
     }
 
+    public static Rational<T> InverseLerp(Rational<T> start, Rational<T> end, Rational<T> weight) => end - (end - start) * weight;
+
     public static bool IsFinite(Rational<T> x) => !T.IsZero(x._denominator);
 
     public static bool IsInfinity(Rational<T> x) => T.IsZero(x._denominator);

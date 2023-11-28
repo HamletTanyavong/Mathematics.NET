@@ -63,6 +63,13 @@ public interface IReal<T>
     /// <returns>The largest integer less than or equal to the value</returns>
     static abstract T Floor(T x);
 
+    /// <summary>Perform inverse linear interpolation given two points and a weight</summary>
+    /// <param name="start">The start point</param>
+    /// <param name="end">The end point</param>
+    /// <param name="weight">The weight</param>
+    /// <returns>The inversely interpolated value</returns>
+    static abstract T InverseLerp(T start, T end, T weight);
+
     /// <summary>Check if a value is negative infinity</summary>
     /// <param name="x">The value to check</param>
     /// <returns><c>true</c> if the value is negative infinity; otherwise, <c>false</c></returns>

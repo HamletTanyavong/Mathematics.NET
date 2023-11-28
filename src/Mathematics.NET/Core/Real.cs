@@ -269,6 +269,8 @@ public readonly struct Real(double real)
 
     public static Real Hypot(Real x, Real y) => double.Hypot(x._value, y._value);
 
+    public static Real InverseLerp(Real start, Real end, Real weight) => end - (end - start) * weight;
+
     public static bool IsFinite(Real x) => double.IsFinite(x._value);
 
     public static bool IsInfinity(Real x) => double.IsInfinity(x._value);
