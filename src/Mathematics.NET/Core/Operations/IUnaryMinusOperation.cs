@@ -1,4 +1,4 @@
-﻿// <copyright file="INegationOperation.cs" company="Mathematics.NET">
+﻿// <copyright file="IUnaryMinusOperation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,8 +30,8 @@ namespace Mathematics.NET.Core.Operations;
 /// <summary>Defines a mechanism for negating values</summary>
 /// <typeparam name="TInput">The input type</typeparam>
 /// <typeparam name="TResult">The output type</typeparam>
-public interface INegationOperation<TInput, TResult>
-    where TInput : INegationOperation<TInput, TResult>
+public interface IUnaryMinusOperation<TInput, TResult>
+    where TInput : IUnaryMinusOperation<TInput, TResult>
 {
     static abstract TResult operator -(TInput value);
     static virtual TResult operator checked -(TInput value) => -value;

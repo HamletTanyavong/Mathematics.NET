@@ -40,7 +40,7 @@ public interface IComplex<T>
     : IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
-      INegationOperation<T, T>,
+      IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>,
       ISubtractionOperation<T, T>,
       IEqualityRelation<T, bool>,

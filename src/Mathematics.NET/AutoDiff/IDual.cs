@@ -37,7 +37,7 @@ public interface IDual<T, U>
     : IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
-      INegationOperation<T, T>,
+      IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>,
       ISubtractionOperation<T, T>,
       IFormattable,
