@@ -162,4 +162,10 @@ public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
         var norm = Norm();
         return new(X1 / norm, X2 / norm);
     }
+
+    /// <summary>Convert a value of type <see cref="Vector2{T}"/> to one of type <see cref="System.Numerics.Vector2"/></summary>
+    /// <param name="x">The value to convert</param>
+    /// <returns>A vector of type <see cref="System.Numerics.Vector2"/></returns>
+    public static System.Numerics.Vector2 CreateSystemVector(Vector2<Real> x)
+        => new((float)x.X1.Value, (float)x.X2.Value);
 }

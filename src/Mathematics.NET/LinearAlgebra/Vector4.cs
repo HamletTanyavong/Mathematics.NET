@@ -211,4 +211,10 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
         var norm = Norm();
         return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
     }
+
+    /// <summary>Convert a value of type <see cref="Vector4{T}"/> to one of type <see cref="System.Numerics.Vector4"/></summary>
+    /// <param name="x">The value to convert</param>
+    /// <returns>A vector of type <see cref="System.Numerics.Vector4"/></returns>
+    public static System.Numerics.Vector4 CreateSystemVector(Vector4<Real> x)
+        => new((float)x.X1.Value, (float)x.X2.Value, (float)x.X3.Value, (float)x.X4.Value);
 }
