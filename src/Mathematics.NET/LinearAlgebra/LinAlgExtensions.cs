@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 using System.Text;
 
 namespace Mathematics.NET.LinearAlgebra;
@@ -43,6 +44,34 @@ public static class LinAlgExtensions
     {
         return new Span2D<T>(Unsafe.AsPointer(ref matrix.E11), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
     }
+
+    /// <summary>Reinterprets a <see cref="Vector4{Real}"/> as a new <see cref="Vector256{Double}"/></summary>
+    /// <param name="value">The vector to reinterpret</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector256{Double}"/></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector256<double> AsVector256(this Vector4<Real> value)
+        => Unsafe.As<Vector4<Real>, Vector256<double>>(ref value);
+
+    /// <summary>Reinterprets a <see cref="Vector256{Real}"/> as a new <see cref="Vector4{Real}"/></summary>
+    /// <param name="value">The vector to reinterpret</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector4{Real}"/></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<Real> AsVector4(this Vector256<double> value)
+        => Unsafe.As<Vector256<double>, Vector4<Real>>(ref value);
+
+    /// <summary>Reinterprets a <see cref="Vector512{Real}"/> as a new <see cref="Vector4{Complex}"/></summary>
+    /// <param name="value">The vector to reinterpret</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector4{Complex}"/></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<Complex> AsVector4(this Vector512<double> value)
+        => Unsafe.As<Vector512<double>, Vector4<Complex>>(ref value);
+
+    /// <summary>Reinterprets a <see cref="Vector4{Complex}"/> as a new <see cref="Vector512{Double}"/></summary>
+    /// <param name="value">The vector to reinterpret</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector512{Double}"/></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector512<double> AsVector512(this Vector4<Complex> value)
+        => Unsafe.As<Vector4<Complex>, Vector512<double>>(ref value);
 
     /// <summary>Get the string representation of this <see cref="ReadOnlySpan{T}"/> object</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
