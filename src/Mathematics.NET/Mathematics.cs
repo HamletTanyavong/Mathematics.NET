@@ -167,6 +167,10 @@ public static class Mathematics
             for (int i = 1; i < α.Length; i++)
             {
                 var element = α[i];
+                if (element < T.Zero)
+                {
+                    throw new ArgumentException("Elements of α must be positive");
+                }
                 partialSum += element;
                 result *= Binomial(partialSum, element, cancellationToken);
             }
