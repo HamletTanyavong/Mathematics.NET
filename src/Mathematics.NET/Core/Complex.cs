@@ -755,7 +755,7 @@ public readonly struct Complex(Real real, Real imaginary)
     }
 
     //
-    // Implicit Operators
+    // Implicit operators
     //
 
     public static implicit operator Complex(double x) => new(x);
