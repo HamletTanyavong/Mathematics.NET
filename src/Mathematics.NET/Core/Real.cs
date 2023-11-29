@@ -294,11 +294,11 @@ public readonly struct Real(double real)
 
     public static Real Reciprocate(Real x)
     {
-        if (x._value == 0.0)
+        if (x == Zero)
         {
             return PositiveInfinity;
         }
-        return 1.0 / x;
+        return One / x;
     }
 
     public static int Sign(Real x) => Math.Sign(x._value);
