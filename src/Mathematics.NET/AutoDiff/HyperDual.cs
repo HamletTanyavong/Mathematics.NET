@@ -60,6 +60,8 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     // Operators
     //
 
+    public static HyperDual<T> operator +(HyperDual<T> x) => x;
+
     public static HyperDual<T> operator -(HyperDual<T> x) => new(-x._d0, -x._d1);
 
     public static HyperDual<T> operator +(HyperDual<T> x, HyperDual<T> y) => new(x._d0 + y._d0, x._d1 + y._d1);

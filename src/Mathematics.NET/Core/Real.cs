@@ -138,6 +138,7 @@ public readonly struct Real(double real)
     // Operators
     //
 
+    public static Real operator +(Real value) => value;
     public static Real operator -(Real value) => -value._value;
     public static Real operator --(Real value) => value._value - One;
     public static Real operator ++(Real value) => value._value + One;

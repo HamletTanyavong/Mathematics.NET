@@ -41,6 +41,7 @@ public interface IComplex<T>
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
       INegationOperation<T, T>,
+      IUnaryPlusOperation<T, T>,
       ISubtractionOperation<T, T>,
       IEqualityRelation<T, bool>,
       IEquatable<T>,

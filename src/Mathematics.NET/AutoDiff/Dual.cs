@@ -53,6 +53,8 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     // Operators
     //
 
+    public static Dual<T> operator +(Dual<T> x) => x;
+
     public static Dual<T> operator -(Dual<T> x) => new(-x._d0, -x._d1);
 
     public static Dual<T> operator +(Dual<T> x, Dual<T> y) => new(x._d0 + y._d0, x._d1 + y._d1);

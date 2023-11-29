@@ -87,6 +87,8 @@ public readonly struct Complex(Real real, Real imaginary)
     // Operators
     //
 
+    public static Complex operator +(Complex z) => z;
+
     public static Complex operator -(Complex z) => new(-z._real, -z._imaginary);
 
     public static Complex operator +(Complex z, Complex w) => new(z._real + w._real, z._imaginary + w._imaginary);

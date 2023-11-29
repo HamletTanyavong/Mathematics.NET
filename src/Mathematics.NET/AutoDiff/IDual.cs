@@ -38,6 +38,7 @@ public interface IDual<T, U>
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
       INegationOperation<T, T>,
+      IUnaryPlusOperation<T, T>,
       ISubtractionOperation<T, T>,
       IFormattable,
       IEqualityRelation<T, bool>,
