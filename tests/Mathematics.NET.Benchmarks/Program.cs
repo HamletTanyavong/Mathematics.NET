@@ -28,21 +28,10 @@
 #if RELEASE
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
-using Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
-using Mathematics.NET.Benchmarks.Core.RealNumberBenchmarks;
-using Mathematics.NET.Benchmarks.LinearAlgebra;
 
-var benchmarkSwitcher = new BenchmarkSwitcher(new[]
-{
-    typeof(ComplexDivisionBenchmarks),
-    typeof(ComplexTrigonometryBenchmarks),
-    typeof(MatrixMultiplyByScalarBenchmarks),
-    typeof(NormBenchmarks),
-    typeof(RealvsDouble),
-    typeof(SystemComplexAbsVsComplexAbsBenchmarks)
-});
-
-benchmarkSwitcher.Run(args, new DebugInProcessConfig());
+BenchmarkSwitcher
+    .FromAssembly(typeof(Program).Assembly)
+    .Run(args, new DebugInProcessConfig());
 #else
 Console.WriteLine("Must be in release mode to run benchmarks");
 #endif
