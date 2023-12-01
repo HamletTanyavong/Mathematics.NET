@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
@@ -117,22 +118,46 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     // Operators
     //
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<T> operator +(Vector4<T> left, Vector4<T> right)
     {
-        return new(
-            left.X1 + right.X1,
-            left.X2 + right.X2,
-            left.X3 + right.X3,
-            left.X4 + right.X4);
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Add(left.AsVector256(), right.AsVector256()).AsVector4<T>();
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return Vector512.Add(left.AsVector512(), right.AsVector512()).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                left.X1 + right.X1,
+                left.X2 + right.X2,
+                left.X3 + right.X3,
+                left.X4 + right.X4);
+        }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<T> operator -(Vector4<T> left, Vector4<T> right)
     {
-        return new(
-            left.X1 - right.X1,
-            left.X2 - right.X2,
-            left.X3 - right.X3,
-            left.X4 - right.X4);
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Subtract(left.AsVector256(), right.AsVector256()).AsVector4<T>();
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return Vector512.Subtract(left.AsVector512(), right.AsVector512()).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                left.X1 - right.X1,
+                left.X2 - right.X2,
+                left.X3 - right.X3,
+                left.X4 - right.X4);
+        }
     }
 
     //
