@@ -34,6 +34,10 @@ namespace Mathematics.NET.LinearAlgebra;
 /// <summary>A class containing linear algebra extension methods</summary>
 public static class LinAlgExtensions
 {
+    //
+    // Reinterpret
+    //
+
     /// <summary>Create a new <see cref="Span2D{T}"/> over a 4x4 matrix of <typeparamref name="T"/> numbers</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
     /// <param name="matrix">The input matrix</param>
@@ -72,6 +76,33 @@ public static class LinAlgExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector512<double> AsVector512(this Vector4<Complex> value)
         => Unsafe.As<Vector4<Complex>, Vector512<double>>(ref value);
+
+    // Do not make the following methods public. AsVector256 must only be used with Vector4<Real>
+    // and AsVector256 must only be used with Vector4<Complex>.
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector256<double> AsVector256<T>(this Vector4<T> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector4<T>, Vector256<double>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector4<T> AsVector4<T>(this Vector256<double> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector256<double>, Vector4<T>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector512<double> AsVector512<T>(this Vector4<T> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector4<T>, Vector512<double>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector4<T> AsVector4<T>(this Vector512<double> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector512<double>, Vector4<T>>(ref value);
+
+    //
+    // Formatting
+    //
 
     /// <summary>Get the string representation of this <see cref="ReadOnlySpan{T}"/> object</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
