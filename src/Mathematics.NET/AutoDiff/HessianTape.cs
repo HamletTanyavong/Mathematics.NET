@@ -331,7 +331,7 @@ public record class HessianTape<T> : ITape<T>
 
     public Variable<Real> Modulo(Real c, Variable<Real> x)
     {
-        _nodes.Add(new(c.Value * Real.Floor(c.Value / x.Value), T.Zero, x._index, _nodes.Count));
+        _nodes.Add(new(c * Real.Floor(c / x.Value), T.Zero, x._index, _nodes.Count));
         return new(_nodes.Count - 1, c % x.Value);
     }
 
