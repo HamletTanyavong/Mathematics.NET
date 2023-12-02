@@ -52,6 +52,11 @@
       "_appFaviconPath": "images/logo/mathematics.net.ico",
       "_disableContribution": true,
       "_enableSearch": true
+    },
+    "sitemap": {
+      "baseUrl": "https://mathematics.hamlettanyavong.com",
+      "priority": 0.5,
+      "changefreq": "weekly"
     }
   }
 }
