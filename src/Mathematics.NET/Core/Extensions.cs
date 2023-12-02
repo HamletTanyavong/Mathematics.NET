@@ -26,12 +26,31 @@
 // </copyright>
 
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Mathematics.NET.Core;
 
 /// <summary>Extension methods for Mathematics.NET</summary>
 public static class Extensions
 {
+    //
+    // Reinterprets
+    //
+
+    /// <summary>Reinterprets a <see cref="Real"/> as a new <see cref="double"/></summary>
+    /// <param name="value">The real number to reinterpret</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="double"/></returns>
+    public static double AsDouble(this Real value) => Unsafe.As<Real, double>(ref value);
+
+    /// <summary>Reinterprets a <see cref="double"/> as a new <see cref="Real"/></summary>
+    /// <param name="value">The double to reinterpret</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Real"/></returns>
+    public static Real AsReal(this double value) => Unsafe.As<double, Real>(ref value);
+
+    //
+    // Rational
+    //
+
     /// <inheritdoc cref="IRational{T, U}.Reduce(T)" />
     public static Rational<T> Reduce<T>(this Rational<T> r)
         where T : IBinaryInteger<T>
