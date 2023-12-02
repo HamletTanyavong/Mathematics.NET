@@ -38,8 +38,8 @@ public sealed class ComplexTests
         Complex input = new(inReal, inImaginary);
 
         var actualResult = Complex.Acos(input);
-        var actualRe = actualResult.Re.Value;
-        var actualIm = actualResult.Im.Value;
+        var actualRe = actualResult.Re.AsDouble();
+        var actualIm = actualResult.Im.AsDouble();
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -52,8 +52,8 @@ public sealed class ComplexTests
         Complex input = new(inReal, inImaginary);
 
         var actualResult = Complex.Asin(input);
-        var actualRe = actualResult.Re.Value;
-        var actualIm = actualResult.Im.Value;
+        var actualRe = actualResult.Re.AsDouble();
+        var actualIm = actualResult.Im.AsDouble();
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -66,8 +66,8 @@ public sealed class ComplexTests
         Complex input = new(inReal, inImaginary);
 
         var actualResult = Complex.Atan(input);
-        var actualRe = actualResult.Re.Value;
-        var actualIm = actualResult.Im.Value;
+        var actualRe = actualResult.Re.AsDouble();
+        var actualIm = actualResult.Im.AsDouble();
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -96,8 +96,8 @@ public sealed class ComplexTests
         Complex divisor = new(divisorRe, divisorIm);
 
         var actualResult = dividend / divisor;
-        var actualRe = actualResult.Re.Value;
-        var actualIm = actualResult.Im.Value;
+        var actualRe = actualResult.Re.AsDouble();
+        var actualIm = actualResult.Im.AsDouble();
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -109,7 +109,7 @@ public sealed class ComplexTests
     {
         Complex z = new(inReal, inImaginary);
 
-        var actual = z.Magnitude.Value;
+        var actual = z.Magnitude.AsDouble();
 
         Assert.AreEqual(expected, actual);
     }
@@ -123,7 +123,7 @@ public sealed class ComplexTests
     {
         Complex z = new(inReal, inImaginary);
 
-        var actual = z.Phase.Value;
+        var actual = z.Phase.AsDouble();
 
         Assert.IsTrue(expectedMin <= actual && actual <= expectedMax);
     }

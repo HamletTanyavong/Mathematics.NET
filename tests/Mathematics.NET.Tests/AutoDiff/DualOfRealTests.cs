@@ -224,7 +224,7 @@ public sealed class DualOfRealTests
         Dual<Real> x = new(right, Real.Zero);
         var u = Real.One / (x.D0 * x.D0 + y.D0 * y.D0);
 
-        var actual = Dual<Real>.CustomOperation(x, y, Real.Atan2, (x, y) => x.Value * u, (x, y) => -y.Value * u).D1;
+        var actual = Dual<Real>.CustomOperation(x, y, Real.Atan2, (x, y) => x.AsDouble() * u, (x, y) => -y.AsDouble() * u).D1;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }

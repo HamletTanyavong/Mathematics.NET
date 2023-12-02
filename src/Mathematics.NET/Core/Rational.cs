@@ -92,7 +92,6 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public T Den => _denominator;
 
     public Real Re => (Real)this;
-    public double Value => (double)this;
 
     //
     // Constants
@@ -742,7 +741,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(num / gcd, den / gcd);
     }
 
-    public static explicit operator Rational<T>(Real x) => (Rational<T>)x.Value;
+    public static explicit operator Rational<T>(Real x) => (Rational<T>)x.AsDouble();
 
     public static explicit operator checked Real(Rational<T> x) => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
 

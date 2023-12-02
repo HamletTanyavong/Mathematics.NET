@@ -28,7 +28,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
@@ -104,7 +103,6 @@ public readonly struct Real(double real)
     //
 
     public Real Re => _value;
-    public double Value => _value;
 
     //
     // Constants
@@ -416,5 +414,5 @@ public readonly struct Real(double real)
     // Implicit operators
     //
 
-    public static implicit operator Real(double x) => new(x);
+    public static implicit operator Real(double x) => x.AsReal();
 }

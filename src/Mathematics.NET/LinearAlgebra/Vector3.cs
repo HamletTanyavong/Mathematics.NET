@@ -216,5 +216,5 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     /// <param name="x">The value to convert</param>
     /// <returns>A vector of type <see cref="System.Numerics.Vector3"/></returns>
     public static System.Numerics.Vector3 CreateSystemVector(Vector3<Real> x)
-        => new((float)x.X1.Value, (float)x.X2.Value, (float)x.X3.Value);
+        => new((float)x.X1.AsDouble(), (float)x.X2.AsDouble(), (float)x.X3.AsDouble());
 }

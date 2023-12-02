@@ -40,11 +40,13 @@ public static class Extensions
     /// <summary>Reinterprets a <see cref="Real"/> as a new <see cref="double"/></summary>
     /// <param name="value">The real number to reinterpret</param>
     /// <returns><paramref name="value"/> reinterpreted as a new <see cref="double"/></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double AsDouble(this Real value) => Unsafe.As<Real, double>(ref value);
 
     /// <summary>Reinterprets a <see cref="double"/> as a new <see cref="Real"/></summary>
     /// <param name="value">The double to reinterpret</param>
     /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Real"/></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Real AsReal(this double value) => Unsafe.As<double, Real>(ref value);
 
     //

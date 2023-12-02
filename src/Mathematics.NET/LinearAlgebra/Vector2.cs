@@ -167,5 +167,5 @@ public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
     /// <param name="x">The value to convert</param>
     /// <returns>A vector of type <see cref="System.Numerics.Vector2"/></returns>
     public static System.Numerics.Vector2 CreateSystemVector(Vector2<Real> x)
-        => new((float)x.X1.Value, (float)x.X2.Value);
+        => new((float)x.X1.AsDouble(), (float)x.X2.AsDouble());
 }

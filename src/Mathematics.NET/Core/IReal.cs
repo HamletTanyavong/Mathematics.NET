@@ -44,9 +44,6 @@ public interface IReal<T>
       IMinMaxValue<T>
     where T : IReal<T>
 {
-    /// <summary>The backing value of the type</summary>
-    double Value { get; }
-
     /// <summary>Compute a quadrant-aware arctangent given two values</summary>
     /// <param name="y">The first value</param>
     /// <param name="x">The second value</param>
