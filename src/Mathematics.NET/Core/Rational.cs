@@ -544,7 +544,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
         checked
         {
-            var n = 0.0;
+            var n = 0;
             while (x != Math.Floor(x))
             {
                 x *= 10.0;
@@ -713,21 +713,24 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static bool TryConvertToChecked<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateChecked(checked(double.CreateChecked(value._numerator) / double.CreateChecked(value._denominator)));
+        value = Rational<T>.Reduce(value);
+        result = checked(U.CreateChecked(value._numerator) / U.CreateChecked(value._denominator));
         return true;
     }
 
     public static bool TryConvertToSaturating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateSaturating(double.CreateSaturating(value._numerator) / double.CreateSaturating(value._denominator));
+        value = Rational<T>.Reduce(value);
+        result = checked(U.CreateSaturating(value._numerator) / U.CreateSaturating(value._denominator));
         return true;
     }
 
     public static bool TryConvertToTruncating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateTruncating(double.CreateTruncating(value._numerator) / double.CreateTruncating(value._denominator));
+        value = Rational<T>.Reduce(value);
+        result = checked(U.CreateTruncating(value._numerator) / U.CreateTruncating(value._denominator));
         return true;
     }
 
