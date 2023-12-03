@@ -91,7 +91,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public T Num => _numerator;
     public T Den => _denominator;
 
-    public Real Re => (Real)this;
+    public Real Re => ToReal(this);
 
     //
     // Constants
@@ -534,9 +534,30 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
-    public static Rational<T> FromDouble(double x) => (Rational<T>)x;
+    // TODO: Find a better implementation
+    public static Rational<T> FromDouble(double x)
+    {
+        var value = x;
+        if (double.IsNaN(value) || double.IsInfinity(value))
+        {
+            return NaN;
+        }
 
-    public static Rational<T> FromReal(Real x) => (Rational<T>)x;
+        var n = 0.0;
+        while (x != double.Floor(value))
+        {
+            x *= 10.0;
+            n++;
+        }
+
+        T num = T.CreateChecked(value);
+        T den = T.CreateChecked(Math.Pow(10.0, n));
+        var gcd = GCD(num, den);
+
+        return new(num / gcd, den / gcd);
+    }
+
+    public static Rational<T> FromReal(Real x) => FromDouble(x.AsDouble());
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T GCD(T p, T q)
@@ -647,7 +668,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     {
         if (Real.TryConvertFromChecked(value, out var intermediateResult))
         {
-            result = (Rational<T>)intermediateResult;
+            result = FromReal(intermediateResult);
             return true;
         }
         else
@@ -662,7 +683,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     {
         if (Real.TryConvertFromSaturating(value, out var intermediateResult))
         {
-            result = (Rational<T>)intermediateResult;
+            result = FromReal(intermediateResult);
             return true;
         }
         else
@@ -677,7 +698,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     {
         if (Real.TryConvertFromTruncating(value, out var intermediateResult))
         {
-            result = (Rational<T>)intermediateResult;
+            result = FromReal(intermediateResult);
             return true;
         }
         else
@@ -713,41 +734,4 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     //
 
     public static implicit operator Rational<T>(T p) => new(p);
-
-    //
-    // Explicit operators
-    //
-
-    // TODO: Find a better implementation
-    public static explicit operator Rational<T>(double x)
-    {
-        var value = x;
-        if (double.IsNaN(value) || double.IsInfinity(value))
-        {
-            return NaN;
-        }
-
-        var n = 0.0;
-        while (x != double.Floor(value))
-        {
-            x *= 10.0;
-            n++;
-        }
-
-        T num = T.CreateChecked(value);
-        T den = T.CreateChecked(Math.Pow(10.0, n));
-        var gcd = GCD(num, den);
-
-        return new(num / gcd, den / gcd);
-    }
-
-    public static explicit operator Rational<T>(Real x) => (Rational<T>)x.AsDouble();
-
-    public static explicit operator checked Real(Rational<T> x) => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
-
-    public static explicit operator Real(Rational<T> x) => ToReal(x);
-
-    public static explicit operator checked double(Rational<T> x) => double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator);
-
-    public static explicit operator double(Rational<T> x) => double.CreateSaturating(x._numerator) / double.CreateSaturating(x._denominator);
 }
