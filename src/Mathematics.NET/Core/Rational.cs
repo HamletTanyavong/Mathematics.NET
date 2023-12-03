@@ -537,24 +537,26 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // TODO: Find a better implementation
     public static Rational<T> FromDouble(double x)
     {
-        var value = x;
-        if (double.IsNaN(value) || double.IsInfinity(value))
+        if (double.IsNaN(x) || double.IsInfinity(x))
         {
             return NaN;
         }
 
-        var n = 0.0;
-        while (x != double.Floor(value))
+        checked
         {
-            x *= 10.0;
-            n++;
+            var n = 0.0;
+            while (x != Math.Floor(x))
+            {
+                x *= 10.0;
+                n++;
+            }
+
+            T num = T.CreateChecked(x);
+            T den = T.CreateChecked(Math.Pow(10.0, n));
+            var gcd = GCD(num, den);
+
+            return new(num / gcd, den / gcd);
         }
-
-        T num = T.CreateChecked(value);
-        T den = T.CreateChecked(Math.Pow(10.0, n));
-        var gcd = GCD(num, den);
-
-        return new(num / gcd, den / gcd);
     }
 
     public static Rational<T> FromReal(Real x) => FromDouble(x.AsDouble());
