@@ -251,13 +251,13 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
 
     public readonly Real Norm()
     {
-        Span<Real> components = [
-            (X1 * T.Conjugate(X1)).Re,
-            (X2 * T.Conjugate(X2)).Re,
-            (X3 * T.Conjugate(X3)).Re,
-            (X4 * T.Conjugate(X4)).Re];
+        Span<double> components = [
+            (X1 * T.Conjugate(X1)).Re.AsDouble(),
+            (X2 * T.Conjugate(X2)).Re.AsDouble(),
+            (X3 * T.Conjugate(X3)).Re.AsDouble(),
+            (X4 * T.Conjugate(X4)).Re.AsDouble()];
 
-        Real max = components[0];
+        var max = components[0];
         for (int i = 1; i < 4; i++)
         {
             if (components[i] > max)
@@ -266,14 +266,14 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
             }
         }
 
-        var partialSum = Real.Zero;
+        var partialSum = 0.0;
         var maxSquared = max * max;
         partialSum += components[0] / maxSquared;
         partialSum += components[1] / maxSquared;
         partialSum += components[2] / maxSquared;
         partialSum += components[3] / maxSquared;
 
-        return max * Real.Sqrt(partialSum);
+        return max * Math.Sqrt(partialSum);
     }
 
     public readonly Vector4<T> Normalize()
