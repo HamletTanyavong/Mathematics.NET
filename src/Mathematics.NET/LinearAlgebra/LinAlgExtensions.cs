@@ -45,9 +45,7 @@ public static class LinAlgExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(this Matrix4x4<T> matrix)
         where T : IComplex<T>
-    {
-        return new Span2D<T>(Unsafe.AsPointer(ref matrix.E11), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
-    }
+        => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
 
     /// <summary>Reinterprets a <see cref="Vector4{Real}"/> as a new <see cref="Vector256{Double}"/></summary>
     /// <param name="value">The vector to reinterpret</param>

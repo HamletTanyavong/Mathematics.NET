@@ -177,6 +177,40 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T> operator *(T c, Vector4<T> vector)
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Multiply(Vector256.Create(c.AsDouble()), vector.AsVector256()).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                c * vector.X1,
+                c * vector.X2,
+                c * vector.X3,
+                c * vector.X4);
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T> operator *(Vector4<T> vector, T c)
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Multiply(vector.AsVector256(), Vector256.Create(c.AsDouble())).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                vector.X1 * c,
+                vector.X2 * c,
+                vector.X3 * c,
+                vector.X4 * c);
+        }
+    }
+
     //
     // Equality
     //
