@@ -44,9 +44,6 @@ public interface IReal<T>
       IMinMaxValue<T>
     where T : IReal<T>
 {
-    /// <summary>The backing value of the type</summary>
-    double Value { get; }
-
     /// <summary>Compute a quadrant-aware arctangent given two values</summary>
     /// <param name="y">The first value</param>
     /// <param name="x">The second value</param>
@@ -58,10 +55,24 @@ public interface IReal<T>
     /// <returns>The smallest integer greater than or equal to the value</returns>
     static abstract T Ceiling(T x);
 
+    /// <summary>Clamp a value to an inclusive range</summary>
+    /// <param name="value">A value</param>
+    /// <param name="min">The lower bound</param>
+    /// <param name="max">The upper bound</param>
+    /// <returns>The clamped value</returns>
+    static abstract T Clamp(T value, T min, T max);
+
     /// <summary>Compute the floor function of a value</summary>
     /// <param name="x">A value</param>
     /// <returns>The largest integer less than or equal to the value</returns>
     static abstract T Floor(T x);
+
+    /// <summary>Perform inverse linear interpolation given two points and a weight</summary>
+    /// <param name="start">The start point</param>
+    /// <param name="end">The end point</param>
+    /// <param name="weight">The weight</param>
+    /// <returns>The inversely interpolated value</returns>
+    static abstract T InverseLerp(T start, T end, T weight);
 
     /// <summary>Check if a value is negative infinity</summary>
     /// <param name="x">The value to check</param>
@@ -72,6 +83,13 @@ public interface IReal<T>
     /// <param name="x">The value to check</param>
     /// <returns><c>true</c> if the value is positive infinity; otherwise, <c>false</c></returns>
     static abstract bool IsPositiveInfinity(T x);
+
+    /// <summary>Linearly interpolate between two points</summary>
+    /// <param name="start">The start point</param>
+    /// <param name="end">The end point</param>
+    /// <param name="weight">The weight</param>
+    /// <returns>The interpolated value</returns>
+    static abstract T Lerp(T start, T end, T weight);
 
     /// <summary>Find which of two numbers is greater than the other</summary>
     /// <remarks>If any of the values are <c>NaN</c>, then <c>NaN</c> is returned</remarks>

@@ -1,4 +1,4 @@
-﻿// <copyright file="IVector.cs" company="Mathematics.NET">
+﻿// <copyright file="IUnaryMinusOperation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,26 +25,14 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Operations;
+namespace Mathematics.NET.Core.Operations;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
-
-/// <summary>Defines support for vectors</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IVector<T, U>
-    : IOneDimensionalArrayRepresentable<T, U>,
-      IAdditionOperation<T, T>,
-      ISubtractionOperation<T, T>,
-      IInnerProductOperation<T, U>
-    where T : IVector<T, U>
-    where U : IComplex<U>
+/// <summary>Defines a mechanism for negating values</summary>
+/// <typeparam name="TInput">The input type</typeparam>
+/// <typeparam name="TResult">The output type</typeparam>
+public interface IUnaryMinusOperation<TInput, TResult>
+    where TInput : IUnaryMinusOperation<TInput, TResult>
 {
-    /// <summary>Compute the $ L^2 $-norm of the vector</summary>
-    /// <returns>The norm</returns>
-    Real Norm();
-
-    /// <summary>Normalize the vector</summary>
-    /// <returns>The normalized vector</returns>
-    T Normalize();
+    static abstract TResult operator -(TInput value);
+    static virtual TResult operator checked -(TInput value) => -value;
 }

@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
@@ -117,48 +118,108 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     // Operators
     //
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<T> operator +(Vector4<T> left, Vector4<T> right)
     {
-        return new(
-            left.X1 + right.X1,
-            left.X2 + right.X2,
-            left.X3 + right.X3,
-            left.X4 + right.X4);
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Add(left.AsVector256(), right.AsVector256()).AsVector4<T>();
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return Vector512.Add(left.AsVector512(), right.AsVector512()).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                left.X1 + right.X1,
+                left.X2 + right.X2,
+                left.X3 + right.X3,
+                left.X4 + right.X4);
+        }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<T> operator -(Vector4<T> left, Vector4<T> right)
     {
-        return new(
-            left.X1 - right.X1,
-            left.X2 - right.X2,
-            left.X3 - right.X3,
-            left.X4 - right.X4);
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Subtract(left.AsVector256(), right.AsVector256()).AsVector4<T>();
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return Vector512.Subtract(left.AsVector512(), right.AsVector512()).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                left.X1 - right.X1,
+                left.X2 - right.X2,
+                left.X3 - right.X3,
+                left.X4 - right.X4);
+        }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<T> operator *(Vector4<T> left, Vector4<T> right)
     {
-        return new(
-            left.X1 * right.X1,
-            left.X2 * right.X2,
-            left.X3 * right.X3,
-            left.X4 * right.X4);
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Multiply(left.AsVector256(), right.AsVector256()).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                left.X1 * right.X1,
+                left.X2 * right.X2,
+                left.X3 * right.X3,
+                left.X4 * right.X4);
+        }
     }
 
     //
     // Equality
     //
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator ==(Vector4<T> left, Vector4<T> right)
-        => left.X1 == right.X1
-        && left.X2 == right.X2
-        && left.X3 == right.X3
-        && left.X4 == right.X4;
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.EqualsAll(left.AsVector256(), right.AsVector256());
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return Vector512.EqualsAll(left.AsVector512(), right.AsVector512());
+        }
+        else
+        {
+            return left.X1 == right.X1
+                && left.X2 == right.X2
+                && left.X3 == right.X3
+                && left.X4 == right.X4;
+        }
+    }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator !=(Vector4<T> left, Vector4<T> right)
-        => left.X1 != right.X1
-        || left.X2 != right.X2
-        || left.X3 != right.X3
-        || left.X4 != right.X4;
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return !Vector256.EqualsAll(left.AsVector256(), right.AsVector256());
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return !Vector512.EqualsAll(left.AsVector512(), right.AsVector512());
+        }
+        else
+        {
+            return left.X1 != right.X1
+                || left.X2 != right.X2
+                || left.X3 != right.X3
+                || left.X4 != right.X4;
+        }
+    }
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is Vector4<T> other && Equals(other);
 
@@ -186,17 +247,26 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     //
 
     public static T InnerProduct(Vector4<T> left, Vector4<T> right)
-        => T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3 + T.Conjugate(left.X4) * right.X4;
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Dot(left.AsVector256(), right.AsVector256());
+        }
+        else
+        {
+            return T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3 + T.Conjugate(left.X4) * right.X4;
+        }
+    }
 
     public readonly Real Norm()
     {
-        Span<Real> components = [
-            (X1 * T.Conjugate(X1)).Re,
-            (X2 * T.Conjugate(X2)).Re,
-            (X3 * T.Conjugate(X3)).Re,
-            (X4 * T.Conjugate(X4)).Re];
+        Span<double> components = [
+            (X1 * T.Conjugate(X1)).Re.AsDouble(),
+            (X2 * T.Conjugate(X2)).Re.AsDouble(),
+            (X3 * T.Conjugate(X3)).Re.AsDouble(),
+            (X4 * T.Conjugate(X4)).Re.AsDouble()];
 
-        Real max = components[0];
+        var max = components[0];
         for (int i = 1; i < 4; i++)
         {
             if (components[i] > max)
@@ -205,19 +275,37 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
             }
         }
 
-        var partialSum = Real.Zero;
+        var partialSum = 0.0;
         var maxSquared = max * max;
         partialSum += components[0] / maxSquared;
         partialSum += components[1] / maxSquared;
         partialSum += components[2] / maxSquared;
         partialSum += components[3] / maxSquared;
 
-        return max * Real.Sqrt(partialSum);
+        return max * Math.Sqrt(partialSum);
     }
 
     public readonly Vector4<T> Normalize()
     {
         var norm = Norm();
-        return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
+        if (norm == T.Zero)
+        {
+            throw new DivideByZeroException("Norm must be greater than zero");
+        }
+
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Divide(this.AsVector256(), Vector256.Create(norm.AsDouble())).AsVector4<T>();
+        }
+        else
+        {
+            return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
+        }
     }
+
+    /// <summary>Convert a value of type <see cref="Vector4{T}"/> to one of type <see cref="System.Numerics.Vector4"/></summary>
+    /// <param name="x">The value to convert</param>
+    /// <returns>A vector of type <see cref="System.Numerics.Vector4"/></returns>
+    public static System.Numerics.Vector4 CreateSystemVector(Vector4<Real> x)
+        => new((float)x.X1.AsDouble(), (float)x.X2.AsDouble(), (float)x.X3.AsDouble(), (float)x.X4.AsDouble());
 }

@@ -129,14 +129,6 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
             left.X3 - right.X3);
     }
 
-    public static Vector3<T> operator *(Vector3<T> left, Vector3<T> right)
-    {
-        return new(
-            left.X1 * right.X1,
-            left.X2 * right.X2,
-            left.X3 * right.X3);
-    }
-
     //
     // Equality
     //
@@ -219,4 +211,10 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
         var norm = Norm();
         return new(X1 / norm, X2 / norm, X3 / norm);
     }
+
+    /// <summary>Convert a value of type <see cref="Vector3{T}"/> to one of type <see cref="System.Numerics.Vector3"/></summary>
+    /// <param name="x">The value to convert</param>
+    /// <returns>A vector of type <see cref="System.Numerics.Vector3"/></returns>
+    public static System.Numerics.Vector3 CreateSystemVector(Vector3<Real> x)
+        => new((float)x.X1.AsDouble(), (float)x.X2.AsDouble(), (float)x.X3.AsDouble());
 }

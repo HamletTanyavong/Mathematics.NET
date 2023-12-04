@@ -40,7 +40,8 @@ public interface IComplex<T>
     : IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
       IMultiplicationOperation<T, T>,
-      INegationOperation<T, T>,
+      IUnaryMinusOperation<T, T>,
+      IUnaryPlusOperation<T, T>,
       ISubtractionOperation<T, T>,
       IEqualityRelation<T, bool>,
       IEquatable<T>,
@@ -270,7 +271,7 @@ public interface IComplex<T>
     /// <exception cref="ArgumentException"><paramref name="style" /> is not a supported</exception>
     static abstract bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out T result);
 
-    /// <summary>Convert a value of type <see cref="IFloatingPointIeee754{TSelf}"/> to one of type <typeparamref name="T"/></summary>
+    /// <summary>Convert a value of type <see cref="double"/> to one of type <typeparamref name="T"/></summary>
     /// <param name="x">The value to convert</param>
     static virtual implicit operator T(double x) => T.FromDouble(x);
 

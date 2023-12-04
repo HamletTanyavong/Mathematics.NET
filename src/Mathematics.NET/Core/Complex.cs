@@ -72,8 +72,8 @@ public readonly struct Complex(Real real, Real imaginary)
     public Real Re => _real;
     public Real Im => _imaginary;
 
-    public Real Magnitude => Hypot(_real.Value, _imaginary.Value);
-    public Real Phase => Math.Atan2(_imaginary.Value, _real.Value);
+    public Real Magnitude => Hypot(_real.AsDouble(), _imaginary.AsDouble());
+    public Real Phase => Math.Atan2(_imaginary.AsDouble(), _real.AsDouble());
 
     //
     // Constants
@@ -87,6 +87,8 @@ public readonly struct Complex(Real real, Real imaginary)
     // Operators
     //
 
+    public static Complex operator +(Complex z) => z;
+
     public static Complex operator -(Complex z) => new(-z._real, -z._imaginary);
 
     public static Complex operator +(Complex z, Complex w) => new(z._real + w._real, z._imaginary + w._imaginary);
@@ -99,10 +101,10 @@ public readonly struct Complex(Real real, Real imaginary)
     // From Michael Baudin and Robert L. Smith
     public static Complex operator /(Complex z, Complex w)
     {
-        var a = z._real.Value;
-        var b = z._imaginary.Value;
-        var c = w._real.Value;
-        var d = w._imaginary.Value;
+        var a = z._real.AsDouble();
+        var b = z._imaginary.AsDouble();
+        var c = w._real.AsDouble();
+        var d = w._imaginary.AsDouble();
 
         Max(Math.Abs(a), Math.Abs(b), out var maxAB);
         Max(Math.Abs(c), Math.Abs(d), out var maxCD);
@@ -371,14 +373,14 @@ public readonly struct Complex(Real real, Real imaginary)
     // Methods
     //
 
-    public static Complex Abs(Complex z) => Hypot(z._real.Value, z._imaginary.Value);
+    public static Complex Abs(Complex z) => Hypot(z._real.AsDouble(), z._imaginary.AsDouble());
 
     public static Complex Conjugate(Complex z) => new(z._real, -z._imaginary);
 
     public static Complex FromDouble(double x) => new(x);
 
     public static Complex FromPolarForm(Real magnitude, Real phase)
-        => new(magnitude * Math.Cos(phase.Value), magnitude * Math.Sin(phase.Value));
+        => new(magnitude * Math.Cos(phase.AsDouble()), magnitude * Math.Sin(phase.AsDouble()));
 
     public static Complex FromReal(Real x) => new(x);
 
@@ -432,8 +434,8 @@ public readonly struct Complex(Real real, Real imaginary)
 
         var scale = 1.0;
 
-        var re = z._real.Value;
-        var im = z._imaginary.Value;
+        var re = z._real.AsDouble();
+        var im = z._imaginary.AsDouble();
 
         Max(Math.Abs(re), Math.Abs(im), out var max);
 
@@ -496,21 +498,21 @@ public readonly struct Complex(Real real, Real imaginary)
             throw new OverflowException();
         }
 
-        result = U.CreateChecked(value._real.Value);
+        result = U.CreateChecked(value._real.AsDouble());
         return true;
     }
 
     public static bool TryConvertToSaturating<U>(Complex value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateSaturating(value._real.Value);
+        result = U.CreateSaturating(value._real.AsDouble());
         return true;
     }
 
     public static bool TryConvertToTruncating<U>(Complex value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateTruncating(value._real.Value);
+        result = U.CreateTruncating(value._real.AsDouble());
         return true;
     }
 
@@ -548,7 +550,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     // Logarithmic functions
 
-    public static Complex Ln(Complex z) => new(Real.Ln(Hypot(z._real.Value, z._imaginary.Value)), Real.Atan2(z._imaginary, z._real));
+    public static Complex Ln(Complex z) => new(Real.Ln(Hypot(z._real.AsDouble(), z._imaginary.AsDouble())), Real.Atan2(z._imaginary, z._real));
 
     public static Complex Log(Complex z, Complex b) => Ln(z) / Ln(b);
 
@@ -572,7 +574,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static Complex Acos(Complex z)
     {
-        AsinInternal(Math.Abs(z._real.Value), Math.Abs(z._imaginary.Value), out double b, out double bPrime, out double v);
+        AsinInternal(Math.Abs(z._real.AsDouble()), Math.Abs(z._imaginary.AsDouble()), out double b, out double bPrime, out double v);
 
         double u;
         if (bPrime < 0.0)
@@ -598,7 +600,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static Complex Asin(Complex z)
     {
-        AsinInternal(Math.Abs(z._real.Value), Math.Abs(z._imaginary.Value), out double b, out double bPrime, out double v);
+        AsinInternal(Math.Abs(z._real.AsDouble()), Math.Abs(z._imaginary.AsDouble()), out double b, out double bPrime, out double v);
 
         double u;
         if (bPrime < 0.0)
@@ -755,7 +757,7 @@ public readonly struct Complex(Real real, Real imaginary)
     }
 
     //
-    // Implicit Operators
+    // Implicit operators
     //
 
     public static implicit operator Complex(double x) => new(x);

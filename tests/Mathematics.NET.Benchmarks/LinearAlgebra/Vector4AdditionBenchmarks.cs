@@ -1,4 +1,4 @@
-﻿// <copyright file="IVector.cs" company="Mathematics.NET">
+﻿// <copyright file="Vector4AdditionBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,26 +25,30 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Operations;
+using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 
-/// <summary>Defines support for vectors</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IVector<T, U>
-    : IOneDimensionalArrayRepresentable<T, U>,
-      IAdditionOperation<T, T>,
-      ISubtractionOperation<T, T>,
-      IInnerProductOperation<T, U>
-    where T : IVector<T, U>
-    where U : IComplex<U>
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
+public class Vector4AdditionBenchmarks
 {
-    /// <summary>Compute the $ L^2 $-norm of the vector</summary>
-    /// <returns>The norm</returns>
-    Real Norm();
+    public Vector4<Real> U { get; set; }
 
-    /// <summary>Normalize the vector</summary>
-    /// <returns>The normalized vector</returns>
-    T Normalize();
+    public Vector4<Real> V { get; set; }
+
+    [GlobalSetup]
+    public void GlobalSetup()
+    {
+        U = new(1, 2, 3, 4);
+        V = new(2, 4, 6, 8);
+    }
+
+    [Benchmark(Baseline = true)]
+    public Vector4<Real> AddNaive() => Vector4Implmentations.AddNaive(U, V);
+
+    [Benchmark]
+    public Vector4<Real> AddSimd() => Vector4Implmentations.AddSimd(U, V);
 }

@@ -103,7 +103,6 @@ public readonly struct Real(double real)
     //
 
     public Real Re => _value;
-    public double Value => _value;
 
     //
     // Constants
@@ -137,6 +136,7 @@ public readonly struct Real(double real)
     // Operators
     //
 
+    public static Real operator +(Real value) => value;
     public static Real operator -(Real value) => -value._value;
     public static Real operator --(Real value) => value._value - One;
     public static Real operator ++(Real value) => value._value + One;
@@ -259,6 +259,8 @@ public readonly struct Real(double real)
 
     public static Real Ceiling(Real x) => Math.Ceiling(x._value);
 
+    public static Real Clamp(Real value, Real min, Real max) => Math.Clamp(value._value, min._value, max._value);
+
     public static Real Conjugate(Real x) => x;
 
     public static Real Floor(Real x) => Math.Floor(x._value);
@@ -268,6 +270,8 @@ public readonly struct Real(double real)
     public static Real FromReal(Real x) => x;
 
     public static Real Hypot(Real x, Real y) => double.Hypot(x._value, y._value);
+
+    public static Real InverseLerp(Real start, Real end, Real weight) => (One - weight) * end + weight * start;
 
     public static bool IsFinite(Real x) => double.IsFinite(x._value);
 
@@ -281,17 +285,19 @@ public readonly struct Real(double real)
 
     public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
+    public static Real Lerp(Real start, Real end, Real weight) => (One - weight) * start + weight * end;
+
     public static Real Max(Real x, Real y) => Math.Max(x._value, y._value);
 
     public static Real Min(Real x, Real y) => Math.Min(x._value, y._value);
 
     public static Real Reciprocate(Real x)
     {
-        if (x._value == 0.0)
+        if (x == Zero)
         {
             return PositiveInfinity;
         }
-        return 1.0 / x;
+        return One / x;
     }
 
     public static int Sign(Real x) => Math.Sign(x._value);
@@ -408,5 +414,13 @@ public readonly struct Real(double real)
     // Implicit operators
     //
 
-    public static implicit operator Real(double x) => new(x);
+    public static implicit operator Real(double x) => x.AsReal();
+
+    //
+    // Explicit operators
+    //
+
+    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="long"/></summary>
+    /// <param name="x">The value to convert</param>
+    public static explicit operator long(Real x) => (long)x.AsDouble();
 }

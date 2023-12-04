@@ -1,4 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="Mathematics.NET">
+﻿// <copyright file="LinearAlgebraImplementationExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,36 +25,31 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
+using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Core;
+namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 
-/// <summary>Extension methods for Mathematics.NET</summary>
-public static class Extensions
+internal static class LinearAlgebraImplementationExtensions
 {
-    //
-    // Reinterprets
-    //
-
-    /// <summary>Reinterprets a <see cref="Real"/> as a new <see cref="double"/></summary>
-    /// <param name="value">The real number to reinterpret</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="double"/></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double AsDouble(this Real value) => Unsafe.As<Real, double>(ref value);
+    internal static Vector256<double> AsVector256<T>(this Vector4<T> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector4<T>, Vector256<double>>(ref value);
 
-    /// <summary>Reinterprets a <see cref="double"/> as a new <see cref="Real"/></summary>
-    /// <param name="value">The double to reinterpret</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Real"/></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Real AsReal(this double value) => Unsafe.As<double, Real>(ref value);
+    internal static Vector4<T> AsVector4<T>(this Vector256<double> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector256<double>, Vector4<T>>(ref value);
 
-    //
-    // Rational
-    //
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector512<double> AsVector512<T>(this Vector4<T> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector4<T>, Vector512<double>>(ref value);
 
-    /// <inheritdoc cref="IRational{T, U}.Reduce(T)" />
-    public static Rational<T> Reduce<T>(this Rational<T> value)
-        where T : IBinaryInteger<T>
-        => Rational<T>.Reduce(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector4<T> AsVector4<T>(this Vector512<double> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector512<double>, Vector4<T>>(ref value);
 }

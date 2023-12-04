@@ -1,4 +1,4 @@
-﻿// <copyright file="INegationOperation.cs" company="Mathematics.NET">
+﻿// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,14 +25,24 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Core.Operations;
+using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+using Mathematics.NET.LinearAlgebra;
 
-/// <summary>Defines a mechanism for negating values</summary>
-/// <typeparam name="TInput">The input type</typeparam>
-/// <typeparam name="TResult">The output type</typeparam>
-public interface INegationOperation<TInput, TResult>
-    where TInput : INegationOperation<TInput, TResult>
+namespace Mathematics.NET.Benchmarks.LinearAlgebra;
+
+public class Vector4NormBenchmarks
 {
-    static abstract TResult operator -(TInput value);
-    static virtual TResult operator checked -(TInput value) => -value;
+    public Vector4<Real> U { get; set; }
+
+    [GlobalSetup]
+    public void GlobalSetup()
+    {
+        U = new(1, 2, 3, 4);
+    }
+
+    [Benchmark(Baseline = true)]
+    public Real NormNaive() => U.NormNaive();
+
+    [Benchmark]
+    public Real NormSimd() => U.NormSimd();
 }

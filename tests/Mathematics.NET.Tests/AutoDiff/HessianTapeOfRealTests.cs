@@ -340,10 +340,10 @@ public sealed class HessianTapeOfRealTests
             y,
             x,
             Real.Atan2,
-            (y, x) => x.Value * u,
+            (y, x) => x.AsDouble() * u,
             (y, x) => Real.Zero, // Not of interest
             (y, x) => Real.Zero, // Not of interest
-            (y, x) => -y.Value * u,
+            (y, x) => -y.AsDouble() * u,
             (y, x) => Real.Zero); // Not of interest
 
         Real[] expected = [expectedLeft, expectedRight];
@@ -370,10 +370,10 @@ public sealed class HessianTapeOfRealTests
             y,
             x,
             Real.Atan2,
-            (y, x) => x.Value * a,
+            (y, x) => x.AsDouble() * a,
             (y, x) => dfyy,
             (y, x) => (u - v) * b,
-            (y, x) => -y.Value * a,
+            (y, x) => -y.AsDouble() * a,
             (y, x) => -dfyy);
 
         Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };

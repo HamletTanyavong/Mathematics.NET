@@ -64,12 +64,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     /// <param name="q">The denominator</param>
     public Rational(T p, T q)
     {
-        if (q == T.Zero)
-        {
-            _numerator = T.Zero;
-            _denominator = T.One;
-        }
-        else
+        if (q != T.Zero)
         {
             if (q > T.Zero)
             {
@@ -82,6 +77,22 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
                 _denominator = -q;
             }
         }
+        else
+        {
+            if (p == T.Zero)
+            {
+                _numerator = p;
+            }
+            else if (p > T.Zero)
+            {
+                _numerator = T.One;
+            }
+            else
+            {
+                _numerator = -T.One;
+            }
+            _denominator = q;
+        }
     }
 
     //
@@ -91,8 +102,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public T Num => _numerator;
     public T Den => _denominator;
 
-    public Real Re => (Real)this;
-    public double Value => (double)this;
+    public Real Re => ToReal(this);
 
     //
     // Constants
@@ -107,6 +117,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     //
     // Operators
     //
+
+    public static Rational<T> operator +(Rational<T> x) => x;
 
     public static Rational<T> operator -(Rational<T> x) => x + One;
 
@@ -509,13 +521,56 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return remainder == T.Zero ? quotient : quotient + T.One;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Rational<T> Clamp(Rational<T> value, Rational<T> min, Rational<T> max)
+    {
+        if (min > max)
+        {
+            throw new ArgumentException("Minimum value must be less than or equal to maximum value");
+        }
+
+        if (value < min)
+        {
+            return min;
+        }
+        else if (value > max)
+        {
+            return max;
+        }
+
+        return value;
+    }
+
     public static Rational<T> Conjugate(Rational<T> x) => x;
 
     public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
-    public static Rational<T> FromDouble(double x) => (Rational<T>)x;
+    // TODO: Find a better implementation
+    public static Rational<T> FromDouble(double x)
+    {
+        if (double.IsNaN(x) || double.IsInfinity(x))
+        {
+            return NaN;
+        }
 
-    public static Rational<T> FromReal(Real x) => (Rational<T>)x;
+        checked
+        {
+            var n = 0;
+            while (x != Math.Floor(x))
+            {
+                x *= 10.0;
+                n++;
+            }
+
+            T num = T.CreateChecked(x);
+            T den = T.CreateChecked(Math.Pow(10.0, n));
+            var gcd = GCD(num, den);
+
+            return new(num / gcd, den / gcd);
+        }
+    }
+
+    public static Rational<T> FromReal(Real x) => FromDouble(x.AsDouble());
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T GCD(T p, T q)
@@ -535,6 +590,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
         return p | q;
     }
+
+    public static Rational<T> InverseLerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * end + weight * start;
 
     public static bool IsFinite(Rational<T> x) => !T.IsZero(x._denominator);
 
@@ -568,6 +625,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
         return holdP / (p | q) * holdQ;
     }
+
+    public static Rational<T> Lerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * start + weight * end;
 
     // TODO: Find a better implementation for Max and Min
     public static Rational<T> Max(Rational<T> x, Rational<T> y)
@@ -622,7 +681,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     {
         if (Real.TryConvertFromChecked(value, out var intermediateResult))
         {
-            result = (Rational<T>)intermediateResult;
+            result = FromReal(intermediateResult);
             return true;
         }
         else
@@ -632,12 +691,52 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
+    /// <summary>Try to convert a <see cref="Real"/> into a <see cref="Rational{T}"/> of <see cref="long"/> to within a certain <paramref name="tolerance"/> and with a max denominator of <paramref name="maxDenominator"/>.</summary>
+    /// <param name="value">The value to convert</param>
+    /// <param name="tolerance">A tolerance</param>
+    /// <param name="maxDenominator">The max denominator</param>
+    /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/></param>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/></returns>
+    public static bool TryConvertFromReal(Real value, Real tolerance, long maxDenominator, out Rational<long> result)
+    {
+        if (tolerance < Precision.DblEpsilonVariant || Real.IsNaN(value) || Real.IsInfinity(value))
+        {
+            result = Rational<long>.NaN;
+            return false;
+        }
+
+        var num = 0L;
+        var den = 1L;
+
+        var quotient = (long)Real.Floor(value);
+        var fractional = value - quotient;
+
+        while (Real.Abs((Real)num / den - fractional) > tolerance)
+        {
+            if (den > maxDenominator)
+            {
+                result = Rational<long>.NaN;
+                return false;
+            }
+            if (num == den)
+            {
+                num = 0L;
+                den++;
+            }
+            num++;
+        }
+
+        // There is no need to reduce our fraction since if it were simpler, it would have been returned already.
+        result = new(num + quotient * den, den);
+        return true;
+    }
+
     public static bool TryConvertFromSaturating<U>(U value, out Rational<T> result)
         where U : INumberBase<U>
     {
         if (Real.TryConvertFromSaturating(value, out var intermediateResult))
         {
-            result = (Rational<T>)intermediateResult;
+            result = FromReal(intermediateResult);
             return true;
         }
         else
@@ -652,7 +751,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     {
         if (Real.TryConvertFromTruncating(value, out var intermediateResult))
         {
-            result = (Rational<T>)intermediateResult;
+            result = FromReal(intermediateResult);
             return true;
         }
         else
@@ -665,21 +764,24 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static bool TryConvertToChecked<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateChecked(checked(double.CreateChecked(value._numerator) / double.CreateChecked(value._denominator)));
+        value = Rational<T>.Reduce(value);
+        result = checked(U.CreateChecked(value._numerator) / U.CreateChecked(value._denominator));
         return true;
     }
 
     public static bool TryConvertToSaturating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateSaturating(double.CreateSaturating(value._numerator) / double.CreateSaturating(value._denominator));
+        value = Rational<T>.Reduce(value);
+        result = checked(U.CreateSaturating(value._numerator) / U.CreateSaturating(value._denominator));
         return true;
     }
 
     public static bool TryConvertToTruncating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>
     {
-        result = U.CreateTruncating(double.CreateTruncating(value._numerator) / double.CreateTruncating(value._denominator));
+        value = Rational<T>.Reduce(value);
+        result = checked(U.CreateTruncating(value._numerator) / U.CreateTruncating(value._denominator));
         return true;
     }
 
@@ -688,41 +790,4 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     //
 
     public static implicit operator Rational<T>(T p) => new(p);
-
-    //
-    // Explicit operators
-    //
-
-    // TODO: Find a better implementation
-    public static explicit operator Rational<T>(double x)
-    {
-        var value = x;
-        if (double.IsNaN(value) || double.IsInfinity(value))
-        {
-            return NaN;
-        }
-
-        var n = 0.0;
-        while (x != double.Floor(value))
-        {
-            x *= 10.0;
-            n++;
-        }
-
-        T num = T.CreateChecked(value);
-        T den = T.CreateChecked(Math.Pow(10.0, n));
-        var gcd = GCD(num, den);
-
-        return new(num / gcd, den / gcd);
-    }
-
-    public static explicit operator Rational<T>(Real x) => (Rational<T>)x.Value;
-
-    public static explicit operator checked Real(Rational<T> x) => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
-
-    public static explicit operator Real(Rational<T> x) => ToReal(x);
-
-    public static explicit operator checked double(Rational<T> x) => double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator);
-
-    public static explicit operator double(Rational<T> x) => double.CreateSaturating(x._numerator) / double.CreateSaturating(x._denominator);
 }

@@ -206,7 +206,7 @@ public sealed class GradientTapeOfRealTests
         var y = _tape.CreateVariable(left);
         var x = _tape.CreateVariable(right);
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-        _ = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x.Value * u, (y, x) => -y.Value * u);
+        _ = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x.AsDouble() * u, (y, x) => -y.AsDouble() * u);
         _tape.ReverseAccumulation(out var actual);
 
         Real[] expected = [expectedLeft, expectedRight];
