@@ -415,4 +415,12 @@ public readonly struct Real(double real)
     //
 
     public static implicit operator Real(double x) => x.AsReal();
+
+    //
+    // Explicit operators
+    //
+
+    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="long"/></summary>
+    /// <param name="x">The value to convert</param>
+    public static explicit operator long(Real x) => (long)x.AsDouble();
 }
