@@ -29,6 +29,4 @@ namespace Mathematics.NET.Core.Attributes;
 
 /// <summary>Indicates that a method represents an equation</summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public sealed class EquationAttribute : Attribute
-{
-}
+public sealed class EquationAttribute : Attribute;
