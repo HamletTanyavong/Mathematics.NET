@@ -160,21 +160,66 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T> operator *(Vector4<T> left, Vector4<T> right)
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Multiply(left.AsVector256(), right.AsVector256()).AsVector4<T>();
+        }
+        else
+        {
+            return new(
+                left.X1 * right.X1,
+                left.X2 * right.X2,
+                left.X3 * right.X3,
+                left.X4 * right.X4);
+        }
+    }
+
     //
     // Equality
     //
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator ==(Vector4<T> left, Vector4<T> right)
-        => left.X1 == right.X1
-        && left.X2 == right.X2
-        && left.X3 == right.X3
-        && left.X4 == right.X4;
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.EqualsAll(left.AsVector256(), right.AsVector256());
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return Vector512.EqualsAll(left.AsVector512(), right.AsVector512());
+        }
+        else
+        {
+            return left.X1 == right.X1
+                && left.X2 == right.X2
+                && left.X3 == right.X3
+                && left.X4 == right.X4;
+        }
+    }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool operator !=(Vector4<T> left, Vector4<T> right)
-        => left.X1 != right.X1
-        || left.X2 != right.X2
-        || left.X3 != right.X3
-        || left.X4 != right.X4;
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return !Vector256.EqualsAll(left.AsVector256(), right.AsVector256());
+        }
+        else if (typeof(T) == typeof(Complex))
+        {
+            return !Vector512.EqualsAll(left.AsVector512(), right.AsVector512());
+        }
+        else
+        {
+            return left.X1 != right.X1
+                || left.X2 != right.X2
+                || left.X3 != right.X3
+                || left.X4 != right.X4;
+        }
+    }
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is Vector4<T> other && Equals(other);
 
@@ -234,7 +279,19 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     public readonly Vector4<T> Normalize()
     {
         var norm = Norm();
-        return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
+        if (norm == T.Zero)
+        {
+            throw new DivideByZeroException("Norm must be greater than zero");
+        }
+
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Divide(this.AsVector256(), Vector256.Create(norm.AsDouble())).AsVector4<T>();
+        }
+        else
+        {
+            return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
+        }
     }
 
     /// <summary>Convert a value of type <see cref="Vector4{T}"/> to one of type <see cref="System.Numerics.Vector4"/></summary>
