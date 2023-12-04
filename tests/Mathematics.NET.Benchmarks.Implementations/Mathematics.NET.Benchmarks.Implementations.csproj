@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Mathematics.NET\Mathematics.NET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Mathematics.NET.Core" />
+  </ItemGroup>
+
+</Project>
