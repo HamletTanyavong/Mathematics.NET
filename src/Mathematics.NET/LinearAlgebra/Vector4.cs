@@ -247,7 +247,16 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     //
 
     public static T InnerProduct(Vector4<T> left, Vector4<T> right)
-        => T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3 + T.Conjugate(left.X4) * right.X4;
+    {
+        if (typeof(T) == typeof(Real))
+        {
+            return Vector256.Dot(left.AsVector256(), right.AsVector256());
+        }
+        else
+        {
+            return T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3 + T.Conjugate(left.X4) * right.X4;
+        }
+    }
 
     public readonly Real Norm()
     {
