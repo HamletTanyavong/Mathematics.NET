@@ -125,4 +125,55 @@ public static class Vector4Implmentations
                 left.X4 * right.X4);
         }
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Real NormNaive<T>(this Vector4<T> vector)
+        where T : IComplex<T>
+    {
+        Span<double> components = [
+            (vector.X1 * T.Conjugate(vector.X1)).Re.AsDouble(),
+            (vector.X2 * T.Conjugate(vector.X2)).Re.AsDouble(),
+            (vector.X3 * T.Conjugate(vector.X3)).Re.AsDouble(),
+            (vector.X4 * T.Conjugate(vector.X4)).Re.AsDouble()];
+
+        var max = components[0];
+        for (int i = 1; i < 4; i++)
+        {
+            if (components[i] > max)
+            {
+                max = components[i];
+            }
+        }
+
+        var partialSum = 0.0;
+        var maxSquared = max * max;
+        partialSum += components[0] / maxSquared;
+        partialSum += components[1] / maxSquared;
+        partialSum += components[2] / maxSquared;
+        partialSum += components[3] / maxSquared;
+
+        return max * Math.Sqrt(partialSum);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Real NormSimd<T>(this Vector4<T> vector)
+        where T : IComplex<T>
+    {
+        var vec = Vector256<double>.Zero
+            .WithElement(0, (vector.X1 * T.Conjugate(vector.X1)).Re.AsDouble())
+            .WithElement(1, (vector.X2 * T.Conjugate(vector.X2)).Re.AsDouble())
+            .WithElement(2, (vector.X3 * T.Conjugate(vector.X3)).Re.AsDouble())
+            .WithElement(3, (vector.X4 * T.Conjugate(vector.X4)).Re.AsDouble());
+
+        var max = vec[0];
+        for (int i = 1; i < 4; i++)
+        {
+            if (vec[i] > max)
+            {
+                max = vec[i];
+            }
+        }
+
+        return max * Real.Sqrt(Vector256.Sum(Vector256.Divide(vec, max * max)));
+    }
 }
