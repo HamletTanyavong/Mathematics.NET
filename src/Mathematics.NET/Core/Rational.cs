@@ -580,7 +580,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return p | q;
     }
 
-    public static Rational<T> InverseLerp(Rational<T> start, Rational<T> end, Rational<T> weight) => end - (end - start) * weight;
+    public static Rational<T> InverseLerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * end + weight * start;
 
     public static bool IsFinite(Rational<T> x) => !T.IsZero(x._denominator);
 
@@ -615,7 +615,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return holdP / (p | q) * holdQ;
     }
 
-    public static Rational<T> Lerp(Rational<T> start, Rational<T> end, Rational<T> weight) => start + (end - start) * weight;
+    public static Rational<T> Lerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * start + weight * end;
 
     // TODO: Find a better implementation for Max and Min
     public static Rational<T> Max(Rational<T> x, Rational<T> y)
