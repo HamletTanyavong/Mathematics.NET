@@ -691,6 +691,46 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
+    /// <summary>Try to convert a <see cref="Real"/> into a <see cref="Rational{T}"/> of <see cref="long"/> to within a certain <paramref name="tolerance"/> and with a max denominator of <paramref name="maxDenominator"/>.</summary>
+    /// <param name="value">The value to convert</param>
+    /// <param name="tolerance">A tolerance</param>
+    /// <param name="maxDenominator">The max denominator</param>
+    /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/></param>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/></returns>
+    public static bool TryConvertFromReal(Real value, Real tolerance, long maxDenominator, out Rational<long> result)
+    {
+        if (tolerance < Precision.DblEpsilonVariant || Real.IsNaN(value) || Real.IsInfinity(value))
+        {
+            result = Rational<long>.NaN;
+            return false;
+        }
+
+        var num = 0L;
+        var den = 1L;
+
+        var quotient = (long)Real.Floor(value);
+        var fractional = value - quotient;
+
+        while (Real.Abs((Real)num / den - fractional) > tolerance)
+        {
+            if (den > maxDenominator)
+            {
+                result = Rational<long>.NaN;
+                return false;
+            }
+            if (num == den)
+            {
+                num = 0L;
+                den++;
+            }
+            num++;
+        }
+
+        // There is no need to reduce our fraction since if it were simpler, it would have been returned already.
+        result = new(num + quotient * den, den);
+        return true;
+    }
+
     public static bool TryConvertFromSaturating<U>(U value, out Rational<T> result)
         where U : INumberBase<U>
     {
