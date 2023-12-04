@@ -35,8 +35,8 @@ internal static class LinearAlgebraImplementationExtensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector256<double> AsVector256<T>(this Vector4<T> value)
-    where T : IComplex<T>
-    => Unsafe.As<Vector4<T>, Vector256<double>>(ref value);
+        where T : IComplex<T>
+        => Unsafe.As<Vector4<T>, Vector256<double>>(ref value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector4<T> AsVector4<T>(this Vector256<double> value)
