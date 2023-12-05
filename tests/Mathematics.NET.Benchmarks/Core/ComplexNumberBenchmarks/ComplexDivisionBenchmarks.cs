@@ -28,6 +28,8 @@
 namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 
 [MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class ComplexDivisionBenchmarks
 {
     public Complex Z { get; set; }

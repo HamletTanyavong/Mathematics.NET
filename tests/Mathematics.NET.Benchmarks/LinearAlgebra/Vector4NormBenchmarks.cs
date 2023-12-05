@@ -30,6 +30,9 @@ using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class Vector4NormBenchmarks
 {
     public Vector4<Real> U { get; set; }

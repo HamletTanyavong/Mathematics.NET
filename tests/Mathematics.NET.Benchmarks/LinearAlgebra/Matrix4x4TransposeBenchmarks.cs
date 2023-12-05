@@ -30,6 +30,9 @@ using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class Matrix4x4TransposeBenchmarks
 {
     public Matrix4x4<Real> A { get; set; }
