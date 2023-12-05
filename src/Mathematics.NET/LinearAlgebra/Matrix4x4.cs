@@ -176,6 +176,30 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
+    public static Matrix4x4<T> operator *(T c, Matrix4x4<T> matrix)
+    {
+        Unsafe.SkipInit(out Matrix4x4<T> result);
+
+        result.X1 = c * matrix.X1;
+        result.X2 = c * matrix.X2;
+        result.X3 = c * matrix.X3;
+        result.X4 = c * matrix.X4;
+
+        return result;
+    }
+
+    public static Matrix4x4<T> operator *(Matrix4x4<T> matrix, T c)
+    {
+        Unsafe.SkipInit(out Matrix4x4<T> result);
+
+        result.X1 = matrix.X1 * c;
+        result.X2 = matrix.X2 * c;
+        result.X3 = matrix.X3 * c;
+        result.X4 = matrix.X4 * c;
+
+        return result;
+    }
+
     //
     // Equality
     //
