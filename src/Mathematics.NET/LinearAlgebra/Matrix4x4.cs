@@ -28,6 +28,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -342,6 +344,29 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     public readonly Matrix4x4<T> Transpose()
     {
         Unsafe.SkipInit(out Matrix4x4<T> result);
+
+        if (typeof(T) == typeof(Real))
+        {
+            if (Avx.IsSupported)
+            {
+                var x1 = X1.AsVector256();
+                var x2 = X2.AsVector256();
+                var x3 = X3.AsVector256();
+                var x4 = X4.AsVector256();
+
+                var l12 = Avx.UnpackLow(x1, x2);
+                var l34 = Avx.UnpackLow(x3, x4);
+                var u12 = Avx.UnpackHigh(x1, x2);
+                var u34 = Avx.UnpackHigh(x3, x4);
+
+                result.X1 = l12.WithUpper(l34.GetLower()).AsVector4<T>();
+                result.X2 = u12.WithUpper(u34.GetLower()).AsVector4<T>();
+                result.X3 = l34.WithLower(l12.GetUpper()).AsVector4<T>();
+                result.X4 = u34.WithLower(u12.GetUpper()).AsVector4<T>();
+
+                return result;
+            }
+        }
 
         result.X1 = new(X1.X1, X2.X1, X3.X1, X4.X1);
         result.X2 = new(X1.X2, X2.X2, X3.X2, X4.X2);
