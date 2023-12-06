@@ -40,10 +40,10 @@ public static class LinAlgExtensions
     // Reinterpret
     //
 
-    /// <summary>Create a new <see cref="Span2D{T}"/> over a 4x4 matrix of <typeparamref name="T"/> numbers</summary>
+    /// <summary>Reinterprets a <see cref="Matrix4x4{T}"/> as a new <see cref="Span2D{T}"/></summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="matrix">The input matrix</param>
-    /// <returns>A <see cref="Span2D{T}"/> with elements from the input matrix</returns>
+    /// <param name="matrix">The matrix to reinterpret</param>
+    /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(this Matrix4x4<T> matrix)
         where T : IComplex<T>
