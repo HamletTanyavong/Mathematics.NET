@@ -30,7 +30,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
-using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
@@ -221,39 +220,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     //
 
     public string ToString(string? format, IFormatProvider? provider)
-    {
-        Span2D<string> strings = new string[4, 4];
-        var maxElementLength = 0;
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                var s = this[i, j].ToString(format, provider);
-                strings[i, j] = s;
-                var length = s.Length + 2;
-                if (maxElementLength < length)
-                {
-                    maxElementLength = length;
-                }
-            }
-        }
-
-        StringBuilder builder = new();
-        var newlineChars = Environment.NewLine.ToCharArray();
-        builder.Append('[');
-        for (int i = 0; i < 4; i++)
-        {
-            builder.Append(i != 0 ? " [" : "[");
-            for (int j = 0; j < 4; j++)
-            {
-                string value = j != 3 ? $"{strings[i, j]}, " : strings[i, j];
-                builder.Append(value.PadRight(maxElementLength));
-            }
-            LinAlgExtensions.CloseGroup(builder, newlineChars);
-        }
-        LinAlgExtensions.CloseGroup(builder, newlineChars, true);
-        return string.Format(provider, builder.ToString());
-    }
+        => this.AsSpan2D().ToDisplayString(format, provider);
 
     //
     // Methods
