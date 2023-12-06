@@ -87,7 +87,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     // Constants
     //
 
-    static int IArrayRepresentable<T>.Components => Components;
+    static int IArrayRepresentable<Matrix4x4<T>, T>.Components => Components;
     static int ITwoDimensionalArrayRepresentable<Matrix4x4<T>, T>.E1Components => E1Components;
     static int ITwoDimensionalArrayRepresentable<Matrix4x4<T>, T>.E2Components => E2Components;
     static Matrix4x4<T> ISquareMatrix<Matrix4x4<T>, T>.Identity => s_identity;

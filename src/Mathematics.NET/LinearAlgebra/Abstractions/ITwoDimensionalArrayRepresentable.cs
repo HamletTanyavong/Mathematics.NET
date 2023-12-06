@@ -25,16 +25,13 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Relations;
-
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for mathematical objects that can be represented by two-dimensional arrays</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 public interface ITwoDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<U>,
-      IEqualityRelation<T, bool>,
+    : IArrayRepresentable<T, U>,
       IFormattable
     where T : ITwoDimensionalArrayRepresentable<T, U>
     where U : IComplex<U>
@@ -45,7 +42,7 @@ public interface ITwoDimensionalArrayRepresentable<T, U>
     /// <summary>The number of columns in the array</summary>
     static abstract int E2Components { get; }
 
-    /// <summary>Get the element at the specified row and column</summary>
+    /// <summary>Get the element at the specified row and column.</summary>
     /// <param name="row">The row</param>
     /// <param name="column">The column</param>
     /// <returns>The element at the specified row and column</returns>
