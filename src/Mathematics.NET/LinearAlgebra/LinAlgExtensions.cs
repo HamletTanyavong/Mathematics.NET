@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0058
+
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using System.Text;
