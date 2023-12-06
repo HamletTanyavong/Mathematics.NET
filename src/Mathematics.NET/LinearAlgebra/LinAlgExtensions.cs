@@ -204,13 +204,13 @@ public static class LinAlgExtensions
                 var value = j != cols - 1 ? $"{strings[i, j]}, " : strings[i, j];
                 builder.Append(value.PadRight(maxElementLength));
             }
-            CloseGroup(builder, newlineChars);
+            builder.CloseGroup(newlineChars);
         }
-        CloseGroup(builder, newlineChars, true);
+        builder.CloseGroup(newlineChars, true);
         return string.Format(provider, builder.ToString());
     }
 
-    internal static void CloseGroup(StringBuilder builder, char[]? unwantedChars, bool isEnd = false)
+    internal static void CloseGroup(this StringBuilder builder, char[]? unwantedChars, bool isEnd = false)
     {
         builder.TrimEnd(unwantedChars);
         if (!isEnd)
