@@ -28,19 +28,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 2x2 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <param name="e11">The $ e_{11} $ component</param>
-/// <param name="e12">The $ e_{12} $ component</param>
-/// <param name="e21">The $ e_{21} $ component</param>
-/// <param name="e22">The $ e_{22} $ component</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix2x2<T>(T e11, T e12, T e21, T e22) : ISquareMatrix<Matrix2x2<T>, T>
+public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     where T : IComplex<T>
 {
     private static readonly Matrix2x2<T> s_identity = CreateDiagonal(T.One, T.One);
@@ -51,11 +46,19 @@ public struct Matrix2x2<T>(T e11, T e12, T e21, T e22) : ISquareMatrix<Matrix2x2
 
     public static readonly Matrix2x2<T> NaM = CreateDiagonal(T.NaN, T.NaN);
 
-    public T E11 = e11;
-    public T E12 = e12;
+    public Vector2<T> X1;
+    public Vector2<T> X2;
 
-    public T E21 = e21;
-    public T E22 = e22;
+    /// <summary>Create a 2x2 matrix given a set of 4 values</summary>
+    /// <param name="e11">The $ e_{11} $ component</param>
+    /// <param name="e12">The $ e_{12} $ component</param>
+    /// <param name="e21">The $ e_{21} $ component</param>
+    /// <param name="e22">The $ e_{22} $ component</param>
+    public Matrix2x2(T e11, T e12, T e21, T e22)
+    {
+        X1 = new(e11, e12);
+        X2 = new(e21, e22);
+    }
 
     //
     // Constants
@@ -73,26 +76,24 @@ public struct Matrix2x2<T>(T e11, T e12, T e21, T e22) : ISquareMatrix<Matrix2x2
 
     public T this[int row, int column]
     {
-        get
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly get
         {
             if ((uint)row >= 2)
             {
                 throw new IndexOutOfRangeException();
             }
-
-            ref Vector2<T> vrow = ref Unsafe.Add(ref Unsafe.As<T, Vector2<T>>(ref E11), row);
-            return vrow[column];
+            return Unsafe.Add(ref Unsafe.AsRef(in X1), row)[column];
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
             if ((uint)row >= 2)
             {
                 throw new IndexOutOfRangeException();
             }
-
-            ref Vector2<T> vrow = ref Unsafe.Add(ref Unsafe.As<T, Vector2<T>>(ref E11), row);
-            var temp = Vector2<T>.WithElement(vrow, column, value);
-            vrow = temp;
+            Unsafe.Add(ref X1, row)[column] = value;
         }
     }
 
@@ -100,94 +101,55 @@ public struct Matrix2x2<T>(T e11, T e12, T e21, T e22) : ISquareMatrix<Matrix2x2
     // Operators
     //
 
-    public static Matrix2x2<T> operator +(Matrix2x2<T> a, Matrix2x2<T> b)
+    public static Matrix2x2<T> operator +(Matrix2x2<T> left, Matrix2x2<T> right)
     {
-        return new(
-            a.E11 + b.E11, a.E12 + b.E12,
-            a.E21 + b.E21, a.E22 + b.E22);
+        Unsafe.SkipInit(out Matrix2x2<T> result);
+        result.X1 = left.X1 + right.X1;
+        result.X2 = left.X2 + right.X2;
+        return result;
     }
 
-    public static Matrix2x2<T> operator -(Matrix2x2<T> a, Matrix2x2<T> b)
+    public static Matrix2x2<T> operator -(Matrix2x2<T> left, Matrix2x2<T> right)
     {
-        return new(
-            a.E11 - b.E11, a.E12 - b.E12,
-            a.E21 - b.E21, a.E22 - b.E22);
+        Unsafe.SkipInit(out Matrix2x2<T> result);
+        result.X1 = left.X1 - right.X1;
+        result.X2 = left.X2 - right.X2;
+        return result;
     }
 
-    public static Matrix2x2<T> operator *(Matrix2x2<T> a, Matrix2x2<T> b)
+    public static Matrix2x2<T> operator *(Matrix2x2<T> left, Matrix2x2<T> right)
     {
-        return new(
-            a.E11 * b.E11 + a.E12 * b.E21, a.E11 * b.E12 + a.E12 * b.E22,
-            a.E21 * b.E11 + a.E22 * b.E21, a.E21 * b.E12 + a.E22 * b.E22);
+        Unsafe.SkipInit(out Matrix2x2<T> result);
+
+        result.X1 = right.X1 * left.X1.X1 + right.X2 * left.X1.X2;
+        result.X2 = right.X1 * left.X2.X1 + right.X2 * left.X2.X2;
+
+        return result;
     }
 
     //
     // Equality
     //
 
-    public static bool operator ==(Matrix2x2<T> a, Matrix2x2<T> b)
-    {
-        return a.E11 == b.E11 && a.E22 == b.E22 // Check diagonal first
-            && a.E12 == b.E12
-            && a.E21 == b.E21;
-    }
+    public static bool operator ==(Matrix2x2<T> left, Matrix2x2<T> right)
+        => left.X1 == right.X1 && left.X2 == right.X2;
 
-    public static bool operator !=(Matrix2x2<T> a, Matrix2x2<T> b)
-    {
-        return a.E11 != b.E11 || a.E22 != b.E22 // Check diagonal first
-            || a.E12 != b.E12
-            || a.E21 != b.E21;
-    }
+    public static bool operator !=(Matrix2x2<T> left, Matrix2x2<T> right)
+        => left.X1 != right.X1 || left.X2 != right.X2;
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is Matrix2x2<T> other && Equals(other);
 
     public bool Equals(Matrix2x2<T> value)
-    {
-        return E11.Equals(value.E11) && E22.Equals(value.E22) // Check diagonal first
-            && E12.Equals(value.E12)
-            && E21.Equals(value.E21);
-    }
+        => X1.Equals(value.X1) && X2.Equals(value.X2);
 
-    public override readonly int GetHashCode() => HashCode.Combine(E11, E12, E21, E22);
+    public override readonly int GetHashCode() => HashCode.Combine(X1, X2);
 
     //
     // Formatting
     //
 
     public string ToString(string? format, IFormatProvider? provider)
-    {
-        Span2D<string> strings = new string[2, 2];
-        var maxElementLength = 0;
-        for (int i = 0; i < 2; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                var s = this[i, j].ToString(format, provider);
-                strings[i, j] = s;
-                var length = s.Length + 2;
-                if (maxElementLength < length)
-                {
-                    maxElementLength = length;
-                }
-            }
-        }
-
-        StringBuilder builder = new();
-        var newlineChars = Environment.NewLine.ToCharArray();
-        builder.Append('[');
-        for (int i = 0; i < 2; i++)
-        {
-            builder.Append(i != 0 ? " [" : "[");
-            for (int j = 0; j < 2; j++)
-            {
-                string value = j != 1 ? $"{strings[i, j]}, " : strings[i, j];
-                builder.Append(value.PadRight(maxElementLength));
-            }
-            LinAlgExtensions.CloseGroup(builder, newlineChars);
-        }
-        LinAlgExtensions.CloseGroup(builder, newlineChars, true);
-        return string.Format(provider, builder.ToString());
-    }
+        => this.AsSpan2D().ToDisplayString(format, provider);
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
     /// <param name="e11">The $ e_{11} $ component</param>
@@ -196,7 +158,7 @@ public struct Matrix2x2<T>(T e11, T e12, T e21, T e22) : ISquareMatrix<Matrix2x2
     public static Matrix2x2<T> CreateDiagonal(T e11, T e22)
         => new(e11, T.Zero, T.Zero, e22);
 
-    public readonly T Determinant() => E11 * E22 - E12 * E21;
+    public readonly T Determinant() => X1.X1 * X2.X2 - X1.X2 - X2.X1;
 
     public readonly Matrix2x2<T> Inverse()
     {
@@ -207,13 +169,13 @@ public struct Matrix2x2<T>(T e11, T e12, T e21, T e22) : ISquareMatrix<Matrix2x2
         }
         T invDet = T.One / det;
 
-        return new(E22 * invDet, -E12 * invDet, -E21 * invDet, E11 * invDet);
+        return new(X2.X2 * invDet, -X1.X2 * invDet, -X2.X1 * invDet, X1.X1 * invDet);
     }
 
     public static bool IsNaM(Matrix2x2<T> matrix)
-        => T.IsNaN(matrix.E11) && T.IsNaN(matrix.E22);
+        => T.IsNaN(matrix.X1.X1) && T.IsNaN(matrix.X2.X2);
 
-    public readonly T Trace() => E11 + E22;
+    public readonly T Trace() => X1.X1 + X2.X2;
 
-    public readonly Matrix2x2<T> Transpose() => new(E11, E21, E12, E22);
+    public readonly Matrix2x2<T> Transpose() => new(X1.X1, X2.X1, X1.X2, X2.X2);
 }
