@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="CoreImplementationExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,27 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
-using Mathematics.NET.LinearAlgebra;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 
-namespace Mathematics.NET.Benchmarks.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Implementations.Core;
 
-[MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class Vector4NormBenchmarks
+public static class CoreImplementationExtensions
 {
-    public Vector4<Real> U { get; set; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Complex AsComplex(this Vector128<double> value)
+        => Unsafe.As<Vector128<double>, Complex>(ref value);
 
-    [GlobalSetup]
-    public void GlobalSetup()
-    {
-        U = new(1, 2, 3, 4);
-    }
-
-    [Benchmark(Baseline = true)]
-    public Real NormNaive() => U.NormNaive();
-
-    [Benchmark]
-    public Real NormSimd() => U.NormSimd();
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector128<double> AsVector128(this Complex value)
+        => Unsafe.As<Complex, Vector128<double>>(ref value);
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexMultiplicationBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,27 +25,28 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
-using Mathematics.NET.LinearAlgebra;
+using Mathematics.NET.Benchmarks.Implementations.Core;
 
-namespace Mathematics.NET.Benchmarks.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 
 [MemoryDiagnoser]
 [RankColumn]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class Vector4NormBenchmarks
+public class ComplexMultiplicationBenchmarks
 {
-    public Vector4<Real> U { get; set; }
+    public Complex Z { get; set; }
+    public Complex W { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        U = new(1, 2, 3, 4);
+        Z = new(1.23, 2.34);
+        W = new(4.56, 3.45);
     }
 
     [Benchmark(Baseline = true)]
-    public Real NormNaive() => U.NormNaive();
+    public Complex MultiplyNaive() => ComplexImplementations.MultiplyNaive(Z, W);
 
     [Benchmark]
-    public Real NormSimd() => U.NormSimd();
+    public Complex MultiplySimd() => ComplexImplementations.MultiplySimd(Z, W);
 }

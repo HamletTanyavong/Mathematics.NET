@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="Vector2AdditionBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -33,19 +33,22 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [MemoryDiagnoser]
 [RankColumn]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class Vector4NormBenchmarks
+public class Vector2AdditionBenchmarks
 {
-    public Vector4<Real> U { get; set; }
+    public Vector2<Real> U { get; set; }
+
+    public Vector2<Real> V { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        U = new(1, 2, 3, 4);
+        U = new(1.23, 2.34);
+        V = new(-0.66, 0.76);
     }
 
     [Benchmark(Baseline = true)]
-    public Real NormNaive() => U.NormNaive();
+    public Vector2<Real> AddNaive() => Vector2Implementations.AddNaive(U, V);
 
     [Benchmark]
-    public Real NormSimd() => U.NormSimd();
+    public Vector2<Real> AddSimd() => Vector2Implementations.AddSimd(U, V);
 }

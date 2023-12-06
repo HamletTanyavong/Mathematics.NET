@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="ComplexImplementations.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,27 +25,30 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
-using Mathematics.NET.LinearAlgebra;
+using System.Runtime.Intrinsics.X86;
 
-namespace Mathematics.NET.Benchmarks.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Implementations.Core;
 
-[MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class Vector4NormBenchmarks
+public static class ComplexImplementations
 {
-    public Vector4<Real> U { get; set; }
+    public static Complex MultiplyNaive(Complex left, Complex right)
+        => new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
 
-    [GlobalSetup]
-    public void GlobalSetup()
+    public static Complex MultiplySimd(Complex left, Complex right)
     {
-        U = new(1, 2, 3, 4);
+        if (Avx.IsSupported)
+        {
+            var vecL = left.AsVector128();
+            var vecR = right.AsVector128();
+
+            var mulStraight = Avx.Multiply(vecL, vecR);
+            var mulCross = Avx.Multiply(vecL, Avx.Permute(vecR, 0b00011001));
+
+            return Avx.AddSubtract(Avx.UnpackLow(mulStraight, mulCross), Avx.UnpackHigh(mulStraight, mulCross)).AsComplex();
+        }
+        else
+        {
+            return new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
+        }
     }
-
-    [Benchmark(Baseline = true)]
-    public Real NormNaive() => U.NormNaive();
-
-    [Benchmark]
-    public Real NormSimd() => U.NormSimd();
 }

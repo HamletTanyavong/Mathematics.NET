@@ -31,6 +31,4 @@ namespace Mathematics.NET.Core.Attributes;
 /// <param name="arity">The arity of the function</param>
 /// <param name="name">The name of the function</param>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public class FunctionAttribute(uint arity, string name) : RelationAttribute(arity, name)
-{
-}
+public class FunctionAttribute(uint arity, string name) : RelationAttribute(arity, name);

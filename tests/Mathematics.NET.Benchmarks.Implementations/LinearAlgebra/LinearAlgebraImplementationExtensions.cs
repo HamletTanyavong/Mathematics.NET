@@ -34,6 +34,26 @@ namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 internal static class LinearAlgebraImplementationExtensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector128<double> AsVector128<T>(this Vector2<T> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector2<T>, Vector128<double>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector2<T> AsVector2<T>(this Vector128<double> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector128<double>, Vector2<T>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector256<double> AsVector256<T>(this Vector2<T> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector2<T>, Vector256<double>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector2<T> AsVector2<T>(this Vector256<double> value)
+        where T : IComplex<T>
+        => Unsafe.As<Vector256<double>, Vector2<T>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector256<double> AsVector256<T>(this Vector4<T> value)
         where T : IComplex<T>
         => Unsafe.As<Vector4<T>, Vector256<double>>(ref value);

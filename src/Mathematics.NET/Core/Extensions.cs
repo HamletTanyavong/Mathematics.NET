@@ -49,6 +49,13 @@ public static class Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Real AsReal(this double value) => Unsafe.As<double, Real>(ref value);
 
+    // Do not make the following methods public.
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static double AsDouble<T>(this T value)
+        where T : IComplex<T>
+        => Unsafe.As<T, double>(ref value);
+
     //
     // Rational
     //

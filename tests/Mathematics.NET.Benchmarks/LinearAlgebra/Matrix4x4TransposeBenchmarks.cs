@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="Matrix4x4TransposeBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -33,19 +33,22 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [MemoryDiagnoser]
 [RankColumn]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class Vector4NormBenchmarks
+public class Matrix4x4TransposeBenchmarks
 {
-    public Vector4<Real> U { get; set; }
+    public Matrix4x4<Real> A { get; set; }
 
-    [GlobalSetup]
     public void GlobalSetup()
     {
-        U = new(1, 2, 3, 4);
+        A = new(
+            1.4, 0.12, 3, 4,
+            5, 6, 7.5, -8,
+            9, 10, 12.1, 12,
+            3.3, 14, 15, 16);
     }
 
     [Benchmark(Baseline = true)]
-    public Real NormNaive() => U.NormNaive();
+    public Matrix4x4<Real> TransposeNaive() => A.TransposeNaive();
 
     [Benchmark]
-    public Real NormSimd() => U.NormSimd();
+    public Matrix4x4<Real> TransposeSimdV1() => A.TransposeSimdV1();
 }
