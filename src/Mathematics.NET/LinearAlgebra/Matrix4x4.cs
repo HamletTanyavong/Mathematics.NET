@@ -102,18 +102,17 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly get
         {
-            if ((uint)row >= E1Components)
+            if ((uint)row >= 4)
             {
                 throw new IndexOutOfRangeException();
             }
-
             return Unsafe.Add(ref Unsafe.AsRef(in X1), row)[column];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
-            if ((uint)row >= E1Components)
+            if ((uint)row >= 4)
             {
                 throw new IndexOutOfRangeException();
             }
