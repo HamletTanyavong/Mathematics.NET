@@ -230,6 +230,60 @@ public static class LinAlgExtensions
         return string.Format(provider, builder.ToString());
     }
 
+    /// <summary>Get the string representation of this <see cref="Array"/> object</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <param name="array">An array to format</param>
+    /// <param name="format">The format to use</param>
+    /// <param name="provider">The provider to use to format the value</param>
+    /// <returns>A string representation of this object</returns>
+    public static string ToDisplayString<T>(this T[,,] array, string? format = null, IFormatProvider? provider = null)
+        where T : IComplex<T>
+    {
+        var e1Length = array.GetLength(0);
+        var e2Length = array.GetLength(1);
+        var e3Length = array.GetLength(2);
+
+        var maxElementLength = 0;
+        var strings = new string[4, 4, 4];
+        for (int i = 0; i < e1Length; i++)
+        {
+            for (int j = 0; j < e2Length; j++)
+            {
+                for (int k = 0; k < e3Length; k++)
+                {
+                    var s = array[i, j, k].ToString(format, provider);
+                    strings[i, j, k] = s;
+                    var length = s.Length + 2;
+                    if (maxElementLength < length)
+                    {
+                        maxElementLength = length;
+                    }
+                }
+            }
+        }
+
+        StringBuilder builder = new();
+        var newlineChars = Environment.NewLine.ToCharArray();
+        builder.Append('[');
+        for (int i = 0; i < e1Length; i++)
+        {
+            builder.Append(i != 0 ? " [" : "[");
+            for (int j = 0; j < e2Length; j++)
+            {
+                builder.Append(j != 0 ? "  [" : "[");
+                for (int k = 0; k < e3Length; k++)
+                {
+                    string value = k != e3Length - 1 ? $"{strings[i, j, k]}, " : strings[i, j, k];
+                    builder.Append(value.PadRight(maxElementLength));
+                }
+                builder.CloseGroup(newlineChars);
+            }
+            builder.CloseGroup(newlineChars);
+        }
+        builder.CloseGroup(newlineChars, true);
+        return string.Format(provider, builder.ToString());
+    }
+
     internal static void CloseGroup(this StringBuilder builder, char[]? unwantedChars, bool isEnd = false)
     {
         builder.TrimEnd(unwantedChars);
