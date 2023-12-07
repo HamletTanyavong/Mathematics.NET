@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorBase4x4x4.cs" company="Mathematics.NET">
+﻿// <copyright file="Array4x4x4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,9 +32,11 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
+/// <summary>Represents a 4x4x4 array</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct TensorBase4x4x4<T>
-    : IThreeDimensionalArrayRepresentable<TensorBase4x4x4<T>, T>,
+public struct Array4x4x4<T>
+    : ICubicArray<Array4x4x4<T>, T>,
       IHypercubicArray
     where T : IComplex<T>
 {
@@ -52,10 +54,10 @@ public struct TensorBase4x4x4<T>
     // Constants
     //
 
-    static int IArrayRepresentable<TensorBase4x4x4<T>, T>.Components => Components;
-    static int IThreeDimensionalArrayRepresentable<TensorBase4x4x4<T>, T>.E1Components => E1Components;
-    static int IThreeDimensionalArrayRepresentable<TensorBase4x4x4<T>, T>.E2Components => E2Components;
-    static int IThreeDimensionalArrayRepresentable<TensorBase4x4x4<T>, T>.E3Components => E3Components;
+    static int IArrayRepresentable<Array4x4x4<T>, T>.Components => Components;
+    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E1Components => E1Components;
+    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E2Components => E2Components;
+    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E3Components => E3Components;
 
     //
     // Indexer
@@ -88,15 +90,15 @@ public struct TensorBase4x4x4<T>
     // Equality
     //
 
-    public static bool operator ==(TensorBase4x4x4<T> left, TensorBase4x4x4<T> right)
+    public static bool operator ==(Array4x4x4<T> left, Array4x4x4<T> right)
         => left.X1 == right.X1 && left.X2 == right.X2 && left.X3 == right.X3 && left.X4 == right.X4;
 
-    public static bool operator !=(TensorBase4x4x4<T> left, TensorBase4x4x4<T> right)
+    public static bool operator !=(Array4x4x4<T> left, Array4x4x4<T> right)
         => left.X1 != right.X1 || left.X2 != right.X2 || left.X3 != right.X3 || left.X4 != right.X4;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is TensorBase4x4x4<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Array4x4x4<T> other && Equals(other);
 
-    public bool Equals(TensorBase4x4x4<T> value)
+    public bool Equals(Array4x4x4<T> value)
         => X1.Equals(value.X1) && X2.Equals(value.X2) && X3.Equals(value.X3) && X4.Equals(value.X4);
 
     public override int GetHashCode() => HashCode.Combine(X1, X2, X3, X4);
