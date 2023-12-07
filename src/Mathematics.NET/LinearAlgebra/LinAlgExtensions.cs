@@ -178,15 +178,15 @@ public static class LinAlgExtensions
 
     /// <summary>Get the string representation of this <see cref="Span2D{T}"/> object</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="span">The span to format</param>
+    /// <param name="span2D">The span to format</param>
     /// <param name="format">The format to use</param>
     /// <param name="provider">The provider to use to format the value</param>
     /// <returns>A string representation of this object</returns>
-    public static string ToDisplayString<T>(this Span2D<T> span, string? format = null, IFormatProvider? provider = null)
+    public static string ToDisplayString<T>(this Span2D<T> span2D, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
-        var rows = span.Height;
-        var cols = span.Width;
+        var rows = span2D.Height;
+        var cols = span2D.Width;
 
         Span2D<string> strings = new string[rows, cols];
         var maxElementLength = 0;
@@ -194,7 +194,7 @@ public static class LinAlgExtensions
         {
             for (int j = 0; j < cols; j++)
             {
-                var s = span[i, j].ToString(format, provider);
+                var s = span2D[i, j].ToString(format, provider);
                 strings[i, j] = s;
                 var length = s.Length + 2;
                 if (maxElementLength < length)
