@@ -60,7 +60,9 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
     // IRankTwoTensor interface
     //
 
-    public readonly IIndex[] Indices => new IIndex[2] { Index<V, W>.Instance, Index<V, X>.Instance };
+    public readonly IIndex I1 => Index<V, W>.Instance;
+
+    public readonly IIndex I2 => Index<V, X>.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces

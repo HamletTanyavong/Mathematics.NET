@@ -55,7 +55,9 @@ public struct RankTwoTensor<T, U, V, W>(T matrix)
     // IRankTwoTensor interface
     //
 
-    public readonly IIndex[] Indices => new IIndex[2] { V.Instance, W.Instance };
+    public readonly IIndex I1 => V.Instance;
+
+    public readonly IIndex I2 => W.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces

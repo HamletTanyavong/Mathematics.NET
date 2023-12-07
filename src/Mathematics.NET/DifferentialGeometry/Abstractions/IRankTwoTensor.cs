@@ -42,10 +42,13 @@ public interface IRankTwoTensor<T, U, V, W, X> : ITwoDimensionalArrayRepresentab
     where W : IIndex
     where X : IIndex
 {
-    /// <summary>Get the indices associated with this rank two tensor</summary>
-    IIndex[] Indices { get; }
+    /// <summary>The first index</summary>
+    IIndex I1 { get; }
+
+    /// <summary>The second index</summary>
+    IIndex I2 { get; }
 
     /// <summary>Convert a value that implements <see cref="IMatrix{T, U}"/> to one of type <typeparamref name="T"/></summary>
-    /// <param name="input">The value to convert</param>
-    static abstract implicit operator T(U input);
+    /// <param name="value">The value to convert</param>
+    static abstract implicit operator T(U value);
 }
