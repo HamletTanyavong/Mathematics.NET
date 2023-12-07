@@ -44,6 +44,6 @@ public interface IRankOneTensor<T, U, V, W> : IOneDimensionalArrayRepresentable<
     IIndex I1 { get; }
 
     /// <summary>Convert a value that implements <see cref="IVector{T, U}"/> to one of type <typeparamref name="T"/></summary>
-    /// <param name="input">The value to convert</param>
-    static abstract implicit operator T(U input);
+    /// <param name="value">The value to convert</param>
+    static abstract implicit operator T(U value);
 }
