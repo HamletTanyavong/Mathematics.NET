@@ -28,27 +28,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 3x3 matrix</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <param name="e11">The $ e_{11} $ component</param>
-/// <param name="e12">The $ e_{12} $ component</param>
-/// <param name="e13">The $ e_{13} $ component</param>
-/// <param name="e21">The $ e_{21} $ component</param>
-/// <param name="e22">The $ e_{22} $ component</param>
-/// <param name="e23">The $ e_{23} $ component</param>
-/// <param name="e31">The $ e_{31} $ component</param>
-/// <param name="e32">The $ e_{32} $ component</param>
-/// <param name="e33">The $ e_{33} $ component</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix3x3<T>(
-    T e11, T e12, T e13,
-    T e21, T e22, T e23,
-    T e31, T e32, T e33) : ISquareMatrix<Matrix3x3<T>, T>
+public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     where T : IComplex<T>
 {
     private static readonly Matrix3x3<T> s_identity = CreateDiagonal(T.One, T.One, T.One);
@@ -59,17 +46,29 @@ public struct Matrix3x3<T>(
 
     public static readonly Matrix3x3<T> NaM = CreateDiagonal(T.NaN, T.NaN, T.NaN);
 
-    public T E11 = e11;
-    public T E12 = e12;
-    public T E13 = e13;
+    public Vector3<T> X1;
+    public Vector3<T> X2;
+    public Vector3<T> X3;
 
-    public T E21 = e21;
-    public T E22 = e22;
-    public T E23 = e23;
-
-    public T E31 = e31;
-    public T E32 = e32;
-    public T E33 = e33;
+    /// <summary>Create a 3x3 matrix given a set of 9 values</summary>
+    /// <param name="e11">The $ e_{11} $ component</param>
+    /// <param name="e12">The $ e_{12} $ component</param>
+    /// <param name="e13">The $ e_{13} $ component</param>
+    /// <param name="e21">The $ e_{21} $ component</param>
+    /// <param name="e22">The $ e_{22} $ component</param>
+    /// <param name="e23">The $ e_{23} $ component</param>
+    /// <param name="e31">The $ e_{31} $ component</param>
+    /// <param name="e32">The $ e_{32} $ component</param>
+    /// <param name="e33">The $ e_{33} $ component</param>
+    public Matrix3x3(
+        T e11, T e12, T e13,
+        T e21, T e22, T e23,
+        T e31, T e32, T e33)
+    {
+        X1 = new(e11, e12, e13);
+        X2 = new(e21, e22, e23);
+        X3 = new(e31, e32, e33);
+    }
 
     //
     // Constants
@@ -87,26 +86,24 @@ public struct Matrix3x3<T>(
 
     public T this[int row, int column]
     {
-        get
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        readonly get
         {
             if ((uint)row >= 3)
             {
                 throw new IndexOutOfRangeException();
             }
-
-            ref Vector3<T> vrow = ref Unsafe.Add(ref Unsafe.As<T, Vector3<T>>(ref E11), row);
-            return vrow[column];
+            return Unsafe.Add(ref Unsafe.AsRef(in X1), row)[column];
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
             if ((uint)row >= 3)
             {
                 throw new IndexOutOfRangeException();
             }
-
-            ref Vector3<T> vrow = ref Unsafe.Add(ref Unsafe.As<T, Vector3<T>>(ref E11), row);
-            var temp = Vector3<T>.WithElement(vrow, column, value);
-            vrow = temp;
+            Unsafe.Add(ref X1, row)[column] = value;
         }
     }
 
@@ -114,37 +111,43 @@ public struct Matrix3x3<T>(
     // Operators
     //
 
-    public static Matrix3x3<T> operator +(Matrix3x3<T> a, Matrix3x3<T> b)
-    {
-        return new(
-            a.E11 + b.E11, a.E12 + b.E12, a.E13 + b.E13,
-            a.E21 + b.E21, a.E22 + b.E22, a.E23 + b.E23,
-            a.E31 + b.E31, a.E32 + b.E32, a.E33 + b.E33);
-    }
-
-    public static Matrix3x3<T> operator -(Matrix3x3<T> a, Matrix3x3<T> b)
-    {
-        return new(
-            a.E11 - b.E11, a.E12 - b.E12, a.E13 - b.E13,
-            a.E21 - b.E21, a.E22 - b.E22, a.E23 - b.E23,
-            a.E31 - b.E31, a.E32 - b.E32, a.E33 - b.E33);
-    }
-
-    public static Matrix3x3<T> operator *(Matrix3x3<T> a, Matrix3x3<T> b)
+    public static Matrix3x3<T> operator +(Matrix3x3<T> left, Matrix3x3<T> right)
     {
         Unsafe.SkipInit(out Matrix3x3<T> result);
 
-        result.E11 = a.E11 * b.E11 + a.E12 * b.E21 + a.E13 * b.E31;
-        result.E12 = a.E11 * b.E12 + a.E12 * b.E22 + a.E13 * b.E32;
-        result.E13 = a.E11 * b.E13 + a.E12 * b.E23 + a.E13 * b.E33;
+        result.X1 = left.X1 + left.X1;
+        result.X2 = left.X2 + left.X2;
+        result.X3 = left.X3 + left.X3;
 
-        result.E21 = a.E21 * b.E11 + a.E22 * b.E21 + a.E23 * b.E31;
-        result.E22 = a.E21 * b.E12 + a.E22 * b.E22 + a.E23 * b.E32;
-        result.E23 = a.E21 * b.E13 + a.E22 * b.E23 + a.E23 * b.E33;
+        return result;
+    }
 
-        result.E31 = a.E31 * b.E11 + a.E32 * b.E21 + a.E33 * b.E31;
-        result.E32 = a.E31 * b.E12 + a.E32 * b.E22 + a.E33 * b.E32;
-        result.E33 = a.E31 * b.E13 + a.E32 * b.E23 + a.E33 * b.E33;
+    public static Matrix3x3<T> operator -(Matrix3x3<T> left, Matrix3x3<T> right)
+    {
+        Unsafe.SkipInit(out Matrix3x3<T> result);
+
+        result.X1 = left.X1 - left.X1;
+        result.X2 = left.X2 - left.X2;
+        result.X3 = left.X3 - left.X3;
+
+        return result;
+    }
+
+    public static Matrix3x3<T> operator *(Matrix3x3<T> left, Matrix3x3<T> right)
+    {
+        Unsafe.SkipInit(out Matrix3x3<T> result);
+
+        result.X1 = right.X1 * left.X1.X1;
+        result.X1 += right.X2 * left.X1.X2;
+        result.X1 += right.X3 * left.X1.X3;
+
+        result.X2 = right.X1 * left.X2.X1;
+        result.X2 += right.X2 * left.X2.X2;
+        result.X2 += right.X3 * left.X2.X3;
+
+        result.X3 = right.X1 * left.X3.X1;
+        result.X3 += right.X2 * left.X3.X2;
+        result.X3 += right.X3 * left.X3.X3;
 
         return result;
     }
@@ -153,89 +156,25 @@ public struct Matrix3x3<T>(
     // Equality
     //
 
-    public static bool operator ==(Matrix3x3<T> a, Matrix3x3<T> b)
-    {
-        return a.E11 == b.E11 && a.E22 == b.E22 && a.E33 == b.E33 // Check diagonal first
-            && a.E12 == b.E12 && a.E13 == b.E13
-            && a.E21 == b.E21 && a.E23 == b.E23
-            && a.E31 == b.E31 && a.E32 == b.E32;
-    }
+    public static bool operator ==(Matrix3x3<T> left, Matrix3x3<T> right)
+        => left.X1 == right.X1 && left.X2 == right.X2 && left.X3 == right.X3;
 
-    public static bool operator !=(Matrix3x3<T> a, Matrix3x3<T> b)
-    {
-        return a.E11 != b.E11 || a.E22 != b.E22 || a.E33 != b.E33 // Check diagonal first
-            || a.E12 != b.E12 || a.E13 != b.E13
-            || a.E21 != b.E21 || a.E23 != b.E23
-            || a.E31 != b.E31 || a.E32 != b.E32;
-    }
+    public static bool operator !=(Matrix3x3<T> left, Matrix3x3<T> right)
+        => left.X1 != right.X1 || left.X2 != right.X2 || left.X3 != right.X3;
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is Matrix3x3<T> other && Equals(other);
 
     public bool Equals(Matrix3x3<T> value)
-    {
-        return E11.Equals(value.E11) && E22.Equals(value.E22) && E33.Equals(value.E33) // Check diagonal first
-            && E12.Equals(value.E12) && E13.Equals(value.E13)
-            && E21.Equals(value.E21) && E23.Equals(value.E23)
-            && E31.Equals(value.E31) && E32.Equals(value.E32);
-    }
+        => X1.Equals(value.X1) && X2.Equals(value.X2) && X3.Equals(value.X3);
 
-    public override readonly int GetHashCode()
-    {
-        HashCode hash = default;
-
-        hash.Add(E11);
-        hash.Add(E12);
-        hash.Add(E13);
-
-        hash.Add(E21);
-        hash.Add(E22);
-        hash.Add(E23);
-
-        hash.Add(E31);
-        hash.Add(E32);
-        hash.Add(E33);
-
-        return hash.ToHashCode();
-    }
+    public override readonly int GetHashCode() => HashCode.Combine(X1, X2, X3);
 
     //
     // Formatting
     //
 
     public string ToString(string? format, IFormatProvider? provider)
-    {
-        Span2D<string> strings = new string[3, 3];
-        var maxElementLength = 0;
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                var s = this[i, j].ToString(format, provider);
-                strings[i, j] = s;
-                var length = s.Length + 2;
-                if (maxElementLength < length)
-                {
-                    maxElementLength = length;
-                }
-            }
-        }
-
-        StringBuilder builder = new();
-        var newlineChars = Environment.NewLine.ToCharArray();
-        builder.Append('[');
-        for (int i = 0; i < 3; i++)
-        {
-            builder.Append(i != 0 ? " [" : "[");
-            for (int j = 0; j < 3; j++)
-            {
-                string value = j != 2 ? $"{strings[i, j]}, " : strings[i, j];
-                builder.Append(value.PadRight(maxElementLength));
-            }
-            LinAlgExtensions.CloseGroup(builder, newlineChars);
-        }
-        LinAlgExtensions.CloseGroup(builder, newlineChars, true);
-        return string.Format(provider, builder.ToString());
-    }
+        => this.AsSpan2D().ToDisplayString();
 
     //
     // Methods
@@ -256,9 +195,9 @@ public struct Matrix3x3<T>(
 
     public readonly T Determinant()
     {
-        T a = E11, b = E12, c = E13;
-        T d = E21, e = E22, f = E23;
-        T g = E31, h = E32, i = E33;
+        T a = X1.X1, b = X1.X2, c = X1.X3;
+        T d = X2.X1, e = X2.X2, f = X2.X3;
+        T g = X3.X1, h = X3.X2, i = X3.X3;
 
         T ei_fh = e * i - f * h;
         T di_fg = d * i - f * g;
@@ -269,9 +208,9 @@ public struct Matrix3x3<T>(
 
     public readonly Matrix3x3<T> Inverse()
     {
-        T a = E11, b = E12, c = E13;
-        T d = E21, e = E22, f = E23;
-        T g = E31, h = E32, i = E33;
+        T a = X1.X1, b = X1.X2, c = X1.X3;
+        T d = X2.X1, e = X2.X2, f = X2.X3;
+        T g = X3.X1, h = X3.X2, i = X3.X3;
 
         T ei_fh = e * i - f * h;
         T di_fg = d * i - f * g;
@@ -286,39 +225,39 @@ public struct Matrix3x3<T>(
 
         Matrix3x3<T> result;
 
-        result.E11 = ei_fh * invDet;
-        result.E21 = -di_fg * invDet;
-        result.E31 = dh_eg * invDet;
+        result.X1.X1 = ei_fh * invDet;
+        result.X2.X1 = -di_fg * invDet;
+        result.X3.X1 = dh_eg * invDet;
 
         T bi_ch = b * i - c * h;
         T ai_cg = a * i - c * g;
         T ah_bg = a * h - b * g;
 
-        result.E12 = -bi_ch * invDet;
-        result.E22 = ai_cg * invDet;
-        result.E32 = -ah_bg * invDet;
+        result.X1.X2 = -bi_ch * invDet;
+        result.X2.X2 = ai_cg * invDet;
+        result.X3.X2 = -ah_bg * invDet;
 
         T bf_ce = b * f - c * e;
         T af_cd = a * f - c * d;
         T ae_bd = a * e - b * d;
 
-        result.E13 = bf_ce * invDet;
-        result.E23 = -af_cd * invDet;
-        result.E33 = ae_bd * invDet;
+        result.X1.X3 = bf_ce * invDet;
+        result.X2.X3 = -af_cd * invDet;
+        result.X3.X3 = ae_bd * invDet;
 
         return result;
     }
 
     public static bool IsNaM(Matrix3x3<T> matrix)
-        => T.IsNaN(matrix.E11) && T.IsNaN(matrix.E22) && T.IsNaN(matrix.E33);
+        => T.IsNaN(matrix.X1.X1) && T.IsNaN(matrix.X2.X2) && T.IsNaN(matrix.X3.X3);
 
-    public readonly T Trace() => E11 + E22 + E33;
+    public readonly T Trace() => X1.X1 + X2.X2 + X3.X3;
 
     public readonly Matrix3x3<T> Transpose()
     {
         return new(
-            E11, E21, E31,
-            E12, E22, E32,
-            E13, E23, E33);
+            X1.X1, X2.X1, X3.X1,
+            X1.X2, X2.X2, X3.X2,
+            X1.X3, X2.X3, X3.X3);
     }
 }
