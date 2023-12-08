@@ -45,10 +45,6 @@ public interface IThreeDimensionalArrayRepresentable<T, U>
     /// <summary>The number of elements in the third dimension of the array</summary>
     static abstract int E3Components { get; }
 
-    /// <summary>Convert the matrix into a 3D array.</summary>
-    /// <returns>A 3D array</returns>
-    U[,,] ToArray3D();
-
     /// <summary>Get the element at the specified indices.</summary>
     /// <param name="i">The first index</param>
     /// <param name="j">The second index</param>

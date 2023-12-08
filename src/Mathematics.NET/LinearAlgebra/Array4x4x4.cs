@@ -110,10 +110,10 @@ public struct Array4x4x4<T>
     public string ToString(string? format, IFormatProvider? provider) => ToArray3D().ToDisplayString(format, provider);
 
     //
-    // Methods
+    // Helpers
     //
 
-    public T[,,] ToArray3D()
+    private T[,,] ToArray3D()
     {
         T[,,] result = new T[4, 4, 4];
 
