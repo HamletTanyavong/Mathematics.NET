@@ -36,19 +36,23 @@ namespace Mathematics.NET.DifferentialGeometry;
 public static class DifGeo
 {
     /// <summary>Contract two rank-one tensors: $ a_\mu b^\mu $</summary>
-    /// <typeparam name="T">The backing type of the tensors</typeparam>
-    /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="V">A symbol</typeparam>
+    /// <typeparam name="T">A rank-one tensor with a lower index</typeparam>
+    /// <typeparam name="U">A rank-one tensor with an upper index</typeparam>
+    /// <typeparam name="V">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
+    /// <typeparam name="W">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="X">The name of the index to contract</typeparam>
     /// <param name="a">A tensor with a lower index</param>
     /// <param name="b">A tensor with an upper index</param>
     /// <returns>A scalar</returns>
-    public static U Contract<T, U, V>(RankOneTensor<T, U, Index<Lower, V>> a, RankOneTensor<T, U, Index<Upper, V>> b)
-        where T : IVector<T, U>
-        where U : IComplex<U>
-        where V : ISymbol
+    public static W Contract<T, U, V, W, X>(IRankOneTensor<T, V, W, Index<Lower, X>> a, IRankOneTensor<U, V, W, Index<Upper, X>> b)
+        where T : IRankOneTensor<T, V, W, Index<Lower, X>>
+        where U : IRankOneTensor<U, V, W, Index<Upper, X>>
+        where V : IVector<V, W>
+        where W : IComplex<W>
+        where X : ISymbol
     {
-        U result = U.Zero;
-        for (int i = 0; i < T.E1Components; i++)
+        var result = W.Zero;
+        for (int i = 0; i < V.E1Components; i++)
         {
             result += a[i] * b[i];
         }
@@ -56,19 +60,23 @@ public static class DifGeo
     }
 
     /// <summary>Contract two rank-one tensors: $ a^\mu b_\mu $</summary>
-    /// <typeparam name="T">The backing type of the tensors</typeparam>
-    /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="V">A symbol</typeparam>
+    /// <typeparam name="T">A rank-one tensor with an upper index</typeparam>
+    /// <typeparam name="U">A rank-one tensor with a lower index</typeparam>
+    /// <typeparam name="V">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
+    /// <typeparam name="W">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="X">The name of the index to contract</typeparam>
     /// <param name="a">A tensor with an upper index</param>
     /// <param name="b">A tensor with a lower index</param>
     /// <returns>A scalar</returns>
-    public static U Contract<T, U, V>(RankOneTensor<T, U, Index<Upper, V>> a, RankOneTensor<T, U, Index<Lower, V>> b)
-        where T : IVector<T, U>
-        where U : IComplex<U>
-        where V : ISymbol
+    public static W Contract<T, U, V, W, X>(IRankOneTensor<T, V, W, Index<Upper, X>> a, IRankOneTensor<U, V, W, Index<Lower, X>> b)
+        where T : IRankOneTensor<T, V, W, Index<Upper, X>>
+        where U : IRankOneTensor<U, V, W, Index<Lower, X>>
+        where V : IVector<V, W>
+        where W : IComplex<W>
+        where X : ISymbol
     {
-        U result = U.Zero;
-        for (int i = 0; i < T.E1Components; i++)
+        var result = W.Zero;
+        for (int i = 0; i < V.E1Components; i++)
         {
             result += a[i] * b[i];
         }
