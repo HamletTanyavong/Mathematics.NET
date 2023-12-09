@@ -733,6 +733,280 @@ public static class DifGeo
         return new(matrix);
     }
 
+    // Rank-two and rank-two
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with a lower, first index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with an upper, first index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The name of the index to contract</typeparam>
+    /// <typeparam name="X">The second index of the first tensor</typeparam>
+    /// <typeparam name="Y">The second index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, X, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, W>, X> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, W>, Y> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, W>, X>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, W>, Y>
+        where V : IComplex<V>
+        where W : ISymbol
+        where X : IIndex
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[k, i] * b[k, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with an upper, first index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with a lower, first index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The name of the index to contract</typeparam>
+    /// <typeparam name="X">The second index of the first tensor</typeparam>
+    /// <typeparam name="Y">The second index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, X, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Upper, W>, X> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Lower, W>, Y> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Upper, W>, X>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Lower, W>, Y>
+        where V : IComplex<V>
+        where W : ISymbol
+        where X : IIndex
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[k, i] * b[k, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with a lower, first index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with an upper, second index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The name of the index to contract</typeparam>
+    /// <typeparam name="X">The second index of the first tensor</typeparam>
+    /// <typeparam name="Y">The first index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, X, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, W>, X> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Upper, W>> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, W>, X>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Upper, W>>
+        where V : IComplex<V>
+        where W : ISymbol
+        where X : IIndex
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[k, i] * b[j, k];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with an upper, first index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with a lower, second index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The name of the index to contract</typeparam>
+    /// <typeparam name="X">The second index of the first tensor</typeparam>
+    /// <typeparam name="Y">The first index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, X, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Upper, W>, X> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Lower, W>> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Upper, W>, X>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Lower, W>>
+        where V : IComplex<V>
+        where W : ISymbol
+        where X : IIndex
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[k, i] * b[j, k];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with a lower, second index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with an upper, first index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The first index of the first tensor</typeparam>
+    /// <typeparam name="X">The name of the index to contract</typeparam>
+    /// <typeparam name="Y">The second index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, W, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Lower, X>> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, X>, Y> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Lower, X>>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, X>, Y>
+        where V : IComplex<V>
+        where W : IIndex
+        where X : ISymbol
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[i, k] * b[k, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with an upper, second index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with a lower, first index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The first index of the first tensor</typeparam>
+    /// <typeparam name="X">The name of the index to contract</typeparam>
+    /// <typeparam name="Y">The second index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, W, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Upper, X>> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Lower, X>, Y> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Upper, X>>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Lower, X>, Y>
+        where V : IComplex<V>
+        where W : IIndex
+        where X : ISymbol
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[i, k] * b[k, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with a lower, second index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with an upper, second index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The first index of the first tensor</typeparam>
+    /// <typeparam name="X">The name of the index to contract</typeparam>
+    /// <typeparam name="Y">The first index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, W, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Lower, X>> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Upper, X>> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Lower, X>>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Upper, X>>
+        where V : IComplex<V>
+        where W : IIndex
+        where X : ISymbol
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[i, k] * b[j, k];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <summary>Contract two rank-two tensors</summary>
+    /// <typeparam name="T">A rank-two tensor with an upper, second index</typeparam>
+    /// <typeparam name="U">A rank-two tensor with a lower, second index</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="W">The first index of the first tensor</typeparam>
+    /// <typeparam name="X">The name of the index to contract</typeparam>
+    /// <typeparam name="Y">The first index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, W, Y> Contract<T, U, V, W, X, Y>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Upper, X>> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Lower, X>> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, W, Index<Upper, X>>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Y, Index<Lower, X>>
+        where V : IComplex<V>
+        where W : IIndex
+        where X : ISymbol
+        where Y : IIndex
+    {
+        Matrix4x4<V> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[i, k] * b[j, k];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
     //
     // Tensor products
     //
