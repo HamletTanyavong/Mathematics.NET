@@ -2020,7 +2020,7 @@ public static class DifGeo
     /// <param name="a">A rank-two tensor</param>
     /// <param name="b">A rank-one tensor</param>
     /// <returns>A rank-three tensor</returns>
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, I2, I3>(
+    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> TensorProduct<T, U, V, I1, I2, I3>(
         IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2> a,
         IRankOneTensor<U, Vector4<V>, V, I3> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2>
