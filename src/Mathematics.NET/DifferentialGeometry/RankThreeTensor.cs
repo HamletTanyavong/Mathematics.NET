@@ -1,4 +1,4 @@
-﻿// <copyright file="RankTwoTensor.cs" company="Mathematics.NET">
+﻿// <copyright file="RankThreeTensor.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,37 +27,38 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensors</summary>
-/// <typeparam name="T">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+/// <summary>Represents a rank-three tensor</summary>
+/// <typeparam name="T">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="V">The first index</typeparam>
 /// <typeparam name="W">The second index</typeparam>
-/// <param name="matrix">A backing matrix</param>
+/// <typeparam name="X">The third index</typeparam>
+/// <param name="array">A backing array</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct RankTwoTensor<T, U, V, W>(T matrix)
-    : IRankTwoTensor<RankTwoTensor<T, U, V, W>, T, U, V, W>,
-      IAdditionOperation<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, W>>,
-      ISubtractionOperation<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, W>>
-    where T : ISquareMatrix<T, U>
+public struct RankThreeTensor<T, U, V, W, X>(T array)
+    : IRankThreeTensor<RankThreeTensor<T, U, V, W, X>, T, U, V, W, X>
+    where T : ICubicArray<T, U>
     where U : IComplex<U>
     where V : IIndex
     where W : IIndex
+    where X : IIndex
 {
-    private T _matrix = matrix;
+    private T _array = array;
 
     //
-    // IRankTwoTensor interface
+    // IRankThreeTensor interface
     //
 
     public readonly IIndex I1 => V.Instance;
 
     public readonly IIndex I2 => W.Instance;
+
+    public readonly IIndex I3 => X.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
@@ -69,51 +70,43 @@ public struct RankTwoTensor<T, U, V, W>(T matrix)
 
     public static int E2Components => T.E2Components;
 
+    public static int E3Components => T.E3Components;
+
     //
     // Indexer
     //
 
-    public U this[int row, int column]
+    public U this[int i, int j, int k]
     {
-        get => _matrix[row, column];
-        set => _matrix[row, column] = value;
+        get => _array[i, j, k];
+        set => _array[i, j, k] = value;
     }
-
-    //
-    // Operators
-    //
-
-    public static RankTwoTensor<T, U, V, W> operator +(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
-        => left._matrix + right._matrix;
-
-    public static RankTwoTensor<T, U, V, W> operator -(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
-        => left._matrix - right._matrix;
 
     //
     // Equality
     //
 
-    public static bool operator ==(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
-        => left._matrix == right._matrix;
+    public static bool operator ==(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
+        => left._array == right._array;
 
-    public static bool operator !=(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
-        => left._matrix != right._matrix;
+    public static bool operator !=(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
+    => left._array != right._array;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankTwoTensor<T, U, V, W> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankThreeTensor<T, U, V, W, X> other && Equals(other);
 
-    public bool Equals(RankTwoTensor<T, U, V, W> value) => _matrix.Equals(value._matrix);
+    public bool Equals(RankThreeTensor<T, U, V, W, X> value) => _array.Equals(value._array);
 
-    public override int GetHashCode() => HashCode.Combine(_matrix);
+    public override int GetHashCode() => HashCode.Combine(_array);
 
     //
     // Formatting
     //
 
-    public string ToString(string? format, IFormatProvider? provider) => _matrix.ToString(format, provider);
+    public string ToString(string? format, IFormatProvider? provider) => _array.ToString(format, provider);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator RankTwoTensor<T, U, V, W>(T input) => new(input);
+    public static implicit operator RankThreeTensor<T, U, V, W, X>(T value) => new(value);
 }

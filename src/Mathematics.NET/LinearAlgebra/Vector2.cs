@@ -117,6 +117,18 @@ public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
     public static Vector2<T> operator -(Vector2<T> left, Vector2<T> right)
         => new(left.X1 - right.X1, left.X2 - right.X2);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2<T> operator *(Vector2<T> left, Vector2<T> right)
+        => new(left.X1 * right.X1, left.X2 * right.X2);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2<T> operator *(T c, Vector2<T> vector)
+        => new(c * vector.X1, c * vector.X2);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2<T> operator *(Vector2<T> vector, T c)
+        => new(vector.X1 * c, vector.X2 * c);
+
     //
     // Equality
     //

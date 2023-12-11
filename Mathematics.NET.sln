@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.DevApp", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Renderer", "src\Mathematics.NET.Renderer\Mathematics.NET.Renderer.csproj", "{94744B01-DD3C-4623-992F-19C5CC2B475B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.Benchmarks.Implementations", "tests\Mathematics.NET.Benchmarks.Implementations\Mathematics.NET.Benchmarks.Implementations.csproj", "{DFC7E4A6-FA68-4552-BD73-73DFE4636945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks.Implementations", "tests\Mathematics.NET.Benchmarks.Implementations\Mathematics.NET.Benchmarks.Implementations.csproj", "{DFC7E4A6-FA68-4552-BD73-73DFE4636945}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

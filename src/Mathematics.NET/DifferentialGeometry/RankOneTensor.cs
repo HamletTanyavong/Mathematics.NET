@@ -61,7 +61,7 @@ public struct RankOneTensor<T, U, V>(T vector)
     // IRankOneTensor interface
     //
 
-    public readonly IIndex Index => V.Instance;
+    public readonly IIndex I1 => V.Instance;
 
     //
     // Indexer

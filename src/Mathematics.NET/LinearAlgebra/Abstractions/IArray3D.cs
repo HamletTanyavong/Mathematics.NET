@@ -1,4 +1,4 @@
-﻿// <copyright file="IOneDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="IArray3D.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,20 +27,9 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays</summary>
+/// <summary>Defines support for 3D arrays</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IOneDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<T, U>,
-      IFormattable
-    where T : IOneDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
-{
-    /// <summary>The number of components in the one-dimensional array</summary>
-    static abstract int E1Components { get; }
-
-    /// <summary>Get the element at the specified index.</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
-    U this[int index] { get; set; }
-}
+public interface IArray3D<T, U> : IThreeDimensionalArrayRepresentable<T, U>
+    where T : IArray3D<T, U>
+    where U : IComplex<U>;

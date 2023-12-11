@@ -38,8 +38,8 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="T">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="V">An index position</typeparam>
-/// <typeparam name="W">The first index</typeparam>
-/// <typeparam name="X">The second index</typeparam>
+/// <typeparam name="W">The name of the first index</typeparam>
+/// <typeparam name="X">The name of the second index</typeparam>
 /// <param name="matrix">A backing matrix</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct MetricTensor<T, U, V, W, X>(T matrix)
@@ -60,7 +60,9 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
     // IRankTwoTensor interface
     //
 
-    public readonly IIndex[] Indices => new IIndex[2] { Index<V, W>.Instance, Index<V, X>.Instance };
+    public readonly IIndex I1 => Index<V, W>.Instance;
+
+    public readonly IIndex I2 => Index<V, X>.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
