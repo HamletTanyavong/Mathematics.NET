@@ -1949,23 +1949,23 @@ public static class DifGeo
     // Tensor products
     //
 
-    /// <summary>
-    /// Compute the tensor product of two rank-one tensors with four elements.
-    ///
-    /// This operation is written as $$ a\otimes b $$.
-    /// </summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="I1">The first index</typeparam>
-    /// <typeparam name="I2">The second index</typeparam>
+    /// <summary>Compute the tensor product of two rank-one tensors.</summary>
+    /// <typeparam name="T">A rank-one tensor</typeparam>
+    /// <typeparam name="U">A rank-one tensor</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="I1">The index of the first tensor</typeparam>
+    /// <typeparam name="I2">The index of the second tensor</typeparam>
     /// <param name="a">The first tensor</param>
     /// <param name="b">The second tensor</param>
-    /// <returns>A rank two tensor</returns>
-    public static RankTwoTensor<Matrix4x4<T>, T, I1, I2> TensorProduct<T, I1, I2>(RankOneTensor<Vector4<T>, T, I1> a, RankOneTensor<Vector4<T>, T, I2> b)
-        where T : IComplex<T>
+    /// <returns>A rank-two tensor</returns>
+    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> TensorProduct<T, U, V, I1, I2>(IRankOneTensor<T, Vector4<V>, V, I1> a, IRankOneTensor<U, Vector4<V>, V, I2> b)
+        where T : IRankOneTensor<T, Vector4<V>, V, I1>
+        where U : IRankOneTensor<U, Vector4<V>, V, I2>
+        where V : IComplex<V>
         where I1 : IIndex
         where I2 : IIndex
     {
-        Matrix4x4<T> matrix = new();
+        Matrix4x4<V> matrix = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -1974,5 +1974,73 @@ public static class DifGeo
             }
         }
         return new(matrix);
+    }
+
+    /// <summary>Compute the tensor product of a rank-one tensor and a rank-two tensor.</summary>
+    /// <typeparam name="T">A rank-one tensor</typeparam>
+    /// <typeparam name="U">A rank-two tensor</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="I1">The index of the first tensor</typeparam>
+    /// <typeparam name="I2">The first index of the second tensor</typeparam>
+    /// <typeparam name="I3">The second index of the second tensor</typeparam>
+    /// <param name="a">A rank-one tensor</param>
+    /// <param name="b">A rank-two tensor</param>
+    /// <returns>A rank-three tensor</returns>
+    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> TensorProduct<T, U, V, I1, I2, I3>(
+        IRankOneTensor<T, Vector4<V>, V, I1> a,
+        IRankTwoTensor<U, Matrix4x4<V>, V, I2, I3> b)
+        where T : IRankOneTensor<T, Vector4<V>, V, I1>
+        where U : IRankTwoTensor<U, Matrix4x4<V>, V, I2, I3>
+        where V : IComplex<V>
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+    {
+        Array4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    array[i, j, k] = a[i] * b[j, k];
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <summary>Compute the tensor product of a rank-two tensor and a rank-one tensor.</summary>
+    /// <typeparam name="T">A rank-two tensor</typeparam>
+    /// <typeparam name="U">A rank-one tensor</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
+    /// <typeparam name="I1">The first index of the first tensor</typeparam>
+    /// <typeparam name="I2">The second index of the second tensor</typeparam>
+    /// <typeparam name="I3">The index of the second tensor</typeparam>
+    /// <param name="a">A rank-two tensor</param>
+    /// <param name="b">A rank-one tensor</param>
+    /// <returns>A rank-three tensor</returns>
+    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, I2, I3>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2> a,
+        IRankOneTensor<U, Vector4<V>, V, I3> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2>
+        where U : IRankOneTensor<U, Vector4<V>, V, I3>
+        where V : IComplex<V>
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+    {
+        Array4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    array[i, j, k] = a[i, j] * b[k];
+                }
+            }
+        }
+        return new(array);
     }
 }
