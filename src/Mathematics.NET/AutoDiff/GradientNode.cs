@@ -1,4 +1,4 @@
-﻿// <copyright file="Node.cs" company="Mathematics.NET">
+﻿// <copyright file="GradientNode.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,7 +32,7 @@ namespace Mathematics.NET.AutoDiff;
 /// <summary>Represents a node on a gradient tape</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-internal readonly record struct Node<T>
+internal readonly record struct GradientNode<T>
     where T : IComplex<T>
 {
     /// <summary>The derivative of the left component of the binary operation</summary>
@@ -45,7 +45,7 @@ internal readonly record struct Node<T>
     /// <summary>The parent index of the right node</summary>
     public readonly int PY;
 
-    public Node(int index)
+    public GradientNode(int index)
     {
         DX = T.Zero;
         DY = T.Zero;
@@ -54,7 +54,7 @@ internal readonly record struct Node<T>
         PY = index;
     }
 
-    public Node(T dx, int px, int py)
+    public GradientNode(T dx, int px, int py)
     {
         DX = dx;
         DY = T.Zero;
@@ -63,7 +63,7 @@ internal readonly record struct Node<T>
         PY = py;
     }
 
-    public Node(T dx, T dy, int px, int py)
+    public GradientNode(T dx, T dy, int px, int py)
     {
         DX = dx;
         DY = dy;
