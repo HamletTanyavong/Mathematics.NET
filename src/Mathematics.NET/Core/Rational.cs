@@ -124,7 +124,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> operator --(Rational<T> x) => Reduce(new(x._numerator - x._denominator, x._denominator));
 
-    public static Rational<T> operator ++(Rational<T> x) => new(x._numerator, x._denominator);
+    public static Rational<T> operator ++(Rational<T> x) => Reduce(new(x._numerator + x._denominator, x._denominator));
 
     public static Rational<T> operator +(Rational<T> x, Rational<T> y)
     {
