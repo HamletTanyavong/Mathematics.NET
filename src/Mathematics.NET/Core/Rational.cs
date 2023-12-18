@@ -513,8 +513,6 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), T.Abs(x._denominator));
 
-    public static Real Atan2(Rational<T> y, Rational<T> x) => Real.Atan2(ToReal(y), ToReal(x));
-
     public static Rational<T> Ceiling(Rational<T> x)
     {
         var (quotient, remainder) = T.DivRem(x._numerator, x._denominator);

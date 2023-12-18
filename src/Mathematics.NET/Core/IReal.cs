@@ -48,7 +48,7 @@ public interface IReal<T>
     /// <param name="y">The first value</param>
     /// <param name="x">The second value</param>
     /// <returns>An angle</returns>
-    static abstract Real Atan2(T y, T x);
+    static virtual Real Atan2(T y, T x) => Math.Atan2(T.ToReal(y).AsDouble(), T.ToReal(x).AsDouble());
 
     /// <summary>Compute the ceiling function of a value</summary>
     /// <param name="x">A value</param>
