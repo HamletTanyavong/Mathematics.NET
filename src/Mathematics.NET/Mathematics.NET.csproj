@@ -50,8 +50,4 @@
     <Using Include="Mathematics.NET.Core" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Bezier\" />
-  </ItemGroup>
-
 </Project>
