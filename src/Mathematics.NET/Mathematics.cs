@@ -96,6 +96,20 @@ public static class Mathematics
     // Integer-related
 
     /// <summary>The binomial coefficient</summary>
+    /// <param name="n">A total of <paramref name="n"/> elements</param>
+    /// <param name="k">An unordered subset of <paramref name="k"/> elements</param>
+    /// <returns><paramref name="n"/> choose <paramref name="k"/></returns>
+    public static Real Binomial(uint n, uint k)
+    {
+        var result = 1.0;
+        for (uint i = 0; i < k; i++)
+        {
+            result *= (double)(n - i) / (i + 1);
+        }
+        return result;
+    }
+
+    /// <summary>The binomial coefficient</summary>
     /// <remarks>This method works with <c>BigInteger</c>. Be aware that this method may take a long time.</remarks>
     /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
     /// <param name="n">A total of <paramref name="n"/> elements</param>

@@ -70,7 +70,7 @@ public record class GradientTape<T> : ITape<T>
 {
     // TODO: Measure performance with Stack<Node<T>> instead of List<Node<T>>
     // TODO: Consider using array pools or something similar
-    private List<Node<T>> _nodes;
+    private List<GradientNode<T>> _nodes;
     private int _variableCount;
 
     public GradientTape()
@@ -97,8 +97,8 @@ public record class GradientTape<T> : ITape<T>
     {
         const string tab = "    ";
 
-        ReadOnlySpan<Node<T>> nodeSpan = CollectionsMarshal.AsSpan(_nodes);
-        Node<T> node;
+        ReadOnlySpan<GradientNode<T>> nodeSpan = CollectionsMarshal.AsSpan(_nodes);
+        GradientNode<T> node;
 
         int i = 0;
         while (i < Math.Min(_variableCount, limit))
@@ -146,7 +146,7 @@ public record class GradientTape<T> : ITape<T>
             throw new Exception("Gradient tape contains no root nodes");
         }
 
-        ReadOnlySpan<Node<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ReadOnlySpan<GradientNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
 
         var length = nodes.Length;

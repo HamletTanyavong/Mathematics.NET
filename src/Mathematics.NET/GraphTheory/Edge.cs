@@ -1,4 +1,4 @@
-﻿// <copyright file="Node.cs" company="Mathematics.NET">
+﻿// <copyright file="Edge.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,50 +25,22 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.InteropServices;
+using Mathematics.NET.GraphTheory.Abstractions;
 
-namespace Mathematics.NET.AutoDiff;
+namespace Mathematics.NET.GraphTheory;
 
-/// <summary>Represents a node on a gradient tape</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-[StructLayout(LayoutKind.Sequential)]
-internal readonly record struct Node<T>
-    where T : IComplex<T>
+/// <summary>Represents an edge on a graph</summary>
+public class Edge : IGraphComponent
 {
-    /// <summary>The derivative of the left component of the binary operation</summary>
-    public readonly T DX;
-    /// <summary>The derivative of the right component of the binary operation</summary>
-    public readonly T DY;
-
-    /// <summary>The parent index of the left node</summary>
-    public readonly int PX;
-    /// <summary>The parent index of the right node</summary>
-    public readonly int PY;
-
-    public Node(int index)
+    public Edge(Node origin, Node destination)
     {
-        DX = T.Zero;
-        DY = T.Zero;
-
-        PX = index;
-        PY = index;
+        Origin = origin;
+        Destination = destination;
     }
 
-    public Node(T dx, int px, int py)
-    {
-        DX = dx;
-        DY = T.Zero;
+    /// <summary>Get the origin node.</summary>
+    public Node Origin { get; set; }
 
-        PX = px;
-        PY = py;
-    }
-
-    public Node(T dx, T dy, int px, int py)
-    {
-        DX = dx;
-        DY = dy;
-
-        PX = px;
-        PY = py;
-    }
+    /// <summary>Get the destination node.</summary>
+    public Node Destination { get; set; }
 }
