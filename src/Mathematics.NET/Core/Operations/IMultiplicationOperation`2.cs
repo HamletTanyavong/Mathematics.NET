@@ -1,4 +1,4 @@
-﻿// <copyright file="IMultiplicationOperation.cs" company="Mathematics.NET">
+﻿// <copyright file="IMultiplicationOperation`2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
