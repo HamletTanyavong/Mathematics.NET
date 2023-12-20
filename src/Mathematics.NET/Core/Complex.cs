@@ -28,6 +28,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
@@ -288,6 +289,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static Complex FromDouble(double x) => new(x);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Complex FromPolarForm(Real magnitude, Real phase)
         => new(magnitude * Math.Cos(phase.AsDouble()), magnitude * Math.Sin(phase.AsDouble()));
 
@@ -326,6 +328,10 @@ public readonly struct Complex(Real real, Real imaginary)
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Complex InverseLerp(Complex start, Complex end, Real weight)
+        => new(Real.InverseLerp(start._real, end._real, weight), Real.InverseLerp(start._imaginary, end._imaginary, weight));
+
     public static bool IsFinite(Complex z) => Real.IsFinite(z._real) && Real.IsFinite(z._imaginary);
 
     public static bool IsInfinity(Complex z) => Real.IsInfinity(z._real) || Real.IsInfinity(z._imaginary);
@@ -333,6 +339,10 @@ public readonly struct Complex(Real real, Real imaginary)
     public static bool IsNaN(Complex z) => !IsInfinity(z) && !IsFinite(z);
 
     public static bool IsZero(Complex z) => Real.IsZero(z._real) && Real.IsZero(z._imaginary);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Complex Lerp(Complex start, Complex end, Real weight)
+        => new(Real.Lerp(start._real, end._real, weight), Real.Lerp(start._imaginary, end._imaginary, weight));
 
     public static Complex Reciprocate(Complex z)
     {
