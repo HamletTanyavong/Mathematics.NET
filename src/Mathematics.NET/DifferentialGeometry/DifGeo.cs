@@ -39,7 +39,7 @@ public static partial class DifGeo
     // Tensor contractions
     //
 
-    // Rank-one and rank-one
+    #region Rank-one and Rank-one
 
     /// <summary>Contract two rank-one tensors.</summary>
     /// <typeparam name="T">A rank-one tensor with a lower index</typeparam>
@@ -89,7 +89,9 @@ public static partial class DifGeo
         return result;
     }
 
-    // Rank-one and rank-two
+    #endregion
+
+    #region Rank-one and Rank-two
 
     /// <summary>Contract a rank-one tensor with a rank-two tensor.</summary>
     /// <typeparam name="T">A rank-one tensor with a lower index</typeparam>
@@ -323,7 +325,9 @@ public static partial class DifGeo
         return new(vector);
     }
 
-    // Rank-one and rank-three
+    #endregion
+
+    #region Rank-one and Rank-three
 
     /// <summary>Contract a rank-one tensor with a rank-three tensor.</summary>
     /// <typeparam name="T">A rank-one tensor with a lower index</typeparam>
@@ -733,7 +737,9 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    // Rank-two and rank-two
+    #endregion
+
+    #region Rank-two and Rank-two
 
     /// <summary>Contract two rank-two tensors.</summary>
     /// <typeparam name="T">A rank-two tensor with a lower, first index</typeparam>
@@ -1007,7 +1013,9 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    // Rank-two and rank-three
+    #endregion
+
+    #region Rank-two and Rank-three
 
     /// <summary>Contract a rank-two tensor with a rank-three tensor.</summary>
     /// <typeparam name="T">A rank-two tensor with a lower, first index</typeparam>
@@ -1944,6 +1952,8 @@ public static partial class DifGeo
         }
         return new(array);
     }
+
+    #endregion
 
     //
     // Tensor products
