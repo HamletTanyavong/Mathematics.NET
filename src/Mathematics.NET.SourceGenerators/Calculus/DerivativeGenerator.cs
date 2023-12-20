@@ -28,12 +28,13 @@
 using System.Collections.Immutable;
 using System.Text;
 using Mathematics.NET.SourceGenerators.Models;
-using Mathematics.NET.SourceGenerators.SourceBuilders;
 
-namespace Mathematics.NET.SourceGenerators.IncrementalGenerators;
+namespace Mathematics.NET.SourceGenerators.Calculus;
+
+// This is experimental. Uncomment the generator attribute to generate code.
 
 /// <summary>A generator for calculating derivatives</summary>
-[Generator]
+//[Generator]
 public sealed class DerivativeGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)

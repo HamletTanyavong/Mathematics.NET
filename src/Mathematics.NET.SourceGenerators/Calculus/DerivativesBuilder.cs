@@ -30,7 +30,7 @@ using Mathematics.NET.SourceGenerators.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators.SourceBuilders;
+namespace Mathematics.NET.SourceGenerators.Calculus;
 
 /// <summary>Derivatives builder</summary>
 public sealed class DerivativesBuilder
@@ -78,6 +78,7 @@ public sealed class DerivativesBuilder
                     .WithMembers(
                         SingletonList<MemberDeclarationSyntax>(
                             ClassDeclaration("Equations")
+
                             .WithModifiers(
                                 TokenList(new[] {
                                     Token(SyntaxKind.PublicKeyword),
