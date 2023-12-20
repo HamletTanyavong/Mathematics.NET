@@ -33,7 +33,7 @@ using Mathematics.NET.Symbols;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>A class containing differential geometry operations</summary>
-public static class DifGeo
+public static partial class DifGeo
 {
     //
     // Tensor contractions
