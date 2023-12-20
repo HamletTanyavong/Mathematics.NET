@@ -28,7 +28,7 @@
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for cubic arrays</summary>
-/// <typeparam name="T">A type that implements <see cref="IArray3D{T, U}"/></typeparam>
+/// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 public interface ICubicArray<T, U> : IArray3D<T, U>
     where T : ICubicArray<T, U>
