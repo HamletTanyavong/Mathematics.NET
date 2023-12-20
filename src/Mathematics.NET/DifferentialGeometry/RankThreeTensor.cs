@@ -90,7 +90,7 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
         => left._array == right._array;
 
     public static bool operator !=(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
-    => left._array != right._array;
+        => left._array != right._array;
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankThreeTensor<T, U, V, W, X> other && Equals(other);
 
