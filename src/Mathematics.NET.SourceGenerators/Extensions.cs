@@ -39,12 +39,16 @@ public static class Extensions
         };
     }
 
-    public static MethodDeclarationSyntax RemoveAttribute(this MethodDeclarationSyntax methodDeclarationSyntax, string baseAttributeName)
+    public static MethodDeclarationSyntax RemoveAttribute(this MethodDeclarationSyntax methodDeclarationSyntax, string attributeName)
     {
+        if (attributeName.EndsWith("Attribute"))
+        {
+            attributeName = attributeName.Remove(attributeName.Length - 9);
+        }
         var attributeNode = methodDeclarationSyntax
             .DescendantNodes()
             .OfType<AttributeSyntax>()
-            .First(x => x.Name.GetValue() == baseAttributeName);
+            .First(x => x.Name.GetValue() == attributeName);
 
         if (attributeNode.Parent!.ChildNodes().Count() > 1)
         {
