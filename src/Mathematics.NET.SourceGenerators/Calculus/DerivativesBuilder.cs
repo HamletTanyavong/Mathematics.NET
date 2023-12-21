@@ -80,9 +80,9 @@ public sealed class DerivativesBuilder
                             ClassDeclaration("Equations")
 
                             .WithModifiers(
-                                TokenList(new[] {
+                                TokenList([
                                     Token(SyntaxKind.PublicKeyword),
-                                    Token(SyntaxKind.StaticKeyword) }))
+                                    Token(SyntaxKind.StaticKeyword)]))
                             .WithMembers(
                                 List(memberDeclarations))))))
             .NormalizeWhitespace();
