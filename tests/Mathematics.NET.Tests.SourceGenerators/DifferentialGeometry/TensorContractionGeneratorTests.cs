@@ -38,52 +38,39 @@ public sealed class TensorContractionGeneratorTests : VerifyBase
     public void SourceGenerator_RankThreeTensor_GeneratesTensorContractions()
     {
         var source = """
-            using Mathematics.NET.Core.Attributes.GeneratorAttributes;
-            using Mathematics.NET.DifferentialGeometry.Abstractions;
-            using Mathematics.NET.LinearAlgebra;
-            using Mathematics.NET.LinearAlgebra.Abstractions;
-            using Mathematics.NET.Symbols;
+            namespace TestNamespace;
 
-            namespace CompilationNamespace;
-
-            public class Program
+            [GenerateTensorContractions]
+            public static RankFourTensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
+                IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
+                IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
+                where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
+                where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4>
+                where V : IComplex<V>
+                where IC : ISymbol
+                where I1 : IIndex
+                where I2 : IIndex
+                where I3 : IIndex
+                where I4 : IIndex
             {
-                public static void Main(string[] args)
+                Array4x4x4x4<V> array = new();
+                for (int i = 0; i < 4; i++)
                 {
-                }
-
-                [GenerateTensorContractions]
-                public static RankFourTensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
-                    IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
-                    IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
-                    where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
-                    where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4>
-                    where V : IComplex<V>
-                    where IC : ISymbol
-                    where I1 : IIndex
-                    where I2 : IIndex
-                    where I3 : IIndex
-                    where I4 : IIndex
-                {
-                    Array4x4x4x4<V> array = new();
-                    for (int i = 0; i < 4; i++)
+                    for (int j = 0; j < 4; j++)
                     {
-                        for (int j = 0; j < 4; j++)
+                        for (int k = 0; k < 4; k++)
                         {
-                            for (int k = 0; k < 4; k++)
+                            for (int l = 0; l < 4; l++)
                             {
-                                for (int l = 0; l < 4; l++)
+                                for (int m = 0; m < 4; m++)
                                 {
-                                    for (int m = 0; m < 4; m++)
-                                    {
-                                        array[i, j, k, l] += a[m, i, j] * b[m, k, l];
-                                    }
+                                    array[i, j, k, l] += a[m, i, j] * b[m, k, l];
                                 }
                             }
                         }
                     }
-                    return new(array);
                 }
+                return new(array);
             }
             """;
 
@@ -98,7 +85,7 @@ public sealed class TensorContractionGeneratorTests : VerifyBase
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(source);
         var compilation = CSharpCompilation.Create(
-            assemblyName: "Tests",
+            assemblyName: "TestAssembly",
             syntaxTrees: [syntaxTree]);
 
         var generator = new TensorContractionGenerator();
