@@ -40,7 +40,9 @@ public static partial class DifGeo
     // Tensor contractions
     //
 
-    #region Rank-one and Rank-one
+    //
+    // Rank-one and Rank-one
+    //
 
     [GenerateTensorContractions]
     public static W Contract<T, U, V, W, IC>(IRankOneTensor<T, V, W, Index<Lower, IC>> a, IRankOneTensor<U, V, W, Index<Upper, IC>> b)
@@ -58,9 +60,9 @@ public static partial class DifGeo
         return result;
     }
 
-    #endregion
-
-    #region Rank-one and Rank-two
+    //
+    // Rank-one and Rank-two
+    //
 
     [GenerateTensorContractions]
     public static RankOneTensor<Vector4<V>, V, I> Contract<T, U, V, IC, I>(
@@ -78,27 +80,6 @@ public static partial class DifGeo
             for (int j = 0; j < 4; j++)
             {
                 vector[i] += a[j] * b[j, i];
-            }
-        }
-        return new(vector);
-    }
-
-    [GenerateTensorContractions]
-    public static RankOneTensor<Vector4<V>, V, I> Contract<T, U, V, IC, I>(
-        IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, I, Index<Upper, IC>> b)
-        where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, I, Index<Upper, IC>>
-        where V : IComplex<V>
-        where IC : ISymbol
-        where I : IIndex
-    {
-        Vector4<V> vector = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                vector[i] += a[j] * b[i, j];
             }
         }
         return new(vector);
@@ -125,30 +106,9 @@ public static partial class DifGeo
         return new(vector);
     }
 
-    [GenerateTensorContractions]
-    public static RankOneTensor<Vector4<V>, V, I> Contract<T, U, V, I, IC>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, I, Index<Lower, IC>> a,
-        IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, I, Index<Lower, IC>>
-        where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
-        where V : IComplex<V>
-        where I : IIndex
-        where IC : ISymbol
-    {
-        Vector4<V> vector = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                vector[i] += a[i, j] * b[j];
-            }
-        }
-        return new(vector);
-    }
-
-    #endregion
-
-    #region Rank-one and Rank-three
+    //
+    // Rank-one and Rank-three
+    //
 
     [GenerateTensorContractions]
     public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
@@ -169,56 +129,6 @@ public static partial class DifGeo
                 for (int k = 0; k < 4; k++)
                 {
                     matrix[i, j] += a[k] * b[k, i, j];
-                }
-            }
-        }
-        return new(matrix);
-    }
-
-    [GenerateTensorContractions]
-    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
-        IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, I1, Index<Upper, IC>, I2> b)
-        where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I1, Index<Upper, IC>, I2>
-        where V : IComplex<V>
-        where IC : ISymbol
-        where I1 : IIndex
-        where I2 : IIndex
-    {
-        Matrix4x4<V> matrix = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    matrix[i, j] += a[k] * b[i, k, j];
-                }
-            }
-        }
-        return new(matrix);
-    }
-
-    [GenerateTensorContractions]
-    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
-        IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, I1, I2, Index<Upper, IC>> b)
-        where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I1, I2, Index<Upper, IC>>
-        where V : IComplex<V>
-        where IC : ISymbol
-        where I1 : IIndex
-        where I2 : IIndex
-    {
-        Matrix4x4<V> matrix = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    matrix[i, j] += a[k] * b[i, j, k];
                 }
             }
         }
@@ -250,59 +160,9 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    [GenerateTensorContractions]
-    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, I1, IC, I2>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
-        IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2>
-        where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-    {
-        Matrix4x4<V> matrix = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    matrix[i, j] += a[i, k, j] * b[k];
-                }
-            }
-        }
-        return new(matrix);
-    }
-
-    [GenerateTensorContractions]
-    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, I1, I2, IC>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, I1, I2, Index<Lower, IC>> a,
-        IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, I2, Index<Lower, IC>>
-        where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where I2 : IIndex
-        where IC : ISymbol
-    {
-        Matrix4x4<V> matrix = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    matrix[i, j] += a[i, j, k] * b[k];
-                }
-            }
-        }
-        return new(matrix);
-    }
-
-    #endregion
-
-    #region Rank-two and Rank-two
+    //
+    // Rank-two and Rank-two
+    //
 
     [GenerateTensorContractions]
     public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
@@ -329,84 +189,9 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    [GenerateTensorContractions]
-    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, I2, Index<Upper, IC>> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, I2, Index<Upper, IC>>
-        where V : IComplex<V>
-        where IC : ISymbol
-        where I1 : IIndex
-        where I2 : IIndex
-    {
-        Matrix4x4<V> matrix = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    matrix[i, j] += a[k, i] * b[j, k];
-                }
-            }
-        }
-        return new(matrix);
-    }
-
-    [GenerateTensorContractions]
-    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, I1, IC, I2>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I2> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I2>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-    {
-        Matrix4x4<V> matrix = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    matrix[i, j] += a[i, k] * b[k, j];
-                }
-            }
-        }
-        return new(matrix);
-    }
-
-    [GenerateTensorContractions]
-    public static RankTwoTensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, I1, IC, I2>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, I2, Index<Upper, IC>> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, I2, Index<Upper, IC>>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-    {
-        Matrix4x4<V> matrix = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    matrix[i, j] += a[i, k] * b[j, k];
-                }
-            }
-        }
-        return new(matrix);
-    }
-
-    #endregion
-
-    #region Rank-two and Rank-three
+    //
+    // Rank-two and Rank-three
+    //
 
     [GenerateTensorContractions]
     public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
@@ -430,151 +215,6 @@ public static partial class DifGeo
                     for (int l = 0; l < 4; l++)
                     {
                         array[i, j, k] += a[l, i] * b[l, j, k];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, I2, Index<Upper, IC>, I3> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I2, Index<Upper, IC>, I3>
-        where V : IComplex<V>
-        where IC : ISymbol
-        where I1 : IIndex
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[l, i] * b[j, l, k];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, I2, I3, Index<Upper, IC>> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I2, I3, Index<Upper, IC>>
-        where V : IComplex<V>
-        where IC : ISymbol
-        where I1 : IIndex
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[l, i] * b[j, k, l];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, IC, I2, I3>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I2, I3> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I2, I3>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[i, l] * b[l, j, k];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, IC, I2, I3>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, I2, Index<Upper, IC>, I3> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I2, Index<Upper, IC>, I3>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[i, l] * b[j, l, k];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, IC, I2, I3>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, I2, I3, Index<Upper, IC>> b)
-        where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, Index<Lower, IC>>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I2, I3, Index<Upper, IC>>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[i, l] * b[j, k, l];
                     }
                 }
             }
@@ -610,153 +250,6 @@ public static partial class DifGeo
         }
         return new(array);
     }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, I3, Index<Upper, IC>> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, I3, Index<Upper, IC>>
-        where V : IComplex<V>
-        where IC : ISymbol
-        where I1 : IIndex
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[l, i, j] * b[k, l];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, IC, I2, I3>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[i, l, j] * b[l, k];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, IC, I2, I3>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, I3, Index<Upper, IC>> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, I3, Index<Upper, IC>>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where IC : ISymbol
-        where I2 : IIndex
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[i, l, j] * b[k, l];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, I2, IC, I3>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, I1, I2, Index<Lower, IC>> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, I2, Index<Lower, IC>>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where I2 : IIndex
-        where IC : ISymbol
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[i, j, l] * b[l, k];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    [GenerateTensorContractions]
-    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, I1, I2, IC, I3>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, I1, I2, Index<Lower, IC>> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, I3, Index<Upper, IC>> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, I2, Index<Lower, IC>>
-        where U : IRankTwoTensor<U, Matrix4x4<V>, V, I3, Index<Upper, IC>>
-        where V : IComplex<V>
-        where I1 : IIndex
-        where I2 : IIndex
-        where IC : ISymbol
-        where I3 : IIndex
-    {
-        Array4x4x4<V> array = new();
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    for (int l = 0; l < 4; l++)
-                    {
-                        array[i, j, k] += a[i, j, l] * b[k, l];
-                    }
-                }
-            }
-        }
-        return new(array);
-    }
-
-    #endregion
 
     //
     // Tensor products
