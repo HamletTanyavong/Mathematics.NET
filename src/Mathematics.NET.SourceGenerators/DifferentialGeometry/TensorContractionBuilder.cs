@@ -127,7 +127,9 @@ public sealed class TensorContractionBuilder
         List<MemberDeclarationSyntax> result = [];
         for (int i = 0; i < _methodInformationArray.Length; i++)
         {
-            var method = _methodInformationArray[i].MethodDeclaration.RemoveAttribute("GenerateTensorContractions");
+            var method = _methodInformationArray[i].MethodDeclaration;
+            ValidateSeedContraction(method);
+            method = method.RemoveAttribute("GenerateTensorContractions");
 
             // Generate the twin of the original contraction.
             result.Add(GenerateTwinContraction(method));
@@ -160,6 +162,47 @@ public sealed class TensorContractionBuilder
             }
         }
         return result.ToArray();
+    }
+
+    //
+    // Validation
+    //
+
+    private void ValidateSeedContraction(MemberDeclarationSyntax memberDeclaration)
+    {
+        var paramList = GetParameterList(memberDeclaration);
+
+        var leftParam = paramList.Parameters[0];
+        var leftArgs = GetTypeArgumentList(leftParam);
+        if (leftArgs.Arguments[3] is GenericNameSyntax leftName)
+        {
+            if (((IdentifierNameSyntax)leftName.TypeArgumentList.Arguments[0]).Identifier.Text != "Lower")
+            {
+                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the first parameter must be \"Lower.\"");
+                _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+            }
+        }
+        else
+        {
+            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the first parameter must be of type \"Index.\"");
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+        }
+
+        var rightParam = paramList.Parameters[1];
+        var rightArgs = GetTypeArgumentList(rightParam);
+        if (rightArgs.Arguments[3] is GenericNameSyntax rightName)
+        {
+            if (((IdentifierNameSyntax)rightName.TypeArgumentList.Arguments[0]).Identifier.Text != "Upper")
+            {
+                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the second parameter must be \"Upper.\"");
+                _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+            }
+        }
+        else
+        {
+            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the second parameter must be of type \"Index.\"");
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+        }
     }
 
     //
