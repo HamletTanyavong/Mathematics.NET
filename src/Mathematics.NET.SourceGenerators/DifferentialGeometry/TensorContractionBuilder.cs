@@ -234,18 +234,8 @@ public sealed class TensorContractionBuilder
         var paramList = GetParameterList(memberDeclaration).Parameters[(int)position];
         var args = GetTypeArgumentList(paramList).Arguments;
         var count = args.Count;
-
-        // The first 3 type parameters do not represent indices.
-        int i = 3;
-        while (i < args.Count)
-        {
-            if (args[i] is GenericNameSyntax name && name.Identifier.Text == "Index")
-            {
-                break;
-            }
-            i++;
-        }
-        return new(i, count);
+        var index = args.IndexOf(args.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
+        return new(index, count);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
