@@ -35,7 +35,7 @@ namespace Mathematics.NET.Tests.SourceGenerators.DifferentialGeometry;
 public sealed class TensorContractionGeneratorTests : VerifyBase
 {
     [TestMethod]
-    public void SourceGenerator_RankThreeTensor_GeneratesTensorContractions()
+    public void SourceGenerator_RankThreeTensors_GeneratesContractions()
     {
         var source = """
             namespace TestNamespace;
