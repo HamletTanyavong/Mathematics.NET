@@ -179,13 +179,13 @@ public sealed class TensorContractionBuilder
             if (((IdentifierNameSyntax)leftName.TypeArgumentList.Arguments[0]).Identifier.Text != "Lower")
             {
                 var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the first parameter must be \"Lower.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+                _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
             }
         }
         else
         {
             var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the first parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
         }
 
         var rightParam = paramList.Parameters[1];
@@ -195,13 +195,13 @@ public sealed class TensorContractionBuilder
             if (((IdentifierNameSyntax)rightName.TypeArgumentList.Arguments[0]).Identifier.Text != "Upper")
             {
                 var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the second parameter must be \"Upper.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+                _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
             }
         }
         else
         {
             var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the second parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
         }
     }
 
