@@ -28,6 +28,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
@@ -271,6 +272,7 @@ public readonly struct Real(double real)
 
     public static Real Hypot(Real x, Real y) => double.Hypot(x._value, y._value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Real InverseLerp(Real start, Real end, Real weight) => (One - weight) * end + weight * start;
 
     public static bool IsFinite(Real x) => double.IsFinite(x._value);
@@ -285,6 +287,7 @@ public readonly struct Real(double real)
 
     public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Real Lerp(Real start, Real end, Real weight) => (One - weight) * start + weight * end;
 
     public static Real Max(Real x, Real y) => Math.Max(x._value, y._value);

@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
     <Title>Mathematics.NET</Title>
-    <Version>0.1.0-alpha.11</Version>
+    <Version>0.1.0-alpha.12</Version>
     <PackageIcon>mathematics.net.png</PackageIcon>
     <Authors>Hamlet Tanyavong</Authors>
     <Description>Mathematics.NET is a C# class library that provides tools for solving mathematical problems. Included are custom types for real, complex, and rational numbers as well as other mathematical objects such as vectors, matrices, and tensors. The library also contains methods for performing first and second-order, forward and reverse-mode automatic differentiation.</Description>

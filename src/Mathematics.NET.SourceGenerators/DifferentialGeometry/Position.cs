@@ -1,4 +1,4 @@
-﻿// <copyright file="ICubicArray.cs" company="Mathematics.NET">
+﻿// <copyright file="Position.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,11 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>Defines support for cubic arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ICubicArray<T, U> : IArray3D<T, U>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>;
+public enum Position : byte
+{
+    Left = 0,
+    Right = 1
+}

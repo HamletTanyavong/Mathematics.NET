@@ -1,4 +1,4 @@
-﻿// <copyright file="DualVector3OfRealTests.cs" company="Mathematics.NET">
+﻿// <copyright file="DualVector3OfDualOfRealTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

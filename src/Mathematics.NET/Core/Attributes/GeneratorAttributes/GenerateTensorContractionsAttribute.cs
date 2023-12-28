@@ -1,4 +1,4 @@
-﻿// <copyright file="ICubicArray.cs" company="Mathematics.NET">
+﻿// <copyright file="GenerateTensorContractionsAttribute.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,11 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.Core.Attributes.GeneratorAttributes;
 
-/// <summary>Defines support for cubic arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ICubicArray<T, U> : IArray3D<T, U>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>;
+/// <summary>Indicates that index permutations of a tensor contraction should be generated</summary>
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+internal sealed class GenerateTensorContractionsAttribute : Attribute;

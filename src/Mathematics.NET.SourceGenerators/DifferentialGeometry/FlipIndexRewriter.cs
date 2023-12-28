@@ -1,4 +1,4 @@
-﻿// <copyright file="ICubicArray.cs" company="Mathematics.NET">
+﻿// <copyright file="FlipIndexRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,11 +25,26 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+using Microsoft.CodeAnalysis.CSharp;
 
-/// <summary>Defines support for cubic arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ICubicArray<T, U> : IArray3D<T, U>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+
+/// <summary>A syntax walker that flips lower indices to upper indices and vice versa</summary>
+public sealed class FlipIndexRewriter : CSharpSyntaxRewriter
+{
+    private static readonly IdentifierNameSyntax s_lower = SyntaxFactory.IdentifierName("Lower");
+    private static readonly IdentifierNameSyntax s_upper = SyntaxFactory.IdentifierName("Upper");
+
+    public override SyntaxNode VisitIdentifierName(IdentifierNameSyntax node)
+    {
+        if (node.Identifier.Text == "Lower")
+        {
+            return s_upper;
+        }
+        else if (node.Identifier.Text == "Upper")
+        {
+            return s_lower;
+        }
+        return node;
+    }
+}

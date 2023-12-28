@@ -1,4 +1,4 @@
-﻿// <copyright file="IMultiplicationOperation.cs" company="Mathematics.NET">
+﻿// <copyright file="ContractionInformation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,14 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Core.Operations;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 
-/// <summary>Defines a mechanism for multiplying two values</summary>
-/// <typeparam name="TInput">The input type</typeparam>
-/// <typeparam name="TOutput">The output type</typeparam>
-public interface IMultiplicationOperation<TInput, TOutput>
-    where TInput : IMultiplicationOperation<TInput, TOutput>
+/// <summary>Holds information about a particular tensor contraction</summary>
+public readonly record struct ContractionInformation
 {
-    static abstract TOutput operator *(TInput left, TInput right);
-    static virtual TOutput operator checked *(TInput left, TInput right) => left * right;
+    public readonly int LeftRank;
+    public readonly int RightRank;
+
+    public ContractionInformation(int leftRank, int rightRank)
+    {
+        LeftRank = leftRank;
+        RightRank = rightRank;
+    }
 }

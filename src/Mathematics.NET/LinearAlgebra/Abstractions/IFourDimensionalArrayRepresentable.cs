@@ -1,4 +1,4 @@
-﻿// <copyright file="ICubicArray.cs" company="Mathematics.NET">
+﻿// <copyright file="IFourDimensionalArrayRepresentable.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,9 +27,32 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for cubic arrays</summary>
+/// <summary>Defines support for the mathematical objects that can be represented by four-dimensional arrays</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ICubicArray<T, U> : IArray3D<T, U>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>;
+public interface IFourDimensionalArrayRepresentable<T, U>
+    : IArrayRepresentable<T, U>,
+      IFormattable
+    where T : IFourDimensionalArrayRepresentable<T, U>
+    where U : IComplex<U>
+{
+    /// <summary>The number of elements in the first dimension of the array</summary>
+    static abstract int E1Components { get; }
+
+    /// <summary>The number of elements in the second dimension of the array</summary>
+    static abstract int E2Components { get; }
+
+    /// <summary>The number of elements in the third dimension of the array</summary>
+    static abstract int E3Components { get; }
+
+    /// <summary>The number of elements in the fourth dimension of the array</summary>
+    static abstract int E4Components { get; }
+
+    /// <summary>Get the element at the specified indices.</summary>
+    /// <param name="i">The first index</param>
+    /// <param name="j">The second index</param>
+    /// <param name="k">The third index</param>
+    /// <param name="l">The fourth index</param>
+    /// <returns>The element at the specified indices</returns>
+    U this[int i, int j, int k, int l] { get; set; }
+}

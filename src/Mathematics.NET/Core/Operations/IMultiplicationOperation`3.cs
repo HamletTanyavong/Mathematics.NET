@@ -1,4 +1,4 @@
-﻿// <copyright file="ICubicArray.cs" company="Mathematics.NET">
+﻿// <copyright file="IMultiplicationOperation`3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,11 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines support for cubic arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ICubicArray<T, U> : IArray3D<T, U>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>;
+/// <summary>Defines a mechanism for multiplying two values of different types</summary>
+/// <typeparam name="T">An input of the first type</typeparam>
+/// <typeparam name="U">An input of the second type</typeparam>
+/// <typeparam name="V">The output type</typeparam>
+public interface IMultiplicationOperation<T, U, V>
+    where T : IMultiplicationOperation<T, U, V>
+{
+    static abstract V operator *(T left, U right);
+    static abstract V operator *(U left, T right);
+    static virtual V operator checked *(T left, U right) => left * right;
+    static virtual V operator checked *(U left, T right) => left * right;
+}

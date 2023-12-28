@@ -30,7 +30,7 @@ using Mathematics.NET.SourceGenerators.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators.SourceBuilders;
+namespace Mathematics.NET.SourceGenerators.Calculus;
 
 /// <summary>Derivatives builder</summary>
 public sealed class DerivativesBuilder
@@ -78,10 +78,11 @@ public sealed class DerivativesBuilder
                     .WithMembers(
                         SingletonList<MemberDeclarationSyntax>(
                             ClassDeclaration("Equations")
+
                             .WithModifiers(
-                                TokenList(new[] {
+                                TokenList([
                                     Token(SyntaxKind.PublicKeyword),
-                                    Token(SyntaxKind.StaticKeyword) }))
+                                    Token(SyntaxKind.StaticKeyword)]))
                             .WithMembers(
                                 List(memberDeclarations))))))
             .NormalizeWhitespace();
@@ -92,7 +93,7 @@ public sealed class DerivativesBuilder
         var result = new MemberDeclarationSyntax[_methodInformation.Length];
         for (int i = 0; i < _methodInformation.Length; i++)
         {
-            var equation = _methodInformation[i].MethodDeclaration.RemoveEquationAttribute();
+            var equation = _methodInformation[i].MethodDeclaration.RemoveAttribute("Equation");
             var transformedEquation = SymbolicsHelper.TransformEquation(equation);
             result[i] = transformedEquation;
         }

@@ -1,4 +1,4 @@
-﻿// <copyright file="ICubicArray.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexStructure.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,11 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 
-/// <summary>Defines support for cubic arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface ICubicArray<T, U> : IArray3D<T, U>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>;
+/// <summary>Represents the index structure of a tensor</summary>
+public readonly record struct IndexStructure
+{
+    public readonly int ContractPosition;
+    public readonly int IndexCount;
+
+    public IndexStructure(int position, int indexCount)
+    {
+        ContractPosition = position;
+        IndexCount = indexCount;
+    }
+}

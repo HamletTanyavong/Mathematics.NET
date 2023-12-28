@@ -39,21 +39,24 @@ public static class Extensions
         };
     }
 
-    // TODO: Determine if every equation should/will have an attribute to remove.
-    public static MethodDeclarationSyntax RemoveEquationAttribute(this MethodDeclarationSyntax methodDeclarationSyntax)
+    public static MethodDeclarationSyntax RemoveAttribute(this MethodDeclarationSyntax methodDeclarationSyntax, string attributeName)
     {
-        var equationAttributeNode = methodDeclarationSyntax
+        if (attributeName.EndsWith("Attribute"))
+        {
+            attributeName = attributeName.Remove(attributeName.Length - 9);
+        }
+        var attributeNode = methodDeclarationSyntax
             .DescendantNodes()
             .OfType<AttributeSyntax>()
-            .First(syntax => syntax.Name.GetValue() is "Equation" or "EquationAttribute");
+            .First(x => x.Name.GetValue() == attributeName);
 
-        if (equationAttributeNode.Parent!.ChildNodes().Count() > 1)
+        if (attributeNode.Parent!.ChildNodes().Count() > 1)
         {
-            return methodDeclarationSyntax.RemoveNode(equationAttributeNode, SyntaxRemoveOptions.KeepNoTrivia)!;
+            return methodDeclarationSyntax.RemoveNode(attributeNode, SyntaxRemoveOptions.KeepNoTrivia)!;
         }
         else
         {
-            return methodDeclarationSyntax.RemoveNode(equationAttributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia)!;
+            return methodDeclarationSyntax.RemoveNode(attributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia)!;
         }
     }
 }

@@ -28,7 +28,7 @@
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for square matrices</summary>
-/// <typeparam name="T">A type that implements <see cref="IMatrix{T, U}"/></typeparam>
+/// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 public interface ISquareMatrix<T, U> : IMatrix<T, U>
     where T : ISquareMatrix<T, U>

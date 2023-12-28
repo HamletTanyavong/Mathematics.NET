@@ -156,6 +156,10 @@ public struct SphericalVector : IVector<SphericalVector, Real>
         return new(r, Real.Acos(z / r), Real.Atan2(y, x));
     }
 
+    public static SphericalVector operator *(Real left, SphericalVector right) => new(left * right.R, right.Theta, right.Phi);
+
+    public static SphericalVector operator *(SphericalVector left, Real right) => new(left.R * right, left.Theta, left.Phi);
+
     //
     // Equality
     //

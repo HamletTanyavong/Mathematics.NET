@@ -25,6 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
+using Mathematics.NET.Core;
+
 Console.WriteLine("Mathematics.NET Development Application");
+Console.WriteLine();
 
 // Add code here for quick testing and verification.

@@ -1,4 +1,4 @@
-﻿// <copyright file="RankThreeTensor.cs" company="Mathematics.NET">
+﻿// <copyright file="RankFourTensor.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,26 +32,28 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-three tensor</summary>
-/// <typeparam name="T">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
+/// <summary>Represents a rank-four tensor</summary>
+/// <typeparam name="T">A backing type that implements <see cref="IHyperCubic4DArray{T, U}"/></typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="V">The first index</typeparam>
 /// <typeparam name="W">The second index</typeparam>
 /// <typeparam name="X">The third index</typeparam>
+/// <typeparam name="Y">The fourth index</typeparam>
 /// <param name="array">A backing array</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct RankThreeTensor<T, U, V, W, X>(T array)
-    : IRankThreeTensor<RankThreeTensor<T, U, V, W, X>, T, U, V, W, X>
-    where T : ICubicArray<T, U>
+public struct RankFourTensor<T, U, V, W, X, Y>(T array)
+    : IRankFourTensor<RankFourTensor<T, U, V, W, X, Y>, T, U, V, W, X, Y>
+    where T : IHyperCubic4DArray<T, U>
     where U : IComplex<U>
     where V : IIndex
     where W : IIndex
     where X : IIndex
+    where Y : IIndex
 {
     private T _array = array;
 
     //
-    // IRankThreeTensor interface
+    // IRankFourTensor interface
     //
 
     public readonly IIndex I1 => V.Instance;
@@ -59,6 +61,8 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
     public readonly IIndex I2 => W.Instance;
 
     public readonly IIndex I3 => X.Instance;
+
+    public readonly IIndex I4 => Y.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
@@ -72,29 +76,31 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
 
     public static int E3Components => T.E3Components;
 
+    public static int E4Components => T.E4Components;
+
     //
     // Indexer
     //
 
-    public U this[int i, int j, int k]
+    public U this[int i, int j, int k, int l]
     {
-        get => _array[i, j, k];
-        set => _array[i, j, k] = value;
+        get => _array[i, j, k, l];
+        set => _array[i, j, k, l] = value;
     }
 
     //
     // Equality
     //
 
-    public static bool operator ==(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
-        => left._array == right._array;
+    public static bool operator ==(RankFourTensor<T, U, V, W, X, Y> left, RankFourTensor<T, U, V, W, X, Y> right)
+    => left._array == right._array;
 
-    public static bool operator !=(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
+    public static bool operator !=(RankFourTensor<T, U, V, W, X, Y> left, RankFourTensor<T, U, V, W, X, Y> right)
         => left._array != right._array;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankThreeTensor<T, U, V, W, X> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankFourTensor<T, U, V, W, X, Y> other && Equals(other);
 
-    public bool Equals(RankThreeTensor<T, U, V, W, X> value) => _array.Equals(value._array);
+    public bool Equals(RankFourTensor<T, U, V, W, X, Y> value) => _array.Equals(value._array);
 
     public override int GetHashCode() => HashCode.Combine(_array);
 
@@ -108,5 +114,5 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
     // Implicit operators
     //
 
-    public static implicit operator RankThreeTensor<T, U, V, W, X>(T value) => new(value);
+    public static implicit operator RankFourTensor<T, U, V, W, X, Y>(T value) => new(value);
 }

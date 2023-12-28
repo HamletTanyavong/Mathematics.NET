@@ -28,7 +28,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators;
+namespace Mathematics.NET.SourceGenerators.Calculus;
 
 public static class SymbolicsHelper
 {
