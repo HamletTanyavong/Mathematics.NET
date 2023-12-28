@@ -179,13 +179,13 @@ public sealed class TensorContractionBuilder
             if (((IdentifierNameSyntax)leftName.TypeArgumentList.Arguments[0]).Identifier.Text != "Lower")
             {
                 var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the first parameter must be \"Lower.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+                _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
             }
         }
         else
         {
             var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the first parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
         }
 
         var rightParam = paramList.Parameters[1];
@@ -195,13 +195,13 @@ public sealed class TensorContractionBuilder
             if (((IdentifierNameSyntax)rightName.TypeArgumentList.Arguments[0]).Identifier.Text != "Upper")
             {
                 var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the second parameter must be \"Upper.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+                _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
             }
         }
         else
         {
             var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the second parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, Location.None));
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
         }
     }
 
@@ -234,18 +234,8 @@ public sealed class TensorContractionBuilder
         var paramList = GetParameterList(memberDeclaration).Parameters[(int)position];
         var args = GetTypeArgumentList(paramList).Arguments;
         var count = args.Count;
-
-        // The first 3 type parameters do not represent indices.
-        int i = 3;
-        while (i < args.Count)
-        {
-            if (args[i] is GenericNameSyntax name && name.Identifier.Text == "Index")
-            {
-                break;
-            }
-            i++;
-        }
-        return new(i, count);
+        var index = args.IndexOf(args.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
+        return new(index, count);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
