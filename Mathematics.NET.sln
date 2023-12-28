@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Renderer", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks.Implementations", "tests\Mathematics.NET.Benchmarks.Implementations\Mathematics.NET.Benchmarks.Implementations.csproj", "{DFC7E4A6-FA68-4552-BD73-73DFE4636945}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.Tests.SourceGenerators", "tests\Mathematics.NET.Tests.SourceGenerators\Mathematics.NET.Tests.SourceGenerators.csproj", "{56D57E0D-4E88-43F3-AAE9-1727DCA11031}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -73,6 +75,10 @@ Global
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945}.Debug|x64.Build.0 = Debug|x64
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945}.Release|x64.ActiveCfg = Release|x64
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945}.Release|x64.Build.0 = Release|x64
+		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Debug|x64.ActiveCfg = Debug|x64
+		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Debug|x64.Build.0 = Debug|x64
+		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Release|x64.ActiveCfg = Release|x64
+		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{89C3482F-0027-483E-AAD7-5E12453915B3} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 		{94744B01-DD3C-4623-992F-19C5CC2B475B} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
+		{56D57E0D-4E88-43F3-AAE9-1727DCA11031} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D9282-B1D9-42EC-A6A0-C1970012ED73}
