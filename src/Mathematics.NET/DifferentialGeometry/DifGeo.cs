@@ -161,6 +161,68 @@ public static partial class DifGeo
     }
 
     //
+    // Rank-one and Rank-four
+    //
+
+    [GenerateTensorContractions]
+    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
+        IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
+        IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I1, I2, I3> b)
+        where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
+        where U : IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I1, I2, I3>
+        where V : IComplex<V>
+        where IC : ISymbol
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+    {
+        Array4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        array[i, j, k] += a[l] * b[l, i, j, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static RankThreeTensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
+        IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3> a,
+        IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
+        where T : IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3>
+        where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
+        where V : IComplex<V>
+        where IC : ISymbol
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+    {
+        Array4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        array[i, j, k] += a[l, i, j, k] * b[l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    //
     // Rank-two and Rank-two
     //
 
@@ -244,6 +306,113 @@ public static partial class DifGeo
                     for (int l = 0; l < 4; l++)
                     {
                         array[i, j, k] += a[l, i, j] * b[l, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    //
+    // Rank-two and Rank-four
+    //
+
+    [GenerateTensorContractions]
+    public static RankFourTensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
+        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
+        IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I2, I3, I4> b)
+        where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
+        where U : IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I2, I3, I4>
+        where V : IComplex<V>
+        where IC : ISymbol
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+        where I4 : IIndex
+    {
+        Array4x4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        for (int m = 0; m < 4; m++)
+                        {
+                            array[i, j, k, l] += a[m, i] * b[m, j, k, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static RankFourTensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
+        IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3> a,
+        IRankTwoTensor<U, Matrix2x2<V>, V, Index<Upper, IC>, I4> b)
+        where T : IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3>
+        where U : IRankTwoTensor<U, Matrix2x2<V>, V, Index<Upper, IC>, I4>
+        where V : IComplex<V>
+        where IC : ISymbol
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+        where I4 : IIndex
+    {
+        Array4x4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        for (int m = 0; m < 4; m++)
+                        {
+                            array[i, j, k, l] += a[m, i, j, k] * b[m, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    //
+    // Rank-three and Rank-three
+    //
+
+    [GenerateTensorContractions]
+    public static RankFourTensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
+        IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
+        IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
+        where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
+        where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4>
+        where V : IComplex<V>
+        where IC : ISymbol
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+        where I4 : IIndex
+    {
+        Array4x4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        for (int m = 0; m < 4; m++)
+                        {
+                            array[i, j, k, l] += a[m, i, j] * b[m, k, l];
+                        }
                     }
                 }
             }
