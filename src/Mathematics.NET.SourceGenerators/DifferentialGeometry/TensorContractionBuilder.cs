@@ -47,10 +47,12 @@ public sealed class TensorContractionBuilder
                             Token(SyntaxKind.CommaToken),
                             IdentifierName("IC")})));
 
+    private readonly SourceProductionContext _context;
     private readonly ImmutableArray<MethodInformation> _methodInformationArray;
 
-    public TensorContractionBuilder(ImmutableArray<MethodInformation> methodInformationArray)
+    public TensorContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
     {
+        _context = context;
         _methodInformationArray = methodInformationArray;
     }
 
@@ -89,6 +91,14 @@ public sealed class TensorContractionBuilder
                                 IdentifierName("Mathematics"),
                                 IdentifierName("NET")),
                             IdentifierName("LinearAlgebra"))),
+                    UsingDirective(
+                        QualifiedName(
+                            QualifiedName(
+                                QualifiedName(
+                                    IdentifierName("Mathematics"),
+                                    IdentifierName("NET")),
+                                IdentifierName("LinearAlgebra")),
+                            IdentifierName("Abstractions"))),
                     UsingDirective(
                         QualifiedName(
                             QualifiedName(
