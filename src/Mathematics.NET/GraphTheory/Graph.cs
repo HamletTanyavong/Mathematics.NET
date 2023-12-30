@@ -55,7 +55,6 @@ public class Graph<T, U>
     {
         if (_nodes.Contains(edge.Origin) && _nodes.Contains(edge.Destination))
         {
-
             edge.Origin.OutgoingEdges.AddLast(edge);
             edge.Destination.IncomingEdges.AddLast(edge);
         }
