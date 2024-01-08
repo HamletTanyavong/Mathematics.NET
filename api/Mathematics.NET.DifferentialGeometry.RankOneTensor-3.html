@@ -1,0 +1,708 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct RankOneTensor&lt;T, U, V&gt;
+ | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct RankOneTensor&lt;T, U, V&gt;
+ | Mathematics.NET ">
+      
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_DifferentialGeometry_RankOneTensor_3.md&amp;value=---%0Auid%3A%20Mathematics.NET.DifferentialGeometry.RankOneTensor%603%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3">
+
+
+
+  <h1 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3" class="text-break">
+    Struct RankOneTensor&lt;T, U, V&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.DifferentialGeometry.html">DifferentialGeometry</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a rank-one tensor</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct RankOneTensor&lt;T, U, V&gt; : IRankOneTensor&lt;RankOneTensor&lt;T, U, V&gt;, T, U, V&gt;, IOneDimensionalArrayRepresentable&lt;RankOneTensor&lt;T, U, V&gt;, U&gt;, IArrayRepresentable&lt;RankOneTensor&lt;T, U, V&gt;, U&gt;, IEqualityRelation&lt;RankOneTensor&lt;T, U, V&gt;, bool&gt;, IFormattable, IAdditionOperation&lt;RankOneTensor&lt;T, U, V&gt;, RankOneTensor&lt;T, U, V&gt;&gt;, ISubtractionOperation&lt;RankOneTensor&lt;T, U, V&gt;, RankOneTensor&lt;T, U, V&gt;&gt; where T : IVector&lt;T, U&gt; where U : IComplex&lt;U&gt; where V : IIndex</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A backing type that implements <a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IVector-2.html">IVector&lt;T, U&gt;</a></p>
+</dd>
+    <dt><code>U</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a></p>
+</dd>
+    <dt><code>V</code></dt>
+    <dd><p>An index</p>
+</dd>
+  </dl>
+
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Mathematics.NET.DifferentialGeometry.Abstractions.IRankOneTensor-4.html">IRankOneTensor</a>&lt;<a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;, T, U, V&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IOneDimensionalArrayRepresentable-2.html">IOneDimensionalArrayRepresentable</a>&lt;<a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;, U&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IArrayRepresentable-2.html">IArrayRepresentable</a>&lt;<a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;, U&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Relations.IEqualityRelation-2.html">IEqualityRelation</a>&lt;<a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a></div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IAdditionOperation-2.html">IAdditionOperation</a>&lt;<a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;, <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.ISubtractionOperation-2.html">ISubtractionOperation</a>&lt;<a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;, <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3__ctor_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3__ctor__0_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.#ctor(`0)">
+  RankOneTensor(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents a rank-one tensor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RankOneTensor(T vector)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>vector</code> <span class="xref">T</span></dt>
+    <dd><p>A backing vector</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Components_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Components*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Components" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Components">
+  Components
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The total number of components in the array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Components { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_E1Components_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.E1Components*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_E1Components" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.E1Components">
+  E1Components
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The number of components in the one-dimensional array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int E1Components { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_I1_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.I1*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_I1" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.I1">
+  I1
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the index associated with this rank one tensor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly IIndex I1 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.Abstractions.IIndex.html">IIndex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Item_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Item*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Item_System_Int32_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Item(System.Int32)">
+  this[int]
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the element at the specified index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public U this[int index] { get; set; }</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>An index</p>
+</dd>
+  </dl>
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">U</span></dt>
+    <dd><p>The element at the index</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Equals_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Equals*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Equals_Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Equals(Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2})">
+  Equals(RankOneTensor&lt;T, U, V&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(RankOneTensor&lt;T, U, V&gt; value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Equals_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Equals*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_Equals_System_Object_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_GetHashCode_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.GetHashCode*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_GetHashCode" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A 32-bit signed integer that is the hash code for this instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_ToString_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.ToString*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_ToString_System_String_System_IFormatProvider_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.ToString(System.String,System.IFormatProvider)">
+  ToString(string?, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the value of the current instance using the specified format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string? format, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The format to use.</p>
+<p>-or-</p>
+<p>A null reference (<code>Nothing</code> in Visual Basic) to use the default format defined for the type of the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a> implementation.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The value of the current instance in the specified format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Addition_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Addition*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Addition_Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Addition(Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2},Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2})">
+  operator +(RankOneTensor&lt;T, U, V&gt;, RankOneTensor&lt;T, U, V&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RankOneTensor&lt;T, U, V&gt; operator +(RankOneTensor&lt;T, U, V&gt; left, RankOneTensor&lt;T, U, V&gt; right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Equality_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Equality*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Equality_Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Equality(Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2},Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2})">
+  operator ==(RankOneTensor&lt;T, U, V&gt;, RankOneTensor&lt;T, U, V&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(RankOneTensor&lt;T, U, V&gt; left, RankOneTensor&lt;T, U, V&gt; right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Implicit_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Implicit*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Implicit__0__Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Implicit(`0)~Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2}">
+  implicit operator RankOneTensor&lt;T, U, V&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a value that implements <a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IVector-2.html">IVector&lt;T, U&gt;</a> to one of type <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor&lt;T, U, V&gt;</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator RankOneTensor&lt;T, U, V&gt;(T input)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>input</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Inequality_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Inequality*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Inequality_Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Inequality(Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2},Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2})">
+  operator !=(RankOneTensor&lt;T, U, V&gt;, RankOneTensor&lt;T, U, V&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(RankOneTensor&lt;T, U, V&gt; left, RankOneTensor&lt;T, U, V&gt; right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Subtraction_" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Subtraction*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_RankOneTensor_3_op_Subtraction_Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__Mathematics_NET_DifferentialGeometry_RankOneTensor__0__1__2__" data-uid="Mathematics.NET.DifferentialGeometry.RankOneTensor`3.op_Subtraction(Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2},Mathematics.NET.DifferentialGeometry.RankOneTensor{`0,`1,`2})">
+  operator -(RankOneTensor&lt;T, U, V&gt;, RankOneTensor&lt;T, U, V&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/RankOneTensor.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RankOneTensor&lt;T, U, V&gt; operator -(RankOneTensor&lt;T, U, V&gt; left, RankOneTensor&lt;T, U, V&gt; right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.RankOneTensor-3.html">RankOneTensor</a>&lt;T, U, V&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2023 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
