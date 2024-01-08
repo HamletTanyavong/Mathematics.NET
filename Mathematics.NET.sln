@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		THIRD_PARTY_NOTICES.txt = THIRD_PARTY_NOTICES.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{91DB0FE7-BAA4-4D16-8A39-65332DD53662}"
@@ -39,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Renderer", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks.Implementations", "tests\Mathematics.NET.Benchmarks.Implementations\Mathematics.NET.Benchmarks.Implementations.csproj", "{DFC7E4A6-FA68-4552-BD73-73DFE4636945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.Tests.SourceGenerators", "tests\Mathematics.NET.Tests.SourceGenerators\Mathematics.NET.Tests.SourceGenerators.csproj", "{56D57E0D-4E88-43F3-AAE9-1727DCA11031}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Tests.SourceGenerators", "tests\Mathematics.NET.Tests.SourceGenerators\Mathematics.NET.Tests.SourceGenerators.csproj", "{56D57E0D-4E88-43F3-AAE9-1727DCA11031}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
