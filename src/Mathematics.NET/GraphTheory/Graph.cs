@@ -82,7 +82,7 @@ public class Graph<T, U>
     /// <returns>A node if it exists; otherwise, <see langword="null"/></returns>
     public virtual T? GetNodeOrNull(int i) => _nodes.ElementAtOrDefault(i);
 
-    /// <summary>Remove an edge from the graph if it exists.</summary>
+    /// <summary>Remove an edge from the graph if it exists between two specified origin and destination nodes.</summary>
     /// <param name="origin">The origin node of the edge.</param>
     /// <param name="destination">The destination node of the edge.</param>
     public virtual void RemoveEdge(T origin, T destination)
