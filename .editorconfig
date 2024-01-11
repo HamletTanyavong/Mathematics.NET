@@ -22,6 +22,11 @@ indent_size = 2
 
 indent_size = 2
 
+### Csproj files ###
+[*.csproj]
+
+indent_size = 2
+
 ### C# ###
 [*.cs]
 
