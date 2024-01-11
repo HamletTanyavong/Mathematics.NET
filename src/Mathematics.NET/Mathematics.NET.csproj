@@ -50,4 +50,8 @@
     <Using Include="Mathematics.NET.Core" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Mathematics.NET.Benchmarks.Implementations"/>
+  </ItemGroup>
+
 </Project>
