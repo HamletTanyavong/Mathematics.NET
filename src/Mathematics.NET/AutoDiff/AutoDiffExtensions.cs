@@ -33,28 +33,68 @@ namespace Mathematics.NET.AutoDiff;
 public static class AutoDiffExtensions
 {
     //
-    // Variable vector creation
+    // Autodiff vector creation
     //
 
-    /// <summary>Create a dual vector from a seed vector.</summary>
+    /// <summary>Create an autodiff vector from a seed vector.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x">A vector of seed values</param>
+    /// <returns>A variable vector of length two</returns>
+    public static AutoDiffVector2<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector2<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2));
+
+    /// <summary>Create an autodiff vector from seed values.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x1Seed">The first seed value</param>
+    /// <param name="x2Seed">The second seed value</param>
+    /// <returns>A variable vector of length two</returns>
+    public static AutoDiffVector2<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed));
+
+    /// <summary>Create an autodiff vector from a seed vector.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x">A vector of seed values</param>
     /// <returns>A variable vector of length three</returns>
-    public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, Vector3<T> x)
+    public static AutoDiffVector3<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3));
 
-    /// <summary>Create a vector from seed values.</summary>
+    /// <summary>Create an autodiff vector from seed values.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
     /// <param name="x1Seed">The first seed value</param>
     /// <param name="x2Seed">The second seed value</param>
     /// <param name="x3Seed">The third seed value</param>
     /// <returns>A variable vector of length three</returns>
-    public static VariableVector3<T> CreateVariableVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed)
+    public static AutoDiffVector3<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed));
+
+    /// <summary>Create an autodiff vector from a seed vector.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x">A vector of seed values</param>
+    /// <returns>A variable vector of length four</returns>
+    public static AutoDiffVector4<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3), tape.CreateVariable(x.X4));
+
+    /// <summary>Create an autodiff vector from seed values.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x1Seed">The first seed value</param>
+    /// <param name="x2Seed">The second seed value</param>
+    /// <param name="x3Seed">The third seed value</param>
+    /// <param name="x4Seed">The fourth seed value</param>
+    /// <returns>A variable vector of length four</returns>
+    public static AutoDiffVector4<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed, T x4Seed)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed), tape.CreateVariable(x4Seed));
 
     //
     // Vector calculus
@@ -65,32 +105,32 @@ public static class AutoDiffExtensions
     /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation: $ (\nabla\times\textbf{F})(\textbf{x}) $.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="fx">The x-component of the vector field</param>
-    /// <param name="fy">The y-component of the vector field</param>
-    /// <param name="fz">The z-component of the vector field</param>
+    /// <param name="f1">The first component of the vector field</param>
+    /// <param name="f2">The second component of the vector field</param>
+    /// <param name="f3">The third component of the vector field</param>
     /// <param name="x">The point at which to compute the curl</param>
     /// <returns>The curl of the vector field</returns>
     public static Vector3<T> Curl<T>(
         this ITape<T> tape,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
-        VariableVector3<T> x)
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f3,
+        AutoDiffVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
-        _ = fx(tape, x);
-        tape.ReverseAccumulation(out var dfx);
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var df1);
 
-        _ = fy(tape, x);
-        tape.ReverseAccumulation(out var dfy);
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out var df2);
 
-        _ = fz(tape, x);
-        tape.ReverseAccumulation(out var dfz);
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out var df3);
 
         return new(
-            dfz[1] - dfy[2],
-            dfx[2] - dfz[0],
-            dfy[0] - dfx[1]);
+            df3[1] - df2[2],
+            df1[2] - df3[0],
+            df2[0] - df1[1]);
     }
 
     /// <summary>Compute the derivative of a scalar function along a particular direction using reverse-mode automatic differentiation: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
@@ -100,45 +140,133 @@ public static class AutoDiffExtensions
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the directional derivative</param>
     /// <returns>The directional derivative</returns>
-    public static T DirectionalDerivative<T>(this ITape<T> tape, Vector3<T> v, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+    public static T DirectionalDerivative<T>(this ITape<T> tape, Vector2<T> v, Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f, AutoDiffVector2<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradients);
+        tape.ReverseAccumulation(out var gradient);
 
-        return gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+        return gradient[0] * v.X1 + gradient[1] * v.X2;
+    }
+
+    /// <inheritdoc cref="DirectionalDerivative{T}(ITape{T}, Vector2{T}, Func{ITape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static T DirectionalDerivative<T>(this ITape<T> tape, Vector3<T> v, Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f, AutoDiffVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out var gradient);
+
+        return gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
+    }
+
+    /// <inheritdoc cref="DirectionalDerivative{T}(ITape{T}, Vector2{T}, Func{ITape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static T DirectionalDerivative<T>(this ITape<T> tape, Vector4<T> v, Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f, AutoDiffVector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out var gradient);
+
+        return gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
     }
 
     /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="fx">The x-component of the vector field</param>
-    /// <param name="fy">The y-component of the vector field</param>
-    /// <param name="fz">The z-component of the vector field</param>
+    /// <param name="f1">The first component of the vector field</param>
+    /// <param name="f2">The second component of the vector field</param>
     /// <param name="x">The point at which to compute the divergence</param>
     /// <returns>The divergence of the vector field</returns>
     public static T Divergence<T>(
         this ITape<T> tape,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
-        VariableVector3<T> x)
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f2,
+        AutoDiffVector2<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         var partialSum = T.Zero;
 
-        _ = fx(tape, x);
-        tape.ReverseAccumulation(out var gradients);
-        partialSum += gradients[0];
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        partialSum += gradient[0];
 
-        _ = fy(tape, x);
-        tape.ReverseAccumulation(out gradients);
-        partialSum += gradients[1];
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        partialSum += gradient[1];
 
-        _ = fz(tape, x);
-        tape.ReverseAccumulation(out gradients);
-        partialSum += gradients[2];
+        return partialSum;
+    }
+
+    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f1">The first component of the vector field</param>
+    /// <param name="f2">The second component of the vector field</param>
+    /// <param name="f3">The third component of the vector field</param>
+    /// <param name="x">The point at which to compute the divergence</param>
+    /// <returns>The divergence of the vector field</returns>
+    public static T Divergence<T>(
+        this ITape<T> tape,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f3,
+        AutoDiffVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        var partialSum = T.Zero;
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        partialSum += gradient[0];
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        partialSum += gradient[1];
+
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        partialSum += gradient[2];
+
+        return partialSum;
+    }
+
+    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f1">The first component of the vector field</param>
+    /// <param name="f2">The second component of the vector field</param>
+    /// <param name="f3">The third component of the vector field</param>
+    /// <param name="f4">The fourth component of the vector field</param>
+    /// <param name="x">The point at which to compute the divergence</param>
+    /// <returns>The divergence of the vector field</returns>
+    public static T Divergence<T>(
+        this ITape<T> tape,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f3,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f4,
+        AutoDiffVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        var partialSum = T.Zero;
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        partialSum += gradient[0];
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        partialSum += gradient[1];
+
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        partialSum += gradient[2];
+
+        _ = f4(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        partialSum += gradient[3];
 
         return partialSum;
     }
@@ -149,14 +277,36 @@ public static class AutoDiffExtensions
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the gradient</param>
     /// <returns>The gradient of the scalar function</returns>
-    public static Vector3<T> Gradient<T>(this ITape<T> tape, Func<ITape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+    public static Vector2<T> Gradient<T>(this ITape<T> tape, Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f, AutoDiffVector2<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradients);
+        tape.ReverseAccumulation(out var gradient);
 
-        return new(gradients[0], gradients[1], gradients[2]);
+        return new(gradient[0], gradient[1]);
+    }
+
+    /// <inheritdoc cref="Gradient{T}(ITape{T}, Func{ITape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static Vector3<T> Gradient<T>(this ITape<T> tape, Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f, AutoDiffVector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out var gradient);
+
+        return new(gradient[0], gradient[1], gradient[2]);
+    }
+
+    /// <inheritdoc cref="Gradient{T}(ITape{T}, Func{ITape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static Vector4<T> Gradient<T>(this ITape<T> tape, Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f, AutoDiffVector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out var gradient);
+
+        return new(gradient[0], gradient[1], gradient[2], gradient[3]);
     }
 
     /// <summary>Compute the Hessian of a scaler function using reverse-mode automatic differentiation.</summary>
@@ -165,7 +315,20 @@ public static class AutoDiffExtensions
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the gradient</param>
     /// <returns>The Hessian of the scalar function</returns>
-    public static Matrix3x3<T> Hessian<T>(this HessianTape<T> tape, Func<HessianTape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+    public static Matrix2x2<T> Hessian<T>(this HessianTape<T> tape, Func<HessianTape<T>, AutoDiffVector2<T>, Variable<T>> f, AutoDiffVector2<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return new(
+            hessian[0, 0], hessian[0, 1],
+            hessian[1, 0], hessian[1, 1]);
+    }
+
+    /// <inheritdoc cref="Hessian{T}(HessianTape{T}, Func{HessianTape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static Matrix3x3<T> Hessian<T>(this HessianTape<T> tape, Func<HessianTape<T>, AutoDiffVector3<T>, Variable<T>> f, AutoDiffVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);
@@ -178,35 +341,116 @@ public static class AutoDiffExtensions
             hessian[2, 0], hessian[2, 1], hessian[2, 2]);
     }
 
+    /// <inheritdoc cref="Hessian{T}(HessianTape{T}, Func{HessianTape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static Matrix4x4<T> Hessian<T>(this HessianTape<T> tape, Func<HessianTape<T>, AutoDiffVector4<T>, Variable<T>> f, AutoDiffVector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return new(
+            hessian[0, 0], hessian[0, 1], hessian[0, 2], hessian[0, 3],
+            hessian[1, 0], hessian[1, 1], hessian[1, 2], hessian[1, 3],
+            hessian[2, 0], hessian[2, 1], hessian[2, 2], hessian[2, 3],
+            hessian[3, 0], hessian[3, 1], hessian[3, 2], hessian[3, 3]);
+    }
+
     /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="fx">The first function</param>
-    /// <param name="fy">The second function</param>
-    /// <param name="fz">The third function</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="x">The point at which to compute the Jacobian</param>
+    /// <returns>The Jacobian of the vector function</returns>
+    public static Matrix2x2<T> Jacobian<T>(
+        this ITape<T> tape,
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f2,
+        AutoDiffVector2<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        Matrix2x2<T> result = new();
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        result[0, 0] = gradient[0]; result[0, 1] = gradient[1];
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[1, 0] = gradient[0]; result[1, 1] = gradient[1];
+
+        return result;
+    }
+
+    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="f3">The third function</param>
     /// <param name="x">The point at which to compute the Jacobian</param>
     /// <returns>The Jacobian of the vector function</returns>
     public static Matrix3x3<T> Jacobian<T>(
         this ITape<T> tape,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
-        VariableVector3<T> x)
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f3,
+        AutoDiffVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         Matrix3x3<T> result = new();
 
-        _ = fx(tape, x);
-        tape.ReverseAccumulation(out var gradients);
-        result[0, 0] = gradients[0]; result[0, 1] = gradients[1]; result[0, 2] = gradients[2];
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        result[0, 0] = gradient[0]; result[0, 1] = gradient[1]; result[0, 2] = gradient[2];
 
-        _ = fy(tape, x);
-        tape.ReverseAccumulation(out gradients);
-        result[1, 0] = gradients[0]; result[1, 1] = gradients[1]; result[1, 2] = gradients[2];
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[1, 0] = gradient[0]; result[1, 1] = gradient[1]; result[1, 2] = gradient[2];
 
-        _ = fz(tape, x);
-        tape.ReverseAccumulation(out gradients);
-        result[2, 0] = gradients[0]; result[2, 1] = gradients[1]; result[2, 2] = gradients[2];
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[2, 0] = gradient[0]; result[2, 1] = gradient[1]; result[2, 2] = gradient[2];
+
+        return result;
+    }
+
+    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="f3">The third function</param>
+    /// <param name="f4">The fourth function</param>
+    /// <param name="x">The point at which to compute the Jacobian</param>
+    /// <returns>The Jacobian of the vector function</returns>
+    public static Matrix4x4<T> Jacobian<T>(
+        this ITape<T> tape,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f3,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f4,
+        AutoDiffVector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        Matrix4x4<T> result = new();
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        result[0, 0] = gradient[0]; result[0, 1] = gradient[1]; result[0, 2] = gradient[2]; result[0, 3] = gradient[3];
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[1, 0] = gradient[0]; result[1, 1] = gradient[1]; result[1, 2] = gradient[2]; result[1, 3] = gradient[3];
+
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[2, 0] = gradient[0]; result[2, 1] = gradient[1]; result[2, 2] = gradient[2]; result[2, 3] = gradient[3];
+
+        _ = f4(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[3, 0] = gradient[0]; result[3, 1] = gradient[1]; result[3, 2] = gradient[2]; result[3, 3] = gradient[3];
 
         return result;
     }
@@ -214,34 +458,104 @@ public static class AutoDiffExtensions
     /// <summary>Compute the Jacobian-vector product of a vector function and a vector using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="fx">The first function</param>
-    /// <param name="fy">The second function</param>
-    /// <param name="fz">The third function</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="x">The point at which to compute the Jacobian-vector product</param>
+    /// <param name="v">A vector</param>
+    /// <returns>The Jacobian-vector product of the vector function and vector</returns>
+    public static Vector2<T> JVP<T>(
+        this ITape<T> tape,
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f2,
+        AutoDiffVector2<T> x,
+        Vector2<T> v)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        Vector2<T> result = new();
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        result[0] = gradient[0] * v.X1 + gradient[1] * v.X2;
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[1] = gradient[0] * v.X1 + gradient[1] * v.X2;
+
+        return result;
+    }
+
+    /// <summary>Compute the Jacobian-vector product of a vector function and a vector using reverse-mode automatic differentiation.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="f3">The third function</param>
     /// <param name="x">The point at which to compute the Jacobian-vector product</param>
     /// <param name="v">A vector</param>
     /// <returns>The Jacobian-vector product of the vector function and vector</returns>
     public static Vector3<T> JVP<T>(
         this ITape<T> tape,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
-        VariableVector3<T> x,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f3,
+        AutoDiffVector3<T> x,
         Vector3<T> v)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         Vector3<T> result = new();
 
-        _ = fx(tape, x);
-        tape.ReverseAccumulation(out var gradients);
-        result[0] = gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        result[0] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
 
-        _ = fy(tape, x);
-        tape.ReverseAccumulation(out gradients);
-        result[1] = gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[1] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
 
-        _ = fz(tape, x);
-        tape.ReverseAccumulation(out gradients);
-        result[2] = gradients[0] * v.X1 + gradients[1] * v.X2 + gradients[2] * v.X3;
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[2] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
+
+        return result;
+    }
+
+    /// <summary>Compute the Jacobian-vector product of a vector function and a vector using reverse-mode automatic differentiation.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="f3">The third function</param>
+    /// <param name="f4">The fourth function</param>
+    /// <param name="x">The point at which to compute the Jacobian-vector product</param>
+    /// <param name="v">A vector</param>
+    /// <returns>The Jacobian-vector product of the vector function and vector</returns>
+    public static Vector4<T> JVP<T>(
+        this ITape<T> tape,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f3,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f4,
+        AutoDiffVector4<T> x,
+        Vector4<T> v)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        Vector4<T> result = new();
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient);
+        result[0] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[1] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
+
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[2] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
+
+        _ = f4(tape, x);
+        tape.ReverseAccumulation(out gradient);
+        result[3] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
 
         return result;
     }
@@ -252,7 +566,18 @@ public static class AutoDiffExtensions
     /// <param name="f">A scalar function</param>
     /// <param name="x">The point at which to compute the Laplacian</param>
     /// <returns>The Laplacian of the scalar function</returns>
-    public static T Laplacian<T>(this HessianTape<T> tape, Func<HessianTape<T>, VariableVector3<T>, Variable<T>> f, VariableVector3<T> x)
+    public static T Laplacian<T>(this HessianTape<T> tape, Func<HessianTape<T>, AutoDiffVector2<T>, Variable<T>> f, AutoDiffVector2<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return hessian[0, 0] + hessian[1, 1];
+    }
+
+    /// <inheritdoc cref="Laplacian{T}(HessianTape{T}, Func{HessianTape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static T Laplacian<T>(this HessianTape<T> tape, Func<HessianTape<T>, AutoDiffVector3<T>, Variable<T>> f, AutoDiffVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f(tape, x);
@@ -262,38 +587,119 @@ public static class AutoDiffExtensions
         return hessian[0, 0] + hessian[1, 1] + hessian[2, 2];
     }
 
+    /// <inheritdoc cref="Laplacian{T}(HessianTape{T}, Func{HessianTape{T}, AutoDiffVector2{T}, Variable{T}}, AutoDiffVector2{T})"/>
+    public static T Laplacian<T>(this HessianTape<T> tape, Func<HessianTape<T>, AutoDiffVector4<T>, Variable<T>> f, AutoDiffVector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        _ = f(tape, x);
+
+        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+
+        return hessian[0, 0] + hessian[1, 1] + hessian[2, 2] + hessian[3, 3];
+    }
+
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="v">A vector</param>
-    /// <param name="fx">The first function</param>
-    /// <param name="fy">The second function</param>
-    /// <param name="fz">The third function</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="x">The point at which to compute the vector-Jacobian product</param>
+    /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
+    public static Vector2<T> VJP<T>(
+        this ITape<T> tape,
+        Vector2<T> v,
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector2<T>, Variable<T>> f2,
+        AutoDiffVector2<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        Vector2<T> result = new();
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient, v.X1);
+        result[0] += gradient[0]; result[1] += gradient[1];
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient, v.X2);
+        result[0] += gradient[0]; result[1] += gradient[1];
+
+        return new(result[0], result[1]);
+    }
+
+    /// <summary>Compute the vector-Jacobian product of a vector and a vector function using reverse-mode automatic differentiation.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="v">A vector</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="f3">The third function</param>
     /// <param name="x">The point at which to compute the vector-Jacobian product</param>
     /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
     public static Vector3<T> VJP<T>(
         this ITape<T> tape,
         Vector3<T> v,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fx,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fy,
-        Func<ITape<T>, VariableVector3<T>, Variable<T>> fz,
-        VariableVector3<T> x)
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector3<T>, Variable<T>> f3,
+        AutoDiffVector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         Vector3<T> result = new();
 
-        _ = fx(tape, x);
-        tape.ReverseAccumulation(out var gradients, v.X1);
-        result[0] += gradients[0]; result[1] += gradients[1]; result[2] += gradients[2];
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient, v.X1);
+        result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2];
 
-        _ = fy(tape, x);
-        tape.ReverseAccumulation(out gradients, v.X2);
-        result[0] += gradients[0]; result[1] += gradients[1]; result[2] += gradients[2];
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient, v.X2);
+        result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2];
 
-        _ = fz(tape, x);
-        tape.ReverseAccumulation(out gradients, v.X3);
-        result[0] += gradients[0]; result[1] += gradients[1]; result[2] += gradients[2];
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient, v.X3);
+        result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2];
 
         return new(result[0], result[1], result[2]);
+    }
+
+    /// <summary>Compute the vector-Jacobian product of a vector and a vector function using reverse-mode automatic differentiation.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="v">A vector</param>
+    /// <param name="f1">The first function</param>
+    /// <param name="f2">The second function</param>
+    /// <param name="f3">The third function</param>
+    /// <param name="f4">The fourth function</param>
+    /// <param name="x">The point at which to compute the vector-Jacobian product</param>
+    /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
+    public static Vector4<T> VJP<T>(
+        this ITape<T> tape,
+        Vector4<T> v,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f1,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f2,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f3,
+        Func<ITape<T>, AutoDiffVector4<T>, Variable<T>> f4,
+        AutoDiffVector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+    {
+        Vector4<T> result = new();
+
+        _ = f1(tape, x);
+        tape.ReverseAccumulation(out var gradient, v.X1);
+        result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
+
+        _ = f2(tape, x);
+        tape.ReverseAccumulation(out gradient, v.X2);
+        result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
+
+        _ = f3(tape, x);
+        tape.ReverseAccumulation(out gradient, v.X3);
+        result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
+
+        _ = f4(tape, x);
+        tape.ReverseAccumulation(out gradient, v.X4);
+        result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
+
+        return new(result[0], result[1], result[2], result[3]);
     }
 }
