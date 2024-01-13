@@ -256,6 +256,6 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     // Dual vector creation
     //
 
-    public static DualVector3<HyperDual<T>, T> CreateDualVector(HyperDual<T> x1Seed, HyperDual<T> x2Seed, HyperDual<T> x3Seed)
+    public static AutoDiffVector3<HyperDual<T>, T> CreateDualVector(HyperDual<T> x1Seed, HyperDual<T> x2Seed, HyperDual<T> x3Seed)
         => new(x1Seed, x2Seed, x3Seed);
 }

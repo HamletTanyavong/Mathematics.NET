@@ -242,6 +242,6 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     // Dual vector creation
     //
 
-    public static DualVector3<Dual<T>, T> CreateDualVector(Dual<T> x1Seed, Dual<T> x2Seed, Dual<T> x3Seed)
+    public static AutoDiffVector3<Dual<T>, T> CreateDualVector(Dual<T> x1Seed, Dual<T> x2Seed, Dual<T> x3Seed)
         => new(x1Seed, x2Seed, x3Seed);
 }

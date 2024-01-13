@@ -58,7 +58,7 @@ public interface IDual<T, U>
     /// <param name="x2Seed">The second seed value</param>
     /// <param name="x3Seed">The third seed value</param>
     /// <returns>A dual vector of length three</returns>
-    static abstract DualVector3<T, U> CreateDualVector(T x1Seed, T x2Seed, T x3Seed);
+    static abstract AutoDiffVector3<T, U> CreateDualVector(T x1Seed, T x2Seed, T x3Seed);
 
     /// <summary>Create an instance of the type with a specified value.</summary>
     /// <param name="value">A value</param>
