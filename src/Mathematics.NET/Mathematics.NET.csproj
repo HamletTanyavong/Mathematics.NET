@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Mathematics.NET.Benchmarks.Implementations"/>
+    <InternalsVisibleTo Include="Mathematics.NET.Benchmarks.Implementations" />
   </ItemGroup>
 
 </Project>
