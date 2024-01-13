@@ -34,7 +34,7 @@ using Mathematics.NET.AutoDiff;
 using Mathematics.NET.Core;
 
 HessianTape<Real> tape = new();
-var x = tape.CreateVariableVector(1.23, 0.66, 0.23);
+var x = tape.CreateAutoDiffVector(1.23, 0.66, 0.23);
 
 // f(r, θ, ϕ) = cos(r) / ((r + θ) * sin(ϕ))
 _ = tape.Divide(

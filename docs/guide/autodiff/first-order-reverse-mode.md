@@ -21,7 +21,7 @@ var y = tape.CreateVariable(0.66);
 ```
 and so on. To simplify this process, we may choose to create a vector of variables.
 ```csharp
-VariableVector3 x = tape.CreateVariableVector(1.23, 0.66, 2.34);
+AutoDiffVector3 x = tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
 ```
 Once we are satisfied, we may use these in our equations.
 
@@ -229,11 +229,11 @@ $$
 $$
 at our specified points.
 
-### Variable Vectors
+### AutoDiff Vectors
 
 Instead of tracking $ x $, $ y $, and $ z $ individually, we can create a vector of variables.
 ```csharp
-tape.CreateVariableVector(1.23, 0.66, 2.34);
+tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
 ```
 We can use this to calculate, for example, a Jacobian-vector product with the vector functions
 $$
@@ -248,7 +248,7 @@ and the vector $ \textbf{v} = (0.23, 1.57, -1.71) $ for $ x_1,x_2,x_3>0 $.
 using Mathematics.NET.AutoDiff;
 
 GradientTape<Real> tape = new();
-var x = tape.CreateVariableVector(1.23, 0.66, 2.34);
+var x = tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
 Vector3<Real> v = new(0.23, 1.57, -1.71);
 
 var result = tape.JVP(F1, F2, F3, x, v);
@@ -256,7 +256,7 @@ var result = tape.JVP(F1, F2, F3, x, v);
 Console.WriteLine(result);
 
 // f(x, y, z) = Sin(x) * (Cos(y) + Sqrt(z))
-static Variable F1(GradientTape tape, VariableVector3 x)
+static Variable F1(GradientTape tape, AutoDiffVector3 x)
 {
     return tape.Multiply(
         tape.Sin(x.X1),
@@ -264,7 +264,7 @@ static Variable F1(GradientTape tape, VariableVector3 x)
 }
 
 // f(x, y, z) = Sqrt(x + y + z)
-static Variable F2(GradientTape tape, VariableVector3 x)
+static Variable F2(GradientTape tape, AutoDiffVector3 x)
 {
     return tape.Sqrt(
         tape.Add(
@@ -273,7 +273,7 @@ static Variable F2(GradientTape tape, VariableVector3 x)
 }
 
 // f(x, y, z) = Sinh(Exp(x) * y / z)
-static Variable F3(GradientTape tape, VariableVector3 x)
+static Variable F3(GradientTape tape, AutoDiffVector3 x)
 {
     return tape.Sinh(
         tape.Multiply(
