@@ -45,7 +45,7 @@
     "postProcessors": [ "ExtractSearchIndex" ],
     "keepFileLink": false,
     "disableGitFeatures": false,
-    "globalMetadata" :{
+    "globalMetadata" : {
       "_appTitle": "Mathematics.NET",
       "_appFooter": "Copyright &copy; 2023 Hamlet Tanyavong",
       "_appLogoPath": "images/logo/mathematics.net.png",

@@ -127,6 +127,10 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public HyperDual<T> WithSeed(T seed) => new(new(_d0.D0, seed));
 
+    /// <summary>Create a seeded instance of this type</summary>
+    /// <param name="e1Seed">The first seed</param>
+    /// <param name="e2Seed">The second seed</param>
+    /// <returns>A seeded value</returns>
     public HyperDual<T> WithSeed(T e1Seed, T e2Seed) => new(new(_d0.D0, e1Seed), new(e2Seed));
 
     // Exponential functions
@@ -256,6 +260,6 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     // Dual vector creation
     //
 
-    public static DualVector3<HyperDual<T>, T> CreateDualVector(HyperDual<T> x1Seed, HyperDual<T> x2Seed, HyperDual<T> x3Seed)
+    public static AutoDiffVector3<HyperDual<T>, T> CreateDualVector(HyperDual<T> x1Seed, HyperDual<T> x2Seed, HyperDual<T> x3Seed)
         => new(x1Seed, x2Seed, x3Seed);
 }

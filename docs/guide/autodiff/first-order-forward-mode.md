@@ -55,11 +55,11 @@ Dual<Real> y = CreateVariable(2.34, 1.0);
 // Repeat for each variable present
 ```
 
-## Dual Vectors
+## AutoDiff Vectors
 
-We can create dual vectors to help us keep track of multiple dual numbers.
+We can create autodiff vectors to help us keep track of multiple dual numbers.
 ```csharp
-DualVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
+AutoDiffVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
 ```
 We can use this to compute the vector-Jacobian product of the vector functions
 $$
@@ -75,10 +75,10 @@ using Mathematics.NET.AutoDiff;
 using Mathematics.NET.Core;
 using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Core.Real>;
 
-DualVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
+AutoDiffVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
 Vector3<Real> v = new(0.23, 1.57, -1.71);
 
-var result = DualVector3<Real>.VJP(
+var result = AutoDiffVector3<Real>.VJP(
     v,
     x => Sin(x.X1) * (Cos(x.X2) + Sqrt(x.X3)),
     x => Sqrt(x.X1 + x.X2 + x.X3),
