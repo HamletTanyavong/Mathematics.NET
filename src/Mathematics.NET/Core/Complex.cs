@@ -51,6 +51,8 @@ public readonly struct Complex(Real real, Real imaginary)
     public static readonly Complex NaN = new(Real.NaN, Real.NaN);
     public static readonly Complex Infinity = new(Real.PositiveInfinity, Real.PositiveInfinity);
 
+    public static readonly int Radix = 2;
+
     private readonly Real _real = real;
     private readonly Real _imaginary = imaginary;
 
@@ -73,6 +75,7 @@ public readonly struct Complex(Real real, Real imaginary)
     static Complex IComplex<Complex>.Zero => Zero;
     static Complex IComplex<Complex>.One => One;
     static Complex IComplex<Complex>.NaN => NaN;
+    static int IComplex<Complex>.Radix => Radix;
 
     //
     // Operators

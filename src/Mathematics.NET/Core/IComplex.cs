@@ -70,6 +70,9 @@ public interface IComplex<T>
     /// <summary>Represents NaN for the type</summary>
     static abstract T NaN { get; }
 
+    /// <summary>Represents the radix, base, of the type</summary>
+    static abstract int Radix { get; }
+
     /// <summary>Compute the absolute value of a number</summary>
     /// <param name="z">A complex number</param>
     /// <returns>The absolute value</returns>
