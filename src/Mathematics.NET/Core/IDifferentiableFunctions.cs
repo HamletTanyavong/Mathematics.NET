@@ -97,17 +97,17 @@ public interface IDifferentiableFunctions<T>
     /// <summary>Compute the logarithm of <paramref name="x"/> to base <paramref name="b"/>: $ \log_b(x) $</summary>
     /// <param name="x">A value</param>
     /// <param name="b">A base</param>
-    /// <returns>The natural logarithm of <paramref name="x"/> to base b</returns>
+    /// <returns>The logarithm of <paramref name="x"/> to base b</returns>
     static abstract T Log(T x, T b);
 
     /// <summary>Compute the logarithm of <paramref name="x"/> to base 2: $ \log_2(x) $</summary>
     /// <param name="x">A value</param>
-    /// <returns>The natural logarithm of <paramref name="x"/> to base 2</returns>
+    /// <returns>The logarithm of <paramref name="x"/> to base 2</returns>
     static abstract T Log2(T x);
 
     /// <summary>Compute the logarithm of <paramref name="x"/> to base 10: $ \log_{10}(x) $</summary>
     /// <param name="x">A value</param>
-    /// <returns>The natural logarithm of <paramref name="x"/> to base 10</returns>
+    /// <returns>The logarithm of <paramref name="x"/> to base 10</returns>
     static abstract T Log10(T x);
 
     //
