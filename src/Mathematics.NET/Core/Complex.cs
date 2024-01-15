@@ -648,13 +648,13 @@ public readonly struct Complex(Real real, Real imaginary)
         if (Real.Abs(z._imaginary) <= 4.0)
         {
             Real sinh = (p - q) / 2.0;
-            Real D = Real.Cos(x2) + cosh;
-            return new(Real.Sin(x2) / D, sinh / D);
+            Real u = Real.Cos(x2) + cosh;
+            return new(Real.Sin(x2) / u, sinh / u);
         }
         else
         {
-            Real D = Real.One + Real.Cos(x2) / cosh;
-            return new(Real.Sin(x2) / cosh / D, Real.Tanh(y2) / D);
+            Real u = Real.One + Real.Cos(x2) / cosh;
+            return new(Real.Sin(x2) / cosh / u, Real.Tanh(y2) / u);
         }
     }
 
