@@ -551,27 +551,27 @@ public readonly struct Complex(Real real, Real imaginary)
                 small = y;
                 big = x;
             }
-            double ratio = small / big;
+            var ratio = small / big;
             v = Constants.Ln2 + Math.Log(big) + 0.5 * Log1P(ratio * ratio);
         }
         else
         {
-            double r = Hypot(x + 1.0, y);
-            double s = Hypot(x - 1.0, y);
+            var r = Hypot(x + 1.0, y);
+            var s = Hypot(x - 1.0, y);
 
-            double a = (r + s) * 0.5;
+            var a = (r + s) * 0.5;
             b = x / a;
 
             if (b > 0.75)
             {
                 if (x <= 1.0)
                 {
-                    double amx = (y * y / (r + (x + 1.0)) + (s + (1.0 - x))) * 0.5;
+                    var amx = (y * y / (r + (x + 1.0)) + (s + (1.0 - x))) * 0.5;
                     bPrime = x / Math.Sqrt((a + x) * amx);
                 }
                 else
                 {
-                    double t = (1.0 / (r + (x + 1.0)) + 1.0 / (s + (x - 1.0))) * 0.5;
+                    var t = (1.0 / (r + (x + 1.0)) + 1.0 / (s + (x - 1.0))) * 0.5;
                     bPrime = x / y / Math.Sqrt((a + x) * t);
                 }
             }
@@ -584,13 +584,13 @@ public readonly struct Complex(Real real, Real imaginary)
             {
                 if (x < 1.0)
                 {
-                    double t = (1.0 / (r + (x + 1.0)) + 1.0 / (s + (1.0 - x))) * 0.5;
-                    double am1 = y * y * t;
+                    var t = (1.0 / (r + (x + 1.0)) + 1.0 / (s + (1.0 - x))) * 0.5;
+                    var am1 = y * y * t;
                     v = Log1P(am1 + y * Math.Sqrt(t * (a + 1.0)));
                 }
                 else
                 {
-                    double am1 = (y * y / (r + (x + 1.0)) + (s + (x - 1.0))) * 0.5;
+                    var am1 = (y * y / (r + (x + 1.0)) + (s + (x - 1.0))) * 0.5;
                     v = Log1P(am1 + Math.Sqrt(am1 * (a + 1.0)));
                 }
             }
@@ -603,7 +603,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     private static double Log1P(double x)
     {
-        double xp1 = 1.0 + x;
+        var xp1 = 1.0 + x;
         if (xp1 == 1.0)
         {
             return x;
