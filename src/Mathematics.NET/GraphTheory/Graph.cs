@@ -38,7 +38,7 @@ public class Graph<T, U>
     where T : Node
     where U : Edge
 {
-    private LinkedList<T> _nodes;
+    private protected LinkedList<T> _nodes;
 
     public Graph()
     {
