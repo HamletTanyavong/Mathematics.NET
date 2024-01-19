@@ -48,6 +48,13 @@ public class Node : IGraphComponent
     // Methods
     //
 
+    /// <summary>Get a list of child nodes of this node.</summary>
+    /// <returns>A list of nodes</returns>
+    /// <remarks>The returned list does not include this node if there is a cycle.</remarks>
+    public IEnumerable<Node> ChildNodes() => OutgoingEdges
+        .Select(x => x.Destination)
+        .Where(x => x != this);
+
     /// <summary>Remove an incoming edge from the node if it exists.</summary>
     /// <param name="edge">An incoming edge</param>
     public virtual void RemoveIncomingEdge(Edge edge) => IncomingEdges.Remove(edge);
