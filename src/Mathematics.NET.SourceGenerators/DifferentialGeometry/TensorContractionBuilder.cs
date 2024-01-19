@@ -45,7 +45,7 @@ public sealed class TensorContractionBuilder
                         new SyntaxNodeOrToken[] {
                             IdentifierName("Upper"),
                             Token(SyntaxKind.CommaToken),
-                            IdentifierName("IC")})));
+                            IdentifierName("IC") })));
 
     private readonly SourceProductionContext _context;
     private readonly ImmutableArray<MethodInformation> _methodInformationArray;
