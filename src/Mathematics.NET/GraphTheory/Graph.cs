@@ -38,7 +38,7 @@ public class Graph<T, U>
     where T : Node
     where U : Edge
 {
-    private LinkedList<T> _nodes;
+    private protected LinkedList<T> _nodes;
 
     public Graph()
     {
@@ -60,9 +60,29 @@ public class Graph<T, U>
         }
     }
 
+    /// <summary>Add a list of the edges to the graph.</summary>
+    /// <param name="edges">A list of edges</param>
+    public virtual void AddEdges(IEnumerable<U> edges)
+    {
+        foreach (var edge in edges)
+        {
+            AddEdge(edge);
+        }
+    }
+
     /// <summary>Add a node to the graph.</summary>
     /// <param name="node">A node</param>
     public virtual void AddNode(T node) => _nodes.AddLast(node);
+
+    /// <summary>Add a list of nodes to the graph.</summary>
+    /// <param name="nodes">A list of nodes</param>
+    public virtual void AddNodes(IEnumerable<T> nodes)
+    {
+        foreach (var node in nodes)
+        {
+            _nodes.AddLast(node);
+        }
+    }
 
     /// <summary>Get an edge from a node by indices or <see langword="null"/> if it does not exist.</summary>
     /// <param name="i">A node index</param>

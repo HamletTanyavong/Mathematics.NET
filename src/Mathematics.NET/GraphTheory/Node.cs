@@ -48,15 +48,75 @@ public class Node : IGraphComponent
     // Methods
     //
 
+    /// <summary>Get a list of all ascendant nodes of this node.</summary>
+    /// <returns>A list of nodes</returns>
+    public IEnumerable<Node> AscendantNodes()
+    {
+        Queue<Node> queue = new();
+        queue.Enqueue(this);
+
+        HashSet<Node> ascendants = [];
+
+        while (queue.Count > 0)
+        {
+            foreach (var node in queue.Dequeue().ParentNodes())
+            {
+                if (ascendants.Add(node))
+                {
+                    queue.Enqueue(node);
+                }
+            }
+        }
+
+        return ascendants;
+    }
+
+    /// <summary>Get a list of child nodes of this node.</summary>
+    /// <returns>A list of nodes</returns>
+    /// <remarks>The returned list does not include this node if there is a cycle.</remarks>
+    public IEnumerable<Node> ChildNodes() => OutgoingEdges
+        .Select(x => x.Destination)
+        .Where(x => x != this);
+
+    /// <summary>Get a list of all descendant nodes of this node.</summary>
+    /// <returns>A list of nodes</returns>
+    public IEnumerable<Node> DescendantNodes()
+    {
+        Queue<Node> queue = new();
+        queue.Enqueue(this);
+
+        HashSet<Node> descendants = [];
+
+        while (queue.Count > 0)
+        {
+            foreach (var node in queue.Dequeue().ChildNodes())
+            {
+                if (descendants.Add(node))
+                {
+                    queue.Enqueue(node);
+                }
+            }
+        }
+
+        return descendants;
+    }
+
+    /// <summary>Get a list of the parent nodes of this node.</summary>
+    /// <returns>A list of nodes</returns>
+    /// <remarks>The returned list does not include this node if there is a cycle.</remarks>
+    public IEnumerable<Node> ParentNodes() => IncomingEdges
+        .Select(x => x.Origin)
+        .Where(x => x != this);
+
     /// <summary>Remove an incoming edge from the node if it exists.</summary>
     /// <param name="edge">An incoming edge</param>
-    public virtual void RemoveIncomingEdge(Edge edge) => IncomingEdges.Remove(edge);
+    public void RemoveIncomingEdge(Edge edge) => IncomingEdges.Remove(edge);
 
     /// <summary>Remove all incoming edges from the node.</summary>
-    public virtual void RemoveIncomingEdges() => IncomingEdges.Clear();
+    public void RemoveIncomingEdges() => IncomingEdges.Clear();
 
     /// <summary>Remove all edges from the node.</summary>
-    public virtual void RemoveEdges()
+    public void RemoveEdges()
     {
         RemoveIncomingEdges();
         RemoveOutgoingEdges();
@@ -64,8 +124,8 @@ public class Node : IGraphComponent
 
     /// <summary>Remove an outgoing edge from the node if it exists.</summary>
     /// <param name="edge">An outgoing edge</param>
-    public virtual void RemoveOutgoingEdge(Edge edge) => OutgoingEdges.Remove(edge);
+    public void RemoveOutgoingEdge(Edge edge) => OutgoingEdges.Remove(edge);
 
     /// <summary>Remove all outgoing edges from the node.</summary>
-    public virtual void RemoveOutgoingEdges() => OutgoingEdges.Clear();
+    public void RemoveOutgoingEdges() => OutgoingEdges.Clear();
 }
