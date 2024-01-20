@@ -110,13 +110,13 @@ public class Node : IGraphComponent
 
     /// <summary>Remove an incoming edge from the node if it exists.</summary>
     /// <param name="edge">An incoming edge</param>
-    public virtual void RemoveIncomingEdge(Edge edge) => IncomingEdges.Remove(edge);
+    public void RemoveIncomingEdge(Edge edge) => IncomingEdges.Remove(edge);
 
     /// <summary>Remove all incoming edges from the node.</summary>
-    public virtual void RemoveIncomingEdges() => IncomingEdges.Clear();
+    public void RemoveIncomingEdges() => IncomingEdges.Clear();
 
     /// <summary>Remove all edges from the node.</summary>
-    public virtual void RemoveEdges()
+    public void RemoveEdges()
     {
         RemoveIncomingEdges();
         RemoveOutgoingEdges();
@@ -124,8 +124,8 @@ public class Node : IGraphComponent
 
     /// <summary>Remove an outgoing edge from the node if it exists.</summary>
     /// <param name="edge">An outgoing edge</param>
-    public virtual void RemoveOutgoingEdge(Edge edge) => OutgoingEdges.Remove(edge);
+    public void RemoveOutgoingEdge(Edge edge) => OutgoingEdges.Remove(edge);
 
     /// <summary>Remove all outgoing edges from the node.</summary>
-    public virtual void RemoveOutgoingEdges() => OutgoingEdges.Clear();
+    public void RemoveOutgoingEdges() => OutgoingEdges.Clear();
 }
