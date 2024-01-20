@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators;
+namespace Mathematics.NET.SourceGenerators.Shared;
 
 public static class Extensions
 {
