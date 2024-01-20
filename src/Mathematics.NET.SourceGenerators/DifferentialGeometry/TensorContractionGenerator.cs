@@ -27,7 +27,6 @@
 
 using System.Collections.Immutable;
 using System.Text;
-using Mathematics.NET.SourceGenerators.Models;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 

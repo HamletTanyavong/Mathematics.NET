@@ -28,7 +28,6 @@
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
-using Mathematics.NET.SourceGenerators.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 

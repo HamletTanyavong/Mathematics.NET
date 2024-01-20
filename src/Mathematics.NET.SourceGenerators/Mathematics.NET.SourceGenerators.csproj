@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Using Include="Mathematics.NET.SourceGenerators.Shared" />
+    <Using Include="Mathematics.NET.SourceGenerators.Shared.Models" />
     <Using Include="Microsoft.CodeAnalysis" />
     <Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
   </ItemGroup>
