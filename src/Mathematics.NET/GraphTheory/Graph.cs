@@ -60,6 +60,16 @@ public class Graph<T, U>
         }
     }
 
+    /// <summary>Add a list of the edges to the graph.</summary>
+    /// <param name="edges">A list of edges</param>
+    public virtual void AddEdges(IEnumerable<U> edges)
+    {
+        foreach (var edge in edges)
+        {
+            AddEdge(edge);
+        }
+    }
+
     /// <summary>Add a node to the graph.</summary>
     /// <param name="node">A node</param>
     public virtual void AddNode(T node) => _nodes.AddLast(node);
