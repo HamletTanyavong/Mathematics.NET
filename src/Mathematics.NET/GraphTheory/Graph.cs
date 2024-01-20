@@ -64,6 +64,16 @@ public class Graph<T, U>
     /// <param name="node">A node</param>
     public virtual void AddNode(T node) => _nodes.AddLast(node);
 
+    /// <summary>Add a list of nodes to the graph.</summary>
+    /// <param name="nodes">A list of nodes</param>
+    public virtual void AddNodes(IEnumerable<T> nodes)
+    {
+        foreach (var node in nodes)
+        {
+            _nodes.AddLast(node);
+        }
+    }
+
     /// <summary>Get an edge from a node by indices or <see langword="null"/> if it does not exist.</summary>
     /// <param name="i">A node index</param>
     /// <param name="j">An edge index</param>
