@@ -48,6 +48,29 @@ public class Node : IGraphComponent
     // Methods
     //
 
+    /// <summary>Get a list of all ascendant nodes of this node.</summary>
+    /// <returns>A list of nodes</returns>
+    public IEnumerable<Node> AscendantNodes()
+    {
+        Queue<Node> queue = new();
+        queue.Enqueue(this);
+
+        HashSet<Node> ascendants = [];
+
+        while (queue.Count > 0)
+        {
+            foreach (var node in queue.Dequeue().ParentNodes())
+            {
+                if (ascendants.Add(node))
+                {
+                    queue.Enqueue(node);
+                }
+            }
+        }
+
+        return ascendants;
+    }
+
     /// <summary>Get a list of child nodes of this node.</summary>
     /// <returns>A list of nodes</returns>
     /// <remarks>The returned list does not include this node if there is a cycle.</remarks>
