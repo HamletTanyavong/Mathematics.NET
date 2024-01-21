@@ -25,8 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators;
+namespace Mathematics.NET.SourceGenerators.Shared;
 
+/// <summary>Extension methods for source generators</summary>
 public static class Extensions
 {
     public static string? GetValue(this NameSyntax name)

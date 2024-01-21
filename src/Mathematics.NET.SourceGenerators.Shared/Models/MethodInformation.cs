@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.Models;
+namespace Mathematics.NET.SourceGenerators.Shared.Models;
 
 /// <summary>A class containing information about a specific method</summary>
 public sealed class MethodInformation
