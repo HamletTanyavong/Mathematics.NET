@@ -52,7 +52,7 @@ internal static class DifGeoGeneratorExtensions
         if (memberDeclaration.ParameterList() is ParameterListSyntax paramList)
         {
             var args = paramList.Parameters[position].TypeArgumentList()!.Arguments;
-            var index = args.IndexOf(args.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
+            var index = args.IndexOf(args.Last(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
             return new(index, args.Count);
         }
         return default;
