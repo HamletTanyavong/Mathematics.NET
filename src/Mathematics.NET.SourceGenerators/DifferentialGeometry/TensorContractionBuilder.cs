@@ -222,15 +222,6 @@ internal sealed class TensorContractionBuilder : IBuilder
         return new(leftRank, rightRank);
     }
 
-    private static IndexStructure GetIndexStructure(MemberDeclarationSyntax memberDeclaration, Position position)
-    {
-        var paramList = memberDeclaration.ParameterList()!.Parameters[(int)position];
-        var args = paramList.TypeArgumentList()!.Arguments;
-        var count = args.Count;
-        var index = args.IndexOf(args.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
-        return new(index, count);
-    }
-
     private static MemberDeclarationSyntax ResetIndices(MemberDeclarationSyntax memberDeclaration)
     {
         memberDeclaration = ResetTypeParameters(memberDeclaration);
@@ -291,7 +282,7 @@ internal sealed class TensorContractionBuilder : IBuilder
 
     private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, Position position)
     {
-        var indexStructure = GetIndexStructure(memberDeclaration, position);
+        var indexStructure = memberDeclaration.GetIndexStructure((int)position);
 
         memberDeclaration = SwapTypeParameters(memberDeclaration, position, indexStructure);
         memberDeclaration = SwapTypeParameterConstraints(memberDeclaration, position, indexStructure);
