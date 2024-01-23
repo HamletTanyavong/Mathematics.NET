@@ -46,7 +46,7 @@ public sealed class TensorContractionGenerator : IIncrementalGenerator
     private static bool CouldBeGenerateTensorContractionAttribute(SyntaxNode syntaxNode, CancellationToken token)
         => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "GenerateTensorContractions" or "GenerateTensorContractionsAttribute";
 
-    public static MethodInformation GetTensorContractionOrNull(GeneratorSyntaxContext context, CancellationToken token)
+    private static MethodInformation GetTensorContractionOrNull(GeneratorSyntaxContext context, CancellationToken token)
     {
         // The method syntax will not be null if attribute syntax is not null since the attribute can only be applied to methods.
         var attribute = (AttributeSyntax)context.Node;
@@ -56,6 +56,6 @@ public sealed class TensorContractionGenerator : IIncrementalGenerator
     private void GenerateCode(SourceProductionContext context, Compilation compilation, ImmutableArray<MethodInformation> information)
     {
         var tensorContractions = new TensorContractionBuilder(context, information);
-        context.AddSource("DifGeo.g.cs", tensorContractions.GenerateSource().GetText(Encoding.UTF8).ToString());
+        context.AddSource("DifGeo.Contractions.g.cs", tensorContractions.GenerateSource().GetText(Encoding.UTF8).ToString());
     }
 }
