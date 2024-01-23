@@ -27,6 +27,7 @@
 
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
+using Mathematics.NET.SourceGenerators.Abstractions;
 using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -34,7 +35,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>Tensor contractions builder</summary>
-public sealed class TensorContractionBuilder
+internal sealed class TensorContractionBuilder : IBuilder
 {
     private static readonly GenericNameSyntax s_indexToContract = GenericName(
         Identifier("Index"))
@@ -62,7 +63,7 @@ public sealed class TensorContractionBuilder
     }
 
     //
-    // Helpers
+    // Compilation unit and members
     //
 
     public CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
@@ -169,10 +170,10 @@ public sealed class TensorContractionBuilder
 
     private void ValidateSeedContraction(MemberDeclarationSyntax memberDeclaration)
     {
-        var paramList = GetParameterList(memberDeclaration);
+        var paramList = memberDeclaration.ParameterList()!;
 
         var leftParam = paramList.Parameters[0];
-        var leftArgs = GetTypeArgumentList(leftParam);
+        var leftArgs = leftParam.TypeArgumentList()!;
         if (leftArgs.Arguments[3] is GenericNameSyntax leftName)
         {
             if (((IdentifierNameSyntax)leftName.TypeArgumentList.Arguments[0]).Identifier.Text != "Lower")
@@ -188,7 +189,7 @@ public sealed class TensorContractionBuilder
         }
 
         var rightParam = paramList.Parameters[1];
-        var rightArgs = GetTypeArgumentList(rightParam);
+        var rightArgs = rightParam.TypeArgumentList()!;
         if (rightArgs.Arguments[3] is GenericNameSyntax rightName)
         {
             if (((IdentifierNameSyntax)rightName.TypeArgumentList.Arguments[0]).Identifier.Text != "Upper")
@@ -217,42 +218,24 @@ public sealed class TensorContractionBuilder
 
     private static ContractionInformation GetContractionInformation(MemberDeclarationSyntax memberDeclaration)
     {
-        var paramList = GetParameterList(memberDeclaration);
+        var paramList = memberDeclaration.ParameterList()!;
 
         var leftParam = paramList.Parameters[0];
         var rightParam = paramList.Parameters[1];
 
-        var leftRank = GetTypeArgumentList(leftParam).Arguments.Count - 3;
-        var rightRank = GetTypeArgumentList(rightParam).Arguments.Count - 3;
+        var leftRank = leftParam.TypeArgumentList()!.Arguments.Count - 3;
+        var rightRank = rightParam.TypeArgumentList()!.Arguments.Count - 3;
 
         return new(leftRank, rightRank);
     }
 
     private static IndexStructure GetIndexStructure(MemberDeclarationSyntax memberDeclaration, Position position)
     {
-        var paramList = GetParameterList(memberDeclaration).Parameters[(int)position];
-        var args = GetTypeArgumentList(paramList).Arguments;
+        var paramList = memberDeclaration.ParameterList()!.Parameters[(int)position];
+        var args = paramList.TypeArgumentList()!.Arguments;
         var count = args.Count;
         var index = args.IndexOf(args.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
         return new(index, count);
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static ParameterListSyntax GetParameterList(MemberDeclarationSyntax memberDeclaration)
-    {
-        return memberDeclaration
-            .DescendantNodes()
-            .OfType<ParameterListSyntax>()
-            .First();
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static TypeArgumentListSyntax GetTypeArgumentList(ParameterSyntax parameter)
-    {
-        return parameter
-            .DescendantNodes()
-            .OfType<TypeArgumentListSyntax>()
-            .First();
     }
 
     private static MemberDeclarationSyntax ResetIndices(MemberDeclarationSyntax memberDeclaration)
@@ -305,8 +288,8 @@ public sealed class TensorContractionBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetTypeParameters(MemberDeclarationSyntax memberDeclaration)
     {
-        var param = GetParameterList(memberDeclaration).Parameters[1];
-        var args = GetTypeArgumentList(param);
+        var param = memberDeclaration.ParameterList()!.Parameters[1];
+        var args = param.TypeArgumentList()!;
 
         var newArgs = args.RemoveNode(args.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
         newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_indexToContract]);
@@ -387,8 +370,8 @@ public sealed class TensorContractionBuilder
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, Position position, IndexStructure indexStructure)
     {
-        var param = GetParameterList(memberDeclaration).Parameters[(int)position];
-        var args = GetTypeArgumentList(param);
+        var param = memberDeclaration.ParameterList()!.Parameters[(int)position];
+        var args = param.TypeArgumentList()!;
 
         var newArgs = SwapCurrentIndexWithNextIndex(args, indexStructure.ContractPosition);
         var newParam = param.ReplaceNode(args, newArgs);
