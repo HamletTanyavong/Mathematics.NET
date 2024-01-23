@@ -33,6 +33,15 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 /// <summary>Syntax helper for differential geometry generators</summary>
 internal static class DifGeoGeneratorExtensions
 {
+    /// <summary>Generate the tensor contraction with index positions swapped: "lower" to "upper" and "upper" to "lower."</summary>
+    /// <param name="memberDeclaration">A member declaration syntax</param>
+    /// <returns>A member declaration syntax</returns>
+    internal static MemberDeclarationSyntax GenerateTwinContraction(this MemberDeclarationSyntax memberDeclaration)
+    {
+        FlipIndexRewriter walker = new();
+        return (MemberDeclarationSyntax)walker.Visit(memberDeclaration);
+    }
+
     /// <summary>Swap the current index with the index immediately to its right.</summary>
     /// <param name="typeArgumentListSyntax">A type argument list syntax</param>
     /// <param name="index">An integer representing the current index position</param>
