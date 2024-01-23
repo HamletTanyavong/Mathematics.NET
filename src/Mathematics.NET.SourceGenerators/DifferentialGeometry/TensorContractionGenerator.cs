@@ -56,6 +56,6 @@ public sealed class TensorContractionGenerator : IIncrementalGenerator
     private void GenerateCode(SourceProductionContext context, Compilation compilation, ImmutableArray<MethodInformation> information)
     {
         var tensorContractions = new TensorContractionBuilder(context, information);
-        context.AddSource("DifGeo.g.cs", tensorContractions.GenerateSource().GetText(Encoding.UTF8).ToString());
+        context.AddSource("DifGeo.Contractions.g.cs", tensorContractions.GenerateSource().GetText(Encoding.UTF8).ToString());
     }
 }
