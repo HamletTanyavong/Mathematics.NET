@@ -132,7 +132,7 @@ internal sealed class TensorContractionBuilder : IBuilder
             method = method.RemoveAttribute("GenerateTensorContractions");
 
             // Generate the twin of the original contraction.
-            result.Add(GenerateTwinContraction(method));
+            result.Add(method.GenerateTwinContraction());
 
             // Generate contractions with swapped parameters.
             var contractionInformation = GetContractionInformation(method);
@@ -142,7 +142,7 @@ internal sealed class TensorContractionBuilder : IBuilder
             {
                 member = SwapRightIndices(member);
                 result.Add(member);
-                result.Add(GenerateTwinContraction(member));
+                result.Add(member.GenerateTwinContraction());
             }
             member = ResetIndices(member);
 
@@ -151,12 +151,12 @@ internal sealed class TensorContractionBuilder : IBuilder
             {
                 member = SwapLeftIndices(member);
                 result.Add(member);
-                result.Add(GenerateTwinContraction(member));
+                result.Add(member.GenerateTwinContraction());
                 for (int k = 0; k < contractionInformation.RightRank - 1; k++)
                 {
                     member = SwapRightIndices(member);
                     result.Add(member);
-                    result.Add(GenerateTwinContraction(member));
+                    result.Add(member.GenerateTwinContraction());
                 }
                 member = ResetIndices(member);
             }
@@ -208,13 +208,6 @@ internal sealed class TensorContractionBuilder : IBuilder
     //
     // Helpers
     //
-
-    // Generate the tensor contraction with index positions swapped: lower => upper and upper => lower.
-    private static MemberDeclarationSyntax GenerateTwinContraction(MemberDeclarationSyntax member)
-    {
-        FlipIndexRewriter walker = new();
-        return (MemberDeclarationSyntax)walker.Visit(member);
-    }
 
     private static ContractionInformation GetContractionInformation(MemberDeclarationSyntax memberDeclaration)
     {
