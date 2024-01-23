@@ -25,21 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.Shared;
+using System.Runtime.CompilerServices;
+
+namespace Mathematics.NET.SourceGenerators;
 
 /// <summary>Extension methods for source generators</summary>
 public static class Extensions
 {
-    public static string? GetValue(this NameSyntax name)
-    {
-        return name switch
-        {
-            SimpleNameSyntax simpleNameSyntax => simpleNameSyntax.Identifier.Text,
-            QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax.Right.Identifier.Text,
-            _ => null
-        };
-    }
-
+    /// <summary>Remove an attribute from a method declaration syntax.</summary>
+    /// <param name="methodDeclarationSyntax">A method declaration syntax</param>
+    /// <param name="attributeName">The name of the attribute</param>
+    /// <returns>A method declaration syntax without the specified attribute</returns>
     public static MethodDeclarationSyntax RemoveAttribute(this MethodDeclarationSyntax methodDeclarationSyntax, string attributeName)
     {
         if (attributeName.EndsWith("Attribute"))
@@ -59,5 +55,22 @@ public static class Extensions
         {
             return methodDeclarationSyntax.RemoveNode(attributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia)!;
         }
+    }
+
+    //
+    // Syntax helper
+    //
+
+    /// <summary>Get the name of a name syntax.</summary>
+    /// <param name="name">A type that derives from name syntax</param>
+    /// <returns>The value of the name syntax</returns>
+    public static string? GetValue(this NameSyntax name)
+    {
+        return name switch
+        {
+            SimpleNameSyntax simpleNameSyntax => simpleNameSyntax.Identifier.Text,
+            QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax.Right.Identifier.Text,
+            _ => null
+        };
     }
 }
