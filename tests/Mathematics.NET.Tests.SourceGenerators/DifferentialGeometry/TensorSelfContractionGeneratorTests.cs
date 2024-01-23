@@ -41,7 +41,7 @@ public sealed class TensorSelfContractionGeneratorTests : VerifyBase
             namespace TestNamespace;
 
             [GenerateTensorSelfContractions]
-            public static RankOneTensor<Vector4<U>, U, I> Contract<T, U, I, IC>(RankThreeTensor<Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I> a)
+            public static RankOneTensor<Vector4<U>, U, I> Contract<T, U, IC, I>(RankThreeTensor<Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I> a)
                 where T : ICubicArray<T, U>
                 where U : IComplex<U>
                 where IC : ISymbol
