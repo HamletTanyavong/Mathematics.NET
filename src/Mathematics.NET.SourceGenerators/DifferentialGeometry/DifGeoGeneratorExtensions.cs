@@ -33,4 +33,21 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 /// <summary>Syntax helper for differential geometry generators</summary>
 internal static class DifGeoGeneratorExtensions
 {
+    /// <summary>Swap the current index with the index immediately to its right.</summary>
+    /// <param name="typeArgumentListSyntax">A type argument list syntax</param>
+    /// <param name="index">An integer representing the current index position</param>
+    /// <returns>A type argument list syntax with the specified indices swapped</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static TypeArgumentListSyntax SwapCurrentIndexWithNextIndex(this TypeArgumentListSyntax typeArgumentListSyntax, int index)
+    {
+        var args = typeArgumentListSyntax.Arguments;
+        var currentIndex = args[index];
+        var nextIndex = args[index + 1];
+
+        var newArgs = args.Replace(currentIndex, nextIndex);
+        nextIndex = newArgs[index + 1];
+        newArgs = newArgs.Replace(nextIndex, currentIndex);
+
+        return TypeArgumentList(newArgs);
+    }
 }
