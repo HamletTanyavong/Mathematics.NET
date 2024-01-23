@@ -296,20 +296,6 @@ internal sealed class TensorContractionBuilder : IBuilder
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static TypeArgumentListSyntax SwapCurrentIndexWithNextIndex(TypeArgumentListSyntax typeArgumentListSyntax, int index)
-    {
-        var args = typeArgumentListSyntax.Arguments;
-        var currentIndex = args[index];
-        var nextIndex = args[index + 1];
-
-        var newArgs = args.Replace(currentIndex, nextIndex);
-        nextIndex = newArgs[index + 1];
-        newArgs = newArgs.Replace(nextIndex, currentIndex);
-
-        return TypeArgumentList(newArgs);
-    }
-
     private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, Position position)
     {
         var indexStructure = GetIndexStructure(memberDeclaration, position);
@@ -361,7 +347,7 @@ internal sealed class TensorContractionBuilder : IBuilder
             .OfType<TypeArgumentListSyntax>()
             .First();
 
-        var newArgs = SwapCurrentIndexWithNextIndex(args, indexStructure.ContractPosition);
+        var newArgs = args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition);
         var newConstraints = constraints.ReplaceNode(args, newArgs);
 
         return memberDeclaration.ReplaceNode(constraints, newConstraints);
@@ -373,7 +359,7 @@ internal sealed class TensorContractionBuilder : IBuilder
         var param = memberDeclaration.ParameterList()!.Parameters[(int)position];
         var args = param.TypeArgumentList()!;
 
-        var newArgs = SwapCurrentIndexWithNextIndex(args, indexStructure.ContractPosition);
+        var newArgs = args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition);
         var newParam = param.ReplaceNode(args, newArgs);
 
         return memberDeclaration.ReplaceNode(param, newParam);
