@@ -61,6 +61,18 @@ public static class Extensions
     // Syntax helper
     //
 
+    /// <summary>Get the parameter list from a member declaration syntax.</summary>
+    /// <param name="memberDeclaration">A member declaration syntax</param>
+    /// <returns>A parameter list syntax</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static ParameterListSyntax? ParameterList(this MemberDeclarationSyntax memberDeclaration)
+    {
+        return memberDeclaration
+            .DescendantNodes()
+            .OfType<ParameterListSyntax>()
+            .FirstOrDefault();
+    }
+
     /// <summary>Get the name of a name syntax.</summary>
     /// <param name="name">A type that derives from name syntax</param>
     /// <returns>The value of the name syntax</returns>
@@ -72,5 +84,17 @@ public static class Extensions
             QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax.Right.Identifier.Text,
             _ => null
         };
+    }
+
+    /// <summary>Get the type argument list from a parameter syntax.</summary>
+    /// <param name="parameter">A parameter syntax</param>
+    /// <returns>A type argument list syntax</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static TypeArgumentListSyntax? TypeArgumentList(this ParameterSyntax parameter)
+    {
+        return parameter
+            .DescendantNodes()
+            .OfType<TypeArgumentListSyntax>()
+            .FirstOrDefault();
     }
 }
