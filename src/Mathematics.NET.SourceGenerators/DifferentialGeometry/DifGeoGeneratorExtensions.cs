@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Runtime.CompilerServices;
+using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
@@ -40,6 +41,21 @@ internal static class DifGeoGeneratorExtensions
     {
         FlipIndexRewriter walker = new();
         return (MemberDeclarationSyntax)walker.Visit(memberDeclaration);
+    }
+
+    /// <summary>Get the index structure of a tensor.</summary>
+    /// <param name="memberDeclaration">A member declaration syntax</param>
+    /// <param name="position">An integer representing the current parameter position—the position of the tensor in question in the parameter list</param>
+    /// <returns>An index structure</returns>
+    internal static IndexStructure GetIndexStructure(this MemberDeclarationSyntax memberDeclaration, int position)
+    {
+        if (memberDeclaration.ParameterList() is ParameterListSyntax paramList)
+        {
+            var args = paramList.Parameters[position].TypeArgumentList()!.Arguments;
+            var index = args.IndexOf(args.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
+            return new(index, args.Count);
+        }
+        return default;
     }
 
     /// <summary>Swap the current index with the index immediately to its right.</summary>
