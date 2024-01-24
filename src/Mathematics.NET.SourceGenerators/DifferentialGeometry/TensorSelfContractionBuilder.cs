@@ -146,28 +146,26 @@ internal sealed class TensorSelfContractionBuilder : IBuilder
             var rank = GetTensorRank(method);
             MemberDeclarationSyntax member = method;
 
-            for (int j = 0; j < rank - 2; j++)
+            for (int j = rank - 2; j > 0; j--)
             {
                 member = SwapIndices(member);
                 result.Add(member);
                 result.Add(member.GenerateTwinContraction());
             }
-            member = ResetIndices(member);
-            result.Add(member);
-            result.Add(member.GenerateTwinContraction());
 
             // Generate the remaining contractions.
-            for (int j = 0; j < rank - 3; j++)
+            for (int j = rank - 2; j > 0; j--)
             {
-                for (int k = 0; k < rank - 3; k++)
+                member = ResetIndices(member);
+                result.Add(member);
+                result.Add(member.GenerateTwinContraction());
+
+                for (int k = j - 1; k > 0; k--)
                 {
                     member = SwapIndices(member);
                     result.Add(member);
                     result.Add(member.GenerateTwinContraction());
                 }
-                member = ResetIndices(member);
-                result.Add(member);
-                result.Add(member.GenerateTwinContraction());
             }
         }
         return result.ToArray();
