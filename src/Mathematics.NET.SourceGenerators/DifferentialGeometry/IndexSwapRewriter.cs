@@ -32,31 +32,30 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 /// <summary>A C# syntax rewriter that swaps tensor index orders</summary>
 public sealed class IndexSwapRewriter : CSharpSyntaxRewriter
 {
-    private readonly string _indexToContract;
-    private readonly string _indexToSwap;
+    private readonly ArgumentSyntax _indexToContract;
+    private readonly ArgumentSyntax _indexToSwap;
 
     public IndexSwapRewriter(BracketedArgumentListSyntax bracketedArgumentList, string indexName)
     {
-        _indexToContract = indexName;
-        _indexToSwap = GetIndexToSwapName(bracketedArgumentList, indexName);
+        _indexToContract = bracketedArgumentList.Arguments.Last(x => x.Expression is IdentifierNameSyntax name && name.Identifier.Text == indexName);
+        _indexToSwap = GetIndexToSwap(bracketedArgumentList);
     }
 
-    private string GetIndexToSwapName(BracketedArgumentListSyntax bracketedArgumentList, string indexName)
+    private ArgumentSyntax GetIndexToSwap(BracketedArgumentListSyntax bracketedArgumentList)
     {
-        var argument = bracketedArgumentList.Arguments.First(x => x.Expression is IdentifierNameSyntax name && name.Identifier.Text == indexName);
-        var index = bracketedArgumentList.Arguments.IndexOf(argument);
-        return ((IdentifierNameSyntax)bracketedArgumentList.Arguments[index + 1].Expression).Identifier.Text;
+        var index = bracketedArgumentList.Arguments.IndexOf(_indexToContract);
+        return bracketedArgumentList.Arguments[index + 1];
     }
 
-    public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
+    public override SyntaxNode? VisitArgument(ArgumentSyntax node)
     {
-        if (node.Identifier.Text == _indexToContract)
+        if (node == _indexToContract)
         {
-            return SyntaxFactory.IdentifierName(_indexToSwap);
+            return _indexToSwap;
         }
-        else if (node.Identifier.Text == _indexToSwap)
+        else if (node == _indexToSwap)
         {
-            return SyntaxFactory.IdentifierName(_indexToContract);
+            return _indexToContract;
         }
         return node;
     }
