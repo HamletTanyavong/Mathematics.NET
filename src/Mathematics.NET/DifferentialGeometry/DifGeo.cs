@@ -421,6 +421,65 @@ public static partial class DifGeo
     }
 
     //
+    // Tensor self-contractions
+    //
+
+    [GenerateTensorSelfContractions]
+    public static V Contract<T, U, V, IC>(IRankTwoTensor<T, U, V, Index<Lower, IC>, Index<Upper, IC>> a)
+        where T : IRankTwoTensor<T, U, V, Index<Lower, IC>, Index<Upper, IC>>
+        where U : ISquareMatrix<U, V>
+        where V : IComplex<V>
+        where IC : ISymbol
+    {
+        var result = V.Zero;
+        for (int i = 0; i < U.E1Components; i++)
+        {
+            result += a[i, i];
+        }
+        return result;
+    }
+
+    [GenerateTensorSelfContractions]
+    public static RankOneTensor<Vector4<U>, U, I> Contract<T, U, IC, I>(IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I> a)
+        where T : IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I>
+        where U : IComplex<U>
+        where IC : ISymbol
+        where I : IIndex
+    {
+        Vector4<U> vector = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                vector[i] += a[j, j, i];
+            }
+        }
+        return new(vector);
+    }
+
+    [GenerateTensorSelfContractions]
+    public static RankTwoTensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
+        where T : IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2>
+        where U : IComplex<U>
+        where IC : ISymbol
+        where I1 : IIndex
+        where I2 : IIndex
+    {
+        Matrix4x4<U> matrix = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    matrix[i, j] += a[k, k, i, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    //
     // Tensor products
     //
 
