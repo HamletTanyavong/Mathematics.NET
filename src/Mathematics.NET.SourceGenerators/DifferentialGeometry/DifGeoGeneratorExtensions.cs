@@ -1,4 +1,4 @@
-﻿// <copyright file="DifGeoSyntaxHelper.cs" company="Mathematics.NET">
+﻿// <copyright file="DifGeoGeneratorExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
