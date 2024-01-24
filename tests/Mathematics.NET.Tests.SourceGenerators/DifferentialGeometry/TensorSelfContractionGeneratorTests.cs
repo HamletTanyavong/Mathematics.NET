@@ -35,27 +35,31 @@ namespace Mathematics.NET.Tests.SourceGenerators.DifferentialGeometry;
 public sealed class TensorSelfContractionGeneratorTests : VerifyBase
 {
     [TestMethod]
-    public void SourceGenerator_RankThreeTensor_GeneratesSelfContractions()
+    public void SourceGenerator_RankFourTensor_GeneratesSelfContractions()
     {
         var source = """
             namespace TestNamespace;
 
             [GenerateTensorSelfContractions]
-            public static RankOneTensor<Vector4<U>, U, I> Contract<T, U, IC, I>(IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I> a)
-                where T : IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I>
-                where U : IComplex<U>, IDifferentiableFunctions<U>
+            public static RankTwoTensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
+                where T : IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2>
+                where U : IComplex<U>
                 where IC : ISymbol
-                where I : IIndex
+                where I1 : IIndex
+                where I2 : IIndex
             {
-                Vector4<U> vector = new();
+                Matrix4x4<U> matrix = new();
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
                     {
-                        vector[i] += a[j, j, i];
+                        for (int k = 0; k < 4; k++)
+                        {
+                            matrix[i, j] += a[k, k, i, j];
+                        }
                     }
                 }
-                return new(vector);
+                return new(matrix);
             }
             """;
 
