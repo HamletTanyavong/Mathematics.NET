@@ -144,21 +144,22 @@ internal sealed class TensorContractionBuilder : IBuilder
                 result.Add(member);
                 result.Add(member.GenerateTwinContraction());
             }
-            member = ResetIndices(member);
 
             // Loop through the remaining index combinations and add the contractions.
             for (int j = 0; j < contractionInformation.LeftRank - 1; j++)
             {
+                member = ResetIndices(member);
+
                 member = SwapLeftIndices(member);
                 result.Add(member);
                 result.Add(member.GenerateTwinContraction());
+
                 for (int k = 0; k < contractionInformation.RightRank - 1; k++)
                 {
                     member = SwapRightIndices(member);
                     result.Add(member);
                     result.Add(member.GenerateTwinContraction());
                 }
-                member = ResetIndices(member);
             }
         }
         return result.ToArray();
