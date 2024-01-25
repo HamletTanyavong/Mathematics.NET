@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorContractionBuilder.cs" company="Mathematics.NET">
+﻿// <copyright file="TensorSelfContractionBuilder.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -26,7 +26,6 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using System.Runtime.CompilerServices;
 using Mathematics.NET.SourceGenerators.Abstractions;
 using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
@@ -34,10 +33,20 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>Tensor contractions builder</summary>
-internal sealed class TensorContractionBuilder : IBuilder
+/// <summary>Tensor self contractions builder</summary>
+internal sealed class TensorSelfContractionBuilder : IBuilder
 {
-    private static readonly GenericNameSyntax s_indexToContract = GenericName(
+    private static readonly GenericNameSyntax s_leftIndex = GenericName(
+        Identifier("Index"))
+            .WithTypeArgumentList(
+                TypeArgumentList(
+                    SeparatedList<TypeSyntax>(
+                        new SyntaxNodeOrToken[] {
+                            IdentifierName("Lower"),
+                            Token(SyntaxKind.CommaToken),
+                            IdentifierName("IC") })));
+
+    private static readonly GenericNameSyntax s_rightIndex = GenericName(
         Identifier("Index"))
             .WithTypeArgumentList(
                 TypeArgumentList(
@@ -50,7 +59,7 @@ internal sealed class TensorContractionBuilder : IBuilder
     private readonly SourceProductionContext _context;
     private readonly ImmutableArray<MethodInformation> _methodInformationArray;
 
-    public TensorContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
+    public TensorSelfContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
     {
         _context = context;
         _methodInformationArray = methodInformationArray;
@@ -128,35 +137,32 @@ internal sealed class TensorContractionBuilder : IBuilder
         for (int i = 0; i < _methodInformationArray.Length; i++)
         {
             var method = _methodInformationArray[i].MethodDeclaration;
-            ValidateSeedContraction(method);
-            method = method.RemoveAttribute("GenerateTensorContractions");
+            method = method.RemoveAttribute("GenerateTensorSelfContractions");
 
-            // Generate the twin of the original contraction.
+            // Generate twin of the original contraction.
             result.Add(method.GenerateTwinContraction());
 
             // Generate contractions with swapped parameters.
-            var contractionInformation = GetContractionInformation(method);
+            var rank = GetTensorRank(method);
             MemberDeclarationSyntax member = method;
 
-            for (int j = 0; j < contractionInformation.RightRank - 1; j++)
+            for (int j = rank - 2; j > 0; j--)
             {
-                member = SwapRightIndices(member);
+                member = SwapIndices(member);
                 result.Add(member);
                 result.Add(member.GenerateTwinContraction());
             }
 
-            // Loop through the remaining index combinations and add the contractions.
-            for (int j = 0; j < contractionInformation.LeftRank - 1; j++)
+            // Generate the remaining contractions.
+            for (int j = rank - 2; j > 0; j--)
             {
                 member = ResetIndices(member);
-
-                member = SwapLeftIndices(member);
                 result.Add(member);
                 result.Add(member.GenerateTwinContraction());
 
-                for (int k = 0; k < contractionInformation.RightRank - 1; k++)
+                for (int k = j - 1; k > 0; k--)
                 {
-                    member = SwapRightIndices(member);
+                    member = SwapIndices(member);
                     result.Add(member);
                     result.Add(member.GenerateTwinContraction());
                 }
@@ -166,166 +172,123 @@ internal sealed class TensorContractionBuilder : IBuilder
     }
 
     //
-    // Validation
-    //
-
-    private void ValidateSeedContraction(MemberDeclarationSyntax memberDeclaration)
-    {
-        var paramList = memberDeclaration.ParameterList()!;
-
-        var leftParam = paramList.Parameters[0];
-        var leftArgs = leftParam.TypeArgumentList()!;
-        if (leftArgs.Arguments[3] is GenericNameSyntax leftName)
-        {
-            if (((IdentifierNameSyntax)leftName.TypeArgumentList.Arguments[0]).Identifier.Text != "Lower")
-            {
-                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the first parameter must be \"Lower.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
-            }
-        }
-        else
-        {
-            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the first parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
-        }
-
-        var rightParam = paramList.Parameters[1];
-        var rightArgs = rightParam.TypeArgumentList()!;
-        if (rightArgs.Arguments[3] is GenericNameSyntax rightName)
-        {
-            if (((IdentifierNameSyntax)rightName.TypeArgumentList.Arguments[0]).Identifier.Text != "Upper")
-            {
-                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the second parameter must be \"Upper.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
-            }
-        }
-        else
-        {
-            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the second parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
-        }
-    }
-
-    //
     // Helpers
     //
 
-    private static ContractionInformation GetContractionInformation(MemberDeclarationSyntax memberDeclaration)
+    private static int GetTensorRank(MemberDeclarationSyntax memberDeclaration)
     {
         var paramList = memberDeclaration.ParameterList()!;
-
-        var leftParam = paramList.Parameters[0];
-        var rightParam = paramList.Parameters[1];
-
-        var leftRank = leftParam.TypeArgumentList()!.Arguments.Count - 3;
-        var rightRank = rightParam.TypeArgumentList()!.Arguments.Count - 3;
-
-        return new(leftRank, rightRank);
+        return paramList.Parameters[0].TypeArgumentList()!.Arguments.Count - 3;
     }
 
     private static MemberDeclarationSyntax ResetIndices(MemberDeclarationSyntax memberDeclaration)
     {
         memberDeclaration = ResetTypeParameters(memberDeclaration);
         memberDeclaration = ResetTypeParameterConstraints(memberDeclaration);
-        memberDeclaration = ResetMultiplyExpressionComponents(memberDeclaration);
+        memberDeclaration = ResetElementAccessComponents(memberDeclaration);
 
         return memberDeclaration;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax ResetMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration)
+    private static MemberDeclarationSyntax ResetElementAccessComponents(MemberDeclarationSyntax memberDeclaration)
     {
-        var multiplyExpression = memberDeclaration
+        var addAssignmentExpression = memberDeclaration
             .DescendantNodes()
-            .OfType<BinaryExpressionSyntax>()
-            .First(x => x.IsKind(SyntaxKind.MultiplyExpression));
-        var args = multiplyExpression.Right
-            .DescendantNodes()
-            .OfType<BracketedArgumentListSyntax>()
-            .First();
+            .OfType<AssignmentExpressionSyntax>()
+            .First(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
 
-        var indexName = ((IdentifierNameSyntax)args.Arguments.Last().ChildNodes().First()).Identifier.Text;
-        var newArgs = args!.InsertNodesBefore(args!.Arguments[0], [Argument(IdentifierName(indexName))]);
-        newArgs = newArgs.RemoveNode(newArgs.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia)!;
+        // This gets the first enclosing for loop.
+        var forStatement = (ForStatementSyntax)addAssignmentExpression.Parent!.Parent!.Parent!;
+        var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
+
+        var args = addAssignmentExpression.Right.ChildNodes().OfType<BracketedArgumentListSyntax>().First();
+
+        var leftIndex = args.Arguments.First(x => x.Expression is IdentifierNameSyntax name && name.Identifier.Text == variableName);
+        var index = args.Arguments.IndexOf(leftIndex);
+
+        var newArgs = args.RemoveNode(args.Arguments.ElementAt(index), SyntaxRemoveOptions.KeepNoTrivia);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[index], [Argument(IdentifierName(variableName))]);
+
+        newArgs = newArgs.RemoveNode(newArgs.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[index + 1], [Argument(IdentifierName(variableName))]);
 
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration)
     {
         var constraints = memberDeclaration
             .ChildNodes()
             .OfType<TypeParameterConstraintClauseSyntax>()
-            .Skip(1)
             .First();
         var args = constraints
             .DescendantNodes()
             .OfType<TypeArgumentListSyntax>()
             .First();
 
-        var newArgs = args.RemoveNode(args.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
-        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_indexToContract]);
+        var leftIndex = args.Arguments.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index");
+        var index = args.Arguments.IndexOf(leftIndex);
+
+        var newArgs = args.RemoveNode(args.Arguments.ElementAt(index), SyntaxRemoveOptions.KeepNoTrivia);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[index], [s_leftIndex]);
+
+        newArgs = newArgs.RemoveNode(newArgs.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[index + 1], [s_rightIndex]);
 
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetTypeParameters(MemberDeclarationSyntax memberDeclaration)
     {
-        var param = memberDeclaration.ParameterList()!.Parameters[1];
+        var param = memberDeclaration.ParameterList()!.Parameters[0];
         var args = param.TypeArgumentList()!;
 
-        var newArgs = args.RemoveNode(args.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
-        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_indexToContract]);
+        var leftIndex = args.Arguments.First(x => x is GenericNameSyntax name && name.Identifier.Text == "Index");
+        var index = args.Arguments.IndexOf(leftIndex);
+
+        var newArgs = args.RemoveNode(args.Arguments.ElementAt(index), SyntaxRemoveOptions.KeepNoTrivia);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[index], [s_leftIndex]);
+
+        newArgs = newArgs.RemoveNode(newArgs.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[index + 1], [s_rightIndex]);
+
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, Position position)
+    private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration)
     {
-        var indexStructure = memberDeclaration.GetIndexStructure((int)position);
+        var indexStructure = memberDeclaration.GetIndexStructure(0);
 
-        memberDeclaration = SwapTypeParameters(memberDeclaration, position, indexStructure);
-        memberDeclaration = SwapTypeParameterConstraints(memberDeclaration, position, indexStructure);
-        memberDeclaration = SwapMultiplyExpressionComponents(memberDeclaration, position);
+        memberDeclaration = SwapTypeParameters(memberDeclaration, indexStructure);
+        memberDeclaration = SwapTypeParameterConstraints(memberDeclaration, indexStructure);
+        memberDeclaration = SwapElementAccessComponents(memberDeclaration);
 
         return memberDeclaration;
     }
 
-    private static MemberDeclarationSyntax SwapLeftIndices(MemberDeclarationSyntax memberDeclaration)
-        => SwapIndices(memberDeclaration, Position.Left);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration, Position position)
+    private static MemberDeclarationSyntax SwapElementAccessComponents(MemberDeclarationSyntax memberDeclaration)
     {
-        var multiplyExpression = memberDeclaration
+        var addAssignmentExpression = memberDeclaration
             .DescendantNodes()
-            .OfType<BinaryExpressionSyntax>()
-            .First(x => x.IsKind(SyntaxKind.MultiplyExpression));
+            .OfType<AssignmentExpressionSyntax>()
+            .First(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
 
         // This gets the first enclosing for loop.
-        var forStatement = (ForStatementSyntax)multiplyExpression.Parent!.Parent!.Parent!.Parent!;
+        var forStatement = (ForStatementSyntax)addAssignmentExpression.Parent!.Parent!.Parent!;
         var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
 
-        var args = position == Position.Left
-            ? multiplyExpression.Left.DescendantNodes().OfType<BracketedArgumentListSyntax>().First()
-            : multiplyExpression.Right.DescendantNodes().OfType<BracketedArgumentListSyntax>().First();
+        var args = addAssignmentExpression.Right.ChildNodes().OfType<BracketedArgumentListSyntax>().First();
         var indexSwapper = new IndexSwapRewriter(args, variableName);
         var newArgs = (BracketedArgumentListSyntax)indexSwapper.Visit(args);
 
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    private static MemberDeclarationSyntax SwapRightIndices(MemberDeclarationSyntax memberDeclaration)
-        => SwapIndices(memberDeclaration, Position.Right);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, Position position, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, IndexStructure indexStructure)
     {
         var constraints = memberDeclaration
             .ChildNodes()
             .OfType<TypeParameterConstraintClauseSyntax>()
-            .Skip((int)position)
             .First();
         var args = constraints
             .DescendantNodes()
@@ -338,15 +301,11 @@ internal sealed class TensorContractionBuilder : IBuilder
         return memberDeclaration.ReplaceNode(constraints, newConstraints);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, Position position, IndexStructure indexStructure)
+    public static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexStructure indexStructure)
     {
-        var param = memberDeclaration.ParameterList()!.Parameters[(int)position];
+        var param = memberDeclaration.ParameterList()!.Parameters[0];
         var args = param.TypeArgumentList()!;
-
-        var newArgs = args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition);
-        var newParam = param.ReplaceNode(args, newArgs);
-
+        var newParam = param.ReplaceNode(args, args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition));
         return memberDeclaration.ReplaceNode(param, newParam);
     }
 }
