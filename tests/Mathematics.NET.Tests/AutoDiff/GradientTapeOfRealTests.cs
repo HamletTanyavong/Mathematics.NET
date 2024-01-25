@@ -80,7 +80,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Add(left, x);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -93,7 +93,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Add(x, right);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -207,7 +207,7 @@ public sealed class GradientTapeOfRealTests
         var x = _tape.CreateVariable(right);
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
         _ = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x.AsDouble() * u, (y, x) => -y.AsDouble() * u);
-        _tape.ReverseAccumulation(out var actual);
+        _tape.ReverseAccumulate(out var actual);
 
         Real[] expected = [expectedLeft, expectedRight];
 
@@ -220,7 +220,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
         _ = _tape.CustomOperation(x, Real.Sin, Real.Cos);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -244,7 +244,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Divide(left, x);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -257,7 +257,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Divide(x, right);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -346,7 +346,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Modulo(left, x);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -359,7 +359,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Modulo(x, right);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -383,7 +383,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Multiply(left, x);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -396,7 +396,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Multiply(x, right);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -478,7 +478,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Subtract(left, x);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -491,7 +491,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Subtract(x, right);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
@@ -524,7 +524,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
         _ = function(x);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
         return gradient[0];
     }
 
@@ -533,7 +533,7 @@ public sealed class GradientTapeOfRealTests
         var x = _tape.CreateVariable(left);
         var y = _tape.CreateVariable(right);
         _ = function(x, y);
-        _tape.ReverseAccumulation(out var gradient);
+        _tape.ReverseAccumulate(out var gradient);
         return gradient.ToArray();
     }
 }

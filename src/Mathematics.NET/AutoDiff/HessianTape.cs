@@ -102,26 +102,26 @@ public record class HessianTape<T> : ITape<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient)
-        => ReverseAccumulation(out gradient, T.One);
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient)
+        => ReverseAccumulate(out gradient, T.One);
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
     /// <param name="hessian">The Hessian</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan2D<T> hessian)
-        => ReverseAccumulation(out hessian, T.One);
+    public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian)
+        => ReverseAccumulate(out hessian, T.One);
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
     /// <param name="gradient">The gradient</param>
     /// <param name="hessian">The Hessian</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian)
-        => ReverseAccumulation(out gradient, out hessian, T.One);
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian)
+        => ReverseAccumulate(out gradient, out hessian, T.One);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient, T seed)
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
         {
@@ -152,7 +152,7 @@ public record class HessianTape<T> : ITape<T>
     /// <param name="seed">A seed value</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan2D<T> hessian, T seed)
+    public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian, T seed)
     {
         if (_variableCount == 0)
         {
@@ -193,7 +193,7 @@ public record class HessianTape<T> : ITape<T>
     /// <param name="seed">A seed value</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, T seed)
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, T seed)
     {
         if (_variableCount == 0)
         {

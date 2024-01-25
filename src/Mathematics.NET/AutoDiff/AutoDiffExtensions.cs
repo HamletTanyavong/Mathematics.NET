@@ -119,13 +119,13 @@ public static class AutoDiffExtensions
         where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var df1);
+        tape.ReverseAccumulate(out var df1);
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out var df2);
+        tape.ReverseAccumulate(out var df2);
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out var df3);
+        tape.ReverseAccumulate(out var df3);
 
         return new(
             df3[1] - df2[2],
@@ -145,7 +145,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
 
         return gradient[0] * v.X1 + gradient[1] * v.X2;
     }
@@ -156,7 +156,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
 
         return gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
     }
@@ -167,7 +167,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
 
         return gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
     }
@@ -189,11 +189,11 @@ public static class AutoDiffExtensions
         var partialSum = T.Zero;
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         partialSum += gradient[0];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         partialSum += gradient[1];
 
         return partialSum;
@@ -218,15 +218,15 @@ public static class AutoDiffExtensions
         var partialSum = T.Zero;
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         partialSum += gradient[0];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         partialSum += gradient[1];
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         partialSum += gradient[2];
 
         return partialSum;
@@ -253,19 +253,19 @@ public static class AutoDiffExtensions
         var partialSum = T.Zero;
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         partialSum += gradient[0];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         partialSum += gradient[1];
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         partialSum += gradient[2];
 
         _ = f4(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         partialSum += gradient[3];
 
         return partialSum;
@@ -282,7 +282,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
 
         return new(gradient[0], gradient[1]);
     }
@@ -293,7 +293,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
 
         return new(gradient[0], gradient[1], gradient[2]);
     }
@@ -304,7 +304,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
 
         return new(gradient[0], gradient[1], gradient[2], gradient[3]);
     }
@@ -320,7 +320,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+        tape.ReverseAccumulate(out ReadOnlySpan2D<T> hessian);
 
         return new(
             hessian[0, 0], hessian[0, 1],
@@ -333,7 +333,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+        tape.ReverseAccumulate(out ReadOnlySpan2D<T> hessian);
 
         return new(
             hessian[0, 0], hessian[0, 1], hessian[0, 2],
@@ -347,7 +347,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+        tape.ReverseAccumulate(out ReadOnlySpan2D<T> hessian);
 
         return new(
             hessian[0, 0], hessian[0, 1], hessian[0, 2], hessian[0, 3],
@@ -373,11 +373,11 @@ public static class AutoDiffExtensions
         Matrix2x2<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         result[0, 0] = gradient[0]; result[0, 1] = gradient[1];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[1, 0] = gradient[0]; result[1, 1] = gradient[1];
 
         return result;
@@ -402,15 +402,15 @@ public static class AutoDiffExtensions
         Matrix3x3<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         result[0, 0] = gradient[0]; result[0, 1] = gradient[1]; result[0, 2] = gradient[2];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[1, 0] = gradient[0]; result[1, 1] = gradient[1]; result[1, 2] = gradient[2];
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[2, 0] = gradient[0]; result[2, 1] = gradient[1]; result[2, 2] = gradient[2];
 
         return result;
@@ -437,19 +437,19 @@ public static class AutoDiffExtensions
         Matrix4x4<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         result[0, 0] = gradient[0]; result[0, 1] = gradient[1]; result[0, 2] = gradient[2]; result[0, 3] = gradient[3];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[1, 0] = gradient[0]; result[1, 1] = gradient[1]; result[1, 2] = gradient[2]; result[1, 3] = gradient[3];
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[2, 0] = gradient[0]; result[2, 1] = gradient[1]; result[2, 2] = gradient[2]; result[2, 3] = gradient[3];
 
         _ = f4(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[3, 0] = gradient[0]; result[3, 1] = gradient[1]; result[3, 2] = gradient[2]; result[3, 3] = gradient[3];
 
         return result;
@@ -474,11 +474,11 @@ public static class AutoDiffExtensions
         Vector2<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         result[0] = gradient[0] * v.X1 + gradient[1] * v.X2;
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[1] = gradient[0] * v.X1 + gradient[1] * v.X2;
 
         return result;
@@ -505,15 +505,15 @@ public static class AutoDiffExtensions
         Vector3<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         result[0] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[1] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[2] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3;
 
         return result;
@@ -542,19 +542,19 @@ public static class AutoDiffExtensions
         Vector4<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         result[0] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[1] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[2] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
 
         _ = f4(tape, x);
-        tape.ReverseAccumulation(out gradient);
+        tape.ReverseAccumulate(out gradient);
         result[3] = gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
 
         return result;
@@ -571,7 +571,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+        tape.ReverseAccumulate(out ReadOnlySpan2D<T> hessian);
 
         return hessian[0, 0] + hessian[1, 1];
     }
@@ -582,7 +582,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+        tape.ReverseAccumulate(out ReadOnlySpan2D<T> hessian);
 
         return hessian[0, 0] + hessian[1, 1] + hessian[2, 2];
     }
@@ -593,7 +593,7 @@ public static class AutoDiffExtensions
     {
         _ = f(tape, x);
 
-        tape.ReverseAccumulation(out ReadOnlySpan2D<T> hessian);
+        tape.ReverseAccumulate(out ReadOnlySpan2D<T> hessian);
 
         return hessian[0, 0] + hessian[1, 1] + hessian[2, 2] + hessian[3, 3];
     }
@@ -617,11 +617,11 @@ public static class AutoDiffExtensions
         Vector2<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient, v.X1);
+        tape.ReverseAccumulate(out var gradient, v.X1);
         result[0] += gradient[0]; result[1] += gradient[1];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient, v.X2);
+        tape.ReverseAccumulate(out gradient, v.X2);
         result[0] += gradient[0]; result[1] += gradient[1];
 
         return new(result[0], result[1]);
@@ -648,15 +648,15 @@ public static class AutoDiffExtensions
         Vector3<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient, v.X1);
+        tape.ReverseAccumulate(out var gradient, v.X1);
         result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient, v.X2);
+        tape.ReverseAccumulate(out gradient, v.X2);
         result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2];
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient, v.X3);
+        tape.ReverseAccumulate(out gradient, v.X3);
         result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2];
 
         return new(result[0], result[1], result[2]);
@@ -685,19 +685,19 @@ public static class AutoDiffExtensions
         Vector4<T> result = new();
 
         _ = f1(tape, x);
-        tape.ReverseAccumulation(out var gradient, v.X1);
+        tape.ReverseAccumulate(out var gradient, v.X1);
         result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
 
         _ = f2(tape, x);
-        tape.ReverseAccumulation(out gradient, v.X2);
+        tape.ReverseAccumulate(out gradient, v.X2);
         result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
 
         _ = f3(tape, x);
-        tape.ReverseAccumulation(out gradient, v.X3);
+        tape.ReverseAccumulate(out gradient, v.X3);
         result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
 
         _ = f4(tape, x);
-        tape.ReverseAccumulation(out gradient, v.X4);
+        tape.ReverseAccumulate(out gradient, v.X4);
         result[0] += gradient[0]; result[1] += gradient[1]; result[2] += gradient[2]; result[3] += gradient[3];
 
         return new(result[0], result[1], result[2], result[3]);

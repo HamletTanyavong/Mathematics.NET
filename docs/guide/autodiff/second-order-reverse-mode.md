@@ -4,18 +4,18 @@ Support for first-order, reverse-mode autodiff is provided by the `HessianTape` 
 
 ## Hessian Tapes
 
-The steps needed to perform second-order, reverse-mode autodiff is similar to the steps needed to perform the first-order case. This time, however, we have access to the following overloads and/or versions of `ReverseAccumulation`:
+The steps needed to perform second-order, reverse-mode autodiff is similar to the steps needed to perform the first-order case. This time, however, we have access to the following overloads and/or versions of `ReverseAccumulate`:
 ```csharp
 HessianTape<Complex> tape = new();
 
 // Do some math...
 
 // Use when we are only interested in the gradient
-tape.ReverseAccumulation(out ReadOnlySpan<Complex> gradient);
+tape.ReverseAccumulate(out ReadOnlySpan<Complex> gradient);
 // Use when we are only interested in the Hessian
-tape.ReverseAccumulation(out ReadOnlySpan2D<Complex> hessian);
+tape.ReverseAccumulate(out ReadOnlySpan2D<Complex> hessian);
 // Use when we are interested in both the gradient and Hessian
-tape.ReverseAccumulation(out var gradient, out var hessian);
+tape.ReverseAccumulate(out var gradient, out var hessian);
 ```
 The last version may be useful for calculations such as finding the Laplacian of a scalar function in spherical coordinates which involves derivatives of first and second orders:
 $$
@@ -43,7 +43,7 @@ _ = tape.Divide(
             tape.Add(x.X1, x.X2),
             tape.Sin(x.X3)));
 
-tape.ReverseAccumulation(out var gradient, out var hessian);
+tape.ReverseAccumulate(out var gradient, out var hessian);
 
 // Manual Laplacian computation
 var u = Real.One / (x.X1.Value * Real.Sin(x.X2.Value)); // 1 / (r * sin(θ))
