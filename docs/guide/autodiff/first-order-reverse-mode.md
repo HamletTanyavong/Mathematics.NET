@@ -98,9 +98,9 @@ graph BT
     expnegx -- adj(w₅) = adj(w₆) ∂w₆/∂w₅ --> divide
     divide -- adj(f) = adj(w₆) = 1 (seed) --> function["f(x)"]
 ```
-We can then calculate the gradient of our function by using the `ReverseAccumulation` method.
+We can then calculate the gradient of our function by using the `ReverseAccumulate` method.
 ```csharp
-tape.ReverseAccumulation(out var gradient);
+tape.ReverseAccumulate(out var gradient);
 ```
 Since this is a single variable equation, we can access the first element of `gradients` to get our result.
 ```csharp
@@ -122,7 +122,7 @@ var result = tape.Divide(
 // Optional: examine the nodes on the gradient tape
 tape.PrintNodes();
 
-tape.ReverseAccumulation(out var gradient);
+tape.ReverseAccumulate(out var gradient);
 
 // The value of the function at the point x = 1.23: 0.6675110878078776
 Console.WriteLine("Value: {0}", result);
@@ -203,9 +203,9 @@ graph BT
     mul -- adj(w₆) = adj(w₇) ∂w₇/∂w₆ --> div
     div -- adj(f) = adj(w₇) = 1 (seed) --> function["f(x, y, z)"]
 ```
-As before, we can use `ReverseAccumulation` to get our gradients
+As before, we can use `ReverseAccumulate` to get our gradients
 ```csharp
-tape.ReverseAccumulation(out var gradient);
+tape.ReverseAccumulate(out var gradient);
 ```
 and print them to the console with
 ```csharp
@@ -281,7 +281,7 @@ static Variable F3(GradientTape tape, AutoDiffVector3 x)
             tape.Divide(x.X2, x.X3)));
 }
 ```
-Note that this time, we do not call the method `ReverseAccumulation`. This should give us the following result: `(-1.2556937075301358, 0.021879748724684178, 4.842981131678516)`.
+Note that this time, we do not call the method `ReverseAccumulate`. This should give us the following result: `(-1.2556937075301358, 0.021879748724684178, 4.842981131678516)`.
 
 ## Complex Variables
 
@@ -307,7 +307,7 @@ var result = tape.Cos(
 tape.PrintNodes(CancellationToken.None);
 Console.WriteLine();
 
-tape.ReverseAccumulation(out var gradient);
+tape.ReverseAccumulate(out var gradient);
 
 // The value of the function at the point z = 1.23 + i2.34 and w = -0.66 + i0.23
 Console.WriteLine("Value: {0}", result);
@@ -352,7 +352,7 @@ var result = tape.CustomOperation(
     x => Real.Sin(x),  // The function
     x => Real.Cos(x)); // The derivative of the function
 
-tape.ReverseAccumulation(out var gradient);
+tape.ReverseAccumulate(out var gradient);
 Console.WriteLine("Value: {0}", result);
 Console.WriteLine("Gradient: {0}", gradient.ToDisplayString());
 ```

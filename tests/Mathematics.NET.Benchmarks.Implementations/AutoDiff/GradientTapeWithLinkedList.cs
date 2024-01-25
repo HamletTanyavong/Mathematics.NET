@@ -64,11 +64,11 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         => throw new NotImplementedException();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient)
-        => ReverseAccumulation(out gradient, T.One);
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient)
+        => ReverseAccumulate(out gradient, T.One);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient, T seed)
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
         {

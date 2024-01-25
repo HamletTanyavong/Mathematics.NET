@@ -51,13 +51,13 @@ public interface ITape<T>
     /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
     /// <param name="gradient">The gradient</param>
     /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient);
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient);
 
     /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
     /// <param name="gradient">The gradient</param>
     /// <param name="seed">A seed value</param>
     /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
-    public void ReverseAccumulation(out ReadOnlySpan<T> gradient, T seed);
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed);
 
     //
     // Basic operations

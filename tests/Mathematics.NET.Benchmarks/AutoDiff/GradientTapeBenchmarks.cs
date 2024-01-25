@@ -63,7 +63,7 @@ public class GradientTapeBenchmarks
                     tape.Divide(
                         tape.Sqrt(y), z))));
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         return gradient[0] + gradient[1] + gradient[2];
     }
 
@@ -83,7 +83,7 @@ public class GradientTapeBenchmarks
                     tape.Divide(
                         tape.Sqrt(y), z))));
 
-        tape.ReverseAccumulation(out var gradient);
+        tape.ReverseAccumulate(out var gradient);
         return gradient[0] + gradient[1] + gradient[2];
     }
 }
