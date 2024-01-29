@@ -27,7 +27,7 @@
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-public enum Position : byte
+internal enum Position : byte
 {
     Left = 0,
     Right = 1
