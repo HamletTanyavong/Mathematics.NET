@@ -28,14 +28,15 @@
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 
 /// <summary>Represents the index structure of a tensor</summary>
-public readonly record struct IndexStructure
+internal readonly record struct IndexStructure
 {
-    public readonly int ContractPosition;
-    public readonly int IndexCount;
-
     public IndexStructure(int position, int indexCount)
     {
         ContractPosition = position;
         IndexCount = indexCount;
     }
+
+    public readonly int ContractPosition { get; }
+
+    public readonly int IndexCount { get; }
 }
