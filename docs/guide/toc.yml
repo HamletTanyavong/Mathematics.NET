@@ -18,3 +18,11 @@
     href: autodiff/second-order-reverse-mode.md
   - name: Second-Order, Forward-Mode Automatic Differentiation
     href: autodiff/second-order-forward-mode.md
+- name: Diagnostic Messages
+  items:
+  - name: Mathematics.NET Diagnostic Messages
+    href: diagnostic_messages/diagnostic-messages.md
+  - name: Symbols Diagnostic Messages
+    items:
+    - name: SGS0001
+      href: diagnostic_messages/symbols/sgs0001.md
