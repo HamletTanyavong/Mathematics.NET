@@ -2,12 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
     <Title>Mathematics.NET</Title>
-    <Version>0.2.0-alpha.2</Version>
+    <Version>0.2.0-alpha.3</Version>
     <PackageIcon>mathematics.net.png</PackageIcon>
     <Authors>Hamlet Tanyavong</Authors>
     <Description>Mathematics.NET is a C# class library that provides tools for solving mathematical problems. Included are custom types for real, complex, and rational numbers as well as other mathematical objects such as vectors, matrices, and tensors. The library also contains methods for performing first and second-order, forward and reverse-mode automatic differentiation.</Description>
@@ -16,7 +19,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageProjectUrl>https://mathematics.hamlettanyavong.com</PackageProjectUrl>
-    <Copyright>Copyright (c) 2023 Hamlet Tanyavong</Copyright>
+    <Copyright>Copyright (c) 2024 Hamlet Tanyavong</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/HamletTanyavong/Mathematics.NET</RepositoryUrl>
     <PackageReleaseNotes>This project is in alpha and is not yet ready for release.</PackageReleaseNotes>
