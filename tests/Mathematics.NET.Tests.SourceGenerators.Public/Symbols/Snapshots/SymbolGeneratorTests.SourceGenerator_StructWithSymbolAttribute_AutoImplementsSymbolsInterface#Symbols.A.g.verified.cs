@@ -7,7 +7,7 @@ namespace A;
 public readonly partial struct Alpha : ISymbol
 {
     /// <inheritdoc cref="ISymbol.DisplayString"/>
-    public const string DisplayString = "alpha";
+    public const string DisplayString = "Alpha";
 
     static string ISymbol.DisplayString => DisplayString;
 }
@@ -15,7 +15,7 @@ public readonly partial struct Alpha : ISymbol
 public readonly partial struct Beta : ISymbol
 {
     /// <inheritdoc cref="ISymbol.DisplayString"/>
-    public const string DisplayString = "beta";
+    public const string DisplayString = "Beta";
 
     static string ISymbol.DisplayString => DisplayString;
 }
@@ -23,7 +23,7 @@ public readonly partial struct Beta : ISymbol
 public readonly partial struct Gamma : ISymbol
 {
     /// <inheritdoc cref="ISymbol.DisplayString"/>
-    public const string DisplayString = "gamma";
+    public const string DisplayString = "Gamma";
 
     static string ISymbol.DisplayString => DisplayString;
 }
