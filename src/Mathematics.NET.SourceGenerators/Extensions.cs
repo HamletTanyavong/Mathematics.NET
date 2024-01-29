@@ -25,13 +25,32 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators;
 
 /// <summary>Extension methods for source generators</summary>
 internal static class Extensions
 {
+    /// <summary>Create a name syntax from a namespace.</summary>
+    /// <param name="namespaceName">A string representing a namespace</param>
+    /// <returns>A name syntax</returns>
+    public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceName)
+    {
+        Debug.Assert(!namespaceName.Contains(' '), "The assembly name must not contain any spaces.");
+        ReadOnlySpan<string> names = namespaceName.Split('.');
+
+        NameSyntax result = IdentifierName(names[0]);
+        for (int i = 1; i < names.Length; i++)
+        {
+            result = QualifiedName(result, IdentifierName(names[i]));
+        }
+
+        return result;
+    }
+
     /// <summary>Remove an attribute from a method declaration syntax.</summary>
     /// <param name="methodDeclarationSyntax">A method declaration syntax</param>
     /// <param name="attributeName">The name of the attribute</param>
