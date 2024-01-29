@@ -1,4 +1,4 @@
-﻿// <copyright file="Nu.cs" company="Mathematics.NET">
+﻿// <copyright file="ModuleInitializer.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,13 +25,12 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Symbols;
+using System.Runtime.CompilerServices;
 
-/// <summary>Represents the Greek letter nu, $ \nu $</summary>
-public readonly struct Nu : ISymbol
+namespace Mathematics.NET.Tests.SourceGenerators.Public;
+
+public static class ModuleInitializer
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
-    public const string DisplayString = "nu";
-
-    static string ISymbol.DisplayString => DisplayString;
+    [ModuleInitializer]
+    public static void Initialize() => VerifySourceGenerators.Initialize();
 }

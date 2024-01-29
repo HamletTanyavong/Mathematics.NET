@@ -1,4 +1,4 @@
-﻿// <copyright file="Mu.cs" company="Mathematics.NET">
+﻿// <copyright file="DiagnosticMessage.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,13 +25,20 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Symbols;
+namespace Mathematics.NET.SourceGenerators.Public;
 
-/// <summary>Represents the Greek letter mu, $ \mu $</summary>
-public readonly struct Mu : ISymbol
+/// <summary>A class for creating diagnostic messages for use in Mathematics.NET source generators</summary>
+public static class DiagnosticMessage
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
-    public const string DisplayString = "mu";
-
-    static string ISymbol.DisplayString => DisplayString;
+    public static DiagnosticDescriptor CreateInvalidSymbolDeclarationDiagnosticDescriptor()
+    {
+        return new DiagnosticDescriptor(
+            id: "SGS0001",
+            title: "Invalid symbol declaration",
+            messageFormat: "Symbols must be declared in namespaces.",
+            category: "Symbol",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            helpLinkUri: "https://mathematics.hamlettanyavong.com/guide/diagnostic_messages/symbols/sgs0001.html");
+    }
 }
