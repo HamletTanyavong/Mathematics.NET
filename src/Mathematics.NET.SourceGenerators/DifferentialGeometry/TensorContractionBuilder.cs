@@ -27,7 +27,6 @@
 
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
-using Mathematics.NET.SourceGenerators.Abstractions;
 using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -35,7 +34,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>Tensor contractions builder</summary>
-internal sealed class TensorContractionBuilder : IBuilder
+internal sealed class TensorContractionBuilder
 {
     private static readonly GenericNameSyntax s_indexToContract = GenericName(
         Identifier("Index"))
