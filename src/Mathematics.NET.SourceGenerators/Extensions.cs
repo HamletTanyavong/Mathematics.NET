@@ -45,7 +45,7 @@ internal static class Extensions
         var attributeNode = methodDeclarationSyntax
             .DescendantNodes()
             .OfType<AttributeSyntax>()
-            .First(x => x.Name.GetValue() == attributeName);
+            .First(x => x.Name.GetLastIdentifierNameValueOrDefault() == attributeName);
 
         if (attributeNode.Parent!.ChildNodes().Count() > 1)
         {
@@ -73,16 +73,16 @@ internal static class Extensions
             .FirstOrDefault();
     }
 
-    /// <summary>Get the name of a name syntax.</summary>
+    /// <summary>Get the value of the last identifier name in a name syntax.</summary>
     /// <param name="name">A type that derives from name syntax</param>
     /// <returns>The value of the name syntax</returns>
-    public static string? GetValue(this NameSyntax name)
+    public static string? GetLastIdentifierNameValueOrDefault(this NameSyntax name)
     {
         return name switch
         {
             SimpleNameSyntax simpleNameSyntax => simpleNameSyntax.Identifier.Text,
             QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax.Right.Identifier.Text,
-            _ => null
+            _ => default
         };
     }
 
