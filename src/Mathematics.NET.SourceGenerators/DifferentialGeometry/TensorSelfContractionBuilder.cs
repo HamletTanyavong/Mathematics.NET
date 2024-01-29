@@ -79,54 +79,30 @@ internal sealed class TensorSelfContractionBuilder
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                QualifiedName(
-                                    IdentifierName("Mathematics"),
-                                    IdentifierName("NET")),
-                                IdentifierName("DifferentialGeometry")),
-                            IdentifierName("Abstractions")))
+                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(
                                     Comment("// Auto-generated code")),
                                 SyntaxKind.UsingKeyword,
                                 TriviaList())),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                IdentifierName("Mathematics"),
-                                IdentifierName("NET")),
-                            IdentifierName("LinearAlgebra"))),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                QualifiedName(
-                                    IdentifierName("Mathematics"),
-                                    IdentifierName("NET")),
-                                IdentifierName("LinearAlgebra")),
-                            IdentifierName("Abstractions"))),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                IdentifierName("Mathematics"),
-                                IdentifierName("NET")),
-                            IdentifierName("Symbols")))]))
+                    UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
+                    UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace()),
+                    UsingDirective("Mathematics.NET.Symbols".CreateNameSyntaxFromNamespace())]))
                 .WithMembers(
                     SingletonList<MemberDeclarationSyntax>(
                         FileScopedNamespaceDeclaration(
-                            IdentifierName("Mathematics.NET.DifferentialGeometry"))
-                            .WithMembers(
-                                SingletonList<MemberDeclarationSyntax>(
-                                    ClassDeclaration("DifGeo")
-                                        .WithModifiers(
-                                            TokenList([
-                                                Token(SyntaxKind.PublicKeyword),
-                                                Token(SyntaxKind.StaticKeyword),
-                                                Token(SyntaxKind.PartialKeyword)]))
-                                        .WithMembers(
-                                            List(memberDeclarations))))))
+                            "Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
+                                .WithMembers(
+                                    SingletonList<MemberDeclarationSyntax>(
+                                        ClassDeclaration("DifGeo")
+                                            .WithModifiers(
+                                                TokenList([
+                                                    Token(SyntaxKind.PublicKeyword),
+                                                    Token(SyntaxKind.StaticKeyword),
+                                                    Token(SyntaxKind.PartialKeyword)]))
+                                            .WithMembers(
+                                                List(memberDeclarations))))))
             .NormalizeWhitespace();
     }
 
