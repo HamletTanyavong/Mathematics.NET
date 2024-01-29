@@ -59,13 +59,13 @@ internal static class Extensions
     /// <summary>Get the value of the last identifier name in a name syntax.</summary>
     /// <param name="name">A type that derives from name syntax</param>
     /// <returns>The value of the name syntax</returns>
-    public static string? GetLastIdentifierNameValue(this NameSyntax name)
+    public static string? GetLastIdentifierNameValueOrDefault(this NameSyntax name)
     {
         return name switch
         {
             SimpleNameSyntax simpleNameSyntax => simpleNameSyntax.Identifier.Text,
             QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax.Right.Identifier.Text,
-            _ => null
+            _ => default
         };
     }
 

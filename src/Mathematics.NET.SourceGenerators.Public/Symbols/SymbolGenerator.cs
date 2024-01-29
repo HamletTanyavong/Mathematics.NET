@@ -45,7 +45,7 @@ public sealed class SymbolGenerator : IIncrementalGenerator
     }
 
     private static bool CouldBeSymbolAttribute(SyntaxNode syntaxNode, CancellationToken token)
-        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetLastIdentifierNameValue() is "Symbol" or "SymbolAttribute";
+        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetLastIdentifierNameValueOrDefault() is "Symbol" or "SymbolAttribute";
 
     private static StructInformation GetStructInformationOrNull(GeneratorSyntaxContext context, CancellationToken token)
     {
