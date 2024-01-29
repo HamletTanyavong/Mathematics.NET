@@ -36,7 +36,7 @@ public static class DiagnosticMessage
             id: "SGS0001",
             title: "Invalid symbol declaration",
             messageFormat: "Symbols must be declared in namespaces.",
-            category: "Symbol",
+            category: "Symbols",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
             helpLinkUri: "https://mathematics.hamlettanyavong.com/guide/diagnostic_messages/symbols/sgs0001.html");
