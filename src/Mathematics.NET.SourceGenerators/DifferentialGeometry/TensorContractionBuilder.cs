@@ -65,7 +65,7 @@ internal sealed class TensorContractionBuilder
     // Compilation unit and members
     //
 
-    private CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
+    private CompilationUnitSyntax CreateCompilationUnit(ImmutableArray<MemberDeclarationSyntax> memberDeclarations)
     {
         return CompilationUnit()
             .WithUsings(
@@ -121,7 +121,7 @@ internal sealed class TensorContractionBuilder
             .NormalizeWhitespace();
     }
 
-    private MemberDeclarationSyntax[] GenerateMembers()
+    private ImmutableArray<MemberDeclarationSyntax> GenerateMembers()
     {
         List<MemberDeclarationSyntax> result = [];
         for (int i = 0; i < _methodInformationArray.Length; i++)
@@ -161,7 +161,7 @@ internal sealed class TensorContractionBuilder
                 }
             }
         }
-        return result.ToArray();
+        return result.ToImmutableArray();
     }
 
     //
