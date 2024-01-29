@@ -30,7 +30,7 @@ using System.Runtime.CompilerServices;
 namespace Mathematics.NET.SourceGenerators;
 
 /// <summary>Extension methods for source generators</summary>
-public static class Extensions
+internal static class Extensions
 {
     /// <summary>Remove an attribute from a method declaration syntax.</summary>
     /// <param name="methodDeclarationSyntax">A method declaration syntax</param>
