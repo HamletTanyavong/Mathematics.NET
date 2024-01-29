@@ -1,4 +1,4 @@
-﻿// <copyright file="ContractionInformation.cs" company="Mathematics.NET">
+﻿// <copyright file="TensorRankInformation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,14 +28,15 @@
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 
 /// <summary>Holds information about a particular tensor contraction</summary>
-public readonly record struct ContractionInformation
+internal readonly record struct TensorRankInformation
 {
-    public readonly int LeftRank;
-    public readonly int RightRank;
-
-    public ContractionInformation(int leftRank, int rightRank)
+    public TensorRankInformation(int leftRank, int rightRank)
     {
         LeftRank = leftRank;
         RightRank = rightRank;
     }
+
+    public readonly int LeftRank { get; }
+
+    public readonly int RightRank { get; }
 }

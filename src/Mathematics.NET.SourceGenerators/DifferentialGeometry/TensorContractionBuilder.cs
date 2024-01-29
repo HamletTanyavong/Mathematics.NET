@@ -185,7 +185,7 @@ internal sealed class TensorContractionBuilder
     // Helpers
     //
 
-    private static ContractionInformation GetContractionInformation(MemberDeclarationSyntax memberDeclaration)
+    private static TensorRankInformation GetContractionInformation(MemberDeclarationSyntax memberDeclaration)
     {
         var paramList = memberDeclaration.ParameterList()!;
 
