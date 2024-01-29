@@ -75,7 +75,7 @@ internal sealed class TensorSelfContractionBuilder : IBuilder
     // Compilation unit and members
     //
 
-    public CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
+    private CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
     {
         return CompilationUnit()
             .WithUsings(
@@ -301,7 +301,7 @@ internal sealed class TensorSelfContractionBuilder : IBuilder
         return memberDeclaration.ReplaceNode(constraints, newConstraints);
     }
 
-    public static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexStructure indexStructure)
     {
         var param = memberDeclaration.ParameterList()!.Parameters[0];
         var args = param.TypeArgumentList()!;

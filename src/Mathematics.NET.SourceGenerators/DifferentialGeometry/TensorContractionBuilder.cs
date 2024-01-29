@@ -66,7 +66,7 @@ internal sealed class TensorContractionBuilder : IBuilder
     // Compilation unit and members
     //
 
-    public CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
+    private CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
     {
         return CompilationUnit()
             .WithUsings(
