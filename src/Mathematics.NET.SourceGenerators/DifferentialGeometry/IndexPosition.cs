@@ -1,4 +1,4 @@
-﻿// <copyright file="Position.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexPosition.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,7 +27,7 @@
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-internal enum Position : byte
+internal enum IndexPosition : byte
 {
     Left = 0,
     Right = 1

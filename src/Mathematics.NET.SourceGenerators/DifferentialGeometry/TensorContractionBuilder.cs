@@ -185,14 +185,14 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         var paramList = methodDeclaration.ParameterList()!;
 
         // Validate left tensor
-        var leftArgs = paramList.Parameters[(int)Position.Left].TypeArgumentList()!;
+        var leftArgs = paramList.Parameters[(int)IndexPosition.Left].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, leftArgs, "Lower"))
         {
             return false;
         }
 
         // Validate right tensor
-        var rightArgs = paramList.Parameters[(int)Position.Right].TypeArgumentList()!;
+        var rightArgs = paramList.Parameters[(int)IndexPosition.Right].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, rightArgs, "Upper"))
         {
             return false;
@@ -276,7 +276,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, Position position)
+    private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
         var indexStructure = memberDeclaration.GetIndexStructure((int)position);
 
@@ -288,10 +288,10 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
     }
 
     private static MemberDeclarationSyntax SwapLeftIndices(MemberDeclarationSyntax memberDeclaration)
-        => SwapIndices(memberDeclaration, Position.Left);
+        => SwapIndices(memberDeclaration, IndexPosition.Left);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration, Position position)
+    private static MemberDeclarationSyntax SwapMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
         var multiplyExpression = memberDeclaration
             .DescendantNodes()
@@ -302,7 +302,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         var forStatement = (ForStatementSyntax)multiplyExpression.Parent!.Parent!.Parent!.Parent!;
         var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
 
-        var args = position == Position.Left
+        var args = position == IndexPosition.Left
             ? multiplyExpression.Left.DescendantNodes().OfType<BracketedArgumentListSyntax>().First()
             : multiplyExpression.Right.DescendantNodes().OfType<BracketedArgumentListSyntax>().First();
         var indexSwapper = new IndexSwapRewriter(args, variableName);
@@ -312,10 +312,10 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
     }
 
     private static MemberDeclarationSyntax SwapRightIndices(MemberDeclarationSyntax memberDeclaration)
-        => SwapIndices(memberDeclaration, Position.Right);
+        => SwapIndices(memberDeclaration, IndexPosition.Right);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, Position position, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
     {
         var constraints = memberDeclaration
             .ChildNodes()
@@ -334,7 +334,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, Position position, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
     {
         var param = memberDeclaration.ParameterList()!.Parameters[(int)position];
         var args = param.TypeArgumentList()!;
