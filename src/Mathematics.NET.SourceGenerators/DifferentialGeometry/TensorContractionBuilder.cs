@@ -112,7 +112,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             var method = _methodInformationArray[i].MethodDeclaration;
 
             // Validate seed contraction
-            if (!IsValidateSeedContraction(method) || !HasSummationComponents(method))
+            if (!IsValidSeedContraction(method) || !HasSummationComponents(method))
             {
                 continue;
             }
@@ -173,7 +173,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         return true;
     }
 
-    private bool IsValidateSeedContraction(MethodDeclarationSyntax methodDeclaration)
+    private bool IsValidSeedContraction(MethodDeclarationSyntax methodDeclaration)
     {
         // Validate method name
         if (!IsValidMethodName(methodDeclaration))
