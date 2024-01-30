@@ -124,7 +124,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             result.Add(method.GenerateTwinContraction());
 
             // Generate contractions with swapped parameters.
-            var contractionInformation = GetContractionInformation(method);
+            var contractionInformation = GetTensorRankInformation(method);
             MemberDeclarationSyntax member = method;
 
             for (int j = 0; j < contractionInformation.RightRank - 1; j++)
@@ -205,7 +205,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
     // Helpers
     //
 
-    private static TensorRankInformation GetContractionInformation(MemberDeclarationSyntax memberDeclaration)
+    private static TensorRankInformation GetTensorRankInformation(MemberDeclarationSyntax memberDeclaration)
     {
         var paramList = memberDeclaration.ParameterList()!;
 
