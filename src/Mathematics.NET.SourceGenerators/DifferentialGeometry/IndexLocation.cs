@@ -1,4 +1,4 @@
-﻿// <copyright file="ContractionInformation.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexLocation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,17 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>Holds information about a particular tensor contraction</summary>
-public readonly record struct ContractionInformation
+public enum IndexLocation : byte
 {
-    public readonly int LeftRank;
-    public readonly int RightRank;
-
-    public ContractionInformation(int leftRank, int rightRank)
-    {
-        LeftRank = leftRank;
-        RightRank = rightRank;
-    }
+    First = 3,
+    Second = 4
 }

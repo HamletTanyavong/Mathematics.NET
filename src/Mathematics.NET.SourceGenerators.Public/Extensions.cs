@@ -40,7 +40,7 @@ internal static class Extensions
     /// <returns>A name syntax</returns>
     public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceName)
     {
-        Debug.Assert(!namespaceName.Contains(' '), "The assembly name must not contain any spaces.");
+        Debug.Assert(!namespaceName.Contains(' '), "The namespace string must not contain any spaces.");
         ReadOnlySpan<string> names = namespaceName.Split('.');
 
         NameSyntax result = IdentifierName(names[0]);
@@ -59,13 +59,13 @@ internal static class Extensions
     /// <summary>Get the value of the last identifier name in a name syntax.</summary>
     /// <param name="name">A type that derives from name syntax</param>
     /// <returns>The value of the name syntax</returns>
-    public static string? GetLastIdentifierNameValue(this NameSyntax name)
+    public static string? GetLastIdentifierNameValueOrDefault(this NameSyntax name)
     {
         return name switch
         {
             SimpleNameSyntax simpleNameSyntax => simpleNameSyntax.Identifier.Text,
             QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax.Right.Identifier.Text,
-            _ => null
+            _ => default
         };
     }
 

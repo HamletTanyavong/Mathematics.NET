@@ -30,7 +30,7 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>A syntax walker that flips lower indices to upper indices and vice versa</summary>
-public sealed class FlipIndexRewriter : CSharpSyntaxRewriter
+internal sealed class FlipIndexRewriter : CSharpSyntaxRewriter
 {
     private static readonly IdentifierNameSyntax s_lower = SyntaxFactory.IdentifierName("Lower");
     private static readonly IdentifierNameSyntax s_upper = SyntaxFactory.IdentifierName("Upper");

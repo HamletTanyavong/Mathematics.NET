@@ -25,13 +25,32 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators;
 
 /// <summary>Extension methods for source generators</summary>
-public static class Extensions
+internal static class Extensions
 {
+    /// <summary>Create a name syntax from a namespace.</summary>
+    /// <param name="namespaceName">A string representing a namespace</param>
+    /// <returns>A name syntax</returns>
+    public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceName)
+    {
+        Debug.Assert(!namespaceName.Contains(' '), "The namespace string must not contain any spaces.");
+        ReadOnlySpan<string> names = namespaceName.Split('.');
+
+        NameSyntax result = IdentifierName(names[0]);
+        for (int i = 1; i < names.Length; i++)
+        {
+            result = QualifiedName(result, IdentifierName(names[i]));
+        }
+
+        return result;
+    }
+
     /// <summary>Remove an attribute from a method declaration syntax.</summary>
     /// <param name="methodDeclarationSyntax">A method declaration syntax</param>
     /// <param name="attributeName">The name of the attribute</param>
@@ -45,7 +64,7 @@ public static class Extensions
         var attributeNode = methodDeclarationSyntax
             .DescendantNodes()
             .OfType<AttributeSyntax>()
-            .First(x => x.Name.GetValue() == attributeName);
+            .First(x => x.Name.GetLastIdentifierNameValueOrDefault() == attributeName);
 
         if (attributeNode.Parent!.ChildNodes().Count() > 1)
         {
@@ -73,16 +92,16 @@ public static class Extensions
             .FirstOrDefault();
     }
 
-    /// <summary>Get the name of a name syntax.</summary>
+    /// <summary>Get the value of the last identifier name in a name syntax.</summary>
     /// <param name="name">A type that derives from name syntax</param>
     /// <returns>The value of the name syntax</returns>
-    public static string? GetValue(this NameSyntax name)
+    public static string? GetLastIdentifierNameValueOrDefault(this NameSyntax name)
     {
         return name switch
         {
             SimpleNameSyntax simpleNameSyntax => simpleNameSyntax.Identifier.Text,
             QualifiedNameSyntax qualifiedNameSyntax => qualifiedNameSyntax.Right.Identifier.Text,
-            _ => null
+            _ => default
         };
     }
 

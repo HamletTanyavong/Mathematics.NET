@@ -28,7 +28,7 @@
 namespace Mathematics.NET.SourceGenerators.Models;
 
 /// <summary>A class containing information about a specific method</summary>
-public sealed class MethodInformation
+internal sealed class MethodInformation
 {
     public MethodInformation(AttributeSyntax attributeSyntax, MethodDeclarationSyntax methodDeclaration)
     {

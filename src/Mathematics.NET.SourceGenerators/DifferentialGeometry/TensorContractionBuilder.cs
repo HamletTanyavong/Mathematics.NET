@@ -26,35 +26,41 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using System.Runtime.CompilerServices;
-using Mathematics.NET.SourceGenerators.Abstractions;
 using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
+// The seed tensor contraction should have a lower index for the left argument and an upper
+// index for the right argument. This is purely by choice, but it makes the code generation
+// easier since it provids a consistent pattern to follow. With the source generator, including
+// the self-contraction source generator, we only need to iterate through the index combinations
+// from left to right. The first indices of the left and right tensors in the seed contraction
+// should also be the indices to contract.
+//
+// public static Result<...> Contract<...>(
+//     TensorA<..., Index<Lower, IC>, ...> a,
+//     TensorB<..., Index<Upper, IC>, ...> b)
+//     // constraints
+// {
+//     // code
+// }
+
 /// <summary>Tensor contractions builder</summary>
-internal sealed class TensorContractionBuilder : IBuilder
+internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 {
     private static readonly GenericNameSyntax s_indexToContract = GenericName(
         Identifier("Index"))
             .WithTypeArgumentList(
                 TypeArgumentList(
-                    SeparatedList<TypeSyntax>(
-                        new SyntaxNodeOrToken[] {
-                            IdentifierName("Upper"),
-                            Token(SyntaxKind.CommaToken),
-                            IdentifierName("IC") })));
-
-    private readonly SourceProductionContext _context;
-    private readonly ImmutableArray<MethodInformation> _methodInformationArray;
+                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
+                        IdentifierName("Upper"),
+                        Token(SyntaxKind.CommaToken),
+                        IdentifierName("IC") })));
 
     public TensorContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
-    {
-        _context = context;
-        _methodInformationArray = methodInformationArray;
-    }
+        : base(context, methodInformationArray) { }
 
     public CompilationUnitSyntax GenerateSource()
     {
@@ -66,76 +72,58 @@ internal sealed class TensorContractionBuilder : IBuilder
     // Compilation unit and members
     //
 
-    private CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
+    private CompilationUnitSyntax CreateCompilationUnit(ImmutableArray<MemberDeclarationSyntax> memberDeclarations)
     {
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                QualifiedName(
-                                    IdentifierName("Mathematics"),
-                                    IdentifierName("NET")),
-                                IdentifierName("DifferentialGeometry")),
-                            IdentifierName("Abstractions")))
+                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(
                                     Comment("// Auto-generated code")),
                                 SyntaxKind.UsingKeyword,
                                 TriviaList())),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                IdentifierName("Mathematics"),
-                                IdentifierName("NET")),
-                            IdentifierName("LinearAlgebra"))),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                QualifiedName(
-                                    IdentifierName("Mathematics"),
-                                    IdentifierName("NET")),
-                                IdentifierName("LinearAlgebra")),
-                            IdentifierName("Abstractions"))),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                IdentifierName("Mathematics"),
-                                IdentifierName("NET")),
-                            IdentifierName("Symbols")))]))
+                    UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
+                    UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace()),
+                    UsingDirective("Mathematics.NET.Symbols".CreateNameSyntaxFromNamespace())]))
                 .WithMembers(
                     SingletonList<MemberDeclarationSyntax>(
                         FileScopedNamespaceDeclaration(
-                            IdentifierName("Mathematics.NET.DifferentialGeometry"))
-                            .WithMembers(
-                                SingletonList<MemberDeclarationSyntax>(
-                                    ClassDeclaration("DifGeo")
-                                        .WithModifiers(
-                                            TokenList([
-                                                Token(SyntaxKind.PublicKeyword),
-                                                Token(SyntaxKind.StaticKeyword),
-                                                Token(SyntaxKind.PartialKeyword)]))
-                                        .WithMembers(
-                                            List(memberDeclarations))))))
+                            "Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
+                                .WithMembers(
+                                    SingletonList<MemberDeclarationSyntax>(
+                                        ClassDeclaration("DifGeo")
+                                            .WithModifiers(
+                                                TokenList([
+                                                    Token(SyntaxKind.PublicKeyword),
+                                                    Token(SyntaxKind.StaticKeyword),
+                                                    Token(SyntaxKind.PartialKeyword)]))
+                                            .WithMembers(
+                                                List(memberDeclarations))))))
             .NormalizeWhitespace();
     }
 
-    private MemberDeclarationSyntax[] GenerateMembers()
+    private ImmutableArray<MemberDeclarationSyntax> GenerateMembers()
     {
         List<MemberDeclarationSyntax> result = [];
         for (int i = 0; i < _methodInformationArray.Length; i++)
         {
             var method = _methodInformationArray[i].MethodDeclaration;
-            ValidateSeedContraction(method);
+
+            // Validate seed contraction
+            if (!IsValidSeedContraction(method) || !HasSummationComponents(method))
+            {
+                continue;
+            }
+
             method = method.RemoveAttribute("GenerateTensorContractions");
 
             // Generate the twin of the original contraction.
             result.Add(method.GenerateTwinContraction());
 
             // Generate contractions with swapped parameters.
-            var contractionInformation = GetContractionInformation(method);
+            var contractionInformation = GetTensorRankInformation(method);
             MemberDeclarationSyntax member = method;
 
             for (int j = 0; j < contractionInformation.RightRank - 1; j++)
@@ -162,55 +150,61 @@ internal sealed class TensorContractionBuilder : IBuilder
                 }
             }
         }
-        return result.ToArray();
+        return result.ToImmutableArray();
     }
 
     //
     // Validation
     //
 
-    private void ValidateSeedContraction(MemberDeclarationSyntax memberDeclaration)
+    private bool HasSummationComponents(MethodDeclarationSyntax methodDeclaration)
     {
-        var paramList = memberDeclaration.ParameterList()!;
+        var multiplyExpression = methodDeclaration
+            .DescendantNodes()
+            .OfType<BinaryExpressionSyntax>()
+            .FirstOrDefault(x => x.IsKind(SyntaxKind.MultiplyExpression));
+        if (multiplyExpression is null ||
+            multiplyExpression.Parent?.Parent?.Parent?.Parent is null) // Check for for loop
+        {
+            var descriptor = DiagnosticMessage.CreateMissingSummationComponentsDiagnosticDescriptor();
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
+            return false;
+        }
+        return true;
+    }
 
-        var leftParam = paramList.Parameters[0];
-        var leftArgs = leftParam.TypeArgumentList()!;
-        if (leftArgs.Arguments[3] is GenericNameSyntax leftName)
+    private bool IsValidSeedContraction(MethodDeclarationSyntax methodDeclaration)
+    {
+        // Validate method name
+        if (!IsValidMethodName(methodDeclaration))
         {
-            if (((IdentifierNameSyntax)leftName.TypeArgumentList.Arguments[0]).Identifier.Text != "Lower")
-            {
-                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the first parameter must be \"Lower.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
-            }
-        }
-        else
-        {
-            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the first parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
+            return false;
         }
 
-        var rightParam = paramList.Parameters[1];
-        var rightArgs = rightParam.TypeArgumentList()!;
-        if (rightArgs.Arguments[3] is GenericNameSyntax rightName)
+        var paramList = methodDeclaration.ParameterList()!;
+
+        // Validate left tensor
+        var leftArgs = paramList.Parameters[(int)IndexPosition.Left].TypeArgumentList()!;
+        if (!IsValidIndexPositionAndName(IndexLocation.First, leftArgs, "Lower"))
         {
-            if (((IdentifierNameSyntax)rightName.TypeArgumentList.Arguments[0]).Identifier.Text != "Upper")
-            {
-                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the second parameter must be \"Upper.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
-            }
+            return false;
         }
-        else
+
+        // Validate right tensor
+        var rightArgs = paramList.Parameters[(int)IndexPosition.Right].TypeArgumentList()!;
+        if (!IsValidIndexPositionAndName(IndexLocation.First, rightArgs, "Upper"))
         {
-            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the second parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
+            return false;
         }
+
+        return true;
     }
 
     //
     // Helpers
     //
 
-    private static ContractionInformation GetContractionInformation(MemberDeclarationSyntax memberDeclaration)
+    private static TensorRankInformation GetTensorRankInformation(MemberDeclarationSyntax memberDeclaration)
     {
         var paramList = memberDeclaration.ParameterList()!;
 
@@ -232,7 +226,6 @@ internal sealed class TensorContractionBuilder : IBuilder
         return memberDeclaration;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration)
     {
         var multiplyExpression = memberDeclaration
@@ -251,7 +244,6 @@ internal sealed class TensorContractionBuilder : IBuilder
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration)
     {
         var constraints = memberDeclaration
@@ -270,7 +262,6 @@ internal sealed class TensorContractionBuilder : IBuilder
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetTypeParameters(MemberDeclarationSyntax memberDeclaration)
     {
         var param = memberDeclaration.ParameterList()!.Parameters[1];
@@ -281,7 +272,7 @@ internal sealed class TensorContractionBuilder : IBuilder
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, Position position)
+    private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
         var indexStructure = memberDeclaration.GetIndexStructure((int)position);
 
@@ -293,21 +284,19 @@ internal sealed class TensorContractionBuilder : IBuilder
     }
 
     private static MemberDeclarationSyntax SwapLeftIndices(MemberDeclarationSyntax memberDeclaration)
-        => SwapIndices(memberDeclaration, Position.Left);
+        => SwapIndices(memberDeclaration, IndexPosition.Left);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration, Position position)
+    private static MemberDeclarationSyntax SwapMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
         var multiplyExpression = memberDeclaration
             .DescendantNodes()
             .OfType<BinaryExpressionSyntax>()
             .First(x => x.IsKind(SyntaxKind.MultiplyExpression));
 
-        // This gets the first enclosing for loop.
         var forStatement = (ForStatementSyntax)multiplyExpression.Parent!.Parent!.Parent!.Parent!;
         var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
 
-        var args = position == Position.Left
+        var args = position == IndexPosition.Left
             ? multiplyExpression.Left.DescendantNodes().OfType<BracketedArgumentListSyntax>().First()
             : multiplyExpression.Right.DescendantNodes().OfType<BracketedArgumentListSyntax>().First();
         var indexSwapper = new IndexSwapRewriter(args, variableName);
@@ -317,10 +306,9 @@ internal sealed class TensorContractionBuilder : IBuilder
     }
 
     private static MemberDeclarationSyntax SwapRightIndices(MemberDeclarationSyntax memberDeclaration)
-        => SwapIndices(memberDeclaration, Position.Right);
+        => SwapIndices(memberDeclaration, IndexPosition.Right);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, Position position, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
     {
         var constraints = memberDeclaration
             .ChildNodes()
@@ -338,15 +326,11 @@ internal sealed class TensorContractionBuilder : IBuilder
         return memberDeclaration.ReplaceNode(constraints, newConstraints);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, Position position, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
     {
         var param = memberDeclaration.ParameterList()!.Parameters[(int)position];
         var args = param.TypeArgumentList()!;
-
-        var newArgs = args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition);
-        var newParam = param.ReplaceNode(args, newArgs);
-
+        var newParam = param.ReplaceNode(args, args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition));
         return memberDeclaration.ReplaceNode(param, newParam);
     }
 }

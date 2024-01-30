@@ -44,7 +44,7 @@ public sealed class TensorSelfContractionGenerator : IIncrementalGenerator
     }
 
     private static bool CouldBeTensorSelfContractionAttribute(SyntaxNode syntaxNode, CancellationToken token)
-        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetValue() is "GenerateTensorSelfContractions" or "GenerateTensorSelfContractionsAttribute";
+        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetLastIdentifierNameValueOrDefault() is "GenerateTensorSelfContractions" or "GenerateTensorSelfContractionsAttribute";
 
     private static MethodInformation GetTensorSelfContractionOrNull(GeneratorSyntaxContext context, CancellationToken token)
     {

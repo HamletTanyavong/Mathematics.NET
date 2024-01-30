@@ -26,7 +26,6 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using Mathematics.NET.SourceGenerators.Abstractions;
 using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -34,36 +33,28 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>Tensor self contractions builder</summary>
-internal sealed class TensorSelfContractionBuilder : IBuilder
+internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBase
 {
     private static readonly GenericNameSyntax s_leftIndex = GenericName(
         Identifier("Index"))
             .WithTypeArgumentList(
                 TypeArgumentList(
-                    SeparatedList<TypeSyntax>(
-                        new SyntaxNodeOrToken[] {
-                            IdentifierName("Lower"),
-                            Token(SyntaxKind.CommaToken),
-                            IdentifierName("IC") })));
+                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
+                        IdentifierName("Lower"),
+                        Token(SyntaxKind.CommaToken),
+                        IdentifierName("IC") })));
 
     private static readonly GenericNameSyntax s_rightIndex = GenericName(
         Identifier("Index"))
             .WithTypeArgumentList(
                 TypeArgumentList(
-                    SeparatedList<TypeSyntax>(
-                        new SyntaxNodeOrToken[] {
-                            IdentifierName("Upper"),
-                            Token(SyntaxKind.CommaToken),
-                            IdentifierName("IC") })));
-
-    private readonly SourceProductionContext _context;
-    private readonly ImmutableArray<MethodInformation> _methodInformationArray;
+                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
+                        IdentifierName("Upper"),
+                        Token(SyntaxKind.CommaToken),
+                        IdentifierName("IC") })));
 
     public TensorSelfContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
-    {
-        _context = context;
-        _methodInformationArray = methodInformationArray;
-    }
+        : base(context, methodInformationArray) { }
 
     public CompilationUnitSyntax GenerateSource()
     {
@@ -75,68 +66,51 @@ internal sealed class TensorSelfContractionBuilder : IBuilder
     // Compilation unit and members
     //
 
-    private CompilationUnitSyntax CreateCompilationUnit(MemberDeclarationSyntax[] memberDeclarations)
+    private CompilationUnitSyntax CreateCompilationUnit(ImmutableArray<MemberDeclarationSyntax> memberDeclarations)
     {
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                QualifiedName(
-                                    IdentifierName("Mathematics"),
-                                    IdentifierName("NET")),
-                                IdentifierName("DifferentialGeometry")),
-                            IdentifierName("Abstractions")))
+                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(
                                     Comment("// Auto-generated code")),
                                 SyntaxKind.UsingKeyword,
                                 TriviaList())),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                IdentifierName("Mathematics"),
-                                IdentifierName("NET")),
-                            IdentifierName("LinearAlgebra"))),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                QualifiedName(
-                                    IdentifierName("Mathematics"),
-                                    IdentifierName("NET")),
-                                IdentifierName("LinearAlgebra")),
-                            IdentifierName("Abstractions"))),
-                    UsingDirective(
-                        QualifiedName(
-                            QualifiedName(
-                                IdentifierName("Mathematics"),
-                                IdentifierName("NET")),
-                            IdentifierName("Symbols")))]))
+                    UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
+                    UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace()),
+                    UsingDirective("Mathematics.NET.Symbols".CreateNameSyntaxFromNamespace())]))
                 .WithMembers(
                     SingletonList<MemberDeclarationSyntax>(
                         FileScopedNamespaceDeclaration(
-                            IdentifierName("Mathematics.NET.DifferentialGeometry"))
-                            .WithMembers(
-                                SingletonList<MemberDeclarationSyntax>(
-                                    ClassDeclaration("DifGeo")
-                                        .WithModifiers(
-                                            TokenList([
-                                                Token(SyntaxKind.PublicKeyword),
-                                                Token(SyntaxKind.StaticKeyword),
-                                                Token(SyntaxKind.PartialKeyword)]))
-                                        .WithMembers(
-                                            List(memberDeclarations))))))
+                            "Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
+                                .WithMembers(
+                                    SingletonList<MemberDeclarationSyntax>(
+                                        ClassDeclaration("DifGeo")
+                                            .WithModifiers(
+                                                TokenList([
+                                                    Token(SyntaxKind.PublicKeyword),
+                                                    Token(SyntaxKind.StaticKeyword),
+                                                    Token(SyntaxKind.PartialKeyword)]))
+                                            .WithMembers(
+                                                List(memberDeclarations))))))
             .NormalizeWhitespace();
     }
 
-    private MemberDeclarationSyntax[] GenerateMembers()
+    private ImmutableArray<MemberDeclarationSyntax> GenerateMembers()
     {
         List<MemberDeclarationSyntax> result = [];
         for (int i = 0; i < _methodInformationArray.Length; i++)
         {
             var method = _methodInformationArray[i].MethodDeclaration;
+
+            // Validate seed contraction
+            if (!IsValidSeedContraction(method) || !HasSummationComponents(method))
+            {
+                continue;
+            }
+
             method = method.RemoveAttribute("GenerateTensorSelfContractions");
 
             // Generate twin of the original contraction.
@@ -168,7 +142,47 @@ internal sealed class TensorSelfContractionBuilder : IBuilder
                 }
             }
         }
-        return result.ToArray();
+        return result.ToImmutableArray();
+    }
+
+    //
+    // Validation
+    //
+
+    private bool HasSummationComponents(MethodDeclarationSyntax methodDeclaration)
+    {
+        var addAssignmentExpression = methodDeclaration
+            .DescendantNodes()
+            .OfType<AssignmentExpressionSyntax>()
+            .FirstOrDefault(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
+        if (addAssignmentExpression is null ||
+            addAssignmentExpression.Parent?.Parent?.Parent is null) // Check for for loop
+        {
+            var descriptor = DiagnosticMessage.CreateMissingSummationComponentsDiagnosticDescriptor();
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
+            return false;
+        }
+        return true;
+    }
+
+    private bool IsValidSeedContraction(MethodDeclarationSyntax methodDeclaration)
+    {
+        // Validate method name
+        if (!IsValidMethodName(methodDeclaration))
+        {
+            return false;
+        }
+
+        var paramList = methodDeclaration.ParameterList()!;
+
+        // Validate tensor
+        var args = paramList.Parameters[0].TypeArgumentList()!;
+        if (!IsValidIndexPositionAndName(IndexLocation.First, args, "Lower") || !IsValidIndexPositionAndName(IndexLocation.Second, args, "Upper"))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     //
@@ -273,7 +287,6 @@ internal sealed class TensorSelfContractionBuilder : IBuilder
             .OfType<AssignmentExpressionSyntax>()
             .First(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
 
-        // This gets the first enclosing for loop.
         var forStatement = (ForStatementSyntax)addAssignmentExpression.Parent!.Parent!.Parent!;
         var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
 

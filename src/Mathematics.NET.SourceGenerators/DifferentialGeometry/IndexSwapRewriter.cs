@@ -30,7 +30,7 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>A C# syntax rewriter that swaps tensor index orders</summary>
-public sealed class IndexSwapRewriter : CSharpSyntaxRewriter
+internal sealed class IndexSwapRewriter : CSharpSyntaxRewriter
 {
     private readonly ArgumentSyntax _indexToContract;
     private readonly ArgumentSyntax _indexToSwap;

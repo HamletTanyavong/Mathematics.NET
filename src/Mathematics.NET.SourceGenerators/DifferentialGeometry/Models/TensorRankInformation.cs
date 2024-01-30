@@ -1,4 +1,4 @@
-﻿// <copyright file="IBuilder.cs" company="Mathematics.NET">
+﻿// <copyright file="TensorRankInformation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,10 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.Abstractions;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 
-/// <summary>Defines support for source builders</summary>
-public interface IBuilder
+/// <summary>Holds information about a particular tensor contraction</summary>
+internal readonly record struct TensorRankInformation
 {
-    CompilationUnitSyntax GenerateSource();
+    public TensorRankInformation(int leftRank, int rightRank)
+    {
+        LeftRank = leftRank;
+        RightRank = rightRank;
+    }
+
+    public readonly int LeftRank { get; }
+
+    public readonly int RightRank { get; }
 }
