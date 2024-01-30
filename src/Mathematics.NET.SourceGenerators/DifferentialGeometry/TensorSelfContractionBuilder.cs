@@ -287,7 +287,6 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
             .OfType<AssignmentExpressionSyntax>()
             .First(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
 
-        // This gets the first enclosing for loop.
         var forStatement = (ForStatementSyntax)addAssignmentExpression.Parent!.Parent!.Parent!;
         var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
 
