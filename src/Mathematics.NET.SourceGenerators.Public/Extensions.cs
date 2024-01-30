@@ -40,7 +40,7 @@ internal static class Extensions
     /// <returns>A name syntax</returns>
     public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceName)
     {
-        Debug.Assert(!namespaceName.Contains(' '), "The assembly name must not contain any spaces.");
+        Debug.Assert(!namespaceName.Contains(' '), "The namespace string must not contain any spaces.");
         ReadOnlySpan<string> names = namespaceName.Split('.');
 
         NameSyntax result = IdentifierName(names[0]);
