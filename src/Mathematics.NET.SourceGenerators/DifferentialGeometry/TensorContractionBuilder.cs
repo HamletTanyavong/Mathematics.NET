@@ -111,7 +111,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         {
             var method = _methodInformationArray[i].MethodDeclaration;
 
-            // Validate seed contraction
+            // Validate seed contraction.
             if (!IsValidSeedContraction(method) || !HasSummationComponents(method))
             {
                 continue;
