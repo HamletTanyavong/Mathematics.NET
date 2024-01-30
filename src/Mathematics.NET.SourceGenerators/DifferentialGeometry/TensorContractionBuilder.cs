@@ -227,7 +227,6 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         return memberDeclaration;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration)
     {
         var multiplyExpression = memberDeclaration
@@ -246,7 +245,6 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration)
     {
         var constraints = memberDeclaration
@@ -265,7 +263,6 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax ResetTypeParameters(MemberDeclarationSyntax memberDeclaration)
     {
         var param = memberDeclaration.ParameterList()!.Parameters[1];
@@ -290,7 +287,6 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
     private static MemberDeclarationSyntax SwapLeftIndices(MemberDeclarationSyntax memberDeclaration)
         => SwapIndices(memberDeclaration, IndexPosition.Left);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax SwapMultiplyExpressionComponents(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
         var multiplyExpression = memberDeclaration
@@ -298,7 +294,6 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             .OfType<BinaryExpressionSyntax>()
             .First(x => x.IsKind(SyntaxKind.MultiplyExpression));
 
-        // This gets the first enclosing for loop.
         var forStatement = (ForStatementSyntax)multiplyExpression.Parent!.Parent!.Parent!.Parent!;
         var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
 
@@ -314,7 +309,6 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
     private static MemberDeclarationSyntax SwapRightIndices(MemberDeclarationSyntax memberDeclaration)
         => SwapIndices(memberDeclaration, IndexPosition.Right);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
     {
         var constraints = memberDeclaration
@@ -333,15 +327,11 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         return memberDeclaration.ReplaceNode(constraints, newConstraints);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
     {
         var param = memberDeclaration.ParameterList()!.Parameters[(int)position];
         var args = param.TypeArgumentList()!;
-
-        var newArgs = args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition);
-        var newParam = param.ReplaceNode(args, newArgs);
-
+        var newParam = param.ReplaceNode(args, args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition));
         return memberDeclaration.ReplaceNode(param, newParam);
     }
 }
