@@ -39,21 +39,19 @@ internal sealed class TensorSelfContractionBuilder
         Identifier("Index"))
             .WithTypeArgumentList(
                 TypeArgumentList(
-                    SeparatedList<TypeSyntax>(
-                        new SyntaxNodeOrToken[] {
-                            IdentifierName("Lower"),
-                            Token(SyntaxKind.CommaToken),
-                            IdentifierName("IC") })));
+                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
+                        IdentifierName("Lower"),
+                        Token(SyntaxKind.CommaToken),
+                        IdentifierName("IC") })));
 
     private static readonly GenericNameSyntax s_rightIndex = GenericName(
         Identifier("Index"))
             .WithTypeArgumentList(
                 TypeArgumentList(
-                    SeparatedList<TypeSyntax>(
-                        new SyntaxNodeOrToken[] {
-                            IdentifierName("Upper"),
-                            Token(SyntaxKind.CommaToken),
-                            IdentifierName("IC") })));
+                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
+                        IdentifierName("Upper"),
+                        Token(SyntaxKind.CommaToken),
+                        IdentifierName("IC") })));
 
     private readonly SourceProductionContext _context;
     private readonly ImmutableArray<MethodInformation> _methodInformationArray;
