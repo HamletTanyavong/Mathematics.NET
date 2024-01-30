@@ -33,8 +33,23 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
+// The seed tensor contraction should have a lower index for the left argument and an upper
+// index for the right argument. This is purely by choice, but it makes the code generation
+// easier since it provids a consistent pattern to follow. With the source generator, including
+// the self-contraction source generator, we only need to iterate through the index combinations
+// from left to right. The first indices of the left and right tensors in the seed contraction
+// should also be the indices to contract.
+//
+// public static Result<...> Contract<...>(
+//     TensorA<..., Index<Lower, IC>, ...> a,
+//     TensorB<..., Index<Upper, IC>, ...> b)
+//     // constraints
+// {
+//     // code
+// }
+
 /// <summary>Tensor contractions builder</summary>
-internal sealed class TensorContractionBuilder
+internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 {
     private static readonly GenericNameSyntax s_indexToContract = GenericName(
         Identifier("Index"))
@@ -45,14 +60,8 @@ internal sealed class TensorContractionBuilder
                         Token(SyntaxKind.CommaToken),
                         IdentifierName("IC") })));
 
-    private readonly SourceProductionContext _context;
-    private readonly ImmutableArray<MethodInformation> _methodInformationArray;
-
     public TensorContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
-    {
-        _context = context;
-        _methodInformationArray = methodInformationArray;
-    }
+        : base(context, methodInformationArray) { }
 
     public CompilationUnitSyntax GenerateSource()
     {
@@ -102,7 +111,13 @@ internal sealed class TensorContractionBuilder
         for (int i = 0; i < _methodInformationArray.Length; i++)
         {
             var method = _methodInformationArray[i].MethodDeclaration;
-            ValidateSeedContraction(method);
+
+            // Validate seed contraction
+            if (!IsValidateSeedContraction(method) || !HasSummationComponents(method))
+            {
+                continue;
+            }
+
             method = method.RemoveAttribute("GenerateTensorContractions");
 
             // Generate the twin of the original contraction.
@@ -143,41 +158,47 @@ internal sealed class TensorContractionBuilder
     // Validation
     //
 
-    private void ValidateSeedContraction(MemberDeclarationSyntax memberDeclaration)
+    private bool HasSummationComponents(MethodDeclarationSyntax methodDeclaration)
     {
-        var paramList = memberDeclaration.ParameterList()!;
+        var multiplyExpression = methodDeclaration
+            .DescendantNodes()
+            .OfType<BinaryExpressionSyntax>()
+            .FirstOrDefault(x => x.IsKind(SyntaxKind.MultiplyExpression));
+        if (multiplyExpression is null ||
+            multiplyExpression.Parent?.Parent?.Parent?.Parent is null) // Check for for loop
+        {
+            var descriptor = DiagnosticMessage.CreateMissingSummationComponentsDiagnosticDescriptor();
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
+            return false;
+        }
+        return true;
+    }
 
-        var leftParam = paramList.Parameters[0];
-        var leftArgs = leftParam.TypeArgumentList()!;
-        if (leftArgs.Arguments[3] is GenericNameSyntax leftName)
+    private bool IsValidateSeedContraction(MethodDeclarationSyntax methodDeclaration)
+    {
+        // Validate method name
+        if (!IsValidMethodName(methodDeclaration))
         {
-            if (((IdentifierNameSyntax)leftName.TypeArgumentList.Arguments[0]).Identifier.Text != "Lower")
-            {
-                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the first parameter must be \"Lower.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
-            }
-        }
-        else
-        {
-            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the first parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, leftArgs.Arguments[3].GetLocation()));
+            return false;
         }
 
-        var rightParam = paramList.Parameters[1];
-        var rightArgs = rightParam.TypeArgumentList()!;
-        if (rightArgs.Arguments[3] is GenericNameSyntax rightName)
+        var paramList = methodDeclaration.ParameterList()!;
+
+        // Validate left tensor
+        var leftArgs = paramList.Parameters[(int)Position.Left].TypeArgumentList()!;
+        if (!IsValidIndexPositionAndName(IndexLocation.First, leftArgs, "Lower"))
         {
-            if (((IdentifierNameSyntax)rightName.TypeArgumentList.Arguments[0]).Identifier.Text != "Upper")
-            {
-                var descriptor = DifGeoDiagnostics.CreateIncorrectIndexPositionDescriptor("The index position of the second parameter must be \"Upper.\"");
-                _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
-            }
+            return false;
         }
-        else
+
+        // Validate right tensor
+        var rightArgs = paramList.Parameters[(int)Position.Right].TypeArgumentList()!;
+        if (!IsValidIndexPositionAndName(IndexLocation.First, rightArgs, "Upper"))
         {
-            var descriptor = DifGeoDiagnostics.CreateIncorrectIndexDescriptor("The first index of the second parameter must be of type \"Index.\"");
-            _context.ReportDiagnostic(Diagnostic.Create(descriptor, rightArgs.Arguments[3].GetLocation()));
+            return false;
         }
+
+        return true;
     }
 
     //

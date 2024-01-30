@@ -1,4 +1,4 @@
-﻿// <copyright file="DifGeoDiagnostics.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexLocation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,28 +27,8 @@
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>Diagnostics descriptors for DifGeo source generators</summary>
-public static class DifGeoDiagnostics
+public enum IndexLocation : byte
 {
-    public static DiagnosticDescriptor CreateIncorrectIndexDescriptor(string message)
-    {
-        return new DiagnosticDescriptor(
-            id: "DG0001",
-            title: "Incorrect index",
-            messageFormat: message,
-            category: "DifGeo",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
-    }
-
-    public static DiagnosticDescriptor CreateIncorrectIndexPositionDescriptor(string message)
-    {
-        return new DiagnosticDescriptor(
-            id: "DG0002",
-            title: "Incorrect index position",
-            messageFormat: message,
-            category: "DifGeo",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
-    }
+    First = 3,
+    Second = 4
 }

@@ -33,7 +33,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>Tensor self contractions builder</summary>
-internal sealed class TensorSelfContractionBuilder
+internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBase
 {
     private static readonly GenericNameSyntax s_leftIndex = GenericName(
         Identifier("Index"))
@@ -53,14 +53,8 @@ internal sealed class TensorSelfContractionBuilder
                         Token(SyntaxKind.CommaToken),
                         IdentifierName("IC") })));
 
-    private readonly SourceProductionContext _context;
-    private readonly ImmutableArray<MethodInformation> _methodInformationArray;
-
     public TensorSelfContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
-    {
-        _context = context;
-        _methodInformationArray = methodInformationArray;
-    }
+        : base(context, methodInformationArray) { }
 
     public CompilationUnitSyntax GenerateSource()
     {
@@ -110,6 +104,13 @@ internal sealed class TensorSelfContractionBuilder
         for (int i = 0; i < _methodInformationArray.Length; i++)
         {
             var method = _methodInformationArray[i].MethodDeclaration;
+
+            // Validate seed contraction
+            if (!IsValidateSeedContraction(method) || !HasSummationComponents(method))
+            {
+                continue;
+            }
+
             method = method.RemoveAttribute("GenerateTensorSelfContractions");
 
             // Generate twin of the original contraction.
@@ -142,6 +143,46 @@ internal sealed class TensorSelfContractionBuilder
             }
         }
         return result.ToImmutableArray();
+    }
+
+    //
+    // Validation
+    //
+
+    private bool HasSummationComponents(MethodDeclarationSyntax methodDeclaration)
+    {
+        var addAssignmentExpression = methodDeclaration
+            .DescendantNodes()
+            .OfType<AssignmentExpressionSyntax>()
+            .FirstOrDefault(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
+        if (addAssignmentExpression is null ||
+            addAssignmentExpression.Parent?.Parent?.Parent is null) // Check for for loop
+        {
+            var descriptor = DiagnosticMessage.CreateMissingSummationComponentsDiagnosticDescriptor();
+            _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
+            return false;
+        }
+        return true;
+    }
+
+    private bool IsValidateSeedContraction(MethodDeclarationSyntax methodDeclaration)
+    {
+        // Validate method name
+        if (!IsValidMethodName(methodDeclaration))
+        {
+            return false;
+        }
+
+        var paramList = methodDeclaration.ParameterList()!;
+
+        // Validate tensor
+        var args = paramList.Parameters[0].TypeArgumentList()!;
+        if (!IsValidIndexPositionAndName(IndexLocation.First, args, "Lower") || !IsValidIndexPositionAndName(IndexLocation.Second, args, "Upper"))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     //
