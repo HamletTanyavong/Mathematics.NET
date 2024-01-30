@@ -26,7 +26,6 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using System.Runtime.CompilerServices;
 using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
