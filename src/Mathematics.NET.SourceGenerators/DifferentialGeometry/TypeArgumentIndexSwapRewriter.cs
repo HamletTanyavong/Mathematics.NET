@@ -1,4 +1,4 @@
-﻿// <copyright file="DifGeoGeneratorExtensions.cs" company="Mathematics.NET">
+﻿// <copyright file="TypeArgumentIndexSwapRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,26 +25,39 @@
 // SOFTWARE.
 // </copyright>
 
+using Microsoft.CodeAnalysis.CSharp;
+
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>Syntax helper for differential geometry generators</summary>
-internal static class DifGeoGeneratorExtensions
+/// <summary>A C# syntax rewriter that swaps indices in a type argument list</summary>
+internal sealed class TypeArgumentIndexSwapRewriter : CSharpSyntaxRewriter
 {
-    /// <summary>Generate the tensor contraction with index positions swapped: "lower" to "upper" and "upper" to "lower."</summary>
-    /// <param name="memberDeclaration">A member declaration syntax</param>
-    /// <returns>A member declaration syntax</returns>
-    internal static MemberDeclarationSyntax GenerateTwinContraction(this MemberDeclarationSyntax memberDeclaration)
+    GenericNameSyntax? _indexToContract;
+    IdentifierNameSyntax? _indexToSwap;
+
+    // Since the index to contract should always be to the left of the index to swap, we
+    // can look to the immediate right of the index to contract to find the index to swap.
+    public TypeArgumentIndexSwapRewriter(TypeArgumentListSyntax typeArgumentList)
     {
-        FlipIndexRewriter walker = new();
-        return (MemberDeclarationSyntax)walker.Visit(memberDeclaration);
+        _indexToContract = (GenericNameSyntax)typeArgumentList.Arguments.Last(x => x is GenericNameSyntax name && name.Identifier.Text == "Index");
+        _indexToSwap = (IdentifierNameSyntax)typeArgumentList.Arguments.SkipWhile(x => x != _indexToContract).Skip(1).First();
     }
 
-    /// <summary>Swap the index to contract with the index immediately to its right.</summary>
-    /// <param name="typeArgumentListSyntax">A type argument list syntax</param>
-    /// <returns>A type argument list syntax with the specified indices swapped</returns>
-    internal static TypeArgumentListSyntax SwapContractIndexWithNextIndex(this TypeArgumentListSyntax typeArgumentListSyntax)
+    public override SyntaxNode? VisitGenericName(GenericNameSyntax node)
     {
-        TypeArgumentIndexSwapRewriter rewriter = new(typeArgumentListSyntax);
-        return (TypeArgumentListSyntax)rewriter.Visit(typeArgumentListSyntax);
+        if (node == _indexToContract)
+        {
+            return _indexToSwap;
+        }
+        return node;
+    }
+
+    public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
+    {
+        if (node == _indexToSwap)
+        {
+            return _indexToContract;
+        }
+        return node;
     }
 }

@@ -265,10 +265,8 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 
     private static MemberDeclarationSyntax SwapIndices(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
-        var indexStructure = memberDeclaration.GetIndexStructure((int)position);
-
-        memberDeclaration = SwapTypeParameters(memberDeclaration, position, indexStructure);
-        memberDeclaration = SwapTypeParameterConstraints(memberDeclaration, position, indexStructure);
+        memberDeclaration = SwapTypeParameters(memberDeclaration, position);
+        memberDeclaration = SwapTypeParameterConstraints(memberDeclaration, position);
         memberDeclaration = SwapMultiplyExpressionComponents(memberDeclaration, position);
 
         return memberDeclaration;
@@ -299,7 +297,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
     private static MemberDeclarationSyntax SwapRightIndices(MemberDeclarationSyntax memberDeclaration)
         => SwapIndices(memberDeclaration, IndexPosition.Right);
 
-    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
         var constraints = memberDeclaration
             .ChildNodes()
@@ -311,17 +309,17 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             .OfType<TypeArgumentListSyntax>()
             .First();
 
-        var newArgs = args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition);
+        var newArgs = args.SwapContractIndexWithNextIndex();
         var newConstraints = constraints.ReplaceNode(args, newArgs);
 
         return memberDeclaration.ReplaceNode(constraints, newConstraints);
     }
 
-    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexPosition position, IndexStructure indexStructure)
+    private static MemberDeclarationSyntax SwapTypeParameters(MemberDeclarationSyntax memberDeclaration, IndexPosition position)
     {
         var param = memberDeclaration.ParameterList()!.Parameters[(int)position];
         var args = param.TypeArgumentList()!;
-        var newParam = param.ReplaceNode(args, args.SwapCurrentIndexWithNextIndex(indexStructure.ContractPosition));
+        var newParam = param.ReplaceNode(args, args.SwapContractIndexWithNextIndex());
         return memberDeclaration.ReplaceNode(param, newParam);
     }
 }
