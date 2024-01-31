@@ -35,7 +35,7 @@ internal static class DifGeoGeneratorExtensions
     /// <returns>A member declaration syntax</returns>
     internal static MemberDeclarationSyntax GenerateTwinContraction(this MemberDeclarationSyntax memberDeclaration)
     {
-        FlipIndexRewriter walker = new();
+        FlipIndexPositionRewriter walker = new();
         return (MemberDeclarationSyntax)walker.Visit(memberDeclaration);
     }
 

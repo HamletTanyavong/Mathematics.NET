@@ -1,4 +1,4 @@
-﻿// <copyright file="FlipIndexRewriter.cs" company="Mathematics.NET">
+﻿// <copyright file="FlipIndexPositionRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,8 +29,8 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A syntax walker that flips lower indices to upper indices and vice versa</summary>
-internal sealed class FlipIndexRewriter : CSharpSyntaxRewriter
+/// <summary>A C# syntax rewriter that flips lower indices to upper indices and vice versa</summary>
+internal sealed class FlipIndexPositionRewriter : CSharpSyntaxRewriter
 {
     private static readonly IdentifierNameSyntax s_lower = SyntaxFactory.IdentifierName("Lower");
     private static readonly IdentifierNameSyntax s_upper = SyntaxFactory.IdentifierName("Upper");
