@@ -35,13 +35,7 @@ internal sealed class NameSyntaxComparer : IEqualityComparer<NameSyntax?>
         {
             return x.GetNameValueOrDefault() == y.GetNameValueOrDefault();
         }
-
-        if (x is null && y is null)
-        {
-            return true;
-        }
-
-        return false;
+        return x == y;
     }
 
     public int GetHashCode(NameSyntax? obj) => obj?.GetNameValueOrDefault()?.GetHashCode() ?? 0;

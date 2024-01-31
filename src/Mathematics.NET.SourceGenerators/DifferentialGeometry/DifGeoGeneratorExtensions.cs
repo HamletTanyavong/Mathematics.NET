@@ -25,10 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.CompilerServices;
-using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>Syntax helper for differential geometry generators</summary>
@@ -39,40 +35,26 @@ internal static class DifGeoGeneratorExtensions
     /// <returns>A member declaration syntax</returns>
     internal static MemberDeclarationSyntax GenerateTwinContraction(this MemberDeclarationSyntax memberDeclaration)
     {
-        FlipIndexRewriter walker = new();
+        FlipIndexPositionRewriter walker = new();
         return (MemberDeclarationSyntax)walker.Visit(memberDeclaration);
     }
 
-    /// <summary>Get the index structure of a tensor.</summary>
-    /// <param name="memberDeclaration">A member declaration syntax</param>
-    /// <param name="position">An integer representing the current parameter position—the position of the tensor in question in the parameter list</param>
-    /// <returns>An index structure</returns>
-    internal static IndexStructure GetIndexStructure(this MemberDeclarationSyntax memberDeclaration, int position)
+    /// <summary>Swap the index to contract with the index immediately to its right.</summary>
+    /// <param name="typeArgumentListSyntax">A type argument list syntax</param>
+    /// <returns>A type argument list syntax with the specified indices swapped</returns>
+    internal static TypeArgumentListSyntax SwapContractIndexWithNextIndex(this TypeArgumentListSyntax typeArgumentListSyntax)
     {
-        if (memberDeclaration.ParameterList() is ParameterListSyntax paramList)
-        {
-            var args = paramList.Parameters[position].TypeArgumentList()!.Arguments;
-            var index = args.IndexOf(args.Last(x => x is GenericNameSyntax name && name.Identifier.Text == "Index"));
-            return new(index, args.Count);
-        }
-        return default;
+        TypeArgumentIndexSwapRewriter rewriter = new(typeArgumentListSyntax);
+        return (TypeArgumentListSyntax)rewriter.Visit(typeArgumentListSyntax);
     }
 
-    /// <summary>Swap the current index with the index immediately to its right.</summary>
-    /// <param name="typeArgumentListSyntax">A type argument list syntax</param>
-    /// <param name="index">An integer representing the current index position</param>
-    /// <returns>A type argument list syntax with the specified indices swapped</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static TypeArgumentListSyntax SwapCurrentIndexWithNextIndex(this TypeArgumentListSyntax typeArgumentListSyntax, int index)
+    /// <summary>Swap the index to contract with the index immediately to its right.</summary>
+    /// <param name="bracketedArgumentListSyntax">A bracketed argument list syntax</param>
+    /// <param name="iterationIndexName">The name of the iteration index</param>
+    /// <returns>A bracketed argument list syntax with the specified indices swapped</returns>
+    internal static BracketedArgumentListSyntax SwapIterationIndexWithNextIndex(this BracketedArgumentListSyntax bracketedArgumentListSyntax, string iterationIndexName)
     {
-        var args = typeArgumentListSyntax.Arguments;
-        var currentIndex = args[index];
-        var nextIndex = args[index + 1];
-
-        var newArgs = args.Replace(currentIndex, nextIndex);
-        nextIndex = newArgs[index + 1];
-        newArgs = newArgs.Replace(nextIndex, currentIndex);
-
-        return TypeArgumentList(newArgs);
+        BracketedArgumentIndexSwapRewriter rewriter = new(bracketedArgumentListSyntax, iterationIndexName);
+        return (BracketedArgumentListSyntax)rewriter.Visit(bracketedArgumentListSyntax);
     }
 }

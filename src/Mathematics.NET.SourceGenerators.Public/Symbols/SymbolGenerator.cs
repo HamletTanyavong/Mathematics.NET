@@ -73,9 +73,9 @@ public sealed class SymbolGenerator : IIncrementalGenerator
                             DiagnosticMessage.CreateInvalidSymbolDeclarationDiagnosticDescriptor(),
                             info.StructDeclarationSyntax.Identifier.GetLocation()));
                     }
-                    break;
+                    continue;
                 }
-                var symbols = new SymbolBuilder(nameSyntax!, context, selectedInformation);
+                var symbols = new SymbolBuilder(nameSyntax, context, selectedInformation);
                 context.AddSource($"Symbols.{nameSyntax.GetNameValueOrDefault()}.g.cs", symbols.GenerateSource().GetText(Encoding.UTF8).ToString());
             }
         }

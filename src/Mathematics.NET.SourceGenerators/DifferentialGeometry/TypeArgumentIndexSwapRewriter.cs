@@ -1,4 +1,4 @@
-﻿// <copyright file="IndexSwapRewriter.cs" company="Mathematics.NET">
+﻿// <copyright file="TypeArgumentIndexSwapRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,31 +29,32 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A C# syntax rewriter that swaps tensor index orders</summary>
-internal sealed class IndexSwapRewriter : CSharpSyntaxRewriter
+/// <summary>A C# syntax rewriter that swaps indices in a type argument list</summary>
+internal sealed class TypeArgumentIndexSwapRewriter : CSharpSyntaxRewriter
 {
-    private readonly ArgumentSyntax _indexToContract;
-    private readonly ArgumentSyntax _indexToSwap;
+    GenericNameSyntax? _indexToContract;
+    IdentifierNameSyntax? _indexToSwap;
 
-    public IndexSwapRewriter(BracketedArgumentListSyntax bracketedArgumentList, string indexName)
+    // Since the index to contract should always be to the left of the index to swap, we
+    // can look to the immediate right of the index to contract to find the index to swap.
+    public TypeArgumentIndexSwapRewriter(TypeArgumentListSyntax typeArgumentList)
     {
-        _indexToContract = bracketedArgumentList.Arguments.Last(x => x.Expression is IdentifierNameSyntax name && name.Identifier.Text == indexName);
-        _indexToSwap = GetIndexToSwap(bracketedArgumentList);
+        _indexToContract = (GenericNameSyntax)typeArgumentList.Arguments.Last(x => x is GenericNameSyntax name && name.Identifier.Text == "Index");
+        _indexToSwap = (IdentifierNameSyntax)typeArgumentList.Arguments.SkipWhile(x => x != _indexToContract).Skip(1).First();
     }
 
-    private ArgumentSyntax GetIndexToSwap(BracketedArgumentListSyntax bracketedArgumentList)
-    {
-        var index = bracketedArgumentList.Arguments.IndexOf(_indexToContract);
-        return bracketedArgumentList.Arguments[index + 1];
-    }
-
-    public override SyntaxNode? VisitArgument(ArgumentSyntax node)
+    public override SyntaxNode? VisitGenericName(GenericNameSyntax node)
     {
         if (node == _indexToContract)
         {
             return _indexToSwap;
         }
-        else if (node == _indexToSwap)
+        return node;
+    }
+
+    public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
+    {
+        if (node == _indexToSwap)
         {
             return _indexToContract;
         }

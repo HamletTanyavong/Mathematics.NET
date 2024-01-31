@@ -40,7 +40,7 @@ public sealed class TensorContractionGenerator : IIncrementalGenerator
             .CreateSyntaxProvider(CouldBeGenerateTensorContractionAttribute, GetTensorContractionOrNull)
             .Where(x => x is not null);
         var compilation = context.CompilationProvider.Combine(provider.Collect());
-        context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Left, source.Right));
+        context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Right));
     }
 
     private static bool CouldBeGenerateTensorContractionAttribute(SyntaxNode syntaxNode, CancellationToken token)
@@ -53,7 +53,7 @@ public sealed class TensorContractionGenerator : IIncrementalGenerator
         return new(attribute, (MethodDeclarationSyntax)attribute.Parent!.Parent!);
     }
 
-    private void GenerateCode(SourceProductionContext context, Compilation compilation, ImmutableArray<MethodInformation> information)
+    private void GenerateCode(SourceProductionContext context, ImmutableArray<MethodInformation> information)
     {
         var tensorContractions = new TensorContractionBuilder(context, information);
         context.AddSource("DifGeo.Contractions.g.cs", tensorContractions.GenerateSource().GetText(Encoding.UTF8).ToString());

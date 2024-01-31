@@ -1,4 +1,4 @@
-﻿// <copyright file="FlipIndexRewriter.cs" company="Mathematics.NET">
+﻿// <copyright file="BracketedArgumentIndexSwapRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,21 +29,33 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A syntax walker that flips lower indices to upper indices and vice versa</summary>
-internal sealed class FlipIndexRewriter : CSharpSyntaxRewriter
+/// <summary>A C# syntax rewriter that swaps indices in a bracketed argument list</summary>
+internal sealed class BracketedArgumentIndexSwapRewriter : CSharpSyntaxRewriter
 {
-    private static readonly IdentifierNameSyntax s_lower = SyntaxFactory.IdentifierName("Lower");
-    private static readonly IdentifierNameSyntax s_upper = SyntaxFactory.IdentifierName("Upper");
+    private readonly ArgumentSyntax _indexToContract;
+    private readonly ArgumentSyntax _indexToSwap;
 
-    public override SyntaxNode VisitIdentifierName(IdentifierNameSyntax node)
+    public BracketedArgumentIndexSwapRewriter(BracketedArgumentListSyntax bracketedArgumentList, string indexName)
     {
-        if (node.Identifier.Text == "Lower")
+        _indexToContract = bracketedArgumentList.Arguments.Last(x => x.Expression is IdentifierNameSyntax name && name.Identifier.Text == indexName);
+        _indexToSwap = GetIndexToSwap(bracketedArgumentList);
+    }
+
+    private ArgumentSyntax GetIndexToSwap(BracketedArgumentListSyntax bracketedArgumentList)
+    {
+        var index = bracketedArgumentList.Arguments.IndexOf(_indexToContract);
+        return bracketedArgumentList.Arguments[index + 1];
+    }
+
+    public override SyntaxNode? VisitArgument(ArgumentSyntax node)
+    {
+        if (node == _indexToContract)
         {
-            return s_upper;
+            return _indexToSwap;
         }
-        else if (node.Identifier.Text == "Upper")
+        else if (node == _indexToSwap)
         {
-            return s_lower;
+            return _indexToContract;
         }
         return node;
     }

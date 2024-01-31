@@ -1,4 +1,4 @@
-﻿// <copyright file="IndexStructure.cs" company="Mathematics.NET">
+﻿// <copyright file="FlipIndexPositionRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,18 +25,26 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
+using Microsoft.CodeAnalysis.CSharp;
 
-/// <summary>Represents the index structure of a tensor</summary>
-internal readonly record struct IndexStructure
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+
+/// <summary>A C# syntax rewriter that flips lower indices to upper indices and vice versa</summary>
+internal sealed class FlipIndexPositionRewriter : CSharpSyntaxRewriter
 {
-    public IndexStructure(int position, int indexCount)
+    private static readonly IdentifierNameSyntax s_lower = SyntaxFactory.IdentifierName("Lower");
+    private static readonly IdentifierNameSyntax s_upper = SyntaxFactory.IdentifierName("Upper");
+
+    public override SyntaxNode VisitIdentifierName(IdentifierNameSyntax node)
     {
-        ContractPosition = position;
-        IndexCount = indexCount;
+        if (node.Identifier.Text == "Lower")
+        {
+            return s_upper;
+        }
+        else if (node.Identifier.Text == "Upper")
+        {
+            return s_lower;
+        }
+        return node;
     }
-
-    public readonly int ContractPosition { get; }
-
-    public readonly int IndexCount { get; }
 }
