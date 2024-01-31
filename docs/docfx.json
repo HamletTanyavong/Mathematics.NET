@@ -30,6 +30,7 @@
     "resource": [
       {
         "files": [
+          "fonts/*",
           "images/**"
         ]
       }
