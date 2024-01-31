@@ -267,9 +267,9 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
             .First(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
 
         var forStatement = (ForStatementSyntax)addAssignmentExpression.Parent!.Parent!.Parent!;
-        var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
+        var iterationIndexName = forStatement.Declaration!.Variables[0].Identifier.Text;
         var args = addAssignmentExpression.Right.ChildNodes().OfType<BracketedArgumentListSyntax>().First();
-        return memberDeclaration.ReplaceNode(args, args.SwapIterationIndexWithNextIndex(variableName));
+        return memberDeclaration.ReplaceNode(args, args.SwapIterationIndexWithNextIndex(iterationIndexName));
     }
 
     private static MemberDeclarationSyntax SwapTypeParameterConstraints(MemberDeclarationSyntax memberDeclaration)
