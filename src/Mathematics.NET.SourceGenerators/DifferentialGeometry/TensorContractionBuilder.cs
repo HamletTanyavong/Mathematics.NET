@@ -288,10 +288,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         var args = position == IndexPosition.Left
             ? multiplyExpression.Left.DescendantNodes().OfType<BracketedArgumentListSyntax>().First()
             : multiplyExpression.Right.DescendantNodes().OfType<BracketedArgumentListSyntax>().First();
-        var indexSwapper = new BracketedArgumentIndexSwapRewriter(args, variableName);
-        var newArgs = (BracketedArgumentListSyntax)indexSwapper.Visit(args);
-
-        return memberDeclaration.ReplaceNode(args, newArgs);
+        return memberDeclaration.ReplaceNode(args, args.SwapIterationIndexWithNextIndex(variableName));
     }
 
     private static MemberDeclarationSyntax SwapRightIndices(MemberDeclarationSyntax memberDeclaration)
