@@ -3,11 +3,7 @@
   <PropertyGroup>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Platforms>x64</Platforms>
-    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>

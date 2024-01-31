@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- Project settings -->
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Platforms>x64</Platforms>
+    
+    <!-- Package information -->
+    <Version>0.2.0-alpha.3</Version>
+    <Authors>Hamlet Tanyavong</Authors>
+    <Copyright>Copyright (c) 2024 Hamlet Tanyavong</Copyright>
+    <PackageProjectUrl>https://mathematics.hamlettanyavong.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HamletTanyavong/Mathematics.NET</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    
+    <!-- Builds -->
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+</Project>
