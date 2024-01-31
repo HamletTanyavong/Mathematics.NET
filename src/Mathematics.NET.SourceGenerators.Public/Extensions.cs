@@ -81,7 +81,7 @@ internal static class Extensions
 
         if (structDeclaration.Parent is NamespaceDeclarationSyntax namespaceDeclaration)
         {
-            return namespaceDeclaration.Name;
+            return namespaceDeclaration.Name.WithoutTrailingTrivia();
         }
 
         return default;
