@@ -283,12 +283,11 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             .First(x => x.IsKind(SyntaxKind.MultiplyExpression));
 
         var forStatement = (ForStatementSyntax)multiplyExpression.Parent!.Parent!.Parent!.Parent!;
-        var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
-
+        var iterationIndexName = forStatement.Declaration!.Variables[0].Identifier.Text;
         var args = position == IndexPosition.Left
             ? multiplyExpression.Left.DescendantNodes().OfType<BracketedArgumentListSyntax>().First()
             : multiplyExpression.Right.DescendantNodes().OfType<BracketedArgumentListSyntax>().First();
-        return memberDeclaration.ReplaceNode(args, args.SwapIterationIndexWithNextIndex(variableName));
+        return memberDeclaration.ReplaceNode(args, args.SwapIterationIndexWithNextIndex(iterationIndexName));
     }
 
     private static MemberDeclarationSyntax SwapRightIndices(MemberDeclarationSyntax memberDeclaration)
