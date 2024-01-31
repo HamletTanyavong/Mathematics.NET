@@ -270,7 +270,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
         var variableName = forStatement.Declaration!.Variables[0].Identifier.Text;
 
         var args = addAssignmentExpression.Right.ChildNodes().OfType<BracketedArgumentListSyntax>().First();
-        var indexSwapper = new IndexSwapRewriter(args, variableName);
+        var indexSwapper = new BracketedArgumentIndexSwapRewriter(args, variableName);
         var newArgs = (BracketedArgumentListSyntax)indexSwapper.Visit(args);
 
         return memberDeclaration.ReplaceNode(args, newArgs);

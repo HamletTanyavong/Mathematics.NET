@@ -1,4 +1,4 @@
-﻿// <copyright file="IndexSwapRewriter.cs" company="Mathematics.NET">
+﻿// <copyright file="BracketedArgumentIndexSwapRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,13 +29,13 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A C# syntax rewriter that swaps tensor index orders</summary>
-internal sealed class IndexSwapRewriter : CSharpSyntaxRewriter
+/// <summary>A C# syntax rewriter that swaps indices in a bracketed argument list</summary>
+internal sealed class BracketedArgumentIndexSwapRewriter : CSharpSyntaxRewriter
 {
     private readonly ArgumentSyntax _indexToContract;
     private readonly ArgumentSyntax _indexToSwap;
 
-    public IndexSwapRewriter(BracketedArgumentListSyntax bracketedArgumentList, string indexName)
+    public BracketedArgumentIndexSwapRewriter(BracketedArgumentListSyntax bracketedArgumentList, string indexName)
     {
         _indexToContract = bracketedArgumentList.Arguments.Last(x => x.Expression is IdentifierNameSyntax name && name.Identifier.Text == indexName);
         _indexToSwap = GetIndexToSwap(bracketedArgumentList);
