@@ -35,12 +35,12 @@ namespace Mathematics.NET.SourceGenerators;
 internal static class Extensions
 {
     /// <summary>Create a name syntax from a namespace.</summary>
-    /// <param name="namespaceName">A string representing a namespace</param>
+    /// <param name="namespaceString">A string representing a namespace</param>
     /// <returns>A name syntax</returns>
-    public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceName)
+    public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceString)
     {
-        Debug.Assert(!namespaceName.Contains(' '), "The namespace string must not contain any spaces.");
-        ReadOnlySpan<string> names = namespaceName.Split('.');
+        Debug.Assert(!namespaceString.Contains(' '), "The namespace string must not contain any spaces.");
+        ReadOnlySpan<string> names = namespaceString.Split('.');
 
         NameSyntax result = IdentifierName(names[0]);
         for (int i = 1; i < names.Length; i++)
