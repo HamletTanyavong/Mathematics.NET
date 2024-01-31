@@ -75,7 +75,7 @@ public sealed class SymbolGenerator : IIncrementalGenerator
                     }
                     continue;
                 }
-                var symbols = new SymbolBuilder(nameSyntax!, context, selectedInformation);
+                var symbols = new SymbolBuilder(nameSyntax, context, selectedInformation);
                 context.AddSource($"Symbols.{nameSyntax.GetNameValueOrDefault()}.g.cs", symbols.GenerateSource().GetText(Encoding.UTF8).ToString());
             }
         }
