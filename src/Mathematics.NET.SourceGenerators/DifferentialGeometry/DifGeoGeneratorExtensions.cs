@@ -47,4 +47,14 @@ internal static class DifGeoGeneratorExtensions
         TypeArgumentIndexSwapRewriter rewriter = new(typeArgumentListSyntax);
         return (TypeArgumentListSyntax)rewriter.Visit(typeArgumentListSyntax);
     }
+
+    /// <summary>Swap the index to contract with the index immediately to its right.</summary>
+    /// <param name="bracketedArgumentListSyntax">A bracketed argument list syntax</param>
+    /// <param name="iterationIndexName">The name of the iteration index</param>
+    /// <returns>A bracketed argument list syntax with the specified indices swapped</returns>
+    internal static BracketedArgumentListSyntax SwapIterationIndexWithNextIndex(this BracketedArgumentListSyntax bracketedArgumentListSyntax, string iterationIndexName)
+    {
+        BracketedArgumentIndexSwapRewriter rewriter = new(bracketedArgumentListSyntax, iterationIndexName);
+        return (BracketedArgumentListSyntax)rewriter.Visit(bracketedArgumentListSyntax);
+    }
 }
