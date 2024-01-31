@@ -40,7 +40,7 @@ public sealed class TensorSelfContractionGenerator : IIncrementalGenerator
             .CreateSyntaxProvider(CouldBeTensorSelfContractionAttribute, GetTensorSelfContractionOrNull)
             .Where(x => x is not null);
         var compilation = context.CompilationProvider.Combine(provider.Collect());
-        context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Left, source.Right));
+        context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Right));
     }
 
     private static bool CouldBeTensorSelfContractionAttribute(SyntaxNode syntaxNode, CancellationToken token)
@@ -53,7 +53,7 @@ public sealed class TensorSelfContractionGenerator : IIncrementalGenerator
         return new(attribute, (MethodDeclarationSyntax)attribute.Parent!.Parent!);
     }
 
-    private void GenerateCode(SourceProductionContext context, Compilation compilation, ImmutableArray<MethodInformation> information)
+    private void GenerateCode(SourceProductionContext context, ImmutableArray<MethodInformation> information)
     {
         var tensorSelfContractions = new TensorSelfContractionBuilder(context, information);
         context.AddSource("DifGeo.SelfContractions.g.cs", tensorSelfContractions.GenerateSource().GetText(Encoding.UTF8).ToString());
