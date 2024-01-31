@@ -50,15 +50,6 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 /// <summary>Tensor contractions builder</summary>
 internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 {
-    private static readonly GenericNameSyntax s_indexToContract = GenericName(
-        Identifier("Index"))
-            .WithTypeArgumentList(
-                TypeArgumentList(
-                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
-                        IdentifierName("Upper"),
-                        Token(SyntaxKind.CommaToken),
-                        IdentifierName("IC") })));
-
     public TensorContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
         : base(context, methodInformationArray) { }
 
@@ -257,7 +248,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             .First();
 
         var newArgs = args.RemoveNode(args.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
-        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_indexToContract]);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_rightIndex]);
 
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
@@ -268,7 +259,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         var args = param.TypeArgumentList()!;
 
         var newArgs = args.RemoveNode(args.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
-        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_indexToContract]);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_rightIndex]);
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 

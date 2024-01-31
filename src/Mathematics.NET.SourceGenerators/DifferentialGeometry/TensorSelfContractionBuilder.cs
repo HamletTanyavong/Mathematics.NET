@@ -35,24 +35,6 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 /// <summary>Tensor self contractions builder</summary>
 internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBase
 {
-    private static readonly GenericNameSyntax s_leftIndex = GenericName(
-        Identifier("Index"))
-            .WithTypeArgumentList(
-                TypeArgumentList(
-                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
-                        IdentifierName("Lower"),
-                        Token(SyntaxKind.CommaToken),
-                        IdentifierName("IC") })));
-
-    private static readonly GenericNameSyntax s_rightIndex = GenericName(
-        Identifier("Index"))
-            .WithTypeArgumentList(
-                TypeArgumentList(
-                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
-                        IdentifierName("Upper"),
-                        Token(SyntaxKind.CommaToken),
-                        IdentifierName("IC") })));
-
     public TensorSelfContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
         : base(context, methodInformationArray) { }
 

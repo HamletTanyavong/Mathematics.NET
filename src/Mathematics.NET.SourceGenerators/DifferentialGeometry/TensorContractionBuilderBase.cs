@@ -26,12 +26,32 @@
 // </copyright>
 
 using System.Collections.Immutable;
+using Microsoft.CodeAnalysis.CSharp;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>A base class for tensor contraction builders</summary>
 internal abstract class TensorContractionBuilderBase
 {
+    private protected static readonly GenericNameSyntax s_leftIndex = GenericName(
+        Identifier("Index"))
+            .WithTypeArgumentList(
+                TypeArgumentList(
+                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
+                            IdentifierName("Lower"),
+                            Token(SyntaxKind.CommaToken),
+                            IdentifierName("IC") })));
+
+    private protected static readonly GenericNameSyntax s_rightIndex = GenericName(
+        Identifier("Index"))
+            .WithTypeArgumentList(
+                TypeArgumentList(
+                    SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
+                        IdentifierName("Upper"),
+                        Token(SyntaxKind.CommaToken),
+                        IdentifierName("IC") })));
+
     private protected readonly SourceProductionContext _context;
     private protected readonly ImmutableArray<MethodInformation> _methodInformationArray;
 
