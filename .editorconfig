@@ -10,9 +10,9 @@ file_header_template = <copyright file="{fileName}" company="Mathematics.NET">\n
 #### Core EditorConfig Options ####
 
 # Indentation and spacing
-indent_size = 4
+indent_size = 2
 indent_style = space
-tab_width = 4
+tab_width = 2
 
 # New line preferences
 end_of_line = crlf
@@ -21,15 +21,13 @@ insert_final_newline = true
 # Other
 trim_trailing_whitespace = true
 
-### Csproj, JSON, props, and XML Files ###
-[*.{csproj,json,props,xml}]
-
-# Indentation and spacing
-indent_size = 2
-tab_width = 2
-
 ### C# Files ###
 [*.cs]
+
+# Indentation and spacing
+indent_size = 4
+indent_style = space
+tab_width = 4
 
 #### .NET Coding Conventions ####
 
