@@ -1,9 +1,9 @@
 <div align="center">
-    <a href="https://mathematics.hamlettanyavong.com">
-        <img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/images/logo/mathematics.net.png" alt="Mathematics.NET Logo">
-    </a>
-    <h1>Mathematics.NET</h1>
-    <p>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</p>
+  <a href="https://mathematics.hamlettanyavong.com">
+      <img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/images/logo/mathematics.net.png" alt="Mathematics.NET Logo">
+  </a>
+  <h1>Mathematics.NET</h1>
+  <p>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</p>
 </div>
 
 [![GitHub](https://img.shields.io/github/license/HamletTanyavong/Mathematics.NET?style=flat-square&logo=github&labelColor=87cefa&color=ffd700)](https://github.com/HamletTanyavong/Mathematics.NET)
