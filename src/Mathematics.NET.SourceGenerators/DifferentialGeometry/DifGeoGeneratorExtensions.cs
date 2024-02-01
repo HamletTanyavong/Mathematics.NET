@@ -31,12 +31,12 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 internal static class DifGeoGeneratorExtensions
 {
     /// <summary>Generate the tensor contraction with index positions swapped: "lower" to "upper" and "upper" to "lower."</summary>
-    /// <param name="memberDeclaration">A member declaration syntax</param>
+    /// <param name="memberDeclarationSyntax">A member declaration syntax</param>
     /// <returns>A member declaration syntax</returns>
-    internal static MemberDeclarationSyntax GenerateTwinContraction(this MemberDeclarationSyntax memberDeclaration)
+    internal static MemberDeclarationSyntax GenerateTwinContraction(this MemberDeclarationSyntax memberDeclarationSyntax)
     {
         FlipIndexPositionRewriter walker = new();
-        return (MemberDeclarationSyntax)walker.Visit(memberDeclaration);
+        return (MemberDeclarationSyntax)walker.Visit(memberDeclarationSyntax);
     }
 
     /// <summary>Swap the index to contract with the index immediately to its right.</summary>

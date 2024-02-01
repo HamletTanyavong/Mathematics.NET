@@ -21,8 +21,8 @@ insert_final_newline = true
 # Other
 trim_trailing_whitespace = true
 
-### Csproj, JSON, and XML Files ###
-[*.{csproj,json,xml}]
+### Csproj, JSON, props, and XML Files ###
+[*.{csproj,json,props,xml}]
 
 # Indentation and spacing
 indent_size = 2
