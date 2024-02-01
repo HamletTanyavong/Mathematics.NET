@@ -32,8 +32,8 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 /// <summary>A C# syntax rewriter that swaps indices in a type argument list</summary>
 internal sealed class TypeArgumentIndexSwapRewriter : CSharpSyntaxRewriter
 {
-    GenericNameSyntax? _indexToContract;
-    IdentifierNameSyntax? _indexToSwap;
+    private GenericNameSyntax? _indexToContract;
+    private IdentifierNameSyntax? _indexToSwap;
 
     // Since the index to contract should always be to the left of the index to swap, we
     // can look to the immediate right of the index to contract to find the index to swap.
