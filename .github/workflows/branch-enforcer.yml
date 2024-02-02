@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-branch:
-    name: "Check Branch"
+    name: Check Branch
     runs-on: ubuntu-latest
     steps:
       - name: Check Branch
