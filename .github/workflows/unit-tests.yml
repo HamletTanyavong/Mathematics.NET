@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: Run Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -24,8 +25,8 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore
 
-    - name: "Build"
+    - name: Build
       run: dotnet build --no-restore
 
-    - name: "Test"
+    - name: Test
       run: dotnet test --no-build --verbosity normal
