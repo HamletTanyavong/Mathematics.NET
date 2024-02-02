@@ -30,7 +30,7 @@ jobs:
         dotnet-version: 8.x
 
     - run: dotnet tool update -g docfx
-    - run: dotnet build src/Mathematics.NET.csproj -c Release
+    - run: dotnet build -c Release
     - run: docfx docs/docfx.json
 
     - name: Deploy
