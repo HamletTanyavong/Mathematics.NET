@@ -21,14 +21,16 @@ jobs:
   publish-docs:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: Checkout Repository
       uses: actions/checkout@v4
-    - name: Setup Dotnet
+
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.x
 
     - run: dotnet tool update -g docfx
+    - run: dotnet build src/Mathematics.NET.csproj -c Release
     - run: docfx docs/docfx.json
 
     - name: Deploy
