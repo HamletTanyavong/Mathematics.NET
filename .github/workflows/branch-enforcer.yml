@@ -18,10 +18,10 @@ jobs:
 
       - name: Validate Branch
         run: |
-          if [ '${{ check-branch.current-branch.output.branch }}' == 'dev' ]; then
-            echo: "Valid incoming branch"
-            run: exit 0
+          if [ '${{ steps.current-branch.outputs.branch }}' == 'dev' ]; then
+            echo "Valid incoming branch"
+            exit 0
           else
-            echo: "ERROR: Can only merge to 'main' branch from 'dev' branch"
-            run: exit 1
+            echo "ERROR: Can only merge to 'main' branch from 'dev' branch"
+            exit 1
           fi
