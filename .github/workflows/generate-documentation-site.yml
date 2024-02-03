@@ -30,9 +30,16 @@ jobs:
       with:
         dotnet-version: 8.x
 
-    - run: dotnet tool update -g docfx
-    - run: dotnet build -c Release
-    - run: docfx docs/docfx.json
+    - name: Build Mathematics.NET Project
+      run: |
+        cd src/Mathematics.NET
+        dotnet build -c Release
+
+    - name: Update DocFX
+      run: dotnet tool update -g docfx
+
+    - name: Run DocFX
+      run: docfx docs/docfx.json
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
