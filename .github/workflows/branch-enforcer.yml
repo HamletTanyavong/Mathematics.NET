@@ -1,17 +1,27 @@
 # Check that the only branch that can merge to "main" is "dev"
 
-name: "Check Branch"
+name: "Check Incoming Branch"
 
 on:
   pull_request:
+    branches:
+    - main
 
 jobs:
   check-branch:
-    name: Check Branch
+    name: Check Incoming Branch
     runs-on: ubuntu-latest
     steps:
-      - name: Check Branch
-        if: github.base_ref == 'main' && github.head_ref != 'dev'
+      - name: Get Current Branch
+        run: echo "Current branch is ${{ github.head_ref }}"
+        id: current-branch
+
+      - name: Validate Branch
         run: |
-          echo "ERROR: Can only merge to main branch from dev branch"
-          exit 1
+          if [ '${{ check-branch.current-branch.output.branch }}' == 'dev' ]; then
+            echo: "Valid incoming branch"
+            run: exit 0
+          else
+            echo: "ERROR: Can only merge to 'main' branch from 'dev' branch"
+            run: exit 1
+          fi
