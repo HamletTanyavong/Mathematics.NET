@@ -9,9 +9,13 @@ on:
     branches: [ "main", "dev" ]
 
 jobs:
-  build:
+  test:
     name: Run Unit Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        dotnet-version: ['8.x']
 
     steps:
     - name: Checkout Repository
@@ -20,7 +24,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.x
+        dotnet-version: ${{ matrix.dotnet-version }}
 
     - name: Restore Dependencies
       run: dotnet restore
