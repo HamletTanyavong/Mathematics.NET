@@ -73,8 +73,6 @@ public sealed class SymbolGeneratorTests : VerifyBase
     public void SourceGenerator_SymbolNotDeclaredInANamespace_ReturnsAnError()
     {
         var source = """
-            namespace A { }
-
             [Symbol] public partial struct Alpha;
             """;
 
