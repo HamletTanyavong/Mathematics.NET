@@ -99,11 +99,11 @@ public struct RankFourTensor<T, U, V, W, X, Y>(T array)
     public static bool operator !=(RankFourTensor<T, U, V, W, X, Y> left, RankFourTensor<T, U, V, W, X, Y> right)
         => left._array != right._array;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankFourTensor<T, U, V, W, X, Y> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankFourTensor<T, U, V, W, X, Y> other && Equals(other);
 
-    public bool Equals(RankFourTensor<T, U, V, W, X, Y> value) => _array.Equals(value._array);
+    public readonly bool Equals(RankFourTensor<T, U, V, W, X, Y> value) => _array.Equals(value._array);
 
-    public override int GetHashCode() => HashCode.Combine(_array);
+    public override readonly int GetHashCode() => HashCode.Combine(_array);
 
     //
     // Formatting

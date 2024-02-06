@@ -105,11 +105,11 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
     public static bool operator !=(MetricTensor<T, U, V, W, X> left, MetricTensor<T, U, V, W, X> right)
         => left._matrix == right._matrix;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<T, U, V, W, X> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<T, U, V, W, X> other && Equals(other);
 
-    public bool Equals(MetricTensor<T, U, V, W, X> value) => _matrix.Equals(value._matrix);
+    public readonly bool Equals(MetricTensor<T, U, V, W, X> value) => _matrix.Equals(value._matrix);
 
-    public override int GetHashCode() => HashCode.Combine(_matrix);
+    public override readonly int GetHashCode() => HashCode.Combine(_matrix);
 
     //
     // Formatting

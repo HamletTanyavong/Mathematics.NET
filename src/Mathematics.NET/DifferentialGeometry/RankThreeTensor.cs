@@ -93,11 +93,11 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
     public static bool operator !=(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
         => left._array != right._array;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankThreeTensor<T, U, V, W, X> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankThreeTensor<T, U, V, W, X> other && Equals(other);
 
-    public bool Equals(RankThreeTensor<T, U, V, W, X> value) => _array.Equals(value._array);
+    public readonly bool Equals(RankThreeTensor<T, U, V, W, X> value) => _array.Equals(value._array);
 
-    public override int GetHashCode() => HashCode.Combine(_array);
+    public override readonly int GetHashCode() => HashCode.Combine(_array);
 
     //
     // Formatting

@@ -100,11 +100,11 @@ public struct RankTwoTensor<T, U, V, W>(T matrix)
     public static bool operator !=(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
         => left._matrix != right._matrix;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankTwoTensor<T, U, V, W> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankTwoTensor<T, U, V, W> other && Equals(other);
 
-    public bool Equals(RankTwoTensor<T, U, V, W> value) => _matrix.Equals(value._matrix);
+    public readonly bool Equals(RankTwoTensor<T, U, V, W> value) => _matrix.Equals(value._matrix);
 
-    public override int GetHashCode() => HashCode.Combine(_matrix);
+    public override readonly int GetHashCode() => HashCode.Combine(_matrix);
 
     //
     // Formatting
