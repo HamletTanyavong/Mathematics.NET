@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -104,6 +105,18 @@ public struct RankOneTensor<T, U, V>(T vector)
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _vector.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a tensor with a new index.</summary>
+    /// <typeparam name="W">A new index</typeparam>
+    /// <returns>A tensor with a new index</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankOneTensor<T, U, W> WithIndex<W>()
+        where W : IIndex
+        => Unsafe.As<RankOneTensor<T, U, V>, RankOneTensor<T, U, W>>(ref this);
 
     //
     // Implicit operators

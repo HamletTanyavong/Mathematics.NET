@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -115,6 +116,24 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _matrix.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a tensor with a new index in the first position.</summary>
+    /// <typeparam name="Y">A symbol</typeparam>
+    /// <returns>A tensor with a new index in the first position</returns>
+    public MetricTensor<T, U, V, Y, X> WithIndexOne<Y>()
+        where Y : ISymbol
+        => Unsafe.As<MetricTensor<T, U, V, W, X>, MetricTensor<T, U, V, Y, X>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the second position.</summary>
+    /// <typeparam name="Y">A symbol</typeparam>
+    /// <returns>A tensor with a new index in the second position</returns>
+    public MetricTensor<T, U, V, W, Y> WithIndexTwo<Y>()
+        where Y : ISymbol
+        => Unsafe.As<MetricTensor<T, U, V, W, X>, MetricTensor<T, U, V, W, Y>>(ref this);
 
     //
     // Implicit operators

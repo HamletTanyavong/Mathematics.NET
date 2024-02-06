@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -110,6 +111,26 @@ public struct RankTwoTensor<T, U, V, W>(T matrix)
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _matrix.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a tensor with a new index in the first position.</summary>
+    /// <typeparam name="X">A new index</typeparam>
+    /// <returns>A tensor with a new index in the first position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankTwoTensor<T, U, X, W> WithIndexOne<X>()
+        where X : IIndex
+        => Unsafe.As<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, X, W>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the second position.</summary>
+    /// <typeparam name="X">A new index</typeparam>
+    /// <returns>A tensor with a new index in the second position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankTwoTensor<T, U, V, X> WithIndexTwo<X>()
+        where X : IIndex
+        => Unsafe.As<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, X>>(ref this);
 
     //
     // Implicit operators

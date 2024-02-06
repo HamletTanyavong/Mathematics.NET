@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
@@ -103,6 +104,34 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _array.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a tensor with a new index in the first position.</summary>
+    /// <typeparam name="Y">A new index</typeparam>
+    /// <returns>A tensor with a new index in the first position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankThreeTensor<T, U, Y, W, X> WithIndexOne<Y>()
+        where Y : IIndex
+        => Unsafe.As<RankThreeTensor<T, U, V, W, X>, RankThreeTensor<T, U, Y, W, X>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the second position.</summary>
+    /// <typeparam name="Y">A new index</typeparam>
+    /// <returns>A tensor with a new index in the second position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankThreeTensor<T, U, V, Y, X> WithIndexTwo<Y>()
+        where Y : IIndex
+        => Unsafe.As<RankThreeTensor<T, U, V, W, X>, RankThreeTensor<T, U, V, Y, X>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the third position.</summary>
+    /// <typeparam name="Y">A new index</typeparam>
+    /// <returns>A tensor with a new index in the third position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankThreeTensor<T, U, V, W, Y> WithIndexThree<Y>()
+        where Y : IIndex
+        => Unsafe.As<RankThreeTensor<T, U, V, W, X>, RankThreeTensor<T, U, V, W, Y>>(ref this);
 
     //
     // Implicit operators
