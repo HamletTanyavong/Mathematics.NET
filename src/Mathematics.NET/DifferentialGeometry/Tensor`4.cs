@@ -1,4 +1,4 @@
-﻿// <copyright file="RankTwoTensor.cs" company="Mathematics.NET">
+﻿// <copyright file="Tensor`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,17 +34,17 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensors</summary>
+/// <summary>Represents a rank-two tensor</summary>
 /// <typeparam name="T">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="V">The first index</typeparam>
 /// <typeparam name="W">The second index</typeparam>
 /// <param name="matrix">A backing matrix</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct RankTwoTensor<T, U, V, W>(T matrix)
-    : IRankTwoTensor<RankTwoTensor<T, U, V, W>, T, U, V, W>,
-      IAdditionOperation<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, W>>,
-      ISubtractionOperation<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, W>>
+public struct Tensor<T, U, V, W>(T matrix)
+    : IRankTwoTensor<Tensor<T, U, V, W>, T, U, V, W>,
+      IAdditionOperation<Tensor<T, U, V, W>, Tensor<T, U, V, W>>,
+      ISubtractionOperation<Tensor<T, U, V, W>, Tensor<T, U, V, W>>
     where T : ISquareMatrix<T, U>
     where U : IComplex<U>
     where V : IIndex
@@ -84,25 +84,25 @@ public struct RankTwoTensor<T, U, V, W>(T matrix)
     // Operators
     //
 
-    public static RankTwoTensor<T, U, V, W> operator +(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
+    public static Tensor<T, U, V, W> operator +(Tensor<T, U, V, W> left, Tensor<T, U, V, W> right)
         => left._matrix + right._matrix;
 
-    public static RankTwoTensor<T, U, V, W> operator -(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
+    public static Tensor<T, U, V, W> operator -(Tensor<T, U, V, W> left, Tensor<T, U, V, W> right)
         => left._matrix - right._matrix;
 
     //
     // Equality
     //
 
-    public static bool operator ==(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
+    public static bool operator ==(Tensor<T, U, V, W> left, Tensor<T, U, V, W> right)
         => left._matrix == right._matrix;
 
-    public static bool operator !=(RankTwoTensor<T, U, V, W> left, RankTwoTensor<T, U, V, W> right)
+    public static bool operator !=(Tensor<T, U, V, W> left, Tensor<T, U, V, W> right)
         => left._matrix != right._matrix;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankTwoTensor<T, U, V, W> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<T, U, V, W> other && Equals(other);
 
-    public readonly bool Equals(RankTwoTensor<T, U, V, W> value) => _matrix.Equals(value._matrix);
+    public readonly bool Equals(Tensor<T, U, V, W> value) => _matrix.Equals(value._matrix);
 
     public override readonly int GetHashCode() => HashCode.Combine(_matrix);
 
@@ -120,21 +120,21 @@ public struct RankTwoTensor<T, U, V, W>(T matrix)
     /// <typeparam name="X">A new index</typeparam>
     /// <returns>A tensor with a new index in the first position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public RankTwoTensor<T, U, X, W> WithIndexOne<X>()
+    public Tensor<T, U, X, W> WithIndexOne<X>()
         where X : IIndex
-        => Unsafe.As<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, X, W>>(ref this);
+        => Unsafe.As<Tensor<T, U, V, W>, Tensor<T, U, X, W>>(ref this);
 
     /// <summary>Create a tensor with a new index in the second position.</summary>
     /// <typeparam name="X">A new index</typeparam>
     /// <returns>A tensor with a new index in the second position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public RankTwoTensor<T, U, V, X> WithIndexTwo<X>()
+    public Tensor<T, U, V, X> WithIndexTwo<X>()
         where X : IIndex
-        => Unsafe.As<RankTwoTensor<T, U, V, W>, RankTwoTensor<T, U, V, X>>(ref this);
+        => Unsafe.As<Tensor<T, U, V, W>, Tensor<T, U, V, X>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator RankTwoTensor<T, U, V, W>(T input) => new(input);
+    public static implicit operator Tensor<T, U, V, W>(T input) => new(input);
 }

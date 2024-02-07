@@ -1,4 +1,4 @@
-﻿// <copyright file="RankThreeTensor.cs" company="Mathematics.NET">
+﻿// <copyright file="Tensor`5.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -41,8 +41,8 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="X">The third index</typeparam>
 /// <param name="array">A backing array</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct RankThreeTensor<T, U, V, W, X>(T array)
-    : IRankThreeTensor<RankThreeTensor<T, U, V, W, X>, T, U, V, W, X>
+public struct Tensor<T, U, V, W, X>(T array)
+    : IRankThreeTensor<Tensor<T, U, V, W, X>, T, U, V, W, X>
     where T : ICubicArray<T, U>
     where U : IComplex<U>
     where V : IIndex
@@ -87,15 +87,15 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
     // Equality
     //
 
-    public static bool operator ==(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
+    public static bool operator ==(Tensor<T, U, V, W, X> left, Tensor<T, U, V, W, X> right)
         => left._array == right._array;
 
-    public static bool operator !=(RankThreeTensor<T, U, V, W, X> left, RankThreeTensor<T, U, V, W, X> right)
+    public static bool operator !=(Tensor<T, U, V, W, X> left, Tensor<T, U, V, W, X> right)
         => left._array != right._array;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankThreeTensor<T, U, V, W, X> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<T, U, V, W, X> other && Equals(other);
 
-    public readonly bool Equals(RankThreeTensor<T, U, V, W, X> value) => _array.Equals(value._array);
+    public readonly bool Equals(Tensor<T, U, V, W, X> value) => _array.Equals(value._array);
 
     public override readonly int GetHashCode() => HashCode.Combine(_array);
 
@@ -113,29 +113,29 @@ public struct RankThreeTensor<T, U, V, W, X>(T array)
     /// <typeparam name="Y">A new index</typeparam>
     /// <returns>A tensor with a new index in the first position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public RankThreeTensor<T, U, Y, W, X> WithIndexOne<Y>()
+    public Tensor<T, U, Y, W, X> WithIndexOne<Y>()
         where Y : IIndex
-        => Unsafe.As<RankThreeTensor<T, U, V, W, X>, RankThreeTensor<T, U, Y, W, X>>(ref this);
+        => Unsafe.As<Tensor<T, U, V, W, X>, Tensor<T, U, Y, W, X>>(ref this);
 
     /// <summary>Create a tensor with a new index in the second position.</summary>
     /// <typeparam name="Y">A new index</typeparam>
     /// <returns>A tensor with a new index in the second position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public RankThreeTensor<T, U, V, Y, X> WithIndexTwo<Y>()
+    public Tensor<T, U, V, Y, X> WithIndexTwo<Y>()
         where Y : IIndex
-        => Unsafe.As<RankThreeTensor<T, U, V, W, X>, RankThreeTensor<T, U, V, Y, X>>(ref this);
+        => Unsafe.As<Tensor<T, U, V, W, X>, Tensor<T, U, V, Y, X>>(ref this);
 
     /// <summary>Create a tensor with a new index in the third position.</summary>
     /// <typeparam name="Y">A new index</typeparam>
     /// <returns>A tensor with a new index in the third position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public RankThreeTensor<T, U, V, W, Y> WithIndexThree<Y>()
+    public Tensor<T, U, V, W, Y> WithIndexThree<Y>()
         where Y : IIndex
-        => Unsafe.As<RankThreeTensor<T, U, V, W, X>, RankThreeTensor<T, U, V, W, Y>>(ref this);
+        => Unsafe.As<Tensor<T, U, V, W, X>, Tensor<T, U, V, W, Y>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator RankThreeTensor<T, U, V, W, X>(T value) => new(value);
+    public static implicit operator Tensor<T, U, V, W, X>(T value) => new(value);
 }
