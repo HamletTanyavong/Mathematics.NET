@@ -174,7 +174,10 @@ public record class HessianTape<T> : ITape<T>
             var gradientElement = gradientSpan[i];
 
             EdgePush(hessianSpan, in node, i);
-            Accumulate(hessianSpan, in node, gradientElement);
+            if (gradientElement != T.Zero)
+            {
+                Accumulate(hessianSpan, in node, gradientElement);
+            }
 
             gradientSpan[node.PX] += gradientElement * node.DX;
             gradientSpan[node.PY] += gradientElement * node.DY;
@@ -185,7 +188,6 @@ public record class HessianTape<T> : ITape<T>
 
     // The following method uses the edge-pushing algorithm outlined by Gower and Mello: https://arxiv.org/pdf/2007.15040.pdf.
     // TODO: use newer variations/versions of this algorithm since they are more performant
-    // TODO: consider creating an overload that computes only the diagonal components of Hessians
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
     /// <param name="gradient">The gradient</param>
@@ -215,7 +217,10 @@ public record class HessianTape<T> : ITape<T>
             var gradientElement = gradientSpan[i];
 
             EdgePush(hessianSpan, in node, i);
-            Accumulate(hessianSpan, in node, gradientElement);
+            if (gradientElement != T.Zero)
+            {
+                Accumulate(hessianSpan, in node, gradientElement);
+            }
 
             gradientSpan[node.PX] += gradientElement * node.DX;
             gradientSpan[node.PY] += gradientElement * node.DY;
