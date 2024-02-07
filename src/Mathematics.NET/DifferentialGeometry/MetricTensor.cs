@@ -45,8 +45,8 @@ namespace Mathematics.NET.DifferentialGeometry;
 [StructLayout(LayoutKind.Sequential)]
 public struct MetricTensor<T, U, V, W, X>(T matrix)
     : IRankTwoTensor<MetricTensor<T, U, V, W, X>, T, U, Index<V, W>, Index<V, X>>,
-      IAdditionOperation<MetricTensor<T, U, V, W, X>, RankTwoTensor<T, U, Index<V, W>, Index<V, X>>>,
-      ISubtractionOperation<MetricTensor<T, U, V, W, X>, RankTwoTensor<T, U, Index<V, W>, Index<V, X>>>
+      IAdditionOperation<MetricTensor<T, U, V, W, X>, Tensor<T, U, Index<V, W>, Index<V, X>>>,
+      ISubtractionOperation<MetricTensor<T, U, V, W, X>, Tensor<T, U, Index<V, W>, Index<V, X>>>
     where T : ISquareMatrix<T, U>
     where U : IComplex<U>
     where V : IIndexPosition
@@ -89,10 +89,10 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
     // Operators
     //
 
-    public static RankTwoTensor<T, U, Index<V, W>, Index<V, X>> operator +(MetricTensor<T, U, V, W, X> left, MetricTensor<T, U, V, W, X> right)
+    public static Tensor<T, U, Index<V, W>, Index<V, X>> operator +(MetricTensor<T, U, V, W, X> left, MetricTensor<T, U, V, W, X> right)
         => left._matrix + right._matrix;
 
-    public static RankTwoTensor<T, U, Index<V, W>, Index<V, X>> operator -(MetricTensor<T, U, V, W, X> left, MetricTensor<T, U, V, W, X> right)
+    public static Tensor<T, U, Index<V, W>, Index<V, X>> operator -(MetricTensor<T, U, V, W, X> left, MetricTensor<T, U, V, W, X> right)
         => left._matrix - right._matrix;
 
     //

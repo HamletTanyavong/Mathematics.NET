@@ -41,7 +41,7 @@ public sealed class TensorSelfContractionGeneratorTests : VerifyBase
             namespace TestNamespace;
 
             [GenerateTensorSelfContractions]
-            public static RankTwoTensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
+            public static Tensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
                 where T : IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2>
                 where U : IComplex<U>
                 where IC : ISymbol

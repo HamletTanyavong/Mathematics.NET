@@ -1,4 +1,4 @@
-﻿// <copyright file="RankOneTensor.cs" company="Mathematics.NET">
+﻿// <copyright file="Tensor`3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -40,10 +40,10 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="V">An index</typeparam>
 /// <param name="vector">A backing vector</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct RankOneTensor<T, U, V>(T vector)
-    : IRankOneTensor<RankOneTensor<T, U, V>, T, U, V>,
-      IAdditionOperation<RankOneTensor<T, U, V>, RankOneTensor<T, U, V>>,
-      ISubtractionOperation<RankOneTensor<T, U, V>, RankOneTensor<T, U, V>>
+public struct Tensor<T, U, V>(T vector)
+    : IRankOneTensor<Tensor<T, U, V>, T, U, V>,
+      IAdditionOperation<Tensor<T, U, V>, Tensor<T, U, V>>,
+      ISubtractionOperation<Tensor<T, U, V>, Tensor<T, U, V>>
     where T : IVector<T, U>
     where U : IComplex<U>
     where V : IIndex
@@ -78,25 +78,25 @@ public struct RankOneTensor<T, U, V>(T vector)
     // Operators
     //
 
-    public static RankOneTensor<T, U, V> operator +(RankOneTensor<T, U, V> left, RankOneTensor<T, U, V> right)
+    public static Tensor<T, U, V> operator +(Tensor<T, U, V> left, Tensor<T, U, V> right)
         => new(left._vector + right._vector);
 
-    public static RankOneTensor<T, U, V> operator -(RankOneTensor<T, U, V> left, RankOneTensor<T, U, V> right)
+    public static Tensor<T, U, V> operator -(Tensor<T, U, V> left, Tensor<T, U, V> right)
         => new(left._vector - right._vector);
 
     //
     // Equality
     //
 
-    public static bool operator ==(RankOneTensor<T, U, V> left, RankOneTensor<T, U, V> right)
+    public static bool operator ==(Tensor<T, U, V> left, Tensor<T, U, V> right)
         => left._vector == right._vector;
 
-    public static bool operator !=(RankOneTensor<T, U, V> left, RankOneTensor<T, U, V> right)
+    public static bool operator !=(Tensor<T, U, V> left, Tensor<T, U, V> right)
         => left._vector != right._vector;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankOneTensor<T, U, V> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<T, U, V> other && Equals(other);
 
-    public readonly bool Equals(RankOneTensor<T, U, V> value) => _vector.Equals(value._vector);
+    public readonly bool Equals(Tensor<T, U, V> value) => _vector.Equals(value._vector);
 
     public override readonly int GetHashCode() => HashCode.Combine(_vector);
 
@@ -114,13 +114,13 @@ public struct RankOneTensor<T, U, V>(T vector)
     /// <typeparam name="W">A new index</typeparam>
     /// <returns>A tensor with a new index</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public RankOneTensor<T, U, W> WithIndex<W>()
+    public Tensor<T, U, W> WithIndex<W>()
         where W : IIndex
-        => Unsafe.As<RankOneTensor<T, U, V>, RankOneTensor<T, U, W>>(ref this);
+        => Unsafe.As<Tensor<T, U, V>, Tensor<T, U, W>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator RankOneTensor<T, U, V>(T input) => new(input);
+    public static implicit operator Tensor<T, U, V>(T input) => new(input);
 }
