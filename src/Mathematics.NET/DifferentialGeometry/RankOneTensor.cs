@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -93,17 +94,29 @@ public struct RankOneTensor<T, U, V>(T vector)
     public static bool operator !=(RankOneTensor<T, U, V> left, RankOneTensor<T, U, V> right)
         => left._vector != right._vector;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankOneTensor<T, U, V> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankOneTensor<T, U, V> other && Equals(other);
 
-    public bool Equals(RankOneTensor<T, U, V> value) => _vector.Equals(value._vector);
+    public readonly bool Equals(RankOneTensor<T, U, V> value) => _vector.Equals(value._vector);
 
-    public override int GetHashCode() => HashCode.Combine(_vector);
+    public override readonly int GetHashCode() => HashCode.Combine(_vector);
 
     //
     // Formatting
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _vector.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a tensor with a new index.</summary>
+    /// <typeparam name="W">A new index</typeparam>
+    /// <returns>A tensor with a new index</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankOneTensor<T, U, W> WithIndex<W>()
+        where W : IIndex
+        => Unsafe.As<RankOneTensor<T, U, V>, RankOneTensor<T, U, W>>(ref this);
 
     //
     // Implicit operators

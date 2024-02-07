@@ -43,7 +43,7 @@ public struct Index<T, U> : IIndex
     // Formatting
     //
 
-    public override string ToString() => ToString(null, null);
+    public override readonly string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? provider) => $"{T.DisplayString} {U.DisplayString}";
+    public readonly string ToString(string? format, IFormatProvider? provider) => $"{T.DisplayString} {U.DisplayString}";
 }

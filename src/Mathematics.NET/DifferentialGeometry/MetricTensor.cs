@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -104,17 +105,35 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
     public static bool operator !=(MetricTensor<T, U, V, W, X> left, MetricTensor<T, U, V, W, X> right)
         => left._matrix == right._matrix;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<T, U, V, W, X> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<T, U, V, W, X> other && Equals(other);
 
-    public bool Equals(MetricTensor<T, U, V, W, X> value) => _matrix.Equals(value._matrix);
+    public readonly bool Equals(MetricTensor<T, U, V, W, X> value) => _matrix.Equals(value._matrix);
 
-    public override int GetHashCode() => HashCode.Combine(_matrix);
+    public override readonly int GetHashCode() => HashCode.Combine(_matrix);
 
     //
     // Formatting
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _matrix.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a tensor with a new index in the first position.</summary>
+    /// <typeparam name="Y">A symbol</typeparam>
+    /// <returns>A tensor with a new index in the first position</returns>
+    public MetricTensor<T, U, V, Y, X> WithIndexOne<Y>()
+        where Y : ISymbol
+        => Unsafe.As<MetricTensor<T, U, V, W, X>, MetricTensor<T, U, V, Y, X>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the second position.</summary>
+    /// <typeparam name="Y">A symbol</typeparam>
+    /// <returns>A tensor with a new index in the second position</returns>
+    public MetricTensor<T, U, V, W, Y> WithIndexTwo<Y>()
+        where Y : ISymbol
+        => Unsafe.As<MetricTensor<T, U, V, W, X>, MetricTensor<T, U, V, W, Y>>(ref this);
 
     //
     // Implicit operators

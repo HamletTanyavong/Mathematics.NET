@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 using Mathematics.NET.Symbols;
@@ -90,17 +91,42 @@ public struct Christoffel<T, U, V, W, X>(T array) : IRankThreeTensor<Christoffel
     public static bool operator !=(Christoffel<T, U, V, W, X> left, Christoffel<T, U, V, W, X> right)
         => left._array != right._array;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Christoffel<T, U, V, W, X> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Christoffel<T, U, V, W, X> other && Equals(other);
 
-    public bool Equals(Christoffel<T, U, V, W, X> value) => _array.Equals(value._array);
+    public readonly bool Equals(Christoffel<T, U, V, W, X> value) => _array.Equals(value._array);
 
-    public override int GetHashCode() => HashCode.Combine(_array);
+    public override readonly int GetHashCode() => HashCode.Combine(_array);
 
     //
     // Formatting
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _array.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a Christoffel symbol with a new index in the first position.</summary>
+    /// <typeparam name="Y">An index</typeparam>
+    /// <returns>A Christoffel symbol with a new index in the first position</returns>
+    public Christoffel<T, U, Y, W, X> WithIndexOne<Y>()
+        where Y : IIndex
+        => Unsafe.As<Christoffel<T, U, V, W, X>, Christoffel<T, U, Y, W, X>>(ref this);
+
+    /// <summary>Create a Christoffel symbol with a new index in the second position.</summary>
+    /// <typeparam name="Y">A symbol</typeparam>
+    /// <returns>A Christoffel symbol with a new index in the second position</returns>
+    public Christoffel<T, U, V, Y, X> WithIndexTwo<Y>()
+        where Y : ISymbol
+        => Unsafe.As<Christoffel<T, U, V, W, X>, Christoffel<T, U, V, Y, X>>(ref this);
+
+    /// <summary>Create a Christoffel symbol with a new index in the third position.</summary>
+    /// <typeparam name="Y">A symbol</typeparam>
+    /// <returns>A Christoffel symbol with a new index in the third position</returns>
+    public Christoffel<T, U, V, W, Y> WithIndexThree<Y>()
+        where Y : ISymbol
+        => Unsafe.As<Christoffel<T, U, V, W, X>, Christoffel<T, U, V, W, Y>>(ref this);
 
     //
     // Implicit operators

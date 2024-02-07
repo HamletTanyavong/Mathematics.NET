@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
@@ -98,17 +99,53 @@ public struct RankFourTensor<T, U, V, W, X, Y>(T array)
     public static bool operator !=(RankFourTensor<T, U, V, W, X, Y> left, RankFourTensor<T, U, V, W, X, Y> right)
         => left._array != right._array;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is RankFourTensor<T, U, V, W, X, Y> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RankFourTensor<T, U, V, W, X, Y> other && Equals(other);
 
-    public bool Equals(RankFourTensor<T, U, V, W, X, Y> value) => _array.Equals(value._array);
+    public readonly bool Equals(RankFourTensor<T, U, V, W, X, Y> value) => _array.Equals(value._array);
 
-    public override int GetHashCode() => HashCode.Combine(_array);
+    public override readonly int GetHashCode() => HashCode.Combine(_array);
 
     //
     // Formatting
     //
 
     public string ToString(string? format, IFormatProvider? provider) => _array.ToString(format, provider);
+
+    //
+    // Methods
+    //
+
+    /// <summary>Create a tensor with a new index in the first position.</summary>
+    /// <typeparam name="Z">A new index</typeparam>
+    /// <returns>A tensor with a new index in the first position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankFourTensor<T, U, Z, W, X, Y> WithIndexOne<Z>()
+        where Z : IIndex
+        => Unsafe.As<RankFourTensor<T, U, V, W, X, Y>, RankFourTensor<T, U, Z, W, X, Y>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the second position.</summary>
+    /// <typeparam name="Z">A new index</typeparam>
+    /// <returns>A tensor with a new index in the second position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankFourTensor<T, U, V, Z, X, Y> WithIndexTwo<Z>()
+        where Z : IIndex
+        => Unsafe.As<RankFourTensor<T, U, V, W, X, Y>, RankFourTensor<T, U, V, Z, X, Y>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the third position.</summary>
+    /// <typeparam name="Z">A new index</typeparam>
+    /// <returns>A tensor with a new index in the third position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankFourTensor<T, U, V, W, Z, Y> WithIndexThree<Z>()
+        where Z : IIndex
+        => Unsafe.As<RankFourTensor<T, U, V, W, X, Y>, RankFourTensor<T, U, V, W, Z, Y>>(ref this);
+
+    /// <summary>Create a tensor with a new index in the fourth position.</summary>
+    /// <typeparam name="Z">A new index</typeparam>
+    /// <returns>A tensor with a new index in the fourth position</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public RankFourTensor<T, U, V, W, X, Z> WithIndexFour<Z>()
+        where Z : IIndex
+        => Unsafe.As<RankFourTensor<T, U, V, W, X, Y>, RankFourTensor<T, U, V, W, X, Z>>(ref this);
 
     //
     // Implicit operators

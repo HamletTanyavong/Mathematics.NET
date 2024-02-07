@@ -38,7 +38,7 @@ public struct NoIndex : IIndex
     // Formatting
     //
 
-    public override string ToString() => ToString(null, null);
+    public override readonly string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? formatProvider) => "No index";
+    public readonly string ToString(string? format, IFormatProvider? formatProvider) => "No index";
 }
