@@ -58,6 +58,8 @@
 //
 //     ╳────╳ '*', '+', '%', etc. and constant ──── Result
 
+#pragma warning disable IDE0032
+
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -68,14 +70,17 @@ namespace Mathematics.NET.AutoDiff;
 public record class GradientTape<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
-    // TODO: Measure performance with Stack<Node<T>> instead of List<Node<T>>
-    // TODO: Consider using array pools or something similar
     private List<GradientNode<T>> _nodes;
     private int _variableCount;
 
     public GradientTape()
     {
         _nodes = [];
+    }
+
+    public GradientTape(int n)
+    {
+        _nodes = new(n);
     }
 
     public int NodeCount => _nodes.Count;
@@ -134,11 +139,9 @@ public record class GradientTape<T> : ITape<T>
         }
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient)
         => ReverseAccumulate(out gradient, T.One);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
