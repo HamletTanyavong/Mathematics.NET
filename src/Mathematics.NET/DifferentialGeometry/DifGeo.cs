@@ -45,7 +45,7 @@ public static partial class DifGeo
     //
 
     [GenerateTensorContractions]
-    public static W Contract<T, U, V, W, IC>(IRankOneTensor<T, V, W, Index<Lower, IC>> a, IRankOneTensor<U, V, W, Index<Upper, IC>> b)
+    public static W Contract<T, U, V, W, IC>(in IRankOneTensor<T, V, W, Index<Lower, IC>> a, in IRankOneTensor<U, V, W, Index<Upper, IC>> b)
         where T : IRankOneTensor<T, V, W, Index<Lower, IC>>
         where U : IRankOneTensor<U, V, W, Index<Upper, IC>>
         where V : IVector<V, W>
@@ -66,8 +66,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Vector4<V>, V, I> Contract<T, U, V, IC, I>(
-        IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I> b)
+        in IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
+        in IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I> b)
         where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I>
         where V : IComplex<V>
@@ -87,8 +87,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Vector4<V>, V, I> Contract<T, U, V, IC, I>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I> a,
-        IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
+        in IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I> a,
+        in IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I>
         where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
         where V : IComplex<V>
@@ -112,8 +112,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
-        IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I1, I2> b)
+        in IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
+        in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I1, I2> b)
         where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I1, I2>
         where V : IComplex<V>
@@ -137,8 +137,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
-        IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
+        in IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
+        in IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
         where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
         where V : IComplex<V>
@@ -166,8 +166,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
-        IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
-        IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I1, I2, I3> b)
+        in IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>> a,
+        in IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I1, I2, I3> b)
         where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
         where U : IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I1, I2, I3>
         where V : IComplex<V>
@@ -195,8 +195,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
-        IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3> a,
-        IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
+        in IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3> a,
+        in IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
         where T : IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3>
         where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
         where V : IComplex<V>
@@ -228,8 +228,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<V>, V, I1, I2> Contract<T, U, V, IC, I1, I2>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I2> b)
+        in IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
+        in IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I2> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I2>
         where V : IComplex<V>
@@ -257,8 +257,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I2, I3> b)
+        in IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
+        in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I2, I3> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I2, I3>
         where V : IComplex<V>
@@ -286,8 +286,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<V>, V, I1, I2, I3> Contract<T, U, V, IC, I1, I2, I3>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3> b)
+        in IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
+        in IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3> b)
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3>
         where V : IComplex<V>
@@ -319,8 +319,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
-        IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I2, I3, I4> b)
+        in IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1> a,
+        in IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I2, I3, I4> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
         where U : IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I2, I3, I4>
         where V : IComplex<V>
@@ -352,8 +352,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
-        IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3> a,
-        IRankTwoTensor<U, Matrix2x2<V>, V, Index<Upper, IC>, I4> b)
+        in IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3> a,
+        in IRankTwoTensor<U, Matrix2x2<V>, V, Index<Upper, IC>, I4> b)
         where T : IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3>
         where U : IRankTwoTensor<U, Matrix2x2<V>, V, Index<Upper, IC>, I4>
         where V : IComplex<V>
@@ -389,8 +389,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
+        in IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
+        in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4>
         where V : IComplex<V>
@@ -425,7 +425,7 @@ public static partial class DifGeo
     //
 
     [GenerateTensorSelfContractions]
-    public static V Contract<T, U, V, IC>(IRankTwoTensor<T, U, V, Index<Lower, IC>, Index<Upper, IC>> a)
+    public static V Contract<T, U, V, IC>(in IRankTwoTensor<T, U, V, Index<Lower, IC>, Index<Upper, IC>> a)
         where T : IRankTwoTensor<T, U, V, Index<Lower, IC>, Index<Upper, IC>>
         where U : ISquareMatrix<U, V>
         where V : IComplex<V>
@@ -440,7 +440,7 @@ public static partial class DifGeo
     }
 
     [GenerateTensorSelfContractions]
-    public static Tensor<Vector4<U>, U, I> Contract<T, U, IC, I>(IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I> a)
+    public static Tensor<Vector4<U>, U, I> Contract<T, U, IC, I>(in IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I> a)
         where T : IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I>
         where U : IComplex<U>
         where IC : ISymbol
@@ -458,7 +458,7 @@ public static partial class DifGeo
     }
 
     [GenerateTensorSelfContractions]
-    public static Tensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
+    public static Tensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(in IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
         where T : IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2>
         where U : IComplex<U>
         where IC : ISymbol
@@ -492,7 +492,7 @@ public static partial class DifGeo
     /// <param name="a">The first tensor</param>
     /// <param name="b">The second tensor</param>
     /// <returns>A rank-two tensor</returns>
-    public static Tensor<Matrix4x4<V>, V, I1, I2> TensorProduct<T, U, V, I1, I2>(IRankOneTensor<T, Vector4<V>, V, I1> a, IRankOneTensor<U, Vector4<V>, V, I2> b)
+    public static Tensor<Matrix4x4<V>, V, I1, I2> TensorProduct<T, U, V, I1, I2>(in IRankOneTensor<T, Vector4<V>, V, I1> a, in IRankOneTensor<U, Vector4<V>, V, I2> b)
         where T : IRankOneTensor<T, Vector4<V>, V, I1>
         where U : IRankOneTensor<U, Vector4<V>, V, I2>
         where V : IComplex<V>
@@ -521,8 +521,8 @@ public static partial class DifGeo
     /// <param name="b">A rank-two tensor</param>
     /// <returns>A rank-three tensor</returns>
     public static Tensor<Array4x4x4<V>, V, I1, I2, I3> TensorProduct<T, U, V, I1, I2, I3>(
-        IRankOneTensor<T, Vector4<V>, V, I1> a,
-        IRankTwoTensor<U, Matrix4x4<V>, V, I2, I3> b)
+        in IRankOneTensor<T, Vector4<V>, V, I1> a,
+        in IRankTwoTensor<U, Matrix4x4<V>, V, I2, I3> b)
         where T : IRankOneTensor<T, Vector4<V>, V, I1>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, I2, I3>
         where V : IComplex<V>
@@ -555,8 +555,8 @@ public static partial class DifGeo
     /// <param name="b">A rank-one tensor</param>
     /// <returns>A rank-three tensor</returns>
     public static Tensor<Array4x4x4<V>, V, I1, I2, I3> TensorProduct<T, U, V, I1, I2, I3>(
-        IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2> a,
-        IRankOneTensor<U, Vector4<V>, V, I3> b)
+        in IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2> a,
+        in IRankOneTensor<U, Vector4<V>, V, I3> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2>
         where U : IRankOneTensor<U, Vector4<V>, V, I3>
         where V : IComplex<V>
