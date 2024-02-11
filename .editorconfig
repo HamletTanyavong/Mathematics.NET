@@ -12,7 +12,6 @@ file_header_template = <copyright file="{fileName}" company="Mathematics.NET">\n
 # Indentation and spacing
 indent_size = 2
 indent_style = space
-tab_width = 2
 
 # New line preferences
 end_of_line = crlf
@@ -27,7 +26,6 @@ trim_trailing_whitespace = true
 # Indentation and spacing
 indent_size = 4
 indent_style = space
-tab_width = 4
 
 #### .NET Coding Conventions ####
 
