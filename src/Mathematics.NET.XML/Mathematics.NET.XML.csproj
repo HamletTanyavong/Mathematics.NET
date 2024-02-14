@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.Xml" />
+    <Using Include="System.Xml.Linq" />
+  </ItemGroup>
+
+</Project>
