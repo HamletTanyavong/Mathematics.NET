@@ -55,7 +55,7 @@ internal abstract class TensorContractionBuilderBase
     private protected readonly SourceProductionContext _context;
     private protected readonly ImmutableArray<MethodInformation> _methodInformationArray;
 
-    public TensorContractionBuilderBase(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
+    private protected TensorContractionBuilderBase(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)
     {
         _context = context;
         _methodInformationArray = methodInformationArray;
