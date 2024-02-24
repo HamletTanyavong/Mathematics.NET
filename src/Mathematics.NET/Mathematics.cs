@@ -167,23 +167,23 @@ public static class Mathematics
     }
 
     /// <summary>The multinomial coefficient</summary>
-    /// <param name="α">An array of positive integers</param>
+    /// <param name="span">A read-only span of positive integers</param>
     /// <param name="cancellationToken">A cancellation token</param>
-    /// <returns>The coefficient associated with a term with powers given by <paramref name="α"/></returns>
+    /// <returns>The coefficient associated with a term with powers given by <paramref name="span"/></returns>
     /// <exception cref="OverflowException"></exception>
-    public static T Multinomial<T>(ReadOnlySpan<T> α, CancellationToken cancellationToken)
+    public static T Multinomial<T>(ReadOnlySpan<T> span, CancellationToken cancellationToken)
         where T : IBinaryInteger<T>
     {
         var result = T.One;
         checked
         {
-            var partialSum = α[0];
-            for (int i = 1; i < α.Length; i++)
+            var partialSum = span[0];
+            for (int i = 1; i < span.Length; i++)
             {
-                var element = α[i];
+                var element = span[i];
                 if (element < T.Zero)
                 {
-                    throw new ArgumentException("Elements of α must be positive");
+                    throw new ArgumentException("Elements of the span must be positive.");
                 }
                 partialSum += element;
                 result *= Binomial(partialSum, element, cancellationToken);
