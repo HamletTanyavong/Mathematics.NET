@@ -40,7 +40,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 public interface IRankFourTensor<T, U, V, W, X, Y, Z> : IFourDimensionalArrayRepresentable<T, V>
     where T : IRankFourTensor<T, U, V, W, X, Y, Z>
     where U : IHyperCubic4DArray<U, V>
-    where V : IComplex<V>
+    where V : IComplex<V>, IDifferentiableFunctions<V>
     where W : IIndex
     where X : IIndex
     where Y : IIndex

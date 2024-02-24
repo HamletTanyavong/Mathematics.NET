@@ -37,7 +37,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 public interface IRankOneTensor<T, U, V, W> : IOneDimensionalArrayRepresentable<T, V>
     where T : IRankOneTensor<T, U, V, W>
     where U : IVector<U, V>
-    where V : IComplex<V>
+    where V : IComplex<V>, IDifferentiableFunctions<V>
     where W : IIndex
 {
     /// <summary>Get the index associated with this rank one tensor</summary>

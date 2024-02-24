@@ -39,7 +39,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 public interface IRankThreeTensor<T, U, V, W, X, Y> : IThreeDimensionalArrayRepresentable<T, V>
     where T : IRankThreeTensor<T, U, V, W, X, Y>
     where U : ICubicArray<U, V>
-    where V : IComplex<V>
+    where V : IComplex<V>, IDifferentiableFunctions<V>
     where W : IIndex
     where X : IIndex
     where Y : IIndex

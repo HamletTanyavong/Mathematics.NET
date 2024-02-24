@@ -46,7 +46,7 @@ public sealed class TensorContractionGeneratorTests : VerifyBase
                 in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
                 where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
                 where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4>
-                where V : IComplex<V>
+                where V : IComplex<V>, IDifferentiableFunctions<V>
                 where IC : ISymbol
                 where I1 : IIndex
                 where I2 : IIndex
