@@ -49,7 +49,7 @@ public static partial class DifGeo
         where T : IRankOneTensor<T, V, W, Index<Lower, IC>>
         where U : IRankOneTensor<U, V, W, Index<Upper, IC>>
         where V : IVector<V, W>
-        where W : IComplex<W>
+        where W : IComplex<W>, IDifferentiableFunctions<W>
         where IC : ISymbol
     {
         var result = W.Zero;
@@ -70,7 +70,7 @@ public static partial class DifGeo
         in IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I> b)
         where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I : IIndex
     {
@@ -91,7 +91,7 @@ public static partial class DifGeo
         in IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I>
         where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I : IIndex
     {
@@ -116,7 +116,7 @@ public static partial class DifGeo
         in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I1, I2> b)
         where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I1, I2>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -141,7 +141,7 @@ public static partial class DifGeo
         in IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
         where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -170,7 +170,7 @@ public static partial class DifGeo
         in IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I1, I2, I3> b)
         where T : IRankOneTensor<T, Vector4<V>, V, Index<Lower, IC>>
         where U : IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I1, I2, I3>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -199,7 +199,7 @@ public static partial class DifGeo
         in IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>> b)
         where T : IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3>
         where U : IRankOneTensor<U, Vector4<V>, V, Index<Upper, IC>>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -232,7 +232,7 @@ public static partial class DifGeo
         in IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I2> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I2>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -261,7 +261,7 @@ public static partial class DifGeo
         in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I2, I3> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I2, I3>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -290,7 +290,7 @@ public static partial class DifGeo
         in IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3> b)
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, Index<Upper, IC>, I3>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -323,7 +323,7 @@ public static partial class DifGeo
         in IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I2, I3, I4> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, Index<Lower, IC>, I1>
         where U : IRankFourTensor<U, Array4x4x4x4<V>, V, Index<Upper, IC>, I2, I3, I4>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -356,7 +356,7 @@ public static partial class DifGeo
         in IRankTwoTensor<U, Matrix2x2<V>, V, Index<Upper, IC>, I4> b)
         where T : IRankFourTensor<T, Array4x4x4x4<V>, V, Index<Lower, IC>, I1, I2, I3>
         where U : IRankTwoTensor<U, Matrix2x2<V>, V, Index<Upper, IC>, I4>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -393,7 +393,7 @@ public static partial class DifGeo
         in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -428,7 +428,7 @@ public static partial class DifGeo
     public static V Contract<T, U, V, IC>(in IRankTwoTensor<T, U, V, Index<Lower, IC>, Index<Upper, IC>> a)
         where T : IRankTwoTensor<T, U, V, Index<Lower, IC>, Index<Upper, IC>>
         where U : ISquareMatrix<U, V>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where IC : ISymbol
     {
         var result = V.Zero;
@@ -442,7 +442,7 @@ public static partial class DifGeo
     [GenerateTensorSelfContractions]
     public static Tensor<Vector4<U>, U, I> Contract<T, U, IC, I>(in IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I> a)
         where T : IRankThreeTensor<T, Array4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I>
-        where U : IComplex<U>
+        where U : IComplex<U>, IDifferentiableFunctions<U>
         where IC : ISymbol
         where I : IIndex
     {
@@ -460,7 +460,7 @@ public static partial class DifGeo
     [GenerateTensorSelfContractions]
     public static Tensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(in IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
         where T : IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2>
-        where U : IComplex<U>
+        where U : IComplex<U>, IDifferentiableFunctions<U>
         where IC : ISymbol
         where I1 : IIndex
         where I2 : IIndex
@@ -495,7 +495,7 @@ public static partial class DifGeo
     public static Tensor<Matrix4x4<V>, V, I1, I2> TensorProduct<T, U, V, I1, I2>(in IRankOneTensor<T, Vector4<V>, V, I1> a, in IRankOneTensor<U, Vector4<V>, V, I2> b)
         where T : IRankOneTensor<T, Vector4<V>, V, I1>
         where U : IRankOneTensor<U, Vector4<V>, V, I2>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where I1 : IIndex
         where I2 : IIndex
     {
@@ -525,7 +525,7 @@ public static partial class DifGeo
         in IRankTwoTensor<U, Matrix4x4<V>, V, I2, I3> b)
         where T : IRankOneTensor<T, Vector4<V>, V, I1>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, I2, I3>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
@@ -559,7 +559,7 @@ public static partial class DifGeo
         in IRankOneTensor<U, Vector4<V>, V, I3> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2>
         where U : IRankOneTensor<U, Vector4<V>, V, I3>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
@@ -594,7 +594,7 @@ public static partial class DifGeo
         in IRankThreeTensor<U, Array4x4x4<V>, V, I2, I3, I4> b)
         where T : IRankOneTensor<T, Vector4<V>, V, I1>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, I2, I3, I4>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
@@ -633,7 +633,7 @@ public static partial class DifGeo
         in IRankOneTensor<U, Vector4<V>, V, I4> b)
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, I2, I3>
         where U : IRankOneTensor<U, Vector4<V>, V, I4>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
@@ -672,7 +672,7 @@ public static partial class DifGeo
         in IRankTwoTensor<U, Matrix4x4<V>, V, I1, I2> b)
         where T : IRankTwoTensor<T, Matrix4x4<V>, V, I1, I2>
         where U : IRankTwoTensor<U, Matrix4x4<V>, V, I1, I2>
-        where V : IComplex<V>
+        where V : IComplex<V>, IDifferentiableFunctions<V>
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex

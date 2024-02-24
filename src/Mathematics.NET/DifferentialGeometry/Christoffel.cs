@@ -42,7 +42,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <param name="array">A backing array</param>
 public struct Christoffel<T, U, V, W, X>(T array) : IRankThreeTensor<Christoffel<T, U, V, W, X>, T, U, V, Index<Lower, W>, Index<Lower, X>>
     where T : ICubicArray<T, U>
-    where U : IComplex<U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
     where V : IIndex
     where W : ISymbol
     where X : ISymbol

@@ -48,7 +48,7 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
       IAdditionOperation<MetricTensor<T, U, V, W, X>, Tensor<T, U, Index<V, W>, Index<V, X>>>,
       ISubtractionOperation<MetricTensor<T, U, V, W, X>, Tensor<T, U, Index<V, W>, Index<V, X>>>
     where T : ISquareMatrix<T, U>
-    where U : IComplex<U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
     where V : IIndexPosition
     where W : ISymbol
     where X : ISymbol
@@ -141,4 +141,3 @@ public struct MetricTensor<T, U, V, W, X>(T matrix)
 
     public static implicit operator MetricTensor<T, U, V, W, X>(T input) => new(input);
 }
-

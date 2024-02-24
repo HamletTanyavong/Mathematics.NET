@@ -45,7 +45,7 @@ public struct Tensor<T, U, V>(T vector)
       IAdditionOperation<Tensor<T, U, V>, Tensor<T, U, V>>,
       ISubtractionOperation<Tensor<T, U, V>, Tensor<T, U, V>>
     where T : IVector<T, U>
-    where U : IComplex<U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
     where V : IIndex
 {
     private T _vector = vector;

@@ -46,7 +46,7 @@ public struct Tensor<T, U, V, W>(T matrix)
       IAdditionOperation<Tensor<T, U, V, W>, Tensor<T, U, V, W>>,
       ISubtractionOperation<Tensor<T, U, V, W>, Tensor<T, U, V, W>>
     where T : ISquareMatrix<T, U>
-    where U : IComplex<U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
     where V : IIndex
     where W : IIndex
 {

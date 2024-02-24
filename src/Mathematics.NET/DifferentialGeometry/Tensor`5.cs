@@ -44,7 +44,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 public struct Tensor<T, U, V, W, X>(T array)
     : IRankThreeTensor<Tensor<T, U, V, W, X>, T, U, V, W, X>
     where T : ICubicArray<T, U>
-    where U : IComplex<U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
     where V : IIndex
     where W : IIndex
     where X : IIndex

@@ -38,7 +38,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 public interface IRankTwoTensor<T, U, V, W, X> : ITwoDimensionalArrayRepresentable<T, V>
     where T : IRankTwoTensor<T, U, V, W, X>
     where U : ISquareMatrix<U, V>
-    where V : IComplex<V>
+    where V : IComplex<V>, IDifferentiableFunctions<V>
     where W : IIndex
     where X : IIndex
 {
