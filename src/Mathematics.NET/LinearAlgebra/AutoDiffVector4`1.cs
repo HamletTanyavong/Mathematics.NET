@@ -28,8 +28,9 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.AutoDiff;
 
-namespace Mathematics.NET.AutoDiff;
+namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a vector of four variables for use in reverse-mode automatic differentiation</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>

@@ -1,4 +1,4 @@
-﻿// <copyright file="AutoDiffVector3`1.cs" company="Mathematics.NET">
+﻿// <copyright file="AutoDiffVector2`1.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,13 +28,14 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.AutoDiff;
 
-namespace Mathematics.NET.AutoDiff;
+namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a vector of three variables for use in reverse-mode automatic differentiation</summary>
+/// <summary>Represents a vector of two variables for use in reverse-mode automatic differentiation</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public record struct AutoDiffVector3<T>
+public record struct AutoDiffVector2<T>
     where T : IComplex<T>
 {
     /// <summary>The first element of the vector</summary>
@@ -43,19 +44,11 @@ public record struct AutoDiffVector3<T>
     /// <summary>The second element of the vector</summary>
     public Variable<T> X2;
 
-    /// <summary>The third element of the vector</summary>
-    public Variable<T> X3;
-
-    public AutoDiffVector3(Variable<T> x1, Variable<T> x2, Variable<T> x3)
+    public AutoDiffVector2(Variable<T> x1, Variable<T> x2)
     {
         X1 = x1;
         X2 = x2;
-        X3 = x3;
     }
-
-    //
-    // Indexer
-    //
 
     /// <summary>Get the element at the specified index</summary>
     /// <param name="index">An index</param>
@@ -68,9 +61,9 @@ public record struct AutoDiffVector3<T>
 
     // Get
 
-    internal static Variable<T> GetElement(AutoDiffVector3<T> vector, int index)
+    internal static Variable<T> GetElement(AutoDiffVector2<T> vector, int index)
     {
-        if ((uint)index >= 3)
+        if ((uint)index >= 2)
         {
             throw new IndexOutOfRangeException();
         }
@@ -79,36 +72,36 @@ public record struct AutoDiffVector3<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Variable<T> GetElementUnsafe(ref AutoDiffVector3<T> vector, int index)
+    private static Variable<T> GetElementUnsafe(ref AutoDiffVector2<T> vector, int index)
     {
-        Debug.Assert(index is >= 0 and < 3);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffVector3<T>, Variable<T>>(ref vector), index);
+        Debug.Assert(index is >= 0 and < 2);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T>, Variable<T>>(ref vector), index);
     }
 
     // Set
 
-    internal static AutoDiffVector3<T> WithElement(AutoDiffVector3<T> vector, int index, Variable<T> value)
+    internal static AutoDiffVector2<T> WithElement(AutoDiffVector2<T> vector, int index, Variable<T> value)
     {
-        if ((uint)index >= 3)
+        if ((uint)index >= 2)
         {
             throw new IndexOutOfRangeException();
         }
 
-        AutoDiffVector3<T> result = vector;
+        AutoDiffVector2<T> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffVector3<T> vector, int index, Variable<T> value)
+    private static void SetElementUnsafe(ref AutoDiffVector2<T> vector, int index, Variable<T> value)
     {
-        Debug.Assert(index is >= 0 and < 3);
-        Unsafe.Add(ref Unsafe.As<AutoDiffVector3<T>, Variable<T>>(ref vector), index) = value;
+        Debug.Assert(index is >= 0 and < 2);
+        Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T>, Variable<T>>(ref vector), index) = value;
     }
 
     //
     // Formatting
     //
 
-    public override readonly string ToString() => $"({X1}, {X2}, {X3})";
+    public override readonly string ToString() => $"({X1}, {X2})";
 }
