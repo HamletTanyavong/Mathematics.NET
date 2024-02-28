@@ -28,9 +28,9 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Mathematics.NET.LinearAlgebra;
+using Mathematics.NET.AutoDiff;
 
-namespace Mathematics.NET.AutoDiff;
+namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a vector of four dual numbers for use in forward-mode automatic differentiation</summary>
 /// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/></typeparam>
