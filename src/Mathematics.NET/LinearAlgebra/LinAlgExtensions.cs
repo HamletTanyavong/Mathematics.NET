@@ -30,6 +30,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using System.Text;
+using Mathematics.NET.AutoDiff;
 
 namespace Mathematics.NET.LinearAlgebra;
 
@@ -117,6 +118,70 @@ public static class LinAlgExtensions
     internal static Vector4<T> AsVector4<T>(this Vector512<double> value)
         where T : IComplex<T>
         => Unsafe.As<Vector512<double>, Vector4<T>>(ref value);
+
+    //
+    // AutoDiff
+    //
+
+    /// <summary>Create an autodiff vector from a seed vector.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x">A vector of seed values</param>
+    /// <returns>A variable vector of length two</returns>
+    public static AutoDiffVector2<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector2<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2));
+
+    /// <summary>Create an autodiff vector from seed values.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x1Seed">The first seed value</param>
+    /// <param name="x2Seed">The second seed value</param>
+    /// <returns>A variable vector of length two</returns>
+    public static AutoDiffVector2<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed));
+
+    /// <summary>Create an autodiff vector from a seed vector.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x">A vector of seed values</param>
+    /// <returns>A variable vector of length three</returns>
+    public static AutoDiffVector3<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector3<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3));
+
+    /// <summary>Create an autodiff vector from seed values.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x1Seed">The first seed value</param>
+    /// <param name="x2Seed">The second seed value</param>
+    /// <param name="x3Seed">The third seed value</param>
+    /// <returns>A variable vector of length three</returns>
+    public static AutoDiffVector3<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed));
+
+    /// <summary>Create an autodiff vector from a seed vector.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x">A vector of seed values</param>
+    /// <returns>A variable vector of length four</returns>
+    public static AutoDiffVector4<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector4<T> x)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3), tape.CreateVariable(x.X4));
+
+    /// <summary>Create an autodiff vector from seed values.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
+    /// <param name="x1Seed">The first seed value</param>
+    /// <param name="x2Seed">The second seed value</param>
+    /// <param name="x3Seed">The third seed value</param>
+    /// <param name="x4Seed">The fourth seed value</param>
+    /// <returns>A variable vector of length four</returns>
+    public static AutoDiffVector4<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed, T x4Seed)
+        where T : IComplex<T>, IDifferentiableFunctions<T>
+        => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed), tape.CreateVariable(x4Seed));
 
     //
     // Formatting
