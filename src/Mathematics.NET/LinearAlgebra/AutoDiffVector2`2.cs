@@ -107,6 +107,12 @@ public record struct AutoDiffVector2<T, U>
     //
 
     //
+    // Formatting
+    //
+
+    public override readonly string ToString() => $"({X1}, {X2})";
+
+    //
     // Vector Calculus
     //
 

@@ -110,6 +110,16 @@ public record struct AutoDiffVector3<T, U>
     // Methods
     //
 
+    //
+    // Formatting
+    //
+
+    public override readonly string ToString() => $"({X1}, {X2}, {X3})";
+
+    //
+    // Three-dimension specific methods
+    //
+
     /// <inheritdoc cref="Vector3{T}.Cross(Vector3{T}, Vector3{T})"/>
     public static AutoDiffVector3<T, U> Cross(AutoDiffVector3<T, U> left, AutoDiffVector3<T, U> right)
     {
