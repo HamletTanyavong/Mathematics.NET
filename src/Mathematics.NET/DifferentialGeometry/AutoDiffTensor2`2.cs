@@ -66,42 +66,42 @@ public record struct AutoDiffTensor2<T, U>
 
     // Get
 
-    internal static Variable<T> GetElement(AutoDiffTensor2<T, U> vector, int index)
+    internal static Variable<T> GetElement(AutoDiffTensor2<T, U> tensor, int index)
     {
         if ((uint)index >= 2)
         {
             throw new IndexOutOfRangeException();
         }
 
-        return GetElementUnsafe(ref vector, index);
+        return GetElementUnsafe(ref tensor, index);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Variable<T> GetElementUnsafe(ref AutoDiffTensor2<T, U> vector, int index)
+    private static Variable<T> GetElementUnsafe(ref AutoDiffTensor2<T, U> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 2);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U>, Variable<T>>(ref vector), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U>, Variable<T>>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor2<T, U> WithElement(AutoDiffTensor2<T, U> vector, int index, Variable<T> value)
+    internal static AutoDiffTensor2<T, U> WithElement(AutoDiffTensor2<T, U> tensor, int index, Variable<T> value)
     {
         if ((uint)index >= 2)
         {
             throw new IndexOutOfRangeException();
         }
 
-        AutoDiffTensor2<T, U> result = vector;
+        AutoDiffTensor2<T, U> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor2<T, U> vector, int index, Variable<T> value)
+    private static void SetElementUnsafe(ref AutoDiffTensor2<T, U> tensor, int index, Variable<T> value)
     {
         Debug.Assert(index is >= 0 and < 2);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U>, Variable<T>>(ref vector), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U>, Variable<T>>(ref tensor), index) = value;
     }
 
     //
