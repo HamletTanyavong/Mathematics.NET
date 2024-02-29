@@ -115,6 +115,12 @@ public record struct AutoDiffVector4<T, U>
     //
 
     //
+    // Formatting
+    //
+
+    public override readonly string ToString() => $"({X1}, {X2}, {X3}, {X4})";
+
+    //
     // Vector Calculus
     //
 

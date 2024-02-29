@@ -1,4 +1,4 @@
-﻿// <copyright file="AutoDiffTensor4`2.cs" company="Mathematics.NET">
+﻿// <copyright file="AutoDiffTensor2`3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,89 +32,84 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor of four variables for use in reverse-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="U">An index</typeparam>
-public record struct AutoDiffTensor4<T, U>
-    where T : IComplex<T>
-    where U : IIndex
+/// <summary>Represents a rank-one tensor of two variables for use in forward-mode automatic differentiation</summary>
+/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/></typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="V">An index</typeparam>
+public record struct AutoDiffTensor2<T, U, V>
+    where T : IDual<T, U>
+    where U : IComplex<U>, IDifferentiableFunctions<U>
+    where V : IIndex
 {
     /// <summary>The zeroth element of the rank-one tensor</summary>
-    public Variable<T> X0;
+    public T X0;
 
     /// <summary>The first element of the rank-one tensor</summary>
-    public Variable<T> X1;
+    public T X1;
 
-    /// <summary>The second element of the rank-one tensor</summary>
-    public Variable<T> X2;
-
-    /// <summary>The third element of the rank-one tensor</summary>
-    public Variable<T> X3;
-
-    public AutoDiffTensor4(Variable<T> x0, Variable<T> x1, Variable<T> x2, Variable<T> x3)
+    public AutoDiffTensor2(T x0, T x1)
     {
         X0 = x0;
         X1 = x1;
-        X2 = x2;
-        X3 = x3;
     }
 
     //
     // Indexer
     //
 
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
-    public Variable<T> this[int index]
+    public T this[int index]
     {
-        readonly get => GetElement(this, index);
+        get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 
     // Get
 
-    internal static Variable<T> GetElement(AutoDiffTensor4<T, U> tensor, int index)
+    internal static T GetElement(AutoDiffTensor2<T, U, V> vector, int index)
     {
-        if ((uint)index >= 4)
+        if ((uint)index >= 2)
         {
             throw new IndexOutOfRangeException();
         }
 
-        return GetElementUnsafe(ref tensor, index);
+        return GetElementUnsafe(ref vector, index);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Variable<T> GetElementUnsafe(ref AutoDiffTensor4<T, U> tensor, int index)
+    private static T GetElementUnsafe(ref AutoDiffTensor2<T, U, V> vector, int index)
     {
-        Debug.Assert(index is >= 0 and < 4);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U>, Variable<T>>(ref tensor), index);
+        Debug.Assert(index is >= 0 and < 2);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U, V>, T>(ref vector), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor4<T, U> WithElement(AutoDiffTensor4<T, U> tensor, int index, Variable<T> value)
+    internal static AutoDiffTensor2<T, U, V> WithElement(AutoDiffTensor2<T, U, V> vector, int index, T value)
     {
-        if ((uint)index >= 4)
+        if ((uint)index >= 2)
         {
             throw new IndexOutOfRangeException();
         }
 
-        AutoDiffTensor4<T, U> result = tensor;
+        AutoDiffTensor2<T, U, V> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor4<T, U> tensor, int index, Variable<T> value)
+    private static void SetElementUnsafe(ref AutoDiffTensor2<T, U, V> vector, int index, T value)
     {
-        Debug.Assert(index is >= 0 and < 4);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U>, Variable<T>>(ref tensor), index) = value;
+        Debug.Assert(index is >= 0 and < 2);
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U, V>, T>(ref vector), index) = value;
     }
+
+    //
+    // Methods
+    //
 
     //
     // Formatting
     //
 
-    public override readonly string ToString() => $"({X0}, {X1}, {X2}, {X3})";
+    public override readonly string ToString() => $"({X0}, {X1})";
 }
