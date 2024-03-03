@@ -35,7 +35,7 @@ namespace Mathematics.NET.Tests.SourceGenerators.Public.Symbols;
 public sealed class SymbolGeneratorTests : VerifyBase
 {
     [TestMethod]
-    public void SourceGenerator_StructWithSymbolAttribute_AutoImplementsSymbolsInterface()
+    public void SourceGenerator_StructWithSymbolAttribute_AutoImplementsISymbol()
     {
         var source = """
             namespace A

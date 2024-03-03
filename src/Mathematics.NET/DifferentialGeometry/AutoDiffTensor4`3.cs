@@ -73,42 +73,42 @@ public record struct AutoDiffTensor4<T, U, V>
 
     // Get
 
-    internal static T GetElement(AutoDiffTensor4<T, U, V> vector, int index)
+    internal static T GetElement(AutoDiffTensor4<T, U, V> tensor, int index)
     {
         if ((uint)index >= 4)
         {
             throw new IndexOutOfRangeException();
         }
 
-        return GetElementUnsafe(ref vector, index);
+        return GetElementUnsafe(ref tensor, index);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T GetElementUnsafe(ref AutoDiffTensor4<T, U, V> vector, int index)
+    private static T GetElementUnsafe(ref AutoDiffTensor4<T, U, V> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 4);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U, V>, T>(ref vector), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U, V>, T>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor4<T, U, V> WithElement(AutoDiffTensor4<T, U, V> vector, int index, T value)
+    internal static AutoDiffTensor4<T, U, V> WithElement(AutoDiffTensor4<T, U, V> tensor, int index, T value)
     {
         if ((uint)index >= 4)
         {
             throw new IndexOutOfRangeException();
         }
 
-        AutoDiffTensor4<T, U, V> result = vector;
+        AutoDiffTensor4<T, U, V> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor4<T, U, V> vector, int index, T value)
+    private static void SetElementUnsafe(ref AutoDiffTensor4<T, U, V> tensor, int index, T value)
     {
         Debug.Assert(index is >= 0 and < 4);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U, V>, T>(ref vector), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U, V>, T>(ref tensor), index) = value;
     }
 
     //
