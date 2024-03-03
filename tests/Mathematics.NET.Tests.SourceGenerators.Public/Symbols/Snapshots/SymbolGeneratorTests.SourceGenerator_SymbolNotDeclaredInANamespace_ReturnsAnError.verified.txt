@@ -5,7 +5,7 @@
       Title: Invalid symbol declaration,
       Severity: Error,
       WarningLevel: 0,
-      Location: : (2,31)-(2,36),
+      Location: : (0,31)-(0,36),
       HelpLink: https://mathematics.hamlettanyavong.com/guide/diagnostic_messages/symbols/sgs0001.html,
       MessageFormat: Symbols must be declared in namespaces.,
       Message: Symbols must be declared in namespaces.,
