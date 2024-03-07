@@ -14,7 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Verify.MSTest" Version="23.2.2" />
+    <PackageReference Include="Verify.MSTest" Version="23.2.3" />
     <PackageReference Include="Verify.SourceGenerators" Version="2.2.0" />
   </ItemGroup>
 
