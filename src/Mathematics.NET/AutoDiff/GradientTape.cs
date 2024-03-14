@@ -70,18 +70,23 @@ namespace Mathematics.NET.AutoDiff;
 public record class GradientTape<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
+    private bool _isTracking;
     private List<GradientNode<T>> _nodes;
     private int _variableCount;
 
-    public GradientTape()
+    public GradientTape(bool isTracking = true)
     {
         _nodes = [];
+        _isTracking = isTracking;
     }
 
-    public GradientTape(int n)
+    public GradientTape(int n, bool isTracking = true)
     {
         _nodes = new(n);
+        _isTracking = isTracking;
     }
+
+    public bool IsTracking { get => _isTracking; set => _isTracking = false; }
 
     public int NodeCount => _nodes.Count;
 
@@ -174,95 +179,155 @@ public record class GradientTape<T> : ITape<T>
 
     public Variable<T> Add(Variable<T> x, Variable<T> y)
     {
-        _nodes.Add(new(T.One, T.One, x._index, y._index));
-        return new(_nodes.Count - 1, x.Value + y.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One, T.One, x._index, y._index));
+            return new(_nodes.Count - 1, x.Value + y.Value);
+        }
+        return new(_nodes.Count, x.Value + y.Value);
     }
 
     public Variable<T> Add(T c, Variable<T> x)
     {
-        _nodes.Add(new(T.One, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, c + x.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, c + x.Value);
+        }
+        return new(_nodes.Count, c + x.Value);
     }
 
     public Variable<T> Add(Variable<T> x, T c)
     {
-        _nodes.Add(new(T.One, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, x.Value + c);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, x.Value + c);
+        }
+        return new(_nodes.Count, x.Value + c);
     }
 
     public Variable<T> Divide(Variable<T> x, Variable<T> y)
     {
         var u = T.One / y.Value;
-        _nodes.Add(new(T.One / y.Value, -x.Value * u * u, x._index, y._index));
-        return new(_nodes.Count - 1, x.Value * u);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / y.Value, -x.Value * u * u, x._index, y._index));
+            return new(_nodes.Count - 1, x.Value * u);
+        }
+        return new(_nodes.Count, x.Value * u);
     }
 
     public Variable<T> Divide(T c, Variable<T> x)
     {
         var u = T.One / x.Value;
-        _nodes.Add(new(-c * u * u, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, x.Value * u);
+        if (_isTracking)
+        {
+            _nodes.Add(new(-c * u * u, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, c * u);
+        }
+        return new(_nodes.Count, c * u);
     }
 
     public Variable<T> Divide(Variable<T> x, T c)
     {
         var u = T.One / c;
-        _nodes.Add(new(u, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, x.Value * u);
+        if (_isTracking)
+        {
+            _nodes.Add(new(u, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, x.Value * u);
+        }
+        return new(_nodes.Count, x.Value * u);
     }
 
     public Variable<Real> Modulo(Variable<Real> x, Variable<Real> y)
     {
-        _nodes.Add(new(T.One, x.Value * Real.Floor(x.Value / y.Value), x._index, y._index));
-        return new(_nodes.Count - 1, x.Value % y.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One, x.Value * Real.Floor(x.Value / y.Value), x._index, y._index));
+            return new(_nodes.Count - 1, x.Value % y.Value);
+        }
+        return new(_nodes.Count, x.Value % y.Value);
     }
 
     public Variable<Real> Modulo(Real c, Variable<Real> x)
     {
-        _nodes.Add(new(c * Real.Floor(c / x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, c % x.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(c * Real.Floor(c / x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, c % x.Value);
+        }
+        return new(_nodes.Count, c % x.Value);
     }
 
     public Variable<Real> Modulo(Variable<Real> x, Real c)
     {
-        _nodes.Add(new(T.One, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, x.Value % c);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, x.Value % c);
+        }
+        return new(_nodes.Count, x.Value % c);
     }
 
     public Variable<T> Multiply(Variable<T> x, Variable<T> y)
     {
-        _nodes.Add(new(y.Value, x.Value, x._index, y._index));
-        return new(_nodes.Count - 1, x.Value * y.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(y.Value, x.Value, x._index, y._index));
+            return new(_nodes.Count - 1, x.Value * y.Value);
+        }
+        return new(_nodes.Count, x.Value * y.Value);
     }
 
     public Variable<T> Multiply(T c, Variable<T> x)
     {
-        _nodes.Add(new(c, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, c * x.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(c, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, c * x.Value);
+        }
+        return new(_nodes.Count, c * x.Value);
     }
 
     public Variable<T> Multiply(Variable<T> x, T c)
     {
-        _nodes.Add(new(c, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, x.Value * c);
+        if (_isTracking)
+        {
+            _nodes.Add(new(c, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, x.Value * c);
+        }
+        return new(_nodes.Count, x.Value * c);
     }
 
     public Variable<T> Subtract(Variable<T> x, Variable<T> y)
     {
-        _nodes.Add(new(T.One, -T.One, x._index, y._index));
-        return new(_nodes.Count - 1, x.Value - y.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One, -T.One, x._index, y._index));
+            return new(_nodes.Count - 1, x.Value - y.Value);
+        }
+        return new(_nodes.Count, x.Value - y.Value);
     }
 
     public Variable<T> Subtract(T c, Variable<T> x)
     {
-        _nodes.Add(new(-T.One, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, c - x.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(-T.One, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, c - x.Value);
+        }
+        return new(_nodes.Count, c - x.Value);
     }
 
     public Variable<T> Subtract(Variable<T> x, T c)
     {
-        _nodes.Add(new(T.One, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, x.Value - c);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, x.Value - c);
+        }
+        return new(_nodes.Count, x.Value - c);
     }
 
     //
@@ -271,8 +336,12 @@ public record class GradientTape<T> : ITape<T>
 
     public Variable<T> Negate(Variable<T> x)
     {
-        _nodes.Add(new(-T.One, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, -x.Value);
+        if (_isTracking)
+        {
+            _nodes.Add(new(-T.One, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, -x.Value);
+        }
+        return new(_nodes.Count, -x.Value);
     }
 
     // Exponential functions
@@ -280,88 +349,140 @@ public record class GradientTape<T> : ITape<T>
     public Variable<T> Exp(Variable<T> x)
     {
         var exp = T.Exp(x.Value);
-        _nodes.Add(new(exp, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, exp);
+        if (_isTracking)
+        {
+            _nodes.Add(new(exp, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, exp);
+        }
+        return new(_nodes.Count, exp);
     }
 
     public Variable<T> Exp2(Variable<T> x)
     {
         var exp2 = T.Exp2(x.Value);
-        _nodes.Add(new(Real.Ln2 * exp2, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, exp2);
+        if (_isTracking)
+        {
+            _nodes.Add(new(Real.Ln2 * exp2, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, exp2);
+        }
+        return new(_nodes.Count, exp2);
     }
 
     public Variable<T> Exp10(Variable<T> x)
     {
         var exp10 = T.Exp10(x.Value);
-        _nodes.Add(new(Real.Ln10 * exp10, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, exp10);
+        if (_isTracking)
+        {
+            _nodes.Add(new(Real.Ln10 * exp10, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, exp10);
+        }
+        return new(_nodes.Count, exp10);
     }
 
     // Hyperbolic functions
 
     public Variable<T> Acosh(Variable<T> x)
     {
-        _nodes.Add(new(T.One / (T.Sqrt(x.Value - T.One) * T.Sqrt(x.Value + T.One)), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Acosh(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / (T.Sqrt(x.Value - T.One) * T.Sqrt(x.Value + T.One)), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Acosh(x.Value));
+        }
+        return new(_nodes.Count, T.Acosh(x.Value));
     }
 
     public Variable<T> Asinh(Variable<T> x)
     {
-        _nodes.Add(new(T.One / T.Sqrt(x.Value * x.Value + T.One), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Asinh(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / T.Sqrt(x.Value * x.Value + T.One), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Asinh(x.Value));
+        }
+        return new(_nodes.Count, T.Asinh(x.Value));
     }
 
     public Variable<T> Atanh(Variable<T> x)
     {
-        _nodes.Add(new(T.One / (T.One - x.Value * x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Atanh(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / (T.One - x.Value * x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Atanh(x.Value));
+        }
+        return new(_nodes.Count, T.Atanh(x.Value));
     }
 
     public Variable<T> Cosh(Variable<T> x)
     {
-        _nodes.Add(new(T.Sinh(x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Cosh(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.Sinh(x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Cosh(x.Value));
+        }
+        return new(_nodes.Count, T.Cosh(x.Value));
     }
 
     public Variable<T> Sinh(Variable<T> x)
     {
-        _nodes.Add(new(T.Cosh(x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Sinh(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.Cosh(x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Sinh(x.Value));
+        }
+        return new(_nodes.Count, T.Sinh(x.Value));
     }
 
     public Variable<T> Tanh(Variable<T> x)
     {
-        var u = T.One / T.Cosh(x.Value);
-        _nodes.Add(new(u * u, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Tanh(x.Value));
+        if (_isTracking)
+        {
+            var u = T.One / T.Cosh(x.Value);
+            _nodes.Add(new(u * u, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Tanh(x.Value));
+        }
+        return new(_nodes.Count, T.Tanh(x.Value));
     }
 
     // Logarithmic functions
 
     public Variable<T> Ln(Variable<T> x)
     {
-        _nodes.Add(new(T.One / x.Value, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Ln(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / x.Value, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Ln(x.Value));
+        }
+        return new(_nodes.Count, T.Ln(x.Value));
     }
 
     public Variable<T> Log(Variable<T> x, Variable<T> b)
     {
-        var lnB = T.Ln(b.Value);
-        _nodes.Add(new(T.One / (x.Value * lnB), -T.Ln(x.Value) / (b.Value * lnB * lnB), x._index, b._index));
-        return new(_nodes.Count - 1, T.Log(x.Value, b.Value));
+        if (_isTracking)
+        {
+            var lnB = T.Ln(b.Value);
+            _nodes.Add(new(T.One / (x.Value * lnB), -T.Ln(x.Value) / (b.Value * lnB * lnB), x._index, b._index));
+            return new(_nodes.Count - 1, T.Log(x.Value, b.Value));
+        }
+        return new(_nodes.Count, T.Log(x.Value, b.Value));
     }
 
     public Variable<T> Log2(Variable<T> x)
     {
-        _nodes.Add(new(T.One / (Real.Ln2 * x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Log2(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / (Real.Ln2 * x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Log2(x.Value));
+        }
+        return new(_nodes.Count, T.Log2(x.Value));
     }
 
     public Variable<T> Log10(Variable<T> x)
     {
-        _nodes.Add(new(T.One / (Real.Ln10 * x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Log10(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / (Real.Ln10 * x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Log10(x.Value));
+        }
+        return new(_nodes.Count, T.Log10(x.Value));
     }
 
     // Power functions
@@ -369,8 +490,12 @@ public record class GradientTape<T> : ITape<T>
     public Variable<T> Pow(Variable<T> x, Variable<T> y)
     {
         var pow = T.Pow(x.Value, y.Value);
-        _nodes.Add(new(y.Value * T.Pow(x.Value, y.Value - T.One), T.Ln(x.Value) * pow, x._index, y._index));
-        return new(_nodes.Count - 1, pow);
+        if (_isTracking)
+        {
+            _nodes.Add(new(y.Value * T.Pow(x.Value, y.Value - T.One), T.Ln(x.Value) * pow, x._index, y._index));
+            return new(_nodes.Count - 1, pow);
+        }
+        return new(_nodes.Count, pow);
     }
 
     // Root functions
@@ -378,68 +503,108 @@ public record class GradientTape<T> : ITape<T>
     public Variable<T> Cbrt(Variable<T> x)
     {
         var cbrt = T.Cbrt(x.Value);
-        _nodes.Add(new(T.One / (3.0 * cbrt * cbrt), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, cbrt);
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / (3.0 * cbrt * cbrt), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, cbrt);
+        }
+        return new(_nodes.Count, cbrt);
     }
 
     public Variable<T> Root(Variable<T> x, Variable<T> n)
     {
         var root = T.Root(x.Value, n.Value);
-        _nodes.Add(new(root / (n.Value * x.Value), -T.Ln(x.Value) * root / (n.Value * n.Value), x._index, n._index));
-        return new(_nodes.Count - 1, root);
+        if (_isTracking)
+        {
+            _nodes.Add(new(root / (n.Value * x.Value), -T.Ln(x.Value) * root / (n.Value * n.Value), x._index, n._index));
+            return new(_nodes.Count - 1, root);
+        }
+        return new(_nodes.Count, root);
     }
 
     public Variable<T> Sqrt(Variable<T> x)
     {
         var sqrt = T.Sqrt(x.Value);
-        _nodes.Add(new(0.5 / sqrt, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, sqrt);
+        if (_isTracking)
+        {
+            _nodes.Add(new(0.5 / sqrt, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, sqrt);
+        }
+        return new(_nodes.Count, sqrt);
     }
 
     // Trigonometric functions
 
     public Variable<T> Acos(Variable<T> x)
     {
-        _nodes.Add(new(-T.One / T.Sqrt(T.One - x.Value * x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Acos(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(-T.One / T.Sqrt(T.One - x.Value * x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Acos(x.Value));
+        }
+        return new(_nodes.Count, T.Acos(x.Value));
     }
 
     public Variable<T> Asin(Variable<T> x)
     {
-        _nodes.Add(new(T.One / T.Sqrt(T.One - x.Value * x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Asin(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / T.Sqrt(T.One - x.Value * x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Asin(x.Value));
+        }
+        return new(_nodes.Count, T.Asin(x.Value));
     }
 
     public Variable<T> Atan(Variable<T> x)
     {
-        _nodes.Add(new(T.One / (T.One + x.Value * x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Atan(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.One / (T.One + x.Value * x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Atan(x.Value));
+        }
+        return new(_nodes.Count, T.Atan(x.Value));
     }
 
     public Variable<Real> Atan2(Variable<Real> y, Variable<Real> x)
     {
-        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-        _nodes.Add(new(x.Value * u, -y.Value * u, y._index, x._index));
-        return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
+        if (_isTracking)
+        {
+            var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
+            _nodes.Add(new(x.Value * u, -y.Value * u, y._index, x._index));
+            return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
+        }
+        return new(_nodes.Count, Real.Atan2(y.Value, x.Value));
     }
 
     public Variable<T> Cos(Variable<T> x)
     {
-        _nodes.Add(new(-T.Sin(x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Cos(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(-T.Sin(x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Cos(x.Value));
+        }
+        return new(_nodes.Count, T.Cos(x.Value));
     }
 
     public Variable<T> Sin(Variable<T> x)
     {
-        _nodes.Add(new(T.Cos(x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Sin(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(T.Cos(x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Sin(x.Value));
+        }
+        return new(_nodes.Count, T.Sin(x.Value));
     }
 
     public Variable<T> Tan(Variable<T> x)
     {
-        var sec = T.One / T.Cos(x.Value);
-        _nodes.Add(new(sec * sec, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Tan(x.Value));
+        if (_isTracking)
+        {
+            var sec = T.One / T.Cos(x.Value);
+            _nodes.Add(new(sec * sec, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, T.Tan(x.Value));
+        }
+        return new(_nodes.Count, T.Tan(x.Value));
     }
 
     //
@@ -453,8 +618,12 @@ public record class GradientTape<T> : ITape<T>
     /// <returns>A variable</returns>
     public Variable<T> CustomOperation(Variable<T> x, Func<T, T> f, Func<T, T> df)
     {
-        _nodes.Add(new(df(x.Value), x._index, _nodes.Count));
-        return new(_nodes.Count - 1, f(x.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(df(x.Value), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, f(x.Value));
+        }
+        return new(_nodes.Count, f(x.Value));
     }
 
     /// <summary>Add a node to the gradient tape using a custom binary operation.</summary>
@@ -466,7 +635,11 @@ public record class GradientTape<T> : ITape<T>
     /// <returns>A variable</returns>
     public Variable<T> CustomOperation(Variable<T> x, Variable<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
     {
-        _nodes.Add(new(dfx(x.Value, y.Value), dfy(x.Value, y.Value), x._index, y._index));
-        return new(_nodes.Count - 1, f(x.Value, y.Value));
+        if (_isTracking)
+        {
+            _nodes.Add(new(dfx(x.Value, y.Value), dfy(x.Value, y.Value), x._index, y._index));
+            return new(_nodes.Count - 1, f(x.Value, y.Value));
+        }
+        return new(_nodes.Count, f(x.Value, y.Value));
     }
 }
