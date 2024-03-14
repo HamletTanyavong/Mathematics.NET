@@ -587,7 +587,7 @@ public record class HessianTape<T> : ITape<T>
     {
         var df = T.One / (T.One + x.Value * x.Value);
         _nodes.Add(new(df, -2.0 * df * x.Value * df, x._index, _nodes.Count));
-        return new(_nodes.Count - 1, T.Asin(x.Value));
+        return new(_nodes.Count - 1, T.Atan(x.Value));
     }
 
     public Variable<Real> Atan2(Variable<Real> y, Variable<Real> x)
