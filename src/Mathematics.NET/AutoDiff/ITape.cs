@@ -32,6 +32,9 @@ namespace Mathematics.NET.AutoDiff;
 public interface ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
+    /// <summary>This property indicates whether or not the tape is currently tracking nodes.</summary>
+    public bool IsTracking { get; set; }
+
     /// <summary>Get the number of nodes on the gradient tape.</summary>
     public int NodeCount { get; }
 
