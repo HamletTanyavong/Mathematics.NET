@@ -461,10 +461,10 @@ public sealed class HessianTapeOfRealTests
             y,
             x,
             Real.Atan2,
-            (y, x) => x.AsDouble() * u,
+            (y, x) => x * u,
             (y, x) => Real.Zero, // Not of interest
             (y, x) => Real.Zero, // Not of interest
-            (y, x) => -y.AsDouble() * u,
+            (y, x) => -y * u,
             (y, x) => Real.Zero); // Not of interest
 
         Real[] expected = [expectedLeft, expectedRight];
@@ -491,10 +491,10 @@ public sealed class HessianTapeOfRealTests
             y,
             x,
             Real.Atan2,
-            (y, x) => x.AsDouble() * a,
+            (y, x) => x * a,
             (y, x) => dfyy,
             (y, x) => (u - v) * b,
-            (y, x) => -y.AsDouble() * a,
+            (y, x) => -y * a,
             (y, x) => -dfyy);
 
         Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
@@ -523,10 +523,10 @@ public sealed class HessianTapeOfRealTests
             y,
             x,
             Real.Atan2,
-            (y, x) => x.AsDouble() * a,
+            (y, x) => x * a,
             (y, x) => dfyy,
             (y, x) => (u - v) * b,
-            (y, x) => -y.AsDouble() * a,
+            (y, x) => -y * a,
             (y, x) => -dfyy).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
