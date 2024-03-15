@@ -343,7 +343,7 @@ public sealed class GradientTapeOfRealTests
         var x = _tape.CreateVariable(right);
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
 
-        var actual = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x.AsDouble() * u, (y, x) => -y.AsDouble() * u).Value;
+        var actual = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
