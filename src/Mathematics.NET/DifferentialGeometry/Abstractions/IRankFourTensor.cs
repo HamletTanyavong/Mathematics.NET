@@ -30,21 +30,21 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
 /// <summary>Defines support for rank-four tensors</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A backing type that implements <see cref="IHyperCubic4DArray{T, U}"/></typeparam>
-/// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="W">An index</typeparam>
-/// <typeparam name="X">An index</typeparam>
-/// <typeparam name="Y">An index</typeparam>
-/// <typeparam name="Z">An index</typeparam>
-public interface IRankFourTensor<T, U, V, W, X, Y, Z> : IFourDimensionalArrayRepresentable<T, V>
-    where T : IRankFourTensor<T, U, V, W, X, Y, Z>
-    where U : IHyperCubic4DArray<U, V>
-    where V : IComplex<V>, IDifferentiableFunctions<V>
-    where W : IIndex
-    where X : IIndex
-    where Y : IIndex
-    where Z : IIndex
+/// <typeparam name="TRankFourTensor">The type that implements the interface</typeparam>
+/// <typeparam name="THyperCubic4DArray">A backing type that implements <see cref="IHyperCubic4DArray{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TIndex1">An index</typeparam>
+/// <typeparam name="TIndex2">An index</typeparam>
+/// <typeparam name="TIndex3">An index</typeparam>
+/// <typeparam name="TIndex4">An index</typeparam>
+public interface IRankFourTensor<TRankFourTensor, THyperCubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> : IFourDimensionalArrayRepresentable<TRankFourTensor, TNumber>
+    where TRankFourTensor : IRankFourTensor<TRankFourTensor, THyperCubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>
+    where THyperCubic4DArray : IHyperCubic4DArray<THyperCubic4DArray, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex1 : IIndex
+    where TIndex2 : IIndex
+    where TIndex3 : IIndex
+    where TIndex4 : IIndex
 {
     /// <summary>The first index</summary>
     IIndex I1 { get; }
@@ -58,7 +58,7 @@ public interface IRankFourTensor<T, U, V, W, X, Y, Z> : IFourDimensionalArrayRep
     /// <summary>The fourth index</summary>
     IIndex I4 { get; }
 
-    /// <summary>Convert a value that implements <see cref="IHyperCubic4DArray{T, U}"/> to one of type <typeparamref name="T"/></summary>
+    /// <summary>Convert a value that implements <see cref="IHyperCubic4DArray{T, U}"/> to one of type <typeparamref name="TRankFourTensor"/></summary>
     /// <param name="value">The value to convert</param>
-    static abstract implicit operator T(U value);
+    static abstract implicit operator TRankFourTensor(THyperCubic4DArray value);
 }

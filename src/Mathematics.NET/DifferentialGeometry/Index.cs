@@ -31,13 +31,13 @@ using Mathematics.NET.Symbols;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a tensor index</summary>
-/// <typeparam name="T">An index position</typeparam>
-/// <typeparam name="U">A symbol</typeparam>
-public struct Index<T, U> : IIndex
-    where T : IIndexPosition
-    where U : ISymbol
+/// <typeparam name="TIndexPosition">An index position</typeparam>
+/// <typeparam name="TIndexName">A symbol</typeparam>
+public struct Index<TIndexPosition, TIndexName> : IIndex
+    where TIndexPosition : IIndexPosition
+    where TIndexName : ISymbol
 {
-    public static IIndex Instance => new Index<T, U>();
+    public static IIndex Instance => new Index<TIndexPosition, TIndexName>();
 
     //
     // Formatting
@@ -45,5 +45,5 @@ public struct Index<T, U> : IIndex
 
     public override readonly string ToString() => ToString(null, null);
 
-    public readonly string ToString(string? format, IFormatProvider? provider) => $"{T.DisplayString} {U.DisplayString}";
+    public readonly string ToString(string? format, IFormatProvider? provider) => $"{TIndexPosition.DisplayString} {TIndexName.DisplayString}";
 }

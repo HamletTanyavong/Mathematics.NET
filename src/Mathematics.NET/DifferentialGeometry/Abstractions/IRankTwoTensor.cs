@@ -30,17 +30,17 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
 /// <summary>Defines support for rank-two tensors</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-/// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="W">An index</typeparam>
-/// <typeparam name="X">An index</typeparam>
-public interface IRankTwoTensor<T, U, V, W, X> : ITwoDimensionalArrayRepresentable<T, V>
-    where T : IRankTwoTensor<T, U, V, W, X>
-    where U : ISquareMatrix<U, V>
-    where V : IComplex<V>, IDifferentiableFunctions<V>
-    where W : IIndex
-    where X : IIndex
+/// <typeparam name="TRankTwoTensor">The type that implements the interface</typeparam>
+/// <typeparam name="TSquareMatrix">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TIndex1">An index</typeparam>
+/// <typeparam name="TIndex2">An index</typeparam>
+public interface IRankTwoTensor<TRankTwoTensor, TSquareMatrix, TNumber, TIndex1, TIndex2> : ITwoDimensionalArrayRepresentable<TRankTwoTensor, TNumber>
+    where TRankTwoTensor : IRankTwoTensor<TRankTwoTensor, TSquareMatrix, TNumber, TIndex1, TIndex2>
+    where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex1 : IIndex
+    where TIndex2 : IIndex
 {
     /// <summary>The first index</summary>
     IIndex I1 { get; }
@@ -48,7 +48,7 @@ public interface IRankTwoTensor<T, U, V, W, X> : ITwoDimensionalArrayRepresentab
     /// <summary>The second index</summary>
     IIndex I2 { get; }
 
-    /// <summary>Convert a value that implements <see cref="IMatrix{T, U}"/> to one of type <typeparamref name="T"/></summary>
+    /// <summary>Convert a value that implements <see cref="IMatrix{T, U}"/> to one of type <typeparamref name="TRankTwoTensor"/></summary>
     /// <param name="value">The value to convert</param>
-    static abstract implicit operator T(U value);
+    static abstract implicit operator TRankTwoTensor(TSquareMatrix value);
 }
