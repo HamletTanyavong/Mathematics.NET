@@ -33,7 +33,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-four tensor</summary>
+/// <summary>Represents a rank-four tensor or a similar mathematical object</summary>
 /// <typeparam name="THyperCubic4DArray">A backing type that implements <see cref="IHyperCubic4DArray{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="TIndex1">The first index</typeparam>

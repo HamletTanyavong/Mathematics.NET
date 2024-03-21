@@ -29,7 +29,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-three tensors</summary>
+/// <summary>Defines support for rank-three tensors and similar mathematical objects</summary>
 /// <typeparam name="TRankThreeTensor">The type that implements the interface</typeparam>
 /// <typeparam name="TCubicArray">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>

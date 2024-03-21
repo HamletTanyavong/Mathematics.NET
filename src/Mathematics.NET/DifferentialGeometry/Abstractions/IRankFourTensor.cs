@@ -29,7 +29,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-four tensors</summary>
+/// <summary>Defines support for rank-four tensors and similar mathematical objects</summary>
 /// <typeparam name="TRankFourTensor">The type that implements the interface</typeparam>
 /// <typeparam name="THyperCubic4DArray">A backing type that implements <see cref="IHyperCubic4DArray{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>

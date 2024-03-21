@@ -29,7 +29,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-two tensors</summary>
+/// <summary>Defines support for rank-two tensors and similar mathematical objects</summary>
 /// <typeparam name="TRankTwoTensor">The type that implements the interface</typeparam>
 /// <typeparam name="TSquareMatrix">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>

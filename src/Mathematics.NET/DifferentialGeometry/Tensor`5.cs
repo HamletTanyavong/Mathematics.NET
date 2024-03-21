@@ -33,7 +33,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-three tensor</summary>
+/// <summary>Represents a rank-three tensor or a similar mathematical object</summary>
 /// <typeparam name="TCubicArray">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="TIndex1">The first index</typeparam>

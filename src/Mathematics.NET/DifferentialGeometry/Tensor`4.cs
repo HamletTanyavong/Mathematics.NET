@@ -34,7 +34,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensor</summary>
+/// <summary>Represents a rank-two tensor or a similar mathematical object</summary>
 /// <typeparam name="TSquareMatrix">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="TIndex1">The first index</typeparam>

@@ -29,7 +29,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-one tensors</summary>
+/// <summary>Defines support for rank-one tensors and similar mathematical objects</summary>
 /// <typeparam name="TRankOneTensor">The type that implements the interface</typeparam>
 /// <typeparam name="TVector">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>

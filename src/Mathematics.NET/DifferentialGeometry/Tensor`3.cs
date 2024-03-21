@@ -34,7 +34,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor</summary>
+/// <summary>Represents a rank-one tensor or a similar mathematical object</summary>
 /// <typeparam name="TVector">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="TIndex">An index</typeparam>
