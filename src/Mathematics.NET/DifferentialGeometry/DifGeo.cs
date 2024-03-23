@@ -95,12 +95,12 @@ public static partial class DifGeo
         where TIndex3 : ISymbol
         where TPointIndex : ISymbol
     {
-        var value = metric
+        var inverseMetric = metric
             .Compute<TIndex1, InternalIndex1>(tape, position)
             .Inverse();
         Christoffel(tape, metric, position, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, InternalIndex1>, TIndex2, TIndex3> christoffelFirstKind);
 
-        var result = Contract(value, christoffelFirstKind);
+        var result = Contract(inverseMetric, christoffelFirstKind);
 
         christoffel = Unsafe.As<
             Tensor<Array4x4x4<Real>, Real, Index<Upper, TIndex1>, Index<Lower, TIndex2>, Index<Lower, TIndex3>>,
