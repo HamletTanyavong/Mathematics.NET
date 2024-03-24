@@ -1,4 +1,4 @@
-﻿// <copyright file="IHyperCubic4DArray.cs" company="Mathematics.NET">
+﻿// <copyright file="IHypercubic4DArray.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,6 +30,6 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <summary>Defines support for 4D hypercubic arrays</summary>
 /// <typeparam name="T">The type that implements the interface</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IHyperCubic4DArray<T, U> : IArray4D<T, U>
-    where T : IHyperCubic4DArray<T, U>
+public interface IHypercubic4DArray<T, U> : IArray4D<T, U>
+    where T : IHypercubic4DArray<T, U>
     where U : IComplex<U>;

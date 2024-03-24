@@ -31,15 +31,15 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
 /// <summary>Defines support for rank-four tensors and similar mathematical objects</summary>
 /// <typeparam name="TRankFourTensor">The type that implements the interface</typeparam>
-/// <typeparam name="THyperCubic4DArray">A backing type that implements <see cref="IHyperCubic4DArray{T, U}"/></typeparam>
+/// <typeparam name="THypercubic4DArray">A backing type that implements <see cref="IHypercubic4DArray{T, U}"/></typeparam>
 /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
 /// <typeparam name="TIndex1">An index</typeparam>
 /// <typeparam name="TIndex2">An index</typeparam>
 /// <typeparam name="TIndex3">An index</typeparam>
 /// <typeparam name="TIndex4">An index</typeparam>
-public interface IRankFourTensor<TRankFourTensor, THyperCubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> : IFourDimensionalArrayRepresentable<TRankFourTensor, TNumber>
-    where TRankFourTensor : IRankFourTensor<TRankFourTensor, THyperCubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>
-    where THyperCubic4DArray : IHyperCubic4DArray<THyperCubic4DArray, TNumber>
+public interface IRankFourTensor<TRankFourTensor, THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> : IFourDimensionalArrayRepresentable<TRankFourTensor, TNumber>
+    where TRankFourTensor : IRankFourTensor<TRankFourTensor, THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>
+    where THypercubic4DArray : IHypercubic4DArray<THypercubic4DArray, TNumber>
     where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
     where TIndex1 : IIndex
     where TIndex2 : IIndex
@@ -58,7 +58,7 @@ public interface IRankFourTensor<TRankFourTensor, THyperCubic4DArray, TNumber, T
     /// <summary>The fourth index</summary>
     IIndex I4 { get; }
 
-    /// <summary>Convert a value that implements <see cref="IHyperCubic4DArray{T, U}"/> to one of type <typeparamref name="TRankFourTensor"/></summary>
+    /// <summary>Convert a value that implements <see cref="IHypercubic4DArray{T, U}"/> to one of type <typeparamref name="TRankFourTensor"/></summary>
     /// <param name="value">The value to convert</param>
-    static abstract implicit operator TRankFourTensor(THyperCubic4DArray value);
+    static abstract implicit operator TRankFourTensor(THypercubic4DArray value);
 }
