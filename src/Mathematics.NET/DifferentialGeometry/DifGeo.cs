@@ -43,6 +43,7 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute the Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TIndex1">The first index of the Christoffel symbol</typeparam>
     /// <typeparam name="TIndex2">The second index of the Christoffel symbol</typeparam>
     /// <typeparam name="TIndex3">The third index of the Christoffel symbol</typeparam>
@@ -51,11 +52,12 @@ public static partial class DifGeo
     /// <param name="metric">A metric tensor</param>
     /// <param name="point">A point on the manifold</param>
     /// <param name="christoffel">The result</param>
-    public static void Christoffel<TIndex1, TIndex2, TIndex3, TPointIndex>(
-        ITape<Real> tape,
-        MetricTensorField<ITape<Real>, Matrix4x4<Real>, Real, Index<Upper, TPointIndex>> metric,
-        AutoDiffTensor4<Real, Index<Upper, TPointIndex>> point,
-        out Christoffel<Array4x4x4<Real>, Real, Index<Lower, TIndex1>, TIndex2, TIndex3> christoffel)
+    public static void Christoffel<TNumber, TIndex1, TIndex2, TIndex3, TPointIndex>(
+        ITape<TNumber> tape,
+        MetricTensorField<ITape<TNumber>, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndex>> metric,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndex>> point,
+        out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Lower, TIndex1>, TIndex2, TIndex3> christoffel)
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
         where TIndex1 : ISymbol
         where TIndex2 : ISymbol
         where TIndex3 : ISymbol
@@ -77,6 +79,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TIndex1">The first index of the Christoffel symbol</typeparam>
     /// <typeparam name="TIndex2">The second index of the Christoffel symbol</typeparam>
     /// <typeparam name="TIndex3">The third index of the Christoffel symbol</typeparam>
@@ -85,11 +88,12 @@ public static partial class DifGeo
     /// <param name="metric">A metric tensor</param>
     /// <param name="point">A point on the manifold</param>
     /// <param name="christoffel">The result</param>
-    public static void Christoffel<TIndex1, TIndex2, TIndex3, TPointIndex>(
-        ITape<Real> tape,
-        MetricTensorField<ITape<Real>, Matrix4x4<Real>, Real, Index<Upper, TPointIndex>> metric,
-        AutoDiffTensor4<Real, Index<Upper, TPointIndex>> position,
-        out Christoffel<Array4x4x4<Real>, Real, Index<Upper, TIndex1>, TIndex2, TIndex3> christoffel)
+    public static void Christoffel<TNumber, TIndex1, TIndex2, TIndex3, TPointIndex>(
+        ITape<TNumber> tape,
+        MetricTensorField<ITape<TNumber>, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndex>> metric,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndex>> position,
+        out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1>, TIndex2, TIndex3> christoffel)
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
         where TIndex1 : ISymbol
         where TIndex2 : ISymbol
         where TIndex3 : ISymbol
@@ -98,13 +102,13 @@ public static partial class DifGeo
         var inverseMetric = metric
             .Compute<TIndex1, InternalIndex1>(tape, position)
             .Inverse();
-        Christoffel(tape, metric, position, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, InternalIndex1>, TIndex2, TIndex3> christoffelFirstKind);
+        Christoffel(tape, metric, position, out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Lower, InternalIndex1>, TIndex2, TIndex3> christoffelFirstKind);
 
         var result = Contract(inverseMetric, christoffelFirstKind);
 
         christoffel = Unsafe.As<
-            Tensor<Array4x4x4<Real>, Real, Index<Upper, TIndex1>, Index<Lower, TIndex2>, Index<Lower, TIndex3>>,
-            Christoffel<Array4x4x4<Real>, Real, Index<Upper, TIndex1>, TIndex2, TIndex3>
+            Tensor<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1>, Index<Lower, TIndex2>, Index<Lower, TIndex3>>,
+            Christoffel<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1>, TIndex2, TIndex3>
             >(ref result);
     }
 
