@@ -25,15 +25,22 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using Mathematics.NET.LinearAlgebra.Abstractions;
+using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>A class containing difgeo extension methods</summary>
 public static class DifGeoExtensions
 {
+    //
+    // AutoDiff
+    //
+
     /// <summary>Create an autodiff, rank-one tensor from a real vector.</summary>
     /// <typeparam name="T">An index</typeparam>
     /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
@@ -153,4 +160,42 @@ public static class DifGeoExtensions
     public static AutoDiffTensor4<Complex, T> CreateAutoDiffTensor<T>(this ITape<Complex> tape, Complex x0Seed, Complex x1Seed, Complex x2Seed, Complex x3Seed)
         where T : IIndex
         => new(tape.CreateVariable(x0Seed), tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed));
+
+    //
+    // Calculus
+    //
+
+    /// <summary>Compute the inverse of a metric tensor with lower indices.</summary>
+    /// <typeparam name="TSquareMatrix">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TIndex1Name">The first index of the metric tensor</typeparam>
+    /// <typeparam name="TIndex2Name">The second index of the metric tensor</typeparam>
+    /// <param name="metric">The metric tensor</param>
+    /// <returns>A metric tensor with upper indices</returns>
+    public static MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name> Inverse<TSquareMatrix, TNumber, TIndex1Name, TIndex2Name>(this MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name> metric)
+        where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+    {
+        var inverse = Unsafe.As<MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name>, TSquareMatrix>(ref metric).Inverse();
+        return Unsafe.As<TSquareMatrix, MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name>>(ref inverse);
+    }
+
+    /// <summary>Compute the inverse of a metric tensor with upper indices.</summary>
+    /// <typeparam name="TSquareMatrix">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TIndex1Name">The first index of the metric tensor</typeparam>
+    /// <typeparam name="TIndex2Name">The second index of the metric tensor</typeparam>
+    /// <param name="metric">The metric tensor</param>
+    /// <returns>A metric tensor with lower indices</returns>
+    public static MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name> Inverse<TSquareMatrix, TNumber, TIndex1Name, TIndex2Name>(this MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name> metric)
+        where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+    {
+        var inverse = Unsafe.As<MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name>, TSquareMatrix>(ref metric).Inverse();
+        return Unsafe.As<TSquareMatrix, MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name>>(ref inverse);
+    }
 }

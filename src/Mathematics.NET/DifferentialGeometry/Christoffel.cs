@@ -34,48 +34,49 @@ using Mathematics.NET.Symbols;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a Christoffel symbol</summary>
-/// <typeparam name="T">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="V">The first index</typeparam>
-/// <typeparam name="W">The name of the second index</typeparam>
-/// <typeparam name="X">The name of the third index</typeparam>
+/// <typeparam name="TCubicArray">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TIndex1">The first index</typeparam>
+/// <typeparam name="TIndex2Name">The name of the second index</typeparam>
+/// <typeparam name="TIndex3Name">The name of the third index</typeparam>
 /// <param name="array">A backing array</param>
-public struct Christoffel<T, U, V, W, X>(T array) : IRankThreeTensor<Christoffel<T, U, V, W, X>, T, U, V, Index<Lower, W>, Index<Lower, X>>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>, IDifferentiableFunctions<U>
-    where V : IIndex
-    where W : ISymbol
-    where X : ISymbol
+public struct Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name>(TCubicArray array)
+    : IRankThreeTensor<Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name>, TCubicArray, TNumber, TIndex1, Index<Lower, TIndex2Name>, Index<Lower, TIndex3Name>>
+    where TCubicArray : ICubicArray<TCubicArray, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex1 : IIndex
+    where TIndex2Name : ISymbol
+    where TIndex3Name : ISymbol
 {
-    private T _array = array;
+    private TCubicArray _array = array;
 
     //
     // IRankThreeTensor interface
     //
 
-    public readonly IIndex I1 => V.Instance;
+    public readonly IIndex I1 => TIndex1.Instance;
 
-    public readonly IIndex I2 => Index<Lower, W>.Instance;
+    public readonly IIndex I2 => Index<Lower, TIndex2Name>.Instance;
 
-    public readonly IIndex I3 => Index<Lower, X>.Instance;
+    public readonly IIndex I3 => Index<Lower, TIndex3Name>.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
     //
 
-    public static int Components => T.Components;
+    public static int Components => TCubicArray.Components;
 
-    public static int E1Components => T.E1Components;
+    public static int E1Components => TCubicArray.E1Components;
 
-    public static int E2Components => T.E2Components;
+    public static int E2Components => TCubicArray.E2Components;
 
-    public static int E3Components => T.E3Components;
+    public static int E3Components => TCubicArray.E3Components;
 
     //
     // Indexer
     //
 
-    public U this[int i, int j, int k]
+    public TNumber this[int i, int j, int k]
     {
         get => _array[i, j, k];
         set => _array[i, j, k] = value;
@@ -85,15 +86,15 @@ public struct Christoffel<T, U, V, W, X>(T array) : IRankThreeTensor<Christoffel
     // Equality
     //
 
-    public static bool operator ==(Christoffel<T, U, V, W, X> left, Christoffel<T, U, V, W, X> right)
+    public static bool operator ==(Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> left, Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> right)
         => left._array == right._array;
 
-    public static bool operator !=(Christoffel<T, U, V, W, X> left, Christoffel<T, U, V, W, X> right)
+    public static bool operator !=(Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> left, Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> right)
         => left._array != right._array;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Christoffel<T, U, V, W, X> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> other && Equals(other);
 
-    public readonly bool Equals(Christoffel<T, U, V, W, X> value) => _array.Equals(value._array);
+    public readonly bool Equals(Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> value) => _array.Equals(value._array);
 
     public override readonly int GetHashCode() => HashCode.Combine(_array);
 
@@ -108,29 +109,29 @@ public struct Christoffel<T, U, V, W, X>(T array) : IRankThreeTensor<Christoffel
     //
 
     /// <summary>Create a Christoffel symbol with a new index in the first position.</summary>
-    /// <typeparam name="Y">An index</typeparam>
+    /// <typeparam name="TNewIndex">An index</typeparam>
     /// <returns>A Christoffel symbol with a new index in the first position</returns>
-    public Christoffel<T, U, Y, W, X> WithIndexOne<Y>()
-        where Y : IIndex
-        => Unsafe.As<Christoffel<T, U, V, W, X>, Christoffel<T, U, Y, W, X>>(ref this);
+    public Christoffel<TCubicArray, TNumber, TNewIndex, TIndex2Name, TIndex3Name> WithIndexOne<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name>, Christoffel<TCubicArray, TNumber, TNewIndex, TIndex2Name, TIndex3Name>>(ref this);
 
     /// <summary>Create a Christoffel symbol with a new index in the second position.</summary>
-    /// <typeparam name="Y">A symbol</typeparam>
+    /// <typeparam name="TNewIndexName">A symbol</typeparam>
     /// <returns>A Christoffel symbol with a new index in the second position</returns>
-    public Christoffel<T, U, V, Y, X> WithIndexTwo<Y>()
-        where Y : ISymbol
-        => Unsafe.As<Christoffel<T, U, V, W, X>, Christoffel<T, U, V, Y, X>>(ref this);
+    public Christoffel<TCubicArray, TNumber, TIndex1, TNewIndexName, TIndex3Name> WithIndexTwo<TNewIndexName>()
+        where TNewIndexName : ISymbol
+        => Unsafe.As<Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name>, Christoffel<TCubicArray, TNumber, TIndex1, TNewIndexName, TIndex3Name>>(ref this);
 
     /// <summary>Create a Christoffel symbol with a new index in the third position.</summary>
-    /// <typeparam name="Y">A symbol</typeparam>
+    /// <typeparam name="TNewIndexName">A symbol</typeparam>
     /// <returns>A Christoffel symbol with a new index in the third position</returns>
-    public Christoffel<T, U, V, W, Y> WithIndexThree<Y>()
-        where Y : ISymbol
-        => Unsafe.As<Christoffel<T, U, V, W, X>, Christoffel<T, U, V, W, Y>>(ref this);
+    public Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TNewIndexName> WithIndexThree<TNewIndexName>()
+        where TNewIndexName : ISymbol
+        => Unsafe.As<Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name>, Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TNewIndexName>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator Christoffel<T, U, V, W, X>(T value) => new(value);
+    public static implicit operator Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name>(TCubicArray value) => new(value);
 }

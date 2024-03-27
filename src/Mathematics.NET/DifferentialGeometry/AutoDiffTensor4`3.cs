@@ -33,27 +33,27 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor of four variables for use in forward-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="V">An index</typeparam>
-public record struct AutoDiffTensor4<T, U, V>
-    where T : IDual<T, U>
-    where U : IComplex<U>, IDifferentiableFunctions<U>
-    where V : IIndex
+/// <typeparam name="TDualNumber">A type that implements <see cref="IDual{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TIndex">An index</typeparam>
+public record struct AutoDiffTensor4<TDualNumber, TNumber, TIndex>
+    where TDualNumber : IDual<TDualNumber, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex : IIndex
 {
     /// <summary>The zeroth element of the rank-one tensor</summary>
-    public T X0;
+    public TDualNumber X0;
 
     /// <summary>The first element of the rank-one tensor</summary>
-    public T X1;
+    public TDualNumber X1;
 
     /// <summary>The second element of the rank-one tensor</summary>
-    public T X2;
+    public TDualNumber X2;
 
     /// <summary>The third element of the rank-one tensor</summary>
-    public T X3;
+    public TDualNumber X3;
 
-    public AutoDiffTensor4(T x0, T x1, T x2, T x3)
+    public AutoDiffTensor4(TDualNumber x0, TDualNumber x1, TDualNumber x2, TDualNumber x3)
     {
         X0 = x0;
         X1 = x1;
@@ -65,7 +65,7 @@ public record struct AutoDiffTensor4<T, U, V>
     // Indexer
     //
 
-    public T this[int index]
+    public TDualNumber this[int index]
     {
         get => GetElement(this, index);
         set => this = WithElement(this, index, value);
@@ -73,7 +73,7 @@ public record struct AutoDiffTensor4<T, U, V>
 
     // Get
 
-    internal static T GetElement(AutoDiffTensor4<T, U, V> tensor, int index)
+    internal static TDualNumber GetElement(AutoDiffTensor4<TDualNumber, TNumber, TIndex> tensor, int index)
     {
         if ((uint)index >= 4)
         {
@@ -84,31 +84,31 @@ public record struct AutoDiffTensor4<T, U, V>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T GetElementUnsafe(ref AutoDiffTensor4<T, U, V> tensor, int index)
+    private static TDualNumber GetElementUnsafe(ref AutoDiffTensor4<TDualNumber, TNumber, TIndex> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 4);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U, V>, T>(ref tensor), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<TDualNumber, TNumber, TIndex>, TDualNumber>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor4<T, U, V> WithElement(AutoDiffTensor4<T, U, V> tensor, int index, T value)
+    internal static AutoDiffTensor4<TDualNumber, TNumber, TIndex> WithElement(AutoDiffTensor4<TDualNumber, TNumber, TIndex> tensor, int index, TDualNumber value)
     {
         if ((uint)index >= 4)
         {
             throw new IndexOutOfRangeException();
         }
 
-        AutoDiffTensor4<T, U, V> result = tensor;
+        AutoDiffTensor4<TDualNumber, TNumber, TIndex> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor4<T, U, V> tensor, int index, T value)
+    private static void SetElementUnsafe(ref AutoDiffTensor4<TDualNumber, TNumber, TIndex> tensor, int index, TDualNumber value)
     {
         Debug.Assert(index is >= 0 and < 4);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<T, U, V>, T>(ref tensor), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<TDualNumber, TNumber, TIndex>, TDualNumber>(ref tensor), index) = value;
     }
 
     //

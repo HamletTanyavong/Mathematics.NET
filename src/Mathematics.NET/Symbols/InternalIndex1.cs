@@ -1,4 +1,4 @@
-﻿// <copyright file="Index.cs" company="Mathematics.NET">
+﻿// <copyright file="InternalIndex1.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,12 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.Symbols;
+namespace Mathematics.NET.Symbols;
 
-namespace Mathematics.NET.DifferentialGeometry;
-
-/// <summary>Represents a tensor index</summary>
-/// <typeparam name="TIndexPosition">An index position</typeparam>
-/// <typeparam name="TIndexName">A symbol</typeparam>
-public struct Index<TIndexPosition, TIndexName> : IIndex
-    where TIndexPosition : IIndexPosition
-    where TIndexName : ISymbol
+internal readonly struct InternalIndex1 : ISymbol
 {
-    public static IIndex Instance => new Index<TIndexPosition, TIndexName>();
+    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    public const string DisplayString = "InternalIndex1";
 
-    //
-    // Formatting
-    //
-
-    public override readonly string ToString() => ToString(null, null);
-
-    public readonly string ToString(string? format, IFormatProvider? provider) => $"{TIndexPosition.DisplayString} {TIndexName.DisplayString}";
+    static string ISymbol.DisplayString => DisplayString;
 }

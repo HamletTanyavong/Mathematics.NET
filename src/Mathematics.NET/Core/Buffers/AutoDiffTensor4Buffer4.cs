@@ -1,4 +1,4 @@
-﻿// <copyright file="Index.cs" company="Mathematics.NET">
+﻿// <copyright file="AutoDiffTensor4Buffer4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,24 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0051
+
+using System.Runtime.CompilerServices;
+using Mathematics.NET.AutoDiff;
+using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.Symbols;
 
-namespace Mathematics.NET.DifferentialGeometry;
+namespace Mathematics.NET.Core.Buffers;
 
-/// <summary>Represents a tensor index</summary>
-/// <typeparam name="TIndexPosition">An index position</typeparam>
-/// <typeparam name="TIndexName">A symbol</typeparam>
-public struct Index<TIndexPosition, TIndexName> : IIndex
-    where TIndexPosition : IIndexPosition
-    where TIndexName : ISymbol
+/// <summary>Represents a buffer of 4 AutoDiffTensor4 delegates</summary>
+/// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TIndex">An index</typeparam>
+[InlineArray(4)]
+internal struct AutoDiffTensor4Buffer4<TTape, TNumber, TIndex>
+    where TTape : ITape<TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex : IIndex
 {
-    public static IIndex Instance => new Index<TIndexPosition, TIndexName>();
-
-    //
-    // Formatting
-    //
-
-    public override readonly string ToString() => ToString(null, null);
-
-    public readonly string ToString(string? format, IFormatProvider? provider) => $"{TIndexPosition.DisplayString} {TIndexName.DisplayString}";
+    private Func<TTape, AutoDiffTensor4<TNumber, TIndex>, Variable<TNumber>> _element0;
 }

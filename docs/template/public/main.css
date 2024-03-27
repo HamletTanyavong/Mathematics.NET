@@ -48,21 +48,19 @@ code {
     position: relative;
     text-align: center;
   }
-  
+
   #interactive-card > .flare,
   #overlay {
     position: absolute;
-    transition: ease-out;
-    transition-duration: 250ms;
     opacity: 0;
     pointer-events: none;
   }
-  
+
   #interactive-card:hover > #overlay,
   #interactive-card:hover > .flare {
     opacity: 1;
   }
-  
+
 #overlay {
   width: 100%;
   height: 100%;
@@ -118,7 +116,7 @@ footer {
 a {
   text-decoration: none;
 }
-  
+
   a:hover {
     text-decoration: underline;
   }

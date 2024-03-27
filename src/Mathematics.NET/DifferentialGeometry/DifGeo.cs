@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Runtime.CompilerServices;
+using Mathematics.NET.AutoDiff;
 using Mathematics.NET.Core.Attributes.GeneratorAttributes;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
@@ -36,6 +38,80 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>A class containing differential geometry operations</summary>
 public static partial class DifGeo
 {
+    //
+    // Christoffel symbols
+    //
+
+    /// <summary>Compute the Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TIndex1Name">The first index of the Christoffel symbol</typeparam>
+    /// <typeparam name="TIndex2Name">The second index of the Christoffel symbol</typeparam>
+    /// <typeparam name="TIndex3Name">The third index of the Christoffel symbol</typeparam>
+    /// <typeparam name="TPointIndexName">The index of the point at which to compute the Christoffel symbol</typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="metric">A metric tensor</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="christoffel">The result</param>
+    public static void Christoffel<TNumber, TIndex1Name, TIndex2Name, TIndex3Name, TPointIndexName>(
+        ITape<TNumber> tape,
+        MetricTensorField<ITape<TNumber>, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> point,
+        out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Lower, TIndex1Name>, TIndex2Name, TIndex3Name> christoffel)
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+        where TPointIndexName : ISymbol
+    {
+        christoffel = new();
+        var diff = metric.ElementGradient<TIndex1Name, TIndex2Name>(tape, point);
+
+        for (int k = 0; k < 4; k++)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    christoffel[k, i, j] = 0.5 * (diff[j][k, i] + diff[i][k, j] - diff[k][i, j]);
+                }
+            }
+        }
+    }
+
+    /// <summary>Compute the Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TIndex1Name">The first index of the Christoffel symbol</typeparam>
+    /// <typeparam name="TIndex2Name">The second index of the Christoffel symbol</typeparam>
+    /// <typeparam name="TIndex3Name">The third index of the Christoffel symbol</typeparam>
+    /// <typeparam name="TPointIndexName">The index of the point at which to compute the Christoffel symbol</typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="metric">A metric tensor</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="christoffel">The result</param>
+    public static void Christoffel<TNumber, TIndex1Name, TIndex2Name, TIndex3Name, TPointIndexName>(
+        ITape<TNumber> tape,
+        MetricTensorField<ITape<TNumber>, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> position,
+        out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, TIndex2Name, TIndex3Name> christoffel)
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+        where TPointIndexName : ISymbol
+    {
+        var inverseMetric = metric
+            .Compute<TIndex1Name, InternalIndex1>(tape, position)
+            .Inverse();
+        Christoffel(tape, metric, position, out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Lower, InternalIndex1>, TIndex2Name, TIndex3Name> christoffelFirstKind);
+
+        var result = Contract(inverseMetric, christoffelFirstKind);
+
+        christoffel = Unsafe.As<
+            Tensor<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, Index<Lower, TIndex2Name>, Index<Lower, TIndex3Name>>,
+            Christoffel<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, TIndex2Name, TIndex3Name>
+            >(ref result);
+    }
+
     //
     // Tensor contractions
     //

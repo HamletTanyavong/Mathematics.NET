@@ -1,4 +1,4 @@
-﻿// <copyright file="Index.cs" company="Mathematics.NET">
+﻿// <copyright file="IHypercubic4DArray.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,25 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.Symbols;
+namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.DifferentialGeometry;
-
-/// <summary>Represents a tensor index</summary>
-/// <typeparam name="TIndexPosition">An index position</typeparam>
-/// <typeparam name="TIndexName">A symbol</typeparam>
-public struct Index<TIndexPosition, TIndexName> : IIndex
-    where TIndexPosition : IIndexPosition
-    where TIndexName : ISymbol
-{
-    public static IIndex Instance => new Index<TIndexPosition, TIndexName>();
-
-    //
-    // Formatting
-    //
-
-    public override readonly string ToString() => ToString(null, null);
-
-    public readonly string ToString(string? format, IFormatProvider? provider) => $"{TIndexPosition.DisplayString} {TIndexName.DisplayString}";
-}
+/// <summary>Defines support for 4D hypercubic arrays</summary>
+/// <typeparam name="T">The type that implements the interface</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+public interface IHypercubic4DArray<T, U> : IArray4D<T, U>
+    where T : IHypercubic4DArray<T, U>
+    where U : IComplex<U>;

@@ -33,21 +33,21 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor of two variables for use in forward-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="V">An index</typeparam>
-public record struct AutoDiffTensor2<T, U, V>
-    where T : IDual<T, U>
-    where U : IComplex<U>, IDifferentiableFunctions<U>
-    where V : IIndex
+/// <typeparam name="TDualNumber">A type that implements <see cref="IDual{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TIndex">An index</typeparam>
+public record struct AutoDiffTensor2<TDualNumber, TNumber, TIndex>
+    where TDualNumber : IDual<TDualNumber, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex : IIndex
 {
     /// <summary>The zeroth element of the rank-one tensor</summary>
-    public T X0;
+    public TDualNumber X0;
 
     /// <summary>The first element of the rank-one tensor</summary>
-    public T X1;
+    public TDualNumber X1;
 
-    public AutoDiffTensor2(T x0, T x1)
+    public AutoDiffTensor2(TDualNumber x0, TDualNumber x1)
     {
         X0 = x0;
         X1 = x1;
@@ -57,7 +57,7 @@ public record struct AutoDiffTensor2<T, U, V>
     // Indexer
     //
 
-    public T this[int index]
+    public TDualNumber this[int index]
     {
         get => GetElement(this, index);
         set => this = WithElement(this, index, value);
@@ -65,7 +65,7 @@ public record struct AutoDiffTensor2<T, U, V>
 
     // Get
 
-    internal static T GetElement(AutoDiffTensor2<T, U, V> tensor, int index)
+    internal static TDualNumber GetElement(AutoDiffTensor2<TDualNumber, TNumber, TIndex> tensor, int index)
     {
         if ((uint)index >= 2)
         {
@@ -76,31 +76,31 @@ public record struct AutoDiffTensor2<T, U, V>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T GetElementUnsafe(ref AutoDiffTensor2<T, U, V> tensor, int index)
+    private static TDualNumber GetElementUnsafe(ref AutoDiffTensor2<TDualNumber, TNumber, TIndex> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 2);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U, V>, T>(ref tensor), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<TDualNumber, TNumber, TIndex>, TDualNumber>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor2<T, U, V> WithElement(AutoDiffTensor2<T, U, V> tensor, int index, T value)
+    internal static AutoDiffTensor2<TDualNumber, TNumber, TIndex> WithElement(AutoDiffTensor2<TDualNumber, TNumber, TIndex> tensor, int index, TDualNumber value)
     {
         if ((uint)index >= 2)
         {
             throw new IndexOutOfRangeException();
         }
 
-        AutoDiffTensor2<T, U, V> result = tensor;
+        AutoDiffTensor2<TDualNumber, TNumber, TIndex> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor2<T, U, V> tensor, int index, T value)
+    private static void SetElementUnsafe(ref AutoDiffTensor2<TDualNumber, TNumber, TIndex> tensor, int index, TDualNumber value)
     {
         Debug.Assert(index is >= 0 and < 2);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<T, U, V>, T>(ref tensor), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<TDualNumber, TNumber, TIndex>, TDualNumber>(ref tensor), index) = value;
     }
 
     //

@@ -29,21 +29,21 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-one tensors</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
-/// <typeparam name="V">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="W">An index</typeparam>
-public interface IRankOneTensor<T, U, V, W> : IOneDimensionalArrayRepresentable<T, V>
-    where T : IRankOneTensor<T, U, V, W>
-    where U : IVector<U, V>
-    where V : IComplex<V>, IDifferentiableFunctions<V>
-    where W : IIndex
+/// <summary>Defines support for rank-one tensors and similar mathematical objects</summary>
+/// <typeparam name="TRankOneTensor">The type that implements the interface</typeparam>
+/// <typeparam name="TVector">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TIndex">An index</typeparam>
+public interface IRankOneTensor<TRankOneTensor, TVector, TNumber, TIndex> : IOneDimensionalArrayRepresentable<TRankOneTensor, TNumber>
+    where TRankOneTensor : IRankOneTensor<TRankOneTensor, TVector, TNumber, TIndex>
+    where TVector : IVector<TVector, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex : IIndex
 {
     /// <summary>Get the index associated with this rank one tensor</summary>
     IIndex I1 { get; }
 
-    /// <summary>Convert a value that implements <see cref="IVector{T, U}"/> to one of type <typeparamref name="T"/></summary>
+    /// <summary>Convert a value that implements <see cref="IVector{T, U}"/> to one of type <typeparamref name="TRankOneTensor"/></summary>
     /// <param name="value">The value to convert</param>
-    static abstract implicit operator T(U value);
+    static abstract implicit operator TRankOneTensor(TVector value);
 }

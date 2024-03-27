@@ -35,7 +35,7 @@ namespace Mathematics.NET.LinearAlgebra;
 /// <summary>Represents a 4x4x4x4 array</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct Array4x4x4x4<T> : IHyperCubic4DArray<Array4x4x4x4<T>, T>
+public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
     where T : IComplex<T>
 {
     public const int Components = 256;

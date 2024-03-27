@@ -33,51 +33,51 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-three tensor</summary>
-/// <typeparam name="T">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="V">The first index</typeparam>
-/// <typeparam name="W">The second index</typeparam>
-/// <typeparam name="X">The third index</typeparam>
+/// <summary>Represents a rank-three tensor or a similar mathematical object</summary>
+/// <typeparam name="TCubicArray">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TIndex1">The first index</typeparam>
+/// <typeparam name="TIndex2">The second index</typeparam>
+/// <typeparam name="TIndex3">The third index</typeparam>
 /// <param name="array">A backing array</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<T, U, V, W, X>(T array)
-    : IRankThreeTensor<Tensor<T, U, V, W, X>, T, U, V, W, X>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>, IDifferentiableFunctions<U>
-    where V : IIndex
-    where W : IIndex
-    where X : IIndex
+public struct Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>(TCubicArray array)
+    : IRankThreeTensor<Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>, TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>
+    where TCubicArray : ICubicArray<TCubicArray, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex1 : IIndex
+    where TIndex2 : IIndex
+    where TIndex3 : IIndex
 {
-    private T _array = array;
+    private TCubicArray _array = array;
 
     //
     // IRankThreeTensor interface
     //
 
-    public readonly IIndex I1 => V.Instance;
+    public readonly IIndex I1 => TIndex1.Instance;
 
-    public readonly IIndex I2 => W.Instance;
+    public readonly IIndex I2 => TIndex2.Instance;
 
-    public readonly IIndex I3 => X.Instance;
+    public readonly IIndex I3 => TIndex3.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
     //
 
-    public static int Components => T.Components;
+    public static int Components => TCubicArray.Components;
 
-    public static int E1Components => T.E1Components;
+    public static int E1Components => TCubicArray.E1Components;
 
-    public static int E2Components => T.E2Components;
+    public static int E2Components => TCubicArray.E2Components;
 
-    public static int E3Components => T.E3Components;
+    public static int E3Components => TCubicArray.E3Components;
 
     //
     // Indexer
     //
 
-    public U this[int i, int j, int k]
+    public TNumber this[int i, int j, int k]
     {
         get => _array[i, j, k];
         set => _array[i, j, k] = value;
@@ -87,15 +87,15 @@ public struct Tensor<T, U, V, W, X>(T array)
     // Equality
     //
 
-    public static bool operator ==(Tensor<T, U, V, W, X> left, Tensor<T, U, V, W, X> right)
+    public static bool operator ==(Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> left, Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> right)
         => left._array == right._array;
 
-    public static bool operator !=(Tensor<T, U, V, W, X> left, Tensor<T, U, V, W, X> right)
+    public static bool operator !=(Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> left, Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> right)
         => left._array != right._array;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<T, U, V, W, X> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> other && Equals(other);
 
-    public readonly bool Equals(Tensor<T, U, V, W, X> value) => _array.Equals(value._array);
+    public readonly bool Equals(Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> value) => _array.Equals(value._array);
 
     public override readonly int GetHashCode() => HashCode.Combine(_array);
 
@@ -110,32 +110,32 @@ public struct Tensor<T, U, V, W, X>(T array)
     //
 
     /// <summary>Create a tensor with a new index in the first position.</summary>
-    /// <typeparam name="Y">A new index</typeparam>
+    /// <typeparam name="TNewIndex">A new index</typeparam>
     /// <returns>A tensor with a new index in the first position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<T, U, Y, W, X> WithIndexOne<Y>()
-        where Y : IIndex
-        => Unsafe.As<Tensor<T, U, V, W, X>, Tensor<T, U, Y, W, X>>(ref this);
+    public Tensor<TCubicArray, TNumber, TNewIndex, TIndex2, TIndex3> WithIndexOne<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>, Tensor<TCubicArray, TNumber, TNewIndex, TIndex2, TIndex3>>(ref this);
 
     /// <summary>Create a tensor with a new index in the second position.</summary>
-    /// <typeparam name="Y">A new index</typeparam>
+    /// <typeparam name="TNewIndex">A new index</typeparam>
     /// <returns>A tensor with a new index in the second position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<T, U, V, Y, X> WithIndexTwo<Y>()
-        where Y : IIndex
-        => Unsafe.As<Tensor<T, U, V, W, X>, Tensor<T, U, V, Y, X>>(ref this);
+    public Tensor<TCubicArray, TNumber, TIndex1, TNewIndex, TIndex3> WithIndexTwo<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>, Tensor<TCubicArray, TNumber, TIndex1, TNewIndex, TIndex3>>(ref this);
 
     /// <summary>Create a tensor with a new index in the third position.</summary>
-    /// <typeparam name="Y">A new index</typeparam>
+    /// <typeparam name="TNewIndex">A new index</typeparam>
     /// <returns>A tensor with a new index in the third position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<T, U, V, W, Y> WithIndexThree<Y>()
-        where Y : IIndex
-        => Unsafe.As<Tensor<T, U, V, W, X>, Tensor<T, U, V, W, Y>>(ref this);
+    public Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TNewIndex> WithIndexThree<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>, Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TNewIndex>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator Tensor<T, U, V, W, X>(T value) => new(value);
+    public static implicit operator Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>(TCubicArray value) => new(value);
 }

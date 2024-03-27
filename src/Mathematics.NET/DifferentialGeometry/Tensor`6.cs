@@ -33,57 +33,57 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-four tensor</summary>
-/// <typeparam name="T">A backing type that implements <see cref="IHyperCubic4DArray{T, U}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="V">The first index</typeparam>
-/// <typeparam name="W">The second index</typeparam>
-/// <typeparam name="X">The third index</typeparam>
-/// <typeparam name="Y">The fourth index</typeparam>
+/// <summary>Represents a rank-four tensor or a similar mathematical object</summary>
+/// <typeparam name="THypercubic4DArray">A backing type that implements <see cref="IHypercubic4DArray{T, U}"/></typeparam>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TIndex1">The first index</typeparam>
+/// <typeparam name="TIndex2">The second index</typeparam>
+/// <typeparam name="TIndex3">The third index</typeparam>
+/// <typeparam name="TIndex4">The fourth index</typeparam>
 /// <param name="array">A backing array</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<T, U, V, W, X, Y>(T array)
-    : IRankFourTensor<Tensor<T, U, V, W, X, Y>, T, U, V, W, X, Y>
-    where T : IHyperCubic4DArray<T, U>
-    where U : IComplex<U>, IDifferentiableFunctions<U>
-    where V : IIndex
-    where W : IIndex
-    where X : IIndex
-    where Y : IIndex
+public struct Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>(THypercubic4DArray array)
+    : IRankFourTensor<Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>, THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>
+    where THypercubic4DArray : IHypercubic4DArray<THypercubic4DArray, TNumber>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex1 : IIndex
+    where TIndex2 : IIndex
+    where TIndex3 : IIndex
+    where TIndex4 : IIndex
 {
-    private T _array = array;
+    private THypercubic4DArray _array = array;
 
     //
     // IRankFourTensor interface
     //
 
-    public readonly IIndex I1 => V.Instance;
+    public readonly IIndex I1 => TIndex1.Instance;
 
-    public readonly IIndex I2 => W.Instance;
+    public readonly IIndex I2 => TIndex2.Instance;
 
-    public readonly IIndex I3 => X.Instance;
+    public readonly IIndex I3 => TIndex3.Instance;
 
-    public readonly IIndex I4 => Y.Instance;
+    public readonly IIndex I4 => TIndex4.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
     //
 
-    public static int Components => T.Components;
+    public static int Components => THypercubic4DArray.Components;
 
-    public static int E1Components => T.E1Components;
+    public static int E1Components => THypercubic4DArray.E1Components;
 
-    public static int E2Components => T.E2Components;
+    public static int E2Components => THypercubic4DArray.E2Components;
 
-    public static int E3Components => T.E3Components;
+    public static int E3Components => THypercubic4DArray.E3Components;
 
-    public static int E4Components => T.E4Components;
+    public static int E4Components => THypercubic4DArray.E4Components;
 
     //
     // Indexer
     //
 
-    public U this[int i, int j, int k, int l]
+    public TNumber this[int i, int j, int k, int l]
     {
         get => _array[i, j, k, l];
         set => _array[i, j, k, l] = value;
@@ -93,15 +93,15 @@ public struct Tensor<T, U, V, W, X, Y>(T array)
     // Equality
     //
 
-    public static bool operator ==(Tensor<T, U, V, W, X, Y> left, Tensor<T, U, V, W, X, Y> right)
+    public static bool operator ==(Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> left, Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> right)
     => left._array == right._array;
 
-    public static bool operator !=(Tensor<T, U, V, W, X, Y> left, Tensor<T, U, V, W, X, Y> right)
+    public static bool operator !=(Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> left, Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> right)
         => left._array != right._array;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<T, U, V, W, X, Y> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> other && Equals(other);
 
-    public readonly bool Equals(Tensor<T, U, V, W, X, Y> value) => _array.Equals(value._array);
+    public readonly bool Equals(Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> value) => _array.Equals(value._array);
 
     public override readonly int GetHashCode() => HashCode.Combine(_array);
 
@@ -116,40 +116,40 @@ public struct Tensor<T, U, V, W, X, Y>(T array)
     //
 
     /// <summary>Create a tensor with a new index in the first position.</summary>
-    /// <typeparam name="Z">A new index</typeparam>
+    /// <typeparam name="TNewIndex">A new index</typeparam>
     /// <returns>A tensor with a new index in the first position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<T, U, Z, W, X, Y> WithIndexOne<Z>()
-        where Z : IIndex
-        => Unsafe.As<Tensor<T, U, V, W, X, Y>, Tensor<T, U, Z, W, X, Y>>(ref this);
+    public Tensor<THypercubic4DArray, TNumber, TNewIndex, TIndex2, TIndex3, TIndex4> WithIndexOne<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>, Tensor<THypercubic4DArray, TNumber, TNewIndex, TIndex2, TIndex3, TIndex4>>(ref this);
 
     /// <summary>Create a tensor with a new index in the second position.</summary>
-    /// <typeparam name="Z">A new index</typeparam>
+    /// <typeparam name="TNewIndex">A new index</typeparam>
     /// <returns>A tensor with a new index in the second position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<T, U, V, Z, X, Y> WithIndexTwo<Z>()
-        where Z : IIndex
-        => Unsafe.As<Tensor<T, U, V, W, X, Y>, Tensor<T, U, V, Z, X, Y>>(ref this);
+    public Tensor<THypercubic4DArray, TNumber, TIndex1, TNewIndex, TIndex3, TIndex4> WithIndexTwo<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>, Tensor<THypercubic4DArray, TNumber, TIndex1, TNewIndex, TIndex3, TIndex4>>(ref this);
 
     /// <summary>Create a tensor with a new index in the third position.</summary>
-    /// <typeparam name="Z">A new index</typeparam>
+    /// <typeparam name="TNewIndex">A new index</typeparam>
     /// <returns>A tensor with a new index in the third position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<T, U, V, W, Z, Y> WithIndexThree<Z>()
-        where Z : IIndex
-        => Unsafe.As<Tensor<T, U, V, W, X, Y>, Tensor<T, U, V, W, Z, Y>>(ref this);
+    public Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TNewIndex, TIndex4> WithIndexThree<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>, Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TNewIndex, TIndex4>>(ref this);
 
     /// <summary>Create a tensor with a new index in the fourth position.</summary>
-    /// <typeparam name="Z">A new index</typeparam>
+    /// <typeparam name="TNewIndex">A new index</typeparam>
     /// <returns>A tensor with a new index in the fourth position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<T, U, V, W, X, Z> WithIndexFour<Z>()
-        where Z : IIndex
-        => Unsafe.As<Tensor<T, U, V, W, X, Y>, Tensor<T, U, V, W, X, Z>>(ref this);
+    public Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TNewIndex> WithIndexFour<TNewIndex>()
+        where TNewIndex : IIndex
+        => Unsafe.As<Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>, Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TNewIndex>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator Tensor<T, U, V, W, X, Y>(T value) => new(value);
+    public static implicit operator Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4>(THypercubic4DArray value) => new(value);
 }

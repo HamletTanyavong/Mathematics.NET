@@ -1,4 +1,4 @@
-﻿// <copyright file="IHyperCubic4DArray.cs" company="Mathematics.NET">
+﻿// <copyright file="TensorField.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,11 +25,14 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for 4D hypercubic arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
-public interface IHyperCubic4DArray<T, U> : IArray4D<T, U>
-    where T : IHyperCubic4DArray<T, U>
-    where U : IComplex<U>;
+/// <summary>A base class for tensor fields and similar mathematical objects</summary>
+/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TIndex">An index</typeparam>
+public abstract class TensorField<TNumber, TIndex>
+    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+    where TIndex : IIndex
+{
+    protected TensorField() { }
+}
