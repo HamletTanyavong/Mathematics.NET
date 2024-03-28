@@ -1,0 +1,2306 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class GradientTape&lt;T&gt; | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class GradientTape&lt;T&gt; | Mathematics.NET ">
+      
+      <meta name="description" content="Represents a gradient tape">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_AutoDiff_GradientTape_1.md&amp;value=---%0Auid%3A%20Mathematics.NET.AutoDiff.GradientTape%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.AutoDiff.GradientTape`1">
+
+
+
+  <h1 id="Mathematics_NET_AutoDiff_GradientTape_1" data-uid="Mathematics.NET.AutoDiff.GradientTape`1" class="text-break">
+Class GradientTape&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.AutoDiff.html">AutoDiff</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a gradient tape</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public record GradientTape&lt;T&gt; : ITape&lt;T&gt;, IEquatable&lt;GradientTape&lt;T&gt;&gt; where T : IComplex&lt;T&gt;, IDifferentiableFunctions&lt;T&gt;</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a> and <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html">IDifferentiableFunctions&lt;T&gt;</a></p>
+</dd>
+  </dl>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">GradientTape&lt;T&gt;</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;T&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Mathematics.NET.AutoDiff.GradientTape-1.html">GradientTape</a>&lt;T&gt;&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Curl__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__">AutoDiffExtensions.Curl&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_DirectionalDerivative__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector2___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__">AutoDiffExtensions.DirectionalDerivative&lt;T&gt;(ITape&lt;T&gt;, Vector2&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector2&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_DirectionalDerivative__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector3___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__">AutoDiffExtensions.DirectionalDerivative&lt;T&gt;(ITape&lt;T&gt;, Vector3&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_DirectionalDerivative__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector4___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__">AutoDiffExtensions.DirectionalDerivative&lt;T&gt;(ITape&lt;T&gt;, Vector4&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector4&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Divergence__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__">AutoDiffExtensions.Divergence&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector2&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Divergence__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__">AutoDiffExtensions.Divergence&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Divergence__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__">AutoDiffExtensions.Divergence&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Gradient__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__">AutoDiffExtensions.Gradient&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector2&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Gradient__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__">AutoDiffExtensions.Gradient&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Gradient__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__">AutoDiffExtensions.Gradient&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector4&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_JVP__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_LinearAlgebra_Vector2___0__">AutoDiffExtensions.JVP&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector2&lt;T&gt;, Vector2&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_JVP__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_LinearAlgebra_Vector3___0__">AutoDiffExtensions.JVP&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;, Vector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_JVP__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_LinearAlgebra_Vector4___0__">AutoDiffExtensions.JVP&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector4&lt;T&gt;, Vector4&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Jacobian__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__">AutoDiffExtensions.Jacobian&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector2&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Jacobian__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__">AutoDiffExtensions.Jacobian&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_Jacobian__1_Mathematics_NET_AutoDiff_ITape___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__">AutoDiffExtensions.Jacobian&lt;T&gt;(ITape&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector4&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_VJP__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector2___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector2___0__">AutoDiffExtensions.VJP&lt;T&gt;(ITape&lt;T&gt;, Vector2&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector2&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector2&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_VJP__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector3___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector3___0__">AutoDiffExtensions.VJP&lt;T&gt;(ITape&lt;T&gt;, Vector3&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector3&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.AutoDiff.AutoDiffExtensions.html#Mathematics_NET_AutoDiff_AutoDiffExtensions_VJP__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector4___0__System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___System_Func_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__Mathematics_NET_AutoDiff_Variable___0___Mathematics_NET_LinearAlgebra_AutoDiffVector4___0__">AutoDiffExtensions.VJP&lt;T&gt;(ITape&lt;T&gt;, Vector4&lt;T&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, Func&lt;ITape&lt;T&gt;, AutoDiffVector4&lt;T&gt;, Variable&lt;T&gt;&gt;, AutoDiffVector4&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlgExtensions.html#Mathematics_NET_LinearAlgebra_LinAlgExtensions_CreateAutoDiffVector__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector2___0__">LinAlgExtensions.CreateAutoDiffVector&lt;T&gt;(ITape&lt;T&gt;, Vector2&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlgExtensions.html#Mathematics_NET_LinearAlgebra_LinAlgExtensions_CreateAutoDiffVector__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector3___0__">LinAlgExtensions.CreateAutoDiffVector&lt;T&gt;(ITape&lt;T&gt;, Vector3&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlgExtensions.html#Mathematics_NET_LinearAlgebra_LinAlgExtensions_CreateAutoDiffVector__1_Mathematics_NET_AutoDiff_ITape___0__Mathematics_NET_LinearAlgebra_Vector4___0__">LinAlgExtensions.CreateAutoDiffVector&lt;T&gt;(ITape&lt;T&gt;, Vector4&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlgExtensions.html#Mathematics_NET_LinearAlgebra_LinAlgExtensions_CreateAutoDiffVector__1_Mathematics_NET_AutoDiff_ITape___0____0___0_">LinAlgExtensions.CreateAutoDiffVector&lt;T&gt;(ITape&lt;T&gt;, T, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlgExtensions.html#Mathematics_NET_LinearAlgebra_LinAlgExtensions_CreateAutoDiffVector__1_Mathematics_NET_AutoDiff_ITape___0____0___0___0_">LinAlgExtensions.CreateAutoDiffVector&lt;T&gt;(ITape&lt;T&gt;, T, T, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlgExtensions.html#Mathematics_NET_LinearAlgebra_LinAlgExtensions_CreateAutoDiffVector__1_Mathematics_NET_AutoDiff_ITape___0____0___0___0___0_">LinAlgExtensions.CreateAutoDiffVector&lt;T&gt;(ITape&lt;T&gt;, T, T, T, T)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1__ctor_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1__ctor_System_Boolean_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.#ctor(System.Boolean)">
+  GradientTape(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GradientTape(bool isTracking = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isTracking</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1__ctor_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1__ctor_System_Int32_System_Boolean_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.#ctor(System.Int32,System.Boolean)">
+  GradientTape(int, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GradientTape(int n, bool isTracking = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>n</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>isTracking</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_IsTracking_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.IsTracking*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_IsTracking" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.IsTracking">
+  IsTracking
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This property indicates whether or not the tape is currently tracking nodes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsTracking { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_NodeCount_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.NodeCount*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_NodeCount" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.NodeCount">
+  NodeCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the number of nodes on the gradient tape.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int NodeCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_VariableCount_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.VariableCount*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_VariableCount" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.VariableCount">
+  VariableCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the number of variables that are being tracked.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int VariableCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Acos_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Acos*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Acos_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Acos(Mathematics.NET.AutoDiff.Variable{`0})">
+  Acos(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L538"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arccosine of <code class="paramref">x</code>: <span class="math">\(\cos^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Acos(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Acosh_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Acosh*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Acosh_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Acosh(Mathematics.NET.AutoDiff.Variable{`0})">
+  Acosh(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L384"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arccosine of <code class="paramref">x</code>: <span class="math">\(\cosh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Acosh(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The hyperbolic arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Add_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Add*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Add_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Add(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0})">
+  Add(Variable&lt;T&gt;, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L180"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Add two variables</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Add(Variable&lt;T&gt; x, Variable&lt;T&gt; y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The first variable</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The second variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Add_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Add*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Add_Mathematics_NET_AutoDiff_Variable__0___0_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Add(Mathematics.NET.AutoDiff.Variable{`0},`0)">
+  Add(Variable&lt;T&gt;, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Add a variable and a constant value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Add(Variable&lt;T&gt; x, T c)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Add_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Add*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Add__0_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Add(`0,Mathematics.NET.AutoDiff.Variable{`0})">
+  Add(T, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L190"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Add a constant value and a variable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Add(T c, Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant value</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Asin_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Asin*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Asin_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Asin(Mathematics.NET.AutoDiff.Variable{`0})">
+  Asin(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L548"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arcsine of <code class="paramref">x</code>: <span class="math">\(\sin^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Asin(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Asinh_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Asinh*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Asinh_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Asinh(Mathematics.NET.AutoDiff.Variable{`0})">
+  Asinh(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L394"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arcsine of <code class="paramref">x</code>: <span class="math">\(\sinh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Asinh(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The hyperbolic arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Atan_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Atan*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Atan_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Atan(Mathematics.NET.AutoDiff.Variable{`0})">
+  Atan(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L558"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arctangent of <code class="paramref">x</code>: <span class="math">\(\tan^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Atan(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Atan2_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Atan2*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Atan2_Mathematics_NET_AutoDiff_Variable_Mathematics_NET_Core_Real__Mathematics_NET_AutoDiff_Variable_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Atan2(Mathematics.NET.AutoDiff.Variable{Mathematics.NET.Core.Real},Mathematics.NET.AutoDiff.Variable{Mathematics.NET.Core.Real})">
+  Atan2(Variable&lt;Real&gt;, Variable&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L568"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute a quadrant-aware arctangent given two values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;Real&gt; Atan2(Variable&lt;Real&gt; y, Variable&lt;Real&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>The first value</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>The second value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>An angle</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Atanh_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Atanh*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Atanh_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Atanh(Mathematics.NET.AutoDiff.Variable{`0})">
+  Atanh(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arctangent of <code class="paramref">x</code>: <span class="math">\(\tanh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Atanh(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The hyperbolic arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Cbrt_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Cbrt*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Cbrt_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Cbrt(Mathematics.NET.AutoDiff.Variable{`0})">
+  Cbrt(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L503"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cuberoot of <code class="paramref">x</code>: <span class="math">\(\sqrt[3]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Cbrt(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The cuberoot of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Cos_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Cos*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Cos_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Cos(Mathematics.NET.AutoDiff.Variable{`0})">
+  Cos(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L579"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cosine of <code class="paramref">x</code>: <span class="math">\(\cos(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Cos(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Cosh_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Cosh*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Cosh_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Cosh(Mathematics.NET.AutoDiff.Variable{`0})">
+  Cosh(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L414"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic cosine of <code class="paramref">x</code>: <span class="math">\(\cosh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Cosh(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The hyperbolic cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_CreateVariable_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.CreateVariable*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_CreateVariable__0_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.CreateVariable(`0)">
+  CreateVariable(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create a variable for the gradient tape to track.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; CreateVariable(T seed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>seed</code> <span class="xref">T</span></dt>
+    <dd><p>A seed value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_CustomOperation_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.CustomOperation*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_CustomOperation_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__System_Func__0__0__0__System_Func__0__0__0__System_Func__0__0__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.CustomOperation(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0},System.Func{`0,`0,`0},System.Func{`0,`0,`0},System.Func{`0,`0,`0})">
+  CustomOperation(Variable&lt;T&gt;, Variable&lt;T&gt;, Func&lt;T, T, T&gt;, Func&lt;T, T, T&gt;, Func&lt;T, T, T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L636"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Add a node to the gradient tape using a custom binary operation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; CustomOperation(Variable&lt;T&gt; x, Variable&lt;T&gt; y, Func&lt;T, T, T&gt; f, Func&lt;T, T, T&gt; dfx, Func&lt;T, T, T&gt; dfy)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The first variable</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The second variable</p>
+</dd>
+    <dt><code>f</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T, T, T&gt;</dt>
+    <dd><p>A function</p>
+</dd>
+    <dt><code>dfx</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T, T, T&gt;</dt>
+    <dd><p>The derivative of the function with respect to the first variable</p>
+</dd>
+    <dt><code>dfy</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T, T, T&gt;</dt>
+    <dd><p>The derivative of the function with respect to the second variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_CustomOperation_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.CustomOperation*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_CustomOperation_Mathematics_NET_AutoDiff_Variable__0__System_Func__0__0__System_Func__0__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.CustomOperation(Mathematics.NET.AutoDiff.Variable{`0},System.Func{`0,`0},System.Func{`0,`0})">
+  CustomOperation(Variable&lt;T&gt;, Func&lt;T, T&gt;, Func&lt;T, T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L619"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Add a node to the gradient tape using a custom unary operation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; CustomOperation(Variable&lt;T&gt; x, Func&lt;T, T&gt; f, Func&lt;T, T&gt; df)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+    <dt><code>f</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;T, T&gt;</dt>
+    <dd><p>A function</p>
+</dd>
+    <dt><code>df</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;T, T&gt;</dt>
+    <dd><p>The derivative of the function</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Divide_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Divide*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Divide_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Divide(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0})">
+  Divide(Variable&lt;T&gt;, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Divide two variables</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Divide(Variable&lt;T&gt; x, Variable&lt;T&gt; y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A dividend</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A divisor</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Divide_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Divide*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Divide_Mathematics_NET_AutoDiff_Variable__0___0_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Divide(Mathematics.NET.AutoDiff.Variable{`0},`0)">
+  Divide(Variable&lt;T&gt;, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L232"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Divide a variable by a constant value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Divide(Variable&lt;T&gt; x, T c)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable dividend</p>
+</dd>
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant divisor</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Divide_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Divide*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Divide__0_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Divide(`0,Mathematics.NET.AutoDiff.Variable{`0})">
+  Divide(T, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L221"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Divide a constant value by a variable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Divide(T c, Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant dividend</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable divisor</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Exp_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Exp*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Exp_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Exp(Mathematics.NET.AutoDiff.Variable{`0})">
+  Exp(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L349"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute e raised to the power of <code class="paramref">x</code>: <span class="math">\(e^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Exp(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>e raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Exp10_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Exp10*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Exp10_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Exp10(Mathematics.NET.AutoDiff.Variable{`0})">
+  Exp10(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L371"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 10 raised to the power of <code class="paramref">x</code>: <span class="math">\(10^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Exp10(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>10 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Exp2_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Exp2*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Exp2_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Exp2(Mathematics.NET.AutoDiff.Variable{`0})">
+  Exp2(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L360"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 2 raised to the power of <code class="paramref">x</code>: <span class="math">\(2^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Exp2(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>2 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Ln_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Ln*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Ln_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Ln(Mathematics.NET.AutoDiff.Variable{`0})">
+  Ln(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L447"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the natural logarithm of <code class="paramref">x</code>: <span class="math">\(\ln(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Ln(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The natural logarithm of<code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Log_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Log*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Log_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Log(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0})">
+  Log(Variable&lt;T&gt;, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L457"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base <code class="paramref">b</code>: <span class="math">\(\log_b(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Log(Variable&lt;T&gt; x, Variable&lt;T&gt; b)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>b</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A base</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base b</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Log10_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Log10*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Log10_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Log10(Mathematics.NET.AutoDiff.Variable{`0})">
+  Log10(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L478"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 10: <span class="math">\(\log_{10}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Log10(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 10</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Log2_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Log2*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Log2_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Log2(Mathematics.NET.AutoDiff.Variable{`0})">
+  Log2(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L468"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 2: <span class="math">\(\log_2(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Log2(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 2</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Modulo_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Modulo*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Modulo_Mathematics_NET_AutoDiff_Variable_Mathematics_NET_Core_Real__Mathematics_NET_AutoDiff_Variable_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Modulo(Mathematics.NET.AutoDiff.Variable{Mathematics.NET.Core.Real},Mathematics.NET.AutoDiff.Variable{Mathematics.NET.Core.Real})">
+  Modulo(Variable&lt;Real&gt;, Variable&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the modulo of a variable given a divisor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;Real&gt; Modulo(Variable&lt;Real&gt; x, Variable&lt;Real&gt; y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A dividend</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A divisor</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p><code class="paramref">x</code> mod <code class="paramref">y</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Modulo_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Modulo*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Modulo_Mathematics_NET_AutoDiff_Variable_Mathematics_NET_Core_Real__Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Modulo(Mathematics.NET.AutoDiff.Variable{Mathematics.NET.Core.Real},Mathematics.NET.Core.Real)">
+  Modulo(Variable&lt;Real&gt;, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L263"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the modulo of a variable given a divisor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;Real&gt; Modulo(Variable&lt;Real&gt; x, Real c)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A variable dividend</p>
+</dd>
+    <dt><code>c</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A real divisor</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p><code class="paramref">x</code> mod <code class="paramref">c</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Modulo_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Modulo*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Modulo_Mathematics_NET_Core_Real_Mathematics_NET_AutoDiff_Variable_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Modulo(Mathematics.NET.Core.Real,Mathematics.NET.AutoDiff.Variable{Mathematics.NET.Core.Real})">
+  Modulo(Real, Variable&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L253"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the modulo of a real value given a divisor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;Real&gt; Modulo(Real c, Variable&lt;Real&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>c</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A real dividend</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A variable divisor</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p><code class="paramref">c</code> mod <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Multiply_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Multiply*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Multiply_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Multiply(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0})">
+  Multiply(Variable&lt;T&gt;, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Multiply two variables</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Multiply(Variable&lt;T&gt; x, Variable&lt;T&gt; y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The first variable</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The second variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Multiply_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Multiply*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Multiply_Mathematics_NET_AutoDiff_Variable__0___0_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Multiply(Mathematics.NET.AutoDiff.Variable{`0},`0)">
+  Multiply(Variable&lt;T&gt;, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Multiply a variable by a constant value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Multiply(Variable&lt;T&gt; x, T c)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Multiply_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Multiply*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Multiply__0_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Multiply(`0,Mathematics.NET.AutoDiff.Variable{`0})">
+  Multiply(T, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L283"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Multiply a constant value by a variable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Multiply(T c, Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant value</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Negate_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Negate*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Negate_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Negate(Mathematics.NET.AutoDiff.Variable{`0})">
+  Negate(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L337"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Negate a variable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Negate(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>Minus one times the variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Pow_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Pow*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Pow_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Pow(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0})">
+  Pow(Variable&lt;T&gt;, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L490"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute <code class="paramref">x</code> raised to the power of <code class="paramref">y</code>: <span class="math">\(x^y\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Pow(Variable&lt;T&gt; x, Variable&lt;T&gt; y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A power</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p><code class="paramref">x</code> raised to the power of <code class="paramref">y</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_PrintNodes_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.PrintNodes*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_PrintNodes_System_Threading_CancellationToken_System_Int32_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.PrintNodes(System.Threading.CancellationToken,System.Int32)">
+  PrintNodes(CancellationToken, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Print the nodes of the gradient tape to the console.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PrintNodes(CancellationToken cancellationToken, int limit = 100)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cancellationToken</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></dt>
+    <dd><p>A cancellation token</p>
+</dd>
+    <dt><code>limit</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The total number of nodes to print</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_ReverseAccumulate_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.ReverseAccumulate*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_ReverseAccumulate_System_ReadOnlySpan__0___" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.ReverseAccumulate(System.ReadOnlySpan{`0}@)">
+  ReverseAccumulate(out ReadOnlySpan&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ReverseAccumulate(out ReadOnlySpan&lt;T&gt; gradient)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>gradient</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;T&gt;</dt>
+    <dd><p>The gradient</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a></dt>
+    <dd><p>The gradient tape does not have any tracked variables.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_ReverseAccumulate_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.ReverseAccumulate*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_ReverseAccumulate_System_ReadOnlySpan__0____0_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.ReverseAccumulate(System.ReadOnlySpan{`0}@,`0)">
+  ReverseAccumulate(out ReadOnlySpan&lt;T&gt;, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ReverseAccumulate(out ReadOnlySpan&lt;T&gt; gradient, T seed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>gradient</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;T&gt;</dt>
+    <dd><p>The gradient</p>
+</dd>
+    <dt><code>seed</code> <span class="xref">T</span></dt>
+    <dd><p>A seed value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a></dt>
+    <dd><p>The gradient tape does not have any tracked variables.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Root_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Root*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Root_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Root(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0})">
+  Root(Variable&lt;T&gt;, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L514"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the <code class="paramref">n</code>th root of <code class="paramref">x</code>: <span class="math">\(\sqrt[n]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Root(Variable&lt;T&gt; x, Variable&lt;T&gt; n)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>n</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The <code class="paramref">n</code>th root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Sin_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Sin*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Sin_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Sin(Mathematics.NET.AutoDiff.Variable{`0})">
+  Sin(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L589"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the sine of <code class="paramref">x</code>: <span class="math">\(\sin(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Sin(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Sinh_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Sinh*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Sinh_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Sinh(Mathematics.NET.AutoDiff.Variable{`0})">
+  Sinh(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L424"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic sine of <code class="paramref">x</code>: <span class="math">\(\sinh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Sinh(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The hyperbolic sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Sqrt_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Sqrt*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Sqrt_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Sqrt(Mathematics.NET.AutoDiff.Variable{`0})">
+  Sqrt(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L525"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the square root of <code class="paramref">x</code>: <span class="math">\(\sqrt{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Sqrt(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The square root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Subtract_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Subtract*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Subtract_Mathematics_NET_AutoDiff_Variable__0__Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Subtract(Mathematics.NET.AutoDiff.Variable{`0},Mathematics.NET.AutoDiff.Variable{`0})">
+  Subtract(Variable&lt;T&gt;, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L303"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subract two variables</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Subtract(Variable&lt;T&gt; x, Variable&lt;T&gt; y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The first variable</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The second variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Subtract_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Subtract*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Subtract_Mathematics_NET_AutoDiff_Variable__0___0_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Subtract(Mathematics.NET.AutoDiff.Variable{`0},`0)">
+  Subtract(Variable&lt;T&gt;, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L323"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subtract a constant value from a variable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Subtract(Variable&lt;T&gt; x, T c)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Subtract_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Subtract*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Subtract__0_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Subtract(`0,Mathematics.NET.AutoDiff.Variable{`0})">
+  Subtract(T, Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L313"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subtract a variable from a constant value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Subtract(T c, Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>c</code> <span class="xref">T</span></dt>
+    <dd><p>A constant value</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A variable</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Tan_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Tan*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Tan_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Tan(Mathematics.NET.AutoDiff.Variable{`0})">
+  Tan(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L599"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the tangent of <code class="paramref">x</code>: <span class="math">\(\tan(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Tan(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_GradientTape_1_Tanh_" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Tanh*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_GradientTape_1_Tanh_Mathematics_NET_AutoDiff_Variable__0__" data-uid="Mathematics.NET.AutoDiff.GradientTape`1.Tanh(Mathematics.NET.AutoDiff.Variable{`0})">
+  Tanh(Variable&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs/#L434"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic tangent of <code class="paramref">x</code>: <span class="math">\(\tanh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Variable&lt;T&gt; Tanh(Variable&lt;T&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.AutoDiff.Variable-1.html">Variable</a>&lt;T&gt;</dt>
+    <dd><p>The hyperbolic tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

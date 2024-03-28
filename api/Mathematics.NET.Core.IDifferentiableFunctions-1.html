@@ -1,0 +1,1057 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IDifferentiableFunctions&lt;T&gt; | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IDifferentiableFunctions&lt;T&gt; | Mathematics.NET ">
+      
+      <meta name="description" content="Defines support for common differentiable functions">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_Core_IDifferentiableFunctions_1.md&amp;value=---%0Auid%3A%20Mathematics.NET.Core.IDifferentiableFunctions%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1">
+
+
+
+  <h1 id="Mathematics_NET_Core_IDifferentiableFunctions_1" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1" class="text-break">
+Interface IDifferentiableFunctions&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines support for common differentiable functions</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDifferentiableFunctions&lt;T&gt; where T : IDifferentiableFunctions&lt;T&gt;</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The type that implements the interface</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Acos_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Acos*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Acos__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Acos(`0)">
+  Acos(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arccosine of <code class="paramref">x</code>: <span class="math">\(\cos^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Acos(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Acosh_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Acosh*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Acosh__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Acosh(`0)">
+  Acosh(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arccosine of <code class="paramref">x</code>: <span class="math">\(\cosh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Acosh(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The hyperbolic arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Asin_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Asin*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Asin__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Asin(`0)">
+  Asin(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arcsine of <code class="paramref">x</code>: <span class="math">\(\sin^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Asin(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Asinh_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Asinh*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Asinh__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Asinh(`0)">
+  Asinh(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arcsine of <code class="paramref">x</code>: <span class="math">\(\sinh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Asinh(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The hyperbolic arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Atan_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Atan*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Atan__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Atan(`0)">
+  Atan(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arctangent of <code class="paramref">x</code>: <span class="math">\(\tan^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Atan(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Atanh_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Atanh*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Atanh__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Atanh(`0)">
+  Atanh(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arctangent of <code class="paramref">x</code>: <span class="math">\(\tanh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Atanh(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The hyperbolic arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Cbrt_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Cbrt*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Cbrt__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Cbrt(`0)">
+  Cbrt(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cuberoot of <code class="paramref">x</code>: <span class="math">\(\sqrt[3]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Cbrt(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The cuberoot of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Cos_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Cos*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Cos__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Cos(`0)">
+  Cos(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L164"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cosine of <code class="paramref">x</code>: <span class="math">\(\cos(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Cos(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Cosh_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Cosh*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Cosh__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Cosh(`0)">
+  Cosh(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic cosine of <code class="paramref">x</code>: <span class="math">\(\cosh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Cosh(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The hyperbolic cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Exp_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Exp*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Exp__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Exp(`0)">
+  Exp(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute e raised to the power of <code class="paramref">x</code>: <span class="math">\(e^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Exp(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>e raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Exp10_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Exp10*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Exp10__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Exp10(`0)">
+  Exp10(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 10 raised to the power of <code class="paramref">x</code>: <span class="math">\(10^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Exp10(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>10 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Exp2_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Exp2*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Exp2__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Exp2(`0)">
+  Exp2(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 2 raised to the power of <code class="paramref">x</code>: <span class="math">\(2^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Exp2(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>2 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Ln_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Ln*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Ln__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Ln(`0)">
+  Ln(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the natural logarithm of <code class="paramref">x</code>: <span class="math">\(\ln(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Ln(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The natural logarithm of<code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Log_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Log*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Log__0__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Log(`0,`0)">
+  Log(T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base <code class="paramref">b</code>: <span class="math">\(\log_b(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Log(T x, T b)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>b</code> <span class="xref">T</span></dt>
+    <dd><p>A base</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base b</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Log10_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Log10*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Log10__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Log10(`0)">
+  Log10(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 10: <span class="math">\(\log_{10}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Log10(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 10</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Log2_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Log2*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Log2__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Log2(`0)">
+  Log2(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 2: <span class="math">\(\log_2(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Log2(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 2</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Pow_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Pow*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Pow__0__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Pow(`0,`0)">
+  Pow(T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute <code class="paramref">x</code> raised to the power of <code class="paramref">y</code>: <span class="math">\(x^y\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Pow(T x, T y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>y</code> <span class="xref">T</span></dt>
+    <dd><p>A power</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p><code class="paramref">x</code> raised to the power of <code class="paramref">y</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Root_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Root*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Root__0__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Root(`0,`0)">
+  Root(T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the <code class="paramref">n</code>th root of <code class="paramref">x</code>: <span class="math">\(\sqrt[n]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Root(T x, T n)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>n</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The <code class="paramref">n</code>th root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Sin_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Sin*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Sin__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Sin(`0)">
+  Sin(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the sine of <code class="paramref">x</code>: <span class="math">\(\sin(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Sin(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Sinh_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Sinh*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Sinh__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Sinh(`0)">
+  Sinh(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic sine of <code class="paramref">x</code>: <span class="math">\(\sinh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Sinh(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The hyperbolic sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Sqrt_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Sqrt*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Sqrt__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Sqrt(`0)">
+  Sqrt(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the square root of <code class="paramref">x</code>: <span class="math">\(\sqrt{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Sqrt(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The square root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Tan_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Tan*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Tan__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Tan(`0)">
+  Tan(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the tangent of <code class="paramref">x</code>: <span class="math">\(\tan(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Tan(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IDifferentiableFunctions_1_Tanh_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Tanh*"></a>
+
+  <h3 id="Mathematics_NET_Core_IDifferentiableFunctions_1_Tanh__0_" data-uid="Mathematics.NET.Core.IDifferentiableFunctions`1.Tanh(`0)">
+  Tanh(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IDifferentiableFunctions.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic tangent of <code class="paramref">x</code>: <span class="math">\(\tanh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Tanh(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The hyperbolic tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

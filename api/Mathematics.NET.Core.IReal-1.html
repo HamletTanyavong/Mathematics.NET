@@ -1,0 +1,795 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IReal&lt;T&gt; | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IReal&lt;T&gt; | Mathematics.NET ">
+      
+      <meta name="description" content="Defines support for real numbers">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_Core_IReal_1.md&amp;value=---%0Auid%3A%20Mathematics.NET.Core.IReal%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.Core.IReal`1">
+
+
+
+  <h1 id="Mathematics_NET_Core_IReal_1" data-uid="Mathematics.NET.Core.IReal`1" class="text-break">
+Interface IReal&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines support for real numbers</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IReal&lt;T&gt; : IComplex&lt;T&gt;, IAdditionOperation&lt;T, T&gt;, IDivisionOperation&lt;T, T&gt;, IMultiplicationOperation&lt;T, T&gt;, IUnaryMinusOperation&lt;T, T&gt;, IUnaryPlusOperation&lt;T, T&gt;, ISubtractionOperation&lt;T, T&gt;, IEqualityRelation&lt;T, bool&gt;, IEquatable&lt;T&gt;, ISpanFormattable, IFormattable, ISpanParsable&lt;T&gt;, IParsable&lt;T&gt;, IModuloOperation&lt;T, T&gt;, IInequalityRelations&lt;T, bool&gt;, IDecrementOperation&lt;T&gt;, IIncrementOperation&lt;T&gt;, IComparable, IComparable&lt;T&gt;, IMinMaxValue&lt;T&gt; where T : IReal&lt;T&gt;</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A type that implements the interface</p>
+</dd>
+  </dl>
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Re">IComplex&lt;T&gt;.Re</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Im">IComplex&lt;T&gt;.Im</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Magnitude">IComplex&lt;T&gt;.Magnitude</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Phase">IComplex&lt;T&gt;.Phase</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Zero">IComplex&lt;T&gt;.Zero</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_One">IComplex&lt;T&gt;.One</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_NaN">IComplex&lt;T&gt;.NaN</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Radix">IComplex&lt;T&gt;.Radix</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Abs__0_">IComplex&lt;T&gt;.Abs(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Conjugate__0_">IComplex&lt;T&gt;.Conjugate(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_CreateChecked__1___0_">IComplex&lt;T&gt;.CreateChecked&lt;U&gt;(U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_CreateSaturating__1___0_">IComplex&lt;T&gt;.CreateSaturating&lt;U&gt;(U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_CreateTruncating__1___0_">IComplex&lt;T&gt;.CreateTruncating&lt;U&gt;(U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_FromDouble_System_Double_">IComplex&lt;T&gt;.FromDouble(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_FromReal_Mathematics_NET_Core_Real_">IComplex&lt;T&gt;.FromReal(Real)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsFinite__0_">IComplex&lt;T&gt;.IsFinite(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsInfinity__0_">IComplex&lt;T&gt;.IsInfinity(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsNaN__0_">IComplex&lt;T&gt;.IsNaN(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsZero__0_">IComplex&lt;T&gt;.IsZero(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Parse_System_String_System_Globalization_NumberStyles_System_IFormatProvider_">IComplex&lt;T&gt;.Parse(string, NumberStyles, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Parse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider_">IComplex&lt;T&gt;.Parse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Reciprocate__0_">IComplex&lt;T&gt;.Reciprocate(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertFromChecked__1___0__0__">IComplex&lt;T&gt;.TryConvertFromChecked&lt;U&gt;(U, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertFromSaturating__1___0__0__">IComplex&lt;T&gt;.TryConvertFromSaturating&lt;U&gt;(U, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertFromTruncating__1___0__0__">IComplex&lt;T&gt;.TryConvertFromTruncating&lt;U&gt;(U, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertToChecked__1__0___0__">IComplex&lt;T&gt;.TryConvertToChecked&lt;U&gt;(T, out U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertToSaturating__1__0___0__">IComplex&lt;T&gt;.TryConvertToSaturating&lt;U&gt;(T, out U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertToTruncating__1__0___0__">IComplex&lt;T&gt;.TryConvertToTruncating&lt;U&gt;(T, out U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryParse_System_String_System_Globalization_NumberStyles_System_IFormatProvider__0__">IComplex&lt;T&gt;.TryParse(string, NumberStyles, IFormatProvider, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryParse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider__0__">IComplex&lt;T&gt;.TryParse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals">IEquatable&lt;T&gt;.Equals(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanformattable.tryformat">ISpanFormattable.TryFormat(Span&lt;char&gt;, out int, ReadOnlySpan&lt;char&gt;, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable.tostring">IFormattable.ToString(string, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanparsable-1.parse">ISpanParsable&lt;T&gt;.Parse(ReadOnlySpan&lt;char&gt;, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanparsable-1.tryparse">ISpanParsable&lt;T&gt;.TryParse(ReadOnlySpan&lt;char&gt;, IFormatProvider, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iparsable-1.parse">IParsable&lt;T&gt;.Parse(string, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iparsable-1.tryparse">IParsable&lt;T&gt;.TryParse(string, IFormatProvider, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable.compareto">IComparable.CompareTo(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1.compareto">IComparable&lt;T&gt;.CompareTo(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.iminmaxvalue-1.maxvalue">IMinMaxValue&lt;T&gt;.MaxValue</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.iminmaxvalue-1.minvalue">IMinMaxValue&lt;T&gt;.MinValue</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Atan2_" data-uid="Mathematics.NET.Core.IReal`1.Atan2*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Atan2__0__0_" data-uid="Mathematics.NET.Core.IReal`1.Atan2(`0,`0)">
+  Atan2(T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute a quadrant-aware arctangent given two values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Atan2(T y, T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>y</code> <span class="xref">T</span></dt>
+    <dd><p>The first value</p>
+</dd>
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>The second value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>An angle</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Ceiling_" data-uid="Mathematics.NET.Core.IReal`1.Ceiling*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Ceiling__0_" data-uid="Mathematics.NET.Core.IReal`1.Ceiling(`0)">
+  Ceiling(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the ceiling function of a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Ceiling(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The smallest integer greater than or equal to the value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Clamp_" data-uid="Mathematics.NET.Core.IReal`1.Clamp*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Clamp__0__0__0_" data-uid="Mathematics.NET.Core.IReal`1.Clamp(`0,`0,`0)">
+  Clamp(T, T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Clamp a value to an inclusive range</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Clamp(T value, T min, T max)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>min</code> <span class="xref">T</span></dt>
+    <dd><p>The lower bound</p>
+</dd>
+    <dt><code>max</code> <span class="xref">T</span></dt>
+    <dd><p>The upper bound</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The clamped value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Floor_" data-uid="Mathematics.NET.Core.IReal`1.Floor*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Floor__0_" data-uid="Mathematics.NET.Core.IReal`1.Floor(`0)">
+  Floor(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the floor function of a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Floor(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The largest integer less than or equal to the value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_InverseLerp_" data-uid="Mathematics.NET.Core.IReal`1.InverseLerp*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_InverseLerp__0__0__0_" data-uid="Mathematics.NET.Core.IReal`1.InverseLerp(`0,`0,`0)">
+  InverseLerp(T, T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Perform inverse linear interpolation given two points and a weight</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T InverseLerp(T start, T end, T weight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>start</code> <span class="xref">T</span></dt>
+    <dd><p>The start point</p>
+</dd>
+    <dt><code>end</code> <span class="xref">T</span></dt>
+    <dd><p>The end point</p>
+</dd>
+    <dt><code>weight</code> <span class="xref">T</span></dt>
+    <dd><p>The weight</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The inversely interpolated value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_IsNegativeInfinity_" data-uid="Mathematics.NET.Core.IReal`1.IsNegativeInfinity*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_IsNegativeInfinity__0_" data-uid="Mathematics.NET.Core.IReal`1.IsNegativeInfinity(`0)">
+  IsNegativeInfinity(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is negative infinity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract bool IsNegativeInfinity(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the value is negative infinity; otherwise, <code>false</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_IsPositiveInfinity_" data-uid="Mathematics.NET.Core.IReal`1.IsPositiveInfinity*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_IsPositiveInfinity__0_" data-uid="Mathematics.NET.Core.IReal`1.IsPositiveInfinity(`0)">
+  IsPositiveInfinity(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a valule is positive infinity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract bool IsPositiveInfinity(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the value is positive infinity; otherwise, <code>false</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Lerp_" data-uid="Mathematics.NET.Core.IReal`1.Lerp*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Lerp__0__0__0_" data-uid="Mathematics.NET.Core.IReal`1.Lerp(`0,`0,`0)">
+  Lerp(T, T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Linearly interpolate between two points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Lerp(T start, T end, T weight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>start</code> <span class="xref">T</span></dt>
+    <dd><p>The start point</p>
+</dd>
+    <dt><code>end</code> <span class="xref">T</span></dt>
+    <dd><p>The end point</p>
+</dd>
+    <dt><code>weight</code> <span class="xref">T</span></dt>
+    <dd><p>The weight</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The interpolated value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Max_" data-uid="Mathematics.NET.Core.IReal`1.Max*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Max__0__0_" data-uid="Mathematics.NET.Core.IReal`1.Max(`0,`0)">
+  Max(T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find which of two numbers is greater than the other</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Max(T x, T y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>The first value</p>
+</dd>
+    <dt><code>y</code> <span class="xref">T</span></dt>
+    <dd><p>The second value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The greater of the two values</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_Core_IReal_1_Max__0__0__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If any of the values are <code>NaN</code>, then <code>NaN</code> is returned</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Min_" data-uid="Mathematics.NET.Core.IReal`1.Min*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Min__0__0_" data-uid="Mathematics.NET.Core.IReal`1.Min(`0,`0)">
+  Min(T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find which of two numbers is less than the other</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Min(T x, T y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>The first value</p>
+</dd>
+    <dt><code>y</code> <span class="xref">T</span></dt>
+    <dd><p>The second value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The lesser of the two values</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_Core_IReal_1_Min__0__0__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If any of the values are <code>NaN</code>, then <code>NaN</code> is returned</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_Sign_" data-uid="Mathematics.NET.Core.IReal`1.Sign*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_Sign__0_" data-uid="Mathematics.NET.Core.IReal`1.Sign(`0)">
+  Sign(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find the sign of a real number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract int Sign(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A number indicating the sign of the value:<br><br>
+<b>1</b> if the value is greater than zero<br>
+<b>0</b> if the value is greater than zero<br>
+<b>-1</b> if the value is less than zero</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.arithmeticexception">ArithmeticException</a></dt>
+    <dd><p>An overflow or underflow has occurred</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_IReal_1_ToReal_" data-uid="Mathematics.NET.Core.IReal`1.ToReal*"></a>
+
+  <h3 id="Mathematics_NET_Core_IReal_1_ToReal__0_" data-uid="Mathematics.NET.Core.IReal`1.ToReal(`0)">
+  ToReal(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IReal.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create a real number from a type that implements <code class="typeparamref">T</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract Real ToReal(T x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">T</span></dt>
+    <dd><p>A type that implements <code class="typeparamref">T</code></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A real value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p>Thrown when the value cannot be converted to the type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

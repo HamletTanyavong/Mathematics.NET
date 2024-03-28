@@ -1,0 +1,3211 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct Complex | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct Complex | Mathematics.NET ">
+      
+      <meta name="description" content="Represents a complex number">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_Core_Complex.md&amp;value=---%0Auid%3A%20Mathematics.NET.Core.Complex%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.Core.Complex">
+
+
+
+  <h1 id="Mathematics_NET_Core_Complex" data-uid="Mathematics.NET.Core.Complex" class="text-break">
+Struct Complex  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a complex number</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+public readonly struct Complex : IComplex&lt;Complex&gt;, IAdditionOperation&lt;Complex, Complex&gt;, IDivisionOperation&lt;Complex, Complex&gt;, IMultiplicationOperation&lt;Complex, Complex&gt;, IUnaryMinusOperation&lt;Complex, Complex&gt;, IUnaryPlusOperation&lt;Complex, Complex&gt;, ISubtractionOperation&lt;Complex, Complex&gt;, IEqualityRelation&lt;Complex, bool&gt;, IEquatable&lt;Complex&gt;, ISpanFormattable, IFormattable, ISpanParsable&lt;Complex&gt;, IParsable&lt;Complex&gt;, IDifferentiableFunctions&lt;Complex&gt;</code></pre>
+  </div>
+
+
+
+
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IAdditionOperation-2.html">IAdditionOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IDivisionOperation-2.html">IDivisionOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IMultiplicationOperation-2.html">IMultiplicationOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryMinusOperation-2.html">IUnaryMinusOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryPlusOperation-2.html">IUnaryPlusOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.ISubtractionOperation-2.html">ISubtractionOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Relations.IEqualityRelation-2.html">IEqualityRelation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanformattable">ISpanFormattable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanparsable-1">ISpanParsable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iparsable-1">IParsable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html">IDifferentiableFunctions</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Complex__ctor_" data-uid="Mathematics.NET.Core.Complex.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex__ctor_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Complex.#ctor(Mathematics.NET.Core.Real)">
+  Complex(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Complex(Real real)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>real</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex__ctor_" data-uid="Mathematics.NET.Core.Complex.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex__ctor_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Complex.#ctor(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Complex(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents a complex number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Complex(Real real, Real imaginary)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>real</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The real part of the complex number</p>
+</dd>
+    <dt><code>imaginary</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The imaginary part of the complex number</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Mathematics_NET_Core_Complex_Infinity" data-uid="Mathematics.NET.Core.Complex.Infinity">
+  Infinity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Complex Infinity</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Complex_NaN" data-uid="Mathematics.NET.Core.Complex.NaN">
+  NaN
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Complex NaN</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Complex_One" data-uid="Mathematics.NET.Core.Complex.One">
+  One
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Complex One</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Complex_Radix" data-uid="Mathematics.NET.Core.Complex.Radix">
+  Radix
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly int Radix</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Complex_Zero" data-uid="Mathematics.NET.Core.Complex.Zero">
+  Zero
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Complex Zero</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Complex_Im_" data-uid="Mathematics.NET.Core.Complex.Im*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Im" data-uid="Mathematics.NET.Core.Complex.Im">
+  Im
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The imaginary part of the complex number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Im { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Magnitude_" data-uid="Mathematics.NET.Core.Complex.Magnitude*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Magnitude" data-uid="Mathematics.NET.Core.Complex.Magnitude">
+  Magnitude
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The magnitude of the complex number in polar coordinates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Magnitude { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Phase_" data-uid="Mathematics.NET.Core.Complex.Phase*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Phase" data-uid="Mathematics.NET.Core.Complex.Phase">
+  Phase
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The phase of the complex number in polar coordinates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Phase { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Re_" data-uid="Mathematics.NET.Core.Complex.Re*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Re" data-uid="Mathematics.NET.Core.Complex.Re">
+  Re
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The real part of the complex number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Re { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Complex_Abs_" data-uid="Mathematics.NET.Core.Complex.Abs*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Abs_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Abs(Mathematics.NET.Core.Complex)">
+  Abs(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L289"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Abs(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Acos_" data-uid="Mathematics.NET.Core.Complex.Acos*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Acos_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Acos(Mathematics.NET.Core.Complex)">
+  Acos(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L477"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arccosine of <code class="paramref">x</code>: <span class="math">\(\cos^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Acos(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Acosh_" data-uid="Mathematics.NET.Core.Complex.Acosh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Acosh_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Acosh(Mathematics.NET.Core.Complex)">
+  Acosh(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L439"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arccosine of <code class="paramref">x</code>: <span class="math">\(\cosh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Acosh(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The hyperbolic arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Asin_" data-uid="Mathematics.NET.Core.Complex.Asin*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Asin_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Asin(Mathematics.NET.Core.Complex)">
+  Asin(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L503"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arcsine of <code class="paramref">x</code>: <span class="math">\(\sin^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Asin(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Asinh_" data-uid="Mathematics.NET.Core.Complex.Asinh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Asinh_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Asinh(Mathematics.NET.Core.Complex)">
+  Asinh(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L441"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arcsine of <code class="paramref">x</code>: <span class="math">\(\sinh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Asinh(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The hyperbolic arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Atan_" data-uid="Mathematics.NET.Core.Complex.Atan*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Atan_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Atan(Mathematics.NET.Core.Complex)">
+  Atan(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L621"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arctangent of <code class="paramref">x</code>: <span class="math">\(\tan^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Atan(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Atanh_" data-uid="Mathematics.NET.Core.Complex.Atanh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Atanh_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Atanh(Mathematics.NET.Core.Complex)">
+  Atanh(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L443"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arctangent of <code class="paramref">x</code>: <span class="math">\(\tanh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Atanh(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The hyperbolic arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Cbrt_" data-uid="Mathematics.NET.Core.Complex.Cbrt*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Cbrt_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Cbrt(Mathematics.NET.Core.Complex)">
+  Cbrt(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L469"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cuberoot of <code class="paramref">x</code>: <span class="math">\(\sqrt[3]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Cbrt(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The cuberoot of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Conjugate_" data-uid="Mathematics.NET.Core.Complex.Conjugate*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Conjugate_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Conjugate(Mathematics.NET.Core.Complex)">
+  Conjugate(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the complex conjugate of a number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Conjugate(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>A complex number</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The complex conjugate</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Cos_" data-uid="Mathematics.NET.Core.Complex.Cos*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Cos_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Cos(Mathematics.NET.Core.Complex)">
+  Cos(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L623"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cosine of <code class="paramref">x</code>: <span class="math">\(\cos(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Cos(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Cosh_" data-uid="Mathematics.NET.Core.Complex.Cosh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Cosh_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Cosh(Mathematics.NET.Core.Complex)">
+  Cosh(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L445"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic cosine of <code class="paramref">x</code>: <span class="math">\(\cosh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Cosh(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The hyperbolic cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Equals_" data-uid="Mathematics.NET.Core.Complex.Equals*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Equals_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Equals(Mathematics.NET.Core.Complex)">
+  Equals(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether the current object is equal to another object of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Complex value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Equals_" data-uid="Mathematics.NET.Core.Complex.Equals*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Equals_System_Object_" data-uid="Mathematics.NET.Core.Complex.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Exp_" data-uid="Mathematics.NET.Core.Complex.Exp*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Exp_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Exp(Mathematics.NET.Core.Complex)">
+  Exp(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L427"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute e raised to the power of <code class="paramref">x</code>: <span class="math">\(e^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Exp(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>e raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Exp10_" data-uid="Mathematics.NET.Core.Complex.Exp10*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Exp10_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Exp10(Mathematics.NET.Core.Complex)">
+  Exp10(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L435"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 10 raised to the power of <code class="paramref">x</code>: <span class="math">\(10^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Exp10(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>10 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Exp2_" data-uid="Mathematics.NET.Core.Complex.Exp2*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Exp2_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Exp2(Mathematics.NET.Core.Complex)">
+  Exp2(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L433"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 2 raised to the power of <code class="paramref">x</code>: <span class="math">\(2^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Exp2(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>2 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_FromDouble_" data-uid="Mathematics.NET.Core.Complex.FromDouble*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_FromDouble_System_Double_" data-uid="Mathematics.NET.Core.Complex.FromDouble(System.Double)">
+  FromDouble(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an instance of type <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a> from one of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex FromDouble(double x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>A value of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>An instance of type <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a> created from <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_FromPolarForm_" data-uid="Mathematics.NET.Core.Complex.FromPolarForm*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_FromPolarForm_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Complex.FromPolarForm(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  FromPolarForm(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex FromPolarForm(Real magnitude, Real phase)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>magnitude</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>phase</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_FromReal_" data-uid="Mathematics.NET.Core.Complex.FromReal*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_FromReal_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Complex.FromReal(Mathematics.NET.Core.Real)">
+  FromReal(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L299"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an instance of type <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a> from one of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex FromReal(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>An instance of type <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a> created from <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_Core_Complex_FromReal_Mathematics_NET_Core_Real__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If the value to convert from is also of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, return itself</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_GetHashCode_" data-uid="Mathematics.NET.Core.Complex.GetHashCode*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_GetHashCode" data-uid="Mathematics.NET.Core.Complex.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A 32-bit signed integer that is the hash code for this instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_InverseLerp_" data-uid="Mathematics.NET.Core.Complex.InverseLerp*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_InverseLerp_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Complex.InverseLerp(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex,Mathematics.NET.Core.Real)">
+  InverseLerp(Complex, Complex, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L334"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex InverseLerp(Complex start, Complex end, Real weight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>start</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>end</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>weight</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_IsFinite_" data-uid="Mathematics.NET.Core.Complex.IsFinite*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_IsFinite_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.IsFinite(Mathematics.NET.Core.Complex)">
+  IsFinite(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L338"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is finite</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsFinite(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is finite; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_IsInfinity_" data-uid="Mathematics.NET.Core.Complex.IsInfinity*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_IsInfinity_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.IsInfinity(Mathematics.NET.Core.Complex)">
+  IsInfinity(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L340"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is infinity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsInfinity(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is infinity; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_IsNaN_" data-uid="Mathematics.NET.Core.Complex.IsNaN*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_IsNaN_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.IsNaN(Mathematics.NET.Core.Complex)">
+  IsNaN(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L342"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if a value is not a number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsNaN(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is not a number; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_IsZero_" data-uid="Mathematics.NET.Core.Complex.IsZero*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_IsZero_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.IsZero(Mathematics.NET.Core.Complex)">
+  IsZero(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L344"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is zero</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsZero(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is zero; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Lerp_" data-uid="Mathematics.NET.Core.Complex.Lerp*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Lerp_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Complex.Lerp(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex,Mathematics.NET.Core.Real)">
+  Lerp(Complex, Complex, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L346"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Lerp(Complex start, Complex end, Real weight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>start</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>end</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>weight</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Ln_" data-uid="Mathematics.NET.Core.Complex.Ln*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Ln_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Ln(Mathematics.NET.Core.Complex)">
+  Ln(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L455"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the natural logarithm of <code class="paramref">x</code>: <span class="math">\(\ln(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Ln(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The natural logarithm of<code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Log_" data-uid="Mathematics.NET.Core.Complex.Log*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Log_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Log(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  Log(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L457"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base <code class="paramref">b</code>: <span class="math">\(\log_b(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Log(Complex z, Complex b)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>b</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>A base</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base b</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Log10_" data-uid="Mathematics.NET.Core.Complex.Log10*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Log10_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Log10(Mathematics.NET.Core.Complex)">
+  Log10(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L461"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 10: <span class="math">\(\log_{10}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Log10(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 10</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Log2_" data-uid="Mathematics.NET.Core.Complex.Log2*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Log2_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Log2(Mathematics.NET.Core.Complex)">
+  Log2(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L459"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 2: <span class="math">\(\log_2(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Log2(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 2</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Parse_" data-uid="Mathematics.NET.Core.Complex.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Parse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Complex.Parse(System.ReadOnlySpan{System.Char},System.Globalization.NumberStyles,System.IFormatProvider)">
+  Parse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parse a span of characters into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Parse(ReadOnlySpan&lt;char&gt; s, NumberStyles style = NumberStyles.AllowThousands | NumberStyles.Float, IFormatProvider? provider = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the span of characters</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The parse result</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p><code class="paramref">s</code> is <code>null</code></p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Parse_" data-uid="Mathematics.NET.Core.Complex.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Parse_System_ReadOnlySpan_System_Char__System_IFormatProvider_" data-uid="Mathematics.NET.Core.Complex.Parse(System.ReadOnlySpan{System.Char},System.IFormatProvider)">
+  Parse(ReadOnlySpan&lt;char&gt;, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a span of characters into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Parse(ReadOnlySpan&lt;char&gt; s, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The result of parsing <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.formatexception">FormatException</a></dt>
+    <dd><p><code class="paramref">s</code> is not in the correct format.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p><code class="paramref">s</code> is not representable by <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Parse_" data-uid="Mathematics.NET.Core.Complex.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Parse_System_String_System_Globalization_NumberStyles_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Complex.Parse(System.String,System.Globalization.NumberStyles,System.IFormatProvider)">
+  Parse(string, NumberStyles, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parse a string into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Parse(string s, NumberStyles style, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the string</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The parse result</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p><code class="paramref">s</code> is <code>null</code></p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Parse_" data-uid="Mathematics.NET.Core.Complex.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Parse_System_String_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Complex.Parse(System.String,System.IFormatProvider)">
+  Parse(string, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L227"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a string into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Parse(string s, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The result of parsing <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p><code class="paramref">s</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.formatexception">FormatException</a></dt>
+    <dd><p><code class="paramref">s</code> is not in the correct format.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p><code class="paramref">s</code> is not representable by <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Pow_" data-uid="Mathematics.NET.Core.Complex.Pow*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Pow_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Pow(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  Pow(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L465"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute <code class="paramref">x</code> raised to the power of <code class="paramref">y</code>: <span class="math">\(x^y\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Pow(Complex z, Complex w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>w</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p><code class="paramref">x</code> raised to the power of <code class="paramref">y</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Reciprocate_" data-uid="Mathematics.NET.Core.Complex.Reciprocate*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Reciprocate_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Reciprocate(Mathematics.NET.Core.Complex)">
+  Reciprocate(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L350"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the reciprocal of a number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Reciprocate(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>A complex number</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The reciprocal</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Root_" data-uid="Mathematics.NET.Core.Complex.Root*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Root_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Root(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  Root(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L471"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the <code class="paramref">n</code>th root of <code class="paramref">x</code>: <span class="math">\(\sqrt[n]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Root(Complex z, Complex w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>w</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The <code class="paramref">n</code>th root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Sin_" data-uid="Mathematics.NET.Core.Complex.Sin*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Sin_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Sin(Mathematics.NET.Core.Complex)">
+  Sin(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L632"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the sine of <code class="paramref">x</code>: <span class="math">\(\sin(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Sin(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Sinh_" data-uid="Mathematics.NET.Core.Complex.Sinh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Sinh_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Sinh(Mathematics.NET.Core.Complex)">
+  Sinh(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L448"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic sine of <code class="paramref">x</code>: <span class="math">\(\sinh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Sinh(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The hyperbolic sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Sqrt_" data-uid="Mathematics.NET.Core.Complex.Sqrt*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Sqrt_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Sqrt(Mathematics.NET.Core.Complex)">
+  Sqrt(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L473"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the square root of <code class="paramref">x</code>: <span class="math">\(\sqrt{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Sqrt(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The square root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Tan_" data-uid="Mathematics.NET.Core.Complex.Tan*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Tan_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Tan(Mathematics.NET.Core.Complex)">
+  Tan(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L641"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the tangent of <code class="paramref">x</code>: <span class="math">\(\tan(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Tan(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_Tanh_" data-uid="Mathematics.NET.Core.Complex.Tanh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_Tanh_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.Tanh(Mathematics.NET.Core.Complex)">
+  Tanh(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L451"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic tangent of <code class="paramref">x</code>: <span class="math">\(\tanh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex Tanh(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The hyperbolic tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_ToString_" data-uid="Mathematics.NET.Core.Complex.ToString*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_ToString" data-uid="Mathematics.NET.Core.Complex.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the fully qualified type name of this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The fully qualified type name.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_ToString_" data-uid="Mathematics.NET.Core.Complex.ToString*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_ToString_System_String_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Complex.ToString(System.String,System.IFormatProvider)">
+  ToString(string?, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the value of the current instance using the specified format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string? format, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The format to use.</p>
+<p>-or-</p>
+<p>A null reference (<code>Nothing</code> in Visual Basic) to use the default format defined for the type of the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a> implementation.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The value of the current instance in the specified format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryConvertFromChecked_" data-uid="Mathematics.NET.Core.Complex.TryConvertFromChecked*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryConvertFromChecked__1___0_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.Core.Complex.TryConvertFromChecked``1(``0,Mathematics.NET.Core.Complex@)">
+  TryConvertFromChecked&lt;U&gt;(U, out Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L374"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of the current type, and throw and overflow exception if the value falls outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertFromChecked&lt;U&gt;(U value, out Complex result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The type from which to convert</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p>The value is not representable by the type <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryConvertFromSaturating_" data-uid="Mathematics.NET.Core.Complex.TryConvertFromSaturating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryConvertFromSaturating__1___0_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.Core.Complex.TryConvertFromSaturating``1(``0,Mathematics.NET.Core.Complex@)">
+  TryConvertFromSaturating&lt;U&gt;(U, out Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L381"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of the current type, and saturate values that fall outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertFromSaturating&lt;U&gt;(U value, out Complex result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The type from which to convert</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryConvertFromTruncating_" data-uid="Mathematics.NET.Core.Complex.TryConvertFromTruncating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryConvertFromTruncating__1___0_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.Core.Complex.TryConvertFromTruncating``1(``0,Mathematics.NET.Core.Complex@)">
+  TryConvertFromTruncating&lt;U&gt;(U, out Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L388"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of the current type, and truncate values that fall outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertFromTruncating&lt;U&gt;(U value, out Complex result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The type from which to convert</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryConvertToChecked_" data-uid="Mathematics.NET.Core.Complex.TryConvertToChecked*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryConvertToChecked__1_Mathematics_NET_Core_Complex___0__" data-uid="Mathematics.NET.Core.Complex.TryConvertToChecked``1(Mathematics.NET.Core.Complex,``0@)">
+  TryConvertToChecked&lt;U&gt;(Complex, out U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L395"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of another type, and throw and overflow exception if the value falls outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertToChecked&lt;U&gt;(Complex value, out U result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <span class="xref">U</span></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The target type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p>The value is not representable by the target type.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryConvertToSaturating_" data-uid="Mathematics.NET.Core.Complex.TryConvertToSaturating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryConvertToSaturating__1_Mathematics_NET_Core_Complex___0__" data-uid="Mathematics.NET.Core.Complex.TryConvertToSaturating``1(Mathematics.NET.Core.Complex,``0@)">
+  TryConvertToSaturating&lt;U&gt;(Complex, out U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L407"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of another type, and saturate values that fall outside of the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertToSaturating&lt;U&gt;(Complex value, out U result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <span class="xref">U</span></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The target type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryConvertToTruncating_" data-uid="Mathematics.NET.Core.Complex.TryConvertToTruncating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryConvertToTruncating__1_Mathematics_NET_Core_Complex___0__" data-uid="Mathematics.NET.Core.Complex.TryConvertToTruncating``1(Mathematics.NET.Core.Complex,``0@)">
+  TryConvertToTruncating&lt;U&gt;(Complex, out U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L414"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of another type, and truncate values that fall outside of the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertToTruncating&lt;U&gt;(Complex value, out U result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <span class="xref">U</span></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The target type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryFormat_" data-uid="Mathematics.NET.Core.Complex.TryFormat*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryFormat_System_Span_System_Char__System_Int32__System_ReadOnlySpan_System_Char__System_IFormatProvider_" data-uid="Mathematics.NET.Core.Complex.TryFormat(System.Span{System.Char},System.Int32@,System.ReadOnlySpan{System.Char},System.IFormatProvider)">
+  TryFormat(Span&lt;char&gt;, out int, ReadOnlySpan&lt;char&gt;, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tries to format the value of the current instance into the provided span of characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryFormat(Span&lt;char&gt; destination, out int charsWritten, ReadOnlySpan&lt;char&gt; format, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>destination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.span-1">Span</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span in which to write this instance's value formatted as a span of characters.</p>
+</dd>
+    <dt><code>charsWritten</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>When this method returns, contains the number of characters that were written in <code class="paramref">destination</code>.</p>
+</dd>
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>A span containing the characters that represent a standard or custom format string that defines the acceptable format for <code class="paramref">destination</code>.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An optional object that supplies culture-specific formatting information for <code class="paramref">destination</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the formatting was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryParse_" data-uid="Mathematics.NET.Core.Complex.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryParse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.Core.Complex.TryParse(System.ReadOnlySpan{System.Char},System.Globalization.NumberStyles,System.IFormatProvider,Mathematics.NET.Core.Complex@)">
+  TryParse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?, out Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to parse a span of characters into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(ReadOnlySpan&lt;char&gt; s, NumberStyles style, IFormatProvider? provider, out Complex result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the span of characters</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The result of the parse or a default value if the parse was unsuccessful</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the parse was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryParse_" data-uid="Mathematics.NET.Core.Complex.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryParse_System_ReadOnlySpan_System_Char__System_IFormatProvider_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.Core.Complex.TryParse(System.ReadOnlySpan{System.Char},System.IFormatProvider,Mathematics.NET.Core.Complex@)">
+  TryParse(ReadOnlySpan&lt;char&gt;, IFormatProvider?, out Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tries to parse a span of characters into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(ReadOnlySpan&lt;char&gt; s, IFormatProvider? provider, out Complex result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>When this method returns, contains the result of successfully parsing <code class="paramref">s</code>, or an undefined value on failure.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">s</code> was successfully parsed; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryParse_" data-uid="Mathematics.NET.Core.Complex.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryParse_System_String_System_Globalization_NumberStyles_System_IFormatProvider_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.Core.Complex.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,Mathematics.NET.Core.Complex@)">
+  TryParse(string?, NumberStyles, IFormatProvider?, out Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L252"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to parse a string into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(string? s, NumberStyles style, IFormatProvider? provider, out Complex result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the string</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The result of the parse or a default value if the parse was unsuccessful</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the parse was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Complex_TryParse_" data-uid="Mathematics.NET.Core.Complex.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_TryParse_System_String_System_IFormatProvider_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.Core.Complex.TryParse(System.String,System.IFormatProvider,Mathematics.NET.Core.Complex@)">
+  TryParse(string?, IFormatProvider?, out Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L246"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tries to parse a string into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(string? s, IFormatProvider? provider, out Complex result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>When this method returns, contains the result of successfully parsing <code class="paramref">s</code> or an undefined value on failure.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">s</code> was successfully parsed; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Addition_" data-uid="Mathematics.NET.Core.Complex.op_Addition*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Addition_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_Addition(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  operator +(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex operator +(Complex z, Complex w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>w</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Division_" data-uid="Mathematics.NET.Core.Complex.op_Division*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Division_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_Division(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  operator /(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex operator /(Complex z, Complex w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>w</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Equality_" data-uid="Mathematics.NET.Core.Complex.op_Equality*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Equality_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_Equality(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  operator ==(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Complex left, Complex right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Implicit_" data-uid="Mathematics.NET.Core.Complex.op_Implicit*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Implicit_Mathematics_NET_Core_Real__Mathematics_NET_Core_Complex" data-uid="Mathematics.NET.Core.Complex.op_Implicit(Mathematics.NET.Core.Real)~Mathematics.NET.Core.Complex">
+  implicit operator Complex(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L669"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a value of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a> to one of type <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator Complex(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Implicit_" data-uid="Mathematics.NET.Core.Complex.op_Implicit*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Implicit_System_Double__Mathematics_NET_Core_Complex" data-uid="Mathematics.NET.Core.Complex.op_Implicit(System.Double)~Mathematics.NET.Core.Complex">
+  implicit operator Complex(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L665"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a value of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> to one of type <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator Complex(double x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Inequality_" data-uid="Mathematics.NET.Core.Complex.op_Inequality*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Inequality_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_Inequality(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  operator !=(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Complex left, Complex right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Multiply_" data-uid="Mathematics.NET.Core.Complex.op_Multiply*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Multiply_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_Multiply(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  operator *(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex operator *(Complex z, Complex w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>w</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_Subtraction_" data-uid="Mathematics.NET.Core.Complex.op_Subtraction*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_Subtraction_Mathematics_NET_Core_Complex_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_Subtraction(Mathematics.NET.Core.Complex,Mathematics.NET.Core.Complex)">
+  operator -(Complex, Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex operator -(Complex z, Complex w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+    <dt><code>w</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_UnaryNegation_" data-uid="Mathematics.NET.Core.Complex.op_UnaryNegation*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_UnaryNegation_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_UnaryNegation(Mathematics.NET.Core.Complex)">
+  operator -(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex operator -(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Complex_op_UnaryPlus_" data-uid="Mathematics.NET.Core.Complex.op_UnaryPlus*"></a>
+
+  <h3 id="Mathematics_NET_Core_Complex_op_UnaryPlus_Mathematics_NET_Core_Complex_" data-uid="Mathematics.NET.Core.Complex.op_UnaryPlus(Mathematics.NET.Core.Complex)">
+  operator +(Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Complex operator +(Complex z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

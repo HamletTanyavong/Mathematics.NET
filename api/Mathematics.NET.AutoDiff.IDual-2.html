@@ -1,0 +1,422 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IDual&lt;T, U&gt; | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IDual&lt;T, U&gt; | Mathematics.NET ">
+      
+      <meta name="description" content="Defines support for dual numbers">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_AutoDiff_IDual_2.md&amp;value=---%0Auid%3A%20Mathematics.NET.AutoDiff.IDual%602%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.AutoDiff.IDual`2">
+
+
+
+  <h1 id="Mathematics_NET_AutoDiff_IDual_2" data-uid="Mathematics.NET.AutoDiff.IDual`2" class="text-break">
+Interface IDual&lt;T, U&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/IDual.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.AutoDiff.html">AutoDiff</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines support for dual numbers</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDual&lt;T, U&gt; : IAdditionOperation&lt;T, T&gt;, IDivisionOperation&lt;T, T&gt;, IMultiplicationOperation&lt;T, T&gt;, IUnaryMinusOperation&lt;T, T&gt;, IUnaryPlusOperation&lt;T, T&gt;, ISubtractionOperation&lt;T, T&gt;, IFormattable, IEqualityRelation&lt;T, bool&gt;, IEquatable&lt;T&gt;, IDifferentiableFunctions&lt;T&gt; where T : IDual&lt;T, U&gt; where U : IComplex&lt;U&gt;, IDifferentiableFunctions&lt;U&gt;</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The type that implements the interface</p>
+</dd>
+    <dt><code>U</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a> and <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html">IDifferentiableFunctions&lt;T&gt;</a></p>
+</dd>
+  </dl>
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable.tostring">IFormattable.ToString(string, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals">IEquatable&lt;T&gt;.Equals(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Exp__0_">IDifferentiableFunctions&lt;T&gt;.Exp(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Exp2__0_">IDifferentiableFunctions&lt;T&gt;.Exp2(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Exp10__0_">IDifferentiableFunctions&lt;T&gt;.Exp10(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Acosh__0_">IDifferentiableFunctions&lt;T&gt;.Acosh(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Asinh__0_">IDifferentiableFunctions&lt;T&gt;.Asinh(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Atanh__0_">IDifferentiableFunctions&lt;T&gt;.Atanh(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Cosh__0_">IDifferentiableFunctions&lt;T&gt;.Cosh(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Sinh__0_">IDifferentiableFunctions&lt;T&gt;.Sinh(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Tanh__0_">IDifferentiableFunctions&lt;T&gt;.Tanh(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Ln__0_">IDifferentiableFunctions&lt;T&gt;.Ln(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Log__0__0_">IDifferentiableFunctions&lt;T&gt;.Log(T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Log2__0_">IDifferentiableFunctions&lt;T&gt;.Log2(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Log10__0_">IDifferentiableFunctions&lt;T&gt;.Log10(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Pow__0__0_">IDifferentiableFunctions&lt;T&gt;.Pow(T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Cbrt__0_">IDifferentiableFunctions&lt;T&gt;.Cbrt(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Root__0__0_">IDifferentiableFunctions&lt;T&gt;.Root(T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Sqrt__0_">IDifferentiableFunctions&lt;T&gt;.Sqrt(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Acos__0_">IDifferentiableFunctions&lt;T&gt;.Acos(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Asin__0_">IDifferentiableFunctions&lt;T&gt;.Asin(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Atan__0_">IDifferentiableFunctions&lt;T&gt;.Atan(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Cos__0_">IDifferentiableFunctions&lt;T&gt;.Cos(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Sin__0_">IDifferentiableFunctions&lt;T&gt;.Sin(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html#Mathematics_NET_Core_IDifferentiableFunctions_1_Tan__0_">IDifferentiableFunctions&lt;T&gt;.Tan(T)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_AutoDiff_IDual_2_D0_" data-uid="Mathematics.NET.AutoDiff.IDual`2.D0*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_IDual_2_D0" data-uid="Mathematics.NET.AutoDiff.IDual`2.D0">
+  D0
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/IDual.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the primal part of the dual number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">U D0 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">U</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_IDual_2_D1_" data-uid="Mathematics.NET.AutoDiff.IDual`2.D1*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_IDual_2_D1" data-uid="Mathematics.NET.AutoDiff.IDual`2.D1">
+  D1
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/IDual.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the tangent part of the dual number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">U D1 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">U</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_AutoDiff_IDual_2_CreateVariable_" data-uid="Mathematics.NET.AutoDiff.IDual`2.CreateVariable*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_IDual_2_CreateVariable__1_" data-uid="Mathematics.NET.AutoDiff.IDual`2.CreateVariable(`1)">
+  CreateVariable(U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/IDual.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an instance of the type with a specified value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T CreateVariable(U value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>An instance of the type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_IDual_2_CreateVariable_" data-uid="Mathematics.NET.AutoDiff.IDual`2.CreateVariable*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_IDual_2_CreateVariable__1__1_" data-uid="Mathematics.NET.AutoDiff.IDual`2.CreateVariable(`1,`1)">
+  CreateVariable(U, U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/IDual.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an instance of the type with a specified value and seed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T CreateVariable(U value, U seed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>seed</code> <span class="xref">U</span></dt>
+    <dd><p>A seed</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>An instance of the type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_AutoDiff_IDual_2_WithSeed_" data-uid="Mathematics.NET.AutoDiff.IDual`2.WithSeed*"></a>
+
+  <h3 id="Mathematics_NET_AutoDiff_IDual_2_WithSeed__1_" data-uid="Mathematics.NET.AutoDiff.IDual`2.WithSeed(`1)">
+  WithSeed(U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/IDual.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create a seeded instance of this type</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">T WithSeed(U seed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>seed</code> <span class="xref">U</span></dt>
+    <dd><p>The seed value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>A seeded value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
