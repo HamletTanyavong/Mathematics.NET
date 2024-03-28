@@ -90,6 +90,9 @@ public struct Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>(TCubicArra
     public static Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> operator -(Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> tensor)
         => new(-tensor._array);
 
+    public static Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> operator +(Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> tensor)
+        => tensor;
+
     //
     // Equality
     //

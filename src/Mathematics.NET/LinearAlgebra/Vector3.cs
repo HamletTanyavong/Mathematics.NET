@@ -118,6 +118,10 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
         => new(-vector.X1, -vector.X2, -vector.X3);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector3<T> operator +(Vector3<T> vector)
+        => vector;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector3<T> operator +(Vector3<T> left, Vector3<T> right)
     {
         return new(

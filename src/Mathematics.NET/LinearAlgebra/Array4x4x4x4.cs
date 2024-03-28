@@ -102,6 +102,9 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
         return result;
     }
 
+    public static Array4x4x4x4<T> operator +(Array4x4x4x4<T> array)
+        => array;
+
     //
     // Equality
     //

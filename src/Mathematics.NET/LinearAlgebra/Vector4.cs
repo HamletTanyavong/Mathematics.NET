@@ -136,6 +136,10 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T> operator +(Vector4<T> vector)
+        => vector;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<T> operator +(Vector4<T> left, Vector4<T> right)
     {
         if (typeof(T) == typeof(Real))

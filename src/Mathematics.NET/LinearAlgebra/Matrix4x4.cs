@@ -135,6 +135,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
+    public static Matrix4x4<T> operator +(Matrix4x4<T> matrix)
+        => matrix;
+
     public static Matrix4x4<T> operator +(Matrix4x4<T> left, Matrix4x4<T> right)
     {
         Unsafe.SkipInit(out Matrix4x4<T> result);

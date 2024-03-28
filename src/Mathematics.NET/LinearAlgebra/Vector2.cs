@@ -114,6 +114,10 @@ public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
         => new(-vector.X1, -vector.X2);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2<T> operator +(Vector2<T> vector)
+        => vector;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector2<T> operator +(Vector2<T> left, Vector2<T> right)
         => new(left.X1 + right.X1, left.X2 + right.X2);
 
