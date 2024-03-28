@@ -89,6 +89,12 @@ public struct MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, 
     // Operators
     //
 
+    public static MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> operator -(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> metric)
+        => new(-metric._matrix);
+
+    public static MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> operator +(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> metric)
+        => metric;
+
     public static Tensor<TSquareMatrix, TNumber, Index<TIndexPosition, TIndex1Name>, Index<TIndexPosition, TIndex2Name>> operator +(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> left, MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> right)
         => left._matrix + right._matrix;
 

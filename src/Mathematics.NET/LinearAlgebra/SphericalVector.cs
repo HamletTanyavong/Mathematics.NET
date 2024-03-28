@@ -130,6 +130,12 @@ public struct SphericalVector : IVector<SphericalVector, Real>
     // Operators
     //
 
+    public static SphericalVector operator -(SphericalVector vector)
+        => new(-vector.R, vector.Theta, vector.Phi);
+
+    public static SphericalVector operator +(SphericalVector vector)
+        => vector;
+
     public static SphericalVector operator +(SphericalVector left, SphericalVector right)
     {
         var sinT1 = Real.Sin(left.Theta);

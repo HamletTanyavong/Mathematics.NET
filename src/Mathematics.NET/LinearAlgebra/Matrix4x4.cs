@@ -123,6 +123,21 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     // Operators
     //
 
+    public static Matrix4x4<T> operator -(Matrix4x4<T> matrix)
+    {
+        Unsafe.SkipInit(out Matrix4x4<T> result);
+
+        result.X1 = -matrix.X1;
+        result.X2 = -matrix.X2;
+        result.X3 = -matrix.X3;
+        result.X4 = -matrix.X4;
+
+        return result;
+    }
+
+    public static Matrix4x4<T> operator +(Matrix4x4<T> matrix)
+        => matrix;
+
     public static Matrix4x4<T> operator +(Matrix4x4<T> left, Matrix4x4<T> right)
     {
         Unsafe.SkipInit(out Matrix4x4<T> result);

@@ -83,6 +83,16 @@ public struct Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Nam
     }
 
     //
+    // Operators
+    //
+
+    public static Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> operator -(Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> christoffel)
+        => new(-christoffel._array);
+
+    public static Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> operator +(Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> christoffel)
+        => christoffel;
+
+    //
     // Equality
     //
 
