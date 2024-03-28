@@ -68,8 +68,8 @@ public abstract class MetricTensorField<TTape, TSquareMatrix, TNumber, TPointInd
         return new MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1, TIndex2>(result);
     }
 
-    /// <inheritdoc cref="TensorField4x4{TTape, TNumber, TIndex1Position, TIndex2Position, TPointIndex}.ElementGradient{TIndex1Name, TIndex2Name}(TTape, AutoDiffTensor4{TNumber, TPointIndex})"/>
-    public new ReadOnlySpan<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>> ElementGradient<TIndex1Name, TIndex2Name>(TTape tape, AutoDiffTensor4<TNumber, TPointIndex> point)
+    /// <inheritdoc cref="TensorField4x4{TTape, TNumber, TIndex1Position, TIndex2Position, TPointIndex}.Derivative{TIndex1Name, TIndex2Name}(TTape, AutoDiffTensor4{TNumber, TPointIndex})"/>
+    public new ReadOnlySpan<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>> Derivative<TIndex1Name, TIndex2Name>(TTape tape, AutoDiffTensor4<TNumber, TPointIndex> point)
         where TIndex1Name : ISymbol
         where TIndex2Name : ISymbol
     {

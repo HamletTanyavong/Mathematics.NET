@@ -64,7 +64,7 @@ public static partial class DifGeo
         where TPointIndexName : ISymbol
     {
         christoffel = new();
-        var diff = metric.ElementGradient<TIndex1Name, TIndex2Name>(tape, point);
+        var diff = metric.Derivative<TIndex1Name, TIndex2Name>(tape, point);
 
         for (int k = 0; k < 4; k++)
         {

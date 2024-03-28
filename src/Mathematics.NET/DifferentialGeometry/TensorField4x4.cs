@@ -82,13 +82,13 @@ public class TensorField4x4<TTape, TNumber, TIndex1Position, TIndex2Position, TP
         return new Tensor<Matrix4x4<TNumber>, TNumber, Index<TIndex1Position, TIndex1>, Index<TIndex2Position, TIndex2>>(result);
     }
 
-    /// <summary>Compute the gradient of all elements of the tensor.</summary>
+    /// <summary>Compute the derivative of all elements of the tensor.</summary>
     /// <typeparam name="TIndex1Name">The first index of the result tensor</typeparam>
     /// <typeparam name="TIndex2Name">The second index of the result tensor</typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="point">A point on the manifold</param>
-    /// <returns>A read-only span of gradients</returns>
-    public ReadOnlySpan<Tensor<Matrix4x4<TNumber>, TNumber, Index<TIndex1Position, TIndex1Name>, Index<TIndex2Position, TIndex2Name>>> ElementGradient<TIndex1Name, TIndex2Name>(
+    /// <returns>A read-only span of derivatives</returns>
+    public ReadOnlySpan<Tensor<Matrix4x4<TNumber>, TNumber, Index<TIndex1Position, TIndex1Name>, Index<TIndex2Position, TIndex2Name>>> Derivative<TIndex1Name, TIndex2Name>(
         TTape tape,
         AutoDiffTensor4<TNumber, TPointIndex> point)
         where TIndex1Name : ISymbol
