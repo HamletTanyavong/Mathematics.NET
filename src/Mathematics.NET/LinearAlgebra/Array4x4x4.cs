@@ -85,6 +85,22 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
     }
 
     //
+    // Operators
+    //
+
+    public static Array4x4x4<T> operator -(Array4x4x4<T> array)
+    {
+        Unsafe.SkipInit(out Array4x4x4<T> result);
+
+        result.X1 = -array.X1;
+        result.X2 = -array.X2;
+        result.X3 = -array.X3;
+        result.X4 = -array.X4;
+
+        return result;
+    }
+
+    //
     // Equality
     //
 

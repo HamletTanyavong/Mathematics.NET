@@ -84,6 +84,9 @@ public struct Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>(TSquareMatrix mat
     // Operators
     //
 
+    public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator -(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> tensor)
+        => new(-tensor._matrix);
+
     public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator +(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> left, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> right)
         => left._matrix + right._matrix;
 

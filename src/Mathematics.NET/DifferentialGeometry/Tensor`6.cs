@@ -90,6 +90,13 @@ public struct Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIn
     }
 
     //
+    // Operators
+    //
+
+    public static Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> operator -(Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> tensor)
+        => new(-tensor._array);
+
+    //
     // Equality
     //
 

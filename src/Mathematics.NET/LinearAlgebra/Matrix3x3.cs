@@ -111,6 +111,17 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     // Operators
     //
 
+    public static Matrix3x3<T> operator -(Matrix3x3<T> matrix)
+    {
+        Unsafe.SkipInit(out Matrix3x3<T> result);
+
+        result.X1 = -matrix.X1;
+        result.X2 = -matrix.X2;
+        result.X3 = -matrix.X3;
+
+        return result;
+    }
+
     public static Matrix3x3<T> operator +(Matrix3x3<T> left, Matrix3x3<T> right)
     {
         Unsafe.SkipInit(out Matrix3x3<T> result);

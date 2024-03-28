@@ -101,6 +101,14 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     // Operators
     //
 
+    public static Matrix2x2<T> operator -(Matrix2x2<T> matrix)
+    {
+        Unsafe.SkipInit(out Matrix2x2<T> result);
+        result.X1 = -matrix.X1;
+        result.X2 = -matrix.X2;
+        return result;
+    }
+
     public static Matrix2x2<T> operator +(Matrix2x2<T> left, Matrix2x2<T> right)
     {
         Unsafe.SkipInit(out Matrix2x2<T> result);

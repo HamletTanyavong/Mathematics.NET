@@ -125,6 +125,9 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     // Operators
     //
 
+    public static CylindricalVector operator -(CylindricalVector vector)
+        => new(-vector.Rho, vector.Phi, -vector.Z);
+
     public static CylindricalVector operator +(CylindricalVector left, CylindricalVector right)
     {
         var x = left.Rho * Real.Cos(left.Phi) + right.Rho * Real.Cos(right.Phi);
