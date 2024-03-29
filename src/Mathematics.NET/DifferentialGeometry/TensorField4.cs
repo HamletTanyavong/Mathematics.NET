@@ -58,12 +58,12 @@ public class TensorField4<TTape, TNumber, TIndexPosition, TPointIndex> : TensorF
         set => _buffer[index] = value;
     }
 
-    /// <summary>Compute the gradient of all elements of the tensor.</summary>
+    /// <summary>Compute the derivative of all elements of the tensor.</summary>
     /// <typeparam name="TIndexName">The first index of the result tensor</typeparam>
     /// <param name="tape">A gradient or Hessian tape</param>
     /// <param name="point">A point on the manifold</param>
-    /// <returns>A read-only span of gradients</returns>
-    public ReadOnlySpan<Tensor<Vector4<TNumber>, TNumber, Index<TIndexPosition, TIndexName>>> ElementGradient<TIndexName>(
+    /// <returns>A read-only span of derivatives</returns>
+    public ReadOnlySpan<Tensor<Vector4<TNumber>, TNumber, Index<TIndexPosition, TIndexName>>> Derivative<TIndexName>(
         TTape tape,
         AutoDiffTensor4<TNumber, TPointIndex> point)
         where TIndexName : ISymbol
