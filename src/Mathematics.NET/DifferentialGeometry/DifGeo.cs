@@ -91,7 +91,7 @@ public static partial class DifGeo
     public static void Christoffel<TNumber, TIndex1Name, TIndex2Name, TIndex3Name, TPointIndexName>(
         ITape<TNumber> tape,
         MetricTensorField<ITape<TNumber>, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
-        AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> position,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> point,
         out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, TIndex2Name, TIndex3Name> christoffel)
         where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
         where TIndex1Name : ISymbol
@@ -100,9 +100,9 @@ public static partial class DifGeo
         where TPointIndexName : ISymbol
     {
         var inverseMetric = metric
-            .Compute<TIndex1Name, InternalIndex1>(tape, position)
+            .Compute<TIndex1Name, InternalIndex1>(tape, point)
             .Inverse();
-        Christoffel(tape, metric, position, out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Lower, InternalIndex1>, TIndex2Name, TIndex3Name> christoffelFirstKind);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Lower, InternalIndex1>, TIndex2Name, TIndex3Name> christoffelFirstKind);
 
         var result = Contract(inverseMetric, christoffelFirstKind);
 
