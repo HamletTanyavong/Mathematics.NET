@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
@@ -91,6 +93,36 @@ public abstract class MetricTensorField<TTape, TSquareMatrix, TNumber, TPointInd
                 }
             }
         }
+        return result;
+    }
+
+    // TODO: Optimize
+    /// <summary>Compute the derivative of all elements of the inverse tensor.</summary>
+    /// <typeparam name="TIndex1Name">The first index of the result tensor</typeparam>
+    /// <typeparam name="TIndex2Name">The second index of the result tensor</typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <returns>A read-only span of derivatives</returns>
+    public ReadOnlySpan<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>> DerivativeOfInverse<TIndex1Name, TIndex2Name>(TTape tape, AutoDiffTensor4<TNumber, TPointIndex> point)
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+    {
+        Span<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>> result = new MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>[4];
+
+        var derivative = Derivative<TIndex1Name, TIndex2Name>(tape, point);
+        ref var start = ref MemoryMarshal.GetReference(derivative);
+
+        // The index names do not matter since they are only placeholders.
+        var value = Compute<InternalIndex1, InternalIndex2>(tape, point);
+        var inverse = Unsafe.As<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, InternalIndex1, InternalIndex2>, Matrix4x4<TNumber>>(ref value).Inverse();
+
+        for (int i = 0; i < 4; i++)
+        {
+            var matrix = Unsafe.As<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>, Matrix4x4<TNumber>>(ref Unsafe.Add(ref start, i));
+            var derivativeOfInverse = -inverse * matrix * inverse;
+            result[i] = Unsafe.As<Matrix4x4<TNumber>, MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>>(ref derivativeOfInverse);
+        }
+
         return result;
     }
 }
