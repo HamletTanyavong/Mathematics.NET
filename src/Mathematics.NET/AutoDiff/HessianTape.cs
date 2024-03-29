@@ -240,7 +240,7 @@ public record class HessianTape<T> : ITape<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    private static void EdgePush(Span2D<T> weight, in HessianNode<T> node, int i)
+    private static void EdgePush(Span2D<T> weight, ref readonly HessianNode<T> node, int i)
     {
         for (int p = 0; p <= i; p++)
         {
@@ -284,7 +284,7 @@ public record class HessianTape<T> : ITape<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    private static void Accumulate(Span2D<T> weight, in HessianNode<T> node, T v)
+    private static void Accumulate(Span2D<T> weight, ref readonly HessianNode<T> node, T v)
     {
         weight[node.PX, node.PX] += v * node.DXX;
         weight[node.PX, node.PY] += v * node.DXY;
