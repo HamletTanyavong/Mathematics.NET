@@ -43,6 +43,7 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute the Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
     /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TIndex1Name">The first index of the Christoffel symbol</typeparam>
     /// <typeparam name="TIndex2Name">The second index of the Christoffel symbol</typeparam>
@@ -52,11 +53,12 @@ public static partial class DifGeo
     /// <param name="metric">A metric tensor</param>
     /// <param name="point">A point on the manifold</param>
     /// <param name="christoffel">The result</param>
-    public static void Christoffel<TNumber, TIndex1Name, TIndex2Name, TIndex3Name, TPointIndexName>(
-        ITape<TNumber> tape,
-        MetricTensorField<ITape<TNumber>, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
+    public static void Christoffel<TTape, TNumber, TIndex1Name, TIndex2Name, TIndex3Name, TPointIndexName>(
+        TTape tape,
+        MetricTensorField<TTape, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
         AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> point,
         out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Lower, TIndex1Name>, TIndex2Name, TIndex3Name> christoffel)
+        where TTape : ITape<TNumber>
         where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
         where TIndex1Name : ISymbol
         where TIndex2Name : ISymbol
@@ -79,6 +81,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
     /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TIndex1Name">The first index of the Christoffel symbol</typeparam>
     /// <typeparam name="TIndex2Name">The second index of the Christoffel symbol</typeparam>
@@ -88,11 +91,12 @@ public static partial class DifGeo
     /// <param name="metric">A metric tensor</param>
     /// <param name="point">A point on the manifold</param>
     /// <param name="christoffel">The result</param>
-    public static void Christoffel<TNumber, TIndex1Name, TIndex2Name, TIndex3Name, TPointIndexName>(
-        ITape<TNumber> tape,
-        MetricTensorField<ITape<TNumber>, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
+    public static void Christoffel<TTape, TNumber, TIndex1Name, TIndex2Name, TIndex3Name, TPointIndexName>(
+        TTape tape,
+        MetricTensorField<TTape, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
         AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> point,
         out Christoffel<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, TIndex2Name, TIndex3Name> christoffel)
+        where TTape : ITape<TNumber>
         where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
         where TIndex1Name : ISymbol
         where TIndex2Name : ISymbol
