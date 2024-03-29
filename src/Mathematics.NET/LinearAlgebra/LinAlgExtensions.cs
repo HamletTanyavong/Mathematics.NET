@@ -396,6 +396,7 @@ public static class LinAlgExtensions
                 builder.Append(j != 0 ? "  [" : "[");
                 for (int k = 0; k < e3Length; k++)
                 {
+                    builder.Append(k != 0 ? "   [" : "[");
                     for (int l = 0; l < e4Length; l++)
                     {
                         string value = k != e4Length - 1 ? $"{strings[i, j, k, l]}, " : strings[i, j, k, l];
