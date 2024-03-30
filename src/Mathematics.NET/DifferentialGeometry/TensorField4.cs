@@ -29,8 +29,6 @@ using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.LinearAlgebra;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -56,33 +54,5 @@ public class TensorField4<TTape, TNumber, TIndexPosition, TPointIndex> : TensorF
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set => _buffer[index] = value;
-    }
-
-    /// <summary>Compute the derivative of all elements of the tensor.</summary>
-    /// <typeparam name="TIndexName">The first index of the result tensor</typeparam>
-    /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <returns>A read-only span of derivatives</returns>
-    public ReadOnlySpan<Tensor<Vector4<TNumber>, TNumber, Index<TIndexPosition, TIndexName>>> Derivative<TIndexName>(
-        TTape tape,
-        AutoDiffTensor4<TNumber, TPointIndex> point)
-        where TIndexName : ISymbol
-    {
-        Span<Tensor<Vector4<TNumber>, TNumber, Index<TIndexPosition, TIndexName>>> result = new Tensor<Vector4<TNumber>, TNumber, Index<TIndexPosition, TIndexName>>[4];
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (this[i] is Func<TTape, AutoDiffTensor4<TNumber, TPointIndex>, Variable<TNumber>> function)
-            {
-                _ = function(tape, point);
-                tape.ReverseAccumulate(out var gradient);
-
-                result[0][i] = gradient[0];
-                result[1][i] = gradient[1];
-                result[2][i] = gradient[2];
-                result[3][i] = gradient[3];
-            }
-        }
-        return result;
     }
 }

@@ -39,6 +39,263 @@ namespace Mathematics.NET.DifferentialGeometry;
 public static partial class DifGeo
 {
     //
+    // General calculus
+    //
+
+    // TODO: Optimize the following methods
+
+    /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
+    /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
+    /// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TPointIndexName">The name of the point index</typeparam>
+    /// <typeparam name="TIndex1Name">The name of the first index of the tensor</typeparam>
+    /// <typeparam name="TIndex2Name">The name of the second index of the tensor</typeparam>
+    /// <typeparam name="TIndex3Name">The name of the third index of the tensor</typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="metric">A rank-two tensor</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="derivative">A rank-three tensor</param>
+    public static void Derivative<TTape, TNumber, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name>(
+        TTape tape,
+        MetricTensorField<TTape, Matrix4x4<TNumber>, TNumber, Index<Upper, TPointIndexName>> metric,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> point,
+        out Tensor<Array4x4x4<TNumber>, TNumber, Index<Lower, TIndex1Name>, Index<Upper, TIndex2Name>, Index<Upper, TIndex3Name>> derivative)
+        where TTape : ITape<TNumber>
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TPointIndexName : ISymbol
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+    {
+        var inverseMetricLeft = metric
+            .Compute<TIndex2Name, InternalIndex1>(tape, point)
+            .Inverse();
+        var inverseMetricRight = inverseMetricLeft
+            .WithIndexOne<InternalIndex2>()
+            .WithIndexTwo<TIndex3Name>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TNumber>, TNumber, Index<Lower, TIndex1Name>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> intermediate);
+
+        derivative = -Contract(Contract(intermediate, inverseMetricLeft), inverseMetricRight);
+    }
+
+    /// <inheritdoc cref="Derivative{TTape, TNumber, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name}(TTape, MetricTensorField{TTape, Matrix4x4{TNumber}, TNumber, Index{Upper, TPointIndexName}}, AutoDiffTensor4{TNumber, Index{Upper, TPointIndexName}}, out Tensor{Array4x4x4{TNumber}, TNumber, Index{Lower, TIndex1Name}, Index{Upper, TIndex2Name}, Index{Upper, TIndex3Name}})"/>
+    public static void Derivative<TTape, TNumber, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name>(
+        TTape tape,
+        MetricTensorField<TTape, Matrix4x4<TNumber>, TNumber, Index<Lower, TPointIndexName>> metric,
+        AutoDiffTensor4<TNumber, Index<Lower, TPointIndexName>> point,
+        out Tensor<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, Index<Upper, TIndex2Name>, Index<Upper, TIndex3Name>> derivative)
+        where TTape : ITape<TNumber>
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TPointIndexName : ISymbol
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+    {
+        var inverseMetricLeft = metric
+            .Compute<TIndex2Name, InternalIndex1>(tape, point)
+            .Inverse();
+        var inverseMetricRight = inverseMetricLeft
+            .WithIndexOne<InternalIndex2>()
+            .WithIndexTwo<TIndex3Name>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> intermediate);
+
+        derivative = -Contract(Contract(intermediate, inverseMetricLeft), inverseMetricRight);
+    }
+
+    /// <summary>Compute the derivative of rank-two tensor.</summary>
+    /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
+    /// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TIndex2Position">The index position of the second index of the tensor</typeparam>
+    /// <typeparam name="TIndex3Position">The index position of the third index of the tensor</typeparam>
+    /// <typeparam name="TPointIndexName">The name of the point index</typeparam>
+    /// <typeparam name="TIndex1Name">The name of the first index of the tensor</typeparam>
+    /// <typeparam name="TIndex2Name">The name of the second index of the tensor</typeparam>
+    /// <typeparam name="TIndex3Name">The name of the third index of the tensor</typeparam>
+    /// <param name="tape">A gradient or Hessian tape</param>
+    /// <param name="tensor">A rank-two tensor</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="derivative">A rank-three tensor</param>
+    public static void Derivative<TTape, TNumber, TIndex2Position, TIndex3Position, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name>(
+        TTape tape,
+        TensorField4x4<TTape, TNumber, TIndex2Position, TIndex3Position, Index<Upper, TPointIndexName>> tensor,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> point,
+        out Tensor<Array4x4x4<TNumber>, TNumber, Index<Lower, TIndex1Name>, Index<TIndex2Position, TIndex2Name>, Index<TIndex3Position, TIndex3Name>> derivative)
+        where TTape : ITape<TNumber>
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex2Position : IIndexPosition
+        where TIndex3Position : IIndexPosition
+        where TPointIndexName : ISymbol
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+    {
+        derivative = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (tensor[i, j] is Func<TTape, AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>>, Variable<TNumber>> function)
+                {
+                    _ = function(tape, point);
+                    tape.ReverseAccumulate(out var gradient);
+
+                    derivative[0, i, j] = gradient[0];
+                    derivative[1, i, j] = gradient[1];
+                    derivative[2, i, j] = gradient[2];
+                    derivative[3, i, j] = gradient[3];
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="Derivative{TTape, TNumber, TIndex2Position, TIndex3Position, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name}(TTape, TensorField4x4{TTape, TNumber, TIndex2Position, TIndex3Position, Index{Upper, TPointIndexName}}, AutoDiffTensor4{TNumber, Index{Upper, TPointIndexName}}, out Tensor{Array4x4x4{TNumber}, TNumber, Index{Lower, TIndex1Name}, Index{TIndex2Position, TIndex2Name}, Index{TIndex3Position, TIndex3Name}})"/>
+    public static void Derivative<TTape, TNumber, TIndex2Position, TIndex3Position, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name>(
+        TTape tape,
+        TensorField4x4<TTape, TNumber, TIndex2Position, TIndex3Position, Index<Lower, TPointIndexName>> tensor,
+        AutoDiffTensor4<TNumber, Index<Lower, TPointIndexName>> point,
+        out Tensor<Array4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, Index<TIndex2Position, TIndex2Name>, Index<TIndex3Position, TIndex3Name>> derivative)
+        where TTape : ITape<TNumber>
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex2Position : IIndexPosition
+        where TIndex3Position : IIndexPosition
+        where TPointIndexName : ISymbol
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+    {
+        derivative = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (tensor[i, j] is Func<TTape, AutoDiffTensor4<TNumber, Index<Lower, TPointIndexName>>, Variable<TNumber>> function)
+                {
+                    _ = function(tape, point);
+                    tape.ReverseAccumulate(out var gradient);
+
+                    derivative[0, i, j] = gradient[0];
+                    derivative[1, i, j] = gradient[1];
+                    derivative[2, i, j] = gradient[2];
+                    derivative[3, i, j] = gradient[3];
+                }
+            }
+        }
+    }
+
+    /// <summary>Compute the second derivative or a rank-two tensor.</summary>
+    /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
+    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TIndex3Position">The index position of the third index of the tensor</typeparam>
+    /// <typeparam name="TIndex4Position">The index position of the fourth idex of the tensor</typeparam>
+    /// <typeparam name="TPointIndexName">The name of the point index</typeparam>
+    /// <typeparam name="TIndex1Name">The name of the first index of the tensor</typeparam>
+    /// <typeparam name="TIndex2Name">The name of the second index of the tensor</typeparam>
+    /// <typeparam name="TIndex3Name">The name of the third index of the tensor</typeparam>
+    /// <typeparam name="TIndex4Name">The name of the fourth index of the tensor</typeparam>
+    /// <param name="tape">A Hessian tape</param>
+    /// <param name="tensor">A rank-two tensor</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="secondDerivative">A rank-four tensor</param>
+    public static void SecondDerivative<TNumber, TIndex3Position, TIndex4Position, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name, TIndex4Name>(
+        HessianTape<TNumber> tape,
+        TensorField4x4<HessianTape<TNumber>, TNumber, TIndex3Position, TIndex4Position, Index<Upper, TPointIndexName>> tensor,
+        AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>> point,
+        out Tensor<Array4x4x4x4<TNumber>, TNumber, Index<Lower, TIndex1Name>, Index<Lower, TIndex2Name>, Index<TIndex3Position, TIndex3Name>, Index<TIndex4Position, TIndex4Name>> secondDerivative)
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex3Position : IIndexPosition
+        where TIndex4Position : IIndexPosition
+        where TPointIndexName : ISymbol
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+        where TIndex4Name : ISymbol
+    {
+        secondDerivative = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (tensor[i, j] is Func<HessianTape<TNumber>, AutoDiffTensor4<TNumber, Index<Upper, TPointIndexName>>, Variable<TNumber>> function)
+                {
+                    _ = function(tape, point);
+                    tape.ReverseAccumulate(out ReadOnlySpan2D<TNumber> hessian);
+
+                    secondDerivative[0, 0, i, j] = hessian[0, 0];
+                    secondDerivative[0, 1, i, j] = hessian[0, 1];
+                    secondDerivative[0, 2, i, j] = hessian[0, 2];
+                    secondDerivative[0, 3, i, j] = hessian[0, 3];
+
+                    secondDerivative[1, 0, i, j] = hessian[1, 0];
+                    secondDerivative[1, 1, i, j] = hessian[1, 1];
+                    secondDerivative[1, 2, i, j] = hessian[1, 2];
+                    secondDerivative[1, 3, i, j] = hessian[1, 3];
+
+                    secondDerivative[2, 0, i, j] = hessian[2, 0];
+                    secondDerivative[2, 1, i, j] = hessian[2, 1];
+                    secondDerivative[2, 2, i, j] = hessian[2, 2];
+                    secondDerivative[2, 3, i, j] = hessian[2, 3];
+
+                    secondDerivative[3, 0, i, j] = hessian[3, 0];
+                    secondDerivative[3, 1, i, j] = hessian[3, 1];
+                    secondDerivative[3, 2, i, j] = hessian[3, 2];
+                    secondDerivative[3, 3, i, j] = hessian[3, 3];
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="SecondDerivative{TNumber, TIndex3Position, TIndex4Position, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name, TIndex4Name}(HessianTape{TNumber}, TensorField4x4{HessianTape{TNumber}, TNumber, TIndex3Position, TIndex4Position, Index{Upper, TPointIndexName}}, AutoDiffTensor4{TNumber, Index{Upper, TPointIndexName}}, out Tensor{Array4x4x4x4{TNumber}, TNumber, Index{Lower, TIndex1Name}, Index{Lower, TIndex2Name}, Index{TIndex3Position, TIndex3Name}, Index{TIndex4Position, TIndex4Name}})"/>
+    public static void SecondDerivative<TNumber, TIndex3Position, TIndex4Position, TPointIndexName, TIndex1Name, TIndex2Name, TIndex3Name, TIndex4Name>(
+        HessianTape<TNumber> tape,
+        TensorField4x4<HessianTape<TNumber>, TNumber, TIndex3Position, TIndex4Position, Index<Lower, TPointIndexName>> tensor,
+        AutoDiffTensor4<TNumber, Index<Lower, TPointIndexName>> point,
+        out Tensor<Array4x4x4x4<TNumber>, TNumber, Index<Upper, TIndex1Name>, Index<Upper, TIndex2Name>, Index<TIndex3Position, TIndex3Name>, Index<TIndex4Position, TIndex4Name>> secondDerivative)
+        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
+        where TIndex3Position : IIndexPosition
+        where TIndex4Position : IIndexPosition
+        where TPointIndexName : ISymbol
+        where TIndex1Name : ISymbol
+        where TIndex2Name : ISymbol
+        where TIndex3Name : ISymbol
+        where TIndex4Name : ISymbol
+    {
+        secondDerivative = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (tensor[i, j] is Func<HessianTape<TNumber>, AutoDiffTensor4<TNumber, Index<Lower, TPointIndexName>>, Variable<TNumber>> function)
+                {
+                    _ = function(tape, point);
+                    tape.ReverseAccumulate(out ReadOnlySpan2D<TNumber> hessian);
+
+                    secondDerivative[0, 0, i, j] = hessian[0, 0];
+                    secondDerivative[0, 1, i, j] = hessian[0, 1];
+                    secondDerivative[0, 2, i, j] = hessian[0, 2];
+                    secondDerivative[0, 3, i, j] = hessian[0, 3];
+
+                    secondDerivative[1, 0, i, j] = hessian[1, 0];
+                    secondDerivative[1, 1, i, j] = hessian[1, 1];
+                    secondDerivative[1, 2, i, j] = hessian[1, 2];
+                    secondDerivative[1, 3, i, j] = hessian[1, 3];
+
+                    secondDerivative[2, 0, i, j] = hessian[2, 0];
+                    secondDerivative[2, 1, i, j] = hessian[2, 1];
+                    secondDerivative[2, 2, i, j] = hessian[2, 2];
+                    secondDerivative[2, 3, i, j] = hessian[2, 3];
+
+                    secondDerivative[3, 0, i, j] = hessian[3, 0];
+                    secondDerivative[3, 1, i, j] = hessian[3, 1];
+                    secondDerivative[3, 2, i, j] = hessian[3, 2];
+                    secondDerivative[3, 3, i, j] = hessian[3, 3];
+                }
+            }
+        }
+    }
+
+    //
     // Christoffel symbols
     //
 
@@ -66,7 +323,7 @@ public static partial class DifGeo
         where TPointIndexName : ISymbol
     {
         christoffel = new();
-        var diff = metric.Derivative<TIndex1Name, TIndex2Name>(tape, point);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TNumber>, TNumber, Index<Lower, TPointIndexName>, Index<Lower, TIndex1Name>, Index<Lower, TIndex2Name>> derivative);
 
         for (int k = 0; k < 4; k++)
         {
@@ -74,7 +331,7 @@ public static partial class DifGeo
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    christoffel[k, i, j] = 0.5 * (diff[j][k, i] + diff[i][k, j] - diff[k][i, j]);
+                    christoffel[k, i, j] = 0.5 * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
                 }
             }
         }
