@@ -35,23 +35,23 @@ using Mathematics.NET.Symbols;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-two tensor field with 16 elements</summary>
-/// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TIndex1Position">An index</typeparam>
-/// <typeparam name="TIndex2Position">An index</typeparam>
-/// <typeparam name="TPointIndex">An index</typeparam>
-public class TensorField4x4<TTape, TNumber, TIndex1Position, TIndex2Position, TPointIndex> : TensorField<TNumber, TPointIndex>
-    where TTape : ITape<TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TIndex1Position : IIndexPosition
-    where TIndex2Position : IIndexPosition
-    where TPointIndex : IIndex
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TI1P">The position of the first index of the tensor</typeparam>
+/// <typeparam name="TI2P">The position of the second index of the tensor</typeparam>
+/// <typeparam name="TPI">An index</typeparam>
+public class TensorField4x4<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
+    where TT : ITape<TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TI1P : IIndexPosition
+    where TI2P : IIndexPosition
+    where TPI : IIndex
 {
-    private protected AutoDiffTensor4Buffer4x4<TTape, TNumber, TPointIndex> _buffer;
+    private protected AutoDiffTensor4Buffer4x4<TT, TN, TPI> _buffer;
 
     public TensorField4x4() { }
 
-    public Func<TTape, AutoDiffTensor4<TNumber, TPointIndex>, Variable<TNumber>> this[int row, int column]
+    public Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> this[int row, int column]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[row][column];
@@ -60,18 +60,18 @@ public class TensorField4x4<TTape, TNumber, TIndex1Position, TIndex2Position, TP
         set => _buffer[row][column] = value;
     }
 
-    public Tensor<Matrix4x4<TNumber>, TNumber, Index<TIndex1Position, TIndex1>, Index<TIndex2Position, TIndex2>> Compute<TIndex1, TIndex2>(TTape tape, AutoDiffTensor4<TNumber, TPointIndex> x)
-        where TIndex1 : ISymbol
-        where TIndex2 : ISymbol
+    public Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1>, Index<TI2P, TI2>> Compute<TI1, TI2>(TT tape, AutoDiffTensor4<TN, TPI> x)
+        where TI1 : ISymbol
+        where TI2 : ISymbol
     {
         tape.IsTracking = false;
 
-        Matrix4x4<TNumber> result = new();
+        Matrix4x4<TN> result = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (_buffer[i][j] is Func<TTape, AutoDiffTensor4<TNumber, TPointIndex>, Variable<TNumber>> function)
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> function)
                 {
                     result[i, j] = function(tape, x).Value;
                 }
@@ -79,6 +79,6 @@ public class TensorField4x4<TTape, TNumber, TIndex1Position, TIndex2Position, TP
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix4x4<TNumber>, TNumber, Index<TIndex1Position, TIndex1>, Index<TIndex2Position, TIndex2>>(result);
+        return new Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1>, Index<TI2P, TI2>>(result);
     }
 }

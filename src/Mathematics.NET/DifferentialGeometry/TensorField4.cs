@@ -33,21 +33,21 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor field with four elements</summary>
-/// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TIndexPosition">An index position</typeparam>
-/// <typeparam name="TPointIndex">An index</typeparam>
-public class TensorField4<TTape, TNumber, TIndexPosition, TPointIndex> : TensorField<TNumber, TPointIndex>
-    where TTape : ITape<TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TIndexPosition : IIndexPosition
-    where TPointIndex : IIndex
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TIP">An index position</typeparam>
+/// <typeparam name="TPI">An index</typeparam>
+public class TensorField4<TT, TN, TIP, TPI> : TensorField<TN, TPI>
+    where TT : ITape<TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TIP : IIndexPosition
+    where TPI : IIndex
 {
-    private AutoDiffTensor4Buffer4<TTape, TNumber, TPointIndex> _buffer;
+    private AutoDiffTensor4Buffer4<TT, TN, TPI> _buffer;
 
     public TensorField4() { }
 
-    public Func<TTape, AutoDiffTensor4<TNumber, TPointIndex>, Variable<TNumber>> this[int index]
+    public Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> this[int index]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[index];

@@ -35,40 +35,40 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor or a similar mathematical object</summary>
-/// <typeparam name="TVector">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TIndex">An index</typeparam>
+/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TI">An index</typeparam>
 /// <param name="vector">A backing vector</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<TVector, TNumber, TIndex>(TVector vector)
-    : IRankOneTensor<Tensor<TVector, TNumber, TIndex>, TVector, TNumber, TIndex>,
-      IAdditionOperation<Tensor<TVector, TNumber, TIndex>, Tensor<TVector, TNumber, TIndex>>,
-      ISubtractionOperation<Tensor<TVector, TNumber, TIndex>, Tensor<TVector, TNumber, TIndex>>
-    where TVector : IVector<TVector, TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TIndex : IIndex
+public struct Tensor<TV, TN, TI>(TV vector)
+    : IRankOneTensor<Tensor<TV, TN, TI>, TV, TN, TI>,
+      IAdditionOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>,
+      ISubtractionOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>
+    where TV : IVector<TV, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TI : IIndex
 {
-    private TVector _vector = vector;
+    private TV _vector = vector;
 
     //
     // IArrayRepresentable & relevant interfaces
     //
 
-    public static int Components => TVector.Components;
+    public static int Components => TV.Components;
 
-    public static int E1Components => TVector.E1Components;
+    public static int E1Components => TV.E1Components;
 
     //
     // IRankOneTensor interface
     //
 
-    public readonly IIndex I1 => TIndex.Instance;
+    public readonly IIndex I1 => TI.Instance;
 
     //
     // Indexer
     //
 
-    public TNumber this[int index]
+    public TN this[int index]
     {
         get => _vector[index];
         set => _vector[index] = value;
@@ -78,37 +78,37 @@ public struct Tensor<TVector, TNumber, TIndex>(TVector vector)
     // Operators
     //
 
-    public static Tensor<TVector, TNumber, TIndex> operator -(Tensor<TVector, TNumber, TIndex> tensor)
+    public static Tensor<TV, TN, TI> operator -(Tensor<TV, TN, TI> tensor)
         => new(-tensor._vector);
 
-    public static Tensor<TVector, TNumber, TIndex> operator +(Tensor<TVector, TNumber, TIndex> tensor)
+    public static Tensor<TV, TN, TI> operator +(Tensor<TV, TN, TI> tensor)
         => tensor;
 
-    public static Tensor<TVector, TNumber, TIndex> operator +(Tensor<TVector, TNumber, TIndex> left, Tensor<TVector, TNumber, TIndex> right)
+    public static Tensor<TV, TN, TI> operator +(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
         => new(left._vector + right._vector);
 
-    public static Tensor<TVector, TNumber, TIndex> operator -(Tensor<TVector, TNumber, TIndex> left, Tensor<TVector, TNumber, TIndex> right)
+    public static Tensor<TV, TN, TI> operator -(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
         => new(left._vector - right._vector);
 
-    public static Tensor<TVector, TNumber, TIndex> operator *(TNumber c, Tensor<TVector, TNumber, TIndex> tensor)
+    public static Tensor<TV, TN, TI> operator *(TN c, Tensor<TV, TN, TI> tensor)
         => new(c * tensor._vector);
 
-    public static Tensor<TVector, TNumber, TIndex> operator *(Tensor<TVector, TNumber, TIndex> tensor, TNumber c)
+    public static Tensor<TV, TN, TI> operator *(Tensor<TV, TN, TI> tensor, TN c)
         => new(tensor._vector * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(Tensor<TVector, TNumber, TIndex> left, Tensor<TVector, TNumber, TIndex> right)
+    public static bool operator ==(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
         => left._vector == right._vector;
 
-    public static bool operator !=(Tensor<TVector, TNumber, TIndex> left, Tensor<TVector, TNumber, TIndex> right)
+    public static bool operator !=(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
         => left._vector != right._vector;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TVector, TNumber, TIndex> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TV, TN, TI> other && Equals(other);
 
-    public readonly bool Equals(Tensor<TVector, TNumber, TIndex> value) => _vector.Equals(value._vector);
+    public readonly bool Equals(Tensor<TV, TN, TI> value) => _vector.Equals(value._vector);
 
     public override readonly int GetHashCode() => HashCode.Combine(_vector);
 
@@ -123,16 +123,16 @@ public struct Tensor<TVector, TNumber, TIndex>(TVector vector)
     //
 
     /// <summary>Create a tensor with a new index.</summary>
-    /// <typeparam name="TNewIndex">A new index</typeparam>
+    /// <typeparam name="TNI">A new index</typeparam>
     /// <returns>A tensor with a new index</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TVector, TNumber, TNewIndex> WithIndex<TNewIndex>()
-        where TNewIndex : IIndex
-        => Unsafe.As<Tensor<TVector, TNumber, TIndex>, Tensor<TVector, TNumber, TNewIndex>>(ref this);
+    public Tensor<TV, TN, TNI> WithIndex<TNI>()
+        where TNI : IIndex
+        => Unsafe.As<Tensor<TV, TN, TI>, Tensor<TV, TN, TNI>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator Tensor<TVector, TNumber, TIndex>(TVector input) => new(input);
+    public static implicit operator Tensor<TV, TN, TI>(TV input) => new(input);
 }
