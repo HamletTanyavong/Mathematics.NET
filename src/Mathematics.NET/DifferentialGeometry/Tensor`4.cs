@@ -96,6 +96,12 @@ public struct Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>(TSquareMatrix mat
     public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator -(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> left, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> right)
         => left._matrix - right._matrix;
 
+    public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator *(TNumber c, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> tensor)
+        => new(c * tensor._matrix);
+
+    public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator *(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> tensor, TNumber c)
+        => new(tensor._matrix * c);
+
     //
     // Equality
     //

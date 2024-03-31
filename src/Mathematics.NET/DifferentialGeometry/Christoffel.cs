@@ -92,6 +92,12 @@ public struct Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Nam
     public static Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> operator +(Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> christoffel)
         => christoffel;
 
+    public static Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> operator *(TNumber c, Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> christoffel)
+        => new(c * christoffel._array);
+
+    public static Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> operator *(Christoffel<TCubicArray, TNumber, TIndex1, TIndex2Name, TIndex3Name> christoffel, TNumber c)
+        => new(christoffel._array * c);
+
     //
     // Equality
     //

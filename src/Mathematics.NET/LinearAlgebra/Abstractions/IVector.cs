@@ -36,7 +36,6 @@ public interface IVector<T, U>
     : IOneDimensionalArrayRepresentable<T, U>,
       IAdditionOperation<T, T>,
       ISubtractionOperation<T, T>,
-      IMultiplicationOperation<T, U, T>,
       IInnerProductOperation<T, U>
     where T : IVector<T, U>
     where U : IComplex<U>

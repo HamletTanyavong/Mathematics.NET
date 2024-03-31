@@ -99,6 +99,12 @@ public struct Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIn
     public static Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> operator +(Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> tensor)
         => tensor;
 
+    public static Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> operator *(TNumber c, Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> tensor)
+        => new(c * tensor._array);
+
+    public static Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> operator *(Tensor<THypercubic4DArray, TNumber, TIndex1, TIndex2, TIndex3, TIndex4> tensor, TNumber c)
+        => new(tensor._array * c);
+
     //
     // Equality
     //

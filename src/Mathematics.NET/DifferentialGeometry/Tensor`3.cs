@@ -90,6 +90,12 @@ public struct Tensor<TVector, TNumber, TIndex>(TVector vector)
     public static Tensor<TVector, TNumber, TIndex> operator -(Tensor<TVector, TNumber, TIndex> left, Tensor<TVector, TNumber, TIndex> right)
         => new(left._vector - right._vector);
 
+    public static Tensor<TVector, TNumber, TIndex> operator *(TNumber c, Tensor<TVector, TNumber, TIndex> tensor)
+        => new(c * tensor._vector);
+
+    public static Tensor<TVector, TNumber, TIndex> operator *(Tensor<TVector, TNumber, TIndex> tensor, TNumber c)
+        => new(tensor._vector * c);
+
     //
     // Equality
     //

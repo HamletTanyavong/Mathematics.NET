@@ -93,6 +93,12 @@ public struct Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>(TCubicArra
     public static Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> operator +(Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> tensor)
         => tensor;
 
+    public static Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> operator *(TNumber c, Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> tensor)
+        => new(c * tensor._array);
+
+    public static Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> operator *(Tensor<TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> tensor, TNumber c)
+        => new(tensor._array * c);
+
     //
     // Equality
     //
