@@ -215,6 +215,12 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     public Variable<T> Pow(Variable<T> x, Variable<T> y);
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
+    public Variable<T> Pow(Variable<T> x, T y);
+
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
+    public Variable<T> Pow(T x, Variable<T> y);
+
     // Root functions
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Cbrt(T)"/>

@@ -559,6 +559,28 @@ public sealed class DualOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, 0.3360299854573856)]
+    public void Pow_ConstantAndDualNumber_ReturnsDerivativeWithRespectToRight(double left, double right, double expected)
+    {
+        Dual<Real> x = new(right, Real.One);
+
+        var actual = Dual<Real>.Pow(left, x).D1;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 3.088081166620949)]
+    public void Pow_DualNumberAndConstant_ReturnsDerivativeWithRespectToLeft(double left, double right, double expected)
+    {
+        Dual<Real> x = new(left, Real.One);
+
+        var actual = Dual<Real>.Pow(x, right).D1;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 0.3795771135606888)]
     public void Root_TwoDualNumbers_ReturnsDerivativeWithRespectToLeft(double left, double right, double expected)
     {

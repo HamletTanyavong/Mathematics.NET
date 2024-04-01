@@ -64,6 +64,10 @@ public interface IDual<T, U>
     /// <returns>An instance of the type</returns>
     static abstract T CreateVariable(U value, U seed);
 
+    static abstract T Pow(T x, U y);
+
+    static abstract T Pow(U x, T y);
+
     /// <summary>Create a seeded instance of this type</summary>
     /// <param name="seed">The seed value</param>
     /// <returns>A seeded value</returns>

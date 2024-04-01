@@ -188,6 +188,14 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public static HyperDual<T> Pow(HyperDual<T> x, HyperDual<T> y) => Exp(y * Ln(x));
 
+    public static HyperDual<T> Pow(HyperDual<T> x, T y) => new(Dual<T>.Pow(x._d0, y), x._d1 * y * Dual<T>.Pow(x._d0, y - T.One));
+
+    public static HyperDual<T> Pow(T x, HyperDual<T> y)
+    {
+        var pow = Dual<T>.Pow(x, y._d0);
+        return new(pow, y._d1 * T.Ln(x) * pow);
+    }
+
     // Root functions
 
     public static HyperDual<T> Cbrt(HyperDual<T> x)

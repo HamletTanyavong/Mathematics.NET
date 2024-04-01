@@ -1142,6 +1142,80 @@ public sealed class HessianTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, 0.3360299854573856)]
+    public void Pow_ConstantAndVariable_ReturnsGradient(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Pow(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
+
+        var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.06956296832768787)]
+    public void Pow_ConstantAndVariable_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Pow(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 1.623222151685371)]
+    public void Pow_ConstantAndVariable_ReturnsValue(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+
+        var actual = _tape.Pow(left, x).Value;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 3.088081166620949)]
+    public void Pow_VariableAndConstant_ReturnsGradient(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Pow(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
+
+        var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 3.364251027050465)]
+    public void Pow_VariableAndConstant_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Pow(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 1.623222151685371)]
+    public void Pow_VariableAndConstant_ReturnsValue(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+
+        var actual = _tape.Pow(x, right).Value;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 0.3795771135606888, -0.04130373687338086)]
     public void Root_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
