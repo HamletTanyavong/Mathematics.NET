@@ -64,8 +64,10 @@ public interface IDual<T, U>
     /// <returns>An instance of the type</returns>
     static abstract T CreateVariable(U value, U seed);
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     static abstract T Pow(T x, U y);
 
+    /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     static abstract T Pow(U x, T y);
 
     /// <summary>Create a seeded instance of this type</summary>
