@@ -423,6 +423,28 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, pow);
     }
 
+    public Variable<T> Pow(Variable<T> x, T y)
+    {
+        var pow = T.Pow(x.Value, y);
+        if (_isTracking)
+        {
+            _nodes.AddLast(new GradientNode<T>(y * T.Pow(x.Value, y - T.One), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, pow);
+        }
+        return new(_nodes.Count, pow);
+    }
+
+    public Variable<T> Pow(T x, Variable<T> y)
+    {
+        var pow = T.Pow(x, y.Value);
+        if (_isTracking)
+        {
+            _nodes.AddLast(new GradientNode<T>(T.Ln(x) * pow, y._index, _nodes.Count));
+            return new(_nodes.Count - 1, pow);
+        }
+        return new(_nodes.Count, pow);
+    }
+
     // Root functions
 
     public Variable<T> Cbrt(Variable<T> x)
