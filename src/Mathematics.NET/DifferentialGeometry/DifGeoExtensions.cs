@@ -166,36 +166,36 @@ public static class DifGeoExtensions
     //
 
     /// <summary>Compute the inverse of a metric tensor with lower indices.</summary>
-    /// <typeparam name="TSquareMatrix">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TIndex1Name">The first index of the metric tensor</typeparam>
-    /// <typeparam name="TIndex2Name">The second index of the metric tensor</typeparam>
+    /// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TI1N">The first index of the metric tensor</typeparam>
+    /// <typeparam name="TI2N">The second index of the metric tensor</typeparam>
     /// <param name="metric">The metric tensor</param>
     /// <returns>A metric tensor with upper indices</returns>
-    public static MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name> Inverse<TSquareMatrix, TNumber, TIndex1Name, TIndex2Name>(this MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name> metric)
-        where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
-        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-        where TIndex1Name : ISymbol
-        where TIndex2Name : ISymbol
+    public static MetricTensor<TSM, TN, Upper, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this MetricTensor<TSM, TN, Lower, TI1N, TI2N> metric)
+        where TSM : ISquareMatrix<TSM, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1N : ISymbol
+        where TI2N : ISymbol
     {
-        var inverse = Unsafe.As<MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name>, TSquareMatrix>(ref metric).Inverse();
-        return Unsafe.As<TSquareMatrix, MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name>>(ref inverse);
+        var inverse = Unsafe.As<MetricTensor<TSM, TN, Lower, TI1N, TI2N>, TSM>(ref metric).Inverse();
+        return Unsafe.As<TSM, MetricTensor<TSM, TN, Upper, TI1N, TI2N>>(ref inverse);
     }
 
     /// <summary>Compute the inverse of a metric tensor with upper indices.</summary>
-    /// <typeparam name="TSquareMatrix">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-    /// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TIndex1Name">The first index of the metric tensor</typeparam>
-    /// <typeparam name="TIndex2Name">The second index of the metric tensor</typeparam>
+    /// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TI1N">The first index of the metric tensor</typeparam>
+    /// <typeparam name="TI2N">The second index of the metric tensor</typeparam>
     /// <param name="metric">The metric tensor</param>
     /// <returns>A metric tensor with lower indices</returns>
-    public static MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name> Inverse<TSquareMatrix, TNumber, TIndex1Name, TIndex2Name>(this MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name> metric)
-        where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
-        where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-        where TIndex1Name : ISymbol
-        where TIndex2Name : ISymbol
+    public static MetricTensor<TSM, TN, Lower, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this MetricTensor<TSM, TN, Upper, TI1N, TI2N> metric)
+        where TSM : ISquareMatrix<TSM, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1N : ISymbol
+        where TI2N : ISymbol
     {
-        var inverse = Unsafe.As<MetricTensor<TSquareMatrix, TNumber, Upper, TIndex1Name, TIndex2Name>, TSquareMatrix>(ref metric).Inverse();
-        return Unsafe.As<TSquareMatrix, MetricTensor<TSquareMatrix, TNumber, Lower, TIndex1Name, TIndex2Name>>(ref inverse);
+        var inverse = Unsafe.As<MetricTensor<TSM, TN, Upper, TI1N, TI2N>, TSM>(ref metric).Inverse();
+        return Unsafe.As<TSM, MetricTensor<TSM, TN, Lower, TI1N, TI2N>>(ref inverse);
     }
 }

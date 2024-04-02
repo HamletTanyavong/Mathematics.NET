@@ -166,6 +166,28 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
+    public static Matrix3x3<T> operator *(T c, Matrix3x3<T> matrix)
+    {
+        Unsafe.SkipInit(out Matrix3x3<T> result);
+
+        result.X1 = c * matrix.X1;
+        result.X2 = c * matrix.X2;
+        result.X3 = c * matrix.X3;
+
+        return result;
+    }
+
+    public static Matrix3x3<T> operator *(Matrix3x3<T> matrix, T c)
+    {
+        Unsafe.SkipInit(out Matrix3x3<T> result);
+
+        result.X1 = matrix.X1 * c;
+        result.X2 = matrix.X2 * c;
+        result.X3 = matrix.X3 * c;
+
+        return result;
+    }
+
     //
     // Equality
     //

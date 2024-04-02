@@ -34,30 +34,30 @@ using Mathematics.NET.Symbols;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a metric tensor field</summary>
-/// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TSquareMatrix">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TPointIndex">An index name</typeparam>
-public abstract class MetricTensorField<TTape, TSquareMatrix, TNumber, TPointIndex> : TensorField4x4<TTape, TNumber, Lower, Lower, TPointIndex>
-    where TTape : ITape<TNumber>
-    where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TPointIndex : IIndex
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
+/// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TPI">An index name</typeparam>
+public abstract class MetricTensorField<TT, TSM, TN, TPI> : TensorField4x4<TT, TN, Lower, Lower, TPI>
+    where TT : ITape<TN>
+    where TSM : ISquareMatrix<TSM, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TPI : IIndex
 {
     public MetricTensorField() { }
 
-    public new MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1, TIndex2> Compute<TIndex1, TIndex2>(TTape tape, AutoDiffTensor4<TNumber, TPointIndex> x)
-        where TIndex1 : ISymbol
-        where TIndex2 : ISymbol
+    public new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1, TI2> Compute<TI1, TI2>(TT tape, AutoDiffTensor4<TN, TPI> x)
+        where TI1 : ISymbol
+        where TI2 : ISymbol
     {
         tape.IsTracking = false;
 
-        Matrix4x4<TNumber> result = new();
+        Matrix4x4<TN> result = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (_buffer[i][j] is Func<TTape, AutoDiffTensor4<TNumber, TPointIndex>, Variable<TNumber>> function)
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> function)
                 {
                     result[i, j] = function(tape, x).Value;
                 }
@@ -65,32 +65,6 @@ public abstract class MetricTensorField<TTape, TSquareMatrix, TNumber, TPointInd
         }
 
         tape.IsTracking = true;
-        return new MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1, TIndex2>(result);
-    }
-
-    /// <inheritdoc cref="TensorField4x4{TTape, TNumber, TIndex1Position, TIndex2Position, TPointIndex}.ElementGradient{TIndex1Name, TIndex2Name}(TTape, AutoDiffTensor4{TNumber, TPointIndex})"/>
-    public new ReadOnlySpan<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>> ElementGradient<TIndex1Name, TIndex2Name>(TTape tape, AutoDiffTensor4<TNumber, TPointIndex> point)
-        where TIndex1Name : ISymbol
-        where TIndex2Name : ISymbol
-    {
-        Span<MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>> result = new MetricTensor<Matrix4x4<TNumber>, TNumber, Lower, TIndex1Name, TIndex2Name>[4];
-
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                if (this[i, j] is Func<TTape, AutoDiffTensor4<TNumber, TPointIndex>, Variable<TNumber>> function)
-                {
-                    _ = function(tape, point);
-                    tape.ReverseAccumulate(out var gradient);
-
-                    result[0][i, j] = gradient[0];
-                    result[1][i, j] = gradient[1];
-                    result[2][i, j] = gradient[2];
-                    result[3][i, j] = gradient[3];
-                }
-            }
-        }
-        return result;
+        return new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1, TI2>(result);
     }
 }

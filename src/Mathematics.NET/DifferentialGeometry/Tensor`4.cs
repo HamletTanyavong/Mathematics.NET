@@ -35,46 +35,46 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-two tensor or a similar mathematical object</summary>
-/// <typeparam name="TSquareMatrix">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TIndex1">The first index</typeparam>
-/// <typeparam name="TIndex2">The second index</typeparam>
+/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TI1">The first index</typeparam>
+/// <typeparam name="TI2">The second index</typeparam>
 /// <param name="matrix">A backing matrix</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>(TSquareMatrix matrix)
-    : IRankTwoTensor<Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>, TSquareMatrix, TNumber, TIndex1, TIndex2>,
-      IAdditionOperation<Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>>,
-      ISubtractionOperation<Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>>
-    where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TIndex1 : IIndex
-    where TIndex2 : IIndex
+public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
+    : IRankTwoTensor<Tensor<TSM, TN, TI1, TI2>, TSM, TN, TI1, TI2>,
+      IAdditionOperation<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TI2>>,
+      ISubtractionOperation<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TI2>>
+    where TSM : ISquareMatrix<TSM, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TI1 : IIndex
+    where TI2 : IIndex
 {
-    private TSquareMatrix _matrix = matrix;
+    private TSM _matrix = matrix;
 
     //
     // IRankTwoTensor interface
     //
 
-    public readonly IIndex I1 => TIndex1.Instance;
+    public readonly IIndex I1 => TI1.Instance;
 
-    public readonly IIndex I2 => TIndex2.Instance;
+    public readonly IIndex I2 => TI2.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
     //
 
-    public static int Components => TSquareMatrix.Components;
+    public static int Components => TSM.Components;
 
-    public static int E1Components => TSquareMatrix.E1Components;
+    public static int E1Components => TSM.E1Components;
 
-    public static int E2Components => TSquareMatrix.E2Components;
+    public static int E2Components => TSM.E2Components;
 
     //
     // Indexer
     //
 
-    public TNumber this[int row, int column]
+    public TN this[int row, int column]
     {
         get => _matrix[row, column];
         set => _matrix[row, column] = value;
@@ -84,31 +84,37 @@ public struct Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>(TSquareMatrix mat
     // Operators
     //
 
-    public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator -(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> tensor)
+    public static Tensor<TSM, TN, TI1, TI2> operator -(Tensor<TSM, TN, TI1, TI2> tensor)
         => new(-tensor._matrix);
 
-    public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator +(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> tensor)
+    public static Tensor<TSM, TN, TI1, TI2> operator +(Tensor<TSM, TN, TI1, TI2> tensor)
         => tensor;
 
-    public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator +(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> left, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> right)
+    public static Tensor<TSM, TN, TI1, TI2> operator +(Tensor<TSM, TN, TI1, TI2> left, Tensor<TSM, TN, TI1, TI2> right)
         => left._matrix + right._matrix;
 
-    public static Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> operator -(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> left, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> right)
+    public static Tensor<TSM, TN, TI1, TI2> operator -(Tensor<TSM, TN, TI1, TI2> left, Tensor<TSM, TN, TI1, TI2> right)
         => left._matrix - right._matrix;
+
+    public static Tensor<TSM, TN, TI1, TI2> operator *(TN c, Tensor<TSM, TN, TI1, TI2> tensor)
+        => new(c * tensor._matrix);
+
+    public static Tensor<TSM, TN, TI1, TI2> operator *(Tensor<TSM, TN, TI1, TI2> tensor, TN c)
+        => new(tensor._matrix * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> left, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> right)
+    public static bool operator ==(Tensor<TSM, TN, TI1, TI2> left, Tensor<TSM, TN, TI1, TI2> right)
         => left._matrix == right._matrix;
 
-    public static bool operator !=(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> left, Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> right)
+    public static bool operator !=(Tensor<TSM, TN, TI1, TI2> left, Tensor<TSM, TN, TI1, TI2> right)
         => left._matrix != right._matrix;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TSM, TN, TI1, TI2> other && Equals(other);
 
-    public readonly bool Equals(Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2> value) => _matrix.Equals(value._matrix);
+    public readonly bool Equals(Tensor<TSM, TN, TI1, TI2> value) => _matrix.Equals(value._matrix);
 
     public override readonly int GetHashCode() => HashCode.Combine(_matrix);
 
@@ -123,24 +129,24 @@ public struct Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>(TSquareMatrix mat
     //
 
     /// <summary>Create a tensor with a new index in the first position.</summary>
-    /// <typeparam name="TNewIndex">A new index</typeparam>
+    /// <typeparam name="TNI">A new index</typeparam>
     /// <returns>A tensor with a new index in the first position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TSquareMatrix, TNumber, TNewIndex, TIndex2> WithIndexOne<TNewIndex>()
-        where TNewIndex : IIndex
-        => Unsafe.As<Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>, Tensor<TSquareMatrix, TNumber, TNewIndex, TIndex2>>(ref this);
+    public Tensor<TSM, TN, TNI, TI2> WithIndexOne<TNI>()
+        where TNI : IIndex
+        => Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TNI, TI2>>(ref this);
 
     /// <summary>Create a tensor with a new index in the second position.</summary>
-    /// <typeparam name="TNewIndex">A new index</typeparam>
+    /// <typeparam name="TNI">A new index</typeparam>
     /// <returns>A tensor with a new index in the second position</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TSquareMatrix, TNumber, TIndex1, TNewIndex> WithIndexTwo<TNewIndex>()
-        where TNewIndex : IIndex
-        => Unsafe.As<Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>, Tensor<TSquareMatrix, TNumber, TIndex1, TNewIndex>>(ref this);
+    public Tensor<TSM, TN, TI1, TNI> WithIndexTwo<TNI>()
+        where TNI : IIndex
+        => Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TNI>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator Tensor<TSquareMatrix, TNumber, TIndex1, TIndex2>(TSquareMatrix input) => new(input);
+    public static implicit operator Tensor<TSM, TN, TI1, TI2>(TSM input) => new(input);
 }

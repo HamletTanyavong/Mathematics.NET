@@ -138,6 +138,26 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         return result;
     }
 
+    public static Matrix2x2<T> operator *(T c, Matrix2x2<T> matrix)
+    {
+        Unsafe.SkipInit(out Matrix2x2<T> result);
+
+        result.X1 = c * matrix.X1;
+        result.X2 = c * matrix.X2;
+
+        return result;
+    }
+
+    public static Matrix2x2<T> operator *(Matrix2x2<T> matrix, T c)
+    {
+        Unsafe.SkipInit(out Matrix2x2<T> result);
+
+        result.X1 = matrix.X1 * c;
+        result.X2 = matrix.X2 * c;
+
+        return result;
+    }
+
     //
     // Equality
     //

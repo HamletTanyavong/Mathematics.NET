@@ -30,19 +30,19 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
 /// <summary>Defines support for rank-three tensors and similar mathematical objects</summary>
-/// <typeparam name="TRankThreeTensor">The type that implements the interface</typeparam>
-/// <typeparam name="TCubicArray">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TIndex1">An index</typeparam>
-/// <typeparam name="TIndex2">An index</typeparam>
-/// <typeparam name="TIndex3">An index</typeparam>
-public interface IRankThreeTensor<TRankThreeTensor, TCubicArray, TNumber, TIndex1, TIndex2, TIndex3> : IThreeDimensionalArrayRepresentable<TRankThreeTensor, TNumber>
-    where TRankThreeTensor : IRankThreeTensor<TRankThreeTensor, TCubicArray, TNumber, TIndex1, TIndex2, TIndex3>
-    where TCubicArray : ICubicArray<TCubicArray, TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TIndex1 : IIndex
-    where TIndex2 : IIndex
-    where TIndex3 : IIndex
+/// <typeparam name="TR3T">The type that implements the interface</typeparam>
+/// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TI1">An index</typeparam>
+/// <typeparam name="TI2">An index</typeparam>
+/// <typeparam name="TI3">An index</typeparam>
+public interface IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3> : IThreeDimensionalArrayRepresentable<TR3T, TN>
+    where TR3T : IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3>
+    where TCA : ICubicArray<TCA, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TI1 : IIndex
+    where TI2 : IIndex
+    where TI3 : IIndex
 {
     /// <summary>The first index</summary>
     IIndex I1 { get; }
@@ -55,5 +55,5 @@ public interface IRankThreeTensor<TRankThreeTensor, TCubicArray, TNumber, TIndex
 
     /// <summary>Convert a value that implements <see cref="ICubicArray{T, U}"/></summary>
     /// <param name="value">The value to convert</param>
-    static abstract implicit operator TRankThreeTensor(TCubicArray value);
+    static abstract implicit operator TR3T(TCA value);
 }

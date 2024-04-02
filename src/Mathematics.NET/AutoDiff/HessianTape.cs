@@ -240,7 +240,7 @@ public record class HessianTape<T> : ITape<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    private static void EdgePush(Span2D<T> weight, in HessianNode<T> node, int i)
+    private static void EdgePush(Span2D<T> weight, ref readonly HessianNode<T> node, int i)
     {
         for (int p = 0; p <= i; p++)
         {
@@ -284,7 +284,7 @@ public record class HessianTape<T> : ITape<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    private static void Accumulate(Span2D<T> weight, in HessianNode<T> node, T v)
+    private static void Accumulate(Span2D<T> weight, ref readonly HessianNode<T> node, T v)
     {
         weight[node.PX, node.PX] += v * node.DXX;
         weight[node.PX, node.PY] += v * node.DXY;
@@ -626,25 +626,48 @@ public record class HessianTape<T> : ITape<T>
 
     // Power functions
 
-    public Variable<T> Pow(Variable<T> x, Variable<T> n)
+    public Variable<T> Pow(Variable<T> x, Variable<T> y)
     {
-        var pow = T.Pow(x.Value, n.Value);
+        var pow = T.Pow(x.Value, y.Value);
         if (_isTracking)
         {
             var lnx = T.Ln(x.Value);
-            var pownmo = T.Pow(x.Value, n.Value - T.One);
+            var pownmo = T.Pow(x.Value, y.Value - T.One);
             var dfn = lnx * pow;
             _nodes.Add(new(
-                n.Value * pownmo,
-                (n.Value - T.One) * n.Value * T.Pow(x.Value, n.Value - 2.0),
-                (T.One + lnx * n.Value) * pownmo,
+                y.Value * pownmo,
+                (y.Value - T.One) * y.Value * T.Pow(x.Value, y.Value - 2.0),
+                (T.One + lnx * y.Value) * pownmo,
                 dfn,
                 lnx * dfn,
                 x._index,
-                n._index));
+                y._index));
             return new(_nodes.Count - 1, pow);
         }
         return new(_nodes.Count, pow);
+    }
+
+    public Variable<T> Pow(Variable<T> x, T y)
+    {
+        var pow = T.Pow(x.Value, y);
+        if (_isTracking)
+        {
+            _nodes.Add(new(y * T.Pow(x.Value, y - T.One), (y - T.One) * y * T.Pow(x.Value, y - 2.0), x._index, _nodes.Count));
+            return new(_nodes.Count - 1, pow);
+        }
+        return new(_nodes.Count, pow);
+    }
+
+    public Variable<T> Pow(T x, Variable<T> y)
+    {
+        var pow = T.Pow(x, y.Value);
+        if (_isTracking)
+        {
+            var lnx = T.Ln(x);
+            _nodes.Add(new(lnx * pow, lnx * lnx * pow, y._index, _nodes.Count));
+            return new(_nodes.Count - 1, pow);
+        }
+        return new(_nodes.Count - 1, pow);
     }
 
     // Root functions

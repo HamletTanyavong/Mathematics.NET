@@ -35,6 +35,7 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
 public interface IArrayRepresentable<T, U>
     : IEqualityRelation<T, bool>,
+      IMultiplicationOperation<T, U, T>,
       IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>
     where T : IArrayRepresentable<T, U>

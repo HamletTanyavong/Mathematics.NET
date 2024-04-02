@@ -176,6 +176,14 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
 
     public static Dual<T> Pow(Dual<T> x, Dual<T> y) => Exp(y * Ln(x));
 
+    public static Dual<T> Pow(Dual<T> x, T y) => new(T.Pow(x._d0, y), x._d1 * y * T.Pow(x._d0, y - T.One));
+
+    public static Dual<T> Pow(T x, Dual<T> y)
+    {
+        var pow = T.Pow(x, y._d0);
+        return new(pow, y._d1 * T.Ln(x) * pow);
+    }
+
     // Root functions
 
     public static Dual<T> Cbrt(Dual<T> x)

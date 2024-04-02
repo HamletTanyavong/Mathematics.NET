@@ -36,50 +36,50 @@ using Mathematics.NET.Symbols;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a metric tensor</summary>
-/// <typeparam name="TSquareMatrix">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TIndexPosition">An index position</typeparam>
-/// <typeparam name="TIndex1Name">The name of the first index</typeparam>
-/// <typeparam name="TIndex2Name">The name of the second index</typeparam>
+/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <typeparam name="TIP">An index position</typeparam>
+/// <typeparam name="TI1N">The name of the first index</typeparam>
+/// <typeparam name="TI2N">The name of the second index</typeparam>
 /// <param name="matrix">A backing matrix</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name>(TSquareMatrix matrix)
-    : IRankTwoTensor<MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name>, TSquareMatrix, TNumber, Index<TIndexPosition, TIndex1Name>, Index<TIndexPosition, TIndex2Name>>,
-      IAdditionOperation<MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name>, Tensor<TSquareMatrix, TNumber, Index<TIndexPosition, TIndex1Name>, Index<TIndexPosition, TIndex2Name>>>,
-      ISubtractionOperation<MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name>, Tensor<TSquareMatrix, TNumber, Index<TIndexPosition, TIndex1Name>, Index<TIndexPosition, TIndex2Name>>>
-    where TSquareMatrix : ISquareMatrix<TSquareMatrix, TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TIndexPosition : IIndexPosition
-    where TIndex1Name : ISymbol
-    where TIndex2Name : ISymbol
+public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
+    : IRankTwoTensor<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, TSM, TN, Index<TIP, TI1N>, Index<TIP, TI2N>>,
+      IAdditionOperation<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, Tensor<TSM, TN, Index<TIP, TI1N>, Index<TIP, TI2N>>>,
+      ISubtractionOperation<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, Tensor<TSM, TN, Index<TIP, TI1N>, Index<TIP, TI2N>>>
+    where TSM : ISquareMatrix<TSM, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TIP : IIndexPosition
+    where TI1N : ISymbol
+    where TI2N : ISymbol
 {
-    public static readonly MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> Euclidean = TSquareMatrix.Identity;
+    public static readonly MetricTensor<TSM, TN, TIP, TI1N, TI2N> Euclidean = TSM.Identity;
 
-    private TSquareMatrix _matrix = matrix;
+    private TSM _matrix = matrix;
 
     //
     // IRankTwoTensor interface
     //
 
-    public readonly IIndex I1 => Index<TIndexPosition, TIndex1Name>.Instance;
+    public readonly IIndex I1 => Index<TIP, TI1N>.Instance;
 
-    public readonly IIndex I2 => Index<TIndexPosition, TIndex2Name>.Instance;
+    public readonly IIndex I2 => Index<TIP, TI2N>.Instance;
 
     //
     // IArrayRepresentable & relevant interfaces
     //
 
-    public static int Components => TSquareMatrix.Components;
+    public static int Components => TSM.Components;
 
-    public static int E1Components => TSquareMatrix.E1Components;
+    public static int E1Components => TSM.E1Components;
 
-    public static int E2Components => TSquareMatrix.E2Components;
+    public static int E2Components => TSM.E2Components;
 
     //
     // Indexer
     //
 
-    public TNumber this[int row, int column]
+    public TN this[int row, int column]
     {
         get => _matrix[row, column];
         set => _matrix[row, column] = value;
@@ -89,31 +89,37 @@ public struct MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, 
     // Operators
     //
 
-    public static MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> operator -(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> metric)
+    public static MetricTensor<TSM, TN, TIP, TI1N, TI2N> operator -(MetricTensor<TSM, TN, TIP, TI1N, TI2N> metric)
         => new(-metric._matrix);
 
-    public static MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> operator +(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> metric)
+    public static MetricTensor<TSM, TN, TIP, TI1N, TI2N> operator +(MetricTensor<TSM, TN, TIP, TI1N, TI2N> metric)
         => metric;
 
-    public static Tensor<TSquareMatrix, TNumber, Index<TIndexPosition, TIndex1Name>, Index<TIndexPosition, TIndex2Name>> operator +(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> left, MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> right)
+    public static Tensor<TSM, TN, Index<TIP, TI1N>, Index<TIP, TI2N>> operator +(MetricTensor<TSM, TN, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TIP, TI1N, TI2N> right)
         => left._matrix + right._matrix;
 
-    public static Tensor<TSquareMatrix, TNumber, Index<TIndexPosition, TIndex1Name>, Index<TIndexPosition, TIndex2Name>> operator -(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> left, MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> right)
+    public static Tensor<TSM, TN, Index<TIP, TI1N>, Index<TIP, TI2N>> operator -(MetricTensor<TSM, TN, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TIP, TI1N, TI2N> right)
         => left._matrix - right._matrix;
+
+    public static MetricTensor<TSM, TN, TIP, TI1N, TI2N> operator *(TN c, MetricTensor<TSM, TN, TIP, TI1N, TI2N> metric)
+        => new(c * metric._matrix);
+
+    public static MetricTensor<TSM, TN, TIP, TI1N, TI2N> operator *(MetricTensor<TSM, TN, TIP, TI1N, TI2N> metric, TN c)
+        => new(metric._matrix * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> left, MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> right)
+    public static bool operator ==(MetricTensor<TSM, TN, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TIP, TI1N, TI2N> right)
         => left._matrix == right._matrix;
 
-    public static bool operator !=(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> left, MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> right)
+    public static bool operator !=(MetricTensor<TSM, TN, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TIP, TI1N, TI2N> right)
         => left._matrix == right._matrix;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<TSM, TN, TIP, TI1N, TI2N> other && Equals(other);
 
-    public readonly bool Equals(MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name> value) => _matrix.Equals(value._matrix);
+    public readonly bool Equals(MetricTensor<TSM, TN, TIP, TI1N, TI2N> value) => _matrix.Equals(value._matrix);
 
     public override readonly int GetHashCode() => HashCode.Combine(_matrix);
 
@@ -128,22 +134,22 @@ public struct MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, 
     //
 
     /// <summary>Create a tensor with a new index in the first position.</summary>
-    /// <typeparam name="TNewIndexName">A symbol</typeparam>
+    /// <typeparam name="TNIN">A symbol</typeparam>
     /// <returns>A tensor with a new index in the first position</returns>
-    public MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TNewIndexName, TIndex2Name> WithIndexOne<TNewIndexName>()
-        where TNewIndexName : ISymbol
-        => Unsafe.As<MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name>, MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TNewIndexName, TIndex2Name>>(ref this);
+    public MetricTensor<TSM, TN, TIP, TNIN, TI2N> WithIndexOne<TNIN>()
+        where TNIN : ISymbol
+        => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNIN, TI2N>>(ref this);
 
     /// <summary>Create a tensor with a new index in the second position.</summary>
-    /// <typeparam name="TNewIndexName">A symbol</typeparam>
+    /// <typeparam name="TNIN">A symbol</typeparam>
     /// <returns>A tensor with a new index in the second position</returns>
-    public MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TNewIndexName> WithIndexTwo<TNewIndexName>()
-        where TNewIndexName : ISymbol
-        => Unsafe.As<MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name>, MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TNewIndexName>>(ref this);
+    public MetricTensor<TSM, TN, TIP, TI1N, TNIN> WithIndexTwo<TNIN>()
+        where TNIN : ISymbol
+        => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TI1N, TNIN>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator MetricTensor<TSquareMatrix, TNumber, TIndexPosition, TIndex1Name, TIndex2Name>(TSquareMatrix input) => new(input);
+    public static implicit operator MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM input) => new(input);
 }

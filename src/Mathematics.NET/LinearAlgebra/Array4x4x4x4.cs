@@ -105,6 +105,30 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
     public static Array4x4x4x4<T> operator +(Array4x4x4x4<T> array)
         => array;
 
+    public static Array4x4x4x4<T> operator *(T c, Array4x4x4x4<T> array)
+    {
+        Unsafe.SkipInit(out Array4x4x4x4<T> result);
+
+        result.X1 = c * array.X1;
+        result.X2 = c * array.X2;
+        result.X3 = c * array.X3;
+        result.X4 = c * array.X4;
+
+        return result;
+    }
+
+    public static Array4x4x4x4<T> operator *(Array4x4x4x4<T> array, T c)
+    {
+        Unsafe.SkipInit(out Array4x4x4x4<T> result);
+
+        result.X1 = array.X1 * c;
+        result.X2 = array.X2 * c;
+        result.X3 = array.X3 * c;
+        result.X4 = array.X4 * c;
+
+        return result;
+    }
+
     //
     // Equality
     //
