@@ -51,4 +51,8 @@ public interface IThreeDimensionalArrayRepresentable<T, U>
     /// <param name="k">The third index</param>
     /// <returns>The element at the specified indices</returns>
     U this[int i, int j, int k] { get; set; }
+
+    /// <summary>Copy the values of this object to a 3D array.</summary>
+    /// <param name="destination">The destination array</param>
+    void CopyTo(ref U[,,] destination);
 }

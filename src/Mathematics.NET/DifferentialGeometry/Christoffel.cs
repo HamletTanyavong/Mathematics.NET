@@ -124,6 +124,8 @@ public struct Christoffel<TCA, TN, TI, TI2N, TI3N>(TCA array)
     // Methods
     //
 
+    public readonly void CopyTo(ref TN[,,] destination) => _array.CopyTo(ref destination);
+
     /// <summary>Create a Christoffel symbol with a new index in the first position.</summary>
     /// <typeparam name="TNI">An index</typeparam>
     /// <returns>A Christoffel symbol with a new index in the first position</returns>

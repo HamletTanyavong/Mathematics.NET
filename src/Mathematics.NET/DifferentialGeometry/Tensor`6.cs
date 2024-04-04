@@ -131,6 +131,8 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
     // Methods
     //
 
+    public readonly void CopyTo(ref TN[,,,] destination) => _array.CopyTo(ref destination);
+
     /// <summary>Create a tensor with a new index in the first position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
     /// <returns>A tensor with a new index in the first position</returns>
