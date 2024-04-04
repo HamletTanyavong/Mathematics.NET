@@ -47,7 +47,7 @@ public sealed class ChristoffelSymbolTests
     //
 
     [TestMethod]
-    [DynamicData(nameof(GetChristoffelSymbolData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetChristoffelSymbolOfFirstKindData), DynamicDataSourceType.Method)]
     public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheFirstKind(object[] input, object[] values)
     {
         DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Matrix4x4<Real>, Real, Index<Upper, Delta>> metric = new();
@@ -66,7 +66,7 @@ public sealed class ChristoffelSymbolTests
     // Helpers
     //
 
-    public static IEnumerable<object[]> GetChristoffelSymbolData()
+    public static IEnumerable<object[]> GetChristoffelSymbolOfFirstKindData()
     {
         yield return new[]
         {
