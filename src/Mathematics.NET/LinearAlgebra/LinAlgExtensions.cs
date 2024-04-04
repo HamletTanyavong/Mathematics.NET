@@ -304,17 +304,17 @@ public static class LinAlgExtensions
     public static string ToDisplayString<T>(this T[,,] array, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
-        var e1Length = array.GetLength(0);
-        var e2Length = array.GetLength(1);
-        var e3Length = array.GetLength(2);
+        var e0Length = array.GetLength(0);
+        var e1Length = array.GetLength(1);
+        var e2Length = array.GetLength(2);
 
         var maxElementLength = 0;
-        var strings = new string[4, 4, 4];
-        for (int i = 0; i < e1Length; i++)
+        var strings = new string[e0Length, e1Length, e2Length];
+        for (int i = 0; i < e0Length; i++)
         {
-            for (int j = 0; j < e2Length; j++)
+            for (int j = 0; j < e1Length; j++)
             {
-                for (int k = 0; k < e3Length; k++)
+                for (int k = 0; k < e2Length; k++)
                 {
                     var s = array[i, j, k].ToString(format, provider);
                     strings[i, j, k] = s;
@@ -330,15 +330,15 @@ public static class LinAlgExtensions
         StringBuilder builder = new();
         var newlineChars = Environment.NewLine.ToCharArray();
         builder.Append('[');
-        for (int i = 0; i < e1Length; i++)
+        for (int i = 0; i < e0Length; i++)
         {
             builder.Append(i != 0 ? " [" : "[");
-            for (int j = 0; j < e2Length; j++)
+            for (int j = 0; j < e1Length; j++)
             {
                 builder.Append(j != 0 ? "  [" : "[");
-                for (int k = 0; k < e3Length; k++)
+                for (int k = 0; k < e2Length; k++)
                 {
-                    string value = k != e3Length - 1 ? $"{strings[i, j, k]}, " : strings[i, j, k];
+                    string value = k != e2Length - 1 ? $"{strings[i, j, k]}, " : strings[i, j, k];
                     builder.Append(value.PadRight(maxElementLength));
                 }
                 builder.CloseGroup(newlineChars);
@@ -358,20 +358,20 @@ public static class LinAlgExtensions
     public static string ToDisplayString<T>(this T[,,,] array, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
-        var e1Length = array.GetLength(0);
-        var e2Length = array.GetLength(1);
-        var e3Length = array.GetLength(2);
-        var e4Length = array.GetLength(3);
+        var e0Length = array.GetLength(0);
+        var e1Length = array.GetLength(1);
+        var e2Length = array.GetLength(2);
+        var e3Length = array.GetLength(3);
 
         var maxElementLength = 0;
-        var strings = new string[4, 4, 4, 4];
-        for (int i = 0; i < e1Length; i++)
+        var strings = new string[e0Length, e1Length, e2Length, e3Length];
+        for (int i = 0; i < e0Length; i++)
         {
-            for (int j = 0; j < e2Length; j++)
+            for (int j = 0; j < e1Length; j++)
             {
-                for (int k = 0; k < e3Length; k++)
+                for (int k = 0; k < e2Length; k++)
                 {
-                    for (int l = 0; l < e4Length; l++)
+                    for (int l = 0; l < e3Length; l++)
                     {
                         var s = array[i, j, k, l].ToString(format, provider);
                         strings[i, j, k, l] = s;
@@ -388,18 +388,18 @@ public static class LinAlgExtensions
         StringBuilder builder = new();
         var newlineChars = Environment.NewLine.ToCharArray();
         builder.Append('[');
-        for (int i = 0; i < e1Length; i++)
+        for (int i = 0; i < e0Length; i++)
         {
             builder.Append(i != 0 ? " [" : "[");
-            for (int j = 0; j < e2Length; j++)
+            for (int j = 0; j < e1Length; j++)
             {
                 builder.Append(j != 0 ? "  [" : "[");
-                for (int k = 0; k < e3Length; k++)
+                for (int k = 0; k < e2Length; k++)
                 {
                     builder.Append(k != 0 ? "   [" : "[");
-                    for (int l = 0; l < e4Length; l++)
+                    for (int l = 0; l < e3Length; l++)
                     {
-                        string value = k != e4Length - 1 ? $"{strings[i, j, k, l]}, " : strings[i, j, k, l];
+                        string value = k != e3Length - 1 ? $"{strings[i, j, k, l]}, " : strings[i, j, k, l];
                         builder.Append(value.PadRight(maxElementLength));
                     }
                     builder.CloseGroup(newlineChars);

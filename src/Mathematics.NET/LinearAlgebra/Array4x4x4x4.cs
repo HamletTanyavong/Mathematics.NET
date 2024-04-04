@@ -150,16 +150,19 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
     // Formatting
     //
 
-    public string ToString(string? format, IFormatProvider? provider) => ToArray4D().ToDisplayString(format, provider);
-
-    //
-    // Helpers
-    //
-
-    private T[,,,] ToArray4D()
+    public string ToString(string? format, IFormatProvider? provider)
     {
-        T[,,,] result = new T[4, 4, 4, 4];
+        var array = new T[4, 4, 4, 4];
+        CopyTo(ref array);
+        return array.ToDisplayString(format, provider);
+    }
 
+    //
+    // Methods
+    //
+
+    public readonly void CopyTo(ref T[,,,] destination)
+    {
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -168,12 +171,10 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        result[i, j, k, l] = this[i, j, k, l];
+                        destination[i, j, k, l] = this[i, j, k, l];
                     }
                 }
             }
         }
-
-        return result;
     }
 }

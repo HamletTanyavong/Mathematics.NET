@@ -124,7 +124,7 @@ public sealed class Assert<T>
                 if (!Precision.AreApproximatelyEqual(expected[i, j], actual[i, j], epsilon))
                 {
                     Assert.Fail($$"""
-                        Actual value at row {{i}} and column {{j}} does not fall within the specifed margin of error, {{epsilon}}:
+                        Actual value at row {{i}} and column {{j}} does not fall within the specified margin of error, {{epsilon}}:
 
                         Expected: {{expected[i, j]}}
                         Actual: {{actual[i, j]}}
@@ -157,11 +157,89 @@ public sealed class Assert<T>
                 if (!Precision.AreApproximatelyEqual(expected[i, j], actual[i, j], epsilon))
                 {
                     Assert.Fail($$"""
-                        Actual value at row {{i}} and column {{j}} does not fall within the specifed margin of error, {{epsilon}}:
+                        Actual value at row {{i}} and column {{j}} does not fall within the specified margin of error, {{epsilon}}:
 
                         Expected: {{expected[i, j]}}
                         Actual: {{actual[i, j]}}
                         """);
+                }
+            }
+        }
+    }
+
+    /// <summary>Assert that the elements in two 3D arrays are approximately equal.</summary>
+    /// <param name="expected">A 3D array of expected values</param>
+    /// <param name="actual">A 3D array of actual values</param>
+    /// <param name="epsilon">A margin of error</param>
+    public static void AreApproximatelyEqual(T[,,] expected, T[,,] actual, Real epsilon)
+    {
+        if (expected.GetLength(0) != actual.GetLength(0) || expected.GetLength(1) != actual.GetLength(1) || expected.GetLength(2) != actual.GetLength(2))
+        {
+            Assert.Fail($"Dimensions of the actual array, [{actual.GetLength(0)}, {actual.GetLength(1)}, {actual.GetLength(2)}], does not match the dimensions of the expected matrix, [{expected.GetLength(0)}, {expected.GetLength(1)}, {expected.GetLength(2)}]");
+        }
+
+        for (int i = 0; i < expected.GetLength(0); i++)
+        {
+            for (int j = 0; j < expected.GetLength(1); j++)
+            {
+                for (int k = 0; k < expected.GetLength(2); k++)
+                {
+                    if (T.IsNaN(expected[i, j, k]) && T.IsNaN(actual[i, j, k]) || T.IsInfinity(expected[i, j, k]) && T.IsInfinity(actual[i, j, k]))
+                    {
+                        continue;
+                    }
+
+                    if (!Precision.AreApproximatelyEqual(expected[i, j, k], actual[i, j, k], epsilon))
+                    {
+                        Assert.Fail($$"""
+                            Actual value at location [{{i}}, {{j}}, {{k}}] does not fall within the specified margin of error, {{epsilon}}:
+
+                            Expected: {{expected[i, j, k]}}
+                            Actual: {{actual[i, j, k]}}
+                            """);
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>Assert that the elements in two 4D arrays are approximately equal.</summary>
+    /// <param name="expected">A 4D array of expected values</param>
+    /// <param name="actual">A 4D array of actual values</param>
+    /// <param name="epsilon">A margin of error</param>
+    public static void AreApproximatelyEqual(T[,,,] expected, T[,,,] actual, Real epsilon)
+    {
+        if (expected.GetLength(0) != actual.GetLength(0) ||
+            expected.GetLength(1) != actual.GetLength(1) ||
+            expected.GetLength(2) != actual.GetLength(2) ||
+            expected.GetLength(3) != actual.GetLength(3))
+        {
+            Assert.Fail($"Dimensions of the actual array, [{actual.GetLength(0)}, {actual.GetLength(1)}, {actual.GetLength(2)}, {actual.GetLength(3)}], does not match the dimensions of the expected matrix, [{expected.GetLength(0)}, {expected.GetLength(1)}, {expected.GetLength(2)}, {expected.GetLength(3)}]");
+        }
+
+        for (int i = 0; i < expected.GetLength(0); i++)
+        {
+            for (int j = 0; j < expected.GetLength(1); j++)
+            {
+                for (int k = 0; k < expected.GetLength(2); k++)
+                {
+                    for (int l = 0; l < expected.GetLength(3); l++)
+                    {
+                        if (T.IsNaN(expected[i, j, k, l]) && T.IsNaN(actual[i, j, k, l]) || T.IsInfinity(expected[i, j, k, l]) && T.IsInfinity(actual[i, j, k, l]))
+                        {
+                            continue;
+                        }
+
+                        if (!Precision.AreApproximatelyEqual(expected[i, j, k, l], actual[i, j, k, l], epsilon))
+                        {
+                            Assert.Fail($$"""
+                                Actual value at location [{{i}}, {{j}}, {{k}}, {{l}}] does not fall within the specified margin of error, {{epsilon}}:
+
+                                Expected: {{expected[i, j, k, l]}}
+                                Actual: {{actual[i, j, k, l]}}
+                                """);
+                        }
+                    }
                 }
             }
         }
