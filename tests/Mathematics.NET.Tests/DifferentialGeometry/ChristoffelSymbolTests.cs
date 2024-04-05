@@ -62,6 +62,22 @@ public sealed class ChristoffelSymbolTests
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
+    [TestMethod]
+    [DynamicData(nameof(GetChristoffelSymbolOfSecondKindData), DynamicDataSourceType.Method)]
+    public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheSecondKind(object[] input, object[] values)
+    {
+        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Matrix4x4<Real>, Real, Index<Upper, Delta>> metric = new();
+        var position = _tape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+
+        var expected = (Real[,,])values[0];
+
+        DifGeo.Christoffel(_tape, metric, position, out Christoffel<Array4x4x4<Real>, Real, Index<Upper, Alpha>, Beta, Gamma> result);
+        var actual = new Real[4, 4, 4];
+        result.CopyTo(ref actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
+    }
+
     //
     // Helpers
     //
@@ -98,6 +114,44 @@ public sealed class ChristoffelSymbolTests
                         { 0,                 -16.49481128957631, -2185.536093357125, 223.1454164552846 },
                         { 0,                 0.0983537548512989, -19.79949437654947, 177.5415055941374 },
                         { 440.599776,        220.299888,         172.591632,         76.008096         }
+                    }
+                }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> GetChristoffelSymbolOfSecondKindData()
+    {
+        yield return new[]
+        {
+            [1.23, 2.46, 3.14, 7.13],
+            new object[]
+            {
+                new Real[,,]
+                {
+                    {
+                        { 2.239350609791927,  0.01461934253211735, 12.12758273782715,  3.529703641587461 },
+                        { 0,                  2.358106360643505,   -0.90537082358634,  2.620615431196252 },
+                        { -7.779470847122719, 0.03077659910243831, -28.35074813512594, 22.45375027707856 },
+                        { 1378.833245794903,  -0.4756953011488042, 16.77214989444621,  320.5930840087684 }
+                    },
+                    {
+                        { -109.4128102983294, -0.836915783423558, -704.4688660629324, -174.0290625011717 },
+                        { 0,                  -136.3557010019774, 44.25687093771166,  -147.9690124918006 },
+                        { 451.8950828633208,  -1.761531969227613, 1616.423265670495,  -1284.79815262318  },
+                        { -78616.21153791852, 28.54602852524207,  -954.772766741069,  -18384.8988352843  }
+                    },
+                    {
+                        { 0.07224604305626464, 0.00089333296529076 , 0.4689197542974098,   0.1165529750046903 },
+                        { 0,                   0.0913097548918665,   -0.02854633808253575, 0.1011789045933849 },
+                        { -0.3007975816003572, 0.001879437023045884, -1.100072057551851,   1.36988885711727   },
+                        { 53.5046353708834,    -0.01707861770862742, 1.150504003285304,    12.37604007775708  }
+                    },
+                    {
+                        { -22.51226842522944, -0.1750670584484963, -144.8435008425763, -35.85185118427089 },
+                        { 0,                  -28.20211764966779,  9.10866804307758,   -31.25234409183736 },
+                        { 92.9126452120913,   -0.3684726863946806, 339.7224073964993,  -268.7435284973888 },
+                        { -16522.75026428793, 5.850406741691683,   -200.8906641281141, -3837.77389479284  }
                     }
                 }
             }
