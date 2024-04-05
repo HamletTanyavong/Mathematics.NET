@@ -86,7 +86,7 @@ public record class GradientTape<T> : ITape<T>
         _isTracking = isTracking;
     }
 
-    public bool IsTracking { get => _isTracking; set => _isTracking = false; }
+    public bool IsTracking { get => _isTracking; set => _isTracking = value; }
 
     public int NodeCount => _nodes.Count;
 
