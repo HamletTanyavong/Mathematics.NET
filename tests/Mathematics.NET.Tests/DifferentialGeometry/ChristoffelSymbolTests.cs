@@ -51,11 +51,11 @@ public sealed class ChristoffelSymbolTests
     public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheFirstKind(object[] input, object[] values)
     {
         DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Matrix4x4<Real>, Real, Index<Upper, Delta>> metric = new();
-        var position = _tape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = _tape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Christoffel(_tape, metric, position, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Beta, Gamma> result);
+        DifGeo.Christoffel(_tape, metric, point, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Beta, Gamma> result);
         var actual = new Real[4, 4, 4];
         result.CopyTo(ref actual);
 
@@ -67,11 +67,11 @@ public sealed class ChristoffelSymbolTests
     public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheSecondKind(object[] input, object[] values)
     {
         DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Matrix4x4<Real>, Real, Index<Upper, Delta>> metric = new();
-        var position = _tape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = _tape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Christoffel(_tape, metric, position, out Christoffel<Array4x4x4<Real>, Real, Index<Upper, Alpha>, Beta, Gamma> result);
+        DifGeo.Christoffel(_tape, metric, point, out Christoffel<Array4x4x4<Real>, Real, Index<Upper, Alpha>, Beta, Gamma> result);
         var actual = new Real[4, 4, 4];
         result.CopyTo(ref actual);
 
