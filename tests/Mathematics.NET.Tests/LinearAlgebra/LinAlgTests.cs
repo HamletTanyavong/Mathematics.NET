@@ -36,7 +36,7 @@ public sealed class LinAlgTests
 {
     // Inputs
 
-    public static IEnumerable<object[]> GetComplexInputs()
+    public static IEnumerable<object[]> GetComplexInputData()
     {
         yield return new[]
         {
@@ -48,7 +48,7 @@ public sealed class LinAlgTests
         };
     }
 
-    public static IEnumerable<object[]> GetRealInputs()
+    public static IEnumerable<object[]> GetRealInputData()
     {
         yield return new[]
         {
@@ -64,12 +64,12 @@ public sealed class LinAlgTests
     // Tests
 
     [TestMethod]
-    [DynamicData(nameof(GetComplexInputs), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetComplexInputData), DynamicDataSourceType.Method)]
     public void QRGramSchmidt_MatrixOfComplex_ReturnsQRDecompositionOfMatrix(Complex[,] matrix)
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 
     [TestMethod]
-    [DynamicData(nameof(GetRealInputs), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetRealInputData), DynamicDataSourceType.Method)]
     public void QRGramSchmidt_MatrixOfReal_ReturnsQRDecompositionOfMatrix(Real[,] matrix)
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 
