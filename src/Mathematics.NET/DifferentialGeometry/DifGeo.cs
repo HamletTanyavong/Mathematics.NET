@@ -74,9 +74,9 @@ public static partial class DifGeo
         var inverseMetricRight = inverseMetricLeft
             .WithIndexOne<InternalIndex2>()
             .WithIndexTwo<TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> intermediate);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
-        derivative = -Contract(Contract(intermediate, inverseMetricLeft), inverseMetricRight);
+        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
     }
 
     /// <inheritdoc cref="Derivative{TTape, TN, TPIN, TI1N, TI2N, TI3N}(TTape, MetricTensorField{TTape, Matrix4x4{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor4{TN, Index{Upper, TPIN}}, out Tensor{Array4x4x4{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -98,9 +98,9 @@ public static partial class DifGeo
         var inverseMetricRight = inverseMetricLeft
             .WithIndexOne<InternalIndex2>()
             .WithIndexTwo<TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> intermediate);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
-        derivative = -Contract(Contract(intermediate, inverseMetricLeft), inverseMetricRight);
+        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
     }
 
     /// <summary>Compute the derivative of rank-two tensor.</summary>

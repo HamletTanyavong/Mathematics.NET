@@ -37,11 +37,11 @@ namespace Mathematics.NET.Benchmarks.DifferentialGeometry;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class ContractionBenchmarks
 {
-    public Tensor<Vector4<Real>, Real, Index<Lower, Alpha>> RankOneTensorA { get; set; }
-    public Tensor<Vector4<Real>, Real, Index<Upper, Alpha>> RankOneTensorB { get; set; }
+    public Tensor<Vector4<Real>, Real, Index<Lower, Alpha>> RankOneTensorA;
+    public Tensor<Vector4<Real>, Real, Index<Upper, Alpha>> RankOneTensorB;
 
-    public Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> RankThreeTensorA { get; set; }
-    public Tensor<Array4x4x4<Real>, Real, Index<Lower, Delta>, Index<Upper, Beta>, Index<Lower, Epsilon>> RankThreeTensorB { get; set; }
+    public Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> RankThreeTensorA;
+    public Tensor<Array4x4x4<Real>, Real, Index<Lower, Delta>, Index<Upper, Beta>, Index<Lower, Epsilon>> RankThreeTensorB;
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -90,5 +90,11 @@ public class ContractionBenchmarks
     public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithInKeyword()
     {
         return DifGeoImplementations.ContractRankThreeTensorWithInKeyword(RankThreeTensorA, RankThreeTensorB);
+    }
+
+    [Benchmark]
+    public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithRefReadonlyKeyword()
+    {
+        return DifGeoImplementations.ContractRankThreeTensorWithRefReadonlyKeyword(in RankThreeTensorA, in RankThreeTensorB);
     }
 }

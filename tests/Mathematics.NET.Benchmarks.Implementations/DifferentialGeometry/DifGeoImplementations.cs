@@ -133,4 +133,35 @@ public static class DifGeoImplementations
         }
         return new(array);
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> ContractRankThreeTensorWithRefReadonlyKeyword<V, IC, I1, I2, I3, I4>(
+        ref readonly Tensor<Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
+        ref readonly Tensor<Array4x4x4<V>, V, I3, Index<Upper, IC>, I4> b)
+        where V : IComplex<V>, IDifferentiableFunctions<V>
+        where IC : ISymbol
+        where I1 : IIndex
+        where I2 : IIndex
+        where I3 : IIndex
+        where I4 : IIndex
+    {
+        Array4x4x4x4<V> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        for (int m = 0; m < 4; m++)
+                        {
+                            array[i, j, k, l] += a[i, m, j] * b[k, m, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
 }
