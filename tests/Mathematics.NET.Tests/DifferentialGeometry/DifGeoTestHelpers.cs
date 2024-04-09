@@ -106,3 +106,11 @@ public readonly struct Delta : ISymbol
 
     static string ISymbol.DisplayString => DisplayString;
 }
+
+public readonly struct Epsilon : ISymbol
+{
+    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    public const string DisplayString = "Epsilon";
+
+    static string ISymbol.DisplayString => DisplayString;
+}
