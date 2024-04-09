@@ -36,10 +36,12 @@ namespace Mathematics.NET.Tests.DifferentialGeometry;
 public sealed class DifGeoTests
 {
     private GradientTape<Real> _gradientTape;
+    private HessianTape<Real> _hessianTape;
 
     public DifGeoTests()
     {
         _gradientTape = new();
+        _hessianTape = new();
     }
 
     [TestMethod]
@@ -56,6 +58,22 @@ public sealed class DifGeoTests
         derivative.CopyTo(ref actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-13);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(GetSecondDerivativeData), DynamicDataSourceType.Method)]
+    public void SecondDerivative_RankTwoTensor_ReturnsRankFourTensor(object[] input, object[] values)
+    {
+        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<HessianTape<Real>, Matrix4x4<Real>, Real, Index<Upper, Epsilon>> metric = new();
+        var point = _hessianTape.CreateAutoDiffTensor<Index<Upper, Epsilon>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+
+        var expected = (Real[,,,])values[0];
+
+        DifGeo.SecondDerivative(_hessianTape, metric, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> secondDerivative);
+        var actual = new Real[4, 4, 4, 4];
+        secondDerivative.CopyTo(ref actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     //
@@ -94,6 +112,124 @@ public sealed class DifGeoTests
                         { -99.9083713139095,  2.583393035830481,    -108.4372846947553, 0.0894257725193976     },
                         { 0.0876578722667318, -0.00238146677635786, 0.0960322791258335, -0.0000743715905405725 },
                         { -21.22135210759896, 0.5469516019661675,   -23.0619674179585,  0.01887653616804277    }
+                    },
+                }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> GetSecondDerivativeData()
+    {
+        yield return new[]
+        {
+            [1.23, 2.46, 3.14, 7.13],
+            new object[]
+            {
+                new Real[,,,]
+                {
+                    {
+                        {
+                            { -0.942488801931697, 0, 0,  0                 },
+                            { 0,                  0, 0,  14.85408845588213 },
+                            { 0,                  0, 22, 0                 },
+                            { -15301.68323198016, 0, 0,  0                 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 358.2112 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 280.6368 }
+                        },
+                        {
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 5426.483385429979, 0, 0, 123.5904 }
+                        },
+                    },
+                    {
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 358.2112 }
+                        },
+                        {
+                            { 0,                   1.553140567066586, 0, 0                 },
+                            { -0.3239719070443792, 0,                 0, 0                 },
+                            { 0,                   0,                 0, 23.48462711858732 },
+                            { 0,                   13.41041568258237, 0, 0                 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 140.3184 }
+                        },
+                        {
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, -2.313437768524027, 0, 61.7952 }
+                        },
+                    },
+                    {
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 280.6368 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 140.3184 }
+                        },
+                        {
+                            { 0,                   0,                    69.31160057616656,  0 },
+                            { 0,                   -0.01911190771506838, 0,                  0 },
+                            { -0.1338783158199425, 0,                    0,                  0 },
+                            { 0,                   0,                    -45.07682430841755, 0 }
+                        },
+                        {
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 22.53841215420878, 48.41279999999999 }
+                        },
+                    },
+                    {
+                        {
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 5426.483385429979, 0, 0, 123.5904 }
+                        },
+                        {
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, -2.313437768524027, 0, 61.7952 }
+                        },
+                        {
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 22.53841215420878, 48.41279999999999 }
+                        },
+                        {
+                            { 0,                 0,                   0,                  -0.07868300388103916 },
+                            { 0,                 0,                   4371.066581678536,  0                    },
+                            { 0,                 0.05517742207646505, 0,                  0                    },
+                            { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
+                        },
                     },
                 }
             }
