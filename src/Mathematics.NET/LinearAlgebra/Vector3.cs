@@ -65,7 +65,7 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
 
     public T this[int index]
     {
-        get => GetElement(this, index);
+        readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 

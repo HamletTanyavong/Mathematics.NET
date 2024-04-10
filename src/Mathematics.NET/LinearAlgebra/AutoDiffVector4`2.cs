@@ -66,7 +66,7 @@ public record struct AutoDiffVector4<T, U>
 
     public T this[int index]
     {
-        get => GetElement(this, index);
+        readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 

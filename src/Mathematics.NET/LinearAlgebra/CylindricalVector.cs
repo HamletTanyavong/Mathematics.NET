@@ -77,7 +77,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
 
     public Real this[int index]
     {
-        get => GetElement(this, index);
+        readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 
@@ -163,9 +163,9 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     public static bool operator !=(CylindricalVector left, CylindricalVector right)
         => left.Rho != right.Rho || left.Phi != right.Phi || left.Z != right.Z;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is CylindricalVector other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is CylindricalVector other && Equals(other);
 
-    public bool Equals(CylindricalVector other)
+    public readonly bool Equals(CylindricalVector other)
         => Rho.Equals(other.Rho) && Phi.Equals(other.Phi) && Z.Equals(other.Z);
 
     public override readonly int GetHashCode() => HashCode.Combine(Rho, Phi, Z);
@@ -174,7 +174,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     // Formatting
     //
 
-    public string ToString(string? format, IFormatProvider? provider) => string.Format(provider, "({0}, {1}, {2})",
+    public readonly string ToString(string? format, IFormatProvider? provider) => string.Format(provider, "({0}, {1}, {2})",
         Rho.ToString(format, provider),
         Phi.ToString(format, provider),
         Z.ToString(format, provider));
@@ -203,9 +203,9 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     public static Real InnerProduct(CylindricalVector left, CylindricalVector right)
         => left.Rho * right.Rho * Real.Cos(left.Phi - right.Phi) + left.Z * right.Z;
 
-    public Real Norm() => Real.Hypot(Rho, Z);
+    public readonly Real Norm() => Real.Hypot(Rho, Z);
 
-    public CylindricalVector Normalize()
+    public readonly CylindricalVector Normalize()
     {
         var norm = Real.Hypot(Rho, Z);
         return new(Rho / norm, Phi, Z / norm);
@@ -214,5 +214,5 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     /// <summary>Convert a vector in cylindrical coordinates to one in Cartesian coordinates.</summary>
     /// <returns>A vector in Cylindrical coordinates</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3<Real> ToCartesian() => new(Rho * Real.Cos(Phi), Rho * Real.Sin(Phi), Z);
+    public readonly Vector3<Real> ToCartesian() => new(Rho * Real.Cos(Phi), Rho * Real.Sin(Phi), Z);
 }
