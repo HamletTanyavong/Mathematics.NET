@@ -221,7 +221,7 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     public static HyperDual<T> Atan(HyperDual<T> x) => new(Dual<T>.Atan(x._d0), x._d1 / (T.One + x._d0 * x._d0));
 
     /// <inheritdoc cref="IReal{T}.Atan2(T, T)"/>
-    public static HyperDual<Real> Atan2(HyperDual<Real> y, HyperDual<Real> x)
+    public static HyperDual<Real> Atan2(in HyperDual<Real> y, in HyperDual<Real> x)
     {
         var u = Real.One / (x._d0 * x._d0 + y._d0 * y._d0);
         return new(Dual<T>.Atan2(y._d0, x._d0), (y._d1 * x._d0 - x._d1 * y._d0) * u);

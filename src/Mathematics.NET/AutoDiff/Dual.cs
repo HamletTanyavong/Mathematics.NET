@@ -82,14 +82,14 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
 
     public static Dual<T> operator /(Dual<T> x, T c) => new(x._d0 / c, x._d1 / c);
 
-    public static Dual<Real> Modulo(Dual<Real> x, Dual<Real> y)
+    public static Dual<Real> Modulo(in Dual<Real> x, in Dual<Real> y)
     {
         return new(x._d0 % y._d0, x._d1 - y._d1 * Real.Floor(x._d0 / y._d0));
     }
 
-    public static Dual<Real> Modulo(Dual<Real> x, Real c) => new(x._d0 % c, x._d1);
+    public static Dual<Real> Modulo(in Dual<Real> x, Real c) => new(x._d0 % c, x._d1);
 
-    public static Dual<Real> Modulo(Real c, Dual<Real> x) => new(c % x._d0, -x._d1 * Real.Floor(c / x._d0));
+    public static Dual<Real> Modulo(Real c, in Dual<Real> x) => new(c % x._d0, -x._d1 * Real.Floor(c / x._d0));
 
     //
     // Equality
@@ -209,7 +209,7 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     public static Dual<T> Atan(Dual<T> x) => new(T.Atan(x._d0), x._d1 / (T.One + x._d0 * x._d0));
 
     /// <inheritdoc cref="IReal{T}.Atan2(T, T)"/>
-    public static Dual<Real> Atan2(Dual<Real> y, Dual<Real> x)
+    public static Dual<Real> Atan2(in Dual<Real> y, in Dual<Real> x)
     {
         var u = Real.One / (x._d0 * x._d0 + y._d0 * y._d0);
         return new(Real.Atan2(y._d0, x._d0), (y._d1 * x._d0 - x._d1 * y._d0) * u);

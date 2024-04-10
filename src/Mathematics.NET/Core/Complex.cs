@@ -286,7 +286,7 @@ public readonly struct Complex(Real real, Real imaginary)
     // Methods
     //
 
-    public static Complex Abs(Complex z) => Hypot(z._real.AsDouble(), z._imaginary.AsDouble());
+    public static Complex Abs(in Complex z) => Hypot(z._real.AsDouble(), z._imaginary.AsDouble());
 
     public static Complex Conjugate(Complex z) => new(z._real, -z._imaginary);
 
@@ -332,7 +332,7 @@ public readonly struct Complex(Real real, Real imaginary)
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Complex InverseLerp(Complex start, Complex end, Real weight)
+    public static Complex InverseLerp(in Complex start, in Complex end, Real weight)
         => new(Real.InverseLerp(start._real, end._real, weight), Real.InverseLerp(start._imaginary, end._imaginary, weight));
 
     public static bool IsFinite(Complex z) => Real.IsFinite(z._real) && Real.IsFinite(z._imaginary);
@@ -344,7 +344,7 @@ public readonly struct Complex(Real real, Real imaginary)
     public static bool IsZero(Complex z) => Real.IsZero(z._real) && Real.IsZero(z._imaginary);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Complex Lerp(Complex start, Complex end, Real weight)
+    public static Complex Lerp(in Complex start, in Complex end, Real weight)
         => new(Real.Lerp(start._real, end._real, weight), Real.Lerp(start._imaginary, end._imaginary, weight));
 
     public static Complex Reciprocate(Complex z)
