@@ -126,26 +126,32 @@ public struct Christoffel<TCA, TN, TI, TI2N, TI3N>(TCA array)
 
     public readonly void CopyTo(ref TN[,,] destination) => _array.CopyTo(ref destination);
 
-    /// <summary>Create a Christoffel symbol with a new index in the first position.</summary>
-    /// <typeparam name="TNI">An index</typeparam>
-    /// <returns>A Christoffel symbol with a new index in the first position</returns>
-    public Christoffel<TCA, TN, TNI, TI2N, TI3N> WithIndexOne<TNI>()
+    /// <summary>Reinterpret a reference to this Christoffel symbol as one with a new index in the first position.</summary>
+    /// <typeparam name="TNI">A new index</typeparam>
+    /// <returns>A reference to this Christoffel symbol with a new index in the first position</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref Christoffel<TCA, TN, TNI, TI2N, TI3N> WithIndex1<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Christoffel<TCA, TN, TI, TI2N, TI3N>, Christoffel<TCA, TN, TNI, TI2N, TI3N>>(ref this);
+        => ref Unsafe.As<Christoffel<TCA, TN, TI, TI2N, TI3N>, Christoffel<TCA, TN, TNI, TI2N, TI3N>>(ref this);
 
-    /// <summary>Create a Christoffel symbol with a new index in the second position.</summary>
-    /// <typeparam name="TNIN">A symbol</typeparam>
-    /// <returns>A Christoffel symbol with a new index in the second position</returns>
-    public Christoffel<TCA, TN, TI, TNIN, TI3N> WithIndexTwo<TNIN>()
+    /// <summary>Reinterpret a reference to this Christoffel symbol as one with a new index name in the second position.</summary>
+    /// <typeparam name="TNIN">A new index name</typeparam>
+    /// <returns>A reference to this Christoffel symbol with a new index name in the second position</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref Christoffel<TCA, TN, TI, TNIN, TI3N> WithIndex2Name<TNIN>()
         where TNIN : ISymbol
-        => Unsafe.As<Christoffel<TCA, TN, TI, TI2N, TI3N>, Christoffel<TCA, TN, TI, TNIN, TI3N>>(ref this);
+        => ref Unsafe.As<Christoffel<TCA, TN, TI, TI2N, TI3N>, Christoffel<TCA, TN, TI, TNIN, TI3N>>(ref this);
 
-    /// <summary>Create a Christoffel symbol with a new index in the third position.</summary>
-    /// <typeparam name="TNIN">A symbol</typeparam>
-    /// <returns>A Christoffel symbol with a new index in the third position</returns>
-    public Christoffel<TCA, TN, TI, TI2N, TNIN> WithIndexThree<TNIN>()
+    /// <summary>Reinterpret a reference to this Christoffel symbol as one with a new index name in the third position.</summary>
+    /// <typeparam name="TNIN">A new index name</typeparam>
+    /// <returns>A reference to this Christoffel symbol with a new index name in the third position</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref Christoffel<TCA, TN, TI, TI2N, TNIN> WithIndex3Name<TNIN>()
         where TNIN : ISymbol
-        => Unsafe.As<Christoffel<TCA, TN, TI, TI2N, TI3N>, Christoffel<TCA, TN, TI, TI2N, TNIN>>(ref this);
+        => ref Unsafe.As<Christoffel<TCA, TN, TI, TI2N, TI3N>, Christoffel<TCA, TN, TI, TI2N, TNIN>>(ref this);
 
     //
     // Implicit operators

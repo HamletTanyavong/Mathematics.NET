@@ -70,7 +70,7 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
 
     public T this[int index]
     {
-        get => GetElement(this, index);
+        readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 

@@ -68,12 +68,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var inverseMetricLeft = metric
-            .Compute<TI2N, InternalIndex1>(tape, point)
-            .Inverse();
-        var inverseMetricRight = inverseMetricLeft
-            .WithIndexOne<InternalIndex2>()
-            .WithIndexTwo<TI3N>();
+        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        ref var metricValueLeftRef = ref metricValueLeft;
+        var inverseMetricLeft = metricValueLeftRef.Inverse();
+        ref var inverseMetricRight = ref inverseMetricLeft
+            .WithIndex1Name<InternalIndex2>()
+            .WithIndex2Name<TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -92,12 +92,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var inverseMetricLeft = metric
-            .Compute<TI2N, InternalIndex1>(tape, point)
-            .Inverse();
-        var inverseMetricRight = inverseMetricLeft
-            .WithIndexOne<InternalIndex2>()
-            .WithIndexTwo<TI3N>();
+        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        ref var metricValueLeftRef = ref metricValueLeft;
+        var inverseMetricLeft = metricValueLeftRef.Inverse();
+        ref var inverseMetricRight = ref inverseMetricLeft
+            .WithIndex1Name<InternalIndex2>()
+            .WithIndex2Name<TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -360,9 +360,9 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TPIN : ISymbol
     {
-        var inverseMetric = metric
-            .Compute<TI1N, InternalIndex1>(tape, point)
-            .Inverse();
+        var metricValue = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        ref var metricValueRef = ref metricValue;
+        var inverseMetric = metricValueRef.Inverse();
         Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFirstKind);
 
         var result = Contract(inverseMetric, christoffelFirstKind);

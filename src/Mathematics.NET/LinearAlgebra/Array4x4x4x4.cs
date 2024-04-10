@@ -144,13 +144,13 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
     public bool Equals(Array4x4x4x4<T> value)
         => X1.Equals(value.X1) && X2.Equals(value.X2) && X3.Equals(value.X3) && X4.Equals(value.X4);
 
-    public override int GetHashCode() => HashCode.Combine(X1, X2, X3, X4);
+    public override readonly int GetHashCode() => HashCode.Combine(X1, X2, X3, X4);
 
     //
     // Formatting
     //
 
-    public string ToString(string? format, IFormatProvider? provider)
+    public readonly string ToString(string? format, IFormatProvider? provider)
     {
         var array = new T[4, 4, 4, 4];
         CopyTo(ref array);

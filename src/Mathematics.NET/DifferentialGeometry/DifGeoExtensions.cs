@@ -75,7 +75,7 @@ public static class DifGeoExtensions
     /// <param name="x0Seed">The zeroth seed value</param>
     /// <param name="x1Seed">The first seed value</param>
     /// <returns>A rank-one tensor of four variables</returns>
-    public static AutoDiffTensor2<Complex, T> CreateAutoDiffTensor<T>(this ITape<Complex> tape, Complex x0Seed, Complex x1Seed)
+    public static AutoDiffTensor2<Complex, T> CreateAutoDiffTensor<T>(this ITape<Complex> tape, in Complex x0Seed, in Complex x1Seed)
         where T : IIndex
         => new(tape.CreateVariable(x0Seed), tape.CreateVariable(x1Seed));
 
@@ -115,7 +115,7 @@ public static class DifGeoExtensions
     /// <param name="x1Seed">The first seed value</param>
     /// <param name="x2Seed">The second seed value</param>
     /// <returns>A rank-one tensor of four variables</returns>
-    public static AutoDiffTensor3<Complex, T> CreateAutoDiffTensor<T>(this ITape<Complex> tape, Complex x0Seed, Complex x1Seed, Complex x2Seed)
+    public static AutoDiffTensor3<Complex, T> CreateAutoDiffTensor<T>(this ITape<Complex> tape, in Complex x0Seed, in Complex x1Seed, in Complex x2Seed)
         where T : IIndex
         => new(tape.CreateVariable(x0Seed), tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed));
 
@@ -157,7 +157,7 @@ public static class DifGeoExtensions
     /// <param name="x2Seed">The second seed value</param>
     /// <param name="x3Seed">The third seed value</param>
     /// <returns>A rank-one tensor of four variables</returns>
-    public static AutoDiffTensor4<Complex, T> CreateAutoDiffTensor<T>(this ITape<Complex> tape, Complex x0Seed, Complex x1Seed, Complex x2Seed, Complex x3Seed)
+    public static AutoDiffTensor4<Complex, T> CreateAutoDiffTensor<T>(this ITape<Complex> tape, in Complex x0Seed, in Complex x1Seed, in Complex x2Seed, in Complex x3Seed)
         where T : IIndex
         => new(tape.CreateVariable(x0Seed), tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed));
 
@@ -172,7 +172,7 @@ public static class DifGeoExtensions
     /// <typeparam name="TI2N">The second index of the metric tensor</typeparam>
     /// <param name="metric">The metric tensor</param>
     /// <returns>A metric tensor with upper indices</returns>
-    public static MetricTensor<TSM, TN, Upper, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this MetricTensor<TSM, TN, Lower, TI1N, TI2N> metric)
+    public static MetricTensor<TSM, TN, Upper, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(ref this MetricTensor<TSM, TN, Lower, TI1N, TI2N> metric)
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TI1N : ISymbol

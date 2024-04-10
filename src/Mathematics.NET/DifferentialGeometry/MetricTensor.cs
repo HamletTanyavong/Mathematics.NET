@@ -133,19 +133,23 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     // Methods
     //
 
-    /// <summary>Create a tensor with a new index in the first position.</summary>
-    /// <typeparam name="TNIN">A symbol</typeparam>
-    /// <returns>A tensor with a new index in the first position</returns>
-    public MetricTensor<TSM, TN, TIP, TNIN, TI2N> WithIndexOne<TNIN>()
+    /// <summary>Reinterpret a reference to this metric tensor as one with a new index name in the first position.</summary>
+    /// <typeparam name="TNIN">A new index name</typeparam>
+    /// <returns>A reference to this tensor with a new index name in the first position</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref MetricTensor<TSM, TN, TIP, TNIN, TI2N> WithIndex1Name<TNIN>()
         where TNIN : ISymbol
-        => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNIN, TI2N>>(ref this);
+        => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNIN, TI2N>>(ref this);
 
-    /// <summary>Create a tensor with a new index in the second position.</summary>
-    /// <typeparam name="TNIN">A symbol</typeparam>
-    /// <returns>A tensor with a new index in the second position</returns>
-    public MetricTensor<TSM, TN, TIP, TI1N, TNIN> WithIndexTwo<TNIN>()
+    /// <summary>Reinterpret a reference to this metric tensor as one with a new index name in the second position.</summary>
+    /// <typeparam name="TNIN">A new index name</typeparam>
+    /// <returns>A reference to this tensor with a new index name in the second position</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref MetricTensor<TSM, TN, TIP, TI1N, TNIN> WithIndex2Name<TNIN>()
         where TNIN : ISymbol
-        => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TI1N, TNIN>>(ref this);
+        => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TI1N, TNIN>>(ref this);
 
     //
     // Implicit operators

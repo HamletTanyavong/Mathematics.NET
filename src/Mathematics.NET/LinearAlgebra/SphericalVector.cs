@@ -82,7 +82,7 @@ public struct SphericalVector : IVector<SphericalVector, Real>
 
     public Real this[int index]
     {
-        get => GetElement(this, index);
+        readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 
@@ -176,9 +176,9 @@ public struct SphericalVector : IVector<SphericalVector, Real>
     public static bool operator !=(SphericalVector left, SphericalVector right)
         => left.R != right.R || left.Theta != right.Theta || left.Phi != right.Phi;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is SphericalVector other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is SphericalVector other && Equals(other);
 
-    public bool Equals(SphericalVector other)
+    public readonly bool Equals(SphericalVector other)
         => R.Equals(other.R) && Theta.Equals(other.Theta) && Phi.Equals(other.Phi);
 
     public override readonly int GetHashCode() => HashCode.Combine(R, Theta, Phi);
@@ -187,7 +187,7 @@ public struct SphericalVector : IVector<SphericalVector, Real>
     // Formatting
     //
 
-    public string ToString(string? format, IFormatProvider? provider) => string.Format(provider, "({0}, {1}, {2})",
+    public readonly string ToString(string? format, IFormatProvider? provider) => string.Format(provider, "({0}, {1}, {2})",
         R.ToString(format, provider),
         Theta.ToString(format, provider),
         Phi.ToString(format, provider));
@@ -236,14 +236,14 @@ public struct SphericalVector : IVector<SphericalVector, Real>
         return x * x + y * y + z * z;
     }
 
-    public Real Norm() => R;
+    public readonly Real Norm() => R;
 
-    public SphericalVector Normalize() => new(Real.One, Theta, Phi);
+    public readonly SphericalVector Normalize() => new(Real.One, Theta, Phi);
 
     /// <summary>Convert a vector in spherical coordinates to one in Cartesian coordinates.</summary>
     /// <returns>A vector in Cartesian coordinates</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3<Real> ToCartesian()
+    public readonly Vector3<Real> ToCartesian()
     {
         var sinT = Real.Sin(Theta);
         return new(

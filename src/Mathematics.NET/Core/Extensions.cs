@@ -34,7 +34,7 @@ namespace Mathematics.NET.Core;
 public static class Extensions
 {
     //
-    // Reinterprets
+    // Casts and reinterprets
     //
 
     /// <summary>Reinterprets a <see cref="Real"/> as a new <see cref="double"/></summary>

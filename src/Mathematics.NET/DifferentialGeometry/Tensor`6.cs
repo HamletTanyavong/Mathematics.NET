@@ -133,37 +133,41 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
 
     public readonly void CopyTo(ref TN[,,,] destination) => _array.CopyTo(ref destination);
 
-    /// <summary>Create a tensor with a new index in the first position.</summary>
+    /// <summary>Reinterpret a reference to this tensor as one with a new index in the first position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A tensor with a new index in the first position</returns>
+    /// <returns>A reference to this tensor with a new index in the first position</returns>
+    [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TNI, TI2, TI3, TI4> WithIndexOne<TNI>()
+    public ref Tensor<TH4DA, TN, TNI, TI2, TI3, TI4> WithIndex1<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TNI, TI2, TI3, TI4>>(ref this);
+        => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TNI, TI2, TI3, TI4>>(ref this);
 
-    /// <summary>Create a tensor with a new index in the second position.</summary>
+    /// <summary>Reinterpret a reference to this tensor as one with a new index in the second position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A tensor with a new index in the second position</returns>
+    /// <returns>A reference to this tensor with a new index in the second position</returns>
+    [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TI1, TNI, TI3, TI4> WithIndexTwo<TNI>()
+    public ref Tensor<TH4DA, TN, TI1, TNI, TI3, TI4> WithIndex2<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TNI, TI3, TI4>>(ref this);
+        => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TNI, TI3, TI4>>(ref this);
 
-    /// <summary>Create a tensor with a new index in the third position.</summary>
+    /// <summary>Reinterpret a reference to this tensor as one with a new index in the third position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A tensor with a new index in the third position</returns>
+    /// <returns>A reference to this tensor with a new index in the third position</returns>
+    [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TI1, TI2, TNI, TI4> WithIndexThree<TNI>()
+    public ref Tensor<TH4DA, TN, TI1, TI2, TNI, TI4> WithIndex3<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TNI, TI4>>(ref this);
+        => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TNI, TI4>>(ref this);
 
-    /// <summary>Create a tensor with a new index in the fourth position.</summary>
+    /// <summary>Reinterpret a reference to this tensor as one with a new index in the fourth position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A tensor with a new index in the fourth position</returns>
+    /// <returns>A reference to this tensor with a new index in the fourth position</returns>
+    [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TI1, TI2, TI3, TNI> WithIndexFour<TNI>()
+    public ref Tensor<TH4DA, TN, TI1, TI2, TI3, TNI> WithIndex4<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TNI>>(ref this);
+        => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TNI>>(ref this);
 
     //
     // Implicit operators
