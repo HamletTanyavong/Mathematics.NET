@@ -128,21 +128,23 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     // Methods
     //
 
-    /// <summary>Create a tensor with a new index in the first position.</summary>
+    /// <summary>Reinterpret a reference to this tensor as one with a new index in the first position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A tensor with a new index in the first position</returns>
+    /// <returns>A reference to this tensor with a new index in the first position</returns>
+    [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TSM, TN, TNI, TI2> WithIndexOne<TNI>()
+    public ref Tensor<TSM, TN, TNI, TI2> WithIndex1<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TNI, TI2>>(ref this);
+        => ref Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TNI, TI2>>(ref this);
 
-    /// <summary>Create a tensor with a new index in the second position.</summary>
+    /// <summary>Reinterpret a reference to this tensor as one with a new index in the second position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A tensor with a new index in the second position</returns>
+    /// <returns>A reference to this tensor with a new index in the second position</returns>
+    [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TSM, TN, TI1, TNI> WithIndexTwo<TNI>()
+    public ref Tensor<TSM, TN, TI1, TNI> WithIndex2<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TNI>>(ref this);
+        => ref Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TNI>>(ref this);
 
     //
     // Implicit operators

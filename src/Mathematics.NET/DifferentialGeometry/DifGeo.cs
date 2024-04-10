@@ -72,8 +72,8 @@ public static partial class DifGeo
             .Compute<TI2N, InternalIndex1>(tape, point)
             .Inverse();
         var inverseMetricRight = inverseMetricLeft
-            .WithIndexOne<InternalIndex2>()
-            .WithIndexTwo<TI3N>();
+            .WithIndex1Name<InternalIndex2>()
+            .WithIndex2Name<TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -96,8 +96,8 @@ public static partial class DifGeo
             .Compute<TI2N, InternalIndex1>(tape, point)
             .Inverse();
         var inverseMetricRight = inverseMetricLeft
-            .WithIndexOne<InternalIndex2>()
-            .WithIndexTwo<TI3N>();
+            .WithIndex1Name<InternalIndex2>()
+            .WithIndex2Name<TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
