@@ -41,19 +41,19 @@ public sealed class TensorContractionGeneratorTests : VerifyBase
             namespace TestNamespace;
 
             [GenerateTensorContractions]
-            public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> Contract<T, U, V, IC, I1, I2, I3, I4>(
-                in IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2> a,
-                in IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4> b)
-                where T : IRankThreeTensor<T, Array4x4x4<V>, V, Index<Lower, IC>, I1, I2>
-                where U : IRankThreeTensor<U, Array4x4x4<V>, V, Index<Upper, IC>, I3, I4>
-                where V : IComplex<V>, IDifferentiableFunctions<V>
-                where IC : ISymbol
-                where I1 : IIndex
-                where I2 : IIndex
-                where I3 : IIndex
-                where I4 : IIndex
+            public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
+                in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a,
+                in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> b)
+                where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+                where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4>
+                where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+                where TCI : ISymbol
+                where TI1 : IIndex
+                where TI2 : IIndex
+                where TI3 : IIndex
+                where TI4 : IIndex
             {
-                Array4x4x4x4<V> array = new();
+                Array4x4x4x4<TN> array = new();
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
