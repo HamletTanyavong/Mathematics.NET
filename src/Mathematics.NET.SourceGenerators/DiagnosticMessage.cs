@@ -73,7 +73,7 @@ internal static class DiagnosticMessage
         return new DiagnosticDescriptor(
             id: "ISGDG0004",
             title: "Incorrect type parameter name",
-            messageFormat: "The type parameter name of the index to contract must be \"IC.\"",
+            messageFormat: "The type parameter name of the index to contract must be \"TCI.\"",
             category: "DifGeo",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);

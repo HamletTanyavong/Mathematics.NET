@@ -40,8 +40,8 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 // should also be the indices to contract.
 //
 // public static Result<...> Contract<...>(
-//     TensorA<..., Index<Lower, IC>, ...> a,
-//     TensorB<..., Index<Upper, IC>, ...> b)
+//     TensorA<..., Index<Lower, TCI>, ...> a,
+//     TensorB<..., Index<Upper, TCI>, ...> b)
 //     // constraints
 // {
 //     // code

@@ -41,7 +41,7 @@ internal abstract class TensorContractionBuilderBase
                     SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
                             IdentifierName("Lower"),
                             Token(SyntaxKind.CommaToken),
-                            IdentifierName("IC") })));
+                            IdentifierName("TCI") })));
 
     private protected static readonly GenericNameSyntax s_rightIndex = GenericName(
         Identifier("Index"))
@@ -50,7 +50,7 @@ internal abstract class TensorContractionBuilderBase
                     SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
                         IdentifierName("Upper"),
                         Token(SyntaxKind.CommaToken),
-                        IdentifierName("IC") })));
+                        IdentifierName("TCI") })));
 
     private protected readonly SourceProductionContext _context;
     private protected readonly ImmutableArray<MethodInformation> _methodInformationArray;
@@ -74,7 +74,7 @@ internal abstract class TensorContractionBuilderBase
             }
 
             var typeParameterName = (IdentifierNameSyntax)name.TypeArgumentList.Arguments[1];
-            if (typeParameterName.Identifier.Text != "IC")
+            if (typeParameterName.Identifier.Text != "TCI")
             {
                 var descriptor = DiagnosticMessage.CreateIncorrectTypeParameterNameDiagnosticDescriptor();
                 _context.ReportDiagnostic(Diagnostic.Create(descriptor, typeParameterName.Identifier.GetLocation()));

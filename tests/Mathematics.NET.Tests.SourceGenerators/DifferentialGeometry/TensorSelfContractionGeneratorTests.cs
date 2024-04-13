@@ -41,14 +41,14 @@ public sealed class TensorSelfContractionGeneratorTests : VerifyBase
             namespace TestNamespace;
 
             [GenerateTensorSelfContractions]
-            public static Tensor<Matrix4x4<U>, U, I1, I2> Contract<T, U, IC, I1, I2>(in IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2> a)
-                where T : IRankFourTensor<T, Array4x4x4x4<U>, U, Index<Lower, IC>, Index<Upper, IC>, I1, I2>
-                where U : IComplex<U>, IDifferentiableFunctions<U>
-                where IC : ISymbol
-                where I1 : IIndex
-                where I2 : IIndex
+            public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> a)
+                where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
+                where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+                where TCI : ISymbol
+                where TI1 : IIndex
+                where TI2 : IIndex
             {
-                Matrix4x4<U> matrix = new();
+                Matrix4x4<TN> matrix = new();
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
