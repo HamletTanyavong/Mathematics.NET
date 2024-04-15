@@ -377,9 +377,7 @@ public static partial class DifGeo
     // Tensor contractions
     //
 
-    //
     // Rank-one and Rank-one
-    //
 
     [GenerateTensorContractions]
     public static TN Contract<TLR1T, TRR1T, TV, TN, TCI>(in IRankOneTensor<TLR1T, TV, TN, Index<Lower, TCI>> a, in IRankOneTensor<TRR1T, TV, TN, Index<Upper, TCI>> b)
@@ -397,9 +395,7 @@ public static partial class DifGeo
         return result;
     }
 
-    //
     // Rank-one and Rank-two
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Vector4<TN>, TN, TI> Contract<TR1T, TR2T, TN, TCI, TI>(
@@ -443,9 +439,7 @@ public static partial class DifGeo
         return new(vector);
     }
 
-    //
     // Rank-one and Rank-three
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR1T, TR3T, TN, TCI, TI1, TI2>(
@@ -497,9 +491,7 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    //
     // Rank-one and Rank-four
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR1T, TR4T, TN, TCI, TI1, TI2, TI3>(
@@ -559,9 +551,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Rank-two and Rank-two
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TLR2T, TRR3T, TN, TCI, TI1, TI2>(
@@ -588,9 +578,7 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    //
     // Rank-two and Rank-three
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR2T, TR3T, TN, TCI, TI1, TI2, TI3>(
@@ -650,9 +638,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Rank-two and Rank-four
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR2T, TR4T, TN, TCI, TI1, TI2, TI3, TI4>(
@@ -720,9 +706,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Rank-three and Rank-three
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
@@ -757,9 +741,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Tensor self-contractions
-    //
 
     [GenerateTensorSelfContractions]
     public static TN Contract<TR2T, TSM, TN, TCI>(in IRankTwoTensor<TR2T, TSM, TN, Index<Lower, TCI>, Index<Upper, TCI>> a)
