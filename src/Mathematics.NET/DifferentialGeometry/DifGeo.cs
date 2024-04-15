@@ -373,6 +373,47 @@ public static partial class DifGeo
             >(ref result);
     }
 
+    /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
+    /// <typeparam name="TI1N">The name of the first index</typeparam>
+    /// <typeparam name="TI2N">The name of the second index</typeparam>
+    /// <typeparam name="TI3N">The name of the third index</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
+    /// <param name="tape">A Hessian tape</param>
+    /// <param name="metric">A metric tensor field</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="derivative">The result</param>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        HessianTape<TN> tape,
+        MetricTensorField<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : ISymbol
+        where TI1N : ISymbol
+        where TI2N : ISymbol
+        where TI3N : ISymbol
+        where TI4N : ISymbol
+    {
+        SecondDerivative(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> secondDerivativeOfMetric);
+
+        derivative = new();
+        for (int m = 0; m < 4; m++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        derivative[m, k, i, j] = 0.5 * (secondDerivativeOfMetric[m, j, k, i] + secondDerivativeOfMetric[m, i, k, j] - secondDerivativeOfMetric[m, k, i, j]);
+                    }
+                }
+            }
+        }
+    }
+
     //
     // Tensor contractions
     //
