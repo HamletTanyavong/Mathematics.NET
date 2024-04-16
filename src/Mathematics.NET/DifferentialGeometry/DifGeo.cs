@@ -299,7 +299,7 @@ public static partial class DifGeo
     // Christoffel symbols
     //
 
-    /// <summary>Compute the Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
@@ -337,7 +337,7 @@ public static partial class DifGeo
         }
     }
 
-    /// <summary>Compute the Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
@@ -375,7 +375,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol</typeparam>
     /// <typeparam name="TI1N">The name of the first index</typeparam>
     /// <typeparam name="TI2N">The name of the second index</typeparam>
     /// <typeparam name="TI3N">The name of the third index</typeparam>
@@ -416,7 +416,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol</typeparam>
     /// <typeparam name="TI1N">The name of the first index</typeparam>
     /// <typeparam name="TI2N">The name of the second index</typeparam>
     /// <typeparam name="TI3N">The name of the third index</typeparam>
