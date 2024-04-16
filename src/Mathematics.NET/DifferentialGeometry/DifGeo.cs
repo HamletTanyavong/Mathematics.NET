@@ -462,6 +462,54 @@ public static partial class DifGeo
     }
 
     //
+    // Riemann tensor
+    //
+
+    /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor</typeparam>
+    /// <typeparam name="TI1N">The name of the first index</typeparam>
+    /// <typeparam name="TI2N">The name of the second index</typeparam>
+    /// <typeparam name="TI3N">The name of the third index</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
+    /// <param name="tape">A Hessian tape</param>
+    /// <param name="metric">A metric tensor field</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="riemann">The result</param>
+    public static void Riemann<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        HessianTape<TN> tape,
+        MetricTensorField<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : ISymbol
+        where TI1N : ISymbol
+        where TI2N : ISymbol
+        where TI3N : ISymbol
+        where TI4N : ISymbol
+    {
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
+        var contractedChristoffels = Contract(christoffel, christoffel.WithIndex1<Index<Upper, InternalIndex1>>().WithIndex2Name<TI2N>().WithIndex3Name<TI4N>());
+
+        riemann = new();
+        for (int r = 0; r < 4; r++)
+        {
+            for (int s = 0; s < 4; s++)
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    for (int n = 0; n < 4; n++)
+                    {
+                        riemann[r, s, m, n] =
+                            derivativeOfChristoffel[m, r, s, n] - derivativeOfChristoffel[n, r, s, m] + contractedChristoffels[r, m, s, n] - contractedChristoffels[r, n, s, m];
+                    }
+                }
+            }
+        }
+    }
+
+    //
     // Tensor contractions
     //
 
