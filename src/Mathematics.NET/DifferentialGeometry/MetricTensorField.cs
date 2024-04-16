@@ -67,4 +67,12 @@ public abstract class MetricTensorField<TT, TSM, TN, TPI> : TensorField4x4<TT, T
         tape.IsTracking = true;
         return new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1, TI2>(result);
     }
+
+    public MetricTensor<Matrix4x4<TN>, TN, Upper, TI1, TI2> ComputeInverse<TI1, TI2>(TT tape, AutoDiffTensor4<TN, TPI> point)
+        where TI1 : ISymbol
+        where TI2 : ISymbol
+    {
+        var value = Compute<TI1, TI2>(tape, point);
+        return value.Inverse();
+    }
 }
