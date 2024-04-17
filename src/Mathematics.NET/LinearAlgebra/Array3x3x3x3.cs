@@ -1,4 +1,4 @@
-﻿// <copyright file="Array4x4x4.cs" company="Mathematics.NET">
+﻿// <copyright file="Array3x3x3x3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,55 +32,56 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a 4x4x4 array</summary>
+/// <summary>Represents a 3x3x3x3 array</summary>
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
+public struct Array3x3x3x3<T> : IHypercubic4DArray<Array3x3x3x3<T>, T>
     where T : IComplex<T>
 {
-    public const int Components = 64;
-    public const int E1Components = 4;
-    public const int E2Components = 4;
-    public const int E3Components = 4;
+    public const int Components = 81;
+    public const int E1Components = 3;
+    public const int E2Components = 3;
+    public const int E3Components = 3;
+    public const int E4Components = 3;
 
-    public Matrix4x4<T> X1;
-    public Matrix4x4<T> X2;
-    public Matrix4x4<T> X3;
-    public Matrix4x4<T> X4;
+    public Array3x3x3<T> X1;
+    public Array3x3x3<T> X2;
+    public Array3x3x3<T> X3;
 
     //
     // Constants
     //
 
-    static int IArrayRepresentable<Array4x4x4<T>, T>.Components => Components;
-    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E1Components => E1Components;
-    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E2Components => E2Components;
-    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E3Components => E3Components;
+    static int IArrayRepresentable<Array3x3x3x3<T>, T>.Components => Components;
+    static int IFourDimensionalArrayRepresentable<Array3x3x3x3<T>, T>.E1Components => E1Components;
+    static int IFourDimensionalArrayRepresentable<Array3x3x3x3<T>, T>.E2Components => E2Components;
+    static int IFourDimensionalArrayRepresentable<Array3x3x3x3<T>, T>.E3Components => E3Components;
+    static int IFourDimensionalArrayRepresentable<Array3x3x3x3<T>, T>.E4Components => E4Components;
 
     //
     // Indexer
     //
 
-    public T this[int i, int j, int k]
+    public T this[int i, int j, int k, int l]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly get
         {
-            if ((uint)i >= 4)
+            if ((uint)i >= 3)
             {
                 throw new IndexOutOfRangeException();
             }
-            return Unsafe.Add(ref Unsafe.AsRef(in X1), i)[j, k];
+            return Unsafe.Add(ref Unsafe.AsRef(in X1), i)[j, k, l];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
-            if ((uint)i >= 4)
+            if ((uint)i >= 3)
             {
                 throw new IndexOutOfRangeException();
             }
-            Unsafe.Add(ref X1, i)[j, k] = value;
+            Unsafe.Add(ref X1, i)[j, k, l] = value;
         }
     }
 
@@ -88,41 +89,38 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
     // Operators
     //
 
-    public static Array4x4x4<T> operator -(Array4x4x4<T> array)
+    public static Array3x3x3x3<T> operator -(Array3x3x3x3<T> array)
     {
-        Unsafe.SkipInit(out Array4x4x4<T> result);
+        Unsafe.SkipInit(out Array3x3x3x3<T> result);
 
         result.X1 = -array.X1;
         result.X2 = -array.X2;
         result.X3 = -array.X3;
-        result.X4 = -array.X4;
 
         return result;
     }
 
-    public static Array4x4x4<T> operator +(Array4x4x4<T> array)
+    public static Array3x3x3x3<T> operator +(Array3x3x3x3<T> array)
         => array;
 
-    public static Array4x4x4<T> operator *(T c, Array4x4x4<T> array)
+    public static Array3x3x3x3<T> operator *(T c, Array3x3x3x3<T> array)
     {
-        Unsafe.SkipInit(out Array4x4x4<T> result);
+        Unsafe.SkipInit(out Array3x3x3x3<T> result);
 
         result.X1 = c * array.X1;
         result.X2 = c * array.X2;
         result.X3 = c * array.X3;
-        result.X4 = c * array.X4;
 
         return result;
     }
 
-    public static Array4x4x4<T> operator *(Array4x4x4<T> array, T c)
+    public static Array3x3x3x3<T> operator *(Array3x3x3x3<T> array, T c)
     {
-        Unsafe.SkipInit(out Array4x4x4<T> result);
+        Unsafe.SkipInit(out Array3x3x3x3<T> result);
 
         result.X1 = array.X1 * c;
         result.X2 = array.X2 * c;
         result.X3 = array.X3 * c;
-        result.X4 = array.X4 * c;
 
         return result;
     }
@@ -131,18 +129,18 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
     // Equality
     //
 
-    public static bool operator ==(Array4x4x4<T> left, Array4x4x4<T> right)
-        => left.X1 == right.X1 && left.X2 == right.X2 && left.X3 == right.X3 && left.X4 == right.X4;
+    public static bool operator ==(Array3x3x3x3<T> left, Array3x3x3x3<T> right)
+        => left.X1 == right.X1 && left.X2 == right.X2 && left.X3 == right.X3;
 
-    public static bool operator !=(Array4x4x4<T> left, Array4x4x4<T> right)
-        => left.X1 != right.X1 || left.X2 != right.X2 || left.X3 != right.X3 || left.X4 != right.X4;
+    public static bool operator !=(Array3x3x3x3<T> left, Array3x3x3x3<T> right)
+        => left.X1 != right.X1 || left.X2 != right.X2 || left.X3 != right.X3;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Array4x4x4<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Array3x3x3x3<T> other && Equals(other);
 
-    public bool Equals(Array4x4x4<T> value)
-        => X1.Equals(value.X1) && X2.Equals(value.X2) && X3.Equals(value.X3) && X4.Equals(value.X4);
+    public bool Equals(Array3x3x3x3<T> value)
+        => X1.Equals(value.X1) && X2.Equals(value.X2) && X3.Equals(value.X3);
 
-    public override readonly int GetHashCode() => HashCode.Combine(X1, X2, X3, X4);
+    public override readonly int GetHashCode() => HashCode.Combine(X1, X2, X3);
 
     //
     // Formatting
@@ -150,7 +148,7 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
 
     public readonly string ToString(string? format, IFormatProvider? provider)
     {
-        var array = new T[4, 4, 4];
+        var array = new T[3, 3, 3, 3];
         CopyTo(ref array);
         return array.ToDisplayString(format, provider);
     }
@@ -159,15 +157,18 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
     // Methods
     //
 
-    public readonly void CopyTo(ref T[,,] destination)
+    public readonly void CopyTo(ref T[,,,] destination)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 3; j++)
             {
-                for (int k = 0; k < 4; k++)
+                for (int k = 0; k < 3; k++)
                 {
-                    destination[i, j, k] = this[i, j, k];
+                    for (int l = 0; l < 3; l++)
+                    {
+                        destination[i, j, k, l] = this[i, j, k, l];
+                    }
                 }
             }
         }
