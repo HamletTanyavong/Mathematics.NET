@@ -299,7 +299,7 @@ public static partial class DifGeo
     // Christoffel symbols
     //
 
-    /// <summary>Compute the Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
@@ -337,7 +337,7 @@ public static partial class DifGeo
         }
     }
 
-    /// <summary>Compute the Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
@@ -373,13 +373,147 @@ public static partial class DifGeo
             >(ref result);
     }
 
+    /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol</typeparam>
+    /// <typeparam name="TI1N">The name of the first index</typeparam>
+    /// <typeparam name="TI2N">The name of the second index</typeparam>
+    /// <typeparam name="TI3N">The name of the third index</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
+    /// <param name="tape">A Hessian tape</param>
+    /// <param name="metric">A metric tensor field</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="derivative">The result</param>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        HessianTape<TN> tape,
+        MetricTensorField<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : ISymbol
+        where TI1N : ISymbol
+        where TI2N : ISymbol
+        where TI3N : ISymbol
+        where TI4N : ISymbol
+    {
+        SecondDerivative(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> secondDerivativeOfMetric);
+
+        derivative = new();
+        for (int m = 0; m < 4; m++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        derivative[m, k, i, j] = 0.5 * (secondDerivativeOfMetric[m, j, k, i] + secondDerivativeOfMetric[m, i, k, j] - secondDerivativeOfMetric[m, k, i, j]);
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol</typeparam>
+    /// <typeparam name="TI1N">The name of the first index</typeparam>
+    /// <typeparam name="TI2N">The name of the second index</typeparam>
+    /// <typeparam name="TI3N">The name of the third index</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
+    /// <param name="tape">A Hessian tape</param>
+    /// <param name="metric">A metric tensor field</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="derivative">The result</param>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        HessianTape<TN> tape,
+        MetricTensorField<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : ISymbol
+        where TI1N : ISymbol
+        where TI2N : ISymbol
+        where TI3N : ISymbol
+        where TI4N : ISymbol
+    {
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> derivativeOfInverseMetric);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
+        var inverseMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+
+        var firstPart = Contract(derivativeOfInverseMetric, christoffel);
+        var secondPart = Contract(inverseMetric, derivativeOfChristoffel);
+
+        derivative = new();
+        for (int m = 0; m < 4; m++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        derivative[m, k, i, j] = firstPart[m, k, i, j] + secondPart[k, m, i, j];
+                    }
+                }
+            }
+        }
+    }
+
+    //
+    // Riemann tensor
+    //
+
+    /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor</typeparam>
+    /// <typeparam name="TI1N">The name of the first index</typeparam>
+    /// <typeparam name="TI2N">The name of the second index</typeparam>
+    /// <typeparam name="TI3N">The name of the third index</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
+    /// <param name="tape">A Hessian tape</param>
+    /// <param name="metric">A metric tensor field</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <param name="riemann">The result</param>
+    public static void Riemann<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        HessianTape<TN> tape,
+        MetricTensorField<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : ISymbol
+        where TI1N : ISymbol
+        where TI2N : ISymbol
+        where TI3N : ISymbol
+        where TI4N : ISymbol
+    {
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
+        var contractedChristoffels = Contract(christoffel, christoffel.WithIndex1<Index<Upper, InternalIndex1>>().WithIndex2Name<TI2N>().WithIndex3Name<TI4N>());
+
+        riemann = new();
+        for (int r = 0; r < 4; r++)
+        {
+            for (int s = 0; s < 4; s++)
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    for (int n = 0; n < 4; n++)
+                    {
+                        riemann[r, s, m, n] =
+                            derivativeOfChristoffel[m, r, s, n] - derivativeOfChristoffel[n, r, s, m] + contractedChristoffels[r, m, s, n] - contractedChristoffels[r, n, s, m];
+                    }
+                }
+            }
+        }
+    }
+
     //
     // Tensor contractions
     //
 
-    //
     // Rank-one and Rank-one
-    //
 
     [GenerateTensorContractions]
     public static TN Contract<TLR1T, TRR1T, TV, TN, TCI>(in IRankOneTensor<TLR1T, TV, TN, Index<Lower, TCI>> a, in IRankOneTensor<TRR1T, TV, TN, Index<Upper, TCI>> b)
@@ -397,9 +531,7 @@ public static partial class DifGeo
         return result;
     }
 
-    //
     // Rank-one and Rank-two
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Vector4<TN>, TN, TI> Contract<TR1T, TR2T, TN, TCI, TI>(
@@ -443,9 +575,7 @@ public static partial class DifGeo
         return new(vector);
     }
 
-    //
     // Rank-one and Rank-three
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR1T, TR3T, TN, TCI, TI1, TI2>(
@@ -497,9 +627,7 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    //
     // Rank-one and Rank-four
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR1T, TR4T, TN, TCI, TI1, TI2, TI3>(
@@ -559,9 +687,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Rank-two and Rank-two
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TLR2T, TRR3T, TN, TCI, TI1, TI2>(
@@ -588,9 +714,7 @@ public static partial class DifGeo
         return new(matrix);
     }
 
-    //
     // Rank-two and Rank-three
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR2T, TR3T, TN, TCI, TI1, TI2, TI3>(
@@ -650,9 +774,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Rank-two and Rank-four
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR2T, TR4T, TN, TCI, TI1, TI2, TI3, TI4>(
@@ -690,9 +812,9 @@ public static partial class DifGeo
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR4T, TR2T, TN, TCI, TI1, TI2, TI3, TI4>(
         in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> a,
-        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI4> b)
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI4> b)
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
-        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI4>
+        where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TCI : ISymbol
         where TI1 : IIndex
@@ -720,9 +842,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Rank-three and Rank-three
-    //
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
@@ -757,9 +877,7 @@ public static partial class DifGeo
         return new(array);
     }
 
-    //
     // Tensor self-contractions
-    //
 
     [GenerateTensorSelfContractions]
     public static TN Contract<TR2T, TSM, TN, TCI>(in IRankTwoTensor<TR2T, TSM, TN, Index<Lower, TCI>, Index<Upper, TCI>> a)

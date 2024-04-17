@@ -399,7 +399,7 @@ public static class LinAlgExtensions
                     builder.Append(k != 0 ? "   [" : "[");
                     for (int l = 0; l < e3Length; l++)
                     {
-                        string value = k != e3Length - 1 ? $"{strings[i, j, k, l]}, " : strings[i, j, k, l];
+                        string value = l != e3Length - 1 ? $"{strings[i, j, k, l]}, " : strings[i, j, k, l];
                         builder.Append(value.PadRight(maxElementLength));
                     }
                     builder.CloseGroup(newlineChars);
