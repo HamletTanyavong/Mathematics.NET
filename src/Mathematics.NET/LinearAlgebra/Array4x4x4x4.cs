@@ -39,10 +39,10 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
     where T : IComplex<T>
 {
     public const int Components = 256;
-    public const int E1Components = 64;
-    public const int E2Components = 64;
-    public const int E3Components = 64;
-    public const int E4Components = 64;
+    public const int E1Components = 4;
+    public const int E2Components = 4;
+    public const int E3Components = 4;
+    public const int E4Components = 4;
 
     public Array4x4x4<T> X1;
     public Array4x4x4<T> X2;
