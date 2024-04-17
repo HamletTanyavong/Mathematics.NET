@@ -39,9 +39,9 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
     where T : IComplex<T>
 {
     public const int Components = 64;
-    public const int E1Components = 16;
-    public const int E2Components = 16;
-    public const int E3Components = 16;
+    public const int E1Components = 4;
+    public const int E2Components = 4;
+    public const int E3Components = 4;
 
     public Matrix4x4<T> X1;
     public Matrix4x4<T> X2;
@@ -78,7 +78,7 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
         {
             if ((uint)i >= 4)
             {
-                throw new NotImplementedException();
+                throw new IndexOutOfRangeException();
             }
             Unsafe.Add(ref X1, i)[j, k] = value;
         }
