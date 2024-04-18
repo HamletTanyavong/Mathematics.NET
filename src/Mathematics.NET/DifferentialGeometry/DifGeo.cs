@@ -516,7 +516,7 @@ public static partial class DifGeo
     // Rank-one and Rank-one
 
     [GenerateTensorContractions]
-    public static TN Contract<TLR1T, TRR1T, TV, TN, TCI>(in IRankOneTensor<TLR1T, TV, TN, Index<Lower, TCI>> a, in IRankOneTensor<TRR1T, TV, TN, Index<Upper, TCI>> b)
+    public static TN Contract<TLR1T, TRR1T, TV, TN, TCI>(in IRankOneTensor<TLR1T, TV, TN, Index<Lower, TCI>> left, in IRankOneTensor<TRR1T, TV, TN, Index<Upper, TCI>> right)
         where TLR1T : IRankOneTensor<TLR1T, TV, TN, Index<Lower, TCI>>
         where TRR1T : IRankOneTensor<TRR1T, TV, TN, Index<Upper, TCI>>
         where TV : IVector<TV, TN>
@@ -526,7 +526,7 @@ public static partial class DifGeo
         var result = TN.Zero;
         for (int i = 0; i < TV.E1Components; i++)
         {
-            result += a[i] * b[i];
+            result += left[i] * right[i];
         }
         return result;
     }
@@ -534,9 +534,51 @@ public static partial class DifGeo
     // Rank-one and Rank-two
 
     [GenerateTensorContractions]
+    public static Tensor<Vector2<TN>, TN, TI> Contract<TR1T, TR2T, TN, TCI, TI>(
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>> left,
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI> right)
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>>
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI : IIndex
+    {
+        Vector2<TN> vector = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                vector[i] += left[j] * right[j, i];
+            }
+        }
+        return new(vector);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Vector3<TN>, TN, TI> Contract<TR1T, TR2T, TN, TCI, TI>(
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>> left,
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI> right)
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>>
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI : IIndex
+    {
+        Vector3<TN> vector = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                vector[i] += left[j] * right[j, i];
+            }
+        }
+        return new(vector);
+    }
+
+    [GenerateTensorContractions]
     public static Tensor<Vector4<TN>, TN, TI> Contract<TR1T, TR2T, TN, TCI, TI>(
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>> a,
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI> b)
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>> left,
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI> right)
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>>
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -548,7 +590,49 @@ public static partial class DifGeo
         {
             for (int j = 0; j < 4; j++)
             {
-                vector[i] += a[j] * b[j, i];
+                vector[i] += left[j] * right[j, i];
+            }
+        }
+        return new(vector);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Vector2<TN>, TN, TI> Contract<TR2T, TR1T, TN, TCI, TI>(
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI> left,
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI>
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI : IIndex
+    {
+        Vector2<TN> vector = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                vector[i] += left[j, i] * right[j];
+            }
+        }
+        return new(vector);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Vector3<TN>, TN, TI> Contract<TR2T, TR1T, TN, TCI, TI>(
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI> left,
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI>
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI : IIndex
+    {
+        Vector3<TN> vector = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                vector[i] += left[j, i] * right[j];
             }
         }
         return new(vector);
@@ -556,8 +640,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Vector4<TN>, TN, TI> Contract<TR2T, TR1T, TN, TCI, TI>(
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI> a,
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>> b)
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI> left,
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>> right)
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -569,7 +653,7 @@ public static partial class DifGeo
         {
             for (int j = 0; j < 4; j++)
             {
-                vector[i] += a[j, i] * b[j];
+                vector[i] += left[j, i] * right[j];
             }
         }
         return new(vector);
@@ -578,9 +662,59 @@ public static partial class DifGeo
     // Rank-one and Rank-three
 
     [GenerateTensorContractions]
+    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> Contract<TR1T, TR3T, TN, TCI, TI1, TI2>(
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>> left,
+        in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI1, TI2> right)
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>>
+        where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI1, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix2x2<TN> matrix = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    matrix[i, j] += left[k] * right[k, i, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Matrix3x3<TN>, TN, TI1, TI2> Contract<TR1T, TR3T, TN, TCI, TI1, TI2>(
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>> left,
+        in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI1, TI2> right)
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>>
+        where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI1, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix3x3<TN> matrix = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    matrix[i, j] += left[k] * right[k, i, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorContractions]
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR1T, TR3T, TN, TCI, TI1, TI2>(
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>> a,
-        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> b)
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>> left,
+        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> right)
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>>
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -595,7 +729,57 @@ public static partial class DifGeo
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    matrix[i, j] += a[k] * b[k, i, j];
+                    matrix[i, j] += left[k] * right[k, i, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> Contract<TR3T, TR1T, TN, TCI, TI1, TI2>(
+        in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>> right)
+        where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix2x2<TN> matrix = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    matrix[i, j] += left[k, i, j] * right[k];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Matrix3x3<TN>, TN, TI1, TI2> Contract<TR3T, TR1T, TN, TCI, TI1, TI2>(
+        in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>> right)
+        where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix3x3<TN> matrix = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    matrix[i, j] += left[k, i, j] * right[k];
                 }
             }
         }
@@ -604,8 +788,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR3T, TR1T, TN, TCI, TI1, TI2>(
-        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a,
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>> b)
+        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>> right)
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -620,7 +804,7 @@ public static partial class DifGeo
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    matrix[i, j] += a[k, i, j] * b[k];
+                    matrix[i, j] += left[k, i, j] * right[k];
                 }
             }
         }
@@ -630,9 +814,67 @@ public static partial class DifGeo
     // Rank-one and Rank-four
 
     [GenerateTensorContractions]
+    public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> Contract<TR1T, TR4T, TN, TCI, TI1, TI2, TI3>(
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>> left,
+        in IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3> right)
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>>
+        where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        array[i, j, k] += left[l] * right[l, i, j, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> Contract<TR1T, TR4T, TN, TCI, TI1, TI2, TI3>(
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>> left,
+        in IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3> right)
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>>
+        where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        array[i, j, k] += left[l] * right[l, i, j, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR1T, TR4T, TN, TCI, TI1, TI2, TI3>(
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>> a,
-        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3> b)
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>> left,
+        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3> right)
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>>
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -650,7 +892,65 @@ public static partial class DifGeo
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        array[i, j, k] += a[l] * b[l, i, j, k];
+                        array[i, j, k] += left[l] * right[l, i, j, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> Contract<TR4T, TR1T, TN, TCI, TI1, TI2, TI3>(
+        in IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> left,
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>> right)
+        where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        array[i, j, k] += left[l, i, j, k] * right[l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> Contract<TR4T, TR1T, TN, TCI, TI1, TI2, TI3>(
+        in IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> left,
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>> right)
+        where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        array[i, j, k] += left[l, i, j, k] * right[l];
                     }
                 }
             }
@@ -660,8 +960,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR4T, TR1T, TN, TCI, TI1, TI2, TI3>(
-        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> a,
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>> b)
+        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> left,
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>> right)
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -679,7 +979,7 @@ public static partial class DifGeo
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        array[i, j, k] += a[l, i, j, k] * b[l];
+                        array[i, j, k] += left[l, i, j, k] * right[l];
                     }
                 }
             }
@@ -690,9 +990,59 @@ public static partial class DifGeo
     // Rank-two and Rank-two
 
     [GenerateTensorContractions]
+    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> Contract<TLR2T, TRR3T, TN, TCI, TI1, TI2>(
+        in IRankTwoTensor<TLR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankTwoTensor<TRR3T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI2> right)
+        where TLR2T : IRankTwoTensor<TLR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1>
+        where TRR3T : IRankTwoTensor<TRR3T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix2x2<TN> matrix = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    matrix[i, j] += left[k, i] * right[k, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Matrix3x3<TN>, TN, TI1, TI2> Contract<TLR2T, TRR3T, TN, TCI, TI1, TI2>(
+        in IRankTwoTensor<TLR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankTwoTensor<TRR3T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI2> right)
+        where TLR2T : IRankTwoTensor<TLR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1>
+        where TRR3T : IRankTwoTensor<TRR3T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix3x3<TN> matrix = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    matrix[i, j] += left[k, i] * right[k, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorContractions]
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TLR2T, TRR3T, TN, TCI, TI1, TI2>(
-        in IRankTwoTensor<TLR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1> a,
-        in IRankTwoTensor<TRR3T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI2> b)
+        in IRankTwoTensor<TLR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankTwoTensor<TRR3T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI2> right)
         where TLR2T : IRankTwoTensor<TLR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1>
         where TRR3T : IRankTwoTensor<TRR3T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -707,7 +1057,7 @@ public static partial class DifGeo
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    matrix[i, j] += a[k, i] * b[k, j];
+                    matrix[i, j] += left[k, i] * right[k, j];
                 }
             }
         }
@@ -717,9 +1067,67 @@ public static partial class DifGeo
     // Rank-two and Rank-three
 
     [GenerateTensorContractions]
+    public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> Contract<TR2T, TR3T, TN, TCI, TI1, TI2, TI3>(
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI2, TI3> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1>
+        where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI2, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        array[i, j, k] += left[l, i] * right[l, j, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> Contract<TR2T, TR3T, TN, TCI, TI1, TI2, TI3>(
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI2, TI3> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1>
+        where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI2, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        array[i, j, k] += left[l, i] * right[l, j, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR2T, TR3T, TN, TCI, TI1, TI2, TI3>(
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1> a,
-        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3> b)
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3> right)
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1>
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -737,7 +1145,65 @@ public static partial class DifGeo
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        array[i, j, k] += a[l, i] * b[l, j, k];
+                        array[i, j, k] += left[l, i] * right[l, j, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> Contract<TR3T, TR2T, TN, TCI, TI1, TI2, TI3>(
+        in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI3> right)
+        where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        array[i, j, k] += left[l, i, j] * right[l, k];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> Contract<TR3T, TR2T, TN, TCI, TI1, TI2, TI3>(
+        in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI3> right)
+        where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        array[i, j, k] += left[l, i, j] * right[l, k];
                     }
                 }
             }
@@ -747,8 +1213,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> Contract<TR3T, TR2T, TN, TCI, TI1, TI2, TI3>(
-        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a,
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI3> b)
+        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI3> right)
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -766,7 +1232,7 @@ public static partial class DifGeo
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        array[i, j, k] += a[l, i, j] * b[l, k];
+                        array[i, j, k] += left[l, i, j] * right[l, k];
                     }
                 }
             }
@@ -777,9 +1243,75 @@ public static partial class DifGeo
     // Rank-two and Rank-four
 
     [GenerateTensorContractions]
+    public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR2T, TR4T, TN, TCI, TI1, TI2, TI3, TI4>(
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1>
+        where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array2x2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        for (int m = 0; m < 2; m++)
+                        {
+                            array[i, j, k, l] += left[m, i] * right[m, j, k, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array3x3x3x3<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR2T, TR4T, TN, TCI, TI1, TI2, TI3, TI4>(
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1>
+        where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array3x3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        for (int m = 0; m < 3; m++)
+                        {
+                            array[i, j, k, l] += left[m, i] * right[m, j, k, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR2T, TR4T, TN, TCI, TI1, TI2, TI3, TI4>(
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1> a,
-        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4> b)
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1> left,
+        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4> right)
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1>
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -800,7 +1332,73 @@ public static partial class DifGeo
                     {
                         for (int m = 0; m < 4; m++)
                         {
-                            array[i, j, k, l] += a[m, i] * b[m, j, k, l];
+                            array[i, j, k, l] += left[m, i] * right[m, j, k, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR4T, TR2T, TN, TCI, TI1, TI2, TI3, TI4>(
+        in IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> left,
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI4> right)
+        where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array2x2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        for (int m = 0; m < 2; m++)
+                        {
+                            array[i, j, k, l] += left[m, i, j, k] * right[m, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array3x3x3x3<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR4T, TR2T, TN, TCI, TI1, TI2, TI3, TI4>(
+        in IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> left,
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI4> right)
+        where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array3x3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        for (int m = 0; m < 3; m++)
+                        {
+                            array[i, j, k, l] += left[m, i, j, k] * right[m, l];
                         }
                     }
                 }
@@ -811,8 +1409,8 @@ public static partial class DifGeo
 
     [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TR4T, TR2T, TN, TCI, TI1, TI2, TI3, TI4>(
-        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> a,
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI4> b)
+        in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3> left,
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI4> right)
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -833,7 +1431,7 @@ public static partial class DifGeo
                     {
                         for (int m = 0; m < 4; m++)
                         {
-                            array[i, j, k, l] += a[m, i, j, k] * b[m, l];
+                            array[i, j, k, l] += left[m, i, j, k] * right[m, l];
                         }
                     }
                 }
@@ -845,9 +1443,75 @@ public static partial class DifGeo
     // Rank-three and Rank-three
 
     [GenerateTensorContractions]
+    public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
+        in IRankThreeTensor<TLR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankThreeTensor<TRR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI3, TI4> right)
+        where TLR3T : IRankThreeTensor<TLR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+        where TRR3T : IRankThreeTensor<TRR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI3, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array2x2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        for (int m = 0; m < 2; m++)
+                        {
+                            array[i, j, k, l] += left[m, i, j] * right[m, k, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
+    public static Tensor<Array3x3x3x3<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
+        in IRankThreeTensor<TLR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankThreeTensor<TRR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI3, TI4> right)
+        where TLR3T : IRankThreeTensor<TLR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+        where TRR3T : IRankThreeTensor<TRR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI3, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array3x3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        for (int m = 0; m < 3; m++)
+                        {
+                            array[i, j, k, l] += left[m, i, j] * right[m, k, l];
+                        }
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    [GenerateTensorContractions]
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
-        in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a,
-        in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> b)
+        in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> left,
+        in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> right)
         where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -868,7 +1532,7 @@ public static partial class DifGeo
                     {
                         for (int m = 0; m < 4; m++)
                         {
-                            array[i, j, k, l] += a[m, i, j] * b[m, k, l];
+                            array[i, j, k, l] += left[m, i, j] * right[m, k, l];
                         }
                     }
                 }
@@ -877,10 +1541,12 @@ public static partial class DifGeo
         return new(array);
     }
 
+    //
     // Tensor self-contractions
+    //
 
     [GenerateTensorSelfContractions]
-    public static TN Contract<TR2T, TSM, TN, TCI>(in IRankTwoTensor<TR2T, TSM, TN, Index<Lower, TCI>, Index<Upper, TCI>> a)
+    public static TN Contract<TR2T, TSM, TN, TCI>(in IRankTwoTensor<TR2T, TSM, TN, Index<Lower, TCI>, Index<Upper, TCI>> tensor)
         where TR2T : IRankTwoTensor<TR2T, TSM, TN, Index<Lower, TCI>, Index<Upper, TCI>>
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -889,13 +1555,49 @@ public static partial class DifGeo
         var result = TN.Zero;
         for (int i = 0; i < TSM.E1Components; i++)
         {
-            result += a[i, i];
+            result += tensor[i, i];
         }
         return result;
     }
 
     [GenerateTensorSelfContractions]
-    public static Tensor<Vector4<TN>, TN, TI> Contract<TR3T, TN, TCI, TI>(in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI> a)
+    public static Tensor<Vector2<TN>, TN, TI> Contract<TR3T, TN, TCI, TI>(in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI> tensor)
+        where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI : IIndex
+    {
+        Vector2<TN> vector = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                vector[i] += tensor[j, j, i];
+            }
+        }
+        return new(vector);
+    }
+
+    [GenerateTensorSelfContractions]
+    public static Tensor<Vector3<TN>, TN, TI> Contract<TR3T, TN, TCI, TI>(in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI> tensor)
+        where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI : IIndex
+    {
+        Vector3<TN> vector = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                vector[i] += tensor[j, j, i];
+            }
+        }
+        return new(vector);
+    }
+
+    [GenerateTensorSelfContractions]
+    public static Tensor<Vector4<TN>, TN, TI> Contract<TR3T, TN, TCI, TI>(in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI> tensor)
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TCI : ISymbol
@@ -906,14 +1608,58 @@ public static partial class DifGeo
         {
             for (int j = 0; j < 4; j++)
             {
-                vector[i] += a[j, j, i];
+                vector[i] += tensor[j, j, i];
             }
         }
         return new(vector);
     }
 
     [GenerateTensorSelfContractions]
-    public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> a)
+    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> tensor)
+        where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix2x2<TN> matrix = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    matrix[i, j] += tensor[k, k, i, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorSelfContractions]
+    public static Tensor<Matrix3x3<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> tensor)
+        where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TCI : ISymbol
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix3x3<TN> matrix = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    matrix[i, j] += tensor[k, k, i, j];
+                }
+            }
+        }
+        return new(matrix);
+    }
+
+    [GenerateTensorSelfContractions]
+    public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> tensor)
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TCI : ISymbol
@@ -927,7 +1673,7 @@ public static partial class DifGeo
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    matrix[i, j] += a[k, k, i, j];
+                    matrix[i, j] += tensor[k, k, i, j];
                 }
             }
         }
@@ -944,10 +1690,48 @@ public static partial class DifGeo
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
     /// <typeparam name="TI1">The index of the first tensor</typeparam>
     /// <typeparam name="TI2">The index of the second tensor</typeparam>
-    /// <param name="a">The first tensor</param>
-    /// <param name="b">The second tensor</param>
+    /// <param name="left">The first tensor</param>
+    /// <param name="right">The second tensor</param>
     /// <returns>A rank-two tensor</returns>
-    public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> TensorProduct<TLR1T, TRR1T, TN, TI1, TI2>(in IRankOneTensor<TLR1T, Vector4<TN>, TN, TI1> a, in IRankOneTensor<TRR1T, Vector4<TN>, TN, TI2> b)
+    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> TensorProduct<TLR1T, TRR1T, TN, TI1, TI2>(in IRankOneTensor<TLR1T, Vector2<TN>, TN, TI1> left, in IRankOneTensor<TRR1T, Vector2<TN>, TN, TI2> right)
+        where TLR1T : IRankOneTensor<TLR1T, Vector2<TN>, TN, TI1>
+        where TRR1T : IRankOneTensor<TRR1T, Vector2<TN>, TN, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix2x2<TN> matrix = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                matrix[i, j] = left[i] * right[j];
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TLR1T, TRR1T, TN, TI1, TI2}(in IRankOneTensor{TLR1T, Vector2{TN}, TN, TI1}, in IRankOneTensor{TRR1T, Vector2{TN}, TN, TI2})"/>
+    public static Tensor<Matrix3x3<TN>, TN, TI1, TI2> TensorProduct<TLR1T, TRR1T, TN, TI1, TI2>(in IRankOneTensor<TLR1T, Vector3<TN>, TN, TI1> left, in IRankOneTensor<TRR1T, Vector3<TN>, TN, TI2> right)
+        where TLR1T : IRankOneTensor<TLR1T, Vector3<TN>, TN, TI1>
+        where TRR1T : IRankOneTensor<TRR1T, Vector3<TN>, TN, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+    {
+        Matrix3x3<TN> matrix = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                matrix[i, j] = left[i] * right[j];
+            }
+        }
+        return new(matrix);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TLR1T, TRR1T, TN, TI1, TI2}(in IRankOneTensor{TLR1T, Vector2{TN}, TN, TI1}, in IRankOneTensor{TRR1T, Vector2{TN}, TN, TI2})"/>
+    public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> TensorProduct<TLR1T, TRR1T, TN, TI1, TI2>(in IRankOneTensor<TLR1T, Vector4<TN>, TN, TI1> left, in IRankOneTensor<TRR1T, Vector4<TN>, TN, TI2> right)
         where TLR1T : IRankOneTensor<TLR1T, Vector4<TN>, TN, TI1>
         where TRR1T : IRankOneTensor<TRR1T, Vector4<TN>, TN, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -959,7 +1743,7 @@ public static partial class DifGeo
         {
             for (int j = 0; j < 4; j++)
             {
-                matrix[i, j] = a[i] * b[j];
+                matrix[i, j] = left[i] * right[j];
             }
         }
         return new(matrix);
@@ -972,12 +1756,62 @@ public static partial class DifGeo
     /// <typeparam name="TI1">The index of the first tensor</typeparam>
     /// <typeparam name="TI2">The first index of the second tensor</typeparam>
     /// <typeparam name="TI3">The second index of the second tensor</typeparam>
-    /// <param name="a">A rank-one tensor</param>
-    /// <param name="b">A rank-two tensor</param>
+    /// <param name="left">A rank-one tensor</param>
+    /// <param name="right">A rank-two tensor</param>
     /// <returns>A rank-three tensor</returns>
+    public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> TensorProduct<TR1T, TR2T, TN, TI1, TI2, TI3>(
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, TI1> left,
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, TI2, TI3> right)
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, TI1>
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, TI2, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    array[i, j, k] = left[i] * right[j, k];
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR1T, TR2T, TN, TI1, TI2, TI3}(in IRankOneTensor{TR1T, Vector2{TN}, TN, TI1}, in IRankTwoTensor{TR2T, Matrix2x2{TN}, TN, TI2, TI3})"/>
+    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> TensorProduct<TR1T, TR2T, TN, TI1, TI2, TI3>(
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, TI1> left,
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, TI2, TI3> right)
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, TI1>
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, TI2, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    array[i, j, k] = left[i] * right[j, k];
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR1T, TR2T, TN, TI1, TI2, TI3}(in IRankOneTensor{TR1T, Vector2{TN}, TN, TI1}, in IRankTwoTensor{TR2T, Matrix2x2{TN}, TN, TI2, TI3})"/>
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> TensorProduct<TR1T, TR2T, TN, TI1, TI2, TI3>(
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI1> a,
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, TI2, TI3> b)
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI1> left,
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, TI2, TI3> right)
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, TI1>
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -992,7 +1826,7 @@ public static partial class DifGeo
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    array[i, j, k] = a[i] * b[j, k];
+                    array[i, j, k] = left[i] * right[j, k];
                 }
             }
         }
@@ -1006,12 +1840,62 @@ public static partial class DifGeo
     /// <typeparam name="TI1">The first index of the first tensor</typeparam>
     /// <typeparam name="TI2">The second index of the second tensor</typeparam>
     /// <typeparam name="TI3">The index of the second tensor</typeparam>
-    /// <param name="a">A rank-two tensor</param>
-    /// <param name="b">A rank-one tensor</param>
+    /// <param name="left">A rank-two tensor</param>
+    /// <param name="right">A rank-one tensor</param>
     /// <returns>A rank-three tensor</returns>
+    public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> TensorProduct<TR2T, TR1T, TN, TI1, TI2, TI3>(
+        in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, TI1, TI2> left,
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, TI3> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, TI1, TI2>
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    array[i, j, k] = left[i, j] * right[k];
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR2T, TR1T, TN, TI1, TI2, TI3}(in IRankTwoTensor{TR2T, Matrix2x2{TN}, TN, TI1, TI2}, in IRankOneTensor{TR1T, Vector2{TN}, TN, TI3})"/>
+    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> TensorProduct<TR2T, TR1T, TN, TI1, TI2, TI3>(
+        in IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, TI1, TI2> left,
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, TI3> right)
+        where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, TI1, TI2>
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, TI3>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+    {
+        Array3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    array[i, j, k] = left[i, j] * right[k];
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR2T, TR1T, TN, TI1, TI2, TI3}(in IRankTwoTensor{TR2T, Matrix2x2{TN}, TN, TI1, TI2}, in IRankOneTensor{TR1T, Vector2{TN}, TN, TI3})"/>
     public static Tensor<Array4x4x4<TN>, TN, TI1, TI2, TI3> TensorProduct<TR2T, TR1T, TN, TI1, TI2, TI3>(
-        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, TI1, TI2> a,
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI3> b)
+        in IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, TI1, TI2> left,
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI3> right)
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, TI1, TI2>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -1026,7 +1910,7 @@ public static partial class DifGeo
             {
                 for (int k = 0; k < 4; k++)
                 {
-                    array[i, j, k] = a[i, j] * b[k];
+                    array[i, j, k] = left[i, j] * right[k];
                 }
             }
         }
@@ -1041,12 +1925,70 @@ public static partial class DifGeo
     /// <typeparam name="TI2">The first index of the second tensor</typeparam>
     /// <typeparam name="TI3">The second index of the second tensor</typeparam>
     /// <typeparam name="TI4">The third index of the second tensor</typeparam>
-    /// <param name="a">A rank-one tensor</param>
-    /// <param name="b">A rank-three tensor</param>
+    /// <param name="left">A rank-one tensor</param>
+    /// <param name="right">A rank-three tensor</param>
     /// <returns>A rank-four tensor</returns>
+    public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR1T, TR3T, TN, TI1, TI2, TI3, TI4>(
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, TI1> left,
+        in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, TI2, TI3, TI4> right)
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, TI1>
+        where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, TI2, TI3, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array2x2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        array[i, j, k, l] = left[i] * right[j, k, l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR1T, TR3T, TN, TI1, TI2, TI3, TI4}(in IRankOneTensor{TR1T, Vector2{TN}, TN, TI1}, in IRankThreeTensor{TR3T, Array2x2x2{TN}, TN, TI2, TI3, TI4})"/>
+    public static Tensor<Array3x3x3x3<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR1T, TR3T, TN, TI1, TI2, TI3, TI4>(
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, TI1> left,
+        in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, TI2, TI3, TI4> right)
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, TI1>
+        where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, TI2, TI3, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array3x3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        array[i, j, k, l] = left[i] * right[j, k, l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR1T, TR3T, TN, TI1, TI2, TI3, TI4}(in IRankOneTensor{TR1T, Vector2{TN}, TN, TI1}, in IRankThreeTensor{TR3T, Array2x2x2{TN}, TN, TI2, TI3, TI4})"/>
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR1T, TR3T, TN, TI1, TI2, TI3, TI4>(
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI1> a,
-        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, TI2, TI3, TI4> b)
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI1> left,
+        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, TI2, TI3, TI4> right)
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, TI1>
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, TI2, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -1064,7 +2006,7 @@ public static partial class DifGeo
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        array[i, j, k, l] = a[i] * b[j, k, l];
+                        array[i, j, k, l] = left[i] * right[j, k, l];
                     }
                 }
             }
@@ -1080,12 +2022,70 @@ public static partial class DifGeo
     /// <typeparam name="TI2">The second index of the first tensor</typeparam>
     /// <typeparam name="TI3">The third index of the first tensor</typeparam>
     /// <typeparam name="TI4">The index of the second tensor</typeparam>
-    /// <param name="a">A rank-three tensor</param>
-    /// <param name="b">A rank-one tensor</param>
+    /// <param name="left">A rank-three tensor</param>
+    /// <param name="right">A rank-one tensor</param>
     /// <returns>A rank-four tensor</returns>
+    public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR3T, TR1T, TN, TI1, TI2, TI3, TI4>(
+        in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, TI1, TI2, TI3> left,
+        in IRankOneTensor<TR1T, Vector2<TN>, TN, TI4> right)
+        where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, TI1, TI2, TI3>
+        where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array2x2x2x2<TN> array = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        array[i, j, k, l] = left[i, j, k] * right[l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR3T, TR1T, TN, TI1, TI2, TI3, TI4}(in IRankThreeTensor{TR3T, Array2x2x2{TN}, TN, TI1, TI2, TI3}, in IRankOneTensor{TR1T, Vector2{TN}, TN, TI4})"/>
+    public static Tensor<Array3x3x3x3<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR3T, TR1T, TN, TI1, TI2, TI3, TI4>(
+        in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, TI1, TI2, TI3> left,
+        in IRankOneTensor<TR1T, Vector3<TN>, TN, TI4> right)
+        where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, TI1, TI2, TI3>
+        where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, TI4>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array3x3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        array[i, j, k, l] = left[i, j, k] * right[l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TR3T, TR1T, TN, TI1, TI2, TI3, TI4}(in IRankThreeTensor{TR3T, Array2x2x2{TN}, TN, TI1, TI2, TI3}, in IRankOneTensor{TR1T, Vector2{TN}, TN, TI4})"/>
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR3T, TR1T, TN, TI1, TI2, TI3, TI4>(
-        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, TI1, TI2, TI3> a,
-        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI4> b)
+        in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, TI1, TI2, TI3> left,
+        in IRankOneTensor<TR1T, Vector4<TN>, TN, TI4> right)
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, TI1, TI2, TI3>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -1103,7 +2103,7 @@ public static partial class DifGeo
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        array[i, j, k, l] = a[i, j, k] * b[l];
+                        array[i, j, k, l] = left[i, j, k] * right[l];
                     }
                 }
             }
@@ -1119,12 +2119,70 @@ public static partial class DifGeo
     /// <typeparam name="TI2">The second index of the first tensor</typeparam>
     /// <typeparam name="TI3">The first index of the second tensor</typeparam>
     /// <typeparam name="TI4">The second index of the second tensor</typeparam>
-    /// <param name="a">A rank-two tensor</param>
-    /// <param name="b">A rank-two tensor</param>
+    /// <param name="left">A rank-two tensor</param>
+    /// <param name="right">A rank-two tensor</param>
     /// <returns>A rank-four tensor</returns>
+    public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TLR2T, TRR2T, TN, TI1, TI2, TI3, TI4>(
+        in IRankTwoTensor<TLR2T, Matrix2x2<TN>, TN, TI1, TI2> left,
+        in IRankTwoTensor<TRR2T, Matrix2x2<TN>, TN, TI1, TI2> right)
+        where TLR2T : IRankTwoTensor<TLR2T, Matrix2x2<TN>, TN, TI1, TI2>
+        where TRR2T : IRankTwoTensor<TRR2T, Matrix2x2<TN>, TN, TI1, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array2x2x2x2<TN> array = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        array[i, j, k, l] = left[i, j] * right[k, l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TLR2T, TRR2T, TN, TI1, TI2, TI3, TI4}(in IRankTwoTensor{TLR2T, Matrix2x2{TN}, TN, TI1, TI2}, in IRankTwoTensor{TRR2T, Matrix2x2{TN}, TN, TI1, TI2})"/>
+    public static Tensor<Array3x3x3x3<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TLR2T, TRR2T, TN, TI1, TI2, TI3, TI4>(
+        in IRankTwoTensor<TLR2T, Matrix3x3<TN>, TN, TI1, TI2> left,
+        in IRankTwoTensor<TRR2T, Matrix3x3<TN>, TN, TI1, TI2> right)
+        where TLR2T : IRankTwoTensor<TLR2T, Matrix3x3<TN>, TN, TI1, TI2>
+        where TRR2T : IRankTwoTensor<TRR2T, Matrix3x3<TN>, TN, TI1, TI2>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TI1 : IIndex
+        where TI2 : IIndex
+        where TI3 : IIndex
+        where TI4 : IIndex
+    {
+        Array3x3x3x3<TN> array = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        array[i, j, k, l] = left[i, j] * right[k, l];
+                    }
+                }
+            }
+        }
+        return new(array);
+    }
+
+    /// <inheritdoc cref="TensorProduct{TLR2T, TRR2T, TN, TI1, TI2, TI3, TI4}(in IRankTwoTensor{TLR2T, Matrix2x2{TN}, TN, TI1, TI2}, in IRankTwoTensor{TRR2T, Matrix2x2{TN}, TN, TI1, TI2})"/>
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TLR2T, TRR2T, TN, TI1, TI2, TI3, TI4>(
-        in IRankTwoTensor<TLR2T, Matrix4x4<TN>, TN, TI1, TI2> a,
-        in IRankTwoTensor<TRR2T, Matrix4x4<TN>, TN, TI1, TI2> b)
+        in IRankTwoTensor<TLR2T, Matrix4x4<TN>, TN, TI1, TI2> left,
+        in IRankTwoTensor<TRR2T, Matrix4x4<TN>, TN, TI1, TI2> right)
         where TLR2T : IRankTwoTensor<TLR2T, Matrix4x4<TN>, TN, TI1, TI2>
         where TRR2T : IRankTwoTensor<TRR2T, Matrix4x4<TN>, TN, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -1142,7 +2200,7 @@ public static partial class DifGeo
                 {
                     for (int l = 0; l < 4; l++)
                     {
-                        array[i, j, k, l] = a[i, j] * b[k, l];
+                        array[i, j, k, l] = left[i, j] * right[k, l];
                     }
                 }
             }
