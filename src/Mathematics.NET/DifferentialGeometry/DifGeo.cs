@@ -71,9 +71,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft
-            .WithIndex1Name<InternalIndex2>()
-            .WithIndex2Name<TI3N>();
+        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -95,9 +93,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft
-            .WithIndex1Name<InternalIndex2>()
-            .WithIndex2Name<TI3N>();
+        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -490,7 +486,7 @@ public static partial class DifGeo
     {
         DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> derivativeOfChristoffel);
         Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var contractedChristoffels = Contract(christoffel, christoffel.WithIndex1<Index<Upper, InternalIndex1>>().WithIndex2Name<TI2N>().WithIndex3Name<TI4N>());
+        var contractedChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 4; r++)
