@@ -133,6 +133,17 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     // Methods
     //
 
+    /// <summary>Reinterpret a reference to this metric tensor as one with new index names.</summary>
+    /// <typeparam name="TNI1N">The name of the first index</typeparam>
+    /// <typeparam name="TNI2N">The name of the second index</typeparam>
+    /// <returns>A reference to this tensor with new index names</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref MetricTensor<TSM, TN, TIP, TNI1N, TNI2N> WithIndices<TNI1N, TNI2N>()
+        where TNI1N : ISymbol
+        where TNI2N : ISymbol
+        => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNI1N, TNI2N>>(ref this);
+
     /// <summary>Reinterpret a reference to this metric tensor as one with a new index name in the first position.</summary>
     /// <typeparam name="TNIN">A new index name</typeparam>
     /// <returns>A reference to this tensor with a new index name in the first position</returns>

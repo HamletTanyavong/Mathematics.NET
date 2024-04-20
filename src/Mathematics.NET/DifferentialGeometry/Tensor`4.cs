@@ -128,6 +128,17 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     // Methods
     //
 
+    /// <summary>Reinterpret a reference to this tensor as one with new indices.</summary>
+    /// <typeparam name="TNI1">A new first index</typeparam>
+    /// <typeparam name="TNI2">A new second index</typeparam>
+    /// <returns>A reference to this tensor with new indices</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref Tensor<TSM, TN, TNI1, TNI2> WithIndices<TNI1, TNI2>()
+        where TNI1 : IIndex
+        where TNI2 : IIndex
+        => ref Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TNI1, TNI2>>(ref this);
+
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the first position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
     /// <returns>A reference to this tensor with a new index in the first position</returns>
