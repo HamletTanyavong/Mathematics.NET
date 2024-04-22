@@ -35,7 +35,7 @@ namespace Mathematics.NET.Tests.DifferentialGeometry;
 
 public static class DifGeoTestHelpers
 {
-    public sealed class Test4x4MetricTensorFieldNo1<TT, TSM, TN, TPI> : MetricTensorField<TT, TSM, TN, TPI>
+    public sealed class Test4x4MetricTensorFieldNo1<TT, TSM, TN, TPI> : MetricTensorField4x4<TT, TSM, TN, TPI>
         where TT : ITape<TN>
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
