@@ -33,15 +33,15 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.Core.Buffers;
 
-/// <summary>Represents a buffer of 4 TensorDelegateBuffer4 buffers</summary>
-/// <typeparam name="TTape">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TNumber">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TIndex">An index</typeparam>
+/// <summary>Represents a buffer of 4 AutoDiffTensor4Buffer4 buffers</summary>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <typeparam name="TI">An index</typeparam>
 [InlineArray(4)]
-internal struct AutoDiffTensor4Buffer4x4<TTape, TNumber, TIndex>
-    where TTape : ITape<TNumber>
-    where TNumber : IComplex<TNumber>, IDifferentiableFunctions<TNumber>
-    where TIndex : IIndex
+internal struct AutoDiffTensor4Buffer4x4<TT, TN, TI>
+    where TT : ITape<TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TI : IIndex
 {
-    private AutoDiffTensor4Buffer4<TTape, TNumber, TIndex> _element0;
+    private AutoDiffTensor4Buffer4<TT, TN, TI> _element0;
 }
