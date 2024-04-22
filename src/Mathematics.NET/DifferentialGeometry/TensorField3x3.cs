@@ -60,9 +60,10 @@ public class TensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         set => _buffer[row][column] = value;
     }
 
-    public Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1>, Index<TI2P, TI2>> Compute<TI1, TI2>(TT tape, AutoDiffTensor3<TN, TPI> x)
-        where TI1 : ISymbol
-        where TI2 : ISymbol
+    /// <inheritdoc cref="TensorField2x2{TT, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
+    public Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, TPI> x)
+        where TI1N : ISymbol
+        where TI2N : ISymbol
     {
         tape.IsTracking = false;
 
@@ -79,6 +80,6 @@ public class TensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1>, Index<TI2P, TI2>>(result);
+        return new Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }

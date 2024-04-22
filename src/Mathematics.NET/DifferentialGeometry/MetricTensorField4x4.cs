@@ -43,9 +43,10 @@ public abstract class MetricTensorField4x4<TT, TN, TPI> : TensorField4x4<TT, TN,
 {
     public MetricTensorField4x4() { }
 
-    public new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1, TI2> Compute<TI1, TI2>(TT tape, AutoDiffTensor4<TN, TPI> point)
-        where TI1 : ISymbol
-        where TI2 : ISymbol
+    /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
+    public new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
+        where TI1N : ISymbol
+        where TI2N : ISymbol
     {
         tape.IsTracking = false;
 
@@ -62,14 +63,15 @@ public abstract class MetricTensorField4x4<TT, TN, TPI> : TensorField4x4<TT, TN,
         }
 
         tape.IsTracking = true;
-        return new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1, TI2>(result);
+        return new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1N, TI2N>(result);
     }
 
-    public MetricTensor<Matrix4x4<TN>, TN, Upper, TI1, TI2> ComputeInverse<TI1, TI2>(TT tape, AutoDiffTensor4<TN, TPI> point)
-        where TI1 : ISymbol
-        where TI2 : ISymbol
+    /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.ComputeInverse{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
+    public MetricTensor<Matrix4x4<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
+        where TI1N : ISymbol
+        where TI2N : ISymbol
     {
-        var value = Compute<TI1, TI2>(tape, point);
+        var value = Compute<TI1N, TI2N>(tape, point);
         return value.Inverse();
     }
 }
