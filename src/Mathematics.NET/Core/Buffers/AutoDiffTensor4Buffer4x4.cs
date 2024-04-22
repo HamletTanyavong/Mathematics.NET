@@ -36,12 +36,12 @@ namespace Mathematics.NET.Core.Buffers;
 /// <summary>Represents a buffer of 4 AutoDiffTensor4Buffer4 buffers</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TI">An index</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold</typeparam>
 [InlineArray(4)]
-internal struct AutoDiffTensor4Buffer4x4<TT, TN, TI>
+internal struct AutoDiffTensor4Buffer4x4<TT, TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-    where TI : IIndex
+    where TPI : IIndex
 {
-    private AutoDiffTensor4Buffer4<TT, TN, TI> _element0;
+    private AutoDiffTensor4Buffer4<TT, TN, TPI> _element0;
 }
