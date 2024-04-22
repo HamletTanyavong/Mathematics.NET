@@ -133,6 +133,21 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
 
     public readonly void CopyTo(ref TN[,,,] destination) => _array.CopyTo(ref destination);
 
+    /// <summary>Reinterpret a reference to this tensor as one with new indices.</summary>
+    /// <typeparam name="TNI1">A new first index</typeparam>
+    /// <typeparam name="TNI2">A new second index</typeparam>
+    /// <typeparam name="TNI3">A new third index</typeparam>
+    /// <typeparam name="TNI4">A new fourth index</typeparam>
+    /// <returns>A reference to this tensor with new indices</returns>
+    [UnscopedRef]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref Tensor<TH4DA, TN, TNI1, TNI2, TNI3, TNI4> WithIndices<TNI1, TNI2, TNI3, TNI4>()
+        where TNI1 : IIndex
+        where TNI2 : IIndex
+        where TNI3 : IIndex
+        where TNI4 : IIndex
+        => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TNI1, TNI2, TNI3, TNI4>>(ref this);
+
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the first position.</summary>
     /// <typeparam name="TNI">A new index</typeparam>
     /// <returns>A reference to this tensor with a new index in the first position</returns>

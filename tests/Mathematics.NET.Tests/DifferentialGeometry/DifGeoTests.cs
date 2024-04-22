@@ -48,7 +48,7 @@ public sealed class DifGeoTests
     [DynamicData(nameof(GetMetricTensorDerivativeData), DynamicDataSourceType.Method)]
     public void Derivative_InverseMetric_ReturnsRankThreeTensor(object[] input, object[] values)
     {
-        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Matrix4x4<Real>, Real, Index<Upper, Delta>> metric = new();
+        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Real, Index<Upper, Delta>> metric = new();
         var point = _gradientTape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
@@ -64,7 +64,7 @@ public sealed class DifGeoTests
     [DynamicData(nameof(GetSecondDerivativeData), DynamicDataSourceType.Method)]
     public void SecondDerivative_RankTwoTensor_ReturnsRankFourTensor(object[] input, object[] values)
     {
-        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<HessianTape<Real>, Matrix4x4<Real>, Real, Index<Upper, Epsilon>> metric = new();
+        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<HessianTape<Real>, Real, Index<Upper, Epsilon>> metric = new();
         var point = _hessianTape.CreateAutoDiffTensor<Index<Upper, Epsilon>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,,])values[0];

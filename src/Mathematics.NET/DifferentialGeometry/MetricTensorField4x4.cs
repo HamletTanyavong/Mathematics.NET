@@ -1,4 +1,4 @@
-﻿// <copyright file="MetricTensorField.cs" company="Mathematics.NET">
+﻿// <copyright file="MetricTensorField4x4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,23 +28,20 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
-using Mathematics.NET.LinearAlgebra.Abstractions;
 using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a metric tensor field</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
 /// <typeparam name="TPI">An index name</typeparam>
-public abstract class MetricTensorField<TT, TSM, TN, TPI> : TensorField4x4<TT, TN, Lower, Lower, TPI>
+public abstract class MetricTensorField4x4<TT, TN, TPI> : TensorField4x4<TT, TN, Lower, Lower, TPI>
     where TT : ITape<TN>
-    where TSM : ISquareMatrix<TSM, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TPI : IIndex
 {
-    public MetricTensorField() { }
+    public MetricTensorField4x4() { }
 
     public new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1, TI2> Compute<TI1, TI2>(TT tape, AutoDiffTensor4<TN, TPI> point)
         where TI1 : ISymbol
