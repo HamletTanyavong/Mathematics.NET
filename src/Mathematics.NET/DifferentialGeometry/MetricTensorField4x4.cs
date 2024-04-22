@@ -28,19 +28,16 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
-using Mathematics.NET.LinearAlgebra.Abstractions;
 using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a metric tensor field</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
 /// <typeparam name="TPI">An index name</typeparam>
-public abstract class MetricTensorField4x4<TT, TSM, TN, TPI> : TensorField4x4<TT, TN, Lower, Lower, TPI>
+public abstract class MetricTensorField4x4<TT, TN, TPI> : TensorField4x4<TT, TN, Lower, Lower, TPI>
     where TT : ITape<TN>
-    where TSM : ISquareMatrix<TSM, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TPI : IIndex
 {

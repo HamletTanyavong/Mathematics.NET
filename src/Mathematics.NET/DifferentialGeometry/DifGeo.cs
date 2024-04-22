@@ -58,7 +58,7 @@ public static partial class DifGeo
     /// <param name="derivative">A rank-three tensor</param>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        MetricTensorField4x4<TT, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        MetricTensorField4x4<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
@@ -80,7 +80,7 @@ public static partial class DifGeo
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorField4x4{TT, Matrix4x4{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor4{TN, Index{Upper, TPIN}}, out Tensor{Array4x4x4{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        MetricTensorField4x4<TT, Matrix4x4<TN>, TN, Index<Lower, TPIN>> metric,
+        MetricTensorField4x4<TT, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
@@ -308,7 +308,7 @@ public static partial class DifGeo
     /// <param name="christoffel">The result</param>
     public static void Christoffel<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        MetricTensorField4x4<TT, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        MetricTensorField4x4<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN>, TN, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
@@ -346,7 +346,7 @@ public static partial class DifGeo
     /// <param name="christoffel">The result</param>
     public static void Christoffel<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        MetricTensorField4x4<TT, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        MetricTensorField4x4<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
@@ -382,7 +382,7 @@ public static partial class DifGeo
     /// <param name="derivative">The result</param>
     public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
-        MetricTensorField4x4<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        MetricTensorField4x4<HessianTape<TN>, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -423,7 +423,7 @@ public static partial class DifGeo
     /// <param name="derivative">The result</param>
     public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
-        MetricTensorField4x4<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        MetricTensorField4x4<HessianTape<TN>, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -474,7 +474,7 @@ public static partial class DifGeo
     /// <param name="riemann">The result</param>
     public static void Riemann<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
-        MetricTensorField4x4<HessianTape<TN>, Matrix4x4<TN>, TN, Index<Upper, TPIN>> metric,
+        MetricTensorField4x4<HessianTape<TN>, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>

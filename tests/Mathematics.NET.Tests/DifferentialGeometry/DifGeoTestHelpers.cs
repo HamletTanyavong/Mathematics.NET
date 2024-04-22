@@ -28,16 +28,14 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.LinearAlgebra.Abstractions;
 using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.Tests.DifferentialGeometry;
 
 public static class DifGeoTestHelpers
 {
-    public sealed class Test4x4MetricTensorFieldNo1<TT, TSM, TN, TPI> : MetricTensorField4x4<TT, TSM, TN, TPI>
+    public sealed class Test4x4MetricTensorFieldNo1<TT, TN, TPI> : MetricTensorField4x4<TT, TN, TPI>
         where TT : ITape<TN>
-        where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPI : IIndex
     {
