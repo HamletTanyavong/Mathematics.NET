@@ -39,7 +39,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
 /// <typeparam name="TI1P">The position of the first index of the tensor</typeparam>
 /// <typeparam name="TI2P">The position of the second index of the tensor</typeparam>
-/// <typeparam name="TPI">An index</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold</typeparam>
 public class TensorField4x4<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
