@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorField3x3.cs" company="Mathematics.NET">
+﻿// <copyright file="TensorField2x2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,24 +34,24 @@ using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensor field with 9 elements</summary>
+/// <summary>Represents a rank-two tensor field with 4 elements</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
 /// <typeparam name="TI1P">The position of the first index of the tensor</typeparam>
 /// <typeparam name="TI2P">The position of the second index of the tensor</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold</typeparam>
-public class TensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
+public class TensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI1P : IIndexPosition
     where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private protected AutoDiffTensor3Buffer3x3<TT, TN, TPI> _buffer;
+    private protected AutoDiffTensor2Buffer2x2<TT, TN, TPI> _buffer;
 
-    public TensorField3x3() { }
+    public TensorField2x2() { }
 
-    public Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> this[int row, int column]
+    public Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> this[int row, int column]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[row][column];
@@ -60,26 +60,31 @@ public class TensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         set => _buffer[row][column] = value;
     }
 
-    /// <inheritdoc cref="TensorField2x2{TT, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
-    public Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, TPI> x)
+    /// <summary>Compute the value of the tensor at a specific point on the manifold.</summary>
+    /// <typeparam name="TI1N">The name of the first index</typeparam>
+    /// <typeparam name="TI2N">The name of the second index</typeparam>
+    /// <param name="tape">A gradient or Hessian Tape</param>
+    /// <param name="point">A point on the manifold</param>
+    /// <returns>A rank-two tensor</returns>
+    public Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
         where TI1N : ISymbol
         where TI2N : ISymbol
     {
         tape.IsTracking = false;
 
-        Matrix3x3<TN> result = new();
-        for (int i = 0; i < 3; i++)
+        Matrix2x2<TN> result = new();
+        for (int i = 0; i < 2; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 2; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> function)
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> function)
                 {
-                    result[i, j] = function(tape, x).Value;
+                    result[i, j] = function(tape, point).Value;
                 }
             }
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }

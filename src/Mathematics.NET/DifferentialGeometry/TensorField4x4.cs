@@ -60,9 +60,10 @@ public class TensorField4x4<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         set => _buffer[row][column] = value;
     }
 
-    public Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1>, Index<TI2P, TI2>> Compute<TI1, TI2>(TT tape, AutoDiffTensor4<TN, TPI> point)
-        where TI1 : ISymbol
-        where TI2 : ISymbol
+    /// <inheritdoc cref="TensorField2x2{TT, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
+    public Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
+        where TI1N : ISymbol
+        where TI2N : ISymbol
     {
         tape.IsTracking = false;
 
@@ -79,6 +80,6 @@ public class TensorField4x4<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1>, Index<TI2P, TI2>>(result);
+        return new Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
