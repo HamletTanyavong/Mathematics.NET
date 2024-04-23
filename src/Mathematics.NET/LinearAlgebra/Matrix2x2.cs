@@ -189,7 +189,7 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     public static Matrix2x2<T> CreateDiagonal(T e11, T e22)
         => new(e11, T.Zero, T.Zero, e22);
 
-    public readonly T Determinant() => X1.X1 * X2.X2 - X1.X2 - X2.X1;
+    public readonly T Determinant() => X1.X1 * X2.X2 - X1.X2 * X2.X1;
 
     public readonly Matrix2x2<T> Inverse()
     {
