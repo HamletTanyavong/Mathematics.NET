@@ -34,6 +34,40 @@ namespace Mathematics.NET.Tests.DifferentialGeometry;
 
 public static class DifGeoTestHelpers
 {
+    public sealed class Test2x2MetricTensorFieldNo1<TT, TN, TPI> : MetricTensorField2x2<TT, TN, TPI>
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPI : IIndex
+    {
+        public Test2x2MetricTensorFieldNo1()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            base[0, 0] = (tape, x) =>
+            {
+                return tape.Multiply(x.X0, x.X0);
+            };
+
+            base[0, 1] = (tape, x) =>
+            {
+                return tape.Multiply(x.X0, x.X1);
+            };
+
+            base[1, 0] = (tape, x) =>
+            {
+                return tape.Negate(tape.Multiply(x.X0, x.X1));
+            };
+
+            base[1, 1] = (tape, x) =>
+            {
+                return tape.Multiply(x.X1, x.X1);
+            };
+        }
+    }
+
     public sealed class Test4x4MetricTensorFieldNo1<TT, TN, TPI> : MetricTensorField4x4<TT, TN, TPI>
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
