@@ -147,6 +147,10 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
         where TNI2N : ISymbol
         => new(_matrix.Inverse());
 
+    /// <summary>Compute the square root of the determinant of this metric tensor.</summary>
+    /// <returns>The square root of the determinant</returns>
+    public TN SquareRootOfDeterminant() => TN.Sqrt(Determinant());
+
     /// <summary>Reinterpret a reference to this metric tensor as one with new index names.</summary>
     /// <typeparam name="TNI1N">The name of the first index</typeparam>
     /// <typeparam name="TNI2N">The name of the second index</typeparam>
