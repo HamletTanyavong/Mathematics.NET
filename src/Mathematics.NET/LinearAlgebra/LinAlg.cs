@@ -180,7 +180,7 @@ public static class LinAlg
 
                 for (int k = 0; k < height; k++)
                 {
-                    Q[k, i] = Q[k, i] - proj * Q[k, j];
+                    Q[k, i] -= proj * Q[k, j];
                 }
             }
 
