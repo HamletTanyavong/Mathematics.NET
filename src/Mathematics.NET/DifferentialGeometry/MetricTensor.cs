@@ -151,6 +151,11 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     /// <returns>The square root of the determinant</returns>
     public TN SquareRootOfDeterminant() => TN.Sqrt(Determinant());
 
+    /// <summary>Compute the trace of this metric tensor.</summary>
+    /// <remarks>Note that the trace of an <c>nxn</c> metric tensor is equal to <c>n</c>.</remarks>
+    /// <returns>The trace</returns>
+    public readonly TN Trace() => TSM.E1Components;
+
     /// <summary>Reinterpret a reference to this metric tensor as one with new index names.</summary>
     /// <typeparam name="TNI1N">The name of the first index</typeparam>
     /// <typeparam name="TNI2N">The name of the second index</typeparam>
