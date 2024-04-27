@@ -110,7 +110,7 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
     //
 
     public static bool operator ==(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> left, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> right)
-    => left._array == right._array;
+        => left._array == right._array;
 
     public static bool operator !=(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> left, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> right)
         => left._array != right._array;
