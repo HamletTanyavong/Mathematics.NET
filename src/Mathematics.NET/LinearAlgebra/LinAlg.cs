@@ -134,6 +134,11 @@ public static class LinAlg
             }
         }
 
+        if (max == Real.Zero)
+        {
+            return Real.Zero;
+        }
+
         var partialSum = Real.Zero;
         var scale = Real.One / (max * max);
         foreach (ref var component in components)
