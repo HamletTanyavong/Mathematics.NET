@@ -133,6 +133,10 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     // Methods
     //
 
+    /// <summary>Compute the determinant of the metric</summary>
+    /// <returns>The determinant</returns>
+    public TN Determinant() => _matrix.Determinant();
+
     /// <summary>Reinterpret a reference to this metric tensor as one with new index names.</summary>
     /// <typeparam name="TNI1N">The name of the first index</typeparam>
     /// <typeparam name="TNI2N">The name of the second index</typeparam>
