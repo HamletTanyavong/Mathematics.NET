@@ -125,7 +125,7 @@ public static class LinAlg
             Debug.Assert(components[i] >= Real.Zero, "Components must be greater than zero.");
         }
 
-        Real max = components[0];
+        var max = components[0];
         for (int i = 1; i < vector.Length; i++)
         {
             if (components[i] > max)
