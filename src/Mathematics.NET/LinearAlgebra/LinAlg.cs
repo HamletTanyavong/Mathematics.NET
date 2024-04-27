@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Enumerables;
 using CommunityToolkit.HighPerformance.Helpers;
@@ -121,6 +122,7 @@ public static class LinAlg
         for (int i = 0; i < vector.Length; i++)
         {
             components[i] = (vector[i] * T.Conjugate(vector[i])).Re;
+            Debug.Assert(components[i] >= Real.Zero, "Components must be greater than zero.");
         }
 
         Real max = components[0];
