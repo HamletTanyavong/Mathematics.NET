@@ -133,9 +133,19 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     // Methods
     //
 
-    /// <summary>Compute the determinant of the metric</summary>
+    /// <summary>Compute the determinant of the metric.</summary>
     /// <returns>The determinant</returns>
     public TN Determinant() => _matrix.Determinant();
+
+    /// <summary>Compute the inverse of this metric tensor.</summary>
+    /// <remarks>New index names must be supplied.</remarks>
+    /// <typeparam name="TNI1N">The name of the first index</typeparam>
+    /// <typeparam name="TNI2N">The name of the second index</typeparam>
+    /// <returns>The inverse of this metric tensor with new index names</returns>
+    public MetricTensor<TSM, TN, Upper, TNI1N, TNI2N> Inverse<TNI1N, TNI2N>()
+        where TNI1N : ISymbol
+        where TNI2N : ISymbol
+        => new(_matrix.Inverse());
 
     /// <summary>Reinterpret a reference to this metric tensor as one with new index names.</summary>
     /// <typeparam name="TNI1N">The name of the first index</typeparam>
