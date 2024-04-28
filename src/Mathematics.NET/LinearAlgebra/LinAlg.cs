@@ -141,7 +141,7 @@ public static class LinAlg
 
         var partialSum = Real.Zero;
         var scale = Real.One / (max * max);
-        foreach (ref var component in components)
+        foreach (var component in components)
         {
             partialSum += scale * component;
         }
