@@ -162,7 +162,7 @@ public static class LinAlg
     /// <param name="matrix">An input matrix</param>
     /// <param name="Q">The resulting orthogonal matrix</param>
     /// <param name="R">The resulting upper triangular matrix</param>
-    /// <exception cref="DivideByZeroException">One of the columns is not linearly independent from the others</exception>
+    /// <exception cref="DivideByZeroException">One of the columns is not linearly independent from one or more of the others</exception>
     public static void QRGramSchmidt<T>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
         where T : IComplex<T>
     {
@@ -202,8 +202,7 @@ public static class LinAlg
             }
             else
             {
-                // TODO: Consider not throwing an exception
-                throw new DivideByZeroException(string.Format("Column {0} is not linearly independent from the others", i));
+                throw new DivideByZeroException(string.Format("Column {0} is not linearly independent from one or more of the others", i));
             }
         }
     }
