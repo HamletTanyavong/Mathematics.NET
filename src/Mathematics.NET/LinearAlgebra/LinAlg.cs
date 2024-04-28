@@ -172,7 +172,7 @@ public static class LinAlg
         Q = new T[height, width];
         R = new T[height, width];
 
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < Math.Min(height, width); i++)
         {
             var column = Q.GetColumn(i);
             matrix.GetColumn(i).CopyTo(column);
