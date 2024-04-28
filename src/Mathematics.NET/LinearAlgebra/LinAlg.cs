@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Enumerables;
 using CommunityToolkit.HighPerformance.Helpers;
@@ -121,9 +122,10 @@ public static class LinAlg
         for (int i = 0; i < vector.Length; i++)
         {
             components[i] = (vector[i] * T.Conjugate(vector[i])).Re;
+            Debug.Assert(components[i] >= Real.Zero, "Components must be greater than zero.");
         }
 
-        Real max = components[0];
+        var max = components[0];
         for (int i = 1; i < vector.Length; i++)
         {
             if (components[i] > max)
@@ -132,9 +134,14 @@ public static class LinAlg
             }
         }
 
+        if (max == Real.Zero)
+        {
+            return Real.Zero;
+        }
+
         var partialSum = Real.Zero;
         var scale = Real.One / (max * max);
-        foreach (ref var component in components)
+        foreach (var component in components)
         {
             partialSum += scale * component;
         }
@@ -155,7 +162,7 @@ public static class LinAlg
     /// <param name="matrix">An input matrix</param>
     /// <param name="Q">The resulting orthogonal matrix</param>
     /// <param name="R">The resulting upper triangular matrix</param>
-    /// <exception cref="DivideByZeroException">One of the columns is not linearly independent from the others</exception>
+    /// <exception cref="DivideByZeroException">One of the columns is not linearly independent from one or more of the others</exception>
     public static void QRGramSchmidt<T>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
         where T : IComplex<T>
     {
@@ -165,7 +172,7 @@ public static class LinAlg
         Q = new T[height, width];
         R = new T[height, width];
 
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < Math.Min(height, width); i++)
         {
             var column = Q.GetColumn(i);
             matrix.GetColumn(i).CopyTo(column);
@@ -180,10 +187,11 @@ public static class LinAlg
 
                 for (int k = 0; k < height; k++)
                 {
-                    Q[k, i] = Q[k, i] - proj * Q[k, j];
+                    Q[k, i] -= proj * Q[k, j];
                 }
             }
 
+            // TODO: Check to see if using this RefEnumerable<T>, named column, in Norm() is permitted.
             var norm = Norm(column);
             if (norm != Real.Zero)
             {
@@ -195,8 +203,7 @@ public static class LinAlg
             }
             else
             {
-                // TODO: Consider not throwing an exception
-                throw new DivideByZeroException(string.Format("Column {0} is not linearly independent from the others", i));
+                throw new DivideByZeroException(string.Format("Column {0} is not linearly independent from one or more of the others", i));
             }
         }
     }
