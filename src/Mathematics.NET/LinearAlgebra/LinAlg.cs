@@ -191,6 +191,7 @@ public static class LinAlg
                 }
             }
 
+            // TODO: Check to see if using this RefEnumerable<T>, named column, in Norm() is permitted.
             var norm = Norm(column);
             if (norm != Real.Zero)
             {
