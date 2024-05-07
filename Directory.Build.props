@@ -6,10 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Platforms>x64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     
     <!-- Package information -->
-    <Version>0.2.0-alpha.5</Version>
+    <Version>0.2.0-alpha.6</Version>
     <Authors>Hamlet Tanyavong</Authors>
     <Copyright>Copyright (c) 2023–present Hamlet Tanyavong</Copyright>
     <PackageProjectUrl>https://mathematics.hamlettanyavong.com</PackageProjectUrl>
