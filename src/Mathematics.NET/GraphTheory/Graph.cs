@@ -85,11 +85,11 @@ public class Graph<TNode, TEdge>
         }
     }
 
-    /// <summary>Get an edge from a node by indices or <see langword="null"/> if it does not exist.</summary>
+    /// <summary>Get an edge from a node by indices or <see langword="default"/> if it does not exist.</summary>
     /// <param name="i">A node index</param>
     /// <param name="j">An edge index</param>
-    /// <returns>An edge if it exists; otherwise, <see langword="null"/></returns>
-    public virtual TEdge? GetEdgeOrNull(int i, int j)
+    /// <returns>An edge if it exists; otherwise, <see langword="default"/></returns>
+    public virtual TEdge? GetEdgeOrDefault(int i, int j)
     {
         if (_nodes.ElementAtOrDefault(i) is TNode node)
         {
@@ -98,10 +98,10 @@ public class Graph<TNode, TEdge>
         return null;
     }
 
-    /// <summary>Get the node at a specific index or <see langword="null"/> if it does not exist.</summary>
+    /// <summary>Get the node at a specific index or <see langword="default"/> if it does not exist.</summary>
     /// <param name="i">An index</param>
-    /// <returns>A node if it exists; otherwise, <see langword="null"/></returns>
-    public virtual TNode? GetNodeOrNull(int i) => _nodes.ElementAtOrDefault(i);
+    /// <returns>A node if it exists; otherwise, <see langword="default"/></returns>
+    public virtual TNode? GetNodeOrDefault(int i) => _nodes.ElementAtOrDefault(i);
 
     /// <summary>Remove an edge from the graph if it exists.</summary>
     /// <param name="edge">The edge to remove</param>
