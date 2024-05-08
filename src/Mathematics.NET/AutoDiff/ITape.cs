@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+using Microsoft.Extensions.Logging;
+
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Defines support for tapes used in reverse-mode automatic differentiation</summary>
@@ -46,10 +48,11 @@ public interface ITape<T>
     /// <returns>A variable</returns>
     public Variable<T> CreateVariable(T seed);
 
-    /// <summary>Print the nodes of the gradient tape to the console.</summary>
+    /// <summary>Log nodes tracked by the tape.</summary>
+    /// <param name="logger">A logger</param>
     /// <param name="cancellationToken">A cancellation token</param>
-    /// <param name="limit">The total number of nodes to print</param>
-    public void PrintNodes(CancellationToken cancellationToken, int limit = 100);
+    /// <param name="limit">The total number of nodes to log</param>
+    public void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100);
 
     /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
     /// <param name="gradient">The gradient</param>

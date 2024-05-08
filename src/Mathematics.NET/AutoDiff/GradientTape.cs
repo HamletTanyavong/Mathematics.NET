@@ -62,6 +62,7 @@
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.AutoDiff;
 
@@ -103,9 +104,13 @@ public record class GradientTape<T> : ITape<T>
         return variable;
     }
 
-    public void PrintNodes(CancellationToken cancellationToken, int limit = 100)
+    public void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100)
     {
-        const string tab = "    ";
+        const string template = """
+            {NodeType}: {NodeNumber}
+                Weights: [{DX}, {DY}]
+                Parents: [{PX}, {PY}]
+            """;
 
         ReadOnlySpan<GradientNode<T>> nodeSpan = CollectionsMarshal.AsSpan(_nodes);
         GradientNode<T> node;
@@ -115,30 +120,23 @@ public record class GradientTape<T> : ITape<T>
         {
             CheckForCancellation(cancellationToken);
             node = nodeSpan[i];
-            Console.WriteLine($"Root Node {i}:");
-            Console.WriteLine($"{tab}Weights: [{node.DX}, {node.DY}]");
-            Console.WriteLine($"{tab}Parents: [{node.PX}, {node.PY}]");
+            logger.LogInformation(template, "Root Node", i, node.DX, node.DY, node.PX, node.PY);
             i++;
         }
-
-        CheckForCancellation(cancellationToken);
-        Console.WriteLine();
 
         while (i < Math.Min(nodeSpan.Length, limit))
         {
             CheckForCancellation(cancellationToken);
             node = nodeSpan[i];
-            Console.WriteLine($"Node {i}:");
-            Console.WriteLine($"{tab}Weights: [{node.DX}, {node.DY}]");
-            Console.WriteLine($"{tab}Parents: [{node.PX}, {node.PY}]");
+            logger.LogInformation(template, "Node", i, node.DX, node.DY, node.PX, node.PY);
             i++;
         }
 
-        static void CheckForCancellation(CancellationToken cancellationToken)
+        void CheckForCancellation(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
             {
-                Console.WriteLine("Print node operation cancelled");
+                logger.LogInformation("Log nodes operation cancelled");
                 cancellationToken.ThrowIfCancellationRequested();
             }
         }

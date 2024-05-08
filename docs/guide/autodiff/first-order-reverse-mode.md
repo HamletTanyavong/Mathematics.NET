@@ -44,15 +44,20 @@ var result = tape.Divide(
     tape.Exp(
         tape.Multiply(-Real.One, x)));
 ```
-which will give us the value of the function at our specified point. At this moment, the derivative has not been calculated, but we are, however, able to examine the nodes which have been added to our tape. We can use the method `PrintNodes` to examine our nodes.
+which will give us the value of the function at our specified point. At this moment, the derivative has not been calculated, but we are, however, able to examine the nodes which have been added to our tape. We can use the method `LogNodes` to do so, provided we have set up a logger.
 ```csharp
-tape.PrintNodes(CancellationToken.None);
+using Microsoft.Extensions.Logging;
+
+using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+var logger = loggerFactory.CreateLogger<GradientTape<Real>>();
+
+tape.LogNodes(logger, CancellationToken.None);
 ```
-Here, we pass in a cancellation token in case the gradient tape is too large and we do not want to print all of the nodes onto the console. We can also set a limit on how many nodes are printed to the console (by default, this value is 100).
+Here, we pass in a cancellation token in case the gradient tape is too large and we do not want to log all of the nodes onto the console. We can also set a limit on how many nodes are logged to the console (by default, this value is 100).
 ```csharp
-tape.PrintNodes(CancellationToken.None, 25);
+tape.LogNodes(logger, CancellationToken.None, 25);
 ```
-Using this on our gradient tape will give us the following output:
+Using this on our gradient tape will give us the following output, which has been summarized:
 ```
 Root Node 0:
     Weights: [0, 0]
@@ -120,7 +125,7 @@ var result = tape.Divide(
         tape.Multiply(-Real.One, x)));
 
 // Optional: examine the nodes on the gradient tape
-tape.PrintNodes();
+tape.LogNodes(logger, CancellationToken.None);
 
 tape.ReverseAccumulate(out var gradient);
 
@@ -153,7 +158,7 @@ var result = tape.Divide(
         tape.Add(x.X1, x.X2),
         tape.Sin(x.X3)));
 ```
-If we want to examine the nodes, we can use the `PrintNodes` method that we have already encountered.
+If we want to examine the nodes, we can use the `LogNodes` method that we have already encountered.
 ```
 Root Node 0:
     Weights: [0, 0]
@@ -207,7 +212,7 @@ As before, we can use `ReverseAccumulate` to get our gradients
 ```csharp
 tape.ReverseAccumulate(out var gradient);
 ```
-and print them to the console with
+and log them to the console with
 ```csharp
 using Mathematics.NET.LinearAlgebra;
 
@@ -215,7 +220,7 @@ using Mathematics.NET.LinearAlgebra;
 
 Console.WriteLine(gradient.ToDisplayString());
 ```
-This will print the following to the console:
+This will log the following to the console:
 ```
 [-0.8243135949243512,  -0.13023459678281554, 0.2382974299363868    ]
 ```
@@ -304,7 +309,7 @@ var result = tape.Cos(
         tape.Sqrt(w)));
 
 // Optional: examine the nodes on the gradient tape
-tape.PrintNodes(CancellationToken.None);
+tape.LogNodes(logger, CancellationToken.None);
 Console.WriteLine();
 
 tape.ReverseAccumulate(out var gradient);
