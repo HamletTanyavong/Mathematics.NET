@@ -27,6 +27,7 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
+using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.Benchmarks.Implementations.AutoDiff;
 
@@ -64,7 +65,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
     }
 
     // There is no need to benchmark this.
-    public void PrintNodes(CancellationToken cancellationToken, int limit = 100)
+    public void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100)
         => throw new NotImplementedException();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
