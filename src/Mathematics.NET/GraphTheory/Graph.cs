@@ -135,24 +135,21 @@ public class Graph<TNode, TEdge>
     // Other methods
     //
 
-    /// <summary>Print the graph to the console.</summary>
-    public virtual void Print()
+    /// <summary>Log the nodes and edges of the graph.</summary>
+    public virtual void LogGraph(ILogger<Graph<TNode, TEdge>> logger)
     {
-        const string tab = "    ";
+        const string template = "Node {NodeOriginNumber} => Edge {EdgeNumber} => Node {NodeDestinationNumber}";
 
         var nodes = _nodes.ToImmutableArray();
-
         for (int i = 0; i < nodes.Length; i++)
         {
             var node = nodes[i];
             var edges = node.OutgoingEdges.ToImmutableArray();
             if (edges.Length > 0)
             {
-                Console.WriteLine($"Node {i}");
-
                 for (int j = 0; j < edges.Length; j++)
                 {
-                    Console.WriteLine($"{tab}=> Edge {j} => Node {nodes.IndexOf((TNode)edges[j].Destination)}");
+                    logger.LogInformation(template, i, j, nodes.IndexOf((TNode)edges[j].Destination));
                 }
             }
         }
