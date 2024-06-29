@@ -1,0 +1,4452 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct Real | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct Real | Mathematics.NET ">
+      
+      <meta name="description" content="Represents a real number">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_Core_Real.md&amp;value=---%0Auid%3A%20Mathematics.NET.Core.Real%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.Core.Real">
+
+
+
+  <h1 id="Mathematics_NET_Core_Real" data-uid="Mathematics.NET.Core.Real" class="text-break">
+Struct Real  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a real number</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+public readonly struct Real : IReal&lt;Real&gt;, IModuloOperation&lt;Real, Real&gt;, IInequalityRelations&lt;Real, bool&gt;, IDecrementOperation&lt;Real&gt;, IIncrementOperation&lt;Real&gt;, IComparable, IComparable&lt;Real&gt;, IMinMaxValue&lt;Real&gt;, IConstants&lt;Real&gt;, IComplex&lt;Real&gt;, IAdditionOperation&lt;Real, Real&gt;, IDivisionOperation&lt;Real, Real&gt;, IMultiplicationOperation&lt;Real, Real&gt;, IUnaryMinusOperation&lt;Real, Real&gt;, IUnaryPlusOperation&lt;Real, Real&gt;, ISubtractionOperation&lt;Real, Real&gt;, IEqualityRelation&lt;Real, bool&gt;, IEquatable&lt;Real&gt;, ISpanFormattable, IFormattable, ISpanParsable&lt;Real&gt;, IParsable&lt;Real&gt;, IDifferentiableFunctions&lt;Real&gt;</code></pre>
+  </div>
+
+
+
+
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Mathematics.NET.Core.IReal-1.html">IReal</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IModuloOperation-2.html">IModuloOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Relations.IInequalityRelations-2.html">IInequalityRelations</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IDecrementOperation-1.html">IDecrementOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IIncrementOperation-1.html">IIncrementOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable">IComparable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.numerics.iminmaxvalue-1">IMinMaxValue</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.IConstants-1.html">IConstants</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IAdditionOperation-2.html">IAdditionOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IDivisionOperation-2.html">IDivisionOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IMultiplicationOperation-2.html">IMultiplicationOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryMinusOperation-2.html">IUnaryMinusOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryPlusOperation-2.html">IUnaryPlusOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.ISubtractionOperation-2.html">ISubtractionOperation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Relations.IEqualityRelation-2.html">IEqualityRelation</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanformattable">ISpanFormattable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanparsable-1">ISpanParsable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iparsable-1">IParsable</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html">IDifferentiableFunctions</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Mathematics.NET.Core.Extensions.html#Mathematics_NET_Core_Extensions_AsDouble_Mathematics_NET_Core_Real_">Extensions.AsDouble(Real)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Real__ctor_" data-uid="Mathematics.NET.Core.Real.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real__ctor_System_Double_" data-uid="Mathematics.NET.Core.Real.#ctor(System.Double)">
+  Real(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents a real number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real(double real)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>real</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The value of the number</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_E" data-uid="Mathematics.NET.Core.Real.E">
+  E
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the natural logarithmic base, <span class="math">\(e\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real E</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_EulerMascheroni" data-uid="Mathematics.NET.Core.Real.EulerMascheroni">
+  EulerMascheroni
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the Euler-Mascheroni constant, <span class="math">\(\gamma\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real EulerMascheroni</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_GoldenRatio" data-uid="Mathematics.NET.Core.Real.GoldenRatio">
+  GoldenRatio
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the golden ratio, <span class="math">\(\phi\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real GoldenRatio</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Ln10" data-uid="Mathematics.NET.Core.Real.Ln10">
+  Ln10
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the natural logarithm of 10, <span class="math">\(\ln(10)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Ln10</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Ln2" data-uid="Mathematics.NET.Core.Real.Ln2">
+  Ln2
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the natural logarithm of 2, <span class="math">\(\ln(2)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Ln2</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_MaxValue" data-uid="Mathematics.NET.Core.Real.MaxValue">
+  MaxValue
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real MaxValue</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_MinValue" data-uid="Mathematics.NET.Core.Real.MinValue">
+  MinValue
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real MinValue</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_NaN" data-uid="Mathematics.NET.Core.Real.NaN">
+  NaN
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real NaN</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_NegativeInfinity" data-uid="Mathematics.NET.Core.Real.NegativeInfinity">
+  NegativeInfinity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real NegativeInfinity</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_One" data-uid="Mathematics.NET.Core.Real.One">
+  One
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real One</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Pi" data-uid="Mathematics.NET.Core.Real.Pi">
+  Pi
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the ratio of the circumference of a circle to its diameter, <span class="math">\(π\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Pi</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_PiOverTwo" data-uid="Mathematics.NET.Core.Real.PiOverTwo">
+  PiOverTwo
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(π/2\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real PiOverTwo</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_PiSquared" data-uid="Mathematics.NET.Core.Real.PiSquared">
+  PiSquared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(π^2\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real PiSquared</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_PositiveInfinity" data-uid="Mathematics.NET.Core.Real.PositiveInfinity">
+  PositiveInfinity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real PositiveInfinity</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Radix" data-uid="Mathematics.NET.Core.Real.Radix">
+  Radix
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly int Radix</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Sqrt2" data-uid="Mathematics.NET.Core.Real.Sqrt2">
+  Sqrt2
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the square root of 2, <span class="math">\(\sqrt{2}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Sqrt2</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Sqrt3" data-uid="Mathematics.NET.Core.Real.Sqrt3">
+  Sqrt3
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the square root of 3, <span class="math">\(\sqrt{3}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Sqrt3</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Sqrt5" data-uid="Mathematics.NET.Core.Real.Sqrt5">
+  Sqrt5
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the square root of 5, <span class="math">\(\sqrt{5}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Sqrt5</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Tau" data-uid="Mathematics.NET.Core.Real.Tau">
+  Tau
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(2π\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Tau</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_Zero" data-uid="Mathematics.NET.Core.Real.Zero">
+  Zero
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real Zero</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_ZetaOf2" data-uid="Mathematics.NET.Core.Real.ZetaOf2">
+  ZetaOf2
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the solution to the Basel problem, <span class="math">\(\zeta(2) = \pi^2/6\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real ZetaOf2</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_ZetaOf3" data-uid="Mathematics.NET.Core.Real.ZetaOf3">
+  ZetaOf3
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents Apéry's constant, <span class="math">\(\zeta(3)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real ZetaOf3</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_Core_Real_ZetaOf4" data-uid="Mathematics.NET.Core.Real.ZetaOf4">
+  ZetaOf4
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(\zeta(4) = \pi^4/90\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Real ZetaOf4</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Real_Re_" data-uid="Mathematics.NET.Core.Real.Re*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Re" data-uid="Mathematics.NET.Core.Real.Re">
+  Re
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The real part of the complex number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Re { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Real_Abs_" data-uid="Mathematics.NET.Core.Real.Abs*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Abs_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Abs(Mathematics.NET.Core.Real)">
+  Abs(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L262"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the absolute value of a number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Abs(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The absolute value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Acos_" data-uid="Mathematics.NET.Core.Real.Acos*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Acos_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Acos(Mathematics.NET.Core.Real)">
+  Acos(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L405"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arccosine of <code class="paramref">x</code>: <span class="math">\(\cos^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Acos(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Acosh_" data-uid="Mathematics.NET.Core.Real.Acosh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Acosh_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Acosh(Mathematics.NET.Core.Real)">
+  Acosh(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L369"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arccosine of <code class="paramref">x</code>: <span class="math">\(\cosh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Acosh(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The hyperbolic arccosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Asin_" data-uid="Mathematics.NET.Core.Real.Asin*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Asin_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Asin(Mathematics.NET.Core.Real)">
+  Asin(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L407"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arcsine of <code class="paramref">x</code>: <span class="math">\(\sin^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Asin(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Asinh_" data-uid="Mathematics.NET.Core.Real.Asinh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Asinh_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Asinh(Mathematics.NET.Core.Real)">
+  Asinh(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L371"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arcsine of <code class="paramref">x</code>: <span class="math">\(\sinh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Asinh(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The hyperbolic arcsine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Atan_" data-uid="Mathematics.NET.Core.Real.Atan*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Atan_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Atan(Mathematics.NET.Core.Real)">
+  Atan(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L409"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the arctangent of <code class="paramref">x</code>: <span class="math">\(\tan^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Atan(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Atan2_" data-uid="Mathematics.NET.Core.Real.Atan2*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Atan2_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Atan2(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Atan2(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L411"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute a quadrant-aware arctangent given two values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Atan2(Real y, Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The first value</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The second value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>An angle</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Atanh_" data-uid="Mathematics.NET.Core.Real.Atanh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Atanh_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Atanh(Mathematics.NET.Core.Real)">
+  Atanh(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L373"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic arctangent of <code class="paramref">x</code>: <span class="math">\(\tanh^{-1}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Atanh(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The hyperbolic arctangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Cbrt_" data-uid="Mathematics.NET.Core.Real.Cbrt*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Cbrt_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Cbrt(Mathematics.NET.Core.Real)">
+  Cbrt(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L397"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cuberoot of <code class="paramref">x</code>: <span class="math">\(\sqrt[3]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Cbrt(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The cuberoot of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Ceiling_" data-uid="Mathematics.NET.Core.Real.Ceiling*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Ceiling_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Ceiling(Mathematics.NET.Core.Real)">
+  Ceiling(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L264"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the ceiling function of a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Ceiling(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The smallest integer greater than or equal to the value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Clamp_" data-uid="Mathematics.NET.Core.Real.Clamp*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Clamp_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Clamp(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Clamp(Real, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L266"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Clamp a value to an inclusive range</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Clamp(Real value, Real min, Real max)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>min</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The lower bound</p>
+</dd>
+    <dt><code>max</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The upper bound</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The clamped value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_CompareTo_" data-uid="Mathematics.NET.Core.Real.CompareTo*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_CompareTo_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.CompareTo(Mathematics.NET.Core.Real)">
+  CompareTo(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(Real value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">other</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">other</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">other</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_CompareTo_" data-uid="Mathematics.NET.Core.Real.CompareTo*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_CompareTo_System_Object_" data-uid="Mathematics.NET.Core.Real.CompareTo(System.Object)">
+  CompareTo(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>An object to compare with this instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">obj</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">obj</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">obj</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">obj</code> is not the same type as this instance.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_Conjugate_" data-uid="Mathematics.NET.Core.Real.Conjugate*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Conjugate_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Conjugate(Mathematics.NET.Core.Real)">
+  Conjugate(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the complex conjugate of a number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Conjugate(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The complex conjugate</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Cos_" data-uid="Mathematics.NET.Core.Real.Cos*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Cos_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Cos(Mathematics.NET.Core.Real)">
+  Cos(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L413"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cosine of <code class="paramref">x</code>: <span class="math">\(\cos(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Cos(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Cosh_" data-uid="Mathematics.NET.Core.Real.Cosh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Cosh_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Cosh(Mathematics.NET.Core.Real)">
+  Cosh(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L375"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic cosine of <code class="paramref">x</code>: <span class="math">\(\cosh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Cosh(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The hyperbolic cosine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Equals_" data-uid="Mathematics.NET.Core.Real.Equals*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Equals_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Equals(Mathematics.NET.Core.Real)">
+  Equals(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether the current object is equal to another object of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Real value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Equals_" data-uid="Mathematics.NET.Core.Real.Equals*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Equals_System_Object_" data-uid="Mathematics.NET.Core.Real.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Exp_" data-uid="Mathematics.NET.Core.Real.Exp*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Exp_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Exp(Mathematics.NET.Core.Real)">
+  Exp(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L361"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute e raised to the power of <code class="paramref">x</code>: <span class="math">\(e^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Exp(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>e raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Exp10_" data-uid="Mathematics.NET.Core.Real.Exp10*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Exp10_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Exp10(Mathematics.NET.Core.Real)">
+  Exp10(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L365"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 10 raised to the power of <code class="paramref">x</code>: <span class="math">\(10^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Exp10(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>10 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Exp2_" data-uid="Mathematics.NET.Core.Real.Exp2*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Exp2_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Exp2(Mathematics.NET.Core.Real)">
+  Exp2(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L363"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute 2 raised to the power of <code class="paramref">x</code>: <span class="math">\(2^x\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Exp2(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>2 raised to the power of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Floor_" data-uid="Mathematics.NET.Core.Real.Floor*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Floor_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Floor(Mathematics.NET.Core.Real)">
+  Floor(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L270"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the floor function of a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Floor(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The largest integer less than or equal to the value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_FromDouble_" data-uid="Mathematics.NET.Core.Real.FromDouble*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_FromDouble_System_Double_" data-uid="Mathematics.NET.Core.Real.FromDouble(System.Double)">
+  FromDouble(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L272"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an instance of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a> from one of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real FromDouble(double x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>A value of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>An instance of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a> created from <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_FromReal_" data-uid="Mathematics.NET.Core.Real.FromReal*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_FromReal_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.FromReal(Mathematics.NET.Core.Real)">
+  FromReal(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L274"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an instance of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a> from one of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real FromReal(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>An instance of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a> created from <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_Core_Real_FromReal_Mathematics_NET_Core_Real__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If the value to convert from is also of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, return itself</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_GetHashCode_" data-uid="Mathematics.NET.Core.Real.GetHashCode*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_GetHashCode" data-uid="Mathematics.NET.Core.Real.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A 32-bit signed integer that is the hash code for this instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Hypot_" data-uid="Mathematics.NET.Core.Real.Hypot*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Hypot_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Hypot(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Hypot(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L276"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Hypot(Real x, Real y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_InverseLerp_" data-uid="Mathematics.NET.Core.Real.InverseLerp*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_InverseLerp_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.InverseLerp(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  InverseLerp(Real, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Perform inverse linear interpolation given two points and a weight</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real InverseLerp(Real start, Real end, Real weight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>start</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The start point</p>
+</dd>
+    <dt><code>end</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The end point</p>
+</dd>
+    <dt><code>weight</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The weight</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The inversely interpolated value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_IsFinite_" data-uid="Mathematics.NET.Core.Real.IsFinite*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_IsFinite_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.IsFinite(Mathematics.NET.Core.Real)">
+  IsFinite(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L281"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is finite</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsFinite(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is finite; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_IsInfinity_" data-uid="Mathematics.NET.Core.Real.IsInfinity*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_IsInfinity_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.IsInfinity(Mathematics.NET.Core.Real)">
+  IsInfinity(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L283"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is infinity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsInfinity(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is infinity; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_IsNaN_" data-uid="Mathematics.NET.Core.Real.IsNaN*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_IsNaN_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.IsNaN(Mathematics.NET.Core.Real)">
+  IsNaN(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L285"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if a value is not a number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsNaN(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is not a number; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_IsNegativeInfinity_" data-uid="Mathematics.NET.Core.Real.IsNegativeInfinity*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_IsNegativeInfinity_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.IsNegativeInfinity(Mathematics.NET.Core.Real)">
+  IsNegativeInfinity(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L289"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is negative infinity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsNegativeInfinity(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the value is negative infinity; otherwise, <code>false</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_IsPositiveInfinity_" data-uid="Mathematics.NET.Core.Real.IsPositiveInfinity*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_IsPositiveInfinity_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.IsPositiveInfinity(Mathematics.NET.Core.Real)">
+  IsPositiveInfinity(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a valule is positive infinity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsPositiveInfinity(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the value is positive infinity; otherwise, <code>false</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_IsZero_" data-uid="Mathematics.NET.Core.Real.IsZero*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_IsZero_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.IsZero(Mathematics.NET.Core.Real)">
+  IsZero(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check if a value is zero</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsZero(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the value is zero; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Lerp_" data-uid="Mathematics.NET.Core.Real.Lerp*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Lerp_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Lerp(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Lerp(Real, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Linearly interpolate between two points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Lerp(Real start, Real end, Real weight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>start</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The start point</p>
+</dd>
+    <dt><code>end</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The end point</p>
+</dd>
+    <dt><code>weight</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The weight</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The interpolated value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Ln_" data-uid="Mathematics.NET.Core.Real.Ln*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Ln_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Ln(Mathematics.NET.Core.Real)">
+  Ln(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L383"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the natural logarithm of <code class="paramref">x</code>: <span class="math">\(\ln(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Ln(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The natural logarithm of<code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Log_" data-uid="Mathematics.NET.Core.Real.Log*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Log_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Log(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Log(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L385"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base <code class="paramref">b</code>: <span class="math">\(\log_b(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Log(Real x, Real b)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>b</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A base</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base b</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Log10_" data-uid="Mathematics.NET.Core.Real.Log10*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Log10_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Log10(Mathematics.NET.Core.Real)">
+  Log10(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L389"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 10: <span class="math">\(\log_{10}(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Log10(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 10</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Log2_" data-uid="Mathematics.NET.Core.Real.Log2*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Log2_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Log2(Mathematics.NET.Core.Real)">
+  Log2(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L387"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the logarithm of <code class="paramref">x</code> to base 2: <span class="math">\(\log_2(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Log2(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The logarithm of <code class="paramref">x</code> to base 2</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Max_" data-uid="Mathematics.NET.Core.Real.Max*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Max_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Max(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Max(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L296"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find which of two numbers is greater than the other</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Max(Real x, Real y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The first value</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The second value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The greater of the two values</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_Core_Real_Max_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If any of the values are <code>NaN</code>, then <code>NaN</code> is returned</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Min_" data-uid="Mathematics.NET.Core.Real.Min*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Min_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Min(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Min(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L298"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find which of two numbers is less than the other</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Min(Real x, Real y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The first value</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The second value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The lesser of the two values</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_Core_Real_Min_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If any of the values are <code>NaN</code>, then <code>NaN</code> is returned</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Parse_" data-uid="Mathematics.NET.Core.Real.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Parse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Real.Parse(System.ReadOnlySpan{System.Char},System.Globalization.NumberStyles,System.IFormatProvider)">
+  Parse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parse a span of characters into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Parse(ReadOnlySpan&lt;char&gt; s, NumberStyles style = NumberStyles.AllowThousands | NumberStyles.Float, IFormatProvider? provider = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the span of characters</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The parse result</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p><code class="paramref">s</code> is <code>null</code></p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_Parse_" data-uid="Mathematics.NET.Core.Real.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Parse_System_ReadOnlySpan_System_Char__System_IFormatProvider_" data-uid="Mathematics.NET.Core.Real.Parse(System.ReadOnlySpan{System.Char},System.IFormatProvider)">
+  Parse(ReadOnlySpan&lt;char&gt;, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a span of characters into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Parse(ReadOnlySpan&lt;char&gt; s, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The result of parsing <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.formatexception">FormatException</a></dt>
+    <dd><p><code class="paramref">s</code> is not in the correct format.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p><code class="paramref">s</code> is not representable by <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_Parse_" data-uid="Mathematics.NET.Core.Real.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Parse_System_String_System_Globalization_NumberStyles_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Real.Parse(System.String,System.Globalization.NumberStyles,System.IFormatProvider)">
+  Parse(string, NumberStyles, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parse a string into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Parse(string s, NumberStyles style, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the string</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The parse result</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p><code class="paramref">s</code> is <code>null</code></p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_Parse_" data-uid="Mathematics.NET.Core.Real.Parse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Parse_System_String_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Real.Parse(System.String,System.IFormatProvider)">
+  Parse(string, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a string into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Parse(string s, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The result of parsing <code class="paramref">s</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p><code class="paramref">s</code> is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/keywords/null">null</a>.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.formatexception">FormatException</a></dt>
+    <dd><p><code class="paramref">s</code> is not in the correct format.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p><code class="paramref">s</code> is not representable by <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_Pow_" data-uid="Mathematics.NET.Core.Real.Pow*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Pow_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Pow(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Pow(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L393"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute <code class="paramref">x</code> raised to the power of <code class="paramref">y</code>: <span class="math">\(x^y\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Pow(Real x, Real y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A power</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p><code class="paramref">x</code> raised to the power of <code class="paramref">y</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Reciprocate_" data-uid="Mathematics.NET.Core.Real.Reciprocate*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Reciprocate_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Reciprocate(Mathematics.NET.Core.Real)">
+  Reciprocate(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L300"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the reciprocal of a number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Reciprocate(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The reciprocal</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Root_" data-uid="Mathematics.NET.Core.Real.Root*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Root_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Root(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  Root(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L399"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the <code class="paramref">n</code>th root of <code class="paramref">x</code>: <span class="math">\(\sqrt[n]{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Root(Real x, Real y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The <code class="paramref">n</code>th root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Sign_" data-uid="Mathematics.NET.Core.Real.Sign*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Sign_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Sign(Mathematics.NET.Core.Real)">
+  Sign(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L309"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find the sign of a real number</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Sign(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to check</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A number indicating the sign of the value:<br><br><b>1</b> if the value is greater than zero<br><b>0</b> if the value is greater than zero<br><b>-1</b> if the value is less than zero</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.arithmeticexception">ArithmeticException</a></dt>
+    <dd><p>An overflow or underflow has occurred</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_Sin_" data-uid="Mathematics.NET.Core.Real.Sin*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Sin_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Sin(Mathematics.NET.Core.Real)">
+  Sin(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L415"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the sine of <code class="paramref">x</code>: <span class="math">\(\sin(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Sin(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Sinh_" data-uid="Mathematics.NET.Core.Real.Sinh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Sinh_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Sinh(Mathematics.NET.Core.Real)">
+  Sinh(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L377"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic sine of <code class="paramref">x</code>: <span class="math">\(\sinh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Sinh(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The hyperbolic sine of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Sqrt_" data-uid="Mathematics.NET.Core.Real.Sqrt*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Sqrt_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Sqrt(Mathematics.NET.Core.Real)">
+  Sqrt(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L401"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the square root of <code class="paramref">x</code>: <span class="math">\(\sqrt{x}\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Sqrt(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The square root of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Tan_" data-uid="Mathematics.NET.Core.Real.Tan*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Tan_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Tan(Mathematics.NET.Core.Real)">
+  Tan(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L417"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the tangent of <code class="paramref">x</code>: <span class="math">\(\tan(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Tan(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_Tanh_" data-uid="Mathematics.NET.Core.Real.Tanh*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_Tanh_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.Tanh(Mathematics.NET.Core.Real)">
+  Tanh(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L379"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the hyperbolic tangent of <code class="paramref">x</code>: <span class="math">\(\tanh(x)\)</span></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real Tanh(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A value</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The hyperbolic tangent of <code class="paramref">x</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_ToReal_" data-uid="Mathematics.NET.Core.Real.ToReal*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_ToReal_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.ToReal(Mathematics.NET.Core.Real)">
+  ToReal(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L311"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create a real number from a type that implements <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real ToReal(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A real value</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p>Thrown when the value cannot be converted to the type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_ToString_" data-uid="Mathematics.NET.Core.Real.ToString*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_ToString" data-uid="Mathematics.NET.Core.Real.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the fully qualified type name of this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The fully qualified type name.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_ToString_" data-uid="Mathematics.NET.Core.Real.ToString*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_ToString_System_String_System_IFormatProvider_" data-uid="Mathematics.NET.Core.Real.ToString(System.String,System.IFormatProvider)">
+  ToString(string?, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the value of the current instance using the specified format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string? format, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The format to use.</p>
+<p>-or-</p>
+<p>A null reference (<code>Nothing</code> in Visual Basic) to use the default format defined for the type of the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a> implementation.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The value of the current instance in the specified format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryConvertFromChecked_" data-uid="Mathematics.NET.Core.Real.TryConvertFromChecked*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryConvertFromChecked__1___0_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.Core.Real.TryConvertFromChecked``1(``0,Mathematics.NET.Core.Real@)">
+  TryConvertFromChecked&lt;U&gt;(U, out Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L313"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of the current type, and throw and overflow exception if the value falls outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertFromChecked&lt;U&gt;(U value, out Real result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The type from which to convert</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p>The value is not representable by the type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryConvertFromSaturating_" data-uid="Mathematics.NET.Core.Real.TryConvertFromSaturating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryConvertFromSaturating__1___0_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.Core.Real.TryConvertFromSaturating``1(``0,Mathematics.NET.Core.Real@)">
+  TryConvertFromSaturating&lt;U&gt;(U, out Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L320"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of the current type, and saturate values that fall outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertFromSaturating&lt;U&gt;(U value, out Real result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The type from which to convert</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryConvertFromTruncating_" data-uid="Mathematics.NET.Core.Real.TryConvertFromTruncating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryConvertFromTruncating__1___0_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.Core.Real.TryConvertFromTruncating``1(``0,Mathematics.NET.Core.Real@)">
+  TryConvertFromTruncating&lt;U&gt;(U, out Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L327"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of the current type, and truncate values that fall outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertFromTruncating&lt;U&gt;(U value, out Real result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">U</span></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The type from which to convert</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryConvertToChecked_" data-uid="Mathematics.NET.Core.Real.TryConvertToChecked*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryConvertToChecked__1_Mathematics_NET_Core_Real___0__" data-uid="Mathematics.NET.Core.Real.TryConvertToChecked``1(Mathematics.NET.Core.Real,``0@)">
+  TryConvertToChecked&lt;U&gt;(Real, out U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L334"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of another type, and throw and overflow exception if the value falls outside the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertToChecked&lt;U&gt;(Real value, out U result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <span class="xref">U</span></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The target type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.overflowexception">OverflowException</a></dt>
+    <dd><p>The value is not representable by the target type.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryConvertToSaturating_" data-uid="Mathematics.NET.Core.Real.TryConvertToSaturating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryConvertToSaturating__1_Mathematics_NET_Core_Real___0__" data-uid="Mathematics.NET.Core.Real.TryConvertToSaturating``1(Mathematics.NET.Core.Real,``0@)">
+  TryConvertToSaturating&lt;U&gt;(Real, out U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L341"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of another type, and saturate values that fall outside of the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertToSaturating&lt;U&gt;(Real value, out U result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <span class="xref">U</span></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The target type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryConvertToTruncating_" data-uid="Mathematics.NET.Core.Real.TryConvertToTruncating*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryConvertToTruncating__1_Mathematics_NET_Core_Real___0__" data-uid="Mathematics.NET.Core.Real.TryConvertToTruncating``1(Mathematics.NET.Core.Real,``0@)">
+  TryConvertToTruncating&lt;U&gt;(Real, out U)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L348"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to convert a value to one of another type, and truncate values that fall outside of the representable range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryConvertToTruncating&lt;U&gt;(Real value, out U result) where U : INumberBase&lt;U&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+    <dt><code>result</code> <span class="xref">U</span></dt>
+    <dd><p>The result of the conversion</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the conversion was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>U</code></dt>
+    <dd><p>The target type</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryFormat_" data-uid="Mathematics.NET.Core.Real.TryFormat*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryFormat_System_Span_System_Char__System_Int32__System_ReadOnlySpan_System_Char__System_IFormatProvider_" data-uid="Mathematics.NET.Core.Real.TryFormat(System.Span{System.Char},System.Int32@,System.ReadOnlySpan{System.Char},System.IFormatProvider)">
+  TryFormat(Span&lt;char&gt;, out int, ReadOnlySpan&lt;char&gt;, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tries to format the value of the current instance into the provided span of characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryFormat(Span&lt;char&gt; destination, out int charsWritten, ReadOnlySpan&lt;char&gt; format, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>destination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.span-1">Span</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span in which to write this instance's value formatted as a span of characters.</p>
+</dd>
+    <dt><code>charsWritten</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>When this method returns, contains the number of characters that were written in <code class="paramref">destination</code>.</p>
+</dd>
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>A span containing the characters that represent a standard or custom format string that defines the acceptable format for <code class="paramref">destination</code>.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An optional object that supplies culture-specific formatting information for <code class="paramref">destination</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the formatting was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryParse_" data-uid="Mathematics.NET.Core.Real.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryParse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.Core.Real.TryParse(System.ReadOnlySpan{System.Char},System.Globalization.NumberStyles,System.IFormatProvider,Mathematics.NET.Core.Real@)">
+  TryParse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider?, out Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to parse a span of characters into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(ReadOnlySpan&lt;char&gt; s, NumberStyles style, IFormatProvider? provider, out Real result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the span of characters</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The result of the parse or a default value if the parse was unsuccessful</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the parse was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryParse_" data-uid="Mathematics.NET.Core.Real.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryParse_System_ReadOnlySpan_System_Char__System_IFormatProvider_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.Core.Real.TryParse(System.ReadOnlySpan{System.Char},System.IFormatProvider,Mathematics.NET.Core.Real@)">
+  TryParse(ReadOnlySpan&lt;char&gt;, IFormatProvider?, out Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L225"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tries to parse a span of characters into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(ReadOnlySpan&lt;char&gt; s, IFormatProvider? provider, out Real result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a>&gt;</dt>
+    <dd><p>The span of characters to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>When this method returns, contains the result of successfully parsing <code class="paramref">s</code>, or an undefined value on failure.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">s</code> was successfully parsed; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryParse_" data-uid="Mathematics.NET.Core.Real.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryParse_System_String_System_Globalization_NumberStyles_System_IFormatProvider_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.Core.Real.TryParse(System.String,System.Globalization.NumberStyles,System.IFormatProvider,Mathematics.NET.Core.Real@)">
+  TryParse(string?, NumberStyles, IFormatProvider?, out Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L232"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Try to parse a string into a value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(string? s, NumberStyles style, IFormatProvider? provider, out Real result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse</p>
+</dd>
+    <dt><code>style</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.globalization.numberstyles">NumberStyles</a></dt>
+    <dd><p>The number style</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>The culture-specific formatting information about the string</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The result of the parse or a default value if the parse was unsuccessful</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the parse was successful; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">style</code> is not a supported</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_Core_Real_TryParse_" data-uid="Mathematics.NET.Core.Real.TryParse*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_TryParse_System_String_System_IFormatProvider_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.Core.Real.TryParse(System.String,System.IFormatProvider,Mathematics.NET.Core.Real@)">
+  TryParse(string?, IFormatProvider?, out Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L218"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tries to parse a string into a value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParse(string? s, IFormatProvider? provider, out Real result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>s</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The string to parse.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd><p>An object that provides culture-specific formatting information about <code class="paramref">s</code>.</p>
+</dd>
+    <dt><code>result</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>When this method returns, contains the result of successfully parsing <code class="paramref">s</code> or an undefined value on failure.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">s</code> was successfully parsed; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="Mathematics_NET_Core_Real_op_Addition_" data-uid="Mathematics.NET.Core.Real.op_Addition*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Addition_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Addition(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator +(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator +(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Decrement_" data-uid="Mathematics.NET.Core.Real.op_Decrement*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Decrement_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Decrement(Mathematics.NET.Core.Real)">
+  operator --(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator --(Real value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Division_" data-uid="Mathematics.NET.Core.Real.op_Division*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Division_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Division(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator /(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator /(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Equality_" data-uid="Mathematics.NET.Core.Real.op_Equality*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Equality_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Equality(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator ==(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Explicit_" data-uid="Mathematics.NET.Core.Real.op_Explicit*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Explicit_Mathematics_NET_Core_Real__System_Int64" data-uid="Mathematics.NET.Core.Real.op_Explicit(Mathematics.NET.Core.Real)~System.Int64">
+  explicit operator long(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L431"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a value of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a> to one of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static explicit operator long(Real x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_GreaterThan_" data-uid="Mathematics.NET.Core.Real.op_GreaterThan*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_GreaterThan_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_GreaterThan(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator &gt;(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L172"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &gt;(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_GreaterThanOrEqual_" data-uid="Mathematics.NET.Core.Real.op_GreaterThanOrEqual*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_GreaterThanOrEqual_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_GreaterThanOrEqual(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator &gt;=(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &gt;=(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Implicit_" data-uid="Mathematics.NET.Core.Real.op_Implicit*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Implicit_System_Double__Mathematics_NET_Core_Real" data-uid="Mathematics.NET.Core.Real.op_Implicit(System.Double)~Mathematics.NET.Core.Real">
+  implicit operator Real(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L423"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a value of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> to one of type <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator Real(double x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd><p>The value to convert</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Increment_" data-uid="Mathematics.NET.Core.Real.op_Increment*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Increment_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Increment(Mathematics.NET.Core.Real)">
+  operator ++(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator ++(Real value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Inequality_" data-uid="Mathematics.NET.Core.Real.op_Inequality*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Inequality_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Inequality(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator !=(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_LessThan_" data-uid="Mathematics.NET.Core.Real.op_LessThan*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_LessThan_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_LessThan(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator &lt;(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L171"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_LessThanOrEqual_" data-uid="Mathematics.NET.Core.Real.op_LessThanOrEqual*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_LessThanOrEqual_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_LessThanOrEqual(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator &lt;=(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;=(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Modulus_" data-uid="Mathematics.NET.Core.Real.op_Modulus*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Modulus_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Modulus(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator %(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator %(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Multiply_" data-uid="Mathematics.NET.Core.Real.op_Multiply*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Multiply_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Multiply(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator *(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator *(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_Subtraction_" data-uid="Mathematics.NET.Core.Real.op_Subtraction*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_Subtraction_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_Subtraction(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  operator -(Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator -(Real left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_UnaryNegation_" data-uid="Mathematics.NET.Core.Real.op_UnaryNegation*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_UnaryNegation_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_UnaryNegation(Mathematics.NET.Core.Real)">
+  operator -(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L144"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator -(Real value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_Real_op_UnaryPlus_" data-uid="Mathematics.NET.Core.Real.op_UnaryPlus*"></a>
+
+  <h3 id="Mathematics_NET_Core_Real_op_UnaryPlus_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.Core.Real.op_UnaryPlus(Mathematics.NET.Core.Real)">
+  operator +(Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real operator +(Real value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

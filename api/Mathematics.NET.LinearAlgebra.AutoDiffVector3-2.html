@@ -1,0 +1,848 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct AutoDiffVector3&lt;T, U&gt; | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct AutoDiffVector3&lt;T, U&gt; | Mathematics.NET ">
+      
+      <meta name="description" content="Represents a vector of three dual numbers for use in forward-mode automatic differentiation">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_LinearAlgebra_AutoDiffVector3_2.md&amp;value=---%0Auid%3A%20Mathematics.NET.LinearAlgebra.AutoDiffVector3%602%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2">
+
+
+
+  <h1 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2" class="text-break">
+Struct AutoDiffVector3&lt;T, U&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.LinearAlgebra.html">LinearAlgebra</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a vector of three dual numbers for use in forward-mode automatic differentiation</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public record struct AutoDiffVector3&lt;T, U&gt; : IEquatable&lt;AutoDiffVector3&lt;T, U&gt;&gt; where T : IDual&lt;T, U&gt; where U : IComplex&lt;U&gt;, IDifferentiableFunctions&lt;U&gt;</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.IDual-2.html">IDual&lt;T, U&gt;</a></p>
+</dd>
+    <dt><code>U</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a> and <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html">IDifferentiableFunctions&lt;T&gt;</a></p>
+</dd>
+  </dl>
+
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2__ctor_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2__ctor__0__0__0_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.#ctor(`0,`0,`0)">
+  AutoDiffVector3(T, T, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AutoDiffVector3(T x1, T x2, T x3)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x1</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>x2</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>x3</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_X1" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.X1">
+  X1
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The first element of the vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T X1</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_X2" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.X2">
+  X2
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The second element of the vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T X2</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_X3" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.X3">
+  X3
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The third element of the vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T X3</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Item_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Item*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Item_System_Int32_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Item(System.Int32)">
+  this[int]
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T this[int index] { readonly get; set; }</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Cross_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Cross*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Cross_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Cross(Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1})">
+  Cross(AutoDiffVector3&lt;T, U&gt;, AutoDiffVector3&lt;T, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cross product of two vectors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffVector3&lt;T, U&gt; Cross(AutoDiffVector3&lt;T, U&gt; left, AutoDiffVector3&lt;T, U&gt; right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The first vector</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The second vector</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The cross product</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Curl_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Curl*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Curl_System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Curl(System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1})">
+  Curl(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, AutoDiffVector3&lt;T, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the curl of a vector field using forward-mode automatic differentiation: <span class="math">\((\nabla\times\textbf{F})(\textbf{x})\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector3&lt;U&gt; Curl(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f1, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f2, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f3, AutoDiffVector3&lt;T, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>f1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The first component of the vector field</p>
+</dd>
+    <dt><code>f2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The second component of the vector field</p>
+</dd>
+    <dt><code>f3</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The third component of the vector field</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The point at which to compute the curl</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;U&gt;</dt>
+    <dd><p>The curl of the vector field</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_DirectionalDerivative_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.DirectionalDerivative*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_DirectionalDerivative_Mathematics_NET_LinearAlgebra_Vector3__1__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.DirectionalDerivative(Mathematics.NET.LinearAlgebra.Vector3{`1},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1})">
+  DirectionalDerivative(Vector3&lt;U&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, AutoDiffVector3&lt;T, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L164"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the derivative of a scalar function along a particular direction using forward-mode automatic differentiation: <span class="math">\(\nabla_{\textbf{v}}f(\textbf{x})\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static U DirectionalDerivative(Vector3&lt;U&gt; v, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f, AutoDiffVector3&lt;T, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>v</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;U&gt;</dt>
+    <dd><p>A direction</p>
+</dd>
+    <dt><code>f</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>A scalar function</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The point at which to compute the directional derivative</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">U</span></dt>
+    <dd><p>A directional derivative</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Divergence_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Divergence*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Divergence_System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Divergence(System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1})">
+  Divergence(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, AutoDiffVector3&lt;T, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the divergence of a vector field using forward-mode automatic differentiation: <span class="math">\((\nabla\cdot\textbf{F})(\textbf{x})\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static U Divergence(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f1, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f2, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f3, AutoDiffVector3&lt;T, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>f1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The first component of the vector field</p>
+</dd>
+    <dt><code>f2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The second component of the vector field</p>
+</dd>
+    <dt><code>f3</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The third component of the vector field</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The point at which to compute the divergence</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">U</span></dt>
+    <dd><p>The divergence of the vector field</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Gradient_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Gradient*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Gradient_System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Gradient(System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1})">
+  Gradient(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, AutoDiffVector3&lt;T, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the gradient of a scalar function using forward-mode automatic differentiation: <span class="math">\(\nabla f(\textbf{x})\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector3&lt;U&gt; Gradient(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f, AutoDiffVector3&lt;T, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>f</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>A scalar function</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The point at which to compute the gradient</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;U&gt;</dt>
+    <dd><p>The gradient of the scalar function</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Hessian_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Hessian*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Hessian_System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3_Mathematics_NET_AutoDiff_HyperDual__1___1__Mathematics_NET_AutoDiff_HyperDual__1___Mathematics_NET_LinearAlgebra_AutoDiffVector3_Mathematics_NET_AutoDiff_HyperDual__1___1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Hessian(System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{Mathematics.NET.AutoDiff.HyperDual{`1},`1},Mathematics.NET.AutoDiff.HyperDual{`1}},Mathematics.NET.LinearAlgebra.AutoDiffVector3{Mathematics.NET.AutoDiff.HyperDual{`1},`1})">
+  Hessian(Func&lt;AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt;, HyperDual&lt;U&gt;&gt;, AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L209"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the Hessian of a scalar function using forward-mode automatic differentiation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix3x3&lt;U&gt; Hessian(Func&lt;AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt;, HyperDual&lt;U&gt;&gt; f, AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>f</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;<a class="xref" href="Mathematics.NET.AutoDiff.HyperDual-1.html">HyperDual</a>&lt;U&gt;, U&gt;, <a class="xref" href="Mathematics.NET.AutoDiff.HyperDual-1.html">HyperDual</a>&lt;U&gt;&gt;</dt>
+    <dd><p>A scalar function</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;<a class="xref" href="Mathematics.NET.AutoDiff.HyperDual-1.html">HyperDual</a>&lt;U&gt;, U&gt;</dt>
+    <dd><p>The point at which to compute the gradient</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Matrix3x3-1.html">Matrix3x3</a>&lt;U&gt;</dt>
+    <dd><p>The Hessian of the scalar function</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_JVP_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.JVP*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_JVP_System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__Mathematics_NET_LinearAlgebra_Vector3__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.JVP(System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},Mathematics.NET.LinearAlgebra.Vector3{`1})">
+  JVP(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, AutoDiffVector3&lt;T, U&gt;, Vector3&lt;U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L262"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the Jacobian-vector product of a vector function and a vector using forward-mode automatic differentiation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector3&lt;U&gt; JVP(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f1, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f2, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f3, AutoDiffVector3&lt;T, U&gt; x, Vector3&lt;U&gt; v)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>f1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The first function</p>
+</dd>
+    <dt><code>f2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The second function</p>
+</dd>
+    <dt><code>f3</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The third function</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The point at which to compute the Jacobian-vector product</p>
+</dd>
+    <dt><code>v</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;U&gt;</dt>
+    <dd><p>A vector</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;U&gt;</dt>
+    <dd><p>The Jacobian-vector product of the vector function and vector</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Jacobian_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Jacobian*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Jacobian_System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Jacobian(System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1})">
+  Jacobian(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, AutoDiffVector3&lt;T, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L235"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the Jacobian of a vector function using forward-mode automatic differentiation: <span class="math">\(\nabla^\text{T}f_i(\textbf{x})\)</span> for <span class="math">\(i=\left\{1,2,3\right\}\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix3x3&lt;U&gt; Jacobian(Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f1, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f2, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f3, AutoDiffVector3&lt;T, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>f1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The first function</p>
+</dd>
+    <dt><code>f2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The second function</p>
+</dd>
+    <dt><code>f3</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The third function</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The point at which to compute the Jacobian</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Matrix3x3-1.html">Matrix3x3</a>&lt;U&gt;</dt>
+    <dd><p>The Jacobian of the vector function</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Laplacian_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Laplacian*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_Laplacian_System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3_Mathematics_NET_AutoDiff_HyperDual__1___1__Mathematics_NET_AutoDiff_HyperDual__1___Mathematics_NET_LinearAlgebra_AutoDiffVector3_Mathematics_NET_AutoDiff_HyperDual__1___1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.Laplacian(System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{Mathematics.NET.AutoDiff.HyperDual{`1},`1},Mathematics.NET.AutoDiff.HyperDual{`1}},Mathematics.NET.LinearAlgebra.AutoDiffVector3{Mathematics.NET.AutoDiff.HyperDual{`1},`1})">
+  Laplacian(Func&lt;AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt;, HyperDual&lt;U&gt;&gt;, AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L274"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the Laplacian of a scalar function using forward-mode automatic differentiation:  <span class="math">\(\nabla^2f\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static U Laplacian(Func&lt;AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt;, HyperDual&lt;U&gt;&gt; f, AutoDiffVector3&lt;HyperDual&lt;U&gt;, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>f</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;<a class="xref" href="Mathematics.NET.AutoDiff.HyperDual-1.html">HyperDual</a>&lt;U&gt;, U&gt;, <a class="xref" href="Mathematics.NET.AutoDiff.HyperDual-1.html">HyperDual</a>&lt;U&gt;&gt;</dt>
+    <dd><p>A scalar function</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;<a class="xref" href="Mathematics.NET.AutoDiff.HyperDual-1.html">HyperDual</a>&lt;U&gt;, U&gt;</dt>
+    <dd><p>The point at which to compute the gradient</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">U</span></dt>
+    <dd><p>The gradient of the scalar function</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_ToString_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.ToString*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_ToString" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the fully qualified type name of this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The fully qualified type name.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_VJP_" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.VJP*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_AutoDiffVector3_2_VJP_Mathematics_NET_LinearAlgebra_Vector3__1__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__System_Func_Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1___0__Mathematics_NET_LinearAlgebra_AutoDiffVector3__0__1__" data-uid="Mathematics.NET.LinearAlgebra.AutoDiffVector3`2.VJP(Mathematics.NET.LinearAlgebra.Vector3{`1},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},System.Func{Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1},`0},Mathematics.NET.LinearAlgebra.AutoDiffVector3{`0,`1})">
+  VJP(Vector3&lt;U&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt;, AutoDiffVector3&lt;T, U&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/AutoDiffVector3`2.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the vector-Jacobian product of a vector and a vector function using forward-mode automatic differentiation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector3&lt;U&gt; VJP(Vector3&lt;U&gt; v, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f1, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f2, Func&lt;AutoDiffVector3&lt;T, U&gt;, T&gt; f3, AutoDiffVector3&lt;T, U&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>v</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;U&gt;</dt>
+    <dd><p>A vector</p>
+</dd>
+    <dt><code>f1</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The first function</p>
+</dd>
+    <dt><code>f2</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The second function</p>
+</dd>
+    <dt><code>f3</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;, T&gt;</dt>
+    <dd><p>The third function</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html">AutoDiffVector3</a>&lt;T, U&gt;</dt>
+    <dd><p>The point at which to compute the vector-Jacobian product</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;U&gt;</dt>
+    <dd><p>The vector-Jacobian product of the vector and vector-function</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

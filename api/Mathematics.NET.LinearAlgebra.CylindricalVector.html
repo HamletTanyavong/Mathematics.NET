@@ -1,0 +1,1111 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct CylindricalVector | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct CylindricalVector | Mathematics.NET ">
+      
+      <meta name="description" content="Represents a 3D vector in cylindrical coordinates">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_LinearAlgebra_CylindricalVector.md&amp;value=---%0Auid%3A%20Mathematics.NET.LinearAlgebra.CylindricalVector%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector">
+
+
+
+  <h1 id="Mathematics_NET_LinearAlgebra_CylindricalVector" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector" class="text-break">
+Struct CylindricalVector  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.LinearAlgebra.html">LinearAlgebra</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a 3D vector in cylindrical coordinates</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct CylindricalVector : IVector&lt;CylindricalVector, Real&gt;, IOneDimensionalArrayRepresentable&lt;CylindricalVector, Real&gt;, IArrayRepresentable&lt;CylindricalVector, Real&gt;, IEqualityRelation&lt;CylindricalVector, bool&gt;, IMultiplicationOperation&lt;CylindricalVector, Real, CylindricalVector&gt;, IUnaryMinusOperation&lt;CylindricalVector, CylindricalVector&gt;, IUnaryPlusOperation&lt;CylindricalVector, CylindricalVector&gt;, IFormattable, IAdditionOperation&lt;CylindricalVector, CylindricalVector&gt;, ISubtractionOperation&lt;CylindricalVector, CylindricalVector&gt;, IInnerProductOperation&lt;CylindricalVector, Real&gt;</code></pre>
+  </div>
+
+
+
+
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IVector-2.html">IVector</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IOneDimensionalArrayRepresentable-2.html">IOneDimensionalArrayRepresentable</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IArrayRepresentable-2.html">IArrayRepresentable</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Relations.IEqualityRelation-2.html">IEqualityRelation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IMultiplicationOperation-3.html">IMultiplicationOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryMinusOperation-2.html">IUnaryMinusOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryPlusOperation-2.html">IUnaryPlusOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a></div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IAdditionOperation-2.html">IAdditionOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.ISubtractionOperation-2.html">ISubtractionOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IInnerProductOperation-2.html">IInnerProductOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector__ctor_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector__ctor_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.#ctor(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  CylindricalVector(Real, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create a 3D vector in cylindrical coordinates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CylindricalVector(Real rho, Real phi, Real z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>rho</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The radial distance</p>
+</dd>
+    <dt><code>phi</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The azimuthal angle</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The axial coordinate</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Thrown when a negative value is supplied for the radial distance</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Phi" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Phi">
+  Phi
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The azimuthal angle</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Phi</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Rho" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Rho">
+  Rho
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The radial distance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Rho</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Z" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Z">
+  Z
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The axial coordinate</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Z</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_Components_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Components*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Components" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Components">
+  Components
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The total number of components in the array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Components { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_E1Components_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.E1Components*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_E1Components" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.E1Components">
+  E1Components
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The number of components in the one-dimensional array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int E1Components { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_Item_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Item*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Item_System_Int32_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Item(System.Int32)">
+  this[int]
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the element at the specified index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real this[int index] { readonly get; set; }</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>An index</p>
+</dd>
+  </dl>
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The element at the index</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_Cross_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Cross*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Cross_Mathematics_NET_LinearAlgebra_CylindricalVector_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Cross(Mathematics.NET.LinearAlgebra.CylindricalVector,Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  Cross(CylindricalVector, CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cross product of two vectors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector Cross(CylindricalVector left, CylindricalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd><p>The first vector</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd><p>The second vector</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd><p>The cross product</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_Equals_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Equals*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Equals_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Equals(Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  Equals(CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L168"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool Equals(CylindricalVector other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_Equals_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Equals*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Equals_System_Object_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L166"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_FromCartesian_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.FromCartesian*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_FromCartesian_Mathematics_NET_LinearAlgebra_Vector3_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.FromCartesian(Mathematics.NET.LinearAlgebra.Vector3{Mathematics.NET.Core.Real})">
+  FromCartesian(Vector3&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a vector in cartesian cordinates to one in cylindrical coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector FromCartesian(Vector3&lt;Real&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>The vector to convert</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd><p>A cylindrical vector</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_LinearAlgebra_CylindricalVector_FromCartesian_Mathematics_NET_LinearAlgebra_Vector3_Mathematics_NET_Core_Real___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The vector must have real components.</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_GetHashCode_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.GetHashCode*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_GetHashCode" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L171"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A 32-bit signed integer that is the hash code for this instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_InnerProduct_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.InnerProduct*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_InnerProduct_Mathematics_NET_LinearAlgebra_CylindricalVector_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.InnerProduct(Mathematics.NET.LinearAlgebra.CylindricalVector,Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  InnerProduct(CylindricalVector, CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the inner product of two vectors</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real InnerProduct(CylindricalVector left, CylindricalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd><p>A vector of type <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd><p>A vector of type <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A scalar</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_Norm_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Norm*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Norm" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Norm">
+  Norm()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the <span class="math">\(L^2\)</span>-norm of the vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Real Norm()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The norm</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_Normalize_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Normalize*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_Normalize" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.Normalize">
+  Normalize()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Normalize the vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly CylindricalVector Normalize()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd><p>The normalized vector</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_ToCartesian_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.ToCartesian*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_ToCartesian" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.ToCartesian">
+  ToCartesian()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a vector in cylindrical coordinates to one in Cartesian coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Vector3&lt;Real&gt; ToCartesian()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A vector in Cylindrical coordinates</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_ToString_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.ToString*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_ToString_System_String_System_IFormatProvider_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.ToString(System.String,System.IFormatProvider)">
+  ToString(string?, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the value of the current instance using the specified format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string ToString(string? format, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The format to use.</p>
+<p>-or-</p>
+<p>A null reference (<code>Nothing</code> in Visual Basic) to use the default format defined for the type of the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a> implementation.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The value of the current instance in the specified format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Addition_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Addition*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Addition_Mathematics_NET_LinearAlgebra_CylindricalVector_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Addition(Mathematics.NET.LinearAlgebra.CylindricalVector,Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  operator +(CylindricalVector, CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector operator +(CylindricalVector left, CylindricalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Equality_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Equality*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Equality_Mathematics_NET_LinearAlgebra_CylindricalVector_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Equality(Mathematics.NET.LinearAlgebra.CylindricalVector,Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  operator ==(CylindricalVector, CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L160"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(CylindricalVector left, CylindricalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Inequality_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Inequality*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Inequality_Mathematics_NET_LinearAlgebra_CylindricalVector_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Inequality(Mathematics.NET.LinearAlgebra.CylindricalVector,Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  operator !=(CylindricalVector, CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(CylindricalVector left, CylindricalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Multiply_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Multiply*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Multiply_Mathematics_NET_Core_Real_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Multiply(Mathematics.NET.Core.Real,Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  operator *(Real, CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector operator *(Real left, CylindricalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Multiply_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Multiply*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Multiply_Mathematics_NET_LinearAlgebra_CylindricalVector_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Multiply(Mathematics.NET.LinearAlgebra.CylindricalVector,Mathematics.NET.Core.Real)">
+  operator *(CylindricalVector, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector operator *(CylindricalVector left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Subtraction_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Subtraction*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_Subtraction_Mathematics_NET_LinearAlgebra_CylindricalVector_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_Subtraction(Mathematics.NET.LinearAlgebra.CylindricalVector,Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  operator -(CylindricalVector, CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector operator -(CylindricalVector left, CylindricalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_UnaryNegation_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_UnaryNegation*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_UnaryNegation_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_UnaryNegation(Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  operator -(CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector operator -(CylindricalVector vector)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>vector</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_UnaryPlus_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_UnaryPlus*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_CylindricalVector_op_UnaryPlus_Mathematics_NET_LinearAlgebra_CylindricalVector_" data-uid="Mathematics.NET.LinearAlgebra.CylindricalVector.op_UnaryPlus(Mathematics.NET.LinearAlgebra.CylindricalVector)">
+  operator +(CylindricalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/CylindricalVector.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CylindricalVector operator +(CylindricalVector vector)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>vector</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.CylindricalVector.html">CylindricalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
