@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mathematics.NET.Renderer\Mathematics.NET.Renderer.csproj" />
-    <ProjectReference Include="..\Mathematics.NET.Plots\Mathematics.NET.Plots.csproj" />
     <ProjectReference Include="..\Mathematics.NET\Mathematics.NET.csproj" />
     <ProjectReference Include="..\Mathematics.NET.SourceGenerators.Public\Mathematics.NET.SourceGenerators.Public.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
