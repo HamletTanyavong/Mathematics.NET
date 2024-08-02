@@ -49,7 +49,7 @@
     "globalMetadata" : {
       "_appTitle": "Mathematics.NET",
       "_appFooter": "Copyright &copy; 2024 Hamlet Tanyavong",
-      "_appLogoPath": "images/logo/mathematics.net.png",
+      "_appLogoPath": "images/logo/mathematics.net.svg",
       "_appFaviconPath": "images/logo/mathematics.net.ico",
       "_disableContribution": true,
       "_enableSearch": true
