@@ -1,5 +1,3 @@
-<img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/images/logo/mathematics.net.svg" width="128" height="128" alt="Mathematics.NET Logo">
-
 # Mathematics.NET
 
 Mathematics.NET is a C# class library that provides tools for solving mathematical problems.
