@@ -1,4 +1,4 @@
-[![Mathematics.NET Logo](https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/images/logo/mathematics.net.png "Mathematics.NET Logo")](https://mathematics.hamlettanyavong.com)
+<img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/images/logo/mathematics.net.svg" width="128" height="128" alt="Mathematics.NET Logo">
 
 # Mathematics.NET
 
