@@ -42,7 +42,9 @@
     <div class="flare" id="circle-one"></div>
     <div class="flare" id="circle-two"></div>
     <div class="flare" id="circle-three"></div>
-    <img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/gh-pages/images/logo/mathematics.net.svg" width="128" height="128" style="margin: 16px" alt="Mathematics.NET Logo">
+    <a href="https://mathematics.hamlettanyavong.com/">
+      <img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/gh-pages/images/logo/mathematics.net.svg" width="128" height="128" style="margin: 16px" alt="Mathematics.NET Logo">
+    </a>
     <h1>Mathematics.NET</h1>
     <p>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</p>
 </div>
