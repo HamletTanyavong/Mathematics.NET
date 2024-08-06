@@ -29,12 +29,12 @@ using Mathematics.NET.Symbolic.Notation.Numbers;
 
 namespace Mathematics.NET.Symbolic.Notation.Numbers
 {
-    /// <summary>A complex number notation node</summary>
+    /// <summary>A complex number notation node.</summary>
     public class ComplexNumberNotation : NumberNotation
     {
-        /// <summary>The real component of the complex number</summary>
+        /// <summary>The real component of the complex number.</summary>
         public string Real;
-        /// <summary>The imaginary component of the complex number</summary>
+        /// <summary>The imaginary component of the complex number.</summary>
         public string Imaginary;
 
         public ComplexNumberNotation(string real, string imaginary)
@@ -51,9 +51,9 @@ namespace Mathematics.NET.Symbolic
     public static partial class NotationFactory
     {
         /// <summary>Create a <see cref="ComplexNumberNotation"/> instance.</summary>
-        /// <param name="real">The real component of the complex number</param>
-        /// <param name="imaginary">The imaginary component of the complex number</param>
-        /// <returns>A <see cref="ComplexNumberNotation"/> instance</returns>
+        /// <param name="real">The real component of the complex number.</param>
+        /// <param name="imaginary">The imaginary component of the complex number.</param>
+        /// <returns>A <see cref="ComplexNumberNotation"/> instance.</returns>
         public static ComplexNumberNotation ComplexNumber(string real, string imaginary)
             => new(real, imaginary);
     }

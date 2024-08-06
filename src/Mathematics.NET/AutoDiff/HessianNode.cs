@@ -29,26 +29,26 @@ using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Represents a node on a Hessian tape</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a node on a Hessian tape.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 internal readonly record struct HessianNode<T>
     where T : IComplex<T>
 {
-    /// <summary>The first derivative of the left component of the binary operation</summary>
+    /// <summary>The first derivative of the left component of the binary operation.</summary>
     public readonly T DX;
-    /// <summary>The second derivative of the left component of the binary operation</summary>
+    /// <summary>The second derivative of the left component of the binary operation.</summary>
     public readonly T DXX;
-    /// <summary>The derivative of the left or right component of the binary operation with respect to the left and right variables</summary>
+    /// <summary>The derivative of the left or right component of the binary operation with respect to the left and right variables.</summary>
     public readonly T DXY;
-    /// <summary>The first derivative of the right component of the binary operation</summary>
+    /// <summary>The first derivative of the right component of the binary operation.</summary>
     public readonly T DY;
-    /// <summary>The second derivative of the right component of the binary operation</summary>
+    /// <summary>The second derivative of the right component of the binary operation.</summary>
     public readonly T DYY;
 
-    /// <summary>The parent index of the left node</summary>
+    /// <summary>The parent index of the left node.</summary>
     public readonly int PX;
-    /// <summary>The parent index of the right node</summary>
+    /// <summary>The parent index of the right node.</summary>
     public readonly int PY;
 
     public HessianNode(int index)

@@ -29,7 +29,7 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a lower index position</summary>
+/// <summary>Represents a lower index position.</summary>
 public readonly struct Lower : IIndexPosition
 {
     /// <inheritdoc cref="IIndexPosition.DisplayString"/>

@@ -32,8 +32,8 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a 2x2 matrix</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a 2x2 matrix.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     where T : IComplex<T>
@@ -49,11 +49,11 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     public Vector2<T> X1;
     public Vector2<T> X2;
 
-    /// <summary>Create a 2x2 matrix given a set of 4 values</summary>
-    /// <param name="e11">The $ e_{11} $ component</param>
-    /// <param name="e12">The $ e_{12} $ component</param>
-    /// <param name="e21">The $ e_{21} $ component</param>
-    /// <param name="e22">The $ e_{22} $ component</param>
+    /// <summary>Create a 2x2 matrix given a set of 4 values.</summary>
+    /// <param name="e11">The $ e_{11} $ component.</param>
+    /// <param name="e12">The $ e_{12} $ component.</param>
+    /// <param name="e21">The $ e_{21} $ component.</param>
+    /// <param name="e22">The $ e_{22} $ component.</param>
     public Matrix2x2(T e11, T e12, T e21, T e22)
     {
         X1 = new(e11, e12);
@@ -183,9 +183,9 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         => this.AsSpan2D().ToDisplayString(format, provider);
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
-    /// <param name="e11">The $ e_{11} $ component</param>
-    /// <param name="e22">The $ e_{22} $ component</param>
-    /// <returns>A diagonal matrix</returns>
+    /// <param name="e11">The $ e_{11} $ component.</param>
+    /// <param name="e22">The $ e_{22} $ component.</param>
+    /// <returns>A diagonal matrix.</returns>
     public static Matrix2x2<T> CreateDiagonal(T e11, T e22)
         => new(e11, T.Zero, T.Zero, e22);
 

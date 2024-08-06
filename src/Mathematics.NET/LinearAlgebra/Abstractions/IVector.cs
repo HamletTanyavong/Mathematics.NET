@@ -29,9 +29,9 @@ using Mathematics.NET.Core.Operations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for vectors</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for vectors.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IVector<T, U>
     : IOneDimensionalArrayRepresentable<T, U>,
       IAdditionOperation<T, T>,
@@ -40,11 +40,11 @@ public interface IVector<T, U>
     where T : IVector<T, U>
     where U : IComplex<U>
 {
-    /// <summary>Compute the $ L^2 $-norm of the vector</summary>
-    /// <returns>The norm</returns>
+    /// <summary>Compute the $ L^2 $-norm of the vector.</summary>
+    /// <returns>The norm.</returns>
     Real Norm();
 
-    /// <summary>Normalize the vector</summary>
-    /// <returns>The normalized vector</returns>
+    /// <summary>Normalize the vector.</summary>
+    /// <returns>The normalized vector.</returns>
     T Normalize();
 }

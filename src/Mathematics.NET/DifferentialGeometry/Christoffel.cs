@@ -33,13 +33,13 @@ using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a Christoffel symbol</summary>
-/// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI1">The first index</typeparam>
-/// <typeparam name="TI2N">The name of the second index</typeparam>
-/// <typeparam name="TI3N">The name of the third index</typeparam>
-/// <param name="array">A backing array</param>
+/// <summary>Represents a Christoffel symbol.</summary>
+/// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI1">The first index.</typeparam>
+/// <typeparam name="TI2N">The name of the second index.</typeparam>
+/// <typeparam name="TI3N">The name of the third index.</typeparam>
+/// <param name="array">A backing array.</param>
 public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     : IRankThreeTensor<Christoffel<TCA, TN, TI1, TI2N, TI3N>, TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>
     where TCA : ICubicArray<TCA, TN>
@@ -127,10 +127,10 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     public readonly void CopyTo(ref TN[,,] destination) => _array.CopyTo(ref destination);
 
     /// <summary>Reinterpret a reference to this Christoffel symbol as one with a new first index, second index name, and third index name.</summary>
-    /// <typeparam name="TNI1">A new first index</typeparam>
-    /// <typeparam name="TNI2N">A new second index name</typeparam>
-    /// <typeparam name="TNI3N">A new third index name</typeparam>
-    /// <returns>A reference to this Christoffel symbol with a new first index, second index name, and third index name</returns>
+    /// <typeparam name="TNI1">A new first index.</typeparam>
+    /// <typeparam name="TNI2N">A new second index name.</typeparam>
+    /// <typeparam name="TNI3N">A new third index name.</typeparam>
+    /// <returns>A reference to this Christoffel symbol with a new first index, second index name, and third index name.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Christoffel<TCA, TN, TNI1, TNI2N, TNI3N> WithIndices<TNI1, TNI2N, TNI3N>()
@@ -140,8 +140,8 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
         => ref Unsafe.As<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TNI1, TNI2N, TNI3N>>(ref this);
 
     /// <summary>Reinterpret a reference to this Christoffel symbol as one with a new index in the first position.</summary>
-    /// <typeparam name="TNI1">A new index</typeparam>
-    /// <returns>A reference to this Christoffel symbol with a new index in the first position</returns>
+    /// <typeparam name="TNI1">A new index.</typeparam>
+    /// <returns>A reference to this Christoffel symbol with a new index in the first position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Christoffel<TCA, TN, TNI1, TI2N, TI3N> WithIndex1<TNI1>()
@@ -149,8 +149,8 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
         => ref Unsafe.As<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TNI1, TI2N, TI3N>>(ref this);
 
     /// <summary>Reinterpret a reference to this Christoffel symbol as one with a new index name in the second position.</summary>
-    /// <typeparam name="TNIN">A new index name</typeparam>
-    /// <returns>A reference to this Christoffel symbol with a new index name in the second position</returns>
+    /// <typeparam name="TNIN">A new index name.</typeparam>
+    /// <returns>A reference to this Christoffel symbol with a new index name in the second position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Christoffel<TCA, TN, TI1, TNIN, TI3N> WithIndex2Name<TNIN>()
@@ -158,8 +158,8 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
         => ref Unsafe.As<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TI1, TNIN, TI3N>>(ref this);
 
     /// <summary>Reinterpret a reference to this Christoffel symbol as one with a new index name in the third position.</summary>
-    /// <typeparam name="TNIN">A new index name</typeparam>
-    /// <returns>A reference to this Christoffel symbol with a new index name in the third position</returns>
+    /// <typeparam name="TNIN">A new index name.</typeparam>
+    /// <returns>A reference to this Christoffel symbol with a new index name in the third position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Christoffel<TCA, TN, TI1, TI2N, TNIN> WithIndex3Name<TNIN>()

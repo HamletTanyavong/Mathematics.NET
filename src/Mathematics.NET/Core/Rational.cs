@@ -33,8 +33,8 @@ using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
 
-/// <summary>Represents a rational number</summary>
-/// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
+/// <summary>Represents a rational number.</summary>
+/// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct Rational<T> : IRational<Rational<T>, T>
@@ -62,8 +62,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     }
 
     /// <summary>This construct prevents negative numbers from being in the denominator; some methods, such as the ones inherited from <see cref="IComparable"/>, have been written to rely on this fact.</summary>
-    /// <param name="p">The numerator</param>
-    /// <param name="q">The denominator</param>
+    /// <param name="p">The numerator.</param>
+    /// <param name="q">The denominator.</param>
     public Rational(T p, T q)
     {
         if (q != T.Zero)
@@ -693,11 +693,11 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     }
 
     /// <summary>Try to convert a <see cref="Real"/> into a <see cref="Rational{T}"/> of <see cref="long"/> to within a certain <paramref name="tolerance"/> and with a max denominator of <paramref name="maxDenominator"/>.</summary>
-    /// <param name="value">The value to convert</param>
-    /// <param name="tolerance">A tolerance</param>
-    /// <param name="maxDenominator">The max denominator</param>
-    /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/></param>
-    /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/></returns>
+    /// <param name="value">The value to convert.</param>
+    /// <param name="tolerance">A tolerance.</param>
+    /// <param name="maxDenominator">The max denominator.</param>
+    /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/>.</param>
+    /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/>.</returns>
     public static bool TryConvertFromReal(Real value, Real tolerance, long maxDenominator, out Rational<long> result)
     {
         if (tolerance < Precision.DblEpsilonVariant || Real.IsNaN(value) || Real.IsInfinity(value))

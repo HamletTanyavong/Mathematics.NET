@@ -29,12 +29,12 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-two tensors and similar mathematical objects</summary>
-/// <typeparam name="TR2T">The type that implements the interface</typeparam>
-/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI1">An index</typeparam>
-/// <typeparam name="TI2">An index</typeparam>
+/// <summary>Defines support for rank-two tensors and similar mathematical objects.</summary>
+/// <typeparam name="TR2T">The type that implements the interface.</typeparam>
+/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI1">An index.</typeparam>
+/// <typeparam name="TI2">An index.</typeparam>
 public interface IRankTwoTensor<TR2T, TSM, TN, TI1, TI2> : ITwoDimensionalArrayRepresentable<TR2T, TN>
     where TR2T : IRankTwoTensor<TR2T, TSM, TN, TI1, TI2>
     where TSM : ISquareMatrix<TSM, TN>
@@ -42,13 +42,13 @@ public interface IRankTwoTensor<TR2T, TSM, TN, TI1, TI2> : ITwoDimensionalArrayR
     where TI1 : IIndex
     where TI2 : IIndex
 {
-    /// <summary>The first index</summary>
+    /// <summary>The first index.</summary>
     IIndex I1 { get; }
 
-    /// <summary>The second index</summary>
+    /// <summary>The second index.</summary>
     IIndex I2 { get; }
 
-    /// <summary>Convert a value that implements <see cref="IMatrix{T, U}"/> to one of type <typeparamref name="TR2T"/></summary>
-    /// <param name="value">The value to convert</param>
+    /// <summary>Convert a value that implements <see cref="IMatrix{T, U}"/> to one of type <typeparamref name="TR2T"/>.</summary>
+    /// <param name="value">The value to convert.</param>
     static abstract implicit operator TR2T(TSM value);
 }

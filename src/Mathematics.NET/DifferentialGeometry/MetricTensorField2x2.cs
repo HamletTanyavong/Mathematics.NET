@@ -32,10 +32,10 @@ using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a 2x2 metric tensor field</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TPI">The index of the point on the manifold</typeparam>
+/// <summary>Represents a 2x2 metric tensor field.</summary>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
 public abstract class MetricTensorField2x2<TT, TN, TPI> : TensorField2x2<TT, TN, Lower, Lower, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -44,11 +44,11 @@ public abstract class MetricTensorField2x2<TT, TN, TPI> : TensorField2x2<TT, TN,
     public MetricTensorField2x2() { }
 
     /// <summary>Compute the value of the metric tensor at a specific point on the manifold.</summary>
-    /// <typeparam name="TI1N">The name of the first index</typeparam>
-    /// <typeparam name="TI2N">The name of the second index</typeparam>
-    /// <param name="tape">A gradient or Hessian Tape</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <returns>A metric tensor</returns>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <returns>A metric tensor.</returns>
     public new MetricTensor<Matrix2x2<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
         where TI1N : ISymbol
         where TI2N : ISymbol
@@ -72,11 +72,11 @@ public abstract class MetricTensorField2x2<TT, TN, TPI> : TensorField2x2<TT, TN,
     }
 
     /// <summary>Compute the value of the inverse metric tensor at a specific point on the manifold.</summary>
-    /// <typeparam name="TI1N">The name of the first index</typeparam>
-    /// <typeparam name="TI2N">The name of the second index</typeparam>
-    /// <param name="tape">A gradient or Hessian Tape</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <returns>An inverse metric tensor</returns>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <returns>An inverse metric tensor.</returns>
     public MetricTensor<Matrix2x2<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
         where TI1N : ISymbol
         where TI2N : ISymbol

@@ -32,9 +32,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.GraphTheory;
 
-/// <summary>Represents a graph</summary>
-/// <typeparam name="TNode">A type that inherits from <see cref="Node"/></typeparam>
-/// <typeparam name="TEdge">A type that inherits from <see cref="Edge"/></typeparam>
+/// <summary>Represents a graph.</summary>
+/// <typeparam name="TNode">A type that inherits from <see cref="Node"/>.</typeparam>
+/// <typeparam name="TEdge">A type that inherits from <see cref="Edge"/>.</typeparam>
 public class Graph<TNode, TEdge>
     where TNode : Node
     where TEdge : Edge
@@ -51,7 +51,7 @@ public class Graph<TNode, TEdge>
     //
 
     /// <summary>Add an edge to the graph.</summary>
-    /// <param name="edge">An edge</param>
+    /// <param name="edge">An edge.</param>
     public virtual void AddEdge(TEdge edge)
     {
         if (_nodes.Contains(edge.Origin) && _nodes.Contains(edge.Destination))
@@ -62,7 +62,7 @@ public class Graph<TNode, TEdge>
     }
 
     /// <summary>Add a list of the edges to the graph.</summary>
-    /// <param name="edges">A list of edges</param>
+    /// <param name="edges">A list of edges.</param>
     public virtual void AddEdges(IEnumerable<TEdge> edges)
     {
         foreach (var edge in edges)
@@ -72,11 +72,11 @@ public class Graph<TNode, TEdge>
     }
 
     /// <summary>Add a node to the graph.</summary>
-    /// <param name="node">A node</param>
+    /// <param name="node">A node.</param>
     public virtual void AddNode(TNode node) => _nodes.AddLast(node);
 
     /// <summary>Add a list of nodes to the graph.</summary>
-    /// <param name="nodes">A list of nodes</param>
+    /// <param name="nodes">A list of nodes.</param>
     public virtual void AddNodes(IEnumerable<TNode> nodes)
     {
         foreach (var node in nodes)
@@ -86,9 +86,9 @@ public class Graph<TNode, TEdge>
     }
 
     /// <summary>Get an edge from a node by indices or <see langword="default"/> if it does not exist.</summary>
-    /// <param name="i">A node index</param>
-    /// <param name="j">An edge index</param>
-    /// <returns>An edge if it exists; otherwise, <see langword="default"/></returns>
+    /// <param name="i">A node index.</param>
+    /// <param name="j">An edge index.</param>
+    /// <returns>An edge if it exists; otherwise, <see langword="default"/>.</returns>
     public virtual TEdge? GetEdgeOrDefault(int i, int j)
     {
         if (_nodes.ElementAtOrDefault(i) is TNode node)
@@ -99,12 +99,12 @@ public class Graph<TNode, TEdge>
     }
 
     /// <summary>Get the node at a specific index or <see langword="default"/> if it does not exist.</summary>
-    /// <param name="i">An index</param>
-    /// <returns>A node if it exists; otherwise, <see langword="default"/></returns>
+    /// <param name="i">An index.</param>
+    /// <returns>A node if it exists; otherwise, <see langword="default"/>.</returns>
     public virtual TNode? GetNodeOrDefault(int i) => _nodes.ElementAtOrDefault(i);
 
     /// <summary>Remove an edge from the graph if it exists.</summary>
-    /// <param name="edge">The edge to remove</param>
+    /// <param name="edge">The edge to remove.</param>
     public virtual void RemoveEdge(TEdge edge)
     {
         if (_nodes.FirstOrDefault(x => x.OutgoingEdges.Any(x => x == edge)) is Node origin &&
@@ -128,7 +128,7 @@ public class Graph<TNode, TEdge>
     }
 
     /// <summary>Remove a node from the graph and all edges associated with it.</summary>
-    /// <param name="node">A node</param>
+    /// <param name="node">A node.</param>
     public virtual void RemoveNode(TNode node) => _nodes.Remove(node);
 
     //

@@ -27,24 +27,24 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by two-dimensional arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for mathematical objects that can be represented by two-dimensional arrays.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface ITwoDimensionalArrayRepresentable<T, U>
     : IArrayRepresentable<T, U>,
       IFormattable
     where T : ITwoDimensionalArrayRepresentable<T, U>
     where U : IComplex<U>
 {
-    /// <summary>The number of rows in the array</summary>
+    /// <summary>The number of rows in the array.</summary>
     static abstract int E1Components { get; }
 
-    /// <summary>The number of columns in the array</summary>
+    /// <summary>The number of columns in the array.</summary>
     static abstract int E2Components { get; }
 
     /// <summary>Get the element at the specified row and column.</summary>
-    /// <param name="row">The row</param>
-    /// <param name="column">The column</param>
-    /// <returns>The element at the specified row and column</returns>
+    /// <param name="row">The row.</param>
+    /// <param name="column">The column.</param>
+    /// <returns>The element at the specified row and column.</returns>
     U this[int row, int column] { get; set; }
 }

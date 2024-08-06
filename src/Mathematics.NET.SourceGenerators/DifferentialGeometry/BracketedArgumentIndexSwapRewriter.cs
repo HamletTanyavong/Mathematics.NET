@@ -29,7 +29,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A C# syntax rewriter that swaps indices in a bracketed argument list</summary>
+/// <summary>A C# syntax rewriter that swaps indices in a bracketed argument list.</summary>
 internal sealed class BracketedArgumentIndexSwapRewriter : CSharpSyntaxRewriter
 {
     private readonly ArgumentSyntax _indexToContract;

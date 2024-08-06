@@ -32,18 +32,18 @@ using Mathematics.NET.AutoDiff;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a vector of two dual numbers for use in forward-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <summary>Represents a vector of two dual numbers for use in forward-mode automatic differentiation.</summary>
+/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public record struct AutoDiffVector2<T, U>
     where T : IDual<T, U>
     where U : IComplex<U>, IDifferentiableFunctions<U>
 {
-    /// <summary>The first element of the vector</summary>
+    /// <summary>The first element of the vector.</summary>
     public T X1;
 
-    /// <summary>The second element of the vector</summary>
+    /// <summary>The second element of the vector.</summary>
     public T X2;
 
     public AutoDiffVector2(T x1, T x2)
@@ -117,10 +117,10 @@ public record struct AutoDiffVector2<T, U>
     //
 
     /// <summary>Compute the derivative of a scalar function along a particular direction using forward-mode automatic differentiation: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
-    /// <param name="v">A direction</param>
-    /// <param name="f">A scalar function</param>
-    /// <param name="x">The point at which to compute the directional derivative</param>
-    /// <returns>A directional derivative</returns>
+    /// <param name="v">A direction.</param>
+    /// <param name="f">A scalar function.</param>
+    /// <param name="x">The point at which to compute the directional derivative.</param>
+    /// <returns>A directional derivative.</returns>
     public static U DirectionalDerivative(
         Vector2<U> v,
         Func<AutoDiffVector2<T, U>, T> f,
@@ -134,10 +134,10 @@ public record struct AutoDiffVector2<T, U>
     }
 
     /// <summary>Compute the divergence of a vector field using forward-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
-    /// <param name="f1">The first component of the vector field</param>
-    /// <param name="f2">The second component of the vector field</param>
-    /// <param name="x">The point at which to compute the divergence</param>
-    /// <returns>The divergence of the vector field</returns>
+    /// <param name="f1">The first component of the vector field.</param>
+    /// <param name="f2">The second component of the vector field.</param>
+    /// <param name="x">The point at which to compute the divergence.</param>
+    /// <returns>The divergence of the vector field.</returns>
     public static U Divergence(
         Func<AutoDiffVector2<T, U>, T> f1,
         Func<AutoDiffVector2<T, U>, T> f2,
@@ -151,9 +151,9 @@ public record struct AutoDiffVector2<T, U>
     }
 
     /// <summary>Compute the gradient of a scalar function using forward-mode automatic differentiation: $ \nabla f(\textbf{x}) $.</summary>
-    /// <param name="f">A scalar function</param>
-    /// <param name="x">The point at which to compute the gradient</param>
-    /// <returns>The gradient of the scalar function</returns>
+    /// <param name="f">A scalar function.</param>
+    /// <param name="x">The point at which to compute the gradient.</param>
+    /// <returns>The gradient of the scalar function.</returns>
     public static Vector2<U> Gradient(Func<AutoDiffVector2<T, U>, T> f, AutoDiffVector2<T, U> x)
     {
         ReadOnlySpan<AutoDiffVector2<T, U>> seeds = [
@@ -164,9 +164,9 @@ public record struct AutoDiffVector2<T, U>
     }
 
     /// <summary>Compute the Hessian of a scalar function using forward-mode automatic differentiation.</summary>
-    /// <param name="f">A scalar function</param>
-    /// <param name="x">The point at which to compute the gradient</param>
-    /// <returns>The Hessian of the scalar function</returns>
+    /// <param name="f">A scalar function.</param>
+    /// <param name="x">The point at which to compute the gradient.</param>
+    /// <returns>The Hessian of the scalar function.</returns>
     public static Matrix2x2<U> Hessian(Func<AutoDiffVector2<HyperDual<U>, U>, HyperDual<U>> f, AutoDiffVector2<HyperDual<U>, U> x)
     {
         Matrix2x2<U> result = new();
@@ -181,10 +181,10 @@ public record struct AutoDiffVector2<T, U>
     }
 
     /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
-    /// <param name="f1">The first function</param>
-    /// <param name="f2">The second function</param>
-    /// <param name="x">The point at which to compute the Jacobian</param>
-    /// <returns>The Jacobian of the vector function</returns>
+    /// <param name="f1">The first function.</param>
+    /// <param name="f2">The second function.</param>
+    /// <param name="x">The point at which to compute the Jacobian.</param>
+    /// <returns>The Jacobian of the vector function.</returns>
     public static Matrix2x2<U> Jacobian(
         Func<AutoDiffVector2<T, U>, T> f1,
         Func<AutoDiffVector2<T, U>, T> f2,
@@ -203,11 +203,11 @@ public record struct AutoDiffVector2<T, U>
     }
 
     /// <summary>Compute the Jacobian-vector product of a vector function and a vector using forward-mode automatic differentiation.</summary>
-    /// <param name="f1">The first function</param>
-    /// <param name="f2">The second function</param>
-    /// <param name="x">The point at which to compute the Jacobian-vector product</param>
-    /// <param name="v">A vector</param>
-    /// <returns>The Jacobian-vector product of the vector function and vector</returns>
+    /// <param name="f1">The first function.</param>
+    /// <param name="f2">The second function.</param>
+    /// <param name="x">The point at which to compute the Jacobian-vector product.</param>
+    /// <param name="v">A vector.</param>
+    /// <returns>The Jacobian-vector product of the vector function and vector.</returns>
     public static Vector2<U> JVP(
         Func<AutoDiffVector2<T, U>, T> f1,
         Func<AutoDiffVector2<T, U>, T> f2,
@@ -219,9 +219,9 @@ public record struct AutoDiffVector2<T, U>
     }
 
     /// <summary>Compute the Laplacian of a scalar function using forward-mode automatic differentiation:  $ \nabla^2f $.</summary>
-    /// <param name="f">A scalar function</param>
-    /// <param name="x">The point at which to compute the gradient</param>
-    /// <returns>The gradient of the scalar function</returns>
+    /// <param name="f">A scalar function.</param>
+    /// <param name="x">The point at which to compute the gradient.</param>
+    /// <returns>The gradient of the scalar function.</returns>
     public static U Laplacian(Func<AutoDiffVector2<HyperDual<U>, U>, HyperDual<U>> f, AutoDiffVector2<HyperDual<U>, U> x)
     {
         ReadOnlySpan<AutoDiffVector2<HyperDual<U>, U>> seeds = [
@@ -232,11 +232,11 @@ public record struct AutoDiffVector2<T, U>
     }
 
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using forward-mode automatic differentiation.</summary>
-    /// <param name="v">A vector</param>
-    /// <param name="f1">The first function</param>
-    /// <param name="f2">The second function</param>
-    /// <param name="x">The point at which to compute the vector-Jacobian product</param>
-    /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
+    /// <param name="v">A vector.</param>
+    /// <param name="f1">The first function.</param>
+    /// <param name="f2">The second function.</param>
+    /// <param name="x">The point at which to compute the vector-Jacobian product.</param>
+    /// <returns>The vector-Jacobian product of the vector and vector-function.</returns>
     public static Vector2<U> VJP(
         Vector2<U> v,
         Func<AutoDiffVector2<T, U>, T> f1,

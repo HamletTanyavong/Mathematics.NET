@@ -33,24 +33,24 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a 3D vector in spherical coordinates according to the physics convention</summary>
+/// <summary>Represents a 3D vector in spherical coordinates according to the physics convention.</summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct SphericalVector : IVector<SphericalVector, Real>
 {
-    /// <summary>The radius</summary>
+    /// <summary>The radius.</summary>
     public Real R;
 
-    /// <summary>The polar angle</summary>
+    /// <summary>The polar angle.</summary>
     public Real Theta;
 
-    /// <summary>The azimuthal angle</summary>
+    /// <summary>The azimuthal angle.</summary>
     public Real Phi;
 
-    /// <summary>Create a 3D vector in spherical coordinates</summary>
-    /// <param name="r">The radius</param>
-    /// <param name="theta">The polar angle</param>
-    /// <param name="phi">The azimuthal angle</param>
-    /// <exception cref="ArgumentException">Thrown when a negative value is supplied for the radius or when theta does not fall within 0 and π</exception>
+    /// <summary>Create a 3D vector in spherical coordinates.</summary>
+    /// <param name="r">The radius.</param>
+    /// <param name="theta">The polar angle.</param>
+    /// <param name="phi">The azimuthal angle.</param>
+    /// <exception cref="ArgumentException">Thrown when a negative value is supplied for the radius or when theta does not fall within 0 and π.</exception>
     public SphericalVector(Real r, Real theta, Real phi)
     {
         if (r < Real.Zero)
@@ -215,8 +215,8 @@ public struct SphericalVector : IVector<SphericalVector, Real>
 
     /// <summary>Convert a vector in cartesian cordinates to one in spherical coordinates.</summary>
     /// <remarks>The vector must have real components.</remarks>
-    /// <param name="x">The vector to convert</param>
-    /// <returns>A spherical vector</returns>
+    /// <param name="x">The vector to convert.</param>
+    /// <returns>A spherical vector.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static SphericalVector FromCartesian(Vector3<Real> x)
     {
@@ -241,7 +241,7 @@ public struct SphericalVector : IVector<SphericalVector, Real>
     public readonly SphericalVector Normalize() => new(Real.One, Theta, Phi);
 
     /// <summary>Convert a vector in spherical coordinates to one in Cartesian coordinates.</summary>
-    /// <returns>A vector in Cartesian coordinates</returns>
+    /// <returns>A vector in Cartesian coordinates.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly Vector3<Real> ToCartesian()
     {

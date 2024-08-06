@@ -32,25 +32,25 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor of four variables for use in forward-mode automatic differentiation</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TI">An index</typeparam>
+/// <summary>Represents a rank-one tensor of four variables for use in forward-mode automatic differentiation.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TI">An index.</typeparam>
 public record struct AutoDiffTensor4<TDN, TN, TI>
     where TDN : IDual<TDN, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex
 {
-    /// <summary>The zeroth element of the rank-one tensor</summary>
+    /// <summary>The zeroth element of the rank-one tensor.</summary>
     public TDN X0;
 
-    /// <summary>The first element of the rank-one tensor</summary>
+    /// <summary>The first element of the rank-one tensor.</summary>
     public TDN X1;
 
-    /// <summary>The second element of the rank-one tensor</summary>
+    /// <summary>The second element of the rank-one tensor.</summary>
     public TDN X2;
 
-    /// <summary>The third element of the rank-one tensor</summary>
+    /// <summary>The third element of the rank-one tensor.</summary>
     public TDN X3;
 
     public AutoDiffTensor4(TDN x0, TDN x1, TDN x2, TDN x3)

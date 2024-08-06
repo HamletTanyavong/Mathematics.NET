@@ -29,10 +29,10 @@ using Mathematics.NET.Symbolic.Notation.Numbers;
 
 namespace Mathematics.NET.Symbolic.Notation.Numbers
 {
-    /// <summary>A real number notation node</summary>
+    /// <summary>A real number notation node.</summary>
     public class RealNumberNotation : NumberNotation
     {
-        /// <summary>The value of the real number</summary>
+        /// <summary>The value of the real number.</summary>
         public string Value;
 
         public RealNumberNotation(string value) : base(NumberKind.Real)
@@ -47,8 +47,8 @@ namespace Mathematics.NET.Symbolic
     public static partial class NotationFactory
     {
         /// <summary>Create a <see cref="RealNumberNotation"/> instance.</summary>
-        /// <param name="value">The value of the real number</param>
-        /// <returns>A <see cref="RealNumberNotation"/> instance</returns>
+        /// <param name="value">The value of the real number.</param>
+        /// <returns>A <see cref="RealNumberNotation"/> instance.</returns>
         public static RealNumberNotation RealNumber(string value) => new(value);
     }
 }

@@ -34,12 +34,12 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensor or a similar mathematical object</summary>
-/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI1">The first index</typeparam>
-/// <typeparam name="TI2">The second index</typeparam>
-/// <param name="matrix">A backing matrix</param>
+/// <summary>Represents a rank-two tensor or a similar mathematical object.</summary>
+/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI1">The first index.</typeparam>
+/// <typeparam name="TI2">The second index.</typeparam>
+/// <param name="matrix">A backing matrix.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     : IRankTwoTensor<Tensor<TSM, TN, TI1, TI2>, TSM, TN, TI1, TI2>,
@@ -129,9 +129,9 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     //
 
     /// <summary>Reinterpret a reference to this tensor as one with new indices.</summary>
-    /// <typeparam name="TNI1">A new first index</typeparam>
-    /// <typeparam name="TNI2">A new second index</typeparam>
-    /// <returns>A reference to this tensor with new indices</returns>
+    /// <typeparam name="TNI1">A new first index.</typeparam>
+    /// <typeparam name="TNI2">A new second index.</typeparam>
+    /// <returns>A reference to this tensor with new indices.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TSM, TN, TNI1, TNI2> WithIndices<TNI1, TNI2>()
@@ -140,8 +140,8 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
         => ref Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TNI1, TNI2>>(ref this);
 
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the first position.</summary>
-    /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A reference to this tensor with a new index in the first position</returns>
+    /// <typeparam name="TNI">A new index.</typeparam>
+    /// <returns>A reference to this tensor with a new index in the first position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TSM, TN, TNI, TI2> WithIndex1<TNI>()
@@ -149,8 +149,8 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
         => ref Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TNI, TI2>>(ref this);
 
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the second position.</summary>
-    /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A reference to this tensor with a new index in the second position</returns>
+    /// <typeparam name="TNI">A new index.</typeparam>
+    /// <returns>A reference to this tensor with a new index in the second position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TSM, TN, TI1, TNI> WithIndex2<TNI>()

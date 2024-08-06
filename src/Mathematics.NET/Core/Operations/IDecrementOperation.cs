@@ -27,8 +27,8 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines a mechanism for decrementing values</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
+/// <summary>Defines a mechanism for decrementing values.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
 public interface IDecrementOperation<T>
     where T : IDecrementOperation<T>
 {

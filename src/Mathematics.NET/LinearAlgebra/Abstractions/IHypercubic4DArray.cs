@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for 4D hypercubic arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for 4D hypercubic arrays.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IHypercubic4DArray<T, U> : IArray4D<T, U>
     where T : IHypercubic4DArray<T, U>
     where U : IComplex<U>;

@@ -35,7 +35,7 @@ using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>A class containing differential geometry operations</summary>
+/// <summary>A class containing differential geometry operations.</summary>
 public static partial class DifGeo
 {
     //
@@ -46,16 +46,16 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The name of the point index</typeparam>
-    /// <typeparam name="TI1N">The name of the first index of the tensor</typeparam>
-    /// <typeparam name="TI2N">The name of the second index of the tensor</typeparam>
-    /// <typeparam name="TI3N">The name of the third index of the tensor</typeparam>
-    /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="metric">A metric tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="derivative">A rank-three tensor</param>
+    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         MetricTensorField2x2<TT, TN, Index<Upper, TPIN>> metric,
@@ -123,16 +123,16 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The name of the point index</typeparam>
-    /// <typeparam name="TI1N">The name of the first index of the tensor</typeparam>
-    /// <typeparam name="TI2N">The name of the second index of the tensor</typeparam>
-    /// <typeparam name="TI3N">The name of the third index of the tensor</typeparam>
-    /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="metric">A metric tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="derivative">A rank-three tensor</param>
+    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         MetricTensorField2x2<TT, TN, Index<Lower, TPIN>> metric,
@@ -200,18 +200,18 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The name of the point index</typeparam>
-    /// <typeparam name="TI2P">The index position of the second index of the tensor</typeparam>
-    /// <typeparam name="TI3P">The index position of the third index of the tensor</typeparam>
-    /// <typeparam name="TI1N">The name of the first index of the tensor</typeparam>
-    /// <typeparam name="TI2N">The name of the second index of the tensor</typeparam>
-    /// <typeparam name="TI3N">The name of the third index of the tensor</typeparam>
-    /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="tensor">A rank-two tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="derivative">A rank-three tensor</param>
+    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="tensor">A rank-two tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
         TensorField2x2<TT, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
@@ -411,18 +411,18 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative or a rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The name of the point index</typeparam>
-    /// <typeparam name="TI3P">The index position of the third index of the tensor</typeparam>
-    /// <typeparam name="TI4P">The index position of the fourth idex of the tensor</typeparam>
-    /// <typeparam name="TI1N">The name of the first index of the tensor</typeparam>
-    /// <typeparam name="TI2N">The name of the second index of the tensor</typeparam>
-    /// <typeparam name="TI3N">The name of the third index of the tensor</typeparam>
-    /// <typeparam name="TI4N">The name of the fourth index of the tensor</typeparam>
-    /// <param name="tape">A Hessian tape</param>
-    /// <param name="tensor">A rank-two tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="secondDerivative">A rank-four tensor</param>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
+    /// <typeparam name="TI4P">The index position of the fourth idex of the tensor.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index of the tensor.</typeparam>
+    /// <param name="tape">A Hessian tape.</param>
+    /// <param name="tensor">A rank-two tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="secondDerivative">A rank-four tensor.</param>
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
         TensorField2x2<HessianTape<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
@@ -677,16 +677,16 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
-    /// <typeparam name="TI1N">The first index of the Christoffel symbol</typeparam>
-    /// <typeparam name="TI2N">The second index of the Christoffel symbol</typeparam>
-    /// <typeparam name="TI3N">The third index of the Christoffel symbol</typeparam>
-    /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="metric">A metric tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="christoffel">The result</param>
+    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI2N">The second index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI3N">The third index of the Christoffel symbol.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="christoffel">The result.</param>
     public static void Christoffel<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         MetricTensorField2x2<TT, TN, Index<Upper, TPIN>> metric,
@@ -771,16 +771,16 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol</typeparam>
-    /// <typeparam name="TI1N">The first index of the Christoffel symbol</typeparam>
-    /// <typeparam name="TI2N">The second index of the Christoffel symbol</typeparam>
-    /// <typeparam name="TI3N">The third index of the Christoffel symbol</typeparam>
-    /// <param name="tape">A gradient or Hessian tape</param>
-    /// <param name="metric">A metric tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="christoffel">The result</param>
+    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI2N">The second index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI3N">The third index of the Christoffel symbol.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="christoffel">The result.</param>
     public static void Christoffel<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         MetricTensorField2x2<TT, TN, Index<Upper, TPIN>> metric,
@@ -859,16 +859,16 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol</typeparam>
-    /// <typeparam name="TI1N">The name of the first index</typeparam>
-    /// <typeparam name="TI2N">The name of the second index</typeparam>
-    /// <typeparam name="TI3N">The name of the third index</typeparam>
-    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
-    /// <param name="tape">A Hessian tape</param>
-    /// <param name="metric">A metric tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="derivative">The result</param>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index.</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index.</typeparam>
+    /// <param name="tape">A Hessian tape.</param>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The result.</param>
     public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
         MetricTensorField2x2<HessianTape<TN>, TN, Index<Upper, TPIN>> metric,
@@ -962,16 +962,16 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol</typeparam>
-    /// <typeparam name="TI1N">The name of the first index</typeparam>
-    /// <typeparam name="TI2N">The name of the second index</typeparam>
-    /// <typeparam name="TI3N">The name of the third index</typeparam>
-    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
-    /// <param name="tape">A Hessian tape</param>
-    /// <param name="metric">A metric tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="derivative">The result</param>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index.</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index.</typeparam>
+    /// <param name="tape">A Hessian tape.</param>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The result.</param>
     public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
         MetricTensorField2x2<HessianTape<TN>, TN, Index<Upper, TPIN>> metric,
@@ -1087,16 +1087,16 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor</typeparam>
-    /// <typeparam name="TI1N">The name of the first index</typeparam>
-    /// <typeparam name="TI2N">The name of the second index</typeparam>
-    /// <typeparam name="TI3N">The name of the third index</typeparam>
-    /// <typeparam name="TI4N">The name of the fourth index</typeparam>
-    /// <param name="tape">A Hessian tape</param>
-    /// <param name="metric">A metric tensor field</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <param name="riemann">The result</param>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index.</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index.</typeparam>
+    /// <param name="tape">A Hessian tape.</param>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="riemann">The result.</param>
     public static void Riemann<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
         MetricTensorField2x2<HessianTape<TN>, TN, Index<Upper, TPIN>> metric,
@@ -2374,14 +2374,14 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute the tensor product of two rank-one tensors.</summary>
-    /// <typeparam name="TLR1T">A rank-one tensor</typeparam>
-    /// <typeparam name="TRR1T">A rank-one tensor</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="TI1">The index of the first tensor</typeparam>
-    /// <typeparam name="TI2">The index of the second tensor</typeparam>
-    /// <param name="left">The first tensor</param>
-    /// <param name="right">The second tensor</param>
-    /// <returns>A rank-two tensor</returns>
+    /// <typeparam name="TLR1T">A rank-one tensor.</typeparam>
+    /// <typeparam name="TRR1T">A rank-one tensor.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="TI1">The index of the first tensor.</typeparam>
+    /// <typeparam name="TI2">The index of the second tensor.</typeparam>
+    /// <param name="left">The first tensor.</param>
+    /// <param name="right">The second tensor.</param>
+    /// <returns>A rank-two tensor.</returns>
     public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> TensorProduct<TLR1T, TRR1T, TN, TI1, TI2>(in IRankOneTensor<TLR1T, Vector2<TN>, TN, TI1> left, in IRankOneTensor<TRR1T, Vector2<TN>, TN, TI2> right)
         where TLR1T : IRankOneTensor<TLR1T, Vector2<TN>, TN, TI1>
         where TRR1T : IRankOneTensor<TRR1T, Vector2<TN>, TN, TI2>
@@ -2439,15 +2439,15 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the tensor product of a rank-one tensor and a rank-two tensor.</summary>
-    /// <typeparam name="TR1T">A rank-one tensor</typeparam>
-    /// <typeparam name="TR2T">A rank-two tensor</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="TI1">The index of the first tensor</typeparam>
-    /// <typeparam name="TI2">The first index of the second tensor</typeparam>
-    /// <typeparam name="TI3">The second index of the second tensor</typeparam>
-    /// <param name="left">A rank-one tensor</param>
-    /// <param name="right">A rank-two tensor</param>
-    /// <returns>A rank-three tensor</returns>
+    /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
+    /// <typeparam name="TR2T">A rank-two tensor.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="TI1">The index of the first tensor.</typeparam>
+    /// <typeparam name="TI2">The first index of the second tensor.</typeparam>
+    /// <typeparam name="TI3">The second index of the second tensor.</typeparam>
+    /// <param name="left">A rank-one tensor.</param>
+    /// <param name="right">A rank-two tensor.</param>
+    /// <returns>A rank-three tensor.</returns>
     public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> TensorProduct<TR1T, TR2T, TN, TI1, TI2, TI3>(
         in IRankOneTensor<TR1T, Vector2<TN>, TN, TI1> left,
         in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, TI2, TI3> right)
@@ -2523,15 +2523,15 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the tensor product of a rank-two tensor and a rank-one tensor.</summary>
-    /// <typeparam name="TR2T">A rank-two tensor</typeparam>
-    /// <typeparam name="TR1T">A rank-one tensor</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="TI1">The first index of the first tensor</typeparam>
-    /// <typeparam name="TI2">The second index of the second tensor</typeparam>
-    /// <typeparam name="TI3">The index of the second tensor</typeparam>
-    /// <param name="left">A rank-two tensor</param>
-    /// <param name="right">A rank-one tensor</param>
-    /// <returns>A rank-three tensor</returns>
+    /// <typeparam name="TR2T">A rank-two tensor.</typeparam>
+    /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
+    /// <typeparam name="TI2">The second index of the second tensor.</typeparam>
+    /// <typeparam name="TI3">The index of the second tensor.</typeparam>
+    /// <param name="left">A rank-two tensor.</param>
+    /// <param name="right">A rank-one tensor.</param>
+    /// <returns>A rank-three tensor.</returns>
     public static Tensor<Array2x2x2<TN>, TN, TI1, TI2, TI3> TensorProduct<TR2T, TR1T, TN, TI1, TI2, TI3>(
         in IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, TI1, TI2> left,
         in IRankOneTensor<TR1T, Vector2<TN>, TN, TI3> right)
@@ -2607,16 +2607,16 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the tensor product of a rank-one tensor and a rank-three tensor.</summary>
-    /// <typeparam name="TR1T">A rank-one tensor</typeparam>
-    /// <typeparam name="TR3T">A rank-three tensor</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="TI1">The index of the first tensor</typeparam>
-    /// <typeparam name="TI2">The first index of the second tensor</typeparam>
-    /// <typeparam name="TI3">The second index of the second tensor</typeparam>
-    /// <typeparam name="TI4">The third index of the second tensor</typeparam>
-    /// <param name="left">A rank-one tensor</param>
-    /// <param name="right">A rank-three tensor</param>
-    /// <returns>A rank-four tensor</returns>
+    /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
+    /// <typeparam name="TR3T">A rank-three tensor.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="TI1">The index of the first tensor.</typeparam>
+    /// <typeparam name="TI2">The first index of the second tensor.</typeparam>
+    /// <typeparam name="TI3">The second index of the second tensor.</typeparam>
+    /// <typeparam name="TI4">The third index of the second tensor.</typeparam>
+    /// <param name="left">A rank-one tensor.</param>
+    /// <param name="right">A rank-three tensor.</param>
+    /// <returns>A rank-four tensor.</returns>
     public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR1T, TR3T, TN, TI1, TI2, TI3, TI4>(
         in IRankOneTensor<TR1T, Vector2<TN>, TN, TI1> left,
         in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, TI2, TI3, TI4> right)
@@ -2704,16 +2704,16 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the tensor product of a rank-three tensor and a rank-one tensor.</summary>
-    /// <typeparam name="TR3T">A rank-three tensor</typeparam>
-    /// <typeparam name="TR1T">A rank-one tensor</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <typeparam name="TI1">The first index of the first tensor</typeparam>
-    /// <typeparam name="TI2">The second index of the first tensor</typeparam>
-    /// <typeparam name="TI3">The third index of the first tensor</typeparam>
-    /// <typeparam name="TI4">The index of the second tensor</typeparam>
-    /// <param name="left">A rank-three tensor</param>
-    /// <param name="right">A rank-one tensor</param>
-    /// <returns>A rank-four tensor</returns>
+    /// <typeparam name="TR3T">A rank-three tensor.</typeparam>
+    /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
+    /// <typeparam name="TI2">The second index of the first tensor.</typeparam>
+    /// <typeparam name="TI3">The third index of the first tensor.</typeparam>
+    /// <typeparam name="TI4">The index of the second tensor.</typeparam>
+    /// <param name="left">A rank-three tensor.</param>
+    /// <param name="right">A rank-one tensor.</param>
+    /// <returns>A rank-four tensor.</returns>
     public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TR3T, TR1T, TN, TI1, TI2, TI3, TI4>(
         in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, TI1, TI2, TI3> left,
         in IRankOneTensor<TR1T, Vector2<TN>, TN, TI4> right)
@@ -2801,16 +2801,16 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the tensor product of two rank-two tensors.</summary>
-    /// <typeparam name="TLR2T">A rank-two tensors</typeparam>
-    /// <typeparam name="TRR2T">A rank-two tensors</typeparam>
-    /// <typeparam name="TN"></typeparam>
-    /// <typeparam name="TI1">The first index of the first tensor</typeparam>
-    /// <typeparam name="TI2">The second index of the first tensor</typeparam>
-    /// <typeparam name="TI3">The first index of the second tensor</typeparam>
-    /// <typeparam name="TI4">The second index of the second tensor</typeparam>
-    /// <param name="left">A rank-two tensor</param>
-    /// <param name="right">A rank-two tensor</param>
-    /// <returns>A rank-four tensor</returns>
+    /// <typeparam name="TLR2T">A rank-two tensors.</typeparam>
+    /// <typeparam name="TRR2T">A rank-two tensors.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
+    /// <typeparam name="TI2">The second index of the first tensor.</typeparam>
+    /// <typeparam name="TI3">The first index of the second tensor.</typeparam>
+    /// <typeparam name="TI4">The second index of the second tensor.</typeparam>
+    /// <param name="left">A rank-two tensor.</param>
+    /// <param name="right">A rank-two tensor.</param>
+    /// <returns>A rank-four tensor.</returns>
     public static Tensor<Array2x2x2x2<TN>, TN, TI1, TI2, TI3, TI4> TensorProduct<TLR2T, TRR2T, TN, TI1, TI2, TI3, TI4>(
         in IRankTwoTensor<TLR2T, Matrix2x2<TN>, TN, TI1, TI2> left,
         in IRankTwoTensor<TRR2T, Matrix2x2<TN>, TN, TI1, TI2> right)

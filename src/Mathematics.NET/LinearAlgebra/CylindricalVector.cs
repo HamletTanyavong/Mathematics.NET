@@ -33,24 +33,24 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a 3D vector in cylindrical coordinates</summary>
+/// <summary>Represents a 3D vector in cylindrical coordinates.</summary>
 [StructLayout(LayoutKind.Sequential)]
 public struct CylindricalVector : IVector<CylindricalVector, Real>
 {
-    /// <summary>The radial distance</summary>
+    /// <summary>The radial distance.</summary>
     public Real Rho;
 
-    /// <summary>The azimuthal angle</summary>
+    /// <summary>The azimuthal angle.</summary>
     public Real Phi;
 
-    /// <summary>The axial coordinate</summary>
+    /// <summary>The axial coordinate.</summary>
     public Real Z;
 
-    /// <summary>Create a 3D vector in cylindrical coordinates</summary>
-    /// <param name="rho">The radial distance</param>
-    /// <param name="phi">The azimuthal angle</param>
-    /// <param name="z">The axial coordinate</param>
-    /// <exception cref="ArgumentException">Thrown when a negative value is supplied for the radial distance</exception>
+    /// <summary>Create a 3D vector in cylindrical coordinates.</summary>
+    /// <param name="rho">The radial distance.</param>
+    /// <param name="phi">The azimuthal angle.</param>
+    /// <param name="z">The axial coordinate.</param>
+    /// <exception cref="ArgumentException">Thrown when a negative value is supplied for the radial distance.</exception>
     public CylindricalVector(Real rho, Real phi, Real z)
     {
         if (rho < 0)
@@ -195,8 +195,8 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
 
     /// <summary>Convert a vector in cartesian cordinates to one in cylindrical coordinates.</summary>
     /// <remarks>The vector must have real components.</remarks>
-    /// <param name="x">The vector to convert</param>
-    /// <returns>A cylindrical vector</returns>
+    /// <param name="x">The vector to convert.param>
+    /// <returns>A cylindrical vector.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static CylindricalVector FromCartesian(Vector3<Real> x) => new(Real.Hypot(x.X1, x.X2), Real.Atan2(x.X2, x.X1), x.X3);
 
@@ -212,7 +212,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     }
 
     /// <summary>Convert a vector in cylindrical coordinates to one in Cartesian coordinates.</summary>
-    /// <returns>A vector in Cylindrical coordinates</returns>
+    /// <returns>A vector in Cylindrical coordinates.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public readonly Vector3<Real> ToCartesian() => new(Rho * Real.Cos(Phi), Rho * Real.Sin(Phi), Z);
 }

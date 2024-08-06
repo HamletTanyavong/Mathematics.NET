@@ -29,13 +29,13 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-three tensors and similar mathematical objects</summary>
-/// <typeparam name="TR3T">The type that implements the interface</typeparam>
-/// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI1">An index</typeparam>
-/// <typeparam name="TI2">An index</typeparam>
-/// <typeparam name="TI3">An index</typeparam>
+/// <summary>Defines support for rank-three tensors and similar mathematical objects.</summary>
+/// <typeparam name="TR3T">The type that implements the interface.</typeparam>
+/// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI1">An index.</typeparam>
+/// <typeparam name="TI2">An index.</typeparam>
+/// <typeparam name="TI3">An index.</typeparam>
 public interface IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3> : IThreeDimensionalArrayRepresentable<TR3T, TN>
     where TR3T : IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3>
     where TCA : ICubicArray<TCA, TN>
@@ -44,16 +44,16 @@ public interface IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3> : IThreeDimensio
     where TI2 : IIndex
     where TI3 : IIndex
 {
-    /// <summary>The first index</summary>
+    /// <summary>The first index.</summary>
     IIndex I1 { get; }
 
-    /// <summary>The second index</summary>
+    /// <summary>The second index.</summary>
     IIndex I2 { get; }
 
-    /// <summary>The third index</summary>
+    /// <summary>The third index.</summary>
     IIndex I3 { get; }
 
-    /// <summary>Convert a value that implements <see cref="ICubicArray{T, U}"/></summary>
-    /// <param name="value">The value to convert</param>
+    /// <summary>Convert a value that implements <see cref="ICubicArray{T, U}"/>.</summary>
+    /// <param name="value">The value to convert.</param>
     static abstract implicit operator TR3T(TCA value);
 }

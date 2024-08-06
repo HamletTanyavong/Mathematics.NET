@@ -66,8 +66,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Represents a gradient tape</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <summary>Represents a gradient tape.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 public record class GradientTape<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
@@ -632,10 +632,10 @@ public record class GradientTape<T> : ITape<T>
     //
 
     /// <summary>Add a node to the gradient tape using a custom unary operation.</summary>
-    /// <param name="x">A variable</param>
-    /// <param name="f">A function</param>
-    /// <param name="df">The derivative of the function</param>
-    /// <returns>A variable</returns>
+    /// <param name="x">A variable.</param>
+    /// <param name="f">A function.</param>
+    /// <param name="df">The derivative of the function.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> CustomOperation(Variable<T> x, Func<T, T> f, Func<T, T> df)
     {
         if (_isTracking)
@@ -647,12 +647,12 @@ public record class GradientTape<T> : ITape<T>
     }
 
     /// <summary>Add a node to the gradient tape using a custom binary operation.</summary>
-    /// <param name="x">The first variable</param>
-    /// <param name="y">The second variable</param>
-    /// <param name="f">A function</param>
-    /// <param name="dfx">The derivative of the function with respect to the first variable</param>
-    /// <param name="dfy">The derivative of the function with respect to the second variable</param>
-    /// <returns>A variable</returns>
+    /// <param name="x">The first variable.</param>
+    /// <param name="y">The second variable.</param>
+    /// <param name="f">A function.</param>
+    /// <param name="dfx">The derivative of the function with respect to the first variable.</param>
+    /// <param name="dfy">The derivative of the function with respect to the second variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> CustomOperation(Variable<T> x, Variable<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
     {
         if (_isTracking)

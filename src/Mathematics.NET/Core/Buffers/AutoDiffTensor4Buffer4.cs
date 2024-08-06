@@ -34,10 +34,10 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.Core.Buffers;
 
-/// <summary>Represents a buffer of 4 AutoDiffTensor4 delegates</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TPI">The index of the point on the manifold</typeparam>
+/// <summary>Represents a buffer of 4 AutoDiffTensor4 delegates.</summary>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
 [InlineArray(4)]
 internal struct AutoDiffTensor4Buffer4<TT, TN, TPI>
     where TT : ITape<TN>

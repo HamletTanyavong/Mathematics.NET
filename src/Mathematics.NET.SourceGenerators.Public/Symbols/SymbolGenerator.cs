@@ -31,7 +31,7 @@ using Mathematics.NET.SourceGenerators.Public.Models;
 
 namespace Mathematics.NET.SourceGenerators.Public.Symbols;
 
-/// <summary>A generator for mathematical symbols</summary>
+/// <summary>A generator for mathematical symbols.</summary>
 [Generator]
 public sealed class SymbolGenerator : IIncrementalGenerator
 {

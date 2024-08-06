@@ -47,7 +47,7 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 //     // code
 // }
 
-/// <summary>Tensor contractions builder</summary>
+/// <summary>Tensor contractions builder.</summary>
 internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 {
     public TensorContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)

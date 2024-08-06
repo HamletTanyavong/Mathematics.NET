@@ -31,12 +31,12 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators;
 
-/// <summary>Extension methods for source generators</summary>
+/// <summary>Extension methods for source generators.</summary>
 internal static class Extensions
 {
     /// <summary>Create a name syntax from a namespace.</summary>
-    /// <param name="namespaceString">A string representing a namespace</param>
-    /// <returns>A name syntax</returns>
+    /// <param name="namespaceString">A string representing a namespace.</param>
+    /// <returns>A name syntax.</returns>
     public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceString)
     {
         Debug.Assert(!namespaceString.Contains(' '), "The namespace string must not contain any spaces.");
@@ -52,9 +52,9 @@ internal static class Extensions
     }
 
     /// <summary>Remove an attribute from a method declaration syntax.</summary>
-    /// <param name="methodDeclarationSyntax">A method declaration syntax</param>
-    /// <param name="attributeName">The name of the attribute</param>
-    /// <returns>A method declaration syntax without the specified attribute</returns>
+    /// <param name="methodDeclarationSyntax">A method declaration syntax.</param>
+    /// <param name="attributeName">The name of the attribute.</param>
+    /// <returns>A method declaration syntax without the specified attribute.</returns>
     public static MethodDeclarationSyntax RemoveAttribute(this MethodDeclarationSyntax methodDeclarationSyntax, string attributeName)
     {
         if (attributeName.EndsWith("Attribute"))
@@ -81,8 +81,8 @@ internal static class Extensions
     //
 
     /// <summary>Get the parameter list from a member declaration syntax.</summary>
-    /// <param name="memberDeclaration">A member declaration syntax</param>
-    /// <returns>A parameter list syntax</returns>
+    /// <param name="memberDeclaration">A member declaration syntax.</param>
+    /// <returns>A parameter list syntax.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ParameterListSyntax? ParameterList(this MemberDeclarationSyntax memberDeclaration)
     {
@@ -93,8 +93,8 @@ internal static class Extensions
     }
 
     /// <summary>Get the value of the last identifier name in a name syntax.</summary>
-    /// <param name="name">A type that derives from name syntax</param>
-    /// <returns>The value of the name syntax</returns>
+    /// <param name="name">A type that derives from name syntax.</param>
+    /// <returns>The value of the name syntax.</returns>
     public static string? GetLastIdentifierNameValueOrDefault(this NameSyntax name)
     {
         return name switch
@@ -106,8 +106,8 @@ internal static class Extensions
     }
 
     /// <summary>Get the type argument list from a parameter syntax.</summary>
-    /// <param name="parameter">A parameter syntax</param>
-    /// <returns>A type argument list syntax</returns>
+    /// <param name="parameter">A parameter syntax.</param>
+    /// <returns>A type argument list syntax.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TypeArgumentListSyntax? TypeArgumentList(this ParameterSyntax parameter)
     {

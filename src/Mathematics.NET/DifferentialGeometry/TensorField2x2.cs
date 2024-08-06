@@ -34,12 +34,12 @@ using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensor field with 4 elements</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TI1P">The position of the first index of the tensor</typeparam>
-/// <typeparam name="TI2P">The position of the second index of the tensor</typeparam>
-/// <typeparam name="TPI">The index of the point on the manifold</typeparam>
+/// <summary>Represents a rank-two tensor field with 4 elements.</summary>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
+/// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
 public class TensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
@@ -61,11 +61,11 @@ public class TensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     }
 
     /// <summary>Compute the value of the tensor at a specific point on the manifold.</summary>
-    /// <typeparam name="TI1N">The name of the first index</typeparam>
-    /// <typeparam name="TI2N">The name of the second index</typeparam>
-    /// <param name="tape">A gradient or Hessian Tape</param>
-    /// <param name="point">A point on the manifold</param>
-    /// <returns>A rank-two tensor</returns>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <returns>A rank-two tensor.</returns>
     public Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
         where TI1N : ISymbol
         where TI2N : ISymbol

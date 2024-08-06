@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines a mechanism for negating values</summary>
-/// <typeparam name="TInput">The input type</typeparam>
-/// <typeparam name="TResult">The output type</typeparam>
+/// <summary>Defines a mechanism for negating values.</summary>
+/// <typeparam name="TInput">The input type.</typeparam>
+/// <typeparam name="TResult">The output type.</typeparam>
 public interface IUnaryMinusOperation<TInput, TResult>
     where TInput : IUnaryMinusOperation<TInput, TResult>
 {

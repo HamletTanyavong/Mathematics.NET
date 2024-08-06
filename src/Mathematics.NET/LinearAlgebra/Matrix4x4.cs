@@ -34,8 +34,8 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a 4x4 matrix</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a 4x4 matrix.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     where T : IComplex<T>
@@ -53,23 +53,23 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     public Vector4<T> X3;
     public Vector4<T> X4;
 
-    /// <summary>Create a 4x4 matrix given a set of 16 values</summary>
-    /// <param name="e11">The $ e_{11} $ component</param>
-    /// <param name="e12">The $ e_{12} $ component</param>
-    /// <param name="e13">The $ e_{13} $ component</param>
-    /// <param name="e14">The $ e_{14} $ component</param>
-    /// <param name="e21">The $ e_{21} $ component</param>
-    /// <param name="e22">The $ e_{22} $ component</param>
-    /// <param name="e23">The $ e_{23} $ component</param>
-    /// <param name="e24">The $ e_{24} $ component</param>
-    /// <param name="e31">The $ e_{31} $ component</param>
-    /// <param name="e32">The $ e_{32} $ component</param>
-    /// <param name="e33">The $ e_{33} $ component</param>
-    /// <param name="e34">The $ e_{34} $ component</param>
-    /// <param name="e41">The $ e_{41} $ component</param>
-    /// <param name="e42">The $ e_{42} $ component</param>
-    /// <param name="e43">The $ e_{43} $ component</param>
-    /// <param name="e44">The $ e_{44} $ component</param>
+    /// <summary>Create a 4x4 matrix given a set of 16 values.</summary>
+    /// <param name="e11">The $ e_{11} $ component.</param>
+    /// <param name="e12">The $ e_{12} $ component.</param>
+    /// <param name="e13">The $ e_{13} $ component.</param>
+    /// <param name="e14">The $ e_{14} $ component.</param>
+    /// <param name="e21">The $ e_{21} $ component.</param>
+    /// <param name="e22">The $ e_{22} $ component.</param>
+    /// <param name="e23">The $ e_{23} $ component.</param>
+    /// <param name="e24">The $ e_{24} $ component.</param>
+    /// <param name="e31">The $ e_{31} $ component.</param>
+    /// <param name="e32">The $ e_{32} $ component.</param>
+    /// <param name="e33">The $ e_{33} $ component.</param>
+    /// <param name="e34">The $ e_{34} $ component.</param>
+    /// <param name="e41">The $ e_{41} $ component.</param>
+    /// <param name="e42">The $ e_{42} $ component.</param>
+    /// <param name="e43">The $ e_{43} $ component.</param>
+    /// <param name="e44">The $ e_{44} $ component.</param>
     public Matrix4x4(
         T e11, T e12, T e13, T e14,
         T e21, T e22, T e23, T e24,
@@ -242,11 +242,11 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     //
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
-    /// <param name="e11">The $ e_{11} $ component</param>
-    /// <param name="e22">The $ e_{22} $ component</param>
-    /// <param name="e33">The $ e_{33} $ component</param>
-    /// <param name="e44">The $ e_{44} $ component</param>
-    /// <returns>A diagonal matrix</returns>
+    /// <param name="e11">The $ e_{11} $ component.</param>
+    /// <param name="e22">The $ e_{22} $ component.</param>
+    /// <param name="e33">The $ e_{33} $ component.</param>
+    /// <param name="e44">The $ e_{44} $ component.</param>
+    /// <returns>A diagonal matrix.</returns>
     public static Matrix4x4<T> CreateDiagonal(T e11, T e22, T e33, T e44)
     {
         return new(

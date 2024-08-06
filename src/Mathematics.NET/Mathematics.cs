@@ -31,9 +31,9 @@ using Complex = Mathematics.NET.Core.Complex;
 
 namespace Mathematics.NET;
 
-/// <summary>Provides Mathematics.NET functionality</summary>
+/// <summary>Provides Mathematics.NET functionality.</summary>
 /// <remarks>
-/// This class contains constants and static methods for general mathematical purposes. Complicated mathematical operations may be found in their respective classes, and a list of all available operations can be found in the <see href="https://mathematics.hamlettanyavong.com/api/index.html">documentation</see>.
+/// This class contains constants and static methods for general mathematical purposes. Complicated mathematical operations may be found in their respective classes, and a list of all available operations can be found in the <see href="https://mathematics.hamlettanyavong.com/api/index.html">documentation.</see>.
 /// </remarks>
 public static class Mathematics
 {
@@ -41,7 +41,7 @@ public static class Mathematics
     // Constants
     //
 
-    /// <summary>Represents the imaginary unit, $ i $</summary>
+    /// <summary>Represents the imaginary unit, $ i $.</summary>
     public static Complex Im => new(Real.Zero, Real.One);
 
     /// <inheritdoc cref="Constants.E"/>
@@ -95,10 +95,10 @@ public static class Mathematics
 
     // Integer-related
 
-    /// <summary>The binomial coefficient</summary>
-    /// <param name="n">A total of <paramref name="n"/> elements</param>
-    /// <param name="k">An unordered subset of <paramref name="k"/> elements</param>
-    /// <returns><paramref name="n"/> choose <paramref name="k"/></returns>
+    /// <summary>The binomial coefficient.</summary>
+    /// <param name="n">A total of <paramref name="n"/> elements.</param>
+    /// <param name="k">An unordered subset of <paramref name="k"/> elements.</param>
+    /// <returns><paramref name="n"/> choose <paramref name="k"/>.</returns>
     public static Real Binomial(uint n, uint k)
     {
         var result = 1.0;
@@ -109,14 +109,14 @@ public static class Mathematics
         return result;
     }
 
-    /// <summary>The binomial coefficient</summary>
+    /// <summary>The binomial coefficient.</summary>
     /// <remarks>This method works with <c>BigInteger</c>. Be aware that this method may take a long time.</remarks>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
-    /// <param name="n">A total of <paramref name="n"/> elements</param>
-    /// <param name="k">An unordered subset of <paramref name="k"/> elements</param>
-    /// <param name="cancellationToken">A cancellation token</param>
-    /// <returns><paramref name="n"/> choose <paramref name="k"/></returns>
-    /// <exception cref="OverflowException"></exception>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="n">A total of <paramref name="n"/> elements.</param>
+    /// <param name="k">An unordered subset of <paramref name="k"/> elements.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns><paramref name="n"/> choose <paramref name="k"/>.</returns>
+    /// <exception cref="OverflowException">.</exception>
     public static T Binomial<T>(T n, T k, CancellationToken cancellationToken)
         where T : IBinaryInteger<T>
     {
@@ -142,10 +142,10 @@ public static class Mathematics
     }
 
     /// <summary>Compute the greatest common divisor of two integers.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
-    /// <param name="p">An integer</param>
-    /// <param name="q">An integer</param>
-    /// <returns>The GCD of the two values</returns>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="p">An integer.</param>
+    /// <param name="q">An integer.</param>
+    /// <returns>The GCD of the two values.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T GCD<T>(T p, T q)
         where T : IBinaryInteger<T>
@@ -166,11 +166,11 @@ public static class Mathematics
         return p | q;
     }
 
-    /// <summary>The multinomial coefficient</summary>
-    /// <param name="span">A read-only span of positive integers</param>
-    /// <param name="cancellationToken">A cancellation token</param>
-    /// <returns>The coefficient associated with a term with powers given by <paramref name="span"/></returns>
-    /// <exception cref="OverflowException"></exception>
+    /// <summary>The multinomial coefficient.</summary>
+    /// <param name="span">A read-only span of positive integers.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>The coefficient associated with a term with powers given by <paramref name="span"/>.</returns>
+    /// <exception cref="OverflowException">.</exception>
     public static T Multinomial<T>(ReadOnlySpan<T> span, CancellationToken cancellationToken)
         where T : IBinaryInteger<T>
     {

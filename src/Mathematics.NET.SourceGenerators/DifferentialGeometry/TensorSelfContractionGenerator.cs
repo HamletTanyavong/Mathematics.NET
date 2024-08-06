@@ -30,7 +30,7 @@ using System.Text;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A generator for tensor self-contractions</summary>
+/// <summary>A generator for tensor self-contractions.</summary>
 [Generator]
 public sealed class TensorSelfContractionGenerator : IIncrementalGenerator
 {

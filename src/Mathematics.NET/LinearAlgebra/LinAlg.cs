@@ -33,14 +33,14 @@ using Mathematics.NET.Core.ParallelActions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>A class containing linear algebra operations</summary>
+/// <summary>A class containing linear algebra operations.</summary>
 public static class LinAlg
 {
-    /// <summary>Compute the eigenvalues of a matrix using a QR decomposition method</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="matrix">A matrix</param>
-    /// <param name="method">A QR decomposition method</param>
-    /// <returns>The eigenvalues of the given matrix</returns>
+    /// <summary>Compute the eigenvalues of a matrix using a QR decomposition method.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="matrix">A matrix.</param>
+    /// <param name="method">A QR decomposition method.</param>
+    /// <returns>The eigenvalues of the given matrix.</returns>
     /// <example>
     /// Suppose we want to find the eigenvalues of a 2x2 matrix. We can write the following to get them:
     /// <code language="cs">
@@ -77,12 +77,12 @@ public static class LinAlg
         return result;
     }
 
-    /// <summary>Multiply two matrices</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="left">The left matrix</param>
-    /// <param name="right">The right matrix</param>
-    /// <returns>The result of the operation if the dimensions of the matrices are valid; otherwise, throw an exception</returns>
-    /// <exception cref="ArgumentException">Cannot multiply matrices of incompatible dimensions</exception>
+    /// <summary>Multiply two matrices.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="left">The left matrix.</param>
+    /// <param name="right">The right matrix.</param>
+    /// <returns>The result of the operation if the dimensions of the matrices are valid; otherwise, throw an exception.</returns>
+    /// <exception cref="ArgumentException">Cannot multiply matrices of incompatible dimensions.</exception>
     public static Span2D<T> MatMul<T>(Span2D<T> left, Span2D<T> right)
         where T : IComplex<T>
     {
@@ -105,10 +105,10 @@ public static class LinAlg
         return result;
     }
 
-    /// <summary>Multiply a matrix by a scalar in parallel</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="scalar">A scalar</param>
-    /// <param name="matrix">A matrix</param>
+    /// <summary>Multiply a matrix by a scalar in parallel.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="scalar">A scalar.</param>
+    /// <param name="matrix">A matrix.</param>
     /// <remarks>This process overwrites the original matrix.</remarks>
     public static void MatMulByScalarParallel<T>(T scalar, Memory2D<T> matrix)
         where T : IComplex<T>
@@ -149,20 +149,20 @@ public static class LinAlg
         return max * Real.Sqrt(partialSum);
     }
 
-    /// <summary>Encapsulates a QR decomposition method with one input and two out parameters</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="matrix">An input matrix</param>
-    /// <param name="Q">The resulting orthogonal matrix</param>
-    /// <param name="R">The resulting upper triangular matrix</param>
+    /// <summary>Encapsulates a QR decomposition method with one input and two out parameters.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="matrix">An input matrix.</param>
+    /// <param name="Q">The resulting orthogonal matrix.</param>
+    /// <param name="R">The resulting upper triangular matrix.</param>
     public delegate void QRDecompositionMethod<T>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
         where T : IComplex<T>;
 
-    /// <summary>Perform QR decomposition on a matrix using the modified Gram-Schmidt process</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="matrix">An input matrix</param>
-    /// <param name="Q">The resulting orthogonal matrix</param>
-    /// <param name="R">The resulting upper triangular matrix</param>
-    /// <exception cref="DivideByZeroException">One of the columns is not linearly independent from one or more of the others</exception>
+    /// <summary>Perform QR decomposition on a matrix using the modified Gram-Schmidt process.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="matrix">An input matrix.</param>
+    /// <param name="Q">The resulting orthogonal matrix.</param>
+    /// <param name="R">The resulting upper triangular matrix.</param>
+    /// <exception cref="DivideByZeroException">One of the columns is not linearly independent from one or more of the others.</exception>
     public static void QRGramSchmidt<T>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
         where T : IComplex<T>
     {

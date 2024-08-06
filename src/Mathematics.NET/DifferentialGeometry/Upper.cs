@@ -29,7 +29,7 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents an upper index position</summary>
+/// <summary>Represents an upper index position.</summary>
 public readonly struct Upper : IIndexPosition
 {
     /// <inheritdoc cref="IIndexPosition.DisplayString"/>

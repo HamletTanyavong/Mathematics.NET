@@ -34,64 +34,64 @@ using Mathematics.NET.AutoDiff;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>A class containing linear algebra extension methods</summary>
+/// <summary>A class containing linear algebra extension methods.</summary>
 public static class LinAlgExtensions
 {
     //
     // Casts and reinterprets
     //
 
-    /// <summary>Reinterprets a <see cref="Matrix2x2{T}"/> as a new <see cref="Span2D{T}"/></summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="matrix">The matrix to reinterpret</param>
-    /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/></returns>
+    /// <summary>Reinterprets a <see cref="Matrix2x2{T}"/> as a new <see cref="Span2D{T}"/>.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="matrix">The matrix to reinterpret.</param>
+    /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(ref this Matrix2x2<T> matrix)
         where T : IComplex<T>
         => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix2x2<T>.E1Components, Matrix2x2<T>.E2Components, 0);
 
-    /// <summary>Reinterprets a <see cref="Matrix3x3{T}"/> as a new <see cref="Span2D{T}"/></summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="matrix">The matrix to reinterpret</param>
-    /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/></returns>
+    /// <summary>Reinterprets a <see cref="Matrix3x3{T}"/> as a new <see cref="Span2D{T}"/>.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="matrix">The matrix to reinterpret.</param>
+    /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(ref this Matrix3x3<T> matrix)
         where T : IComplex<T>
         => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix3x3<T>.E1Components, Matrix3x3<T>.E2Components, 0);
 
-    /// <summary>Reinterprets a <see cref="Matrix4x4{T}"/> as a new <see cref="Span2D{T}"/></summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="matrix">The matrix to reinterpret</param>
-    /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/></returns>
+    /// <summary>Reinterprets a <see cref="Matrix4x4{T}"/> as a new <see cref="Span2D{T}"/>.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="matrix">The matrix to reinterpret.</param>
+    /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(ref this Matrix4x4<T> matrix)
         where T : IComplex<T>
         => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
 
-    /// <summary>Reinterprets a <see cref="Vector4{Real}"/> as a new <see cref="Vector256{Double}"/></summary>
-    /// <param name="value">The vector to reinterpret</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector256{Double}"/></returns>
+    /// <summary>Reinterprets a <see cref="Vector4{Real}"/> as a new <see cref="Vector256{Double}"/>.</summary>
+    /// <param name="value">The vector to reinterpret.</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector256{Double}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector256<double> AsVector256(this Vector4<Real> value)
         => Unsafe.As<Vector4<Real>, Vector256<double>>(ref value);
 
-    /// <summary>Reinterprets a <see cref="Vector256{Real}"/> as a new <see cref="Vector4{Real}"/></summary>
-    /// <param name="value">The vector to reinterpret</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector4{Real}"/></returns>
+    /// <summary>Reinterprets a <see cref="Vector256{Real}"/> as a new <see cref="Vector4{Real}"/>.</summary>
+    /// <param name="value">The vector to reinterpret.</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector4{Real}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<Real> AsVector4(this Vector256<double> value)
         => Unsafe.As<Vector256<double>, Vector4<Real>>(ref value);
 
-    /// <summary>Reinterprets a <see cref="Vector512{Real}"/> as a new <see cref="Vector4{Complex}"/></summary>
-    /// <param name="value">The vector to reinterpret</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector4{Complex}"/></returns>
+    /// <summary>Reinterprets a <see cref="Vector512{Real}"/> as a new <see cref="Vector4{Complex}"/>.</summary>
+    /// <param name="value">The vector to reinterpret.</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector4{Complex}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<Complex> AsVector4(this Vector512<double> value)
         => Unsafe.As<Vector512<double>, Vector4<Complex>>(ref value);
 
-    /// <summary>Reinterprets a <see cref="Vector4{Complex}"/> as a new <see cref="Vector512{Double}"/></summary>
-    /// <param name="value">The vector to reinterpret</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector512{Double}"/></returns>
+    /// <summary>Reinterprets a <see cref="Vector4{Complex}"/> as a new <see cref="Vector512{Double}"/>.</summary>
+    /// <param name="value">The vector to reinterpret.</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Vector512{Double}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector512<double> AsVector512(this Vector4<Complex> value)
         => Unsafe.As<Vector4<Complex>, Vector512<double>>(ref value);
@@ -124,61 +124,61 @@ public static class LinAlgExtensions
     //
 
     /// <summary>Create an autodiff vector from a seed vector.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x">A vector of seed values</param>
-    /// <returns>A variable vector of length two</returns>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/>.</param>
+    /// <param name="x">A vector of seed values.</param>
+    /// <returns>A variable vector of length two.</returns>
     public static AutoDiffVector2<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector2<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2));
 
     /// <summary>Create an autodiff vector from seed values.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x1Seed">The first seed value</param>
-    /// <param name="x2Seed">The second seed value</param>
-    /// <returns>A variable vector of length two</returns>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/>.</param>
+    /// <param name="x1Seed">The first seed value.</param>
+    /// <param name="x2Seed">The second seed value.</param>
+    /// <returns>A variable vector of length two.</returns>
     public static AutoDiffVector2<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed));
 
     /// <summary>Create an autodiff vector from a seed vector.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x">A vector of seed values</param>
-    /// <returns>A variable vector of length three</returns>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/>.</param>
+    /// <param name="x">A vector of seed values.</param>
+    /// <returns>A variable vector of length three.</returns>
     public static AutoDiffVector3<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector3<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3));
 
     /// <summary>Create an autodiff vector from seed values.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x1Seed">The first seed value</param>
-    /// <param name="x2Seed">The second seed value</param>
-    /// <param name="x3Seed">The third seed value</param>
-    /// <returns>A variable vector of length three</returns>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/>.</param>
+    /// <param name="x1Seed">The first seed value.</param>
+    /// <param name="x2Seed">The second seed value.</param>
+    /// <param name="x3Seed">The third seed value.</param>
+    /// <returns>A variable vector of length three.</returns>
     public static AutoDiffVector3<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed));
 
     /// <summary>Create an autodiff vector from a seed vector.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x">A vector of seed values</param>
-    /// <returns>A variable vector of length four</returns>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/>.</param>
+    /// <param name="x">A vector of seed values.</param>
+    /// <returns>A variable vector of length four.</returns>
     public static AutoDiffVector4<T> CreateAutoDiffVector<T>(this ITape<T> tape, Vector4<T> x)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x.X1), tape.CreateVariable(x.X2), tape.CreateVariable(x.X3), tape.CreateVariable(x.X4));
 
     /// <summary>Create an autodiff vector from seed values.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-    /// <param name="tape">A type that implements <see cref="ITape{T}"/></param>
-    /// <param name="x1Seed">The first seed value</param>
-    /// <param name="x2Seed">The second seed value</param>
-    /// <param name="x3Seed">The third seed value</param>
-    /// <param name="x4Seed">The fourth seed value</param>
-    /// <returns>A variable vector of length four</returns>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <param name="tape">A type that implements <see cref="ITape{T}"/>.</param>
+    /// <param name="x1Seed">The first seed value.</param>
+    /// <param name="x2Seed">The second seed value.</param>
+    /// <param name="x3Seed">The third seed value.</param>
+    /// <param name="x4Seed">The fourth seed value.</param>
+    /// <returns>A variable vector of length four.</returns>
     public static AutoDiffVector4<T> CreateAutoDiffVector<T>(this ITape<T> tape, T x1Seed, T x2Seed, T x3Seed, T x4Seed)
         where T : IComplex<T>, IDifferentiableFunctions<T>
         => new(tape.CreateVariable(x1Seed), tape.CreateVariable(x2Seed), tape.CreateVariable(x3Seed), tape.CreateVariable(x4Seed));
@@ -187,12 +187,12 @@ public static class LinAlgExtensions
     // Formatting
     //
 
-    /// <summary>Get the string representation of this <see cref="ReadOnlySpan{T}"/> object</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="readOnlySpan">The read-only span to format</param>
-    /// <param name="format">The format to use</param>
-    /// <param name="provider">The provider to use to format the value</param>
-    /// <returns>A string representation of this object</returns>
+    /// <summary>Get the string representation of this <see cref="ReadOnlySpan{T}"/> object.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="readOnlySpan">The read-only span to format.</param>
+    /// <param name="format">The format to use.</param>
+    /// <param name="provider">The provider to use to format the value.</param>
+    /// <returns>A string representation of this object.</returns>
     public static string ToDisplayString<T>(this ReadOnlySpan<T> readOnlySpan, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
@@ -201,12 +201,12 @@ public static class LinAlgExtensions
         return span.ToDisplayString(format, provider);
     }
 
-    /// <summary>Get the string representation of this <see cref="Span{T}"/> object</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="span">The span to format</param>
-    /// <param name="format">The format to use</param>
-    /// <param name="provider">The provider to use to format the value</param>
-    /// <returns>A string representation of this object</returns>
+    /// <summary>Get the string representation of this <see cref="Span{T}"/> object.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="span">The span to format.</param>
+    /// <param name="format">The format to use.</param>
+    /// <param name="provider">The provider to use to format the value.</param>
+    /// <returns>A string representation of this object.</returns>
     public static string ToDisplayString<T>(this Span<T> span, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
@@ -236,12 +236,12 @@ public static class LinAlgExtensions
         return string.Format(provider, builder.ToString());
     }
 
-    /// <summary>Get the string representation of this <see cref="ReadOnlySpan2D{T}"/></summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="readOnlySpan2D">A 2D read-only span to format</param>
-    /// <param name="format">The format to use</param>
-    /// <param name="provider">The provider to use to format the value</param>
-    /// <returns>A string representation of this object</returns>
+    /// <summary>Get the string representation of this <see cref="ReadOnlySpan2D{T}"/>.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="readOnlySpan2D">A 2D read-only span to format.</param>
+    /// <param name="format">The format to use.</param>
+    /// <param name="provider">The provider to use to format the value.</param>
+    /// <returns>A string representation of this object.</returns>
     public static string ToDisplayString<T>(this ReadOnlySpan2D<T> readOnlySpan2D, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
@@ -250,12 +250,12 @@ public static class LinAlgExtensions
         return span.ToDisplayString(format, provider);
     }
 
-    /// <summary>Get the string representation of this <see cref="Span2D{T}"/> object</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="span2D">The span to format</param>
-    /// <param name="format">The format to use</param>
-    /// <param name="provider">The provider to use to format the value</param>
-    /// <returns>A string representation of this object</returns>
+    /// <summary>Get the string representation of this <see cref="Span2D{T}"/> object.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="span2D">The span to format.</param>
+    /// <param name="format">The format to use.</param>
+    /// <param name="provider">The provider to use to format the value.</param>
+    /// <returns>A string representation of this object.</returns>
     public static string ToDisplayString<T>(this Span2D<T> span2D, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
@@ -295,12 +295,12 @@ public static class LinAlgExtensions
         return string.Format(provider, builder.ToString());
     }
 
-    /// <summary>Get the string representation of this <see cref="Array"/> object</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="array">An array to format</param>
-    /// <param name="format">The format to use</param>
-    /// <param name="provider">The provider to use to format the value</param>
-    /// <returns>A string representation of this object</returns>
+    /// <summary>Get the string representation of this <see cref="Array"/> object.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="array">An array to format.</param>
+    /// <param name="format">The format to use.</param>
+    /// <param name="provider">The provider to use to format the value.</param>
+    /// <returns>A string representation of this object.</returns>
     public static string ToDisplayString<T>(this T[,,] array, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
@@ -349,12 +349,12 @@ public static class LinAlgExtensions
         return string.Format(provider, builder.ToString());
     }
 
-    /// <summary>Get the string representation of this <see cref="Array"/></summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-    /// <param name="array">An array to format</param>
-    /// <param name="format">The format to use</param>
-    /// <param name="provider">The provider to use to format the value</param>
-    /// <returns>A string representation of this object</returns>
+    /// <summary>Get the string representation of this <see cref="Array"/>.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="array">An array to format.</param>
+    /// <param name="format">The format to use.</param>
+    /// <param name="provider">The provider to use to format the value.</param>
+    /// <returns>A string representation of this object.</returns>
     public static string ToDisplayString<T>(this T[,,,] array, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {

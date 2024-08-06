@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Relations;
 
-/// <summary>Defines a mechanism for ordering values</summary>
-/// <typeparam name="TSelf">The type that implements the interface</typeparam>
-/// <typeparam name="TResult">The result type</typeparam>
+/// <summary>Defines a mechanism for ordering values.</summary>
+/// <typeparam name="TSelf">The type that implements the interface.</typeparam>
+/// <typeparam name="TResult">The result type.</typeparam>
 public interface IInequalityRelations<TSelf, TResult>
     where TSelf : IInequalityRelations<TSelf, TResult>
 {

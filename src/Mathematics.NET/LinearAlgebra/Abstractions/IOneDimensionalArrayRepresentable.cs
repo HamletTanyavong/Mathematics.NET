@@ -27,20 +27,20 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IOneDimensionalArrayRepresentable<T, U>
     : IArrayRepresentable<T, U>,
       IFormattable
     where T : IOneDimensionalArrayRepresentable<T, U>
     where U : IComplex<U>
 {
-    /// <summary>The number of components in the one-dimensional array</summary>
+    /// <summary>The number of components in the one-dimensional array.</summary>
     static abstract int E1Components { get; }
 
     /// <summary>Get the element at the specified index.</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
+    /// <param name="index">An index.</param>
+    /// <returns>The element at the index.</returns>
     U this[int index] { get; set; }
 }

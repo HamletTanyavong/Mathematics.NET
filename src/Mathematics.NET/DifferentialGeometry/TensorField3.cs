@@ -32,11 +32,11 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor field with three elements</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TIP">An index position</typeparam>
-/// <typeparam name="TPI">An index</typeparam>
+/// <summary>Represents a rank-one tensor field with three elements.</summary>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TIP">An index position.</typeparam>
+/// <typeparam name="TPI">An index.</typeparam>
 public class TensorField3<TT, TN, TIP, TPI> : TensorField<TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>

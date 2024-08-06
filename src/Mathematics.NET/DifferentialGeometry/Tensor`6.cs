@@ -33,14 +33,14 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-four tensor or a similar mathematical object</summary>
-/// <typeparam name="TH4DA">A backing type that implements <see cref="IHypercubic4DArray{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI1">The first index</typeparam>
-/// <typeparam name="TI2">The second index</typeparam>
-/// <typeparam name="TI3">The third index</typeparam>
-/// <typeparam name="TI4">The fourth index</typeparam>
-/// <param name="array">A backing array</param>
+/// <summary>Represents a rank-four tensor or a similar mathematical object.</summary>
+/// <typeparam name="TH4DA">A backing type that implements <see cref="IHypercubic4DArray{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI1">The first index.</typeparam>
+/// <typeparam name="TI2">The second index.</typeparam>
+/// <typeparam name="TI3">The third index.</typeparam>
+/// <typeparam name="TI4">The fourth index.</typeparam>
+/// <param name="array">A backing array.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
     : IRankFourTensor<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, TH4DA, TN, TI1, TI2, TI3, TI4>
@@ -134,11 +134,11 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
     public readonly void CopyTo(ref TN[,,,] destination) => _array.CopyTo(ref destination);
 
     /// <summary>Reinterpret a reference to this tensor as one with new indices.</summary>
-    /// <typeparam name="TNI1">A new first index</typeparam>
-    /// <typeparam name="TNI2">A new second index</typeparam>
-    /// <typeparam name="TNI3">A new third index</typeparam>
-    /// <typeparam name="TNI4">A new fourth index</typeparam>
-    /// <returns>A reference to this tensor with new indices</returns>
+    /// <typeparam name="TNI1">A new first index.</typeparam>
+    /// <typeparam name="TNI2">A new second index.</typeparam>
+    /// <typeparam name="TNI3">A new third index.</typeparam>
+    /// <typeparam name="TNI4">A new fourth index.</typeparam>
+    /// <returns>A reference to this tensor with new indices.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TH4DA, TN, TNI1, TNI2, TNI3, TNI4> WithIndices<TNI1, TNI2, TNI3, TNI4>()
@@ -149,8 +149,8 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
         => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TNI1, TNI2, TNI3, TNI4>>(ref this);
 
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the first position.</summary>
-    /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A reference to this tensor with a new index in the first position</returns>
+    /// <typeparam name="TNI">A new index.</typeparam>
+    /// <returns>A reference to this tensor with a new index in the first position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TH4DA, TN, TNI, TI2, TI3, TI4> WithIndex1<TNI>()
@@ -158,8 +158,8 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
         => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TNI, TI2, TI3, TI4>>(ref this);
 
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the second position.</summary>
-    /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A reference to this tensor with a new index in the second position</returns>
+    /// <typeparam name="TNI">A new index.</typeparam>
+    /// <returns>A reference to this tensor with a new index in the second position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TH4DA, TN, TI1, TNI, TI3, TI4> WithIndex2<TNI>()
@@ -167,8 +167,8 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
         => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TNI, TI3, TI4>>(ref this);
 
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the third position.</summary>
-    /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A reference to this tensor with a new index in the third position</returns>
+    /// <typeparam name="TNI">A new index.</typeparam>
+    /// <returns>A reference to this tensor with a new index in the third position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TH4DA, TN, TI1, TI2, TNI, TI4> WithIndex3<TNI>()
@@ -176,8 +176,8 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
         => ref Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TNI, TI4>>(ref this);
 
     /// <summary>Reinterpret a reference to this tensor as one with a new index in the fourth position.</summary>
-    /// <typeparam name="TNI">A new index</typeparam>
-    /// <returns>A reference to this tensor with a new index in the fourth position</returns>
+    /// <typeparam name="TNI">A new index.</typeparam>
+    /// <returns>A reference to this tensor with a new index in the fourth position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TH4DA, TN, TI1, TI2, TI3, TNI> WithIndex4<TNI>()

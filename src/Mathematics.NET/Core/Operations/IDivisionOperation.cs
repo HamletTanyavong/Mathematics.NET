@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines a mechanism for dividing two values</summary>
-/// <typeparam name="TInput">The input type</typeparam>
-/// <typeparam name="TOutput">The output type</typeparam>
+/// <summary>Defines a mechanism for dividing two values.</summary>
+/// <typeparam name="TInput">The input type.</typeparam>
+/// <typeparam name="TOutput">The output type.</typeparam>
 public interface IDivisionOperation<TInput, TOutput>
     where TInput : IDivisionOperation<TInput, TOutput>
 {

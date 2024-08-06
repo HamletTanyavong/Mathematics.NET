@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines support for the unary plus operation</summary>
-/// <typeparam name="TInput">The input type</typeparam>
-/// <typeparam name="TResult">The output type</typeparam>
+/// <summary>Defines support for the unary plus operation.</summary>
+/// <typeparam name="TInput">The input type.</typeparam>
+/// <typeparam name="TResult">The output type.</typeparam>
 public interface IUnaryPlusOperation<TInput, TResult>
     where TInput : IUnaryPlusOperation<TInput, TResult>
 {

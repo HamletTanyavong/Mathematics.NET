@@ -34,26 +34,26 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a vector with four components</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <param name="x1">The $ x_1 $ component</param>
-/// <param name="x2">The $ x_2 $ component</param>
-/// <param name="x3">The $ x_3 $ component</param>
-/// <param name="x4">The $ x_4 $ component</param>
+/// <summary>Represents a vector with four components.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <param name="x1">The $ x_1 $ component.</param>
+/// <param name="x2">The $ x_2 $ component.</param>
+/// <param name="x3">The $ x_3 $ component.</param>
+/// <param name="x4">The $ x_4 $ component.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     where T : IComplex<T>
 {
-    /// <summary>The first element of the vector</summary>
+    /// <summary>The first element of the vector.</summary>
     public T X1 = x1;
 
-    /// <summary>The second element of the vector</summary>
+    /// <summary>The second element of the vector.</summary>
     public T X2 = x2;
 
-    /// <summary>The third element of the vector</summary>
+    /// <summary>The third element of the vector.</summary>
     public T X3 = x3;
 
-    /// <summary>The fourth element of the vector</summary>
+    /// <summary>The fourth element of the vector.</summary>
     public T X4 = x4;
 
     //
@@ -358,9 +358,9 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
         }
     }
 
-    /// <summary>Convert a value of type <see cref="Vector4{T}"/> to one of type <see cref="System.Numerics.Vector4"/></summary>
-    /// <param name="x">The value to convert</param>
-    /// <returns>A vector of type <see cref="System.Numerics.Vector4"/></returns>
+    /// <summary>Convert a value of type <see cref="Vector4{T}"/> to one of type <see cref="System.Numerics.Vector4"/>.</summary>
+    /// <param name="x">The value to convert.</param>
+    /// <returns>A vector of type <see cref="System.Numerics.Vector4"/>.</returns>
     public static System.Numerics.Vector4 CreateSystemVector(Vector4<Real> x)
         => new((float)x.X1.AsDouble(), (float)x.X2.AsDouble(), (float)x.X3.AsDouble(), (float)x.X4.AsDouble());
 }

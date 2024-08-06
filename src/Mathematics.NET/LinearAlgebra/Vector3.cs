@@ -33,22 +33,22 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a vector with three components</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <param name="x1">The $ x_1 $ component</param>
-/// <param name="x2">The $ x_2 $ component</param>
-/// <param name="x3">The $ x_3 $ component</param>
+/// <summary>Represents a vector with three components.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <param name="x1">The $ x_1 $ component.</param>
+/// <param name="x2">The $ x_2 $ component.</param>
+/// <param name="x3">The $ x_3 $ component.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     where T : IComplex<T>
 {
-    /// <summary>The first element of the vector</summary>
+    /// <summary>The first element of the vector.</summary>
     public T X1 = x1;
 
-    /// <summary>The second element of the vector</summary>
+    /// <summary>The second element of the vector.</summary>
     public T X2 = x2;
 
-    /// <summary>The third element of the vector</summary>
+    /// <summary>The third element of the vector.</summary>
     public T X3 = x3;
 
     //
@@ -191,9 +191,9 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     //
 
     /// <summary>Compute the cross product of two vectors.</summary>
-    /// <param name="left">The first vector</param>
-    /// <param name="right">The second vector</param>
-    /// <returns>The cross product</returns>
+    /// <param name="left">The first vector.</param>
+    /// <param name="right">The second vector.</param>
+    /// <returns>The cross product.</returns>
     public static Vector3<T> Cross(Vector3<T> left, Vector3<T> right)
     {
         return new(
@@ -236,9 +236,9 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
         return new(X1 / norm, X2 / norm, X3 / norm);
     }
 
-    /// <summary>Convert a value of type <see cref="Vector3{T}"/> to one of type <see cref="System.Numerics.Vector3"/></summary>
-    /// <param name="x">The value to convert</param>
-    /// <returns>A vector of type <see cref="System.Numerics.Vector3"/></returns>
+    /// <summary>Convert a value of type <see cref="Vector3{T}"/> to one of type <see cref="System.Numerics.Vector3"/>.</summary>
+    /// <param name="x">The value to convert.</param>
+    /// <returns>A vector of type <see cref="System.Numerics.Vector3"/>.</returns>
     public static System.Numerics.Vector3 CreateSystemVector(Vector3<Real> x)
         => new((float)x.X1.AsDouble(), (float)x.X2.AsDouble(), (float)x.X3.AsDouble());
 }

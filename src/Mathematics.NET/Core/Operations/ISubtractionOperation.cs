@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines a mechanism for subtracting two values</summary>
-/// <typeparam name="TInput">The input type</typeparam>
-/// <typeparam name="TOutput">The output type</typeparam>
+/// <summary>Defines a mechanism for subtracting two values.</summary>
+/// <typeparam name="TInput">The input type.</typeparam>
+/// <typeparam name="TOutput">The output type.</typeparam>
 public interface ISubtractionOperation<TInput, TOutput>
     where TInput : ISubtractionOperation<TInput, TOutput>
 {

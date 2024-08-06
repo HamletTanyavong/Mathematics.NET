@@ -32,12 +32,12 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.Public;
 
-/// <summary>Extension methods for source generators</summary>
+/// <summary>Extension methods for source generators.</summary>
 internal static class Extensions
 {
     /// <summary>Create a name syntax from a namespace.</summary>
-    /// <param name="namespaceName">A string representing a namespace</param>
-    /// <returns>A name syntax</returns>
+    /// <param name="namespaceName">A string representing a namespace.</param>
+    /// <returns>A name syntax.</returns>
     public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceName)
     {
         Debug.Assert(!namespaceName.Contains(' '), "The namespace string must not contain any spaces.");
@@ -57,8 +57,8 @@ internal static class Extensions
     //
 
     /// <summary>Get the value of the last identifier name in a name syntax.</summary>
-    /// <param name="name">A type that derives from name syntax</param>
-    /// <returns>The value of the name syntax</returns>
+    /// <param name="name">A type that derives from name syntax.</param>
+    /// <returns>The value of the name syntax.</returns>
     public static string? GetLastIdentifierNameValueOrDefault(this NameSyntax name)
     {
         return name switch
@@ -70,8 +70,8 @@ internal static class Extensions
     }
 
     /// <summary>Get the namespace name syntax from a struct.</summary>
-    /// <param name="structDeclaration">A struct declaration syntax</param>
-    /// <returns>A name syntax</returns>
+    /// <param name="structDeclaration">A struct declaration syntax.</param>
+    /// <returns>A name syntax.</returns>
     public static NameSyntax? GetNamespaceNameSyntaxFromStructOrDefault(this StructDeclarationSyntax structDeclaration)
     {
         if (structDeclaration.Parent is FileScopedNamespaceDeclarationSyntax fileScopedNamespaceDeclaration)
@@ -88,8 +88,8 @@ internal static class Extensions
     }
 
     /// <summary>Get the value of a name syntax.</summary>
-    /// <param name="name">A name syntax</param>
-    /// <returns>A string</returns>
+    /// <param name="name">A name syntax.</param>
+    /// <returns>A string.</returns>
     public static string? GetNameValueOrDefault(this NameSyntax? name)
     {
         if (name is null)
@@ -127,9 +127,9 @@ internal static class Extensions
     }
 
     /// <summary>Create a struct declaration syntax with both open and close parenthesis.</summary>
-    /// <param name="structDeclarationSyntax">A struct declaration syntax</param>
-    /// <param name="whitespace">Indentation whitespace characeters</param>
-    /// <returns>A struct declaration syntax</returns>
+    /// <param name="structDeclarationSyntax">A struct declaration syntax.</param>
+    /// <param name="whitespace">Indentation whitespace characeters.</param>
+    /// <returns>A struct declaration syntax.</returns>
     public static StructDeclarationSyntax WithOpenAndCloseBraceTokens(this StructDeclarationSyntax structDeclarationSyntax, string whitespace, bool extraNewLine)
     {
         return structDeclarationSyntax

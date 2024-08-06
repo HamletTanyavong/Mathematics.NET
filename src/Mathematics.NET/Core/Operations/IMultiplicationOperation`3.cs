@@ -27,10 +27,10 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines a mechanism for multiplying two values of different types</summary>
-/// <typeparam name="T">An input of the first type</typeparam>
-/// <typeparam name="U">An input of the second type</typeparam>
-/// <typeparam name="V">The output type</typeparam>
+/// <summary>Defines a mechanism for multiplying two values of different types.</summary>
+/// <typeparam name="T">An input of the first type.</typeparam>
+/// <typeparam name="U">An input of the second type.</typeparam>
+/// <typeparam name="V">The output type.</typeparam>
 public interface IMultiplicationOperation<T, U, V>
     where T : IMultiplicationOperation<T, U, V>
 {

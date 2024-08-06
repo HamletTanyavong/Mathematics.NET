@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Represents an index position</summary>
+/// <summary>Represents an index position.</summary>
 public interface IIndexPosition
 {
-    /// <summary>Get a string representation of the index position</summary>
+    /// <summary>Get a string representation of the index position.</summary>
     static abstract string DisplayString { get; }
 }

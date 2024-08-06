@@ -29,21 +29,21 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for rank-one tensors and similar mathematical objects</summary>
-/// <typeparam name="TR1T">The type that implements the interface</typeparam>
-/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI">An index</typeparam>
+/// <summary>Defines support for rank-one tensors and similar mathematical objects.</summary>
+/// <typeparam name="TR1T">The type that implements the interface.</typeparam>
+/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI">An index.</typeparam>
 public interface IRankOneTensor<TR1T, TV, TN, TI> : IOneDimensionalArrayRepresentable<TR1T, TN>
     where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex
 {
-    /// <summary>Get the index associated with this rank one tensor</summary>
+    /// <summary>Get the index associated with this rank one tensor.</summary>
     IIndex I1 { get; }
 
-    /// <summary>Convert a value that implements <see cref="IVector{T, U}"/> to one of type <typeparamref name="TR1T"/></summary>
-    /// <param name="value">The value to convert</param>
+    /// <summary>Convert a value that implements <see cref="IVector{T, U}"/> to one of type <typeparamref name="TR1T"/>.</summary>
+    /// <param name="value">The value to convert.</param>
     static abstract implicit operator TR1T(TV value);
 }

@@ -27,5 +27,5 @@
 
 namespace Mathematics.NET.GraphTheory.Abstractions;
 
-/// <summary>Defines support for graph components</summary>
+/// <summary>Defines support for graph components.</summary>
 public interface IGraphComponent;

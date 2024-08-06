@@ -33,9 +33,9 @@ using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
 
-/// <summary>Represents a complex number</summary>
-/// <param name="real">The real part of the complex number</param>
-/// <param name="imaginary">The imaginary part of the complex number</param>
+/// <summary>Represents a complex number.</summary>
+/// <param name="real">The real part of the complex number.</param>
+/// <param name="imaginary">The imaginary part of the complex number.</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct Complex(Real real, Real imaginary)
@@ -664,7 +664,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static implicit operator Complex(double x) => new(x);
 
-    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="Complex"/></summary>
-    /// <param name="x">The value to convert</param>
+    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="Complex"/>.</summary>
+    /// <param name="x">The value to convert.</param>
     public static implicit operator Complex(Real x) => new(x);
 }

@@ -31,7 +31,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>Tensor self contractions builder</summary>
+/// <summary>Tensor self contractions builder.</summary>
 internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBase
 {
     public TensorSelfContractionBuilder(SourceProductionContext context, ImmutableArray<MethodInformation> methodInformationArray)

@@ -29,8 +29,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Defines support for tapes used in reverse-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <summary>Defines support for tapes used in reverse-mode automatic differentiation.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 public interface ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
@@ -44,24 +44,24 @@ public interface ITape<T>
     public int VariableCount { get; }
 
     /// <summary>Create a variable for the gradient tape to track.</summary>
-    /// <param name="seed">A seed value</param>
-    /// <returns>A variable</returns>
+    /// <param name="seed">A seed value.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> CreateVariable(T seed);
 
     /// <summary>Log nodes tracked by the tape.</summary>
-    /// <param name="logger">A logger</param>
-    /// <param name="cancellationToken">A cancellation token</param>
-    /// <param name="limit">The total number of nodes to log</param>
+    /// <param name="logger">A logger.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <param name="limit">The total number of nodes to log.</param>
     public void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100);
 
     /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
-    /// <param name="gradient">The gradient</param>
+    /// <param name="gradient">The gradient.</param>
     /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient);
 
     /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
-    /// <param name="gradient">The gradient</param>
-    /// <param name="seed">A seed value</param>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="seed">A seed value.</param>
     /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed);
 
@@ -69,103 +69,103 @@ public interface ITape<T>
     // Basic operations
     //
 
-    /// <summary>Add two variables</summary>
-    /// <param name="x">The first variable</param>
-    /// <param name="y">The second variable</param>
-    /// <returns>A variable</returns>
+    /// <summary>Add two variables.</summary>
+    /// <param name="x">The first variable.</param>
+    /// <param name="y">The second variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Add(Variable<T> x, Variable<T> y);
 
-    /// <summary>Add a constant value and a variable</summary>
-    /// <param name="c">A constant value</param>
-    /// <param name="x">A variable</param>
-    /// <returns>A variable</returns>
+    /// <summary>Add a constant value and a variable.</summary>
+    /// <param name="c">A constant value.</param>
+    /// <param name="x">A variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Add(T c, Variable<T> x);
 
-    /// <summary>Add a variable and a constant value</summary>
-    /// <param name="x">A variable</param>
-    /// <param name="c">A constant value</param>
-    /// <returns>A variable</returns>
+    /// <summary>Add a variable and a constant value.</summary>
+    /// <param name="x">A variable.</param>
+    /// <param name="c">A constant value.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Add(Variable<T> x, T c);
 
-    /// <summary>Divide two variables</summary>
-    /// <param name="x">A dividend</param>
-    /// <param name="y">A divisor</param>
-    /// <returns>A variable</returns>
+    /// <summary>Divide two variables.</summary>
+    /// <param name="x">A dividend.</param>
+    /// <param name="y">A divisor.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Divide(Variable<T> x, Variable<T> y);
 
-    /// <summary>Divide a constant value by a variable</summary>
-    /// <param name="c">A constant dividend</param>
-    /// <param name="x">A variable divisor</param>
-    /// <returns>A variable</returns>
+    /// <summary>Divide a constant value by a variable.</summary>
+    /// <param name="c">A constant dividend.</param>
+    /// <param name="x">A variable divisor.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Divide(T c, Variable<T> x);
 
-    /// <summary>Divide a variable by a constant value</summary>
-    /// <param name="x">A variable dividend</param>
-    /// <param name="c">A constant divisor</param>
-    /// <returns>A variable</returns>
+    /// <summary>Divide a variable by a constant value.</summary>
+    /// <param name="x">A variable dividend.</param>
+    /// <param name="c">A constant divisor.</param>
+    /// <returns>A variabl.</returns>
     public Variable<T> Divide(Variable<T> x, T c);
 
-    /// <summary>Compute the modulo of a variable given a divisor</summary>
-    /// <param name="x">A dividend</param>
-    /// <param name="y">A divisor</param>
-    /// <returns><paramref name="x"/> mod <paramref name="y"/></returns>
+    /// <summary>Compute the modulo of a variable given a divisor.</summary>
+    /// <param name="x">A dividend.</param>
+    /// <param name="y">A divisor.</param>
+    /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
     public Variable<Real> Modulo(Variable<Real> x, Variable<Real> y);
 
-    /// <summary>Compute the modulo of a real value given a divisor</summary>
-    /// <param name="c">A real dividend</param>
-    /// <param name="x">A variable divisor</param>
-    /// <returns><paramref name="c"/> mod <paramref name="x"/></returns>
+    /// <summary>Compute the modulo of a real value given a divisor.</summary>
+    /// <param name="c">A real dividend.</param>
+    /// <param name="x">A variable divisor.</param>
+    /// <returns><paramref name="c"/> mod <paramref name="x"/>.</returns>
     public Variable<Real> Modulo(Real c, Variable<Real> x);
 
-    /// <summary>Compute the modulo of a variable given a divisor</summary>
-    /// <param name="x">A variable dividend</param>
-    /// <param name="c">A real divisor</param>
-    /// <returns><paramref name="x"/> mod <paramref name="c"/></returns>
+    /// <summary>Compute the modulo of a variable given a divisor.</summary>
+    /// <param name="x">A variable dividend.</param>
+    /// <param name="c">A real divisor.</param>
+    /// <returns><paramref name="x"/> mod <paramref name="c"/>.</returns>
     public Variable<Real> Modulo(Variable<Real> x, Real c);
 
-    /// <summary>Multiply two variables</summary>
-    /// <param name="x">The first variable</param>
-    /// <param name="y">The second variable</param>
-    /// <returns>A variable</returns>
+    /// <summary>Multiply two variables.</summary>
+    /// <param name="x">The first variable.</param>
+    /// <param name="y">The second variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Multiply(Variable<T> x, Variable<T> y);
 
-    /// <summary>Multiply a constant value by a variable</summary>
-    /// <param name="c">A constant value</param>
-    /// <param name="x">A variable</param>
-    /// <returns>A variable</returns>
+    /// <summary>Multiply a constant value by a variable.</summary>
+    /// <param name="c">A constant value.</param>
+    /// <param name="x">A variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Multiply(T c, Variable<T> x);
 
-    /// <summary>Multiply a variable by a constant value</summary>
-    /// <param name="x">A variable</param>
-    /// <param name="c">A constant value</param>
-    /// <returns>A variable</returns>
+    /// <summary>Multiply a variable by a constant value.</summary>
+    /// <param name="x">A variable.</param>
+    /// <param name="c">A constant value.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Multiply(Variable<T> x, T c);
 
-    /// <summary>Subract two variables</summary>
-    /// <param name="x">The first variable</param>
-    /// <param name="y">The second variable</param>
-    /// <returns>A variable</returns>
+    /// <summary>Subract two variables.</summary>
+    /// <param name="x">The first variable.</param>
+    /// <param name="y">The second variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Subtract(Variable<T> x, Variable<T> y);
 
-    /// <summary>Subtract a variable from a constant value</summary>
-    /// <param name="c">A constant value</param>
-    /// <param name="x">A variable</param>
-    /// <returns>A variable</returns>
+    /// <summary>Subtract a variable from a constant value.</summary>
+    /// <param name="c">A constant value.</param>
+    /// <param name="x">A variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Subtract(T c, Variable<T> x);
 
-    /// <summary>Subtract a constant value from a variable</summary>
-    /// <param name="x">A variable</param>
-    /// <param name="c">A constant value</param>
-    /// <returns>A variable</returns>
+    /// <summary>Subtract a constant value from a variable.</summary>
+    /// <param name="x">A variable.</param>
+    /// <param name="c">A constant value.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> Subtract(Variable<T> x, T c);
 
     //
     // Other operations
     //
 
-    /// <summary>Negate a variable</summary>
-    /// <param name="x">A variable</param>
-    /// <returns>Minus one times the variable</returns>
+    /// <summary>Negate a variable.</summary>
+    /// <param name="x">A variable.</param>
+    /// <returns>Minus one times the variable.</returns>
     public Variable<T> Negate(Variable<T> x);
 
     // Exponential functions
