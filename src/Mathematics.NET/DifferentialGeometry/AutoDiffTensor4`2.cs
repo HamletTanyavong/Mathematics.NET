@@ -32,23 +32,23 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor of four variables for use in reverse-mode automatic differentiation</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI">An index</typeparam>
+/// <summary>Represents a rank-one tensor of four variables for use in reverse-mode automatic differentiation.</summary>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI">An index.</typeparam>
 public record struct AutoDiffTensor4<TN, TI>
     where TN : IComplex<TN>
     where TI : IIndex
 {
-    /// <summary>The zeroth element of the rank-one tensor</summary>
+    /// <summary>The zeroth element of the rank-one tensor.</summary>
     public Variable<TN> X0;
 
-    /// <summary>The first element of the rank-one tensor</summary>
+    /// <summary>The first element of the rank-one tensor.</summary>
     public Variable<TN> X1;
 
-    /// <summary>The second element of the rank-one tensor</summary>
+    /// <summary>The second element of the rank-one tensor.</summary>
     public Variable<TN> X2;
 
-    /// <summary>The third element of the rank-one tensor</summary>
+    /// <summary>The third element of the rank-one tensor.</summary>
     public Variable<TN> X3;
 
     public AutoDiffTensor4(Variable<TN> x0, Variable<TN> x1, Variable<TN> x2, Variable<TN> x3)
@@ -63,9 +63,9 @@ public record struct AutoDiffTensor4<TN, TI>
     // Indexer
     //
 
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
+    /// <summary>Get the element at the specified index.</summary>
+    /// <param name="index">An index.</param>
+    /// <returns>The element at the index.</returns>
     public Variable<TN> this[int index]
     {
         readonly get => GetElement(this, index);

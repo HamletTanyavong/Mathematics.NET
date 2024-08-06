@@ -29,10 +29,10 @@ using Mathematics.NET.Symbolic.Notation.Numbers;
 
 namespace Mathematics.NET.Symbolic.Notation.Numbers
 {
-    /// <summary>An integer number notation node</summary>
+    /// <summary>An integer number notation node.</summary>
     public class IntegerNotation : NumberNotation
     {
-        /// <summary>The value of the integer</summary>
+        /// <summary>The value of the integer.</summary>
         public string Value;
 
         public IntegerNotation(string value) : base(NumberKind.Integer)
@@ -47,8 +47,8 @@ namespace Mathematics.NET.Symbolic
     public static partial class NotationFactory
     {
         /// <summary>Create an <see cref="IntegerNotation"/> instance.</summary>
-        /// <param name="value">The value of the integer</param>
-        /// <returns>An <see cref="IntegerNotation"/> instance</returns>
+        /// <param name="value">The value of the integer.</param>
+        /// <returns>An <see cref="IntegerNotation"/> instance.</returns>
         public static IntegerNotation Integer(string value) => new(value);
     }
 }

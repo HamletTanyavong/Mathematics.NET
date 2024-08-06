@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Attributes;
 
-/// <summary>Indicates that a method represents a mathematical relation</summary>
-/// <param name="arity">The arity of the relation</param>
-/// <param name="name">The name of the relation</param>
+/// <summary>Indicates that a method represents a mathematical relation.</summary>
+/// <param name="arity">The arity of the relation.</param>
+/// <param name="name">The name of the relation.</param>
 [AttributeUsage(AttributeTargets.Method)]
 public class RelationAttribute(uint arity, string name) : Attribute
 {

@@ -29,12 +29,12 @@ using Mathematics.NET.Symbolic.Notation.Numbers;
 
 namespace Mathematics.NET.Symbolic.Notation.Numbers
 {
-    /// <summary>A rational number notation node</summary>
+    /// <summary>A rational number notation node.</summary>
     public class RationalNumberNotation : NumberNotation
     {
-        /// <summary>The numerator</summary>
+        /// <summary>The numerator.</summary>
         public string Numerator;
-        /// <summary>The denominator</summary>
+        /// <summary>The denominator.</summary>
         public string Denominator;
 
         public RationalNumberNotation(string numerator, string denominator)
@@ -51,9 +51,9 @@ namespace Mathematics.NET.Symbolic
     public static partial class NotationFactory
     {
         /// <summary>Create a <see cref="RationalNumberNotation"/> instance.</summary>
-        /// <param name="numerator">The numerator</param>
-        /// <param name="denominator">The denominator</param>
-        /// <returns>A <see cref="RationalNumberNotation"/> instance</returns>
+        /// <param name="numerator">The numerator.</param>
+        /// <param name="denominator">The denominator.</param>
+        /// <returns>A <see cref="RationalNumberNotation"/> instance.</returns>
         public static RationalNumberNotation RationalNumber(string numerator, string denominator)
             => new(numerator, denominator);
     }

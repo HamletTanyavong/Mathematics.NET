@@ -30,9 +30,9 @@ using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Defines support for dual numbers</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <summary>Defines support for dual numbers.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 public interface IDual<T, U>
     : IAdditionOperation<T, T>,
       IDivisionOperation<T, T>,
@@ -47,21 +47,21 @@ public interface IDual<T, U>
     where T : IDual<T, U>
     where U : IComplex<U>, IDifferentiableFunctions<U>
 {
-    /// <summary>Represents the primal part of the dual number</summary>
+    /// <summary>Represents the primal part of the dual number.</summary>
     U D0 { get; }
 
-    /// <summary>Represents the tangent part of the dual number</summary>
+    /// <summary>Represents the tangent part of the dual number.</summary>
     U D1 { get; }
 
     /// <summary>Create an instance of the type with a specified value.</summary>
-    /// <param name="value">A value</param>
-    /// <returns>An instance of the type</returns>
+    /// <param name="value">A value.</param>
+    /// <returns>An instance of the type.</returns>
     static abstract T CreateVariable(U value);
 
     /// <summary>Create an instance of the type with a specified value and seed.</summary>
-    /// <param name="value">A value</param>
-    /// <param name="seed">A seed</param>
-    /// <returns>An instance of the type</returns>
+    /// <param name="value">A value.</param>
+    /// <param name="seed">A seed.</param>
+    /// <returns>An instance of the type.</returns>
     static abstract T CreateVariable(U value, U seed);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
@@ -70,8 +70,8 @@ public interface IDual<T, U>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     static abstract T Pow(U x, T y);
 
-    /// <summary>Create a seeded instance of this type</summary>
-    /// <param name="seed">The seed value</param>
-    /// <returns>A seeded value</returns>
+    /// <summary>Create a seeded instance of this type.</summary>
+    /// <param name="seed">The seed value.</param>
+    /// <returns>A seeded value.</returns>
     T WithSeed(U seed);
 }

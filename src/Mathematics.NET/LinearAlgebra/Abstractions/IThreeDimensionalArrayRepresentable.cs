@@ -27,32 +27,32 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by three-dimensional arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for mathematical objects that can be represented by three-dimensional arrays.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IThreeDimensionalArrayRepresentable<T, U>
     : IArrayRepresentable<T, U>,
       IFormattable
     where T : IThreeDimensionalArrayRepresentable<T, U>
     where U : IComplex<U>
 {
-    /// <summary>The number of elements in the first dimension of the array</summary>
+    /// <summary>The number of elements in the first dimension of the array.</summary>
     static abstract int E1Components { get; }
 
-    /// <summary>The number of elements in the second dimension of the array</summary>
+    /// <summary>The number of elements in the second dimension of the array.</summary>
     static abstract int E2Components { get; }
 
-    /// <summary>The number of elements in the third dimension of the array</summary>
+    /// <summary>The number of elements in the third dimension of the array.</summary>
     static abstract int E3Components { get; }
 
     /// <summary>Get the element at the specified indices.</summary>
-    /// <param name="i">The first index</param>
-    /// <param name="j">The second index</param>
-    /// <param name="k">The third index</param>
-    /// <returns>The element at the specified indices</returns>
+    /// <param name="i">The first index.</param>
+    /// <param name="j">The second index.</param>
+    /// <param name="k">The third index.</param>
+    /// <returns>The element at the specified indices.</returns>
     U this[int i, int j, int k] { get; set; }
 
     /// <summary>Copy the values of this object to a 3D array.</summary>
-    /// <param name="destination">The destination array</param>
+    /// <param name="destination">The destination array.</param>
     void CopyTo(ref U[,,] destination);
 }

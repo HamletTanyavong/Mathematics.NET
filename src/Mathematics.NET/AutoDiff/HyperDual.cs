@@ -30,10 +30,10 @@ using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Represents a hyper-dual number</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <param name="d0">The primal part of a hyper-dual number</param>
-/// <param name="d1">The tangent part of a hyper-dual number</param>
+/// <summary>Represents a hyper-dual number.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <param name="d0">The primal part of a hyper-dual number.</param>
+/// <param name="d1">The tangent part of a hyper-dual number.</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>, T>
@@ -44,16 +44,16 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public HyperDual(Dual<T> value) : this(value, new(T.Zero)) { }
 
-    /// <summary>Represents the primal part of the hyper-dual number</summary>
+    /// <summary>Represents the primal part of the hyper-dual number.</summary>
     public T D0 => _d0.D0;
 
-    /// <summary>Represents the first tangent part of the hyper-dual number</summary>
+    /// <summary>Represents the first tangent part of the hyper-dual number.</summary>
     public T D1 => _d0.D1;
 
-    /// <summary>Represents the second tangent part of the hyper-dual number</summary>
+    /// <summary>Represents the second tangent part of the hyper-dual number.</summary>
     public T D2 => _d1.D0;
 
-    /// <summary>Represents the third tangent part, the cross term, of a hyper-dual number</summary>
+    /// <summary>Represents the third tangent part, the cross term, of a hyper-dual number.</summary>
     public T D3 => _d1.D1;
 
     //
@@ -119,18 +119,18 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     /// <summary>Create an instance of the type with a specified value and two seed values.</summary>
     /// <remarks>Use this to compute mixed second derivatives.</remarks>
-    /// <param name="value">A value</param>
-    /// <param name="e1Seed">A seed value for the first variable of interest</param>
-    /// <param name="e2Seed">A seec value for the second variable of interest</param>
-    /// <returns>An instance of the type</returns>
+    /// <param name="value">A value.</param>
+    /// <param name="e1Seed">A seed value for the first variable of interest.</param>
+    /// <param name="e2Seed">A seec value for the second variable of interest.</param>
+    /// <returns>An instance of the type.</returns>
     public static HyperDual<T> CreateVariable(T value, T e1Seed, T e2Seed) => new(new(value, e1Seed), new(e2Seed));
 
     public HyperDual<T> WithSeed(T seed) => new(new(_d0.D0, seed));
 
-    /// <summary>Create a seeded instance of this type</summary>
-    /// <param name="e1Seed">The first seed</param>
-    /// <param name="e2Seed">The second seed</param>
-    /// <returns>A seeded value</returns>
+    /// <summary>Create a seeded instance of this type.</summary>
+    /// <param name="e1Seed">The first seed.</param>
+    /// <param name="e2Seed">The second seed.</param>
+    /// <returns>A seeded value.</returns>
     public HyperDual<T> WithSeed(T e1Seed, T e2Seed) => new(new(_d0.D0, e1Seed), new(e2Seed));
 
     // Exponential functions
@@ -242,20 +242,20 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     //
 
     /// <summary>Perform forward-mode autodiff using a custom unary operation.</summary>
-    /// <param name="x">A hyper-dual number</param>
-    /// <param name="f">A function</param>
-    /// <param name="df">The derivative of the function</param>
-    /// <returns>A hyper-dual number</returns>
+    /// <param name="x">A hyper-dual number.</param>
+    /// <param name="f">A function.</param>
+    /// <param name="df">The derivative of the function.</param>
+    /// <returns>A hyper-dual number.</returns>
     public static HyperDual<T> CustomOperation(HyperDual<T> x, Func<Dual<T>, Dual<T>> f, Func<Dual<T>, Dual<T>> df)
         => new(f(x._d0), x._d1 * df(x._d0));
 
     /// <summary>Perform forward-mode autodiff using a custom binary operation.</summary>
-    /// <param name="x">A variable</param>
-    /// <param name="y">A variable</param>
-    /// <param name="f">A function</param>
-    /// <param name="dfx">The derivative of the function with respect to the left variable</param>
-    /// <param name="dfy">The derivative of the function with respect to the right variable</param>
-    /// <returns>A hyper-dual number</returns>
+    /// <param name="x">A variable.</param>
+    /// <param name="y">A variable.</param>
+    /// <param name="f">A function.</param>
+    /// <param name="dfx">The derivative of the function with respect to the left variable.</param>
+    /// <param name="dfy">The derivative of the function with respect to the right variable.</param>
+    /// <returns>A hyper-dual number.</returns>
     public static HyperDual<T> CustomOperation(
         HyperDual<T> x,
         HyperDual<T> y,

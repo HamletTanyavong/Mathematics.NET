@@ -35,13 +35,13 @@ using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a metric tensor</summary>
-/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TIP">An index position</typeparam>
-/// <typeparam name="TI1N">The name of the first index</typeparam>
-/// <typeparam name="TI2N">The name of the second index</typeparam>
-/// <param name="matrix">A backing matrix</param>
+/// <summary>Represents a metric tensor.</summary>
+/// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TIP">An index position.</typeparam>
+/// <typeparam name="TI1N">The name of the first index.</typeparam>
+/// <typeparam name="TI2N">The name of the second index.</typeparam>
+/// <param name="matrix">A backing matrix.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     : IRankTwoTensor<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, TSM, TN, Index<TIP, TI1N>, Index<TIP, TI2N>>,
@@ -134,32 +134,32 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     //
 
     /// <summary>Compute the determinant of the metric.</summary>
-    /// <returns>The determinant</returns>
+    /// <returns>The determinant.</returns>
     public TN Determinant() => _matrix.Determinant();
 
     /// <summary>Compute the inverse of this metric tensor.</summary>
     /// <remarks>New index names must be supplied.</remarks>
-    /// <typeparam name="TNI1N">The name of the first index</typeparam>
-    /// <typeparam name="TNI2N">The name of the second index</typeparam>
-    /// <returns>The inverse of this metric tensor with new index names</returns>
+    /// <typeparam name="TNI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TNI2N">The name of the second index.</typeparam>
+    /// <returns>The inverse of this metric tensor with new index names.</returns>
     public MetricTensor<TSM, TN, Upper, TNI1N, TNI2N> Inverse<TNI1N, TNI2N>()
         where TNI1N : ISymbol
         where TNI2N : ISymbol
         => new(_matrix.Inverse());
 
     /// <summary>Compute the square root of the determinant of this metric tensor.</summary>
-    /// <returns>The square root of the determinant</returns>
+    /// <returns>The square root of the determinant.</returns>
     public TN SquareRootOfDeterminant() => TN.Sqrt(Determinant());
 
     /// <summary>Compute the trace of this metric tensor.</summary>
-    /// <remarks>Note that the trace of an <c>nxn</c> metric tensor is equal to <c>n</c>.</remarks>
-    /// <returns>The trace</returns>
+    /// <remarks>Note that the trace of an <c>n x n</c> metric tensor is equal to <c>n</c>.</remarks>
+    /// <returns>The trace.</returns>
     public readonly TN Trace() => TSM.E1Components;
 
     /// <summary>Reinterpret a reference to this metric tensor as one with new index names.</summary>
-    /// <typeparam name="TNI1N">The name of the first index</typeparam>
-    /// <typeparam name="TNI2N">The name of the second index</typeparam>
-    /// <returns>A reference to this tensor with new index names</returns>
+    /// <typeparam name="TNI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TNI2N">The name of the second index.</typeparam>
+    /// <returns>A reference to this tensor with new index names.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref MetricTensor<TSM, TN, TIP, TNI1N, TNI2N> WithIndices<TNI1N, TNI2N>()
@@ -168,8 +168,8 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
         => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNI1N, TNI2N>>(ref this);
 
     /// <summary>Reinterpret a reference to this metric tensor as one with a new index name in the first position.</summary>
-    /// <typeparam name="TNIN">A new index name</typeparam>
-    /// <returns>A reference to this tensor with a new index name in the first position</returns>
+    /// <typeparam name="TNIN">A new index name.</typeparam>
+    /// <returns>A reference to this tensor with a new index name in the first position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref MetricTensor<TSM, TN, TIP, TNIN, TI2N> WithIndex1Name<TNIN>()
@@ -177,8 +177,8 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
         => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNIN, TI2N>>(ref this);
 
     /// <summary>Reinterpret a reference to this metric tensor as one with a new index name in the second position.</summary>
-    /// <typeparam name="TNIN">A new index name</typeparam>
-    /// <returns>A reference to this tensor with a new index name in the second position</returns>
+    /// <typeparam name="TNIN">A new index name.</typeparam>
+    /// <returns>A reference to this tensor with a new index name in the second position.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref MetricTensor<TSM, TN, TIP, TI1N, TNIN> WithIndex2Name<TNIN>()

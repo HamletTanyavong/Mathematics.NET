@@ -27,25 +27,25 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for square matrices</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for square matrices.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface ISquareMatrix<T, U> : IMatrix<T, U>
     where T : ISquareMatrix<T, U>
     where U : IComplex<U>
 {
-    /// <summary>Gets the multiplicative identiy matrix</summary>
+    /// <summary>Gets the multiplicative identiy matrix.</summary>
     static abstract T Identity { get; }
 
-    /// <summary>Compute the determinant of the matrix</summary>
-    /// <returns>The determinant</returns>
+    /// <summary>Compute the determinant of the matrix.</summary>
+    /// <returns>The determinant.</returns>
     U Determinant();
 
-    /// <summary>Compute the inverse of the matrix</summary>
-    /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="IMatrix{T, U}.NaM"/></returns>
+    /// <summary>Compute the inverse of the matrix.</summary>
+    /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="IMatrix{T, U}.NaM"/>.</returns>
     T Inverse();
 
-    /// <summary>Compute the trace of the matrix</summary>
-    /// <returns>The trace</returns>
+    /// <summary>Compute the trace of the matrix.</summary>
+    /// <returns>The trace.</returns>
     U Trace();
 }

@@ -45,8 +45,6 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
         private readonly TN _time = time;
         private readonly TN _dt = dt;
 
-        /// <summary>Executes the action on an value of type <typeparamref name="TV"/>.</summary>
-        /// <param name="value">The value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invoke(ref TV value)
         {
@@ -60,7 +58,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
 
     private readonly Func<TN, TV, TV> _function = function;
 
-    /// <inheritdoc cref="RungeKutta4{T}.Integrate(ref SystemState{T}, T)"/>
+    /// <inheritdoc cref="RungeKutta4{T}.Integrate(SystemState{T}, T)"/>
     public void Integrate(ref SystemState<TV, TN> state, TN dt)
     {
         var system = state.System.Span;
@@ -77,8 +75,8 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
         state.Time += dt;
     }
 
-    /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(ref SystemState{T}, T)"/>
-    public void IntegrateParallel(ref SystemState<TV, TN> state, TN dt)
+    /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(SystemState{T}, T)"/>
+    public void IntegrateParallel(SystemState<TV, TN> state, TN dt)
     {
         ParallelHelper.ForEach(state.System, new RK4StepAction(_function, state.Time, dt));
         state.Time += dt;

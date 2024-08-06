@@ -30,15 +30,15 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.Tests;
 
-/// <summary>Assert helpers for Mathemtics.NET</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Assert helpers for Mathemtics.NET.</summary>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public sealed class Assert<TN>
     where TN : IComplex<TN>
 {
     /// <summary>Assert that two values are approximately equal.</summary>
-    /// <param name="expected">The expected value</param>
-    /// <param name="actual">The actual value</param>
-    /// <param name="epsilon">A margin of error</param>
+    /// <param name="expected">The expected value.</param>
+    /// <param name="actual">The actual value.</param>
+    /// <param name="epsilon">A margin of error.</param>
     public static void AreApproximatelyEqual(TN expected, TN actual, Real epsilon)
     {
         if (TN.IsNaN(expected) && TN.IsNaN(actual) || TN.IsInfinity(expected) && TN.IsInfinity(actual))
@@ -58,10 +58,10 @@ public sealed class Assert<TN>
     }
 
     /// <summary>Assert that the elements in vector are approximately equal.</summary>
-    /// <typeparam name="TV">A vector</typeparam>
-    /// <param name="expected">The expected vector</param>
-    /// <param name="actual">The actual vector</param>
-    /// <param name="epsilon">A margin of error</param>
+    /// <typeparam name="TV">A vector.</typeparam>
+    /// <param name="expected">The expected vector.</param>
+    /// <param name="actual">The actual vector.</param>
+    /// <param name="epsilon">A margin of error.</param>
     public static void AreApproximatelyEqual<TV>(IVector<TV, TN> expected, IVector<TV, TN> actual, Real epsilon)
         where TV : IVector<TV, TN>
     {
@@ -80,9 +80,9 @@ public sealed class Assert<TN>
     }
 
     /// <summary>Assert that the elements in two read-only spans are approximately equal.</summary>
-    /// <param name="expected">A read-only span of expected values</param>
-    /// <param name="actual">A read-only span of actual values</param>
-    /// <param name="epsilon">A margin of error</param>
+    /// <param name="expected">A read-only span of expected values.</param>
+    /// <param name="actual">A read-only span of actual values.</param>
+    /// <param name="epsilon">A margin of error.</param>
     public static void AreApproximatelyEqual(ReadOnlySpan<TN> expected, ReadOnlySpan<TN> actual, Real epsilon)
     {
         if (expected.Length != actual.Length)
@@ -110,10 +110,10 @@ public sealed class Assert<TN>
     }
 
     /// <summary>Assert that the elements in a matrix are approximately equal.</summary>
-    /// <typeparam name="TM">A matrix</typeparam>
-    /// <param name="expected">The expected matrix</param>
-    /// <param name="actual">The actual matrix</param>
-    /// <param name="epsilon">A margin of error</param>
+    /// <typeparam name="TM">A matrix.</typeparam>
+    /// <param name="expected">The expected matrix.</param>
+    /// <param name="actual">The actual matrix.</param>
+    /// <param name="epsilon">A margin of error.</param>
     public static void AreApproximatelyEqual<TM>(IMatrix<TM, TN> expected, IMatrix<TM, TN> actual, Real epsilon)
         where TM : IMatrix<TM, TN>
     {
@@ -135,9 +135,9 @@ public sealed class Assert<TN>
     }
 
     /// <summary>Assert that the elements in two 2D, read-only spans are approximately equal.</summary>
-    /// <param name="expected">A 2D, read-only span of expected values</param>
-    /// <param name="actual">A 2D, read-only span of actual values</param>
-    /// <param name="epsilon">A margin of error</param>
+    /// <param name="expected">A 2D, read-only span of expected values.</param>
+    /// <param name="actual">A 2D, read-only span of actual values.</param>
+    /// <param name="epsilon">A margin of error.</param>
     public static void AreApproximatelyEqual(ReadOnlySpan2D<TN> expected, ReadOnlySpan2D<TN> actual, Real epsilon)
     {
         if (expected.Height != actual.Height || expected.Width != actual.Width)
@@ -168,9 +168,9 @@ public sealed class Assert<TN>
     }
 
     /// <summary>Assert that the elements in two 3D arrays are approximately equal.</summary>
-    /// <param name="expected">A 3D array of expected values</param>
-    /// <param name="actual">A 3D array of actual values</param>
-    /// <param name="epsilon">A margin of error</param>
+    /// <param name="expected">A 3D array of expected values.</param>
+    /// <param name="actual">A 3D array of actual values.</param>
+    /// <param name="epsilon">A margin of error.</param>
     public static void AreApproximatelyEqual(TN[,,] expected, TN[,,] actual, Real epsilon)
     {
         if (expected.GetLength(0) != actual.GetLength(0) || expected.GetLength(1) != actual.GetLength(1) || expected.GetLength(2) != actual.GetLength(2))
@@ -204,9 +204,9 @@ public sealed class Assert<TN>
     }
 
     /// <summary>Assert that the elements in two 4D arrays are approximately equal.</summary>
-    /// <param name="expected">A 4D array of expected values</param>
-    /// <param name="actual">A 4D array of actual values</param>
-    /// <param name="epsilon">A margin of error</param>
+    /// <param name="expected">A 4D array of expected values.</param>
+    /// <param name="actual">A 4D array of actual values.</param>
+    /// <param name="epsilon">A margin of error.</param>
     public static void AreApproximatelyEqual(TN[,,,] expected, TN[,,,] actual, Real epsilon)
     {
         if (expected.GetLength(0) != actual.GetLength(0) ||

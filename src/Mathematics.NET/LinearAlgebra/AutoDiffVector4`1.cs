@@ -32,22 +32,22 @@ using Mathematics.NET.AutoDiff;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a vector of four variables for use in reverse-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a vector of four variables for use in reverse-mode automatic differentiation.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public record struct AutoDiffVector4<T>
     where T : IComplex<T>
 {
-    /// <summary>The first element of the vector</summary>
+    /// <summary>The first element of the vector.</summary>
     public Variable<T> X1;
 
-    /// <summary>The second element of the vector</summary>
+    /// <summary>The second element of the vector.</summary>
     public Variable<T> X2;
 
-    /// <summary>The third element of the vector</summary>
+    /// <summary>The third element of the vector.</summary>
     public Variable<T> X3;
 
-    /// <summary>The fourth element of the vector</summary>
+    /// <summary>The fourth element of the vector.</summary>
     public Variable<T> X4;
 
     public AutoDiffVector4(Variable<T> x1, Variable<T> x2, Variable<T> x3, Variable<T> x4)
@@ -62,9 +62,9 @@ public record struct AutoDiffVector4<T>
     // Indexer
     //
 
-    /// <summary>Get the element at the specified index</summary>
-    /// <param name="index">An index</param>
-    /// <returns>The element at the index</returns>
+    /// <summary>Get the element at the specified index.</summary>
+    /// <param name="index">An index.</param>
+    /// <returns>The element at the index.</returns>
     public Variable<T> this[int index]
     {
         readonly get => GetElement(this, index);

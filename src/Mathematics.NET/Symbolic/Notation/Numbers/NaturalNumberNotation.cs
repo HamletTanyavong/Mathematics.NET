@@ -29,10 +29,10 @@ using Mathematics.NET.Symbolic.Notation.Numbers;
 
 namespace Mathematics.NET.Symbolic.Notation.Numbers
 {
-    /// <summary>A natural number notation node</summary>
+    /// <summary>A natural number notation node.</summary>
     public class NaturalNumberNotation : NumberNotation
     {
-        /// <summary>The value of the natural number</summary>
+        /// <summary>The value of the natural number.</summary>
         public string Value;
 
         public NaturalNumberNotation(string value) : base(NumberKind.Natural)
@@ -47,8 +47,8 @@ namespace Mathematics.NET.Symbolic
     public static partial class NotationFactory
     {
         /// <summary>Create a <see cref="NaturalNumberNotation"/> instance.</summary>
-        /// <param name="value">The value of the natural number</param>
-        /// <returns>A <see cref="NaturalNumberNotation"/> instance</returns>
+        /// <param name="value">The value of the natural number.</param>
+        /// <returns>A <see cref="NaturalNumberNotation"/> instance.</returns>
         public static NaturalNumberNotation NaturalNumber(string value) => new(value);
     }
 }

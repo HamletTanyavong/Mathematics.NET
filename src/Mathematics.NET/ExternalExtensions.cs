@@ -29,13 +29,13 @@ using System.Text;
 
 namespace Mathematics.NET;
 
-/// <summary>A class containing extension methods for external .NET objects</summary>
+/// <summary>A class containing extension methods for external .NET objects.</summary>
 public static class ExternalExtensions
 {
-    /// <summary>Remove specified characters from the end of a string being built by a string builder</summary>
-    /// <param name="builder">A string builder instance</param>
-    /// <param name="unwantedChars">An array of characters to trim</param>
-    /// <returns>The same string builder with characters removed</returns>
+    /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
+    /// <param name="builder">A string builder instance.</param>
+    /// <param name="unwantedChars">An array of characters to trim.</param>
+    /// <returns>The same string builder with characters removed.</returns>
     public static StringBuilder TrimEnd(this StringBuilder builder, params char[]? unwantedChars)
     {
         if (unwantedChars == null || builder.Length == 0 || unwantedChars.Length == 0)

@@ -27,8 +27,8 @@
 
 namespace Mathematics.NET.Core;
 
-/// <summary>Defines support for common mathematical constants</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
+/// <summary>Defines support for common mathematical constants.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
 public interface IConstants<T> : IComplex<T>
     where T : IConstants<T>
 {

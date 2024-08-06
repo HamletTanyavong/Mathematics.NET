@@ -31,7 +31,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A base class for tensor contraction builders</summary>
+/// <summary>A base class for tensor contraction builders.</summary>
 internal abstract class TensorContractionBuilderBase
 {
     private protected static readonly GenericNameSyntax s_leftIndex = GenericName(

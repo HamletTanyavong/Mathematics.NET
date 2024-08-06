@@ -27,15 +27,15 @@
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Represents a variable used in reverse-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a variable used in reverse-mode automatic differentiation.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public readonly record struct Variable<T>
     where T : IComplex<T>
 {
-    /// <summary>The index of the variable</summary>
+    /// <summary>The index of the variable.</summary>
     internal readonly int _index;
 
-    /// <summary>The value of the variable</summary>
+    /// <summary>The value of the variable.</summary>
     public readonly T Value;
 
     internal Variable(int index, T value)

@@ -27,7 +27,7 @@
 
 namespace Mathematics.NET.SourceGenerators.Public;
 
-/// <summary>A class for creating diagnostic messages for use in Mathematics.NET source generators</summary>
+/// <summary>A class for creating diagnostic messages for use in Mathematics.NET source generators.</summary>
 internal static class DiagnosticMessage
 {
     public static DiagnosticDescriptor CreateInvalidSymbolDeclarationDiagnosticDescriptor()

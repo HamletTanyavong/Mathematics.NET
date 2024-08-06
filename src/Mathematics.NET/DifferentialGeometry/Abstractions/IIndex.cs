@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
-/// <summary>Defines support for tensor indices</summary>
+/// <summary>Defines support for tensor indices.</summary>
 public interface IIndex : IFormattable
 {
-    /// <summary>Gets an instance of this struct</summary>
+    /// <summary>Gets an instance of this struct.</summary>
     static abstract IIndex Instance { get; }
 }

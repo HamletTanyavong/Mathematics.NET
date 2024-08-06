@@ -32,10 +32,10 @@ using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a 3x3 metric tensor field</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TPI">The index of the point on the manifold</typeparam>
+/// <summary>Represents a 3x3 metric tensor field.</summary>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
 public abstract class MetricTensorField3x3<TT, TN, TPI> : TensorField3x3<TT, TN, Lower, Lower, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>

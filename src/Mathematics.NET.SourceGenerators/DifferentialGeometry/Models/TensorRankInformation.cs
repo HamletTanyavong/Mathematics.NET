@@ -27,7 +27,7 @@
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 
-/// <summary>Holds information about a particular tensor contraction</summary>
+/// <summary>Holds information about a particular tensor contraction.</summary>
 internal readonly record struct TensorRankInformation
 {
     public TensorRankInformation(int leftRank, int rightRank)

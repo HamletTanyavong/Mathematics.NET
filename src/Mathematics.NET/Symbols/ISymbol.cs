@@ -29,9 +29,9 @@ namespace Mathematics.NET.Symbols;
 
 // TODO: Create source generator for symbols
 
-/// <summary>Defines support for mathematical symbols</summary>
+/// <summary>Defines support for mathematical symbols.</summary>
 public interface ISymbol
 {
-    /// <summary>Get a string representation of this symbol</summary>
+    /// <summary>Get a string representation of this symbol.</summary>
     static abstract string DisplayString { get; }
 }

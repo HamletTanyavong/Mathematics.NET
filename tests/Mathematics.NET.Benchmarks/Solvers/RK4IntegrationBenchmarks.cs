@@ -59,7 +59,7 @@ public class RK4IntegrationBenchmarks
     {
         for (int i = 0; i < 10; i++)
         {
-            RK4.Integrate(ref SystemStateA, 0.01);
+            RK4.Integrate(SystemStateA, 0.01);
         }
     }
 
@@ -68,7 +68,7 @@ public class RK4IntegrationBenchmarks
     {
         for (int i = 0; i < 10; i++)
         {
-            RK4.IntegrateParallel(ref SystemStateB, 0.01);
+            RK4.IntegrateParallel(SystemStateB, 0.01);
         }
     }
 }

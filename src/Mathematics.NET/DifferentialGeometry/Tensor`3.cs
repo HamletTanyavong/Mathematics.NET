@@ -34,11 +34,11 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor or a similar mathematical object</summary>
-/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/></typeparam>
-/// <typeparam name="TI">An index</typeparam>
-/// <param name="vector">A backing vector</param>
+/// <summary>Represents a rank-one tensor or a similar mathematical object.</summary>
+/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TI">An index.</typeparam>
+/// <param name="vector">A backing vector.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Tensor<TV, TN, TI>(TV vector)
     : IRankOneTensor<Tensor<TV, TN, TI>, TV, TN, TI>,
@@ -123,8 +123,8 @@ public struct Tensor<TV, TN, TI>(TV vector)
     //
 
     /// <summary>Reinterpret a reference to this tensor as one with a new index.</summary>
-    /// <typeparam name="TNI">An index</typeparam>
-    /// <returns>A reference to this tensor with a new index</returns>
+    /// <typeparam name="TNI">An index.</typeparam>
+    /// <returns>A reference to this tensor with a new index.</returns>
     [UnscopedRef]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ref Tensor<TV, TN, TNI> WithIndex<TNI>()

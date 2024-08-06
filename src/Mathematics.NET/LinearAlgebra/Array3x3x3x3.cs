@@ -32,8 +32,8 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a 3x3x3x3 array</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a 3x3x3x3 array.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public struct Array3x3x3x3<T> : IHypercubic4DArray<Array3x3x3x3<T>, T>
     where T : IComplex<T>

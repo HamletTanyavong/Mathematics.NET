@@ -29,5 +29,5 @@ using Mathematics.NET.GraphTheory;
 
 namespace Mathematics.NET.Symbolic.Notation;
 
-/// <summary>A base class for mathematical notation nodes</summary>
+/// <summary>A base class for mathematical notation nodes.</summary>
 public abstract class NotationNode : Node;

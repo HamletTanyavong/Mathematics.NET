@@ -29,26 +29,26 @@ using System.Numerics;
 
 namespace Mathematics.NET.Core;
 
-/// <summary>Defines support for rational numbers</summary>
-/// <typeparam name="T">A type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryInteger{TSelf}"/></typeparam>
+/// <summary>Defines support for rational numbers.</summary>
+/// <typeparam name="T">A type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
 public interface IRational<T, U> : IReal<T>
     where T : IRational<T, U>
     where U : IBinaryInteger<U>
 {
-    /// <summary>Get the numerator of the rational number</summary>
+    /// <summary>Get the numerator of the rational number.</summary>
     U Num { get; }
 
-    /// <summary>Get the denominator of the rational number</summary>
+    /// <summary>Get the denominator of the rational number.</summary>
     public virtual U Den => U.One;
 
-    /// <summary>Compute the absolute value of a number</summary>
-    /// <param name="x">A rational number</param>
-    /// <returns>The absolute value</returns>
+    /// <summary>Compute the absolute value of a number.</summary>
+    /// <param name="x">A rational number.</param>
+    /// <returns>The absolute value.</returns>
     static new abstract T Abs(T x);
 
-    /// <summary>Reduce a rational number</summary>
-    /// <param name="x">The value to reduce</param>
-    /// <returns>A reduced fraction if the number was reducible; otherwise, itself</returns>
+    /// <summary>Reduce a rational number.</summary>
+    /// <param name="x">The value to reduce.</param>
+    /// <returns>A reduced fraction if the number was reducible; otherwise, itself.</returns>
     static abstract T Reduce(T x);
 }

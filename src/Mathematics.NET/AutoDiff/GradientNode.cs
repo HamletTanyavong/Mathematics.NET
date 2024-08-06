@@ -29,20 +29,20 @@ using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Represents a node on a gradient tape</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a node on a gradient tape.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 internal readonly record struct GradientNode<T>
     where T : IComplex<T>
 {
-    /// <summary>The derivative of the left component of the binary operation</summary>
+    /// <summary>The derivative of the left component of the binary operation.</summary>
     public readonly T DX;
-    /// <summary>The derivative of the right component of the binary operation</summary>
+    /// <summary>The derivative of the right component of the binary operation.</summary>
     public readonly T DY;
 
-    /// <summary>The parent index of the left node</summary>
+    /// <summary>The parent index of the left node.</summary>
     public readonly int PX;
-    /// <summary>The parent index of the right node</summary>
+    /// <summary>The parent index of the right node.</summary>
     public readonly int PY;
 
     public GradientNode(int index)

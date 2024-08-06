@@ -29,7 +29,7 @@ using Mathematics.NET.GraphTheory.Abstractions;
 
 namespace Mathematics.NET.GraphTheory;
 
-/// <summary>Represents a node on a graph</summary>
+/// <summary>Represents a node on a graph.</summary>
 public class Node : IGraphComponent
 {
     public Node()
@@ -49,7 +49,7 @@ public class Node : IGraphComponent
     //
 
     /// <summary>Get a list of all ascendant nodes of this node.</summary>
-    /// <returns>A list of nodes</returns>
+    /// <returns>A list of nodes.</returns>
     public IEnumerable<Node> AscendantNodes()
     {
         Queue<Node> queue = new();
@@ -72,14 +72,14 @@ public class Node : IGraphComponent
     }
 
     /// <summary>Get a list of child nodes of this node.</summary>
-    /// <returns>A list of nodes</returns>
+    /// <returns>A list of nodes.</returns>
     /// <remarks>The returned list does not include this node if there is a cycle.</remarks>
     public IEnumerable<Node> ChildNodes() => OutgoingEdges
         .Select(x => x.Destination)
         .Where(x => x != this);
 
     /// <summary>Get a list of all descendant nodes of this node.</summary>
-    /// <returns>A list of nodes</returns>
+    /// <returns>A list of nodes.</returns>
     public IEnumerable<Node> DescendantNodes()
     {
         Queue<Node> queue = new();
@@ -102,14 +102,14 @@ public class Node : IGraphComponent
     }
 
     /// <summary>Get a list of the parent nodes of this node.</summary>
-    /// <returns>A list of nodes</returns>
+    /// <returns>A list of nodes.</returns>
     /// <remarks>The returned list does not include this node if there is a cycle.</remarks>
     public IEnumerable<Node> ParentNodes() => IncomingEdges
         .Select(x => x.Origin)
         .Where(x => x != this);
 
     /// <summary>Remove an incoming edge from the node if it exists.</summary>
-    /// <param name="edge">An incoming edge</param>
+    /// <param name="edge">An incoming edge.</param>
     public void RemoveIncomingEdge(Edge edge) => IncomingEdges.Remove(edge);
 
     /// <summary>Remove all incoming edges from the node.</summary>
@@ -123,7 +123,7 @@ public class Node : IGraphComponent
     }
 
     /// <summary>Remove an outgoing edge from the node if it exists.</summary>
-    /// <param name="edge">An outgoing edge</param>
+    /// <param name="edge">An outgoing edge.</param>
     public void RemoveOutgoingEdge(Edge edge) => OutgoingEdges.Remove(edge);
 
     /// <summary>Remove all outgoing edges from the node.</summary>

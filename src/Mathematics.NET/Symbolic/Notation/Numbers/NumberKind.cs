@@ -27,7 +27,7 @@
 
 namespace Mathematics.NET.Symbolic.Notation.Numbers;
 
-/// <summary>The kind of number that a number or variable notation represents</summary>
+/// <summary>The kind of number that a number or variable notation represents.</summary>
 [Flags]
 public enum NumberKind
 {

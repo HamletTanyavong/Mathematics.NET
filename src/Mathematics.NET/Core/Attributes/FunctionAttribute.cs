@@ -27,8 +27,8 @@
 
 namespace Mathematics.NET.Core.Attributes;
 
-/// <summary>Indicates that a method represents a mathematical function</summary>
-/// <param name="arity">The arity of the function</param>
-/// <param name="name">The name of the function</param>
+/// <summary>Indicates that a method represents a mathematical function.</summary>
+/// <param name="arity">The arity of the function.</param>
+/// <param name="name">The name of the function.</param>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public class FunctionAttribute(uint arity, string name) : RelationAttribute(arity, name);

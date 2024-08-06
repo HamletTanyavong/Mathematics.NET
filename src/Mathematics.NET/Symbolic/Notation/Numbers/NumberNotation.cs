@@ -27,10 +27,10 @@
 
 namespace Mathematics.NET.Symbolic.Notation.Numbers;
 
-/// <summary>Represents the notation node for numbers</summary>
+/// <summary>Represents the notation node for numbers.</summary>
 public abstract class NumberNotation : NotationNode
 {
-    /// <summary>The kind of number a number notation node represents</summary>
+    /// <summary>The kind of number a number notation node represents.</summary>
     public readonly NumberKind NumberKind;
 
     public NumberNotation(NumberKind numberKind)
@@ -39,8 +39,8 @@ public abstract class NumberNotation : NotationNode
     }
 
     /// <summary>Check if a number is of a certain kind.</summary>
-    /// <param name="numberKind">A kind of number</param>
-    /// <returns><see langword="true"/> if the number is of a certain kind; otherwise, <see langword="false"/></returns>
+    /// <param name="numberKind">A kind of number.</param>
+    /// <returns><see langword="true"/> if the number is of a certain kind; otherwise, <see langword="false"/>.</returns>
     public bool IsNumberKind(NumberKind numberKind)
         => (NumberKind & numberKind) == numberKind;
 }

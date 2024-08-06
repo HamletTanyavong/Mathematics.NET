@@ -32,24 +32,24 @@ using Mathematics.NET.AutoDiff;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a vector of four dual numbers for use in forward-mode automatic differentiation</summary>
-/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/></typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <summary>Represents a vector of four dual numbers for use in forward-mode automatic differentiation.</summary>
+/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public record struct AutoDiffVector4<T, U>
     where T : IDual<T, U>
     where U : IComplex<U>, IDifferentiableFunctions<U>
 {
-    /// <summary>The first element of the vector</summary>
+    /// <summary>The first element of the vector.</summary>
     public T X1;
 
-    /// <summary>The second element of the vector</summary>
+    /// <summary>The second element of the vector.</summary>
     public T X2;
 
-    /// <summary>The third element of the vector</summary>
+    /// <summary>The third element of the vector.</summary>
     public T X3;
 
-    /// <summary>The fourth element of the vector</summary>
+    /// <summary>The fourth element of the vector.</summary>
     public T X4;
 
     public AutoDiffVector4(T x1, T x2, T x3, T x4)
@@ -140,12 +140,12 @@ public record struct AutoDiffVector4<T, U>
     }
 
     /// <summary>Compute the divergence of a vector field using forward-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
-    /// <param name="f1">The first component of the vector field</param>
-    /// <param name="f2">The second component of the vector field</param>
-    /// <param name="f3">The third component of the vector field</param>
-    /// <param name="f4">The fourth component of the vector field</param>
-    /// <param name="x">The point at which to compute the divergence</param>
-    /// <returns>The divergence of the vector field</returns>
+    /// <param name="f1">The first component of the vector field.</param>
+    /// <param name="f2">The second component of the vector field.</param>
+    /// <param name="f3">The third component of the vector field.</param>
+    /// <param name="f4">The fourth component of the vector field.</param>
+    /// <param name="x">The point at which to compute the divergence.</param>
+    /// <returns>The divergence of the vector field.</returns>
     public static U Divergence(
         Func<AutoDiffVector4<T, U>, T> f1,
         Func<AutoDiffVector4<T, U>, T> f2,
@@ -206,12 +206,12 @@ public record struct AutoDiffVector4<T, U>
     }
 
     /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
-    /// <param name="f1">The first function</param>
-    /// <param name="f2">The second function</param>
-    /// <param name="f3">The third function</param>
-    /// <param name="f4">The fourth function</param>
-    /// <param name="x">The point at which to compute the Jacobian</param>
-    /// <returns>The Jacobian of the vector function</returns>
+    /// <param name="f1">The first function.</param>
+    /// <param name="f2">The second function.</param>
+    /// <param name="f3">The third function.</param>
+    /// <param name="f4">The fourth function.</param>
+    /// <param name="x">The point at which to compute the Jacobian.</param>
+    /// <returns>The Jacobian of the vector function.</returns>
     public static Matrix4x4<U> Jacobian(
         Func<AutoDiffVector4<T, U>, T> f1,
         Func<AutoDiffVector4<T, U>, T> f2,
@@ -236,13 +236,13 @@ public record struct AutoDiffVector4<T, U>
     }
 
     /// <summary>Compute the Jacobian-vector product of a vector function and a vector using forward-mode automatic differentiation.</summary>
-    /// <param name="f1">The first function</param>
-    /// <param name="f2">The second function</param>
-    /// <param name="f3">The third function</param>
-    /// <param name="f4">The fourth function</param>
-    /// <param name="x">The point at which to compute the Jacobian-vector product</param>
-    /// <param name="v">A vector</param>
-    /// <returns>The Jacobian-vector product of the vector function and vector</returns>
+    /// <param name="f1">The first function.</param>
+    /// <param name="f2">The second function.</param>
+    /// <param name="f3">The third function.</param>
+    /// <param name="f4">The fourth function.</param>
+    /// <param name="x">The point at which to compute the Jacobian-vector product.</param>
+    /// <param name="v">A vector.</param>
+    /// <returns>The Jacobian-vector product of the vector function and vector.</returns>
     public static Vector4<U> JVP(
         Func<AutoDiffVector4<T, U>, T> f1,
         Func<AutoDiffVector4<T, U>, T> f2,
@@ -268,13 +268,13 @@ public record struct AutoDiffVector4<T, U>
     }
 
     /// <summary>Compute the vector-Jacobian product of a vector and a vector function using forward-mode automatic differentiation.</summary>
-    /// <param name="v">A vector</param>
-    /// <param name="f1">The first function</param>
-    /// <param name="f2">The second function</param>
-    /// <param name="f3">The third function</param>
-    /// <param name="f4">The fourth function</param>
-    /// <param name="x">The point at which to compute the vector-Jacobian product</param>
-    /// <returns>The vector-Jacobian product of the vector and vector-function</returns>
+    /// <param name="v">A vector.</param>
+    /// <param name="f1">The first function.</param>
+    /// <param name="f2">The second function.</param>
+    /// <param name="f3">The third function.</param>
+    /// <param name="f4">The fourth function.</param>
+    /// <param name="x">The point at which to compute the vector-Jacobian product.</param>
+    /// <returns>The vector-Jacobian product of the vector and vector-function.</returns>
     public static Vector4<U> VJP(
         Vector4<U> v,
         Func<AutoDiffVector4<T, U>, T> f1,

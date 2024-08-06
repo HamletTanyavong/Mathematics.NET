@@ -27,8 +27,8 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines a mechanism for incrementing values</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
+/// <summary>Defines a mechanism for incrementing values.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
 public interface IIncrementOperation<T>
     where T : IIncrementOperation<T>
 {

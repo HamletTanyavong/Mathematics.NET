@@ -32,19 +32,19 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor of two variables for use in forward-mode automatic differentiation</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U}"/></typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
-/// <typeparam name="TI">An index</typeparam>
+/// <summary>Represents a rank-one tensor of two variables for use in forward-mode automatic differentiation.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TI">An index.</typeparam>
 public record struct AutoDiffTensor2<TDN, TN, TI>
     where TDN : IDual<TDN, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex
 {
-    /// <summary>The zeroth element of the rank-one tensor</summary>
+    /// <summary>The zeroth element of the rank-one tensor.</summary>
     public TDN X0;
 
-    /// <summary>The first element of the rank-one tensor</summary>
+    /// <summary>The first element of the rank-one tensor.</summary>
     public TDN X1;
 
     public AutoDiffTensor2(TDN x0, TDN x1)

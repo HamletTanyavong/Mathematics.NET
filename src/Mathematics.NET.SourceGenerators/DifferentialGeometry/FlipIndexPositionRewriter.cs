@@ -29,7 +29,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>A C# syntax rewriter that flips lower indices to upper indices and vice versa</summary>
+/// <summary>A C# syntax rewriter that flips lower indices to upper indices and vice versa.</summary>
 internal sealed class FlipIndexPositionRewriter : CSharpSyntaxRewriter
 {
     private static readonly IdentifierNameSyntax s_lower = SyntaxFactory.IdentifierName("Lower");

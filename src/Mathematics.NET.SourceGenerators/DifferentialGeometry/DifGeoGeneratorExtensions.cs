@@ -27,12 +27,12 @@
 
 namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-/// <summary>Syntax helper for differential geometry generators</summary>
+/// <summary>Syntax helper for differential geometry generators.</summary>
 internal static class DifGeoGeneratorExtensions
 {
-    /// <summary>Generate the tensor contraction with index positions swapped: "lower" to "upper" and "upper" to "lower."</summary>
-    /// <param name="memberDeclarationSyntax">A member declaration syntax</param>
-    /// <returns>A member declaration syntax</returns>
+    /// <summary>Generate the tensor contraction with index positions swapped: "lower" to "upper" and "upper" to "lower.".</summary>
+    /// <param name="memberDeclarationSyntax">A member declaration syntax.</param>
+    /// <returns>A member declaration syntax.</returns>
     internal static MemberDeclarationSyntax GenerateTwinContraction(this MemberDeclarationSyntax memberDeclarationSyntax)
     {
         FlipIndexPositionRewriter walker = new();
@@ -40,8 +40,8 @@ internal static class DifGeoGeneratorExtensions
     }
 
     /// <summary>Swap the index to contract with the index immediately to its right.</summary>
-    /// <param name="typeArgumentListSyntax">A type argument list syntax</param>
-    /// <returns>A type argument list syntax with the specified indices swapped</returns>
+    /// <param name="typeArgumentListSyntax">A type argument list syntax.</param>
+    /// <returns>A type argument list syntax with the specified indices swapped.</returns>
     internal static TypeArgumentListSyntax SwapContractIndexWithNextIndex(this TypeArgumentListSyntax typeArgumentListSyntax)
     {
         TypeArgumentIndexSwapRewriter rewriter = new(typeArgumentListSyntax);
@@ -49,9 +49,9 @@ internal static class DifGeoGeneratorExtensions
     }
 
     /// <summary>Swap the index to contract with the index immediately to its right.</summary>
-    /// <param name="bracketedArgumentListSyntax">A bracketed argument list syntax</param>
-    /// <param name="iterationIndexName">The name of the iteration index</param>
-    /// <returns>A bracketed argument list syntax with the specified indices swapped</returns>
+    /// <param name="bracketedArgumentListSyntax">A bracketed argument list syntax.</param>
+    /// <param name="iterationIndexName">The name of the iteration index.</param>
+    /// <returns>A bracketed argument list syntax with the specified indices swapped.</returns>
     internal static BracketedArgumentListSyntax SwapIterationIndexWithNextIndex(this BracketedArgumentListSyntax bracketedArgumentListSyntax, string iterationIndexName)
     {
         BracketedArgumentIndexSwapRewriter rewriter = new(bracketedArgumentListSyntax, iterationIndexName);

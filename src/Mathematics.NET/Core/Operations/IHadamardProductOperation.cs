@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Operations;
 
-/// <summary>Defines a mechanism for performing element-wise multiplication on two array-backed objects</summary>
-/// <typeparam name="TInput">The input type</typeparam>
-/// <typeparam name="TOutput">The output type</typeparam>
+/// <summary>Defines a mechanism for performing element-wise multiplication on two array-backed objects.</summary>
+/// <typeparam name="TInput">The input type.</typeparam>
+/// <typeparam name="TOutput">The output type.</typeparam>
 public interface IHadamardProductOperation<TInput, TOutput>
     where TInput : IHadamardProductOperation<TInput, TOutput>
 {

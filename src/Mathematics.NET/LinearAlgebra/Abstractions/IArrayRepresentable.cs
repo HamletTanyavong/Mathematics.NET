@@ -30,9 +30,9 @@ using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by arrays</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for mathematical objects that can be represented by arrays.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IArrayRepresentable<T, U>
     : IEqualityRelation<T, bool>,
       IMultiplicationOperation<T, U, T>,
@@ -41,6 +41,6 @@ public interface IArrayRepresentable<T, U>
     where T : IArrayRepresentable<T, U>
     where U : IComplex<U>
 {
-    /// <summary>The total number of components in the array</summary>
+    /// <summary>The total number of components in the array.</summary>
     static abstract int Components { get; }
 }

@@ -33,8 +33,8 @@ using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.Core;
 
-/// <summary>Represents a real number</summary>
-/// <param name="real">The value of the number</param>
+/// <summary>Represents a real number.</summary>
+/// <param name="real">The value of the number.</param>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct Real(double real)
@@ -426,7 +426,7 @@ public readonly struct Real(double real)
     // Explicit operators
     //
 
-    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="long"/></summary>
-    /// <param name="x">The value to convert</param>
+    /// <summary>Convert a value of type <see cref="Real"/> to one of type <see cref="long"/>.</summary>
+    /// <param name="x">The value to convert.</param>
     public static explicit operator long(Real x) => (long)x.AsDouble();
 }

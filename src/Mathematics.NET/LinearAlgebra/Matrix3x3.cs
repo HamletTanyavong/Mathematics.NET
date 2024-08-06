@@ -32,8 +32,8 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
 
-/// <summary>Represents a 3x3 matrix</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Represents a 3x3 matrix.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     where T : IComplex<T>
@@ -50,16 +50,16 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     public Vector3<T> X2;
     public Vector3<T> X3;
 
-    /// <summary>Create a 3x3 matrix given a set of 9 values</summary>
-    /// <param name="e11">The $ e_{11} $ component</param>
-    /// <param name="e12">The $ e_{12} $ component</param>
-    /// <param name="e13">The $ e_{13} $ component</param>
-    /// <param name="e21">The $ e_{21} $ component</param>
-    /// <param name="e22">The $ e_{22} $ component</param>
-    /// <param name="e23">The $ e_{23} $ component</param>
-    /// <param name="e31">The $ e_{31} $ component</param>
-    /// <param name="e32">The $ e_{32} $ component</param>
-    /// <param name="e33">The $ e_{33} $ component</param>
+    /// <summary>Create a 3x3 matrix given a set of 9 values.</summary>
+    /// <param name="e11">The $ e_{11} $ component.</param>
+    /// <param name="e12">The $ e_{12} $ component.</param>
+    /// <param name="e13">The $ e_{13} $ component.</param>
+    /// <param name="e21">The $ e_{21} $ component.</param>
+    /// <param name="e22">The $ e_{22} $ component.</param>
+    /// <param name="e23">The $ e_{23} $ component.</param>
+    /// <param name="e31">The $ e_{31} $ component.</param>
+    /// <param name="e32">The $ e_{32} $ component.</param>
+    /// <param name="e33">The $ e_{33} $ component.</param>
     public Matrix3x3(
         T e11, T e12, T e13,
         T e21, T e22, T e23,
@@ -217,10 +217,10 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     //
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
-    /// <param name="e11">The $ e_{11} $ component</param>
-    /// <param name="e22">The $ e_{22} $ component</param>
-    /// <param name="e33">The $ e_{33} $ component</param>
-    /// <returns>A diagonal matrix</returns>
+    /// <param name="e11">The $ e_{11} $ component.</param>
+    /// <param name="e22">The $ e_{22} $ component.</param>
+    /// <param name="e33">The $ e_{33} $ component.</param>
+    /// <returns>A diagonal matrix.</returns>
     public static Matrix3x3<T> CreateDiagonal(T e11, T e22, T e33)
     {
         return new(

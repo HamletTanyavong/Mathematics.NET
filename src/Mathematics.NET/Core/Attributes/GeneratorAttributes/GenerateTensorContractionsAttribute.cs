@@ -27,6 +27,6 @@
 
 namespace Mathematics.NET.Core.Attributes.GeneratorAttributes;
 
-/// <summary>Indicates that index permutations of a tensor contraction should be generated</summary>
+/// <summary>Indicates that index permutations of a tensor contraction should be generated.</summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 internal sealed class GenerateTensorContractionsAttribute : Attribute;

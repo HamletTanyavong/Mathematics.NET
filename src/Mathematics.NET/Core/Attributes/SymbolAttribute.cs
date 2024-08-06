@@ -27,6 +27,6 @@
 
 namespace Mathematics.NET.Core.Attributes;
 
-/// <summary>Indicates that a type represents a mathematical symbol and that its properties should be generated</summary>
+/// <summary>Indicates that a type represents a mathematical symbol and that its properties should be generated.</summary>
 [AttributeUsage(AttributeTargets.Struct, AllowMultiple = false)]
 public sealed class SymbolAttribute : Attribute;

@@ -29,9 +29,9 @@ using Mathematics.NET.Core.Operations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for matrices</summary>
-/// <typeparam name="T">The type that implements the interface</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/></typeparam>
+/// <summary>Defines support for matrices.</summary>
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IMatrix<T, U>
     : ITwoDimensionalArrayRepresentable<T, U>,
       IAdditionOperation<T, T>,
@@ -40,16 +40,16 @@ public interface IMatrix<T, U>
     where T : IMatrix<T, U>
     where U : IComplex<U>
 {
-    /// <summary>Represents a value that is not a matrix</summary>
-    /// <remarks>This will be returned, for instance, when trying to invert a singular matrix</remarks>
+    /// <summary>Represents a value that is not a matrix.</summary>
+    /// <remarks>This will be returned, for instance, when trying to invert a singular matrix.</remarks>
     static abstract T NaM { get; }
 
-    /// <summary>Check if a value is not a matrix</summary>
-    /// <param name="matrix">The value to check</param>
-    /// <returns><see langword="true"/> if the value is not a matrix; otherwise, <see langword="false"/></returns>
+    /// <summary>Check if a value is not a matrix.</summary>
+    /// <param name="matrix">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is not a matrix; otherwise, <see langword="false"/>.</returns>
     static abstract bool IsNaM(T matrix);
 
-    /// <summary>Compute the transpose of the matrix</summary>
-    /// <returns>The transpose</returns>
+    /// <summary>Compute the transpose of the matrix.</summary>
+    /// <returns>The transpose.</returns>
     T Transpose();
 }

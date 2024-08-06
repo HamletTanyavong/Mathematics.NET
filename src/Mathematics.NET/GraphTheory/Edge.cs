@@ -29,7 +29,7 @@ using Mathematics.NET.GraphTheory.Abstractions;
 
 namespace Mathematics.NET.GraphTheory;
 
-/// <summary>Represents an edge on a graph</summary>
+/// <summary>Represents an edge on a graph.</summary>
 public class Edge : IGraphComponent
 {
     public Edge(Node origin, Node destination)

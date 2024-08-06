@@ -32,7 +32,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators.Public.Symbols;
 
-/// <summary>Symbols builder</summary>
+/// <summary>Symbols builder.</summary>
 internal sealed class SymbolBuilder
 {
     private readonly NameSyntax _namespaceNameSyntax;

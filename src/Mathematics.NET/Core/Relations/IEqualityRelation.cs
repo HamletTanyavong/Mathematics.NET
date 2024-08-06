@@ -27,9 +27,9 @@
 
 namespace Mathematics.NET.Core.Relations;
 
-/// <summary>Defines a mechanism for determining equality of two values</summary>
-/// <typeparam name="TSelf">The type that implements the interface</typeparam>
-/// <typeparam name="TResult">The result type</typeparam>
+/// <summary>Defines a mechanism for determining equality of two values.</summary>
+/// <typeparam name="TSelf">The type that implements the interface.</typeparam>
+/// <typeparam name="TResult">The result type.</typeparam>
 public interface IEqualityRelation<TSelf, TResult>
     where TSelf : IEqualityRelation<TSelf, TResult>
 {

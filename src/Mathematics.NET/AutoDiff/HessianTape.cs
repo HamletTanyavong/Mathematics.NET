@@ -33,8 +33,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Represents a Hessian tape</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/></typeparam>
+/// <summary>Represents a Hessian tape.</summary>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 public record class HessianTape<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
@@ -50,7 +50,7 @@ public record class HessianTape<T> : ITape<T>
     }
 
     /// <summary>Create an instance of a Hessian tape that will hold an expected number of nodes.</summary>
-    /// <param name="n">An integer</param>
+    /// <param name="n">An integer.</param>
     public HessianTape(int n, bool isTracking = true)
     {
         _nodes = new(n);
@@ -117,14 +117,14 @@ public record class HessianTape<T> : ITape<T>
         => ReverseAccumulate(out gradient, T.One);
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
-    /// <param name="hessian">The Hessian</param>
+    /// <param name="hessian">The Hessian.</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulate(out hessian, T.One);
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
-    /// <param name="gradient">The gradient</param>
-    /// <param name="hessian">The Hessian</param>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="hessian">The Hessian.</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulate(out gradient, out hessian, T.One);
@@ -156,8 +156,8 @@ public record class HessianTape<T> : ITape<T>
     }
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
-    /// <param name="hessian">The Hessian</param>
-    /// <param name="seed">A seed value</param>
+    /// <param name="hessian">The Hessian.</param>
+    /// <param name="seed">A seed value.</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian, T seed)
     {
@@ -197,9 +197,9 @@ public record class HessianTape<T> : ITape<T>
     // TODO: use newer variations/versions of this algorithm since they are more performant
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
-    /// <param name="gradient">The gradient</param>
-    /// <param name="hessian">The Hessian</param>
-    /// <param name="seed">A seed value</param>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="hessian">The Hessian.</param>
+    /// <param name="seed">A seed value.</param>
     /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, T seed)
     {
@@ -814,11 +814,11 @@ public record class HessianTape<T> : ITape<T>
     //
 
     /// <summary>Add a node to the Hessian tape using a custom unary operation.</summary>
-    /// <param name="x">A variable</param>
-    /// <param name="f">A function</param>
-    /// <param name="df">The derivative of the function</param>
-    /// <param name="dfxx">The second derivative of the function</param>
-    /// <returns>A variable</returns>
+    /// <param name="x">A variable.</param>
+    /// <param name="f">A function.</param>
+    /// <param name="df">The derivative of the function.</param>
+    /// <param name="dfxx">The second derivative of the function.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> CustomOperation(Variable<T> x, Func<T, T> f, Func<T, T> dfx, Func<T, T> dfxx)
     {
         if (_isTracking)
@@ -830,15 +830,15 @@ public record class HessianTape<T> : ITape<T>
     }
 
     /// <summary>Add a node to the Hessian tape using a custom binary operation.</summary>
-    /// <param name="x">The first variable</param>
-    /// <param name="y">The second variable</param>
-    /// <param name="f">A function</param>
-    /// <param name="dfx">The first derivative of the function with respect to the first variable</param>
-    /// <param name="dfxx">The second derivative of the function with respect to the first variable</param>
-    /// <param name="dfxy">The second derivative of the function with respect to both variables</param>
-    /// <param name="dfy">The first derivative of the function with respect to the second variable</param>
-    /// <param name="dfyy">The second derivative of the function with respect to the second variable</param>
-    /// <returns>A variable</returns>
+    /// <param name="x">The first variable.</param>
+    /// <param name="y">The second variable.</param>
+    /// <param name="f">A function.</param>
+    /// <param name="dfx">The first derivative of the function with respect to the first variable.</param>
+    /// <param name="dfxx">The second derivative of the function with respect to the first variable.</param>
+    /// <param name="dfxy">The second derivative of the function with respect to both variables.</param>
+    /// <param name="dfy">The first derivative of the function with respect to the second variable.</param>
+    /// <param name="dfyy">The second derivative of the function with respect to the second variable.</param>
+    /// <returns>A variable.</returns>
     public Variable<T> CustomOperation(
         Variable<T> x,
         Variable<T> y,
