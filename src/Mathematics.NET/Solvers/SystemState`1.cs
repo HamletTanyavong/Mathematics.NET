@@ -31,7 +31,7 @@ namespace Mathematics.NET.Solvers;
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public struct SystemState<T>(Memory<T> system, T time)
+public sealed class SystemState<T>(Memory<T> system, T time)
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
     /// <summary>The system.</summary>
