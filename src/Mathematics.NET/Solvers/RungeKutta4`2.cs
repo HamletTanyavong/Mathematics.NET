@@ -51,7 +51,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
             var k1 = _function(_time, value);
             var k2 = _function(_time + 0.5 * _dt, value + 0.5 * k1 * _dt);
             var k3 = _function(_time + 0.5 * _dt, value + 0.5 * k2 * _dt);
-            var k4 = _function(_time + _dt, value + _dt * k3);
+            var k4 = _function(_time + _dt, value + k3 * _dt);
             value += _dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
         }
     }
@@ -69,7 +69,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
             var k1 = _function(time, value);
             var k2 = _function(time + 0.5 * dt, value + 0.5 * k1 * dt);
             var k3 = _function(time + 0.5 * dt, value + 0.5 * k2 * dt);
-            var k4 = _function(time + dt, value + dt * k3);
+            var k4 = _function(time + dt, value + k3 * dt);
             value += dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
         }
         state.Time += dt;
