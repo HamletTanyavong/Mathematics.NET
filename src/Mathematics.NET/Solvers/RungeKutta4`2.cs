@@ -59,7 +59,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
     private readonly Func<TN, TV, TV> _function = function;
 
     /// <inheritdoc cref="RungeKutta4{T}.Integrate(SystemState{T}, T)"/>
-    public void Integrate(ref SystemState<TV, TN> state, TN dt)
+    public void Integrate(SystemState<TV, TN> state, TN dt)
     {
         var system = state.System.Span;
         var time = state.Time;
