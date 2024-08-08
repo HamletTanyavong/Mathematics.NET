@@ -1,0 +1,1111 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct SphericalVector | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct SphericalVector | Mathematics.NET ">
+      
+      <meta name="description" content="Represents a 3D vector in spherical coordinates according to the physics convention.">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_LinearAlgebra_SphericalVector.md&amp;value=---%0Auid%3A%20Mathematics.NET.LinearAlgebra.SphericalVector%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.LinearAlgebra.SphericalVector">
+
+
+
+  <h1 id="Mathematics_NET_LinearAlgebra_SphericalVector" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector" class="text-break">
+Struct SphericalVector  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.LinearAlgebra.html">LinearAlgebra</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Represents a 3D vector in spherical coordinates according to the physics convention.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct SphericalVector : IVector&lt;SphericalVector, Real&gt;, IOneDimensionalArrayRepresentable&lt;SphericalVector, Real&gt;, IArrayRepresentable&lt;SphericalVector, Real&gt;, IEqualityRelation&lt;SphericalVector, bool&gt;, IMultiplicationOperation&lt;SphericalVector, Real, SphericalVector&gt;, IUnaryMinusOperation&lt;SphericalVector, SphericalVector&gt;, IUnaryPlusOperation&lt;SphericalVector, SphericalVector&gt;, IFormattable, IAdditionOperation&lt;SphericalVector, SphericalVector&gt;, ISubtractionOperation&lt;SphericalVector, SphericalVector&gt;, IInnerProductOperation&lt;SphericalVector, Real&gt;</code></pre>
+  </div>
+
+
+
+
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IVector-2.html">IVector</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IOneDimensionalArrayRepresentable-2.html">IOneDimensionalArrayRepresentable</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.IArrayRepresentable-2.html">IArrayRepresentable</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Relations.IEqualityRelation-2.html">IEqualityRelation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IMultiplicationOperation-3.html">IMultiplicationOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryMinusOperation-2.html">IUnaryMinusOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IUnaryPlusOperation-2.html">IUnaryPlusOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a></div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IAdditionOperation-2.html">IAdditionOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.ISubtractionOperation-2.html">ISubtractionOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>&gt;</div>
+      <div><a class="xref" href="Mathematics.NET.Core.Operations.IInnerProductOperation-2.html">IInnerProductOperation</a>&lt;<a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>, <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector__ctor_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.#ctor*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector__ctor_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.#ctor(Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  SphericalVector(Real, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create a 3D vector in spherical coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SphericalVector(Real r, Real theta, Real phi)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>r</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The radius.</p>
+</dd>
+    <dt><code>theta</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The polar angle.</p>
+</dd>
+    <dt><code>phi</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The azimuthal angle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Thrown when a negative value is supplied for the radius or when theta does not fall within 0 and π.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Phi" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Phi">
+  Phi
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The azimuthal angle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Phi</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_R" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.R">
+  R
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The radius.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real R</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Theta" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Theta">
+  Theta
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The polar angle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real Theta</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_Components_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Components*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Components" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Components">
+  Components
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The total number of components in the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Components { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_E1Components_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.E1Components*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_E1Components" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.E1Components">
+  E1Components
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The number of components in the one-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int E1Components { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_Item_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Item*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Item_System_Int32_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Item(System.Int32)">
+  this[int]
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the element at the specified index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Real this[int index] { readonly get; set; }</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The element at the index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_Cross_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Cross*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Cross_Mathematics_NET_LinearAlgebra_SphericalVector_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Cross(Mathematics.NET.LinearAlgebra.SphericalVector,Mathematics.NET.LinearAlgebra.SphericalVector)">
+  Cross(SphericalVector, SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the cross product of two vectors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector Cross(SphericalVector left, SphericalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd><p>The first vector.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd><p>The second vector.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd><p>The cross product.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_Equals_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Equals*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Equals_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Equals(Mathematics.NET.LinearAlgebra.SphericalVector)">
+  Equals(SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool Equals(SphericalVector other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_Equals_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Equals*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Equals_System_Object_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_FromCartesian_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.FromCartesian*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_FromCartesian_Mathematics_NET_LinearAlgebra_Vector3_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.FromCartesian(Mathematics.NET.LinearAlgebra.Vector3{Mathematics.NET.Core.Real})">
+  FromCartesian(Vector3&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L220"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a vector in cartesian cordinates to one in spherical coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector FromCartesian(Vector3&lt;Real&gt; x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>The vector to convert.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd><p>A spherical vector.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_LinearAlgebra_SphericalVector_FromCartesian_Mathematics_NET_LinearAlgebra_Vector3_Mathematics_NET_Core_Real___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The vector must have real components.</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_GetHashCode_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.GetHashCode*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_GetHashCode" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L184"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override readonly int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A 32-bit signed integer that is the hash code for this instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_InnerProduct_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.InnerProduct*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_InnerProduct_Mathematics_NET_LinearAlgebra_SphericalVector_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.InnerProduct(Mathematics.NET.LinearAlgebra.SphericalVector,Mathematics.NET.LinearAlgebra.SphericalVector)">
+  InnerProduct(SphericalVector, SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L227"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the inner product of two vectors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Real InnerProduct(SphericalVector left, SphericalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd><p>A vector of type <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd><p>A vector of type <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>A scalar.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_Norm_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Norm*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Norm" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Norm">
+  Norm()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L239"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the <span class="math">\(L^2\)</span>-norm of the vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Real Norm()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The norm.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_Normalize_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Normalize*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_Normalize" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.Normalize">
+  Normalize()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L241"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Normalize the vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SphericalVector Normalize()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd><p>The normalized vector.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_ToCartesian_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.ToCartesian*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_ToCartesian" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.ToCartesian">
+  ToCartesian()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Convert a vector in spherical coordinates to one in Cartesian coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Vector3&lt;Real&gt; ToCartesian()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A vector in Cartesian coordinates.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_ToString_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.ToString*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_ToString_System_String_System_IFormatProvider_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.ToString(System.String,System.IFormatProvider)">
+  ToString(string?, IFormatProvider?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L190"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Formats the value of the current instance using the specified format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string ToString(string? format, IFormatProvider? provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The format to use.</p>
+<p>-or-</p>
+<p>A null reference (<code>Nothing</code> in Visual Basic) to use the default format defined for the type of the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable">IFormattable</a> implementation.</p>
+</dd>
+    <dt><code>provider</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformatprovider">IFormatProvider</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The value of the current instance in the specified format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Addition_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Addition*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Addition_Mathematics_NET_LinearAlgebra_SphericalVector_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Addition(Mathematics.NET.LinearAlgebra.SphericalVector,Mathematics.NET.LinearAlgebra.SphericalVector)">
+  operator +(SphericalVector, SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L139"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector operator +(SphericalVector left, SphericalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Equality_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Equality*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Equality_Mathematics_NET_LinearAlgebra_SphericalVector_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Equality(Mathematics.NET.LinearAlgebra.SphericalVector,Mathematics.NET.LinearAlgebra.SphericalVector)">
+  operator ==(SphericalVector, SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(SphericalVector left, SphericalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Inequality_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Inequality*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Inequality_Mathematics_NET_LinearAlgebra_SphericalVector_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Inequality(Mathematics.NET.LinearAlgebra.SphericalVector,Mathematics.NET.LinearAlgebra.SphericalVector)">
+  operator !=(SphericalVector, SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(SphericalVector left, SphericalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Multiply_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Multiply*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Multiply_Mathematics_NET_Core_Real_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Multiply(Mathematics.NET.Core.Real,Mathematics.NET.LinearAlgebra.SphericalVector)">
+  operator *(Real, SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector operator *(Real left, SphericalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Multiply_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Multiply*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Multiply_Mathematics_NET_LinearAlgebra_SphericalVector_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Multiply(Mathematics.NET.LinearAlgebra.SphericalVector,Mathematics.NET.Core.Real)">
+  operator *(SphericalVector, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector operator *(SphericalVector left, Real right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Subtraction_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Subtraction*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_Subtraction_Mathematics_NET_LinearAlgebra_SphericalVector_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_Subtraction(Mathematics.NET.LinearAlgebra.SphericalVector,Mathematics.NET.LinearAlgebra.SphericalVector)">
+  operator -(SphericalVector, SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector operator -(SphericalVector left, SphericalVector right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_UnaryNegation_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_UnaryNegation*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_UnaryNegation_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_UnaryNegation(Mathematics.NET.LinearAlgebra.SphericalVector)">
+  operator -(SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector operator -(SphericalVector vector)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>vector</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_SphericalVector_op_UnaryPlus_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_UnaryPlus*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_SphericalVector_op_UnaryPlus_Mathematics_NET_LinearAlgebra_SphericalVector_" data-uid="Mathematics.NET.LinearAlgebra.SphericalVector.op_UnaryPlus(Mathematics.NET.LinearAlgebra.SphericalVector)">
+  operator +(SphericalVector)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/SphericalVector.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SphericalVector operator +(SphericalVector vector)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>vector</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.LinearAlgebra.SphericalVector.html">SphericalVector</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

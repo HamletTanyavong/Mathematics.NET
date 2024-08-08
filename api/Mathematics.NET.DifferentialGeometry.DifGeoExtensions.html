@@ -1,0 +1,898 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class DifGeoExtensions | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DifGeoExtensions | Mathematics.NET ">
+      
+      <meta name="description" content="A class containing difgeo extension methods.">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_DifferentialGeometry_DifGeoExtensions.md&amp;value=---%0Auid%3A%20Mathematics.NET.DifferentialGeometry.DifGeoExtensions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions">
+
+
+
+  <h1 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions" class="text-break">
+Class DifGeoExtensions  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.DifferentialGeometry.html">DifferentialGeometry</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A class containing difgeo extension methods.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class DifGeoExtensions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">DifGeoExtensions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Complex},Mathematics.NET.Core.Complex@,Mathematics.NET.Core.Complex@)">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Complex&gt;, in Complex, in Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from complex seed values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor2&lt;Complex, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Complex&gt; tape, in Complex x0Seed, in Complex x1Seed) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x0Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The zeroth seed value.</p>
+</dd>
+    <dt><code>x1Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The first seed value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-2.html">AutoDiffTensor2</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Complex},Mathematics.NET.Core.Complex@,Mathematics.NET.Core.Complex@,Mathematics.NET.Core.Complex@)">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Complex&gt;, in Complex, in Complex, in Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from complex seed values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor3&lt;Complex, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Complex&gt; tape, in Complex x0Seed, in Complex x1Seed, in Complex x2Seed) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x0Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The zeroth seed value.</p>
+</dd>
+    <dt><code>x1Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The first seed value.</p>
+</dd>
+    <dt><code>x2Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The second seed value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-2.html">AutoDiffTensor3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Complex},Mathematics.NET.Core.Complex@,Mathematics.NET.Core.Complex@,Mathematics.NET.Core.Complex@,Mathematics.NET.Core.Complex@)">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Complex&gt;, in Complex, in Complex, in Complex, in Complex)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L160"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from complex seed values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor4&lt;Complex, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Complex&gt; tape, in Complex x0Seed, in Complex x1Seed, in Complex x2Seed, in Complex x3Seed) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x0Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The zeroth seed value.</p>
+</dd>
+    <dt><code>x1Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The first seed value.</p>
+</dd>
+    <dt><code>x2Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The second seed value.</p>
+</dd>
+    <dt><code>x3Seed</code> <a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a></dt>
+    <dd><p>The third seed value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-2.html">AutoDiffTensor4</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Complex__Mathematics_NET_LinearAlgebra_Vector2_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Complex},Mathematics.NET.LinearAlgebra.Vector2{Mathematics.NET.Core.Complex})">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Complex&gt;, Vector2&lt;Complex&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from a complex vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor2&lt;Complex, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Complex&gt; tape, Vector2&lt;Complex&gt; x) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector2-1.html">Vector2</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A vector of seed values.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-2.html">AutoDiffTensor2</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Complex__Mathematics_NET_LinearAlgebra_Vector3_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Complex},Mathematics.NET.LinearAlgebra.Vector3{Mathematics.NET.Core.Complex})">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Complex&gt;, Vector3&lt;Complex&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from a complex vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor3&lt;Complex, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Complex&gt; tape, Vector3&lt;Complex&gt; x) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A vector of seed values.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-2.html">AutoDiffTensor3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Complex__Mathematics_NET_LinearAlgebra_Vector4_Mathematics_NET_Core_Complex__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Complex},Mathematics.NET.LinearAlgebra.Vector4{Mathematics.NET.Core.Complex})">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Complex&gt;, Vector4&lt;Complex&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from a complex vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor4&lt;Complex, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Complex&gt; tape, Vector4&lt;Complex&gt; x) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector4-1.html">Vector4</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>&gt;</dt>
+    <dd><p>A vector of seed values.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-2.html">AutoDiffTensor4</a>&lt;<a class="xref" href="Mathematics.NET.Core.Complex.html">Complex</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Real__Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Real},Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Real&gt;, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from real seed values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor2&lt;Real, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Real&gt; tape, Real x0Seed, Real x1Seed) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x0Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The zeroth seed value.</p>
+</dd>
+    <dt><code>x1Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The first seed value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-2.html">AutoDiffTensor2</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Real__Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Real},Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Real&gt;, Real, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from real seed values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor3&lt;Real, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Real&gt; tape, Real x0Seed, Real x1Seed, Real x2Seed) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x0Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The zeroth seed value.</p>
+</dd>
+    <dt><code>x1Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The first seed value.</p>
+</dd>
+    <dt><code>x2Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The second seed value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-2.html">AutoDiffTensor3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Real__Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_Mathematics_NET_Core_Real_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Real},Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real,Mathematics.NET.Core.Real)">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Real&gt;, Real, Real, Real, Real)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from real seed values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor4&lt;Real, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Real&gt; tape, Real x0Seed, Real x1Seed, Real x2Seed, Real x3Seed) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x0Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The zeroth seed value.</p>
+</dd>
+    <dt><code>x1Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The first seed value.</p>
+</dd>
+    <dt><code>x2Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The second seed value.</p>
+</dd>
+    <dt><code>x3Seed</code> <a class="xref" href="Mathematics.NET.Core.Real.html">Real</a></dt>
+    <dd><p>The third seed value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-2.html">AutoDiffTensor4</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Real__Mathematics_NET_LinearAlgebra_Vector2_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Real},Mathematics.NET.LinearAlgebra.Vector2{Mathematics.NET.Core.Real})">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Real&gt;, Vector2&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from a real vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor2&lt;Real, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Real&gt; tape, Vector2&lt;Real&gt; x) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector2-1.html">Vector2</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A vector of seed values.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-2.html">AutoDiffTensor2</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Real__Mathematics_NET_LinearAlgebra_Vector3_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Real},Mathematics.NET.LinearAlgebra.Vector3{Mathematics.NET.Core.Real})">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Real&gt;, Vector3&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from a real vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor3&lt;Real, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Real&gt; tape, Vector3&lt;Real&gt; x) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector3-1.html">Vector3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A vector of seed values.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-2.html">AutoDiffTensor3</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_CreateAutoDiffTensor__1_Mathematics_NET_AutoDiff_ITape_Mathematics_NET_Core_Real__Mathematics_NET_LinearAlgebra_Vector4_Mathematics_NET_Core_Real__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.CreateAutoDiffTensor``1(Mathematics.NET.AutoDiff.ITape{Mathematics.NET.Core.Real},Mathematics.NET.LinearAlgebra.Vector4{Mathematics.NET.Core.Real})">
+  CreateAutoDiffTensor&lt;T&gt;(ITape&lt;Real&gt;, Vector4&lt;Real&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create an autodiff, rank-one tensor from a real vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AutoDiffTensor4&lt;Real, T&gt; CreateAutoDiffTensor&lt;T&gt;(this ITape&lt;Real&gt; tape, Vector4&lt;Real&gt; x) where T : IIndex</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>tape</code> <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.AutoDiff.ITape-1.html">ITape&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>x</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.Vector4-1.html">Vector4</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>&gt;</dt>
+    <dd><p>A vector of seed values.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-2.html">AutoDiffTensor4</a>&lt;<a class="xref" href="Mathematics.NET.Core.Real.html">Real</a>, T&gt;</dt>
+    <dd><p>A rank-one tensor of four variables.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>An index.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_Inverse_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.Inverse*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_Inverse__4_Mathematics_NET_DifferentialGeometry_MetricTensor___0___1_Mathematics_NET_DifferentialGeometry_Lower___2___3___" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.Inverse``4(Mathematics.NET.DifferentialGeometry.MetricTensor{``0,``1,Mathematics.NET.DifferentialGeometry.Lower,``2,``3}@)">
+  Inverse&lt;TSM, TN, TI1N, TI2N&gt;(ref MetricTensor&lt;TSM, TN, Lower, TI1N, TI2N&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the inverse of a metric tensor with lower indices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static MetricTensor&lt;TSM, TN, Upper, TI1N, TI2N&gt; Inverse&lt;TSM, TN, TI1N, TI2N&gt;(this ref MetricTensor&lt;TSM, TN, Lower, TI1N, TI2N&gt; metric) where TSM : ISquareMatrix&lt;TSM, TN&gt; where TN : IComplex&lt;TN&gt;, IDifferentiableFunctions&lt;TN&gt; where TI1N : ISymbol where TI2N : ISymbol</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>metric</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.MetricTensor-5.html">MetricTensor</a>&lt;TSM, TN, <a class="xref" href="Mathematics.NET.DifferentialGeometry.Lower.html">Lower</a>, TI1N, TI2N&gt;</dt>
+    <dd><p>The metric tensor.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.MetricTensor-5.html">MetricTensor</a>&lt;TSM, TN, <a class="xref" href="Mathematics.NET.DifferentialGeometry.Upper.html">Upper</a>, TI1N, TI2N&gt;</dt>
+    <dd><p>A metric tensor with upper indices.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TSM</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.ISquareMatrix-2.html">ISquareMatrix&lt;T, U&gt;</a>.</p>
+</dd>
+    <dt><code>TN</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a> and <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html">IDifferentiableFunctions&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>TI1N</code></dt>
+    <dd><p>The first index of the metric tensor.</p>
+</dd>
+    <dt><code>TI2N</code></dt>
+    <dd><p>The second index of the metric tensor.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_Inverse_" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.Inverse*"></a>
+
+  <h3 id="Mathematics_NET_DifferentialGeometry_DifGeoExtensions_Inverse__4_Mathematics_NET_DifferentialGeometry_MetricTensor___0___1_Mathematics_NET_DifferentialGeometry_Upper___2___3__" data-uid="Mathematics.NET.DifferentialGeometry.DifGeoExtensions.Inverse``4(Mathematics.NET.DifferentialGeometry.MetricTensor{``0,``1,Mathematics.NET.DifferentialGeometry.Upper,``2,``3})">
+  Inverse&lt;TSM, TN, TI1N, TI2N&gt;(MetricTensor&lt;TSM, TN, Upper, TI1N, TI2N&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/DifferentialGeometry/DifGeoExtensions.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the inverse of a metric tensor with upper indices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static MetricTensor&lt;TSM, TN, Lower, TI1N, TI2N&gt; Inverse&lt;TSM, TN, TI1N, TI2N&gt;(this MetricTensor&lt;TSM, TN, Upper, TI1N, TI2N&gt; metric) where TSM : ISquareMatrix&lt;TSM, TN&gt; where TN : IComplex&lt;TN&gt;, IDifferentiableFunctions&lt;TN&gt; where TI1N : ISymbol where TI2N : ISymbol</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>metric</code> <a class="xref" href="Mathematics.NET.DifferentialGeometry.MetricTensor-5.html">MetricTensor</a>&lt;TSM, TN, <a class="xref" href="Mathematics.NET.DifferentialGeometry.Upper.html">Upper</a>, TI1N, TI2N&gt;</dt>
+    <dd><p>The metric tensor.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Mathematics.NET.DifferentialGeometry.MetricTensor-5.html">MetricTensor</a>&lt;TSM, TN, <a class="xref" href="Mathematics.NET.DifferentialGeometry.Lower.html">Lower</a>, TI1N, TI2N&gt;</dt>
+    <dd><p>A metric tensor with lower indices.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TSM</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.LinearAlgebra.Abstractions.ISquareMatrix-2.html">ISquareMatrix&lt;T, U&gt;</a>.</p>
+</dd>
+    <dt><code>TN</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a> and <a class="xref" href="Mathematics.NET.Core.IDifferentiableFunctions-1.html">IDifferentiableFunctions&lt;T&gt;</a>.</p>
+</dd>
+    <dt><code>TI1N</code></dt>
+    <dd><p>The first index of the metric tensor.</p>
+</dd>
+    <dt><code>TI2N</code></dt>
+    <dd><p>The second index of the metric tensor.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

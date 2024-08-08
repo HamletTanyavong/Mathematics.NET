@@ -1,0 +1,390 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class LinAlg | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class LinAlg | Mathematics.NET ">
+      
+      <meta name="description" content="A class containing linear algebra operations.">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_LinearAlgebra_LinAlg.md&amp;value=---%0Auid%3A%20Mathematics.NET.LinearAlgebra.LinAlg%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.LinearAlgebra.LinAlg">
+
+
+
+  <h1 id="Mathematics_NET_LinearAlgebra_LinAlg" data-uid="Mathematics.NET.LinearAlgebra.LinAlg" class="text-break">
+Class LinAlg  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/LinAlg.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.LinearAlgebra.html">LinearAlgebra</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A class containing linear algebra operations.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class LinAlg</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">LinAlg</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Mathematics_NET_LinearAlgebra_LinAlg_EigVals_" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.EigVals*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_LinAlg_EigVals__1_CommunityToolkit_HighPerformance_Span2D___0__Mathematics_NET_LinearAlgebra_LinAlg_QRDecompositionMethod___0__System_Int32_" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.EigVals``1(CommunityToolkit.HighPerformance.Span2D{``0},Mathematics.NET.LinearAlgebra.LinAlg.QRDecompositionMethod{``0},System.Int32)">
+  EigVals&lt;T&gt;(Span2D&lt;T&gt;, QRDecompositionMethod&lt;T&gt;, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/LinAlg.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compute the eigenvalues of a matrix using a QR decomposition method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Span&lt;T&gt; EigVals&lt;T&gt;(Span2D&lt;T&gt; matrix, LinAlg.QRDecompositionMethod&lt;T&gt; method, int iterations = 10) where T : IComplex&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>matrix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.span2d-1">Span2D</a>&lt;T&gt;</dt>
+    <dd><p>A matrix.</p>
+</dd>
+    <dt><code>method</code> <a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlg.html">LinAlg</a>.<a class="xref" href="Mathematics.NET.LinearAlgebra.LinAlg.QRDecompositionMethod-1.html">QRDecompositionMethod</a>&lt;T&gt;</dt>
+    <dd><p>A QR decomposition method.</p>
+</dd>
+    <dt><code>iterations</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.span-1">Span</a>&lt;T&gt;</dt>
+    <dd><p>The eigenvalues of the given matrix.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_LinearAlgebra_LinAlg_EigVals__1_CommunityToolkit_HighPerformance_Span2D___0__Mathematics_NET_LinearAlgebra_LinAlg_QRDecompositionMethod___0__System_Int32__examples">Examples</h4>
+  <p>Suppose we want to find the eigenvalues of a 2x2 matrix. We can write the following to get them:</p>
+<pre><code class="lang-cs">Span2D&lt;Complex&gt; matrix = new Complex[2, 2]
+{
+    { new(1, 2), new(2, 3) },
+    { new(1, -2), new(3, 5) }
+}
+var eigvals = LinAlg.EigVals(matrix, LinAlg.QRGramSchmidt);</code></pre>
+<p>This method returns a span of the eigenvalues which we can use for other computations. We can also specify the number of
+iterations as well if the values do not converge quickly enough. To display the result in the console, write</p>
+<pre><code class="lang-cs">Console.WriteLine(eigvals.ToDisplayString());</code></pre>
+
+
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_LinAlg_MatMulByScalarParallel_" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.MatMulByScalarParallel*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_LinAlg_MatMulByScalarParallel__1___0_CommunityToolkit_HighPerformance_Memory2D___0__" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.MatMulByScalarParallel``1(``0,CommunityToolkit.HighPerformance.Memory2D{``0})">
+  MatMulByScalarParallel&lt;T&gt;(T, Memory2D&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/LinAlg.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Multiply a matrix by a scalar in parallel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void MatMulByScalarParallel&lt;T&gt;(T scalar, Memory2D&lt;T&gt; matrix) where T : IComplex&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>scalar</code> <span class="xref">T</span></dt>
+    <dd><p>A scalar.</p>
+</dd>
+    <dt><code>matrix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.memory2d-1">Memory2D</a>&lt;T&gt;</dt>
+    <dd><p>A matrix.</p>
+</dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="Mathematics_NET_LinearAlgebra_LinAlg_MatMulByScalarParallel__1___0_CommunityToolkit_HighPerformance_Memory2D___0___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This process overwrites the original matrix.</p>
+</div>
+
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_LinAlg_MatMul_" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.MatMul*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_LinAlg_MatMul__1_CommunityToolkit_HighPerformance_Span2D___0__CommunityToolkit_HighPerformance_Span2D___0__" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.MatMul``1(CommunityToolkit.HighPerformance.Span2D{``0},CommunityToolkit.HighPerformance.Span2D{``0})">
+  MatMul&lt;T&gt;(Span2D&lt;T&gt;, Span2D&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/LinAlg.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Multiply two matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Span2D&lt;T&gt; MatMul&lt;T&gt;(Span2D&lt;T&gt; left, Span2D&lt;T&gt; right) where T : IComplex&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.span2d-1">Span2D</a>&lt;T&gt;</dt>
+    <dd><p>The left matrix.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.span2d-1">Span2D</a>&lt;T&gt;</dt>
+    <dd><p>The right matrix.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.span2d-1">Span2D</a>&lt;T&gt;</dt>
+    <dd><p>The result of the operation if the dimensions of the matrices are valid; otherwise, throw an exception.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Cannot multiply matrices of incompatible dimensions.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Mathematics_NET_LinearAlgebra_LinAlg_QRGramSchmidt_" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.QRGramSchmidt*"></a>
+
+  <h3 id="Mathematics_NET_LinearAlgebra_LinAlg_QRGramSchmidt__1_CommunityToolkit_HighPerformance_Span2D___0__CommunityToolkit_HighPerformance_Span2D___0___CommunityToolkit_HighPerformance_Span2D___0___" data-uid="Mathematics.NET.LinearAlgebra.LinAlg.QRGramSchmidt``1(CommunityToolkit.HighPerformance.Span2D{``0},CommunityToolkit.HighPerformance.Span2D{``0}@,CommunityToolkit.HighPerformance.Span2D{``0}@)">
+  QRGramSchmidt&lt;T&gt;(Span2D&lt;T&gt;, out Span2D&lt;T&gt;, out Span2D&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/LinearAlgebra/LinAlg.cs/#L166"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Perform QR decomposition on a matrix using the modified Gram-Schmidt process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void QRGramSchmidt&lt;T&gt;(Span2D&lt;T&gt; matrix, out Span2D&lt;T&gt; Q, out Span2D&lt;T&gt; R) where T : IComplex&lt;T&gt;</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>matrix</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.span2d-1">Span2D</a>&lt;T&gt;</dt>
+    <dd><p>An input matrix.</p>
+</dd>
+    <dt><code>Q</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.span2d-1">Span2D</a>&lt;T&gt;</dt>
+    <dd><p>The resulting orthogonal matrix.</p>
+</dd>
+    <dt><code>R</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/communitytoolkit.highperformance.span2d-1">Span2D</a>&lt;T&gt;</dt>
+    <dd><p>The resulting upper triangular matrix.</p>
+</dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>A type that implements <a class="xref" href="Mathematics.NET.Core.IComplex-1.html">IComplex&lt;T&gt;</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.dividebyzeroexception">DivideByZeroException</a></dt>
+    <dd><p>One of the columns is not linearly independent from one or more of the others.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
