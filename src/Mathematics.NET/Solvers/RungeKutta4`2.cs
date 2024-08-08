@@ -39,7 +39,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
 {
-    private readonly struct RK4StepAction(Func<TN, TV, TV> function, TN time, TN dt) : IRefAction<TV>
+    private readonly struct RK4IntegrateAction(Func<TN, TV, TV> function, TN time, TN dt) : IRefAction<TV>
     {
         private readonly Func<TN, TV, TV> _function = function;
         private readonly TN _time = time;
@@ -51,7 +51,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
             var k1 = _function(_time, value);
             var k2 = _function(_time + 0.5 * _dt, value + 0.5 * k1 * _dt);
             var k3 = _function(_time + 0.5 * _dt, value + 0.5 * k2 * _dt);
-            var k4 = _function(_time + _dt, value + _dt * k3);
+            var k4 = _function(_time + _dt, value + k3 * _dt);
             value += _dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
         }
     }
@@ -59,7 +59,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
     private readonly Func<TN, TV, TV> _function = function;
 
     /// <inheritdoc cref="RungeKutta4{T}.Integrate(SystemState{T}, T)"/>
-    public void Integrate(ref SystemState<TV, TN> state, TN dt)
+    public void Integrate(SystemState<TV, TN> state, TN dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -69,7 +69,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
             var k1 = _function(time, value);
             var k2 = _function(time + 0.5 * dt, value + 0.5 * k1 * dt);
             var k3 = _function(time + 0.5 * dt, value + 0.5 * k2 * dt);
-            var k4 = _function(time + dt, value + dt * k3);
+            var k4 = _function(time + dt, value + k3 * dt);
             value += dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
         }
         state.Time += dt;
@@ -78,7 +78,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
     /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(SystemState{T}, T)"/>
     public void IntegrateParallel(SystemState<TV, TN> state, TN dt)
     {
-        ParallelHelper.ForEach(state.System, new RK4StepAction(_function, state.Time, dt));
+        ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;
     }
 }

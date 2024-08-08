@@ -1,4 +1,4 @@
-﻿// <copyright file="IRankOneTensor.cs" company="Mathematics.NET">
+﻿// <copyright file="SystemState`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,29 +25,27 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Operations;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.DifferentialGeometry.Abstractions;
+namespace Mathematics.NET.Solvers;
 
-/// <summary>Defines support for rank-one tensors and similar mathematical objects.</summary>
-/// <typeparam name="TR1T">The type that implements the interface.</typeparam>
-/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-/// <typeparam name="TI">An index.</typeparam>
-public interface IRankOneTensor<TR1T, TV, TN, TI>
-    : IOneDimensionalArrayRepresentable<TR1T, TN>,
-      IAdditionOperation<TR1T, TR1T>,
-      ISubtractionOperation<TR1T, TR1T>
+/// <summary>Represents the state of a system.</summary>
+/// <typeparam name="TR1T">A rank-one tensor.</typeparam>
+/// <typeparam name="TV">The backing type of the tensor.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TI">The index of the tensor.</typeparam>
+/// <param name="system">The system.</param>
+/// <param name="time">The time.</param>
+public sealed class SystemState<TR1T, TV, TN, TI>(Memory<TR1T> system, TN time)
     where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex
 {
-    /// <summary>Get the index associated with this rank one tensor.</summary>
-    IIndex I1 { get; }
+    /// <inheritdoc cref="SystemState{T}.System"/>
+    public Memory<TR1T> System = system;
 
-    /// <summary>Convert a value that implements <see cref="IVector{T, U}"/> to one of type <typeparamref name="TR1T"/>.</summary>
-    /// <param name="value">The value to convert.</param>
-    static abstract implicit operator TR1T(TV value);
+    /// <inheritdoc cref="SystemState{T}.Time"/>
+    public TN Time = time;
 }

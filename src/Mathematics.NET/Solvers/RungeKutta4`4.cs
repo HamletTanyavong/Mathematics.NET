@@ -1,4 +1,4 @@
-﻿// <copyright file="RungeKutta4`1.cs" company="Mathematics.NET">
+﻿// <copyright file="RungeKutta4`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,23 +27,31 @@
 
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Helpers;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents a fourth-order Runge-Kutta solver.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TR1T">A rank-one tensor.</typeparam>
+/// <typeparam name="TV">The backing type of the tensor.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TI">The index of the tensor.</typeparam>
 /// <param name="function">A function to use for the integration step.</param>
-public sealed class RungeKutta4<T>(Func<T, T, T> function)
-    where T : IComplex<T>, IDifferentiableFunctions<T>
+public sealed class RungeKutta4<TR1T, TV, TN, TI>(Func<TN, TR1T, TR1T> function)
+    where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
+    where TV : IVector<TV, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TI : IIndex
 {
-    private readonly struct RK4IntegrateAction(Func<T, T, T> function, T time, T dt) : IRefAction<T>
+    private readonly struct RK4IntegrateAction(Func<TN, TR1T, TR1T> function, TN time, TN dt) : IRefAction<TR1T>
     {
-        private readonly Func<T, T, T> _function = function;
-        private readonly T _time = time;
-        private readonly T _dt = dt;
+        private readonly Func<TN, TR1T, TR1T> _function = function;
+        private readonly TN _time = time;
+        private readonly TN _dt = dt;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invoke(ref T value)
+        public void Invoke(ref TR1T value)
         {
             var k1 = _function(_time, value);
             var k2 = _function(_time + 0.5 * _dt, value + 0.5 * k1 * _dt);
@@ -53,12 +61,10 @@ public sealed class RungeKutta4<T>(Func<T, T, T> function)
         }
     }
 
-    private readonly Func<T, T, T> _function = function;
+    private readonly Func<TN, TR1T, TR1T> _function = function;
 
-    /// <summary>Solve for the system state.</summary>
-    /// <param name="state">The system state.</param>
-    /// <param name="dt">The time step.</param>
-    public void Integrate(SystemState<T> state, T dt)
+    /// <inheritdoc cref="RungeKutta4{T}.Integrate(SystemState{T}, T)"/>
+    public void Integrate(SystemState<TR1T, TV, TN, TI> state, TN dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -74,10 +80,8 @@ public sealed class RungeKutta4<T>(Func<T, T, T> function)
         state.Time += dt;
     }
 
-    /// <summary>Solve for the system state in parallel.</summary>
-    /// <param name="state">The system state.</param>
-    /// <param name="dt">The time step.</param>
-    public void IntegrateParallel(SystemState<T> state, T dt)
+    /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(SystemState{T}, T)"/>
+    public void IntegrateParallel(SystemState<TR1T, TV, TN, TI> state, TN dt)
     {
         ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;

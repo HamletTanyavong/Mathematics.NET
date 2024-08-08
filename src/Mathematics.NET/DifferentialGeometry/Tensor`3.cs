@@ -40,10 +40,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="TI">An index.</typeparam>
 /// <param name="vector">A backing vector.</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<TV, TN, TI>(TV vector)
-    : IRankOneTensor<Tensor<TV, TN, TI>, TV, TN, TI>,
-      IAdditionOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>,
-      ISubtractionOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>
+public struct Tensor<TV, TN, TI>(TV vector) : IRankOneTensor<Tensor<TV, TN, TI>, TV, TN, TI>
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex
