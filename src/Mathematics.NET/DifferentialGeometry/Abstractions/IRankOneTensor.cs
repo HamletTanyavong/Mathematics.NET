@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -34,7 +35,10 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
-public interface IRankOneTensor<TR1T, TV, TN, TI> : IOneDimensionalArrayRepresentable<TR1T, TN>
+public interface IRankOneTensor<TR1T, TV, TN, TI>
+    : IOneDimensionalArrayRepresentable<TR1T, TN>,
+      IAdditionOperation<TR1T, TR1T>,
+      ISubtractionOperation<TR1T, TR1T>
     where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
