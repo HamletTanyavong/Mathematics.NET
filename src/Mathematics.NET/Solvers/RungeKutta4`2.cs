@@ -39,7 +39,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
 {
-    private readonly struct RK4StepAction(Func<TN, TV, TV> function, TN time, TN dt) : IRefAction<TV>
+    private readonly struct RK4IntegrateAction(Func<TN, TV, TV> function, TN time, TN dt) : IRefAction<TV>
     {
         private readonly Func<TN, TV, TV> _function = function;
         private readonly TN _time = time;
@@ -78,7 +78,7 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
     /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(SystemState{T}, T)"/>
     public void IntegrateParallel(SystemState<TV, TN> state, TN dt)
     {
-        ParallelHelper.ForEach(state.System, new RK4StepAction(_function, state.Time, dt));
+        ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;
     }
 }
