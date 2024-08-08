@@ -36,7 +36,7 @@ namespace Mathematics.NET.Solvers;
 public sealed class RungeKutta4<T>(Func<T, T, T> function)
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
-    private readonly struct RK4StepAction(Func<T, T, T> function, T time, T dt) : IRefAction<T>
+    private readonly struct RK4IntegrateAction(Func<T, T, T> function, T time, T dt) : IRefAction<T>
     {
         private readonly Func<T, T, T> _function = function;
         private readonly T _time = time;
@@ -79,7 +79,7 @@ public sealed class RungeKutta4<T>(Func<T, T, T> function)
     /// <param name="dt">The time step.</param>
     public void IntegrateParallel(SystemState<T> state, T dt)
     {
-        ParallelHelper.ForEach(state.System, new RK4StepAction(_function, state.Time, dt));
+        ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;
     }
 }
