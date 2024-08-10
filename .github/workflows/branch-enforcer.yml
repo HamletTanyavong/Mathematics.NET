@@ -12,15 +12,15 @@ jobs:
     name: Check Incoming Branch
     runs-on: ubuntu-latest
     steps:
-      - name: Print Current Branch
-        run: echo "Current branch is ${{ github.head_ref }}"
+    - name: Print Current Branch
+      run: echo "Current branch is ${{ github.head_ref }}"
 
-      - name: Validate Branch
-        run: |
-          if [ '${{ github.head_ref }}' == 'dev' ]; then
-            echo "Valid incoming branch"
-            exit 0
-          else
-            echo "Can only merge to 'main' branch from 'dev' branch"
-            exit 1
-          fi
+    - name: Validate Branch
+      run: |
+        if [ '${{ github.head_ref }}' == 'dev' ]; then
+          echo "Valid incoming branch"
+          exit 0
+        else
+          echo "Can only merge to 'main' branch from 'dev' branch"
+          exit 1
+        fi
