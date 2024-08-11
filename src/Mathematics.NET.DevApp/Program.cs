@@ -26,8 +26,16 @@
 // </copyright>
 
 using Mathematics.NET.Core;
+using Microsoft.Extensions.Logging;
 
 Console.WriteLine("Mathematics.NET Development Application");
 Console.WriteLine();
 
-// Add code here for quick testing and verification.
+// Configure logging for the development application.
+
+using var loggerFactory = LoggerFactory.Create(builder =>
+{
+    _ = builder.AddConsole();
+});
+
+// Add code below for quick testing and verification.
