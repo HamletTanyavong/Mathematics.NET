@@ -7,6 +7,8 @@
 /src/Mathematics.NET.DevApp/*
 !/src/Mathematics.NET.DevApp/Mathematics.NET.DevApp.csproj
 !/src/Mathematics.NET.DevApp/Program.cs
+!/src/Mathematics.NET.DevApp/README.md
+
 /tests/**/Snapshots/**/*.received.*
 
 # User-specific files
