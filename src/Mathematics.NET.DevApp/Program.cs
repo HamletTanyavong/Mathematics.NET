@@ -26,16 +26,34 @@
 // </copyright>
 
 using Mathematics.NET.Core;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 Console.WriteLine("Mathematics.NET Development Application");
 Console.WriteLine();
 
-// Configure logging for the development application.
+#region Development Application Configuration
 
-using var loggerFactory = LoggerFactory.Create(builder =>
-{
-    _ = builder.AddConsole();
-});
+var builder = Host.CreateApplicationBuilder();
 
-// Add code below for quick testing and verification.
+// Configure services.
+builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
+builder.Services.AddHttpClient();
+
+// Configure logging.
+builder.Logging.AddFilter(logLevel => logLevel == LogLevel.Information);
+
+// Build the application.
+var app = builder.Build();
+
+#endregion
+
+#region Useful Services
+
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
+
+#endregion
+
+// Run the application and/or add code below for quick testing and verification.
