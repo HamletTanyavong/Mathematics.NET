@@ -20,6 +20,13 @@ insert_final_newline = true
 # Other
 trim_trailing_whitespace = true
 
+### OpenCL Files ###
+[*.cl]
+
+# Indentation and spacing
+indent_size = 4
+indent_style = space
+
 ### C# Files ###
 [*.cs]
 
