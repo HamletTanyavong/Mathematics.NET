@@ -28,4 +28,11 @@
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Defines support for GPU compute services.</summary>
-public interface IComputeService : IDisposable;
+public interface IComputeService : IDisposable
+{
+    /// <summary>Multiply a vector by a scalar.</summary>
+    /// <param name="vector">A vector.</param>
+    /// <param name="scalar">A scalar.</param>
+    /// <returns>A new vector.</returns>
+    ReadOnlySpan<Real> VecMulScalar(ReadOnlySpan<Real> vector, Real scalar);
+}
