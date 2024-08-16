@@ -155,8 +155,16 @@ public sealed class OpenCLService : IComputeService
 
     public ReadOnlySpan<Device> Devices => _devices.Span;
 
+    public Program Program => _program;
+
     //
     // Methods
+    //
+
+    public KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel) => new(_logger, _cl, device, kernel);
+
+    //
+    // Interface implementations.
     //
 
     public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, ReadOnlySpan<Real> vector, Real scalar)
@@ -198,9 +206,9 @@ public sealed class OpenCLService : IComputeService
 #endif
 
                 // Enqueue ndrange kernel.
-                // TODO: Allow user to set work sizes.
+                // TODO: Allow user to set work sizes or set automatically.
                 var globalWorkSize = stackalloc nuint[1] { (nuint)length };
-                var localWorkSize = stackalloc nuint[1] { 1024 };
+                var localWorkSize = stackalloc nuint[1] { 1024 }; // TODO: Get rid of this hard-coded number.
 
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
 
