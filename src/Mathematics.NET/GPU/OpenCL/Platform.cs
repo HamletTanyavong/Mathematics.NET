@@ -38,7 +38,7 @@ public sealed class Platform : IOpenCLObject
     // Api.
     private readonly CL _cl;
 
-    // Device information.
+    // Platform information.
     public readonly string Vendor;
 
     public unsafe Platform(CL cl, nint handle)
