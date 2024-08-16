@@ -33,6 +33,15 @@ public interface IComputeService : IDisposable
     /// <summary>Get a span of available devices.</summary>
     ReadOnlySpan<Device> Devices { get; }
 
+    /// <summary>Get the OpenCL program associated with this service.</summary>
+    Program Program { get; }
+
+    /// <summary>Get the kernel work group information.</summary>
+    /// <param name="device">A device.</param>
+    /// <param name="kernel">A kernel associated with the device.</param>
+    /// <returns>The kernel work group information.</returns>
+    KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel);
+
     /// <summary>Multiply a vector by a scalar.</summary>
     /// <param name="device">The device to use.</param>
     /// <param name="vector">A vector.</param>
