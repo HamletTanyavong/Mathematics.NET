@@ -30,7 +30,7 @@ namespace Mathematics.NET.GPU.OpenCL;
 /// <summary>Defines support for GPU compute services.</summary>
 public interface IComputeService : IDisposable
 {
-    /// <summary>Get a span of all available devices.</summary>
+    /// <summary>Get a span of available devices.</summary>
     ReadOnlySpan<Device> Devices { get; }
 
     /// <summary>Multiply a vector by a scalar.</summary>
