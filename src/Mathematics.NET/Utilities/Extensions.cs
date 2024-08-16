@@ -27,10 +27,10 @@
 
 using System.Text;
 
-namespace Mathematics.NET;
+namespace Mathematics.NET.Utilities;
 
 /// <summary>A class containing extension methods for external .NET objects.</summary>
-public static class ExternalExtensions
+public static class Extensions
 {
     /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
     /// <param name="builder">A string builder instance.</param>
