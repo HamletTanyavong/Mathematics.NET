@@ -26,6 +26,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
@@ -167,7 +168,7 @@ public sealed class OpenCLService : IComputeService
     // Interface implementations.
     //
 
-    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, ReadOnlySpan<Real> vector, Real scalar)
+    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, ref WorkSize1D workSize, ReadOnlySpan<Real> vector, Real scalar)
     {
         var length = vector.Length;
         var result = new Real[length];
@@ -206,13 +207,9 @@ public sealed class OpenCLService : IComputeService
 #endif
 
                 // Enqueue ndrange kernel.
-                // TODO: Allow user to set work sizes or set automatically.
-                var globalWorkSize = stackalloc nuint[1] { (nuint)length };
-                var localWorkSize = stackalloc nuint[1] { 1024 }; // TODO: Get rid of this hard-coded number.
-
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-
-                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, globalWorkSize, localWorkSize, 0, null, null);
+                var pWorkSize = (nuint*)Unsafe.AsPointer(ref workSize);
+                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, pWorkSize, pWorkSize + 1, 0, null, null);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)
                 {

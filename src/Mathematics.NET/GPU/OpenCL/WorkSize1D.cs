@@ -1,4 +1,4 @@
-﻿// <copyright file="IComputeService.cs" company="Mathematics.NET">
+﻿// <copyright file="WorkSize1D.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,28 +25,21 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Runtime.InteropServices;
+
 namespace Mathematics.NET.GPU.OpenCL;
 
-/// <summary>Defines support for GPU compute services.</summary>
-public interface IComputeService : IDisposable
+/// <summary>Represents a struct of 1D work sizes.</summary>
+[StructLayout(LayoutKind.Sequential)]
+public readonly struct WorkSize1D
 {
-    /// <summary>Get a span of available devices.</summary>
-    ReadOnlySpan<Device> Devices { get; }
+    // Do not reorder.
+    public readonly nuint _gws;
+    public readonly nuint _lws;
 
-    /// <summary>Get the OpenCL program associated with this service.</summary>
-    Program Program { get; }
-
-    /// <summary>Get the kernel work group information.</summary>
-    /// <param name="device">A device.</param>
-    /// <param name="kernel">A kernel associated with the device.</param>
-    /// <returns>The kernel work group information.</returns>
-    KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel);
-
-    /// <summary>Multiply a vector by a scalar.</summary>
-    /// <param name="device">The device to use.</param>
-    /// <param name="workSize1D">A struct containing work size information.</param>
-    /// <param name="vector">A vector.</param>
-    /// <param name="scalar">A scalar.</param>
-    /// <returns>A new vector.</returns>
-    ReadOnlySpan<Real> VecMulScalar(Device device, ref WorkSize1D workSize1D, ReadOnlySpan<Real> vector, Real scalar);
+    public WorkSize1D(nuint globalWorkSize, nuint localWorkSize)
+    {
+        _gws = globalWorkSize;
+        _lws = localWorkSize;
+    }
 }
