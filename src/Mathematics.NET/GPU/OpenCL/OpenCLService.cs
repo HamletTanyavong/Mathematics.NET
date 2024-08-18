@@ -1,5 +1,4 @@
-﻿
-// <copyright file="OpenCLService.cs" company="Mathematics.NET">
+﻿// <copyright file="OpenCLService.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -26,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0032
+
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
@@ -44,6 +45,9 @@ public sealed class OpenCLService : IComputeService
         public const string NVIDIA = "NVIDIA Corporation";
     }
 
+    private const string s_setKernelArgError = "Unable to set arguments for the kernel {Kernel}.";
+    private const string s_enqueueNDRangeKernelError = "Problem enqueueing NDRange kernel.";
+
     private ILogger<OpenCLService> _logger;
     private CL _cl;
 
@@ -52,7 +56,6 @@ public sealed class OpenCLService : IComputeService
     private Context _context;
     private Program _program;
 
-    // TODO: Use params Span<string> devices when the feature becomes available in C#.
     public unsafe OpenCLService(ILogger<OpenCLService> logger, string vendor, Func<Device, bool> filter, bool useFirst = false)
     {
         _logger = logger;
@@ -69,10 +72,7 @@ public sealed class OpenCLService : IComputeService
 
         try
         {
-            //
             // OpenCL platform.
-            //
-
             _cl.GetPlatformIDs(0, null, out var platformsSize);
             Span<nint> platformsSpan = new nint[platformsSize];
             _cl.GetPlatformIDs(platformsSize, platformsSpan, []);
@@ -95,21 +95,13 @@ public sealed class OpenCLService : IComputeService
                 throw new Exception($"There is no platform with the vendor {vendor}.");
             }
 
-            //
             // OpenCL context.
-            //
-
             _context = new Context(_logger, _cl, _platform);
 
-            //
             // OpenCL device.
-            //
-
             _devices = _context.GetDevices(filter, useFirst).ToArray();
             if (_devices.Length == 0)
-            {
                 throw new Exception("There are no devices available after filtering.");
-            }
 #if DEBUG
             for (int i = 0; i < _devices.Length; i++)
             {
@@ -117,10 +109,7 @@ public sealed class OpenCLService : IComputeService
             }
 #endif
 
-            //
             // OpenCL program.
-            //
-
             _program = new Program(_logger, _cl, _context, _devices.Span);
         }
         catch (Exception e)
@@ -134,21 +123,15 @@ public sealed class OpenCLService : IComputeService
     public void Dispose()
     {
         if (_program is Program program && program.IsValidInstance)
-        {
-            _program.Dispose();
-        }
+            program.Dispose();
 
         if (_context is Context context && context.IsValidInstance)
-        {
-            _context.Dispose();
-        }
+            context.Dispose();
 
         foreach (var device in _devices.Span)
         {
             if (device is not null && device.IsValidInstance)
-            {
                 device.Dispose();
-            }
         }
 
         _cl.Dispose();
@@ -173,7 +156,6 @@ public sealed class OpenCLService : IComputeService
         var length = vector.Length;
         var result = new Real[length];
 
-        // Since we are using MemFlags.UseHostPtr, keep memory pinned until finished.
         fixed (void* pVector = vector)
         {
             // Create buffers.
@@ -182,7 +164,7 @@ public sealed class OpenCLService : IComputeService
                 MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
                 (nuint)(sizeof(Real) * length),
                 pVector,
-                out var errorInt);
+                null);
 
             fixed (void* pResult = result)
             {
@@ -201,20 +183,16 @@ public sealed class OpenCLService : IComputeService
                 error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)
-                {
-                    _logger.LogDebug("Unable to set arguments for kernel \"{Kernel}\"", _program.Kernels["vec_mul_scalar"].Name);
-                }
+                    _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar"].Name);
 #endif
 
-                // Enqueue ndrange kernel.
+                // Enqueue NDRange kernel.
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                 var pWorkSize = (nuint*)Unsafe.AsPointer(ref workSize);
                 error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, pWorkSize, pWorkSize + 1, 0, null, null);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)
-                {
-                    _logger.LogDebug("Problem enqueueing ndrange kernel.");
-                }
+                    _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
                 _cl.Finish(commandQueue.Handle);
 
