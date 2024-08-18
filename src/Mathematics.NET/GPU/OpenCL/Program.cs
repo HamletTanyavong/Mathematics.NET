@@ -48,40 +48,51 @@ public sealed class Program : IOpenCLObject
         _logger = logger;
 
         var assembly = Assembly.GetExecutingAssembly();
-        using var stream = assembly.GetManifestResourceStream("Mathematics.NET.GPU.OpenCL.Kernels.vec_mul_scalar.cl");
-        if (stream is not null)
-        {
-            using var reader = new StreamReader(stream);
-            var kernelCode = reader.ReadToEnd();
+        var resourceNames = assembly.GetManifestResourceNames().Where(x => x.EndsWith(".cl")).ToArray();
 
-            Handle = _cl.CreateProgramWithSource(context.Handle, 1, [kernelCode], null, out var error);
+        var kernels = new string[resourceNames.Length];
+        var kernelLengths = new nuint[resourceNames.Length];
+
+        for (int i = 0; i < resourceNames.Length; i++)
+        {
+            using var stream = assembly.GetManifestResourceStream(resourceNames[i])!;
+            using var reader = new StreamReader(stream);
+            var kernel = reader.ReadToEnd();
+            kernels[i] = kernel;
+            kernelLengths[i] = (nuint)kernel.Length;
+        }
+
+        fixed (nuint* pKernelLengths = kernelLengths)
+        {
+            Handle = _cl.CreateProgramWithSource(context.Handle, (uint)kernels.Length, kernels, pKernelLengths, out var error);
 #if DEBUG
             if (error != (int)ErrorCodes.Success)
-            {
                 _logger.LogDebug("Unable to create the program from source.");
-            }
 #endif
+        }
 
-            fixed (nint* pDevices = devices.ToArray().Select(x => x.Handle).ToArray())
+        fixed (nint* pDevices = devices.ToArray().Select(x => x.Handle).ToArray())
+        {
+            var error = _cl.BuildProgram(Handle, (uint)devices.Length, pDevices, (byte*)null, null, null);
+            if (error != (int)ErrorCodes.Success)
             {
-                error = _cl.BuildProgram(Handle, (uint)devices.Length, pDevices, (byte*)null, null, null);
-                if (error != (int)ErrorCodes.Success)
-                {
-                    _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, 0, null, out var infoSize);
-                    Span<byte> infoSpan = new byte[infoSize];
-                    _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, infoSize, infoSpan, []);
-                    _cl.ReleaseProgram(Handle);
-                    throw new Exception(Encoding.UTF8.GetString(infoSpan));
-                }
+                _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, 0, null, out var infoSize);
+                Span<byte> infoSpan = new byte[infoSize];
+                _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, infoSize, infoSpan, []);
+                throw new Exception(Encoding.UTF8.GetString(infoSpan));
             }
         }
-        else
-        {
-            _logger.LogDebug("Unable to find the embedded resource.");
-        }
 
-        // Create kernels.
-        CreateKernel("vec_mul_scalar");
+        foreach (var resource in resourceNames)
+        {
+            // Make sure all kernels are in the Mathematics.NET.GPU.OpenCL.Kernels folder.
+            //
+            // Mathematics.NET.GPU.OpenCL.Kernels.{name}.cl
+            //                                    ^    ^
+            // Index:                             35   ^3
+
+            CreateKernel(resource[35..^3]);
+        }
     }
 
     public void Dispose()
@@ -89,9 +100,7 @@ public sealed class Program : IOpenCLObject
         foreach (var entry in Kernels)
         {
             if (entry.Value is Kernel kernel && kernel.IsValidInstance)
-            {
                 kernel.Dispose();
-            }
         }
 
         if (Handle != 0)
