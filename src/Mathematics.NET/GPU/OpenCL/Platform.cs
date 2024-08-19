@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="Platform.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,39 +25,37 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+#pragma warning disable IDE0058
 
-Console.WriteLine("Mathematics.NET Development Application");
-Console.WriteLine();
+using System.Text;
+using Silk.NET.OpenCL;
 
-#region Development Application Configuration
+namespace Mathematics.NET.GPU.OpenCL;
 
-var builder = Host.CreateApplicationBuilder();
+/// <summary>Represents an OpenCL platform.</summary>
+public sealed class Platform : IOpenCLObject
+{
+    // Api.
+    private readonly CL _cl;
 
-// Configure services.
-builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
-builder.Services.AddHttpClient();
+    // Platform information.
+    public readonly string Vendor;
 
-// Configure logging.
-#if DEBUG
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Debug);
-#elif RELEASE
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Warning);
-#endif
+    public unsafe Platform(CL cl, nint handle)
+    {
+        _cl = cl;
+        Handle = handle;
 
-// Build the application.
-var app = builder.Build();
+        // Platform vendor.
+        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, 0, null, out var vendorSize);
+        Span<byte> vendorSpan = new byte[vendorSize];
+        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, vendorSize, vendorSpan, []);
+        Vendor = Encoding.UTF8.GetString(vendorSpan).TrimEnd('\0');
+    }
 
-#endregion
+    public void Dispose() => Handle = 0;
 
-#region Useful Services
+    public nint Handle { get; private set; }
 
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
-
-#endregion
-
-// Run the application and/or add code below for quick testing and verification.
+    public bool IsValidInstance => Handle != 0;
+}

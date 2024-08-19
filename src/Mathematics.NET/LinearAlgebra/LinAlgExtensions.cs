@@ -31,6 +31,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using System.Text;
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.Utilities;
 
 namespace Mathematics.NET.LinearAlgebra;
 
@@ -220,9 +221,7 @@ public static class LinAlgExtensions
             strings[i] = s;
             var length = s.Length + 2;
             if (maxElementLength < length)
-            {
                 maxElementLength = length;
-            }
         }
 
         StringBuilder builder = new();
@@ -245,7 +244,7 @@ public static class LinAlgExtensions
     public static string ToDisplayString<T>(this ReadOnlySpan2D<T> readOnlySpan2D, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
-        Span2D<T> span = new T[readOnlySpan2D.Width, readOnlySpan2D.Height];
+        Span2D<T> span = new T[readOnlySpan2D.Height, readOnlySpan2D.Width];
         readOnlySpan2D.CopyTo(span);
         return span.ToDisplayString(format, provider);
     }
@@ -272,9 +271,7 @@ public static class LinAlgExtensions
                 strings[i, j] = s;
                 var length = s.Length + 2;
                 if (maxElementLength < length)
-                {
                     maxElementLength = length;
-                }
             }
         }
 
@@ -320,9 +317,7 @@ public static class LinAlgExtensions
                     strings[i, j, k] = s;
                     var length = s.Length + 2;
                     if (maxElementLength < length)
-                    {
                         maxElementLength = length;
-                    }
                 }
             }
         }
@@ -377,9 +372,7 @@ public static class LinAlgExtensions
                         strings[i, j, k, l] = s;
                         var length = s.Length + 2;
                         if (maxElementLength < length)
-                        {
                             maxElementLength = length;
-                        }
                     }
                 }
             }
@@ -416,12 +409,77 @@ public static class LinAlgExtensions
     {
         builder.TrimEnd(unwantedChars);
         if (!isEnd)
-        {
             builder.AppendLine("]");
-        }
         else
-        {
             builder.Append(']');
+    }
+
+    //
+    // Spans
+    //
+
+    /// <summary>Pad a span of numbers with zeros.</summary>
+    /// <remarks>This method allocates a new array and its performance impacts should be considered.</remarks>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="span">The original span.</param>
+    /// <param name="length">A new length.</param>
+    /// <returns>A padded span.</returns>
+    public static ReadOnlySpan<T> Pad<T>(this ReadOnlySpan<T> span, int length)
+        where T : IComplex<T>
+    {
+        if (span.Length > length)
+            throw new Exception("The new size of the padded span must be greater or equal than the original size.");
+
+        var result = new T[length];
+        span.CopyTo(result);
+        return result;
+    }
+
+    /// <inheritdoc cref="Pad{T}(ReadOnlySpan{T}, int)"/>
+    public static Span<T> Pad<T>(this Span<T> span, int length)
+        where T : IComplex<T>
+    {
+        if (span.Length > length)
+            throw new Exception("The new size of the padded span must be greater or equal than the original size.");
+
+        var result = new T[length];
+        span.CopyTo(result);
+        return result;
+    }
+
+    /// <summary>Pad a 2D span of numbers with zeros.</summary>
+    /// <remarks>This method allocates a new array and its performance impacts should be considered.</remarks>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <param name="span">The original span.</param>
+    /// <param name="height">A new height.</param>
+    /// <param name="width">A new width.</param>
+    /// <returns>A padded 2D span.</returns>
+    public static ReadOnlySpan2D<T> Pad<T>(this ReadOnlySpan2D<T> span, int height, int width)
+        where T : IComplex<T>
+    {
+        if (span.Height > height || span.Width > width)
+            throw new Exception("The new size of the padded span must be greater or equal than the original size.");
+
+        var result = new T[height, width];
+        for (int i = 0; i < span.Height; i++)
+        {
+            span.GetRow(i).CopyTo(result.GetRow(i));
         }
+        return result;
+    }
+
+    /// <inheritdoc cref="Pad{T}(ReadOnlySpan2D{T}, int, int)"/>
+    public static Span2D<T> Pad<T>(this Span2D<T> span, int height, int width)
+        where T : IComplex<T>
+    {
+        if (span.Height > height || span.Width > width)
+            throw new Exception("The new size of the padded span must be greater or equal than the original size.");
+
+        var result = new T[height, width];
+        for (int i = 0; i < span.Height; i++)
+        {
+            span.GetRow(i).CopyTo(result.GetRow(i));
+        }
+        return result;
     }
 }

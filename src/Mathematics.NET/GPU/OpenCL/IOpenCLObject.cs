@@ -1,4 +1,4 @@
-﻿// <copyright file="ExternalExtensions.cs" company="Mathematics.NET">
+﻿// <copyright file="IOpenCLObject.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,38 +25,14 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Text;
+namespace Mathematics.NET.GPU.OpenCL;
 
-namespace Mathematics.NET;
-
-/// <summary>A class containing extension methods for external .NET objects.</summary>
-public static class ExternalExtensions
+/// <summary>Defines support for OpenCL objects.</summary>
+public interface IOpenCLObject : IDisposable
 {
-    /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
-    /// <param name="builder">A string builder instance.</param>
-    /// <param name="unwantedChars">An array of characters to trim.</param>
-    /// <returns>The same string builder with characters removed.</returns>
-    public static StringBuilder TrimEnd(this StringBuilder builder, params char[]? unwantedChars)
-    {
-        if (unwantedChars == null || builder.Length == 0 || unwantedChars.Length == 0)
-        {
-            return builder;
-        }
+    /// <summary>The handle to the object.</summary>
+    nint Handle { get; }
 
-        int i = builder.Length - 1;
-        while (i >= 0)
-        {
-            if (!unwantedChars.Contains(builder[i]))
-            {
-                break;
-            }
-            i--;
-        }
-        if (i < builder.Length - 1)
-        {
-            builder.Length = ++i;
-        }
-
-        return builder;
-    }
+    ////<summary>Check if the OpenCL object is valid and has not been released.</summary>
+    bool IsValidInstance { get; }
 }

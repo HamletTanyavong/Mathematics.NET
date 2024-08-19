@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="CommandQueue.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,39 +25,34 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+#pragma warning disable IDE0058
 
-Console.WriteLine("Mathematics.NET Development Application");
-Console.WriteLine();
+using Silk.NET.OpenCL;
 
-#region Development Application Configuration
+namespace Mathematics.NET.GPU.OpenCL;
 
-var builder = Host.CreateApplicationBuilder();
+/// <summary>Represents an OpenCL command queue.</summary>
+public sealed class CommandQueue : IOpenCLObject
+{
+    // Api.
+    private readonly CL _cl;
 
-// Configure services.
-builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
-builder.Services.AddHttpClient();
+    public unsafe CommandQueue(CL cl, Context context, Device device, CommandQueueProperties commandQueueProperties)
+    {
+        _cl = cl;
+        Handle = _cl.CreateCommandQueue(context.Handle, device.Handle, commandQueueProperties, out _);
+    }
 
-// Configure logging.
-#if DEBUG
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Debug);
-#elif RELEASE
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Warning);
-#endif
+    public void Dispose()
+    {
+        if (Handle != 0)
+        {
+            _cl.ReleaseCommandQueue(Handle);
+            Handle = 0;
+        }
+    }
 
-// Build the application.
-var app = builder.Build();
+    public nint Handle { get; private set; }
 
-#endregion
-
-#region Useful Services
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
-
-#endregion
-
-// Run the application and/or add code below for quick testing and verification.
+    public bool IsValidInstance => Handle != 0;
+}

@@ -17,6 +17,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GPU\OpenCL\Kernels\mat_mul.cl" />
+    <None Remove="GPU\OpenCL\Kernels\vec_mul_scalar.cl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\mat_mul.cl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\vec_mul_scalar.cl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\docs\images\logo\mathematics.net.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -38,6 +51,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.2.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Silk.NET.OpenCL.Extensions.KHR" Version="2.21.0" />
     <ProjectReference Include="..\Mathematics.NET.SourceGenerators\Mathematics.NET.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 

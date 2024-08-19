@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="WorkSize1D.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,39 +25,21 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.Runtime.InteropServices;
 
-Console.WriteLine("Mathematics.NET Development Application");
-Console.WriteLine();
+namespace Mathematics.NET.GPU.OpenCL;
 
-#region Development Application Configuration
+/// <summary>Represents a struct of 1D work sizes.</summary>
+[StructLayout(LayoutKind.Sequential)]
+public readonly struct WorkSize1D
+{
+    // Do not reorder.
+    public readonly nuint _gws;
+    public readonly nuint _lws;
 
-var builder = Host.CreateApplicationBuilder();
-
-// Configure services.
-builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
-builder.Services.AddHttpClient();
-
-// Configure logging.
-#if DEBUG
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Debug);
-#elif RELEASE
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Warning);
-#endif
-
-// Build the application.
-var app = builder.Build();
-
-#endregion
-
-#region Useful Services
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
-
-#endregion
-
-// Run the application and/or add code below for quick testing and verification.
+    public WorkSize1D(nuint globalWorkSize, nuint localWorkSize)
+    {
+        _gws = globalWorkSize;
+        _lws = localWorkSize;
+    }
+}

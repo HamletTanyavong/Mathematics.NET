@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="Kernel.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,39 +25,47 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+#pragma warning disable IDE0058
+
 using Microsoft.Extensions.Logging;
+using Silk.NET.OpenCL;
 
-Console.WriteLine("Mathematics.NET Development Application");
-Console.WriteLine();
+namespace Mathematics.NET.GPU.OpenCL;
 
-#region Development Application Configuration
+/// <summary>Represents an OpenCL kernel.</summary>
+public sealed class Kernel : IOpenCLObject
+{
+    private CL _cl;
+    private ILogger<OpenCLService> _logger;
 
-var builder = Host.CreateApplicationBuilder();
+    public readonly string Name;
 
-// Configure services.
-builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
-builder.Services.AddHttpClient();
+    public unsafe Kernel(ILogger<OpenCLService> logger, CL cl, Program program, string name)
+    {
+        _cl = cl;
+        _logger = logger;
 
-// Configure logging.
+        Name = name;
+
+        Handle = _cl.CreateKernel(program.Handle, name, out var error);
 #if DEBUG
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Debug);
-#elif RELEASE
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Warning);
+        if (error != (int)ErrorCodes.Success)
+        {
+            _logger.LogDebug("Unable to create kernel.");
+        }
 #endif
+    }
 
-// Build the application.
-var app = builder.Build();
+    public void Dispose()
+    {
+        if (Handle != 0)
+        {
+            _cl.ReleaseKernel(Handle);
+            Handle = 0;
+        }
+    }
 
-#endregion
+    public nint Handle { get; private set; }
 
-#region Useful Services
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
-
-#endregion
-
-// Run the application and/or add code below for quick testing and verification.
+    public bool IsValidInstance => Handle != 0;
+}

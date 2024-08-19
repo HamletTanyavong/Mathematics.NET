@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+﻿// <copyright file="ExternalExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,39 +25,38 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.Text;
 
-Console.WriteLine("Mathematics.NET Development Application");
-Console.WriteLine();
+namespace Mathematics.NET.Utilities;
 
-#region Development Application Configuration
+/// <summary>A class containing extension methods for external .NET objects.</summary>
+public static class Extensions
+{
+    /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
+    /// <param name="builder">A string builder instance.</param>
+    /// <param name="unwantedChars">An array of characters to trim.</param>
+    /// <returns>The same string builder with characters removed.</returns>
+    public static StringBuilder TrimEnd(this StringBuilder builder, params char[]? unwantedChars)
+    {
+        if (unwantedChars == null || builder.Length == 0 || unwantedChars.Length == 0)
+        {
+            return builder;
+        }
 
-var builder = Host.CreateApplicationBuilder();
+        int i = builder.Length - 1;
+        while (i >= 0)
+        {
+            if (!unwantedChars.Contains(builder[i]))
+            {
+                break;
+            }
+            i--;
+        }
+        if (i < builder.Length - 1)
+        {
+            builder.Length = ++i;
+        }
 
-// Configure services.
-builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
-builder.Services.AddHttpClient();
-
-// Configure logging.
-#if DEBUG
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Debug);
-#elif RELEASE
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Warning);
-#endif
-
-// Build the application.
-var app = builder.Build();
-
-#endregion
-
-#region Useful Services
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
-
-#endregion
-
-// Run the application and/or add code below for quick testing and verification.
+        return builder;
+    }
+}
