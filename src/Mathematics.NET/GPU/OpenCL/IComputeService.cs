@@ -43,10 +43,11 @@ public interface IComputeService : IDisposable
     KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel);
 
     /// <summary>Multiply a vector by a scalar.</summary>
+    /// <remarks>Padded vectors should have zeros added to their ends.</remarks>
     /// <param name="device">The device to use.</param>
-    /// <param name="workSize1D">A struct containing work size information.</param>
+    /// <param name="workSize">A struct containing work size information.</param>
     /// <param name="vector">A vector.</param>
     /// <param name="scalar">A scalar.</param>
     /// <returns>A new vector.</returns>
-    ReadOnlySpan<Real> VecMulScalar(Device device, ref WorkSize1D workSize1D, ReadOnlySpan<Real> vector, Real scalar);
+    ReadOnlySpan<Real> VecMulScalar(Device device, ref WorkSize1D workSize, ReadOnlySpan<Real> vector, Real scalar);
 }
