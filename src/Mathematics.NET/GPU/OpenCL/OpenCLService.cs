@@ -104,7 +104,7 @@ public sealed class OpenCLService : IComputeService
 #if DEBUG
             for (int i = 0; i < _devices.Length; i++)
             {
-                _logger.LogDebug("Using device at index {Index} with name: {DeviceName}.", i, _devices.Span[i].Name);
+                _logger.LogDebug("Using the device at index {Index} with name: {DeviceName}.", i, _devices.Span[i].Name);
             }
 #endif
 
