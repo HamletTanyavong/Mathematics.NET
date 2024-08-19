@@ -34,8 +34,8 @@ namespace Mathematics.NET.GPU.OpenCL;
 public readonly struct WorkSize1D
 {
     // Do not reorder.
-    public readonly nuint _gws;
-    public readonly nuint _lws;
+    private readonly nuint _gws;
+    private readonly nuint _lws;
 
     public WorkSize1D(nuint globalWorkSize, nuint localWorkSize)
     {

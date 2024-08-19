@@ -34,10 +34,10 @@ namespace Mathematics.NET.GPU.OpenCL;
 [StructLayout(LayoutKind.Sequential)]
 public readonly struct WorkSize2D
 {
-    public readonly nuint _gws0;
-    public readonly nuint _gws1;
-    public readonly nuint _lws0;
-    public readonly nuint _lws1;
+    private readonly nuint _gws0;
+    private readonly nuint _gws1;
+    private readonly nuint _lws0;
+    private readonly nuint _lws1;
 
     public WorkSize2D(ReadOnlySpan<nuint> globalWorkSize, ReadOnlySpan<nuint> localWorkSize)
     {
