@@ -46,7 +46,7 @@ public interface IComputeService : IDisposable
     // Methods.
     //
 
-    /// <summary>Multipy to matrices.</summary>
+    /// <summary>Multipy two matrices.</summary>
     /// <remarks>Padded matrices should have zeros added to their right and bottom.</remarks>
     /// <param name="device">The device to use.</param>
     /// <param name="globalWorkSize">A struct containing global work size information.</param>
