@@ -246,7 +246,7 @@ public static class LinAlgExtensions
     public static string ToDisplayString<T>(this ReadOnlySpan2D<T> readOnlySpan2D, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T>
     {
-        Span2D<T> span = new T[readOnlySpan2D.Width, readOnlySpan2D.Height];
+        Span2D<T> span = new T[readOnlySpan2D.Height, readOnlySpan2D.Width];
         readOnlySpan2D.CopyTo(span);
         return span.ToDisplayString(format, provider);
     }
