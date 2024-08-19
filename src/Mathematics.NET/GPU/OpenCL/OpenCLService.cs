@@ -151,6 +151,76 @@ public sealed class OpenCLService : IComputeService
     // Interface implementations.
     //
 
+    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, ref WorkSize2D workSize, ReadOnlySpan2D<Real> matrixA, ReadOnlySpan2D<Real> matrixB)
+    {
+        var k = matrixA.Width;
+        if (k != matrixB.Height)
+            throw new Exception("Cannot multiply two matrices with incompatible dimensions.");
+        Span2D<Real> result = new Real[matrixA.Height, matrixB.Width];
+
+        fixed (void* pMatrixA = matrixA)
+        {
+            // Create buffers.
+            nint matrixABuffer = _cl.CreateBuffer(
+                _context.Handle,
+                MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
+                (nuint)(sizeof(Real) * matrixA.Length),
+                pMatrixA,
+                null);
+
+            fixed (void* pMatrixB = matrixB)
+            {
+                nint matrixBBuffer = _cl.CreateBuffer(
+                    _context.Handle,
+                    MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
+                    (nuint)(sizeof(Real) * matrixB.Length),
+                    pMatrixB,
+                    null);
+
+                fixed (void* pResult = result)
+                {
+                    nint resultBuffer = _cl.CreateBuffer(
+                        _context.Handle,
+                        MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly,
+                        (nuint)(sizeof(Real) * result.Length),
+                        pResult,
+                        null);
+
+                    // Set kernel arguments.
+                    var kernel = _program.Kernels["mat_mul"].Handle;
+                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &matrixABuffer);
+                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &matrixBBuffer);
+                    error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
+                    error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
+#if DEBUG
+                    if (error != (int)ErrorCodes.Success)
+                        _logger.LogDebug(s_setKernelArgError, _program.Kernels["mat_mul"].Name);
+#endif
+
+                    // Enqueue NDRange kernel.
+                    using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
+                    var pWorkSize = (nuint*)Unsafe.AsPointer(ref workSize);
+                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, pWorkSize, pWorkSize + 2, 0, null, null);
+#if DEBUG
+                    if (error != (int)ErrorCodes.Success)
+                        _logger.LogDebug(s_enqueueNDRangeKernelError);
+#endif
+                    _cl.Finish(commandQueue.Handle);
+
+                    // Enqueue read buffer.
+                    _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * result.Length), pResult, 0, null, null);
+
+                    // Release mem objects.
+                    _cl.ReleaseMemObject(resultBuffer);
+                }
+                _cl.ReleaseMemObject(matrixBBuffer);
+            }
+            _cl.ReleaseMemObject(matrixABuffer);
+        }
+
+        return result;
+    }
+
     public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, ref WorkSize1D workSize, ReadOnlySpan<Real> vector, Real scalar)
     {
         var length = vector.Length;

@@ -42,6 +42,19 @@ public interface IComputeService : IDisposable
     /// <returns>The kernel work group information.</returns>
     KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel);
 
+    //
+    // Methods.
+    //
+
+    /// <summary>Multipy to matrices.</summary>
+    /// <remarks>Padded matrices should have zeros added to their right and bottom.</remarks>
+    /// <param name="device">The device to use.</param>
+    /// <param name="workSize">A struct containing work size information.</param>
+    /// <param name="left">The left matrix.</param>
+    /// <param name="right">The right matrix.</param>
+    /// <returns>A new matrix.</returns>
+    ReadOnlySpan2D<Real> MatMul(Device device, ref WorkSize2D workSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right);
+
     /// <summary>Multiply a vector by a scalar.</summary>
     /// <remarks>Padded vectors should have zeros added to their ends.</remarks>
     /// <param name="device">The device to use.</param>
