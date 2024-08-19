@@ -161,30 +161,15 @@ public sealed class OpenCLService : IComputeService
         fixed (void* pMatrixA = matrixA)
         {
             // Create buffers.
-            nint matrixABuffer = _cl.CreateBuffer(
-                _context.Handle,
-                MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
-                (nuint)(sizeof(Real) * matrixA.Length),
-                pMatrixA,
-                null);
+            nint matrixABuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * matrixA.Length), pMatrixA, null);
 
             fixed (void* pMatrixB = matrixB)
             {
-                nint matrixBBuffer = _cl.CreateBuffer(
-                    _context.Handle,
-                    MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
-                    (nuint)(sizeof(Real) * matrixB.Length),
-                    pMatrixB,
-                    null);
+                nint matrixBBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * matrixB.Length), pMatrixB, null);
 
                 fixed (void* pResult = result)
                 {
-                    nint resultBuffer = _cl.CreateBuffer(
-                        _context.Handle,
-                        MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly,
-                        (nuint)(sizeof(Real) * result.Length),
-                        pResult,
-                        null);
+                    nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * result.Length), pResult, null);
 
                     // Set kernel arguments.
                     var kernel = _program.Kernels["mat_mul"].Handle;
@@ -229,21 +214,11 @@ public sealed class OpenCLService : IComputeService
         fixed (void* pVector = vector)
         {
             // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(
-                _context.Handle,
-                MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
-                (nuint)(sizeof(Real) * length),
-                pVector,
-                null);
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * length), pVector, null);
 
             fixed (void* pResult = result)
             {
-                nint resultBuffer = _cl.CreateBuffer(
-                    _context.Handle,
-                    MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly,
-                    (nuint)(sizeof(Real) * length),
-                    pResult,
-                    null);
+                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * length), pResult, null);
 
                 // Set kernel arguments.
                 var kernel = _program.Kernels["vec_mul_scalar"].Handle;
