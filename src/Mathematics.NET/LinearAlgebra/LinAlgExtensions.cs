@@ -221,9 +221,7 @@ public static class LinAlgExtensions
             strings[i] = s;
             var length = s.Length + 2;
             if (maxElementLength < length)
-            {
                 maxElementLength = length;
-            }
         }
 
         StringBuilder builder = new();
@@ -273,9 +271,7 @@ public static class LinAlgExtensions
                 strings[i, j] = s;
                 var length = s.Length + 2;
                 if (maxElementLength < length)
-                {
                     maxElementLength = length;
-                }
             }
         }
 
@@ -321,9 +317,7 @@ public static class LinAlgExtensions
                     strings[i, j, k] = s;
                     var length = s.Length + 2;
                     if (maxElementLength < length)
-                    {
                         maxElementLength = length;
-                    }
                 }
             }
         }
@@ -378,9 +372,7 @@ public static class LinAlgExtensions
                         strings[i, j, k, l] = s;
                         var length = s.Length + 2;
                         if (maxElementLength < length)
-                        {
                             maxElementLength = length;
-                        }
                     }
                 }
             }
@@ -417,12 +409,8 @@ public static class LinAlgExtensions
     {
         builder.TrimEnd(unwantedChars);
         if (!isEnd)
-        {
             builder.AppendLine("]");
-        }
         else
-        {
             builder.Append(']');
-        }
     }
 }
