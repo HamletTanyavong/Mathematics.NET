@@ -27,7 +27,6 @@
 
 #pragma warning disable IDE0032
 
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
@@ -151,7 +150,7 @@ public sealed class OpenCLService : IComputeService
     // Interface implementations.
     //
 
-    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, ref WorkSize2D workSize, ReadOnlySpan2D<Real> matrixA, ReadOnlySpan2D<Real> matrixB)
+    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> matrixA, ReadOnlySpan2D<Real> matrixB)
     {
         var k = matrixA.Width;
         if (k != matrixB.Height)
@@ -184,8 +183,7 @@ public sealed class OpenCLService : IComputeService
 
                     // Enqueue NDRange kernel.
                     using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                    var pWorkSize = (nuint*)Unsafe.AsPointer(ref workSize);
-                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, pWorkSize, pWorkSize + 2, 0, null, null);
+                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
 #if DEBUG
                     if (error != (int)ErrorCodes.Success)
                         _logger.LogDebug(s_enqueueNDRangeKernelError);
@@ -206,7 +204,7 @@ public sealed class OpenCLService : IComputeService
         return result;
     }
 
-    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, ref WorkSize1D workSize, ReadOnlySpan<Real> vector, Real scalar)
+    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar)
     {
         var length = vector.Length;
         var result = new Real[length];
@@ -233,8 +231,7 @@ public sealed class OpenCLService : IComputeService
 
                 // Enqueue NDRange kernel.
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                var pWorkSize = (nuint*)Unsafe.AsPointer(ref workSize);
-                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, pWorkSize, pWorkSize + 1, 0, null, null);
+                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_enqueueNDRangeKernelError);

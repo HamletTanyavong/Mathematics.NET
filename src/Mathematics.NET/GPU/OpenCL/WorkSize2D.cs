@@ -25,27 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents a struct of 2D work sizes.</summary>
+/// <remarks>A struct that represents kernel work sizes.</remarks>
+/// <param name="ws0">The work size in the first dimension.</param>
+/// <param name="ws1">The work size in the second dimension.</param>
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct WorkSize2D
+public readonly struct WorkSize2D(nuint ws0, nuint ws1)
 {
-    private readonly nuint _gws0;
-    private readonly nuint _gws1;
-    private readonly nuint _lws0;
-    private readonly nuint _lws1;
-
-    public WorkSize2D(ReadOnlySpan<nuint> globalWorkSize, ReadOnlySpan<nuint> localWorkSize)
-    {
-        Debug.Assert(globalWorkSize.Length == 2 && localWorkSize.Length == 2, "The work sizes specified must be of length two.");
-
-        _gws0 = globalWorkSize[0];
-        _gws1 = globalWorkSize[1];
-        _lws0 = localWorkSize[0];
-        _lws1 = localWorkSize[1];
-    }
+    private readonly nuint _ws0 = ws0;
+    private readonly nuint _ws1 = ws1;
 }
