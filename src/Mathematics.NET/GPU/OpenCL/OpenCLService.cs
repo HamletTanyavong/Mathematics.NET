@@ -150,21 +150,21 @@ public sealed class OpenCLService : IComputeService
     // Interface implementations.
     //
 
-    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> matrixA, ReadOnlySpan2D<Real> matrixB)
+    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right)
     {
-        var k = matrixA.Width;
-        if (k != matrixB.Height)
+        var k = left.Width;
+        if (k != right.Height)
             throw new Exception("Cannot multiply two matrices with incompatible dimensions.");
-        Span2D<Real> result = new Real[matrixA.Height, matrixB.Width];
+        Span2D<Real> result = new Real[left.Height, right.Width];
 
-        fixed (void* pMatrixA = matrixA)
+        fixed (void* pLeft = left)
         {
             // Create buffers.
-            nint matrixABuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * matrixA.Length), pMatrixA, null);
+            nint leftBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * left.Length), pLeft, null);
 
-            fixed (void* pMatrixB = matrixB)
+            fixed (void* pRight = right)
             {
-                nint matrixBBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * matrixB.Length), pMatrixB, null);
+                nint rightBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * right.Length), pRight, null);
 
                 fixed (void* pResult = result)
                 {
@@ -172,8 +172,8 @@ public sealed class OpenCLService : IComputeService
 
                     // Set kernel arguments.
                     var kernel = _program.Kernels["mat_mul"].Handle;
-                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &matrixABuffer);
-                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &matrixBBuffer);
+                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &leftBuffer);
+                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
                     error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
                     error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
 #if DEBUG
@@ -196,9 +196,9 @@ public sealed class OpenCLService : IComputeService
                     // Release mem objects.
                     _cl.ReleaseMemObject(resultBuffer);
                 }
-                _cl.ReleaseMemObject(matrixBBuffer);
+                _cl.ReleaseMemObject(rightBuffer);
             }
-            _cl.ReleaseMemObject(matrixABuffer);
+            _cl.ReleaseMemObject(leftBuffer);
         }
 
         return result;
