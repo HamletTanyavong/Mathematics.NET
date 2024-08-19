@@ -222,8 +222,7 @@ public sealed class OpenCLService : IComputeService
                 var kernel = _program.Kernels["vec_mul_scalar"].Handle;
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
                 error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), &scalar);
-                error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &length);
-                error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
+                error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar"].Name);
