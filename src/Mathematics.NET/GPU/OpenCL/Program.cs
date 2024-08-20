@@ -25,8 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-// TODO: Create a source generator that finds kernels in the Kernels folder and adds them automatically.
-
 #pragma warning disable IDE0058
 
 using System.Reflection;
