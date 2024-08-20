@@ -27,7 +27,6 @@
 
 #pragma warning disable IDE0032
 
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
@@ -105,7 +104,7 @@ public sealed class OpenCLService : IComputeService
 #if DEBUG
             for (int i = 0; i < _devices.Length; i++)
             {
-                _logger.LogDebug("Using device at index {Index} with name: {DeviceName}.", i, _devices.Span[i].Name);
+                _logger.LogDebug("Using the device at index {Index} with name: {DeviceName}.", i, _devices.Span[i].Name);
             }
 #endif
 
@@ -151,45 +150,30 @@ public sealed class OpenCLService : IComputeService
     // Interface implementations.
     //
 
-    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, ref WorkSize2D workSize, ReadOnlySpan2D<Real> matrixA, ReadOnlySpan2D<Real> matrixB)
+    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right)
     {
-        var k = matrixA.Width;
-        if (k != matrixB.Height)
+        var k = left.Width;
+        if (k != right.Height)
             throw new Exception("Cannot multiply two matrices with incompatible dimensions.");
-        Span2D<Real> result = new Real[matrixA.Height, matrixB.Width];
+        Span2D<Real> result = new Real[left.Height, right.Width];
 
-        fixed (void* pMatrixA = matrixA)
+        fixed (void* pLeft = left)
         {
             // Create buffers.
-            nint matrixABuffer = _cl.CreateBuffer(
-                _context.Handle,
-                MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
-                (nuint)(sizeof(Real) * matrixA.Length),
-                pMatrixA,
-                null);
+            nint leftBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * left.Length), pLeft, null);
 
-            fixed (void* pMatrixB = matrixB)
+            fixed (void* pRight = right)
             {
-                nint matrixBBuffer = _cl.CreateBuffer(
-                    _context.Handle,
-                    MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
-                    (nuint)(sizeof(Real) * matrixB.Length),
-                    pMatrixB,
-                    null);
+                nint rightBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * right.Length), pRight, null);
 
                 fixed (void* pResult = result)
                 {
-                    nint resultBuffer = _cl.CreateBuffer(
-                        _context.Handle,
-                        MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly,
-                        (nuint)(sizeof(Real) * result.Length),
-                        pResult,
-                        null);
+                    nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * result.Length), pResult, null);
 
                     // Set kernel arguments.
                     var kernel = _program.Kernels["mat_mul"].Handle;
-                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &matrixABuffer);
-                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &matrixBBuffer);
+                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &leftBuffer);
+                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
                     error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
                     error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
 #if DEBUG
@@ -199,8 +183,7 @@ public sealed class OpenCLService : IComputeService
 
                     // Enqueue NDRange kernel.
                     using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                    var pWorkSize = (nuint*)Unsafe.AsPointer(ref workSize);
-                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, pWorkSize, pWorkSize + 2, 0, null, null);
+                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
 #if DEBUG
                     if (error != (int)ErrorCodes.Success)
                         _logger.LogDebug(s_enqueueNDRangeKernelError);
@@ -213,15 +196,15 @@ public sealed class OpenCLService : IComputeService
                     // Release mem objects.
                     _cl.ReleaseMemObject(resultBuffer);
                 }
-                _cl.ReleaseMemObject(matrixBBuffer);
+                _cl.ReleaseMemObject(rightBuffer);
             }
-            _cl.ReleaseMemObject(matrixABuffer);
+            _cl.ReleaseMemObject(leftBuffer);
         }
 
         return result;
     }
 
-    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, ref WorkSize1D workSize, ReadOnlySpan<Real> vector, Real scalar)
+    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar)
     {
         var length = vector.Length;
         var result = new Real[length];
@@ -229,28 +212,17 @@ public sealed class OpenCLService : IComputeService
         fixed (void* pVector = vector)
         {
             // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(
-                _context.Handle,
-                MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess,
-                (nuint)(sizeof(Real) * length),
-                pVector,
-                null);
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * length), pVector, null);
 
             fixed (void* pResult = result)
             {
-                nint resultBuffer = _cl.CreateBuffer(
-                    _context.Handle,
-                    MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly,
-                    (nuint)(sizeof(Real) * length),
-                    pResult,
-                    null);
+                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * length), pResult, null);
 
                 // Set kernel arguments.
                 var kernel = _program.Kernels["vec_mul_scalar"].Handle;
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
                 error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), &scalar);
-                error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &length);
-                error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
+                error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar"].Name);
@@ -258,8 +230,7 @@ public sealed class OpenCLService : IComputeService
 
                 // Enqueue NDRange kernel.
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                var pWorkSize = (nuint*)Unsafe.AsPointer(ref workSize);
-                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, pWorkSize, pWorkSize + 1, 0, null, null);
+                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_enqueueNDRangeKernelError);
