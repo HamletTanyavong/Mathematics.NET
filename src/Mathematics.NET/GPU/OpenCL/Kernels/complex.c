@@ -1,16 +1,30 @@
+#define Re(z) z.re
+#define Im(z) z.im
+
 typedef struct __attribute__((packed)) {
     double re;
     double im;
 } complex;
 
-inline complex comp_add(const complex z, const complex w) {
-    complex result;
-    result.re = z.re + w.re;
-    result.im = z.im + w.im;
+// Basic operations.
+
+complex comp_add(complex z, complex w) {
+    complex result = {
+        .re = z.re + w.re,
+        .im = z.im + w.im
+    };
     return result;
 }
 
-inline complex comp_div(const complex z, const complex w) {
+complex comp_conjugate(complex z) {
+    complex result = {
+        .re = z.re,
+        .im = -z.im
+    };
+    return result;
+}
+
+complex comp_div(complex z, complex w) {
     double a = z.re;
     double b = z.im;
     double c = w.re;
@@ -29,16 +43,47 @@ inline complex comp_div(const complex z, const complex w) {
     return result;
 }
 
-inline complex comp_mul(const complex z, const complex w) {
-    complex result;
-    result.re = z.re * w.re - z.im * w.im;
-    result.im = z.re * w.im + w.re * z.im;
+complex comp_from_polar(double magnitude, double phase) {
+    complex result = {
+        .re = magnitude * cos(phase),
+        .im = magnitude * sin(phase)
+    };
     return result;
 }
 
-inline complex comp_sub(const complex z, const complex w) {
-    complex result;
-    result.re = z.re - w.re;
-    result.im = z.im - w.im;
+double comp_magnitude(complex z) {
+    return hypot(z.re, z.im);
+}
+
+complex comp_mul(complex z, complex w) {
+    complex result = {
+        .re = z.re * w.re - z.im * w.im,
+        .im = z.re * w.im + w.re * z.im
+    };
+    return result;
+}
+
+double comp_phase(complex z) {
+    return atan2(z.im, z.re);
+}
+
+complex comp_reciprocate(complex z) {
+    if (z.re == 0 && z.im == 0) {
+        COMP_INFINITY;
+    }
+
+    double u = z.re * z.re + z.im * z.im;
+    complex result = {
+        .re = z.re / u,
+        .im = -z.im / u
+    };
+    return result;
+}
+
+complex comp_sub(complex z, complex w) {
+    complex result = {
+        .re = z.re - w.re,
+        .im = z.im - w.im
+    };
     return result;
 }

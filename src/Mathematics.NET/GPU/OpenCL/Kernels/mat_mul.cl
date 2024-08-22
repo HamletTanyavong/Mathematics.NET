@@ -1,6 +1,6 @@
 ﻿__kernel void mat_mul(__global const double* matA,
                       __global const double* matB,
-                      int const k,
+                      const int k,
                       __global double* result)
 {
     int row = get_global_id(0);
