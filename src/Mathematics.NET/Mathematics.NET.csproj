@@ -17,15 +17,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GPU\OpenCL\Kernels\complex.c" />
     <None Remove="GPU\OpenCL\Kernels\mat_mul.cl" />
     <None Remove="GPU\OpenCL\Kernels\vec_mul_scalar.cl" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\complex.c" />
     <EmbeddedResource Include="GPU\OpenCL\Kernels\mat_mul.cl" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="GPU\OpenCL\Kernels\vec_mul_scalar.cl" />
   </ItemGroup>
 
