@@ -43,8 +43,18 @@ public interface IComputeService : IDisposable
     KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel);
 
     //
-    // Methods.
+    // Methods
     //
+
+    /// <summary>Multiply a vector by a scalar.</summary>
+    /// <remarks>Padded vectors should have zeros added to their ends.</remarks>
+    /// <param name="device">The device to use.</param>
+    /// <param name="globalWorkSize">The global work size.</param>
+    /// <param name="localWorkSize">The local work size.</param>
+    /// <param name="vector">A vector.</param>
+    /// <param name="scalar">A scalar.</param>
+    /// <returns>A new vector.</returns>
+    ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, Complex scalar);
 
     /// <summary>Multipy two matrices.</summary>
     /// <remarks>Padded matrices should have zeros added to their right and bottom.</remarks>
@@ -56,13 +66,6 @@ public interface IComputeService : IDisposable
     /// <returns>A new matrix.</returns>
     ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right);
 
-    /// <summary>Multiply a vector by a scalar.</summary>
-    /// <remarks>Padded vectors should have zeros added to their ends.</remarks>
-    /// <param name="device">The device to use.</param>
-    /// <param name="globalWorkSize">The global work size.</param>
-    /// <param name="localWorkSize">The local work size.</param>
-    /// <param name="vector">A vector.</param>
-    /// <param name="scalar">A scalar.</param>
-    /// <returns>A new vector.</returns>
+    /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, ReadOnlySpan{Complex}, Complex)"/>
     ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar);
 }
