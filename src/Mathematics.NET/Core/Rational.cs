@@ -581,13 +581,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         while (p != T.Zero && q != T.Zero)
         {
             if (p > q)
-            {
                 p %= q;
-            }
             else
-            {
                 q %= p;
-            }
         }
         return p | q;
     }
@@ -616,13 +612,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         while (p != T.Zero && q != T.Zero)
         {
             if (p > q)
-            {
                 p %= q;
-            }
             else
-            {
                 q %= p;
-            }
         }
         return holdP / (p | q) * holdQ;
     }
