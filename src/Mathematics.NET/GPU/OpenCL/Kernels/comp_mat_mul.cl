@@ -1,7 +1,7 @@
 __kernel void comp_mat_mul(__global const complex* matA,
-    __global const complex* matB,
-    int const k,
-    __global complex* result)
+                           __global const complex* matB,
+                           int const k,
+                           __global complex* result)
 {
     int row = get_global_id(0);
     int col = get_global_id(1);
