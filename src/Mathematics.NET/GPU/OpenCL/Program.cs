@@ -25,8 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-// TODO: Create a source generator that finds kernels in the Kernels folder and adds them automatically.
-
 #pragma warning disable IDE0058
 
 using System.Reflection;
@@ -48,7 +46,7 @@ public sealed class Program : IOpenCLObject
         _logger = logger;
 
         var assembly = Assembly.GetExecutingAssembly();
-        var resourceNames = assembly.GetManifestResourceNames().Where(x => x.EndsWith(".cl")).ToArray();
+        var resourceNames = assembly.GetManifestResourceNames().Where(x => x.EndsWith(".cl") || x.EndsWith(".c")).ToArray();
 
         var kernels = new string[resourceNames.Length];
         var kernelLengths = new nuint[resourceNames.Length];
@@ -91,7 +89,8 @@ public sealed class Program : IOpenCLObject
             //                                    ^    ^
             // Index:                             35   ^3
 
-            CreateKernel(resource[35..^3]);
+            if (resource.EndsWith(".cl"))
+                CreateKernel(resource[35..^3]);
         }
     }
 

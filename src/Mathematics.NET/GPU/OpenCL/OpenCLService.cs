@@ -146,9 +146,108 @@ public sealed class OpenCLService : IComputeService
 
     public KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel) => new(_logger, _cl, device, kernel);
 
-    //
-    // Interface implementations.
-    //
+    #region Interface Implementations
+
+    // TODO: Consider putting this in another file.
+
+    public unsafe ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, Complex scalar)
+    {
+        var length = vector.Length;
+        var result = new Complex[length];
+
+        fixed (void* pVector = vector)
+        {
+            // Create buffers.
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * length), pVector, null);
+
+            fixed (void* pResult = result)
+            {
+                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * length), pResult, null);
+
+                // Set kernel arguments.
+                var kernel = _program.Kernels["comp_vec_mul_scalar"].Handle;
+                var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
+                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), &scalar);
+                error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
+#if DEBUG
+                if (error != (int)ErrorCodes.Success)
+                    _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_vec_mul_scalar"].Name);
+#endif
+
+                // Enqueue NDRange kernel.
+                using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
+                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
+#if DEBUG
+                if (error != (int)ErrorCodes.Success)
+                    _logger.LogDebug(s_enqueueNDRangeKernelError);
+#endif
+                _cl.Finish(commandQueue.Handle);
+
+                // Enqueue read buffer.
+                _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
+
+                // Release mem objects.
+                _cl.ReleaseMemObject(resultBuffer);
+            }
+            _cl.ReleaseMemObject(vectorBuffer);
+        }
+
+        return result;
+    }
+
+    public unsafe ReadOnlySpan2D<Complex> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex> left, ReadOnlySpan2D<Complex> right)
+    {
+        var k = left.Width;
+        if (k != right.Height)
+            throw new Exception("Cannot multiply two matrices with incompatible dimensions.");
+        Span2D<Complex> result = new Complex[left.Height, right.Width];
+
+        fixed (void* pLeft = left)
+        {
+            // Create buffers.
+            nint leftBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * left.Length), pLeft, null);
+
+            fixed (void* pRight = right)
+            {
+                nint rightBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * right.Length), pRight, null);
+
+                fixed (void* pResult = result)
+                {
+                    nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * result.Length), pResult, null);
+
+                    // Set kernel arguments.
+                    var kernel = _program.Kernels["comp_mat_mul"].Handle;
+                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &leftBuffer);
+                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
+                    error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
+                    error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
+#if DEBUG
+                    if (error != (int)ErrorCodes.Success)
+                        _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_mat_mul"].Name);
+#endif
+
+                    // Enqueue NDRange kernel.
+                    using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
+                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
+#if DEBUG
+                    if (error != (int)ErrorCodes.Success)
+                        _logger.LogDebug(s_enqueueNDRangeKernelError);
+#endif
+                    _cl.Finish(commandQueue.Handle);
+
+                    // Enqueue read buffer.
+                    _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * result.Length), pResult, 0, null, null);
+
+                    // Release mem objects.
+                    _cl.ReleaseMemObject(resultBuffer);
+                }
+                _cl.ReleaseMemObject(rightBuffer);
+            }
+            _cl.ReleaseMemObject(leftBuffer);
+        }
+
+        return result;
+    }
 
     public unsafe ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right)
     {
@@ -248,4 +347,6 @@ public sealed class OpenCLService : IComputeService
 
         return result;
     }
+
+    #endregion
 }
