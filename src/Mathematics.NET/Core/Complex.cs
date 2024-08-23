@@ -138,21 +138,13 @@ public readonly struct Complex(Real real, Real imaginary)
         provider ??= NumberFormatInfo.InvariantInfo;
 
         if (format is "ALL")
-        {
             return string.Format(provider, "({0}, {1})", _real.ToString(null, provider), _imaginary.ToString(null, provider));
-        }
         else if (format is "RE")
-        {
             return string.Format(provider, "{0}", _real.ToString(null, provider));
-        }
         else if (format is "IM")
-        {
             return string.Format(provider, "{0}", _imaginary.ToString(null, provider));
-        }
         else
-        {
             throw new FormatException($"The \"{format}\" format is not supported.");
-        }
     }
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
@@ -237,9 +229,7 @@ public readonly struct Complex(Real real, Real imaginary)
     public static Complex Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
     {
         if (!TryParse(s, style, provider, out Complex result))
-        {
             return Infinity;
-        }
         return result;
     }
 
@@ -350,9 +340,7 @@ public readonly struct Complex(Real real, Real imaginary)
     public static Complex Reciprocate(Complex z)
     {
         if (z._real == 0.0 && z._imaginary == 0.0)
-        {
             return Infinity;
-        }
 
         var u = z._real * z._real + z._imaginary * z._imaginary;
         return new(z._real / u, -z._imaginary / u);
@@ -385,9 +373,7 @@ public readonly struct Complex(Real real, Real imaginary)
         where U : INumberBase<U>
     {
         if (value._imaginary == Real.Zero)
-        {
             throw new OverflowException();
-        }
 
         result = U.CreateChecked(value._real.AsDouble());
         return true;
@@ -469,22 +455,14 @@ public readonly struct Complex(Real real, Real imaginary)
 
         double u;
         if (bPrime < 0.0)
-        {
             u = Math.Acos(b);
-        }
         else
-        {
             u = Math.Atan(1.0 / bPrime);
-        }
 
         if (z._real < 0.0)
-        {
             u = Constants.Pi - u;
-        }
         if (z._imaginary > 0.0)
-        {
             v = -v;
-        }
 
         return new(u, v);
     }
@@ -495,22 +473,14 @@ public readonly struct Complex(Real real, Real imaginary)
 
         double u;
         if (bPrime < 0.0)
-        {
             u = Math.Asin(b);
-        }
         else
-        {
             u = Math.Atan(bPrime);
-        }
 
         if (z._real < 0.0)
-        {
             u = -u;
-        }
         if (z._imaginary < 0.0)
-        {
             v = -v;
-        }
 
         return new(u, v);
     }
@@ -594,17 +564,11 @@ public readonly struct Complex(Real real, Real imaginary)
     {
         var xp1 = 1.0 + x;
         if (xp1 == 1.0)
-        {
             return x;
-        }
         else if (x < 0.75)
-        {
             return x * Math.Log(xp1) / (xp1 - 1.0);
-        }
         else
-        {
             return Math.Log(xp1);
-        }
     }
 
     public static Complex Atan(Complex z) => s_imOverTwo * Ln((s_im + z) / (s_im - z));
