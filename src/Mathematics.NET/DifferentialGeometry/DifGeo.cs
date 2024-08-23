@@ -55,12 +55,12 @@ public static partial class DifGeo
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="metric">A metric tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="derivative">A rank-three tensor.</param>
+    /// <param name="dMetric">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         MetricTensorField2x2<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -68,12 +68,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
-        var inverseMetricLeft = metricValueLeft.Inverse();
-        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
+        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
 
-        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -81,7 +81,7 @@ public static partial class DifGeo
         TT tape,
         MetricTensorField3x3<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -89,12 +89,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
-        var inverseMetricLeft = metricValueLeft.Inverse();
-        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
+        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
 
-        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -102,7 +102,7 @@ public static partial class DifGeo
         TT tape,
         MetricTensorField4x4<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -110,12 +110,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
-        var inverseMetricLeft = metricValueLeft.Inverse();
-        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
+        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
 
-        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <summary>Compute the derivative of a metric tensor.</summary>
@@ -129,12 +129,12 @@ public static partial class DifGeo
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="metric">A metric tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="derivative">A rank-three tensor.</param>
+    /// <param name="dMetric">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         MetricTensorField2x2<TT, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -142,12 +142,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
-        var inverseMetricLeft = metricValueLeft.Inverse();
-        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
+        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
 
-        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorField2x2{TT, TN, Index{Lower, TPIN}}, AutoDiffTensor2{TN, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -155,7 +155,7 @@ public static partial class DifGeo
         TT tape,
         MetricTensorField3x3<TT, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -163,12 +163,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
-        var inverseMetricLeft = metricValueLeft.Inverse();
-        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
+        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
 
-        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorField2x2{TT, TN, Index{Lower, TPIN}}, AutoDiffTensor2{TN, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -176,7 +176,7 @@ public static partial class DifGeo
         TT tape,
         MetricTensorField4x4<TT, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -184,12 +184,12 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
-        var inverseMetricLeft = metricValueLeft.Inverse();
-        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
+        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
 
-        derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <summary>Compute the derivative of rank-two tensor.</summary>
@@ -205,12 +205,12 @@ public static partial class DifGeo
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="derivative">A rank-three tensor.</param>
+    /// <param name="dTensor">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
         TensorField2x2<TT, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -220,7 +220,7 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        derivative = new();
+        dTensor = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -230,8 +230,8 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    derivative[0, i, j] = gradient[0];
-                    derivative[1, i, j] = gradient[1];
+                    dTensor[0, i, j] = gradient[0];
+                    dTensor[1, i, j] = gradient[1];
                 }
             }
         }
@@ -242,7 +242,7 @@ public static partial class DifGeo
         TT tape,
         TensorField3x3<TT, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -252,7 +252,7 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        derivative = new();
+        dTensor = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -262,9 +262,9 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    derivative[0, i, j] = gradient[0];
-                    derivative[1, i, j] = gradient[1];
-                    derivative[2, i, j] = gradient[2];
+                    dTensor[0, i, j] = gradient[0];
+                    dTensor[1, i, j] = gradient[1];
+                    dTensor[2, i, j] = gradient[2];
                 }
             }
         }
@@ -275,7 +275,7 @@ public static partial class DifGeo
         TT tape,
         TensorField4x4<TT, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -285,7 +285,7 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        derivative = new();
+        dTensor = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -295,10 +295,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    derivative[0, i, j] = gradient[0];
-                    derivative[1, i, j] = gradient[1];
-                    derivative[2, i, j] = gradient[2];
-                    derivative[3, i, j] = gradient[3];
+                    dTensor[0, i, j] = gradient[0];
+                    dTensor[1, i, j] = gradient[1];
+                    dTensor[2, i, j] = gradient[2];
+                    dTensor[3, i, j] = gradient[3];
                 }
             }
         }
@@ -309,7 +309,7 @@ public static partial class DifGeo
         TT tape,
         TensorField2x2<TT, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -319,7 +319,7 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        derivative = new();
+        dTensor = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -329,8 +329,8 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    derivative[0, i, j] = gradient[0];
-                    derivative[1, i, j] = gradient[1];
+                    dTensor[0, i, j] = gradient[0];
+                    dTensor[1, i, j] = gradient[1];
                 }
             }
         }
@@ -341,7 +341,7 @@ public static partial class DifGeo
         TT tape,
         TensorField3x3<TT, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -351,7 +351,7 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        derivative = new();
+        dTensor = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -361,9 +361,9 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    derivative[0, i, j] = gradient[0];
-                    derivative[1, i, j] = gradient[1];
-                    derivative[2, i, j] = gradient[2];
+                    dTensor[0, i, j] = gradient[0];
+                    dTensor[1, i, j] = gradient[1];
+                    dTensor[2, i, j] = gradient[2];
                 }
             }
         }
@@ -374,7 +374,7 @@ public static partial class DifGeo
         TT tape,
         TensorField4x4<TT, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
@@ -384,7 +384,7 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        derivative = new();
+        dTensor = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -394,10 +394,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    derivative[0, i, j] = gradient[0];
-                    derivative[1, i, j] = gradient[1];
-                    derivative[2, i, j] = gradient[2];
-                    derivative[3, i, j] = gradient[3];
+                    dTensor[0, i, j] = gradient[0];
+                    dTensor[1, i, j] = gradient[1];
+                    dTensor[2, i, j] = gradient[2];
+                    dTensor[3, i, j] = gradient[3];
                 }
             }
         }
@@ -416,12 +416,12 @@ public static partial class DifGeo
     /// <param name="tape">A Hessian tape.</param>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="secondDerivative">A rank-four tensor.</param>
+    /// <param name="d2Tensor">A rank-four tensor.</param>
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
         TensorField2x2<HessianTape<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
         where TI3P : IIndexPosition
@@ -431,7 +431,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        secondDerivative = new();
+        d2Tensor = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -441,11 +441,11 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    secondDerivative[0, 0, i, j] = hessian[0, 0];
-                    secondDerivative[0, 1, i, j] = hessian[0, 1];
+                    d2Tensor[0, 0, i, j] = hessian[0, 0];
+                    d2Tensor[0, 1, i, j] = hessian[0, 1];
 
-                    secondDerivative[1, 0, i, j] = hessian[1, 0];
-                    secondDerivative[1, 1, i, j] = hessian[1, 1];
+                    d2Tensor[1, 0, i, j] = hessian[1, 0];
+                    d2Tensor[1, 1, i, j] = hessian[1, 1];
                 }
             }
         }
@@ -456,7 +456,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         TensorField3x3<HessianTape<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
         where TI3P : IIndexPosition
@@ -466,7 +466,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        secondDerivative = new();
+        d2Tensor = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -476,17 +476,17 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    secondDerivative[0, 0, i, j] = hessian[0, 0];
-                    secondDerivative[0, 1, i, j] = hessian[0, 1];
-                    secondDerivative[0, 2, i, j] = hessian[0, 2];
+                    d2Tensor[0, 0, i, j] = hessian[0, 0];
+                    d2Tensor[0, 1, i, j] = hessian[0, 1];
+                    d2Tensor[0, 2, i, j] = hessian[0, 2];
 
-                    secondDerivative[1, 0, i, j] = hessian[1, 0];
-                    secondDerivative[1, 1, i, j] = hessian[1, 1];
-                    secondDerivative[1, 2, i, j] = hessian[1, 2];
+                    d2Tensor[1, 0, i, j] = hessian[1, 0];
+                    d2Tensor[1, 1, i, j] = hessian[1, 1];
+                    d2Tensor[1, 2, i, j] = hessian[1, 2];
 
-                    secondDerivative[2, 0, i, j] = hessian[2, 0];
-                    secondDerivative[2, 1, i, j] = hessian[2, 1];
-                    secondDerivative[2, 2, i, j] = hessian[2, 2];
+                    d2Tensor[2, 0, i, j] = hessian[2, 0];
+                    d2Tensor[2, 1, i, j] = hessian[2, 1];
+                    d2Tensor[2, 2, i, j] = hessian[2, 2];
                 }
             }
         }
@@ -497,7 +497,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         TensorField4x4<HessianTape<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
         where TI3P : IIndexPosition
@@ -507,7 +507,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        secondDerivative = new();
+        d2Tensor = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -517,25 +517,25 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    secondDerivative[0, 0, i, j] = hessian[0, 0];
-                    secondDerivative[0, 1, i, j] = hessian[0, 1];
-                    secondDerivative[0, 2, i, j] = hessian[0, 2];
-                    secondDerivative[0, 3, i, j] = hessian[0, 3];
+                    d2Tensor[0, 0, i, j] = hessian[0, 0];
+                    d2Tensor[0, 1, i, j] = hessian[0, 1];
+                    d2Tensor[0, 2, i, j] = hessian[0, 2];
+                    d2Tensor[0, 3, i, j] = hessian[0, 3];
 
-                    secondDerivative[1, 0, i, j] = hessian[1, 0];
-                    secondDerivative[1, 1, i, j] = hessian[1, 1];
-                    secondDerivative[1, 2, i, j] = hessian[1, 2];
-                    secondDerivative[1, 3, i, j] = hessian[1, 3];
+                    d2Tensor[1, 0, i, j] = hessian[1, 0];
+                    d2Tensor[1, 1, i, j] = hessian[1, 1];
+                    d2Tensor[1, 2, i, j] = hessian[1, 2];
+                    d2Tensor[1, 3, i, j] = hessian[1, 3];
 
-                    secondDerivative[2, 0, i, j] = hessian[2, 0];
-                    secondDerivative[2, 1, i, j] = hessian[2, 1];
-                    secondDerivative[2, 2, i, j] = hessian[2, 2];
-                    secondDerivative[2, 3, i, j] = hessian[2, 3];
+                    d2Tensor[2, 0, i, j] = hessian[2, 0];
+                    d2Tensor[2, 1, i, j] = hessian[2, 1];
+                    d2Tensor[2, 2, i, j] = hessian[2, 2];
+                    d2Tensor[2, 3, i, j] = hessian[2, 3];
 
-                    secondDerivative[3, 0, i, j] = hessian[3, 0];
-                    secondDerivative[3, 1, i, j] = hessian[3, 1];
-                    secondDerivative[3, 2, i, j] = hessian[3, 2];
-                    secondDerivative[3, 3, i, j] = hessian[3, 3];
+                    d2Tensor[3, 0, i, j] = hessian[3, 0];
+                    d2Tensor[3, 1, i, j] = hessian[3, 1];
+                    d2Tensor[3, 2, i, j] = hessian[3, 2];
+                    d2Tensor[3, 3, i, j] = hessian[3, 3];
                 }
             }
         }
@@ -546,7 +546,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         TensorField2x2<HessianTape<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
         where TI3P : IIndexPosition
@@ -556,7 +556,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        secondDerivative = new();
+        d2Tensor = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -566,11 +566,11 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    secondDerivative[0, 0, i, j] = hessian[0, 0];
-                    secondDerivative[0, 1, i, j] = hessian[0, 1];
+                    d2Tensor[0, 0, i, j] = hessian[0, 0];
+                    d2Tensor[0, 1, i, j] = hessian[0, 1];
 
-                    secondDerivative[1, 0, i, j] = hessian[1, 0];
-                    secondDerivative[1, 1, i, j] = hessian[1, 1];
+                    d2Tensor[1, 0, i, j] = hessian[1, 0];
+                    d2Tensor[1, 1, i, j] = hessian[1, 1];
                 }
             }
         }
@@ -581,7 +581,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         TensorField3x3<HessianTape<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
         where TI3P : IIndexPosition
@@ -591,7 +591,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        secondDerivative = new();
+        d2Tensor = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -601,17 +601,17 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    secondDerivative[0, 0, i, j] = hessian[0, 0];
-                    secondDerivative[0, 1, i, j] = hessian[0, 1];
-                    secondDerivative[0, 2, i, j] = hessian[0, 2];
+                    d2Tensor[0, 0, i, j] = hessian[0, 0];
+                    d2Tensor[0, 1, i, j] = hessian[0, 1];
+                    d2Tensor[0, 2, i, j] = hessian[0, 2];
 
-                    secondDerivative[1, 0, i, j] = hessian[1, 0];
-                    secondDerivative[1, 1, i, j] = hessian[1, 1];
-                    secondDerivative[1, 2, i, j] = hessian[1, 2];
+                    d2Tensor[1, 0, i, j] = hessian[1, 0];
+                    d2Tensor[1, 1, i, j] = hessian[1, 1];
+                    d2Tensor[1, 2, i, j] = hessian[1, 2];
 
-                    secondDerivative[2, 0, i, j] = hessian[2, 0];
-                    secondDerivative[2, 1, i, j] = hessian[2, 1];
-                    secondDerivative[2, 2, i, j] = hessian[2, 2];
+                    d2Tensor[2, 0, i, j] = hessian[2, 0];
+                    d2Tensor[2, 1, i, j] = hessian[2, 1];
+                    d2Tensor[2, 2, i, j] = hessian[2, 2];
                 }
             }
         }
@@ -622,7 +622,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         TensorField4x4<HessianTape<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : ISymbol
         where TI3P : IIndexPosition
@@ -632,7 +632,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        secondDerivative = new();
+        d2Tensor = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -642,25 +642,25 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    secondDerivative[0, 0, i, j] = hessian[0, 0];
-                    secondDerivative[0, 1, i, j] = hessian[0, 1];
-                    secondDerivative[0, 2, i, j] = hessian[0, 2];
-                    secondDerivative[0, 3, i, j] = hessian[0, 3];
+                    d2Tensor[0, 0, i, j] = hessian[0, 0];
+                    d2Tensor[0, 1, i, j] = hessian[0, 1];
+                    d2Tensor[0, 2, i, j] = hessian[0, 2];
+                    d2Tensor[0, 3, i, j] = hessian[0, 3];
 
-                    secondDerivative[1, 0, i, j] = hessian[1, 0];
-                    secondDerivative[1, 1, i, j] = hessian[1, 1];
-                    secondDerivative[1, 2, i, j] = hessian[1, 2];
-                    secondDerivative[1, 3, i, j] = hessian[1, 3];
+                    d2Tensor[1, 0, i, j] = hessian[1, 0];
+                    d2Tensor[1, 1, i, j] = hessian[1, 1];
+                    d2Tensor[1, 2, i, j] = hessian[1, 2];
+                    d2Tensor[1, 3, i, j] = hessian[1, 3];
 
-                    secondDerivative[2, 0, i, j] = hessian[2, 0];
-                    secondDerivative[2, 1, i, j] = hessian[2, 1];
-                    secondDerivative[2, 2, i, j] = hessian[2, 2];
-                    secondDerivative[2, 3, i, j] = hessian[2, 3];
+                    d2Tensor[2, 0, i, j] = hessian[2, 0];
+                    d2Tensor[2, 1, i, j] = hessian[2, 1];
+                    d2Tensor[2, 2, i, j] = hessian[2, 2];
+                    d2Tensor[2, 3, i, j] = hessian[2, 3];
 
-                    secondDerivative[3, 0, i, j] = hessian[3, 0];
-                    secondDerivative[3, 1, i, j] = hessian[3, 1];
-                    secondDerivative[3, 2, i, j] = hessian[3, 2];
-                    secondDerivative[3, 3, i, j] = hessian[3, 3];
+                    d2Tensor[3, 0, i, j] = hessian[3, 0];
+                    d2Tensor[3, 1, i, j] = hessian[3, 1];
+                    d2Tensor[3, 2, i, j] = hessian[3, 2];
+                    d2Tensor[3, 3, i, j] = hessian[3, 3];
                 }
             }
         }
@@ -787,11 +787,11 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValue = metric.Compute<TI1N, InternalIndex1>(tape, point);
-        var inverseMetric = metricValue.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFirstKind);
+        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var invMetric = value.Inverse();
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
 
-        var result = Contract(inverseMetric, christoffelFirstKind);
+        var result = Contract(invMetric, christoffelFK);
 
         christoffel = Unsafe.As<
             Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
@@ -812,11 +812,11 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValue = metric.Compute<TI1N, InternalIndex1>(tape, point);
-        var inverseMetric = metricValue.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFirstKind);
+        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var invMetric = value.Inverse();
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
 
-        var result = Contract(inverseMetric, christoffelFirstKind);
+        var result = Contract(invMetric, christoffelFK);
 
         christoffel = Unsafe.As<
             Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
@@ -837,11 +837,11 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var metricValue = metric.Compute<TI1N, InternalIndex1>(tape, point);
-        var inverseMetric = metricValue.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFirstKind);
+        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var invMetric = value.Inverse();
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
 
-        var result = Contract(inverseMetric, christoffelFirstKind);
+        var result = Contract(invMetric, christoffelFK);
 
         christoffel = Unsafe.As<
             Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
@@ -872,7 +872,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        SecondDerivative(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> secondDerivativeOfMetric);
+        SecondDerivative(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
 
         derivative = new();
         for (int m = 0; m < 2; m++)
@@ -883,7 +883,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 2; j++)
                     {
-                        derivative[m, k, i, j] = 0.5 * (secondDerivativeOfMetric[m, j, k, i] + secondDerivativeOfMetric[m, i, k, j] - secondDerivativeOfMetric[m, k, i, j]);
+                        derivative[m, k, i, j] = 0.5 * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -903,7 +903,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        SecondDerivative(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> secondDerivativeOfMetric);
+        SecondDerivative(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
 
         derivative = new();
         for (int m = 0; m < 3; m++)
@@ -914,7 +914,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        derivative[m, k, i, j] = 0.5 * (secondDerivativeOfMetric[m, j, k, i] + secondDerivativeOfMetric[m, i, k, j] - secondDerivativeOfMetric[m, k, i, j]);
+                        derivative[m, k, i, j] = 0.5 * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -934,7 +934,7 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        SecondDerivative(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> secondDerivativeOfMetric);
+        SecondDerivative(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
 
         derivative = new();
         for (int m = 0; m < 4; m++)
@@ -945,7 +945,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 4; j++)
                     {
-                        derivative[m, k, i, j] = 0.5 * (secondDerivativeOfMetric[m, j, k, i] + secondDerivativeOfMetric[m, i, k, j] - secondDerivativeOfMetric[m, k, i, j]);
+                        derivative[m, k, i, j] = 0.5 * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -975,13 +975,13 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> derivativeOfInverseMetric);
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
         Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var inverseMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
-        var firstPart = Contract(derivativeOfInverseMetric, christoffel);
-        var secondPart = Contract(inverseMetric, derivativeOfChristoffel);
+        var firstPart = Contract(dInvMetric, christoffel);
+        var secondPart = Contract(invMetric, dChristoffel);
 
         derivative = new();
         for (int m = 0; m < 2; m++)
@@ -1012,13 +1012,13 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> derivativeOfInverseMetric);
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
         Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var inverseMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
-        var firstPart = Contract(derivativeOfInverseMetric, christoffel);
-        var secondPart = Contract(inverseMetric, derivativeOfChristoffel);
+        var firstPart = Contract(dInvMetric, christoffel);
+        var secondPart = Contract(invMetric, dChristoffel);
 
         derivative = new();
         for (int m = 0; m < 3; m++)
@@ -1049,13 +1049,13 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> derivativeOfInverseMetric);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
         Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var inverseMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
-        var firstPart = Contract(derivativeOfInverseMetric, christoffel);
-        var secondPart = Contract(inverseMetric, derivativeOfChristoffel);
+        var firstPart = Contract(dInvMetric, christoffel);
+        var secondPart = Contract(invMetric, dChristoffel);
 
         derivative = new();
         for (int m = 0; m < 4; m++)
@@ -1100,9 +1100,9 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
         Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var contractedChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 2; r++)
@@ -1114,7 +1114,7 @@ public static partial class DifGeo
                     for (int n = 0; n < 2; n++)
                     {
                         riemann[r, s, m, n] =
-                            derivativeOfChristoffel[m, r, s, n] - derivativeOfChristoffel[n, r, s, m] + contractedChristoffels[r, m, s, n] - contractedChristoffels[r, n, s, m];
+                            dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
                     }
                 }
             }
@@ -1134,9 +1134,9 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
         Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var contractedChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 3; r++)
@@ -1148,7 +1148,7 @@ public static partial class DifGeo
                     for (int n = 0; n < 3; n++)
                     {
                         riemann[r, s, m, n] =
-                            derivativeOfChristoffel[m, r, s, n] - derivativeOfChristoffel[n, r, s, m] + contractedChristoffels[r, m, s, n] - contractedChristoffels[r, n, s, m];
+                            dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
                     }
                 }
             }
@@ -1168,9 +1168,9 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> derivativeOfChristoffel);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
         Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var contractedChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 4; r++)
@@ -1182,7 +1182,7 @@ public static partial class DifGeo
                     for (int n = 0; n < 4; n++)
                     {
                         riemann[r, s, m, n] =
-                            derivativeOfChristoffel[m, r, s, n] - derivativeOfChristoffel[n, r, s, m] + contractedChristoffels[r, m, s, n] - contractedChristoffels[r, n, s, m];
+                            dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
                     }
                 }
             }
