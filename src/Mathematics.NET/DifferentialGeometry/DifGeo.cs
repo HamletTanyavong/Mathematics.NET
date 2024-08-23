@@ -71,7 +71,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
+        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -93,7 +93,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
+        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -115,7 +115,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
+        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -148,7 +148,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
+        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -170,7 +170,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
+        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
@@ -192,7 +192,7 @@ public static partial class DifGeo
         var metricValueLeft = metric.Compute<TI2N, InternalIndex1>(tape, point);
         ref var metricValueLeftRef = ref metricValueLeft;
         var inverseMetricLeft = metricValueLeftRef.Inverse();
-        ref var inverseMetricRight = ref inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
+        var inverseMetricRight = inverseMetricLeft.WithIndices<InternalIndex2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> derivativeOfMetric);
 
         derivative = -Contract(Contract(derivativeOfMetric, inverseMetricLeft), inverseMetricRight);
