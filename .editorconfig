@@ -21,7 +21,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 ### C and OpenCL Files ###
-[*.{c,cl}]
+[*.{h,c,cl}]
 
 # Indentation and spacing
 indent_size = 4
