@@ -354,19 +354,8 @@ public readonly struct Complex(Real real, Real imaginary)
             return Infinity;
         }
 
-        var c = z._real.AsDouble();
-        var d = z._imaginary.AsDouble();
-
-        if (Math.Abs(d) < Math.Abs(c))
-        {
-            var u = d / c;
-            return new(1.0 / (c + d * u), -u / (c + d * u));
-        }
-        else
-        {
-            var u = c / d;
-            return new(u / (d + c * u), -1.0 / (d + c * u));
-        }
+        var u = z._real * z._real + z._imaginary * z._imaginary;
+        return new(z._real / u, -z._imaginary / u);
     }
 
     // We will only consider the real part of complex numbers for these conversions.
