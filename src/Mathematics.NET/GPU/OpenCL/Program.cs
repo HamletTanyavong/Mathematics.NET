@@ -27,7 +27,6 @@
 
 #pragma warning disable IDE0058
 
-using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
@@ -40,29 +39,39 @@ public sealed class Program : IOpenCLObject
     private readonly CL _cl;
     private readonly ILogger<OpenCLService> _logger;
 
-    public unsafe Program(ILogger<OpenCLService> logger, CL cl, Context context, ReadOnlySpan<Device> devices)
+    public unsafe Program(ILogger<OpenCLService> logger, CL cl, Context context, ReadOnlySpan<Device> devices, params string[] options)
     {
         _cl = cl;
         _logger = logger;
 
-        var assembly = Assembly.GetExecutingAssembly();
-        var resourceNames = assembly.GetManifestResourceNames().Where(x => x.EndsWith(".cl") || x.EndsWith(".c")).ToArray();
+        var files = Directory
+            .EnumerateFiles(@"GPU\OpenCL\Kernels")
+            .Where(x => x.EndsWith(".c") || x.EndsWith(".cl"))
+            .ToArray();
 
-        var kernels = new string[resourceNames.Length];
-        var kernelLengths = new nuint[resourceNames.Length];
+        var code = new string[files.Length];
+        var codeLengths = new nuint[files.Length];
+        List<string> kernels = [];
 
-        for (int i = 0; i < resourceNames.Length; i++)
+        for (int i = 0; i < files.Length; i++)
         {
-            using var stream = assembly.GetManifestResourceStream(resourceNames[i])!;
-            using var reader = new StreamReader(stream);
-            var kernel = reader.ReadToEnd();
-            kernels[i] = kernel;
-            kernelLengths[i] = (nuint)kernel.Length;
+            var text = File.ReadAllText(files[i]);
+            code[i] = text;
+            codeLengths[i] = (nuint)text.Length;
+
+            // Make sure all kernels are in the Mathematics.NET.GPU.OpenCL.Kernels folder.
+            //
+            // GPU\OpenCL\Kernels\{name}.cl
+            //                    ^    ^
+            // Index:             19   ^3
+
+            if (files[i].EndsWith(".cl"))
+                kernels.Add(files[i][19..^3]);
         }
 
-        fixed (nuint* pKernelLengths = kernelLengths)
+        fixed (nuint* pCodeLengths = codeLengths)
         {
-            Handle = _cl.CreateProgramWithSource(context.Handle, (uint)kernels.Length, kernels, pKernelLengths, out var error);
+            Handle = _cl.CreateProgramWithSource(context.Handle, (uint)code.Length, code, pCodeLengths, out var error);
 #if DEBUG
             if (error != (int)ErrorCodes.Success)
                 _logger.LogDebug("Unable to create the program from source.");
@@ -71,26 +80,23 @@ public sealed class Program : IOpenCLObject
 
         fixed (nint* pDevices = devices.ToArray().Select(x => x.Handle).ToArray())
         {
-            var error = _cl.BuildProgram(Handle, (uint)devices.Length, pDevices, (byte*)null, null, null);
-            if (error != (int)ErrorCodes.Success)
+            var optionsString = Encoding.UTF8.GetBytes(string.Join(' ', options.Where(x => !string.IsNullOrEmpty(x))));
+            fixed (byte* pOptionsString = optionsString)
             {
-                _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, 0, null, out var infoSize);
-                Span<byte> infoSpan = new byte[infoSize];
-                _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, infoSize, infoSpan, []);
-                throw new Exception(Encoding.UTF8.GetString(infoSpan));
+                var error = _cl.BuildProgram(Handle, (uint)devices.Length, pDevices, pOptionsString, null, null);
+                if (error != (int)ErrorCodes.Success)
+                {
+                    _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, 0, null, out var infoSize);
+                    Span<byte> infoSpan = new byte[infoSize];
+                    _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, infoSize, infoSpan, []);
+                    throw new Exception(Encoding.UTF8.GetString(infoSpan));
+                }
             }
         }
 
-        foreach (var resource in resourceNames)
+        foreach (var kernel in kernels)
         {
-            // Make sure all kernels are in the Mathematics.NET.GPU.OpenCL.Kernels folder.
-            //
-            // Mathematics.NET.GPU.OpenCL.Kernels.{name}.cl
-            //                                    ^    ^
-            // Index:                             35   ^3
-
-            if (resource.EndsWith(".cl"))
-                CreateKernel(resource[35..^3]);
+            CreateKernel(kernel);
         }
     }
 

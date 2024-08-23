@@ -1,6 +1,8 @@
+#include "GPU\OpenCL\Kernels\complex.h"
+
 __kernel void comp_mat_mul(__global const complex* matA,
                            __global const complex* matB,
-                           int const k,
+                           const int k,
                            __global complex* result)
 {
     int row = get_global_id(0);
@@ -10,9 +12,7 @@ __kernel void comp_mat_mul(__global const complex* matA,
     int aIndex = row * k;
     int bIndex = col;
 
-    complex sum;
-    sum.re = 0;
-    sum.im = 0;
+    complex sum = { .re = 0, .im = 0 };
 
     for (int i = 0; i < k; i++)
     {
