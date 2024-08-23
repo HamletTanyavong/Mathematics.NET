@@ -1,10 +1,4 @@
-#define Re(z) z.re
-#define Im(z) z.im
-
-typedef struct __attribute__((packed)) {
-    double re;
-    double im;
-} complex;
+#include "GPU\OpenCL\Kernels\complex.h"
 
 // Basic operations.
 
