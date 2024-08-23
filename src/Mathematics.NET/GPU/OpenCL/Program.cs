@@ -39,7 +39,7 @@ public sealed class Program : IOpenCLObject
     private readonly CL _cl;
     private readonly ILogger<OpenCLService> _logger;
 
-    public unsafe Program(ILogger<OpenCLService> logger, CL cl, Context context, ReadOnlySpan<Device> devices)
+    public unsafe Program(ILogger<OpenCLService> logger, CL cl, Context context, ReadOnlySpan<Device> devices, params string[] options)
     {
         _cl = cl;
         _logger = logger;
@@ -80,13 +80,17 @@ public sealed class Program : IOpenCLObject
 
         fixed (nint* pDevices = devices.ToArray().Select(x => x.Handle).ToArray())
         {
-            var error = _cl.BuildProgram(Handle, (uint)devices.Length, pDevices, (byte*)null, null, null);
-            if (error != (int)ErrorCodes.Success)
+            var optionsString = Encoding.UTF8.GetBytes(string.Join(' ', options.Where(x => !string.IsNullOrEmpty(x))));
+            fixed (byte* pOptionsString = optionsString)
             {
-                _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, 0, null, out var infoSize);
-                Span<byte> infoSpan = new byte[infoSize];
-                _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, infoSize, infoSpan, []);
-                throw new Exception(Encoding.UTF8.GetString(infoSpan));
+                var error = _cl.BuildProgram(Handle, (uint)devices.Length, pDevices, pOptionsString, null, null);
+                if (error != (int)ErrorCodes.Success)
+                {
+                    _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, 0, null, out var infoSize);
+                    Span<byte> infoSpan = new byte[infoSize];
+                    _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, infoSize, infoSpan, []);
+                    throw new Exception(Encoding.UTF8.GetString(infoSpan));
+                }
             }
         }
 

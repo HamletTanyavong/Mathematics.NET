@@ -55,7 +55,8 @@ public sealed class OpenCLService : IComputeService
     private Context _context;
     private Program _program;
 
-    public unsafe OpenCLService(ILogger<OpenCLService> logger, string vendor, Func<Device, bool> filter, bool useFirst = false)
+    // TODO: Use params ReadOnlySpan<string> when it becomes available.
+    public unsafe OpenCLService(ILogger<OpenCLService> logger, string vendor, Func<Device, bool> filter, bool useFirst = false, params string[] options)
     {
         _logger = logger;
 
@@ -109,7 +110,7 @@ public sealed class OpenCLService : IComputeService
 #endif
 
             // OpenCL program.
-            _program = new Program(_logger, _cl, _context, _devices.Span);
+            _program = new Program(_logger, _cl, _context, _devices.Span, options);
         }
         catch (Exception e)
         {
