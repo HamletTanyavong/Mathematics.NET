@@ -16,7 +16,7 @@
     <RepositoryUrl>https://github.com/HamletTanyavong/Mathematics.NET</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     
-    <!-- Builds -->
+    <!-- Build -->
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
 
