@@ -1,6 +1,6 @@
 #include "GPU\OpenCL\Kernels\complex.h"
 
-// Basic operations.
+// Basic operations
 
 complex comp_add(complex z, complex w) {
     complex result = {

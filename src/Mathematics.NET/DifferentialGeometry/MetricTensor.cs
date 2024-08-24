@@ -156,34 +156,31 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     /// <returns>The trace.</returns>
     public readonly TN Trace() => TSM.E1Components;
 
-    /// <summary>Reinterpret a reference to this metric tensor as one with new index names.</summary>
+    /// <summary>Reinterpret this metric tensor as one with new index names.</summary>
     /// <typeparam name="TNI1N">The name of the first index.</typeparam>
     /// <typeparam name="TNI2N">The name of the second index.</typeparam>
-    /// <returns>A reference to this tensor with new index names.</returns>
-    [UnscopedRef]
+    /// <returns>A tensor with new index names.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ref MetricTensor<TSM, TN, TIP, TNI1N, TNI2N> WithIndices<TNI1N, TNI2N>()
+    public MetricTensor<TSM, TN, TIP, TNI1N, TNI2N> WithIndices<TNI1N, TNI2N>()
         where TNI1N : ISymbol
         where TNI2N : ISymbol
-        => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNI1N, TNI2N>>(ref this);
+        => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNI1N, TNI2N>>(ref this);
 
-    /// <summary>Reinterpret a reference to this metric tensor as one with a new index name in the first position.</summary>
+    /// <summary>Reinterpret this metric tensor as one with a new index name in the first position.</summary>
     /// <typeparam name="TNIN">A new index name.</typeparam>
-    /// <returns>A reference to this tensor with a new index name in the first position.</returns>
-    [UnscopedRef]
+    /// <returns>A tensor with a new index name in the first position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ref MetricTensor<TSM, TN, TIP, TNIN, TI2N> WithIndex1Name<TNIN>()
+    public MetricTensor<TSM, TN, TIP, TNIN, TI2N> WithIndex1Name<TNIN>()
         where TNIN : ISymbol
-        => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNIN, TI2N>>(ref this);
+        => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNIN, TI2N>>(ref this);
 
-    /// <summary>Reinterpret a reference to this metric tensor as one with a new index name in the second position.</summary>
+    /// <summary>Reinterpret this metric tensor as one with a new index name in the second position.</summary>
     /// <typeparam name="TNIN">A new index name.</typeparam>
-    /// <returns>A reference to this tensor with a new index name in the second position.</returns>
-    [UnscopedRef]
+    /// <returns>A tensor with a new index name in the second position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ref MetricTensor<TSM, TN, TIP, TI1N, TNIN> WithIndex2Name<TNIN>()
+    public MetricTensor<TSM, TN, TIP, TI1N, TNIN> WithIndex2Name<TNIN>()
         where TNIN : ISymbol
-        => ref Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TI1N, TNIN>>(ref this);
+        => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TI1N, TNIN>>(ref this);
 
     //
     // Implicit operators

@@ -172,13 +172,13 @@ public static class DifGeoExtensions
     /// <typeparam name="TI2N">The second index of the metric tensor.</typeparam>
     /// <param name="metric">The metric tensor.</param>
     /// <returns>A metric tensor with upper indices.</returns>
-    public static MetricTensor<TSM, TN, Upper, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(ref this MetricTensor<TSM, TN, Lower, TI1N, TI2N> metric)
+    public static MetricTensor<TSM, TN, Upper, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, Lower, TI1N, TI2N> metric)
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TI1N : ISymbol
         where TI2N : ISymbol
     {
-        var inverse = Unsafe.As<MetricTensor<TSM, TN, Lower, TI1N, TI2N>, TSM>(ref metric).Inverse();
+        var inverse = Unsafe.As<MetricTensor<TSM, TN, Lower, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
         return Unsafe.As<TSM, MetricTensor<TSM, TN, Upper, TI1N, TI2N>>(ref inverse);
     }
 
@@ -189,13 +189,13 @@ public static class DifGeoExtensions
     /// <typeparam name="TI2N">The second index of the metric tensor.</typeparam>
     /// <param name="metric">The metric tensor.</param>
     /// <returns>A metric tensor with lower indices.</returns>
-    public static MetricTensor<TSM, TN, Lower, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this MetricTensor<TSM, TN, Upper, TI1N, TI2N> metric)
+    public static MetricTensor<TSM, TN, Lower, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, Upper, TI1N, TI2N> metric)
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TI1N : ISymbol
         where TI2N : ISymbol
     {
-        var inverse = Unsafe.As<MetricTensor<TSM, TN, Upper, TI1N, TI2N>, TSM>(ref metric).Inverse();
+        var inverse = Unsafe.As<MetricTensor<TSM, TN, Upper, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
         return Unsafe.As<TSM, MetricTensor<TSM, TN, Lower, TI1N, TI2N>>(ref inverse);
     }
 }

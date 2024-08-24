@@ -119,14 +119,13 @@ public struct Tensor<TV, TN, TI>(TV vector) : IRankOneTensor<Tensor<TV, TN, TI>,
     // Methods
     //
 
-    /// <summary>Reinterpret a reference to this tensor as one with a new index.</summary>
+    /// <summary>Reinterpret this tensor as one with a new index.</summary>
     /// <typeparam name="TNI">An index.</typeparam>
-    /// <returns>A reference to this tensor with a new index.</returns>
-    [UnscopedRef]
+    /// <returns>A tensor with a new index.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ref Tensor<TV, TN, TNI> WithIndex<TNI>()
+    public Tensor<TV, TN, TNI> WithIndex<TNI>()
         where TNI : IIndex
-        => ref Unsafe.As<Tensor<TV, TN, TI>, Tensor<TV, TN, TNI>>(ref this);
+        => Unsafe.As<Tensor<TV, TN, TI>, Tensor<TV, TN, TNI>>(ref this);
 
     //
     // Implicit operators
