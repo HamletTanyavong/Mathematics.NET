@@ -52,8 +52,6 @@ public readonly struct Real(double real)
     public static readonly Real NegativeInfinity = double.NegativeInfinity;
     public static readonly Real PositiveInfinity = double.PositiveInfinity;
 
-    public static readonly int Radix = 2;
-
     /// <inheritdoc cref="Constants.E" />
     public static readonly Real E = Constants.E;
 
@@ -114,7 +112,7 @@ public readonly struct Real(double real)
     static Real IComplex<Real>.Zero => Zero;
     static Real IComplex<Real>.One => One;
     static Real IComplex<Real>.NaN => NaN;
-    static int IComplex<Real>.Radix => Radix;
+    static int IComplex<Real>.Radix => 2;
     static Real IMinMaxValue<Real>.MaxValue => MaxValue;
     static Real IMinMaxValue<Real>.MinValue => MinValue;
 

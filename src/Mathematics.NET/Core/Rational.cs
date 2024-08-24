@@ -50,8 +50,6 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static readonly Rational<T> NegativeInfinity = new(-T.One, T.Zero);
     public static readonly Rational<T> PositiveInfinity = new(T.One, T.Zero);
 
-    public static readonly int Radix = 2;
-
     private readonly T _numerator;
     private readonly T _denominator;
 
@@ -113,7 +111,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     static Rational<T> IComplex<Rational<T>>.Zero => Zero;
     static Rational<T> IComplex<Rational<T>>.One => One;
     static Rational<T> IComplex<Rational<T>>.NaN => NaN;
-    static int IComplex<Rational<T>>.Radix => Radix;
+    static int IComplex<Rational<T>>.Radix => 2;
     static Rational<T> IMinMaxValue<Rational<T>>.MaxValue => MaxValue;
     static Rational<T> IMinMaxValue<Rational<T>>.MinValue => MinValue;
 
