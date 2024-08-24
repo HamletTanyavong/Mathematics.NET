@@ -61,7 +61,7 @@ public interface IComplex<T>
     /// <summary>The phase of the complex number in polar coordinates.</summary>
     public virtual Real Phase => Real.Atan2(Im, Re);
 
-    /// <summary>Reprsents zero for the type.</summary>
+    /// <summary>Represents zero for the type.</summary>
     static abstract T Zero { get; }
 
     /// <summary>Represents one for the type.</summary>

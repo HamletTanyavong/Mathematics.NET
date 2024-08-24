@@ -40,6 +40,7 @@ public static class LinAlg
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
     /// <param name="matrix">A matrix.</param>
     /// <param name="method">A QR decomposition method.</param>
+    /// <param name="iterations">The number of iterations.</param>
     /// <returns>The eigenvalues of the given matrix.</returns>
     /// <example>
     /// Suppose we want to find the eigenvalues of a 2x2 matrix. We can write the following to get them:
