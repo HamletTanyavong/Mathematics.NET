@@ -75,12 +75,17 @@ public record class GradientTape<T> : ITape<T>
     private List<GradientNode<T>> _nodes;
     private int _variableCount;
 
+    /// <summary>Create an instance of a gradient tape.</summary>
+    /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public GradientTape(bool isTracking = true)
     {
         _nodes = [];
         _isTracking = isTracking;
     }
 
+    /// <summary>Create an instance of a gradient tape that will hold an expected number of nodes.</summary>
+    /// <param name="n">An integer.</param>
+    /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public GradientTape(int n, bool isTracking = true)
     {
         _nodes = new(n);
