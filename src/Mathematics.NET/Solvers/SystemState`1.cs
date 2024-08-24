@@ -1,4 +1,4 @@
-﻿// <copyright file="SystemState.cs" company="Mathematics.NET">
+﻿// <copyright file="SystemState`1.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
