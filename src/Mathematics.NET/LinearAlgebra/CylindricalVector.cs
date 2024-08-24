@@ -54,9 +54,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     public CylindricalVector(Real rho, Real phi, Real z)
     {
         if (rho < 0)
-        {
             throw new ArgumentException("Rho must not be negative");
-        }
 
         Rho = rho;
         Phi = phi;
@@ -86,10 +84,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     internal static Real GetElement(CylindricalVector vector, int index)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -105,10 +100,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     internal static CylindricalVector WithElement(CylindricalVector vector, int index, Real value)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         CylindricalVector result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;

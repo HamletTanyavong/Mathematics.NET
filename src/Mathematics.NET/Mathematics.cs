@@ -155,13 +155,9 @@ public static class Mathematics
         while (p != T.Zero && q != T.Zero)
         {
             if (p > q)
-            {
                 p %= q;
-            }
             else
-            {
                 q %= p;
-            }
         }
         return p | q;
     }

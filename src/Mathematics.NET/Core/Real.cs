@@ -174,14 +174,9 @@ public readonly struct Real(double real)
     public int CompareTo(object? obj)
     {
         if (obj is null)
-        {
             return 1;
-        }
-
         if (obj is Real value)
-        {
             return _value.CompareTo(value._value);
-        }
 
         throw new ArgumentException("Argument is not a real number");
     }
@@ -298,9 +293,7 @@ public readonly struct Real(double real)
     public static Real Reciprocate(Real x)
     {
         if (x == Zero)
-        {
             return PositiveInfinity;
-        }
         return One / x;
     }
 

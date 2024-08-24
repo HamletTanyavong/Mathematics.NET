@@ -66,9 +66,7 @@ public struct Array3x3x3<T> : ICubicArray<Array3x3x3<T>, T>
         readonly get
         {
             if ((uint)i >= 3)
-            {
                 throw new IndexOutOfRangeException();
-            }
             return Unsafe.Add(ref Unsafe.AsRef(in X1), i)[j, k];
         }
 
@@ -76,9 +74,7 @@ public struct Array3x3x3<T> : ICubicArray<Array3x3x3<T>, T>
         set
         {
             if ((uint)i >= 3)
-            {
                 throw new IndexOutOfRangeException();
-            }
             Unsafe.Add(ref X1, i)[j, k] = value;
         }
     }

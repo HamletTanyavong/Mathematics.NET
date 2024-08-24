@@ -62,9 +62,7 @@ public class Node : IGraphComponent
             foreach (var node in queue.Dequeue().ParentNodes())
             {
                 if (ascendants.Add(node))
-                {
                     queue.Enqueue(node);
-                }
             }
         }
 
@@ -92,9 +90,7 @@ public class Node : IGraphComponent
             foreach (var node in queue.Dequeue().ChildNodes())
             {
                 if (descendants.Add(node))
-                {
                     queue.Enqueue(node);
-                }
             }
         }
 

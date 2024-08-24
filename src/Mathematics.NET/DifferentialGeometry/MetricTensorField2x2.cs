@@ -61,9 +61,7 @@ public abstract class MetricTensorField2x2<TT, TN, TPI> : TensorField2x2<TT, TN,
             for (int j = 0; j < 2; j++)
             {
                 if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> function)
-                {
                     result[i, j] = function(tape, point).Value;
-                }
             }
         }
 

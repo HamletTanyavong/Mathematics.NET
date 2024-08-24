@@ -56,9 +56,7 @@ public abstract class MetricTensorField3x3<TT, TN, TPI> : TensorField3x3<TT, TN,
             for (int j = 0; j < 3; j++)
             {
                 if (_buffer[i][j] is Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> function)
-                {
                     result[i, j] = function(tape, point).Value;
-                }
             }
         }
 

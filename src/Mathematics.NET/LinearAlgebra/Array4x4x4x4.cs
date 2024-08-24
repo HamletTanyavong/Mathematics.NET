@@ -69,9 +69,7 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
         readonly get
         {
             if ((uint)i >= 4)
-            {
                 throw new IndexOutOfRangeException();
-            }
             return Unsafe.Add(ref Unsafe.AsRef(in X1), i)[j, k, l];
         }
 
@@ -79,9 +77,7 @@ public struct Array4x4x4x4<T> : IHypercubic4DArray<Array4x4x4x4<T>, T>
         set
         {
             if ((uint)i >= 4)
-            {
                 throw new IndexOutOfRangeException();
-            }
             Unsafe.Add(ref X1, i)[j, k, l] = value;
         }
     }

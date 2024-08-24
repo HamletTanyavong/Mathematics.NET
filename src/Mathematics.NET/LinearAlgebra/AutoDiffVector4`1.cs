@@ -76,10 +76,7 @@ public record struct AutoDiffVector4<T>
     internal static Variable<T> GetElement(AutoDiffVector4<T> vector, int index)
     {
         if ((uint)index >= 4)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -95,10 +92,7 @@ public record struct AutoDiffVector4<T>
     internal static AutoDiffVector4<T> WithElement(AutoDiffVector4<T> vector, int index, Variable<T> value)
     {
         if ((uint)index >= 4)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         AutoDiffVector4<T> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;

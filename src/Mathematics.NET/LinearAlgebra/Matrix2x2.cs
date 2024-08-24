@@ -80,9 +80,7 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         readonly get
         {
             if ((uint)row >= 2)
-            {
                 throw new IndexOutOfRangeException();
-            }
             return Unsafe.Add(ref Unsafe.AsRef(in X1), row)[column];
         }
 
@@ -90,9 +88,7 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         set
         {
             if ((uint)row >= 2)
-            {
                 throw new IndexOutOfRangeException();
-            }
             Unsafe.Add(ref X1, row)[column] = value;
         }
     }
@@ -195,9 +191,7 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     {
         var det = Determinant();
         if (det == T.Zero)
-        {
             return NaM;
-        }
         T invDet = T.One / det;
 
         return new(X2.X2 * invDet, -X1.X2 * invDet, -X2.X1 * invDet, X1.X1 * invDet);

@@ -88,9 +88,7 @@ public static class LinAlg
         where T : IComplex<T>
     {
         if (left.Width != right.Height)
-        {
             throw new ArgumentException("Cannot multiply matrices of incompatible dimensions");
-        }
 
         Span2D<T> result = new T[left.Height, right.Width];
         for (int i = 0; i < left.Height; i++)
@@ -130,15 +128,11 @@ public static class LinAlg
         for (int i = 1; i < vector.Length; i++)
         {
             if (components[i] > max)
-            {
                 max = components[i];
-            }
         }
 
         if (max == Real.Zero)
-        {
             return Real.Zero;
-        }
 
         var partialSum = Real.Zero;
         var scale = Real.One / (max * max);

@@ -70,10 +70,7 @@ public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
     internal static T GetElement(Vector2<T> vector, int index)
     {
         if ((uint)index >= 2)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -89,10 +86,7 @@ public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
     internal static Vector2<T> WithElement(Vector2<T> vector, int index, T value)
     {
         if ((uint)index >= 2)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         Vector2<T> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;

@@ -65,9 +65,7 @@ public struct Array2x2x2<T> : ICubicArray<Array2x2x2<T>, T>
         readonly get
         {
             if ((uint)i >= 2)
-            {
                 throw new IndexOutOfRangeException();
-            }
             return Unsafe.Add(ref Unsafe.AsRef(in X1), i)[j, k];
         }
 
@@ -75,9 +73,7 @@ public struct Array2x2x2<T> : ICubicArray<Array2x2x2<T>, T>
         set
         {
             if ((uint)i >= 2)
-            {
                 throw new IndexOutOfRangeException();
-            }
             Unsafe.Add(ref X1, i)[j, k] = value;
         }
     }

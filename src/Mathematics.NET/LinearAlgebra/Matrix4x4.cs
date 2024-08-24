@@ -102,9 +102,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         readonly get
         {
             if ((uint)row >= 4)
-            {
                 throw new IndexOutOfRangeException();
-            }
             return Unsafe.Add(ref Unsafe.AsRef(in X1), row)[column];
         }
 
@@ -112,9 +110,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         set
         {
             if ((uint)row >= 4)
-            {
                 throw new IndexOutOfRangeException();
-            }
             Unsafe.Add(ref X1, row)[column] = value;
         }
     }
@@ -299,9 +295,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
 
         Matrix4x4<T> result;
         if (T.Abs(det) < Precision.DblMinPositive)
-        {
             return NaM;
-        }
         T invDet = T.One / det;
 
         result.X1.X1 = a11 * invDet;

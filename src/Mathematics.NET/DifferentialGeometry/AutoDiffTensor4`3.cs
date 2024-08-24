@@ -67,7 +67,6 @@ public record struct AutoDiffTensor4<TDN, TN, TI>
 
     public TDN this[int index]
     {
-        get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 
@@ -76,10 +75,7 @@ public record struct AutoDiffTensor4<TDN, TN, TI>
     internal static TDN GetElement(AutoDiffTensor4<TDN, TN, TI> tensor, int index)
     {
         if ((uint)index >= 4)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref tensor, index);
     }
 
@@ -95,10 +91,7 @@ public record struct AutoDiffTensor4<TDN, TN, TI>
     internal static AutoDiffTensor4<TDN, TN, TI> WithElement(AutoDiffTensor4<TDN, TN, TI> tensor, int index, TDN value)
     {
         if ((uint)index >= 4)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         AutoDiffTensor4<TDN, TN, TI> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;

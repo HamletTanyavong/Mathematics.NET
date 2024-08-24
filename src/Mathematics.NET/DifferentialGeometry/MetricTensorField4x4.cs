@@ -56,9 +56,7 @@ public abstract class MetricTensorField4x4<TT, TN, TPI> : TensorField4x4<TT, TN,
             for (int j = 0; j < 4; j++)
             {
                 if (_buffer[i][j] is Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> function)
-                {
                     result[i, j] = function(tape, point).Value;
-                }
             }
         }
 
