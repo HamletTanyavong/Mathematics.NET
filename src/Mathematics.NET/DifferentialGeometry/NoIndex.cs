@@ -30,7 +30,7 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Indicates that no index has been specified.</summary>
-public struct NoIndex : IIndex
+public readonly struct NoIndex : IIndex
 {
     public static IIndex Instance => new NoIndex();
 
