@@ -43,6 +43,7 @@ public record class HessianTape<T> : ITape<T>
     private int _variableCount;
 
     /// <summary>Create an instance of a Hessian tape.</summary>
+    /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public HessianTape(bool isTracking = true)
     {
         _nodes = [];
@@ -51,6 +52,7 @@ public record class HessianTape<T> : ITape<T>
 
     /// <summary>Create an instance of a Hessian tape that will hold an expected number of nodes.</summary>
     /// <param name="n">An integer.</param>
+    /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public HessianTape(int n, bool isTracking = true)
     {
         _nodes = new(n);
@@ -816,7 +818,7 @@ public record class HessianTape<T> : ITape<T>
     /// <summary>Add a node to the Hessian tape using a custom unary operation.</summary>
     /// <param name="x">A variable.</param>
     /// <param name="f">A function.</param>
-    /// <param name="df">The derivative of the function.</param>
+    /// <param name="dfx">The derivative of the function.</param>
     /// <param name="dfxx">The second derivative of the function.</param>
     /// <returns>A variable.</returns>
     public Variable<T> CustomOperation(Variable<T> x, Func<T, T> f, Func<T, T> dfx, Func<T, T> dfxx)
