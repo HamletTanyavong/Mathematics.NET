@@ -63,6 +63,7 @@ public record struct AutoDiffTensor3<TDN, TN, TI>
 
     public TDN this[int index]
     {
+        readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
     }
 
