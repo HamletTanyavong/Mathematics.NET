@@ -61,7 +61,7 @@ internal sealed class SymbolBuilder
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective("Mathematics.NET.Symbols".CreateNameSyntaxFromNamespace())
+                    UsingDirective("Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(

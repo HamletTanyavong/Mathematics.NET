@@ -1,4 +1,4 @@
-﻿// <copyright file="ISymbol.cs" company="Mathematics.NET">
+﻿// <copyright file="Index1.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,13 +25,12 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Symbols;
+namespace Mathematics.NET.DifferentialGeometry.Symbols;
 
-// TODO: Create source generator for symbols
-
-/// <summary>Defines support for mathematical symbols.</summary>
-public interface ISymbol
+internal readonly struct Index1 : ISymbol
 {
-    /// <summary>Get a string representation of this symbol.</summary>
-    static abstract string DisplayString { get; }
+    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    public const string DisplayString = "Index1";
+
+    static string ISymbol.DisplayString => DisplayString;
 }

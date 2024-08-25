@@ -60,8 +60,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
                                 SyntaxKind.UsingKeyword,
                                 TriviaList())),
                     UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
-                    UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace()),
-                    UsingDirective("Mathematics.NET.Symbols".CreateNameSyntaxFromNamespace())]))
+                    UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace())]))
                 .WithMembers(
                     SingletonList<MemberDeclarationSyntax>(
                         FileScopedNamespaceDeclaration(

@@ -29,7 +29,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 

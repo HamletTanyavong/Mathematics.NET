@@ -2,7 +2,6 @@
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 public static partial class DifGeo

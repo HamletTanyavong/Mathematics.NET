@@ -28,7 +28,6 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 

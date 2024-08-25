@@ -31,7 +31,6 @@ using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 

@@ -1,6 +1,6 @@
 ﻿// Auto-generated code
 
-using Mathematics.NET.Symbols;
+using Mathematics.NET.DifferentialGeometry;
 
 namespace B.C;
 
