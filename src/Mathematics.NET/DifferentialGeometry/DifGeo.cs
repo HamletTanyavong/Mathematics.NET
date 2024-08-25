@@ -70,8 +70,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -91,8 +91,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -112,8 +112,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -144,8 +144,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -165,8 +165,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -186,8 +186,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
