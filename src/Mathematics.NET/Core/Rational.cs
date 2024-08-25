@@ -622,7 +622,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static int Sign(Rational<T> x)
     {
-        if (x == Rational<T>.Zero)
+        if (x == Zero)
             return 0;
         return x._numerator > T.Zero ? 1 : -1;
     }
