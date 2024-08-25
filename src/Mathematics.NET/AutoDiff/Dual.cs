@@ -83,9 +83,7 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     public static Dual<T> operator /(Dual<T> x, T c) => new(x._d0 / c, x._d1 / c);
 
     public static Dual<Real> Modulo(in Dual<Real> x, in Dual<Real> y)
-    {
-        return new(x._d0 % y._d0, x._d1 - y._d1 * Real.Floor(x._d0 / y._d0));
-    }
+        => new(x._d0 % y._d0, x._d1 - y._d1 * Real.Floor(x._d0 / y._d0));
 
     public static Dual<Real> Modulo(in Dual<Real> x, Real c) => new(x._d0 % c, x._d1);
 
@@ -118,6 +116,12 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     public static Dual<T> CreateVariable(T value) => new(value, T.Zero);
 
     public static Dual<T> CreateVariable(T value, T seed) => new(value, seed);
+
+    /// <inheritdoc cref="Real.Ceiling(Real)"/>
+    public static Dual<Real> Ceiling(in Dual<Real> x) => new(Real.Ceiling(x._d0));
+
+    /// <inheritdoc cref="Real.Floor(Real)"/>
+    public static Dual<Real> Floor(in Dual<Real> x) => new(Real.Floor(x._d0));
 
     public Dual<T> WithSeed(T seed) => new(_d0, seed);
 

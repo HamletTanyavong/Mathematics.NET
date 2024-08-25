@@ -54,14 +54,9 @@ public struct SphericalVector : IVector<SphericalVector, Real>
     public SphericalVector(Real r, Real theta, Real phi)
     {
         if (r < Real.Zero)
-        {
             throw new ArgumentException("Radius must not be negative");
-        }
-
         if (theta < 0 || theta > Real.Pi)
-        {
             throw new ArgumentException("Polar angle must be in between 0 and π, inclusively");
-        }
 
         R = r;
         Theta = theta;
@@ -91,10 +86,7 @@ public struct SphericalVector : IVector<SphericalVector, Real>
     internal static Real GetElement(SphericalVector vector, int index)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -110,9 +102,7 @@ public struct SphericalVector : IVector<SphericalVector, Real>
     internal static SphericalVector WithElement(SphericalVector vector, int index, Real value)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
 
         SphericalVector result = vector;
         SetElementUnsafe(ref result, index, value);

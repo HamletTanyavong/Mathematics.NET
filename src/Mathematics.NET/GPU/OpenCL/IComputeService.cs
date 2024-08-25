@@ -66,7 +66,7 @@ public interface IComputeService : IDisposable
     /// <returns>A new matrix.</returns>
     ReadOnlySpan2D<Complex> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex> left, ReadOnlySpan2D<Complex> right);
 
-    /// <inheritdoc cref="ComplexMatMul(Device, WorkSize2D, WorkSize2D, ReadOnlySpan2D{Complex}, ReadOnlySpan2D{Complex})"/>
+    /// <inheritdoc cref="CompMatMul(Device, WorkSize2D, WorkSize2D, ReadOnlySpan2D{Complex}, ReadOnlySpan2D{Complex})"/>
     ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right);
 
     /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, ReadOnlySpan{Complex}, Complex)"/>

@@ -40,6 +40,7 @@ public static class LinAlg
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
     /// <param name="matrix">A matrix.</param>
     /// <param name="method">A QR decomposition method.</param>
+    /// <param name="iterations">The number of iterations.</param>
     /// <returns>The eigenvalues of the given matrix.</returns>
     /// <example>
     /// Suppose we want to find the eigenvalues of a 2x2 matrix. We can write the following to get them:
@@ -87,9 +88,7 @@ public static class LinAlg
         where T : IComplex<T>
     {
         if (left.Width != right.Height)
-        {
             throw new ArgumentException("Cannot multiply matrices of incompatible dimensions");
-        }
 
         Span2D<T> result = new T[left.Height, right.Width];
         for (int i = 0; i < left.Height; i++)
@@ -129,15 +128,11 @@ public static class LinAlg
         for (int i = 1; i < vector.Length; i++)
         {
             if (components[i] > max)
-            {
                 max = components[i];
-            }
         }
 
         if (max == Real.Zero)
-        {
             return Real.Zero;
-        }
 
         var partialSum = Real.Zero;
         var scale = Real.One / (max * max);

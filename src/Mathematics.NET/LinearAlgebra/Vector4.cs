@@ -79,10 +79,7 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     internal static T GetElement(Vector4<T> vector, int index)
     {
         if ((uint)index >= 4)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -98,10 +95,7 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     internal static Vector4<T> WithElement(Vector4<T> vector, int index, T value)
     {
         if ((uint)index >= 4)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         Vector4<T> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
@@ -122,17 +116,11 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     public static Vector4<T> operator -(Vector4<T> vector)
     {
         if (typeof(T) == typeof(Real))
-        {
             return Vector256.Negate(vector.AsVector256()).AsVector4<T>();
-        }
         else if (typeof(T) == typeof(Complex))
-        {
             return Vector512.Negate(vector.AsVector512()).AsVector4<T>();
-        }
         else
-        {
             return new(-vector.X1, -vector.X2, -vector.X3, -vector.X4);
-        }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -304,13 +292,9 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     public static T InnerProduct(Vector4<T> left, Vector4<T> right)
     {
         if (typeof(T) == typeof(Real))
-        {
             return Vector256.Dot(left.AsVector256(), right.AsVector256());
-        }
         else
-        {
             return T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3 + T.Conjugate(left.X4) * right.X4;
-        }
     }
 
     public readonly Real Norm()
@@ -344,18 +328,12 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     {
         var norm = Norm();
         if (norm == T.Zero)
-        {
             throw new DivideByZeroException("Norm must be greater than zero");
-        }
 
         if (typeof(T) == typeof(Real))
-        {
             return Vector256.Divide(this.AsVector256(), Vector256.Create(norm.AsDouble())).AsVector4<T>();
-        }
         else
-        {
             return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
-        }
     }
 
     /// <summary>Convert a value of type <see cref="Vector4{T}"/> to one of type <see cref="System.Numerics.Vector4"/>.</summary>

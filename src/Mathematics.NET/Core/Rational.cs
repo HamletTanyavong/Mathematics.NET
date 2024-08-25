@@ -50,8 +50,6 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static readonly Rational<T> NegativeInfinity = new(-T.One, T.Zero);
     public static readonly Rational<T> PositiveInfinity = new(T.One, T.Zero);
 
-    public static readonly int Radix = 2;
-
     private readonly T _numerator;
     private readonly T _denominator;
 
@@ -113,7 +111,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     static Rational<T> IComplex<Rational<T>>.Zero => Zero;
     static Rational<T> IComplex<Rational<T>>.One => One;
     static Rational<T> IComplex<Rational<T>>.NaN => NaN;
-    static int IComplex<Rational<T>>.Radix => Radix;
+    static int IComplex<Rational<T>>.Radix => 2;
     static Rational<T> IMinMaxValue<Rational<T>>.MaxValue => MaxValue;
     static Rational<T> IMinMaxValue<Rational<T>>.MinValue => MinValue;
 
@@ -227,14 +225,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public int CompareTo(object? obj)
     {
         if (obj is null)
-        {
             return 1;
-        }
-
         if (obj is Rational<T> other)
-        {
             return CompareTo(other);
-        }
 
         throw new ArgumentException("Argument is not a rational number");
     }
@@ -242,17 +235,11 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public int CompareTo(Rational<T> value)
     {
         if (this < value)
-        {
             return -1;
-        }
         else if (this > value)
-        {
             return 1;
-        }
         else
-        {
             return 0;
-        }
     }
 
     //
@@ -264,19 +251,11 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public string ToString(string? format, IFormatProvider? provider)
     {
         if (IsNaN(this))
-        {
             return "NaN";
-        }
-
         if (IsPositiveInfinity(this))
-        {
             return "∞";
-        }
-
         if (IsNegativeInfinity(this))
-        {
             return "-∞";
-        }
 
         format = string.IsNullOrEmpty(format) ? "MINIMAL" : format.ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
@@ -284,9 +263,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         if (format is "MINIMAL")
         {
             if (_numerator == T.Zero || _denominator == T.One)
-            {
                 return string.Format(provider, "{0}", _numerator.ToString(null, provider));
-            }
             return string.Format(provider, "({0} / {1})", _numerator.ToString(null, provider), _denominator.ToString(null, provider));
         }
         else if (format is "ALL")
@@ -465,9 +442,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static Rational<T> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
     {
         if (!TryParse(s, style, provider, out Rational<T> result))
-        {
             return NaN;
-        }
         return result;
     }
 
@@ -526,18 +501,12 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static Rational<T> Clamp(Rational<T> value, Rational<T> min, Rational<T> max)
     {
         if (min > max)
-        {
             throw new ArgumentException("Minimum value must be less than or equal to maximum value");
-        }
 
         if (value < min)
-        {
             return min;
-        }
         else if (value > max)
-        {
             return max;
-        }
 
         return value;
     }
@@ -550,9 +519,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static Rational<T> FromDouble(double x)
     {
         if (double.IsNaN(x) || double.IsInfinity(x))
-        {
             return NaN;
-        }
 
         checked
         {
@@ -641,9 +608,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static Rational<T> Reciprocate(Rational<T> x)
     {
         if (x._numerator == T.Zero)
-        {
             return NaN;
-        }
         return new(x._denominator, x._numerator);
     }
 
@@ -651,18 +616,14 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     {
         var gcd = GCD(x._numerator, x._denominator);
         if (gcd == T.One)
-        {
             return x;
-        }
         return new(x._numerator / gcd, x._denominator / gcd);
     }
 
     public static int Sign(Rational<T> x)
     {
-        if (x == Rational<T>.Zero)
-        {
+        if (x == Zero)
             return 0;
-        }
         return x._numerator > T.Zero ? 1 : -1;
     }
 

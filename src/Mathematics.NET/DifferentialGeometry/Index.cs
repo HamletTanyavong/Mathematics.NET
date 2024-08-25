@@ -33,7 +33,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents a tensor index.</summary>
 /// <typeparam name="TIP">An index position.</typeparam>
 /// <typeparam name="TIN">A symbol.</typeparam>
-public struct Index<TIP, TIN> : IIndex
+public readonly struct Index<TIP, TIN> : IIndex
     where TIP : IIndexPosition
     where TIN : ISymbol
 {

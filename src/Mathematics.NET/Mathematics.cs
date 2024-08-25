@@ -116,7 +116,7 @@ public static class Mathematics
     /// <param name="k">An unordered subset of <paramref name="k"/> elements.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns><paramref name="n"/> choose <paramref name="k"/>.</returns>
-    /// <exception cref="OverflowException">.</exception>
+    /// <exception cref="OverflowException"></exception>
     public static T Binomial<T>(T n, T k, CancellationToken cancellationToken)
         where T : IBinaryInteger<T>
     {
@@ -155,13 +155,9 @@ public static class Mathematics
         while (p != T.Zero && q != T.Zero)
         {
             if (p > q)
-            {
                 p %= q;
-            }
             else
-            {
                 q %= p;
-            }
         }
         return p | q;
     }
@@ -170,7 +166,7 @@ public static class Mathematics
     /// <param name="span">A read-only span of positive integers.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>The coefficient associated with a term with powers given by <paramref name="span"/>.</returns>
-    /// <exception cref="OverflowException">.</exception>
+    /// <exception cref="OverflowException"></exception>
     public static T Multinomial<T>(ReadOnlySpan<T> span, CancellationToken cancellationToken)
         where T : IBinaryInteger<T>
     {

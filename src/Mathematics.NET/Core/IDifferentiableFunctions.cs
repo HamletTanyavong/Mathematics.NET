@@ -131,6 +131,7 @@ public interface IDifferentiableFunctions<T>
 
     /// <summary>Compute the <paramref name="n"/>th root of <paramref name="x"/>: $ \sqrt[n]{x} $.</summary>
     /// <param name="x">A value.</param>
+    /// <param name="n">The root.</param>
     /// <returns>The <paramref name="n"/>th root of <paramref name="x"/>.</returns>
     static abstract T Root(T x, T n);
 

@@ -195,6 +195,17 @@ public sealed class DualOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 0)]
+    public void Ceiling_DualNumber_ReturnsDerivative(double input, double expected)
+    {
+        Dual<Real> x = new(input, Real.One);
+
+        var actual = Dual<Real>.Ceiling(x).D1;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 0);
+    }
+
+    [TestMethod]
     [DataRow(1.23, -0.942488801931697)]
     public void Cos_DualNumber_ReturnsDerivative(double input, double expected)
     {
@@ -344,6 +355,17 @@ public sealed class DualOfRealTests
         var actual = Dual<Real>.Exp10(x).D1;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0)]
+    public void Floor_DualNumber_ReturnsDerivative(double input, double expected)
+    {
+        Dual<Real> x = new(input, Real.One);
+
+        var actual = Dual<Real>.Floor(x).D1;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 0);
     }
 
     [TestMethod]

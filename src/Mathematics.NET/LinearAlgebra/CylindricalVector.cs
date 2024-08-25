@@ -54,9 +54,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     public CylindricalVector(Real rho, Real phi, Real z)
     {
         if (rho < 0)
-        {
             throw new ArgumentException("Rho must not be negative");
-        }
 
         Rho = rho;
         Phi = phi;
@@ -86,10 +84,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     internal static Real GetElement(CylindricalVector vector, int index)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -105,10 +100,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     internal static CylindricalVector WithElement(CylindricalVector vector, int index, Real value)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         CylindricalVector result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
@@ -195,7 +187,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
 
     /// <summary>Convert a vector in cartesian cordinates to one in cylindrical coordinates.</summary>
     /// <remarks>The vector must have real components.</remarks>
-    /// <param name="x">The vector to convert.param>
+    /// <param name="x">The vector to convert.</param>
     /// <returns>A cylindrical vector.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static CylindricalVector FromCartesian(Vector3<Real> x) => new(Real.Hypot(x.X1, x.X2), Real.Atan2(x.X2, x.X1), x.X3);

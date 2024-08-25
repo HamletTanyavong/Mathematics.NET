@@ -64,10 +64,7 @@ public record struct AutoDiffVector2<T>
     internal static Variable<T> GetElement(AutoDiffVector2<T> vector, int index)
     {
         if ((uint)index >= 2)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -83,10 +80,7 @@ public record struct AutoDiffVector2<T>
     internal static AutoDiffVector2<T> WithElement(AutoDiffVector2<T> vector, int index, Variable<T> value)
     {
         if ((uint)index >= 2)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         AutoDiffVector2<T> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;

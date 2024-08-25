@@ -129,6 +129,7 @@ internal static class Extensions
     /// <summary>Create a struct declaration syntax with both open and close parenthesis.</summary>
     /// <param name="structDeclarationSyntax">A struct declaration syntax.</param>
     /// <param name="whitespace">Indentation whitespace characeters.</param>
+    /// <param name="extraNewLine">Whether or not to add an extra new line.</param>
     /// <returns>A struct declaration syntax.</returns>
     public static StructDeclarationSyntax WithOpenAndCloseBraceTokens(this StructDeclarationSyntax structDeclarationSyntax, string whitespace, bool extraNewLine)
     {

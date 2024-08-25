@@ -9,16 +9,20 @@
     <Platforms>AnyCPU</Platforms>
     
     <!-- Package information -->
-    <Version>0.2.0-alpha.8</Version>
+    <Version>0.2.0-alpha.9</Version>
     <Authors>Hamlet Tanyavong</Authors>
     <Copyright>Copyright (c) 2023-present Hamlet Tanyavong</Copyright>
     <PackageProjectUrl>https://mathematics.hamlettanyavong.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HamletTanyavong/Mathematics.NET</RepositoryUrl>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     
-    <!-- Builds -->
+    <!-- Build -->
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
+
+    <!-- Documentation file -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
 </Project>

@@ -71,10 +71,7 @@ public record struct AutoDiffVector3<T, U>
     internal static T GetElement(AutoDiffVector3<T, U> vector, int index)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref vector, index);
     }
 
@@ -90,10 +87,7 @@ public record struct AutoDiffVector3<T, U>
     internal static AutoDiffVector3<T, U> WithElement(AutoDiffVector3<T, U> vector, int index, T value)
     {
         if ((uint)index >= 3)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         AutoDiffVector3<T, U> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;

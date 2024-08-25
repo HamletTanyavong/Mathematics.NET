@@ -61,7 +61,7 @@ public interface IComplex<T>
     /// <summary>The phase of the complex number in polar coordinates.</summary>
     public virtual Real Phase => Real.Atan2(Im, Re);
 
-    /// <summary>Reprsents zero for the type.</summary>
+    /// <summary>Represents zero for the type.</summary>
     static abstract T Zero { get; }
 
     /// <summary>Represents one for the type.</summary>
@@ -95,13 +95,9 @@ public interface IComplex<T>
         T? result;
 
         if (typeof(U) == typeof(T))
-        {
             result = (T)(object)value;
-        }
         else if (!T.TryConvertFromChecked(value, out result))
-        {
             throw new NotSupportedException();
-        }
 
         return result;
     }
@@ -118,13 +114,9 @@ public interface IComplex<T>
         T? result;
 
         if (typeof(U) == typeof(T))
-        {
             result = (T)(object)value;
-        }
         else if (!T.TryConvertFromSaturating(value, out result))
-        {
             throw new NotSupportedException();
-        }
 
         return result;
     }
@@ -141,13 +133,9 @@ public interface IComplex<T>
         T? result;
 
         if (typeof(U) == typeof(T))
-        {
             result = (T)(object)value;
-        }
         else if (!T.TryConvertFromTruncating(value, out result))
-        {
             throw new NotSupportedException();
-        }
 
         return result;
     }

@@ -92,9 +92,7 @@ public class Graph<TNode, TEdge>
     public virtual TEdge? GetEdgeOrDefault(int i, int j)
     {
         if (_nodes.ElementAtOrDefault(i) is TNode node)
-        {
             return (TEdge?)node.OutgoingEdges.ElementAtOrDefault(j);
-        }
         return null;
     }
 

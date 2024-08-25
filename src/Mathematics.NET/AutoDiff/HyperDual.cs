@@ -89,6 +89,13 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public static HyperDual<T> operator /(HyperDual<T> x, T c) => new(x._d0 / c, x._d1 / c);
 
+    public static HyperDual<Real> Modulo(in HyperDual<Real> x, in HyperDual<Real> y)
+        => new(Dual<Real>.Modulo(x._d0, y._d0), x._d1 - y._d1 * Dual<Real>.Floor(x._d0 / y._d0));
+
+    public static HyperDual<Real> Modulo(in HyperDual<Real> x, in Dual<Real> c) => new(Dual<Real>.Modulo(x._d0, c), x._d1);
+
+    public static HyperDual<Real> Modulo(in Dual<Real> c, in HyperDual<Real> x) => new(Dual<Real>.Modulo(c, x._d0), -x._d1 * Dual<Real>.Floor(c / x._d0));
+
     //
     // Equality
     //
@@ -124,6 +131,12 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     /// <param name="e2Seed">A seec value for the second variable of interest.</param>
     /// <returns>An instance of the type.</returns>
     public static HyperDual<T> CreateVariable(T value, T e1Seed, T e2Seed) => new(new(value, e1Seed), new(e2Seed));
+
+    /// <inheritdoc cref="Real.Ceiling(Real)"/>
+    public static HyperDual<Real> Ceiling(in HyperDual<Real> x) => new(Dual<Real>.Ceiling(x._d0));
+
+    /// <inheritdoc cref="Real.Floor(Real)"/>
+    public static HyperDual<Real> Floor(in HyperDual<Real> x) => new(Dual<Real>.Floor(x._d0));
 
     public HyperDual<T> WithSeed(T seed) => new(new(_d0.D0, seed));
 

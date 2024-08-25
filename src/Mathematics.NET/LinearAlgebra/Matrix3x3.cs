@@ -90,9 +90,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         readonly get
         {
             if ((uint)row >= 3)
-            {
                 throw new IndexOutOfRangeException();
-            }
             return Unsafe.Add(ref Unsafe.AsRef(in X1), row)[column];
         }
 
@@ -100,9 +98,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         set
         {
             if ((uint)row >= 3)
-            {
                 throw new IndexOutOfRangeException();
-            }
             Unsafe.Add(ref X1, row)[column] = value;
         }
     }
@@ -254,9 +250,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
 
         T det = a * ei_fh - b * di_fg + c * dh_eg;
         if (det == T.Zero)
-        {
             return NaM;
-        }
         var invDet = T.One / det;
 
         Matrix3x3<T> result;

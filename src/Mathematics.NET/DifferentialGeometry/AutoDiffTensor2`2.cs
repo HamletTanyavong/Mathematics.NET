@@ -69,10 +69,7 @@ public record struct AutoDiffTensor2<TN, TI>
     internal static Variable<TN> GetElement(AutoDiffTensor2<TN, TI> tensor, int index)
     {
         if ((uint)index >= 2)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         return GetElementUnsafe(ref tensor, index);
     }
 
@@ -88,10 +85,7 @@ public record struct AutoDiffTensor2<TN, TI>
     internal static AutoDiffTensor2<TN, TI> WithElement(AutoDiffTensor2<TN, TI> tensor, int index, Variable<TN> value)
     {
         if ((uint)index >= 2)
-        {
             throw new IndexOutOfRangeException();
-        }
-
         AutoDiffTensor2<TN, TI> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;

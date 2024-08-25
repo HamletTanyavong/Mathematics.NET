@@ -47,7 +47,7 @@ public static class LinAlgExtensions
     /// <param name="matrix">The matrix to reinterpret.</param>
     /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe Span2D<T> AsSpan2D<T>(ref this Matrix2x2<T> matrix)
+    public static unsafe Span2D<T> AsSpan2D<T>(this ref Matrix2x2<T> matrix)
         where T : IComplex<T>
         => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix2x2<T>.E1Components, Matrix2x2<T>.E2Components, 0);
 
@@ -56,7 +56,7 @@ public static class LinAlgExtensions
     /// <param name="matrix">The matrix to reinterpret.</param>
     /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe Span2D<T> AsSpan2D<T>(ref this Matrix3x3<T> matrix)
+    public static unsafe Span2D<T> AsSpan2D<T>(this ref Matrix3x3<T> matrix)
         where T : IComplex<T>
         => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix3x3<T>.E1Components, Matrix3x3<T>.E2Components, 0);
 
@@ -65,7 +65,7 @@ public static class LinAlgExtensions
     /// <param name="matrix">The matrix to reinterpret.</param>
     /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe Span2D<T> AsSpan2D<T>(ref this Matrix4x4<T> matrix)
+    public static unsafe Span2D<T> AsSpan2D<T>(this ref Matrix4x4<T> matrix)
         where T : IComplex<T>
         => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
 

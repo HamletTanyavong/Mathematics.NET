@@ -1,4 +1,4 @@
-﻿// <copyright file="ExternalExtensions.cs" company="Mathematics.NET">
+﻿// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -39,23 +39,17 @@ public static class Extensions
     public static StringBuilder TrimEnd(this StringBuilder builder, params char[]? unwantedChars)
     {
         if (unwantedChars == null || builder.Length == 0 || unwantedChars.Length == 0)
-        {
             return builder;
-        }
 
         int i = builder.Length - 1;
         while (i >= 0)
         {
             if (!unwantedChars.Contains(builder[i]))
-            {
                 break;
-            }
             i--;
         }
         if (i < builder.Length - 1)
-        {
             builder.Length = ++i;
-        }
 
         return builder;
     }
