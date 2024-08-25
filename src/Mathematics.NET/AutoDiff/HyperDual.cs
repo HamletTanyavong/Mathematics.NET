@@ -125,6 +125,12 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     /// <returns>An instance of the type.</returns>
     public static HyperDual<T> CreateVariable(T value, T e1Seed, T e2Seed) => new(new(value, e1Seed), new(e2Seed));
 
+    /// <inheritdoc cref="Real.Ceiling(Real)"/>
+    public static HyperDual<Real> Ceiling(in HyperDual<Real> x) => new(Dual<Real>.Ceiling(x._d0));
+
+    /// <inheritdoc cref="Real.Floor(Real)"/>
+    public static HyperDual<Real> Floor(in HyperDual<Real> x) => new(Dual<Real>.Floor(x._d0));
+
     public HyperDual<T> WithSeed(T seed) => new(new(_d0.D0, seed));
 
     /// <summary>Create a seeded instance of this type.</summary>

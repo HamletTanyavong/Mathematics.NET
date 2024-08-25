@@ -117,6 +117,12 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
 
     public static Dual<T> CreateVariable(T value, T seed) => new(value, seed);
 
+    /// <inheritdoc cref="Real.Ceiling(Real)"/>
+    public static Dual<Real> Ceiling(in Dual<Real> x) => new(Real.Ceiling(x._d0));
+
+    /// <inheritdoc cref="Real.Floor(Real)"/>
+    public static Dual<Real> Floor(in Dual<Real> x) => new(Real.Floor(x._d0));
+
     public Dual<T> WithSeed(T seed) => new(_d0, seed);
 
     // Exponential functions
