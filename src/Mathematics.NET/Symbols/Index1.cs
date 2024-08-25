@@ -1,4 +1,4 @@
-﻿// <copyright file="InternalIndex1.cs" company="Mathematics.NET">
+﻿// <copyright file="Index1.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,10 +27,10 @@
 
 namespace Mathematics.NET.Symbols;
 
-internal readonly struct InternalIndex1 : ISymbol
+internal readonly struct Index1 : ISymbol
 {
     /// <inheritdoc cref="ISymbol.DisplayString"/>
-    public const string DisplayString = "InternalIndex1";
+    public const string DisplayString = "Index1";
 
     static string ISymbol.DisplayString => DisplayString;
 }

@@ -68,10 +68,10 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -89,10 +89,10 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -110,10 +110,10 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -142,10 +142,10 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -163,10 +163,10 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -184,10 +184,10 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, Index2>> dTensor);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -787,9 +787,9 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
 
         var result = Contract(invMetric, christoffelFK);
 
@@ -812,9 +812,9 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
 
         var result = Contract(invMetric, christoffelFK);
 
@@ -837,9 +837,9 @@ public static partial class DifGeo
         where TI2N : ISymbol
         where TI3N : ISymbol
     {
-        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
 
         var result = Contract(invMetric, christoffelFK);
 
@@ -975,10 +975,10 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
         var firstPart = Contract(dInvMetric, christoffel);
         var secondPart = Contract(invMetric, dChristoffel);
@@ -1012,10 +1012,10 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
         var firstPart = Contract(dInvMetric, christoffel);
         var secondPart = Contract(invMetric, dChristoffel);
@@ -1049,10 +1049,10 @@ public static partial class DifGeo
         where TI3N : ISymbol
         where TI4N : ISymbol
     {
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
         var firstPart = Contract(dInvMetric, christoffel);
         var secondPart = Contract(invMetric, dChristoffel);
@@ -1101,8 +1101,8 @@ public static partial class DifGeo
         where TI4N : ISymbol
     {
         DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 2; r++)
@@ -1135,8 +1135,8 @@ public static partial class DifGeo
         where TI4N : ISymbol
     {
         DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 3; r++)
@@ -1169,8 +1169,8 @@ public static partial class DifGeo
         where TI4N : ISymbol
     {
         DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 4; r++)
