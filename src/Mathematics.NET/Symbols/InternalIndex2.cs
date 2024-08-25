@@ -27,7 +27,7 @@
 
 namespace Mathematics.NET.Symbols;
 
-public readonly struct InternalIndex2 : ISymbol
+internal readonly struct InternalIndex2 : ISymbol
 {
     /// <inheritdoc cref="ISymbol.DisplayString"/>
     public const string DisplayString = "InternalIndex2";
