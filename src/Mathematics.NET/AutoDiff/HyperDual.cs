@@ -89,6 +89,13 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public static HyperDual<T> operator /(HyperDual<T> x, T c) => new(x._d0 / c, x._d1 / c);
 
+    public static HyperDual<Real> Modulo(in HyperDual<Real> x, in HyperDual<Real> y)
+        => new(Dual<Real>.Modulo(x._d0, y._d0), x._d1 - y._d1 * Dual<Real>.Floor(x._d0 / y._d0));
+
+    public static HyperDual<Real> Modulo(in HyperDual<Real> x, in Dual<Real> c) => new(Dual<Real>.Modulo(x._d0, c), x._d1);
+
+    public static HyperDual<Real> Modulo(in Dual<Real> c, in HyperDual<Real> x) => new(Dual<Real>.Modulo(c, x._d0), -x._d1 * Dual<Real>.Floor(c / x._d0));
+
     //
     // Equality
     //
