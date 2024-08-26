@@ -138,7 +138,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
         if (addAssignmentExpression is null ||
             addAssignmentExpression.Parent?.Parent?.Parent is null) // Check for for loop
         {
-            var descriptor = DiagnosticMessage.CreateMissingSummationComponentsDiagnosticDescriptor();
+            var descriptor = DiagnosticMessages.CreateMissingSummationComponentsDiagnosticDescriptor();
             _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
             return false;
         }

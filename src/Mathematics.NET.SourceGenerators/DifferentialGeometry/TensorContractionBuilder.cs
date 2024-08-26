@@ -156,7 +156,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         if (multiplyExpression is null ||
             multiplyExpression.Parent?.Parent?.Parent?.Parent is null) // Check for for loop
         {
-            var descriptor = DiagnosticMessage.CreateMissingSummationComponentsDiagnosticDescriptor();
+            var descriptor = DiagnosticMessages.CreateMissingSummationComponentsDiagnosticDescriptor();
             _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
             return false;
         }
