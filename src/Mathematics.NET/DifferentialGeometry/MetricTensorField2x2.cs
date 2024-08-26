@@ -49,8 +49,8 @@ public abstract class MetricTensorField2x2<TT, TN, TPI> : TensorField2x2<TT, TN,
     /// <param name="point">A point on the manifold.</param>
     /// <returns>A metric tensor.</returns>
     public new MetricTensor<Matrix2x2<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         tape.IsTracking = false;
 
@@ -75,8 +75,8 @@ public abstract class MetricTensorField2x2<TT, TN, TPI> : TensorField2x2<TT, TN,
     /// <param name="point">A point on the manifold.</param>
     /// <returns>An inverse metric tensor.</returns>
     public MetricTensor<Matrix2x2<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         var value = Compute<TI1N, TI2N>(tape, point);
         return value.Inverse();

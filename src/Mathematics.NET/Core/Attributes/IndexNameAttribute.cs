@@ -1,4 +1,4 @@
-﻿// <copyright file="ISymbol.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexNameAttribute.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,13 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.DifferentialGeometry;
+namespace Mathematics.NET.Core.Attributes;
 
-// TODO: Create source generator for symbols
-
-/// <summary>Defines support for mathematical symbols.</summary>
-public interface ISymbol
-{
-    /// <summary>Get a string representation of this symbol.</summary>
-    static abstract string DisplayString { get; }
-}
+/// <summary>Indicates that a type represents an index name and that its properties should be generated.</summary>
+[AttributeUsage(AttributeTargets.Struct, AllowMultiple = false)]
+public sealed class IndexNameAttribute : Attribute;

@@ -27,10 +27,10 @@
 
 namespace Mathematics.NET.DifferentialGeometry.Symbols;
 
-internal readonly struct Index2 : ISymbol
+internal readonly struct Index2 : IIndexName
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.DisplayString"/>
     public const string DisplayString = "Index2";
 
-    static string ISymbol.DisplayString => DisplayString;
+    static string IIndexName.DisplayString => DisplayString;
 }

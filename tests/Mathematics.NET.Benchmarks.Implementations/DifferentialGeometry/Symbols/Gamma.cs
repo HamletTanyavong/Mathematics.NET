@@ -29,7 +29,7 @@ using Mathematics.NET.DifferentialGeometry;
 
 namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 
-public readonly struct Gamma : ISymbol
+public readonly struct Gamma : IIndexName
 {
     public static string DisplayString => "Gamma";
 }

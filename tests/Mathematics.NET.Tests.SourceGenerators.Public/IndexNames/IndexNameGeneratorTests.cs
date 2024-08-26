@@ -1,4 +1,4 @@
-﻿// <copyright file="SymbolGeneratorTests.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexNameGeneratorTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,58 +25,58 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.SourceGenerators.Public.Symbols;
+using Mathematics.NET.SourceGenerators.Public.IndexNames;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Mathematics.NET.Tests.SourceGenerators.Public.Symbols;
+namespace Mathematics.NET.Tests.SourceGenerators.Public.IndexNames;
 
 [TestClass]
-[TestCategory("Source Generator"), TestCategory("Symbols")]
-public sealed class SymbolGeneratorTests : VerifyBase
+[TestCategory("Source Generator"), TestCategory("DifGeo")]
+public sealed class IndexNameGeneratorTests : VerifyBase
 {
     [TestMethod]
-    public void SourceGenerator_StructWithSymbolAttribute_AutoImplementsISymbol()
+    public void SourceGenerator_StructWithIndexNameAttribute_AutoImplementsIIndexName()
     {
         var source = """
             namespace A
             {
-                [Symbol] public partial struct Alpha;
-                [Symbol] public partial struct Beta;
+                [IndexName] public partial struct Alpha;
+                [IndexName] public partial struct Beta;
             }
 
             namespace A
             {
-                [Symbol] public partial struct Gamma;
+                [IndexName] public partial struct Gamma;
             }
 
             namespace A.B
             {
-                [Symbol] public partial struct Delta;
+                [IndexName] public partial struct Delta;
             }
 
             namespace B.C
             {
-                [Symbol] public partial struct Epsilon;
+                [IndexName] public partial struct Epsilon;
             }
 
             namespace B.C.D
             {
-                [Symbol] public partial struct Zeta;
-                [Symbol] public partial struct Eta;
+                [IndexName] public partial struct Zeta;
+                [IndexName] public partial struct Eta;
             }
             """;
 
-        SetupAndVerify(source);
+        _ = SetupAndVerify(source);
     }
 
     [TestMethod]
-    public void SourceGenerator_SymbolNotDeclaredInANamespace_ReturnsAnError()
+    public void SourceGenerator_IndexNameNotDeclaredInANamespace_ReturnsAnError()
     {
         var source = """
-            [Symbol] public partial struct Alpha;
+            [IndexName] public partial struct Alpha;
             """;
 
-        SetupAndVerify(source);
+        _ = SetupAndVerify(source);
     }
 
     public Task SetupAndVerify(string source)
@@ -86,7 +86,7 @@ public sealed class SymbolGeneratorTests : VerifyBase
             assemblyName: "TestAssembly",
             syntaxTrees: [syntaxTree]);
 
-        var generator = new SymbolGenerator();
+        var generator = new IndexNameGenerator();
         var driver = CSharpGeneratorDriver.Create(generator);
 
         driver = (CSharpGeneratorDriver)driver.RunGenerators(compilation);

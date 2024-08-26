@@ -31,10 +31,10 @@ namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a tensor index.</summary>
 /// <typeparam name="TIP">An index position.</typeparam>
-/// <typeparam name="TIN">A symbol.</typeparam>
+/// <typeparam name="TIN">An index name.</typeparam>
 public readonly struct Index<TIP, TIN> : IIndex
     where TIP : IIndexPosition
-    where TIN : ISymbol
+    where TIN : IIndexName
 {
     public static IIndex Instance => new Index<TIP, TIN>();
 

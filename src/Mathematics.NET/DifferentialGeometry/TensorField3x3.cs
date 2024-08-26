@@ -61,8 +61,8 @@ public class TensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
 
     /// <inheritdoc cref="TensorField2x2{TT, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
     public Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, TPI> x)
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         tape.IsTracking = false;
 

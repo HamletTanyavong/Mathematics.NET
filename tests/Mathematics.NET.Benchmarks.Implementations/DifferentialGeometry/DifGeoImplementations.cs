@@ -41,7 +41,7 @@ public static class DifGeoImplementations
         where U : IRankOneTensor<U, V, W, Index<Upper, IC>>
         where V : IVector<V, W>
         where W : IComplex<W>, IDifferentiableFunctions<W>
-        where IC : ISymbol
+        where IC : IIndexName
     {
         var result = W.Zero;
         for (int i = 0; i < V.E1Components; i++)
@@ -57,7 +57,7 @@ public static class DifGeoImplementations
         where U : IRankOneTensor<U, V, W, Index<Upper, IC>>
         where V : IVector<V, W>
         where W : IComplex<W>, IDifferentiableFunctions<W>
-        where IC : ISymbol
+        where IC : IIndexName
     {
         var result = W.Zero;
         for (int i = 0; i < V.E1Components; i++)
@@ -74,7 +74,7 @@ public static class DifGeoImplementations
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, I3, Index<Upper, IC>, I4>
         where V : IComplex<V>, IDifferentiableFunctions<V>
-        where IC : ISymbol
+        where IC : IIndexName
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
@@ -107,7 +107,7 @@ public static class DifGeoImplementations
         where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2>
         where U : IRankThreeTensor<U, Array4x4x4<V>, V, I3, Index<Upper, IC>, I4>
         where V : IComplex<V>, IDifferentiableFunctions<V>
-        where IC : ISymbol
+        where IC : IIndexName
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
@@ -138,7 +138,7 @@ public static class DifGeoImplementations
         ref readonly Tensor<Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
         ref readonly Tensor<Array4x4x4<V>, V, I3, Index<Upper, IC>, I4> b)
         where V : IComplex<V>, IDifferentiableFunctions<V>
-        where IC : ISymbol
+        where IC : IIndexName
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
