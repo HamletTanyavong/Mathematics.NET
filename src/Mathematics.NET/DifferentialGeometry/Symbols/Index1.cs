@@ -31,6 +31,5 @@ internal readonly struct Index1 : IIndexName
 {
     /// <inheritdoc cref="IIndexName.DisplayString"/>
     public const string DisplayString = "Index1";
-
     static string IIndexName.DisplayString => DisplayString;
 }
