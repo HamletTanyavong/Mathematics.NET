@@ -90,7 +90,8 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
                                                     Token(SyntaxKind.PartialKeyword)]))
                                             .WithMembers(
                                                 List(memberDeclarations))))))
-            .NormalizeWhitespace();
+            .NormalizeWhitespace()
+            .WithTrailingTrivia(CarriageReturnLineFeed);
     }
 
     private ImmutableArray<MemberDeclarationSyntax> GenerateMembers()

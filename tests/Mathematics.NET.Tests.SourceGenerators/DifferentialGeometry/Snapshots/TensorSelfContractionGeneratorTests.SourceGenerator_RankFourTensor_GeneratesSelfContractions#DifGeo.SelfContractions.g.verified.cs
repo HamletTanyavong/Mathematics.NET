@@ -1,4 +1,5 @@
-﻿// Auto-generated code
+﻿//HintName: DifGeo.SelfContractions.g.cs
+// Auto-generated code
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra.Abstractions;
