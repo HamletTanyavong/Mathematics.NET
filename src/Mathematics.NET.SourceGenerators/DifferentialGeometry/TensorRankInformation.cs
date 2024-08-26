@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 /// <summary>Holds information about a particular tensor contraction.</summary>
 internal readonly record struct TensorRankInformation

@@ -26,7 +26,6 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -154,7 +153,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             .OfType<BinaryExpressionSyntax>()
             .FirstOrDefault(x => x.IsKind(SyntaxKind.MultiplyExpression));
         if (multiplyExpression is null ||
-            multiplyExpression.Parent?.Parent?.Parent?.Parent is null) // Check for for loop
+            multiplyExpression.Parent?.Parent?.Parent?.Parent is null) // Check for for loop.
         {
             var descriptor = DiagnosticMessages.CreateMissingSummationComponentsDiagnosticDescriptor();
             _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
@@ -165,7 +164,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 
     private bool IsValidSeedContraction(MethodDeclarationSyntax methodDeclaration)
     {
-        // Validate method name
+        // Validate method name.
         if (!IsValidMethodName(methodDeclaration))
         {
             return false;
@@ -173,14 +172,14 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 
         var paramList = methodDeclaration.ParameterList()!;
 
-        // Validate left tensor
+        // Validate left tensor.
         var leftArgs = paramList.Parameters[(int)IndexPosition.Left].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, leftArgs, "Lower"))
         {
             return false;
         }
 
-        // Validate right tensor
+        // Validate right tensor.
         var rightArgs = paramList.Parameters[(int)IndexPosition.Right].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, rightArgs, "Upper"))
         {

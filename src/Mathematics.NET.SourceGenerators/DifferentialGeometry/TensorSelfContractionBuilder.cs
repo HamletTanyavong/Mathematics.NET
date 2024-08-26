@@ -136,7 +136,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
             .OfType<AssignmentExpressionSyntax>()
             .FirstOrDefault(x => x.IsKind(SyntaxKind.AddAssignmentExpression));
         if (addAssignmentExpression is null ||
-            addAssignmentExpression.Parent?.Parent?.Parent is null) // Check for for loop
+            addAssignmentExpression.Parent?.Parent?.Parent is null) // Check for for loop.
         {
             var descriptor = DiagnosticMessages.CreateMissingSummationComponentsDiagnosticDescriptor();
             _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
@@ -147,7 +147,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
 
     private bool IsValidSeedContraction(MethodDeclarationSyntax methodDeclaration)
     {
-        // Validate method name
+        // Validate method name.
         if (!IsValidMethodName(methodDeclaration))
         {
             return false;
@@ -155,7 +155,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
 
         var paramList = methodDeclaration.ParameterList()!;
 
-        // Validate tensor
+        // Validate tensor.
         var args = paramList.Parameters[0].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, args, "Lower") || !IsValidIndexPositionAndName(IndexLocation.Second, args, "Upper"))
         {
