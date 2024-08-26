@@ -44,9 +44,7 @@ internal static class Extensions
 
         NameSyntax result = IdentifierName(names[0]);
         for (int i = 1; i < names.Length; i++)
-        {
             result = QualifiedName(result, IdentifierName(names[i]));
-        }
 
         return result;
     }
@@ -58,22 +56,16 @@ internal static class Extensions
     public static MethodDeclarationSyntax RemoveAttribute(this MethodDeclarationSyntax methodDeclarationSyntax, string attributeName)
     {
         if (attributeName.EndsWith("Attribute"))
-        {
             attributeName = attributeName.Remove(attributeName.Length - 9);
-        }
         var attributeNode = methodDeclarationSyntax
             .DescendantNodes()
             .OfType<AttributeSyntax>()
             .First(x => x.Name.GetLastIdentifierNameValueOrDefault() == attributeName);
 
         if (attributeNode.Parent!.ChildNodes().Count() > 1)
-        {
             return methodDeclarationSyntax.RemoveNode(attributeNode, SyntaxRemoveOptions.KeepNoTrivia)!;
-        }
         else
-        {
             return methodDeclarationSyntax.RemoveNode(attributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia)!;
-        }
     }
 
     //

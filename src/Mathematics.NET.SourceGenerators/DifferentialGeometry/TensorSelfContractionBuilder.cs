@@ -88,9 +88,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
 
             // Validate seed contraction.
             if (!IsValidSeedContraction(method) || !HasSummationComponents(method))
-            {
                 continue;
-            }
 
             method = method.RemoveAttribute("GenerateTensorSelfContractions");
 
@@ -150,18 +148,14 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
     {
         // Validate method name.
         if (!IsValidMethodName(methodDeclaration))
-        {
             return false;
-        }
 
         var paramList = methodDeclaration.ParameterList()!;
 
         // Validate tensor.
         var args = paramList.Parameters[0].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, args, "Lower") || !IsValidIndexPositionAndName(IndexLocation.Second, args, "Upper"))
-        {
             return false;
-        }
 
         return true;
     }

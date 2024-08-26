@@ -46,18 +46,14 @@ internal sealed class TypeArgumentIndexSwapRewriter : CSharpSyntaxRewriter
     public override SyntaxNode? VisitGenericName(GenericNameSyntax node)
     {
         if (node == _indexToContract)
-        {
             return _indexToSwap;
-        }
         return node;
     }
 
     public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
     {
         if (node == _indexToSwap)
-        {
             return _indexToContract;
-        }
         return node;
     }
 }

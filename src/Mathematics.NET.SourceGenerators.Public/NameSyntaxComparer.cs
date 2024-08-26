@@ -32,9 +32,7 @@ internal sealed class NameSyntaxComparer : IEqualityComparer<NameSyntax?>
     public bool Equals(NameSyntax? x, NameSyntax? y)
     {
         if (x is not null && y is not null)
-        {
             return x.GetNameValueOrDefault() == y.GetNameValueOrDefault();
-        }
         return x == y;
     }
 
