@@ -27,7 +27,7 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Attributes.GeneratorAttributes;
+using Mathematics.NET.Core.Attributes;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.DifferentialGeometry.Symbols;
 using Mathematics.NET.LinearAlgebra;
