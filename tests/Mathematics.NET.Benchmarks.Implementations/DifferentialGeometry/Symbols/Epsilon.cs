@@ -25,11 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Symbols;
+using Mathematics.NET.DifferentialGeometry;
 
 namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 
-public readonly struct Epsilon : ISymbol
+public readonly struct Epsilon : IIndexName
 {
     public static string DisplayString => "Epsilon";
 }

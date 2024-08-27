@@ -27,7 +27,7 @@
 
 namespace Mathematics.NET.SourceGenerators.Public.Models;
 
-/// <summary>A class containing information about a symbol struct.</summary>
+/// <summary>A class containing information about an index name struct.</summary>
 internal sealed class StructInformation
 {
     public StructInformation(NameSyntax? namespaceNameSyntax, AttributeSyntax attributeSyntax, StructDeclarationSyntax structDeclarationSyntax)

@@ -289,9 +289,13 @@ public sealed class HessianTapeOfRealTests
     [DataRow(1.23, 2.34, 0.334835801674179, -0.1760034342133505)]
     public void Atan2_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Atan2(y, x);
+
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradient(_tape.Atan2, left, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -300,9 +304,13 @@ public sealed class HessianTapeOfRealTests
     [DataRow(1.23, 2.34, -0.1178645019844717, -0.081137805227897, 0.1178645019844717)]
     public void Atan2_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
     {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Atan2(y, x);
+
         Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
 
-        var actual = ComputeHessian(_tape.Atan2, left, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
     }
@@ -311,7 +319,10 @@ public sealed class HessianTapeOfRealTests
     [DataRow(1.23, 2.34, 0.4839493878600246)]
     public void Atan2_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
-        var actual = ComputeValue(_tape.Atan2, left, right);
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+
+        var actual = _tape.Atan2(y, x).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -499,9 +510,7 @@ public sealed class HessianTapeOfRealTests
 
         Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
 
-        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
-
-        var actual = hessian.ToArray();
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
     }
@@ -875,9 +884,13 @@ public sealed class HessianTapeOfRealTests
     [DataRow(1.23, 2.34, 1, 0)]
     public void Modulo_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+        _ = _tape.Modulo(x, y);
+
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradient(_tape.Modulo, left, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -886,9 +899,13 @@ public sealed class HessianTapeOfRealTests
     [DataRow(1.23, 2.34, 0, 0, 0)]
     public void Modulo_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
     {
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+        _ = _tape.Modulo(x, y);
+
         Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
 
-        var actual = ComputeHessian(_tape.Modulo, left, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -897,7 +914,10 @@ public sealed class HessianTapeOfRealTests
     [DataRow(3.14, 2.34, 0.8)]
     public void Modulo_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
-        var actual = ComputeValue(_tape.Modulo, left, right);
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+
+        var actual = _tape.Modulo(x, y).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }

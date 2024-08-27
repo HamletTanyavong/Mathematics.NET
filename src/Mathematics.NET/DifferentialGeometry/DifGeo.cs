@@ -27,11 +27,11 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Attributes.GeneratorAttributes;
+using Mathematics.NET.Core.Attributes;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.DifferentialGeometry.IndexNames;
 using Mathematics.NET.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -63,15 +63,15 @@ public static partial class DifGeo
         out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -84,15 +84,15 @@ public static partial class DifGeo
         out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -105,15 +105,15 @@ public static partial class DifGeo
         out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -137,15 +137,15 @@ public static partial class DifGeo
         out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -158,15 +158,15 @@ public static partial class DifGeo
         out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -179,15 +179,15 @@ public static partial class DifGeo
         out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI2N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI2N, Index1>(tape, point);
         var invMetricL = value.Inverse();
-        var invMetricR = invMetricL.WithIndices<InternalIndex2, TI3N>();
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, InternalIndex2>> dTensor);
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
 
         dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
@@ -213,12 +213,12 @@ public static partial class DifGeo
         out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI2P : IIndexPosition
         where TI3P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         dTensor = new();
         for (int i = 0; i < 2; i++)
@@ -245,12 +245,12 @@ public static partial class DifGeo
         out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI2P : IIndexPosition
         where TI3P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         dTensor = new();
         for (int i = 0; i < 3; i++)
@@ -278,12 +278,12 @@ public static partial class DifGeo
         out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI2P : IIndexPosition
         where TI3P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         dTensor = new();
         for (int i = 0; i < 4; i++)
@@ -312,12 +312,12 @@ public static partial class DifGeo
         out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI2P : IIndexPosition
         where TI3P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         dTensor = new();
         for (int i = 0; i < 2; i++)
@@ -344,12 +344,12 @@ public static partial class DifGeo
         out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI2P : IIndexPosition
         where TI3P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         dTensor = new();
         for (int i = 0; i < 3; i++)
@@ -377,12 +377,12 @@ public static partial class DifGeo
         out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI2P : IIndexPosition
         where TI3P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         dTensor = new();
         for (int i = 0; i < 4; i++)
@@ -423,13 +423,13 @@ public static partial class DifGeo
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI3P : IIndexPosition
         where TI4P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         d2Tensor = new();
         for (int i = 0; i < 2; i++)
@@ -458,13 +458,13 @@ public static partial class DifGeo
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI3P : IIndexPosition
         where TI4P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         d2Tensor = new();
         for (int i = 0; i < 3; i++)
@@ -499,13 +499,13 @@ public static partial class DifGeo
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI3P : IIndexPosition
         where TI4P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         d2Tensor = new();
         for (int i = 0; i < 4; i++)
@@ -548,13 +548,13 @@ public static partial class DifGeo
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI3P : IIndexPosition
         where TI4P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         d2Tensor = new();
         for (int i = 0; i < 2; i++)
@@ -583,13 +583,13 @@ public static partial class DifGeo
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI3P : IIndexPosition
         where TI4P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         d2Tensor = new();
         for (int i = 0; i < 3; i++)
@@ -624,13 +624,13 @@ public static partial class DifGeo
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
+        where TPIN : IIndexName
         where TI3P : IIndexPosition
         where TI4P : IIndexPosition
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         d2Tensor = new();
         for (int i = 0; i < 4; i++)
@@ -688,10 +688,10 @@ public static partial class DifGeo
         out Christoffel<Array2x2x2<TN>, TN, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
@@ -716,10 +716,10 @@ public static partial class DifGeo
         out Christoffel<Array3x3x3<TN>, TN, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
@@ -744,10 +744,10 @@ public static partial class DifGeo
         out Christoffel<Array4x4x4<TN>, TN, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
         christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
@@ -782,14 +782,14 @@ public static partial class DifGeo
         out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
 
         var result = Contract(invMetric, christoffelFK);
 
@@ -807,14 +807,14 @@ public static partial class DifGeo
         out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
 
         var result = Contract(invMetric, christoffelFK);
 
@@ -832,14 +832,14 @@ public static partial class DifGeo
         out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
     {
-        var value = metric.Compute<TI1N, InternalIndex1>(tape, point);
+        var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI2N, TI3N> christoffelFK);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
 
         var result = Contract(invMetric, christoffelFK);
 
@@ -866,11 +866,11 @@ public static partial class DifGeo
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         SecondDerivative(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
 
@@ -897,11 +897,11 @@ public static partial class DifGeo
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         SecondDerivative(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
 
@@ -928,11 +928,11 @@ public static partial class DifGeo
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         SecondDerivative(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
 
@@ -969,16 +969,16 @@ public static partial class DifGeo
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
-        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+        Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
         var firstPart = Contract(dInvMetric, christoffel);
         var secondPart = Contract(invMetric, dChristoffel);
@@ -1006,16 +1006,16 @@ public static partial class DifGeo
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
-        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+        Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
         var firstPart = Contract(dInvMetric, christoffel);
         var secondPart = Contract(invMetric, dChristoffel);
@@ -1043,16 +1043,16 @@ public static partial class DifGeo
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
-        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, InternalIndex1>> dInvMetric);
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, InternalIndex1>, TI3N, TI4N> christoffel);
-        var invMetric = metric.ComputeInverse<TI2N, InternalIndex1>(tape, point);
-        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, InternalIndex1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+        Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(tape, point);
+        DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
 
         var firstPart = Contract(dInvMetric, christoffel);
         var secondPart = Contract(invMetric, dChristoffel);
@@ -1094,15 +1094,15 @@ public static partial class DifGeo
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         DerivativeOfChristoffel(tape, metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 2; r++)
@@ -1128,15 +1128,15 @@ public static partial class DifGeo
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         DerivativeOfChristoffel(tape, metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 3; r++)
@@ -1162,15 +1162,15 @@ public static partial class DifGeo
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TPIN : ISymbol
-        where TI1N : ISymbol
-        where TI2N : ISymbol
-        where TI3N : ISymbol
-        where TI4N : ISymbol
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
     {
         DerivativeOfChristoffel(tape, metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, InternalIndex1, TI3N> christoffel);
-        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, InternalIndex1>, TI2N, TI4N>());
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
 
         riemann = new();
         for (int r = 0; r < 4; r++)
@@ -1201,7 +1201,7 @@ public static partial class DifGeo
         where TRR1T : IRankOneTensor<TRR1T, TV, TN, Index<Upper, TCI>>
         where TV : IVector<TV, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
     {
         var result = TN.Zero;
         for (int i = 0; i < TV.E1Components; i++)
@@ -1220,7 +1220,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>>
         where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector2<TN> vector = new();
@@ -1241,7 +1241,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>>
         where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector3<TN> vector = new();
@@ -1262,7 +1262,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>>
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector4<TN> vector = new();
@@ -1283,7 +1283,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI>
         where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector2<TN> vector = new();
@@ -1304,7 +1304,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI>
         where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector3<TN> vector = new();
@@ -1325,7 +1325,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector4<TN> vector = new();
@@ -1348,7 +1348,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>>
         where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1373,7 +1373,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>>
         where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1398,7 +1398,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>>
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1423,7 +1423,7 @@ public static partial class DifGeo
         where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1448,7 +1448,7 @@ public static partial class DifGeo
         where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1473,7 +1473,7 @@ public static partial class DifGeo
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1500,7 +1500,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Lower, TCI>>
         where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1529,7 +1529,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Lower, TCI>>
         where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1558,7 +1558,7 @@ public static partial class DifGeo
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Lower, TCI>>
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1587,7 +1587,7 @@ public static partial class DifGeo
         where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR1T : IRankOneTensor<TR1T, Vector2<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1616,7 +1616,7 @@ public static partial class DifGeo
         where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR1T : IRankOneTensor<TR1T, Vector3<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1645,7 +1645,7 @@ public static partial class DifGeo
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR1T : IRankOneTensor<TR1T, Vector4<TN>, TN, Index<Upper, TCI>>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1676,7 +1676,7 @@ public static partial class DifGeo
         where TLR2T : IRankTwoTensor<TLR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1>
         where TRR3T : IRankTwoTensor<TRR3T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1701,7 +1701,7 @@ public static partial class DifGeo
         where TLR2T : IRankTwoTensor<TLR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1>
         where TRR3T : IRankTwoTensor<TRR3T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1726,7 +1726,7 @@ public static partial class DifGeo
         where TLR2T : IRankTwoTensor<TLR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1>
         where TRR3T : IRankTwoTensor<TRR3T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -1753,7 +1753,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1>
         where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1782,7 +1782,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1>
         where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1811,7 +1811,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1>
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1840,7 +1840,7 @@ public static partial class DifGeo
         where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1869,7 +1869,7 @@ public static partial class DifGeo
         where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1898,7 +1898,7 @@ public static partial class DifGeo
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI3>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1929,7 +1929,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Lower, TCI>, TI1>
         where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1962,7 +1962,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Lower, TCI>, TI1>
         where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -1995,7 +1995,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Lower, TCI>, TI1>
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Upper, TCI>, TI2, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -2028,7 +2028,7 @@ public static partial class DifGeo
         where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR2T : IRankTwoTensor<TR2T, Matrix2x2<TN>, TN, Index<Upper, TCI>, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -2061,7 +2061,7 @@ public static partial class DifGeo
         where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR2T : IRankTwoTensor<TR2T, Matrix3x3<TN>, TN, Index<Upper, TCI>, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -2094,7 +2094,7 @@ public static partial class DifGeo
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2, TI3>
         where TR2T : IRankTwoTensor<TR2T, Matrix4x4<TN>, TN, Index<Upper, TCI>, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -2129,7 +2129,7 @@ public static partial class DifGeo
         where TLR3T : IRankThreeTensor<TLR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TRR3T : IRankThreeTensor<TRR3T, Array2x2x2<TN>, TN, Index<Upper, TCI>, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -2162,7 +2162,7 @@ public static partial class DifGeo
         where TLR3T : IRankThreeTensor<TLR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TRR3T : IRankThreeTensor<TRR3T, Array3x3x3<TN>, TN, Index<Upper, TCI>, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -2195,7 +2195,7 @@ public static partial class DifGeo
         where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
         where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
         where TI3 : IIndex
@@ -2230,7 +2230,7 @@ public static partial class DifGeo
         where TR2T : IRankTwoTensor<TR2T, TSM, TN, Index<Lower, TCI>, Index<Upper, TCI>>
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
     {
         var result = TN.Zero;
         for (int i = 0; i < TSM.E1Components; i++)
@@ -2244,7 +2244,7 @@ public static partial class DifGeo
     public static Tensor<Vector2<TN>, TN, TI> Contract<TR3T, TN, TCI, TI>(in IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI> tensor)
         where TR3T : IRankThreeTensor<TR3T, Array2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector2<TN> vector = new();
@@ -2262,7 +2262,7 @@ public static partial class DifGeo
     public static Tensor<Vector3<TN>, TN, TI> Contract<TR3T, TN, TCI, TI>(in IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI> tensor)
         where TR3T : IRankThreeTensor<TR3T, Array3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector3<TN> vector = new();
@@ -2280,7 +2280,7 @@ public static partial class DifGeo
     public static Tensor<Vector4<TN>, TN, TI> Contract<TR3T, TN, TCI, TI>(in IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI> tensor)
         where TR3T : IRankThreeTensor<TR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI : IIndex
     {
         Vector4<TN> vector = new();
@@ -2298,7 +2298,7 @@ public static partial class DifGeo
     public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> tensor)
         where TR4T : IRankFourTensor<TR4T, Array2x2x2x2<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -2320,7 +2320,7 @@ public static partial class DifGeo
     public static Tensor<Matrix3x3<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> tensor)
         where TR4T : IRankFourTensor<TR4T, Array3x3x3x3<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -2342,7 +2342,7 @@ public static partial class DifGeo
     public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> tensor)
         where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TCI : ISymbol
+        where TCI : IIndexName
         where TI1 : IIndex
         where TI2 : IIndex
     {

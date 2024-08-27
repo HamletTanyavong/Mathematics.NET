@@ -151,7 +151,7 @@ public sealed class OpenCLService : IComputeService
 
     // TODO: Consider putting this in another file.
 
-    public unsafe ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, Complex scalar)
+    public unsafe ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, in Complex scalar)
     {
         var length = vector.Length;
         var result = new Complex[length];
@@ -168,7 +168,7 @@ public sealed class OpenCLService : IComputeService
                 // Set kernel arguments.
                 var kernel = _program.Kernels["comp_vec_mul_scalar"].Handle;
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), &scalar);
+                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
                 error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
 #if DEBUG
                 if (error != (int)ErrorCodes.Success)

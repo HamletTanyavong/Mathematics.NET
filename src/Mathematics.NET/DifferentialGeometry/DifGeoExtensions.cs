@@ -30,7 +30,6 @@ using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -175,8 +174,8 @@ public static class DifGeoExtensions
     public static MetricTensor<TSM, TN, Upper, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, Lower, TI1N, TI2N> metric)
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         var inverse = Unsafe.As<MetricTensor<TSM, TN, Lower, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
         return Unsafe.As<TSM, MetricTensor<TSM, TN, Upper, TI1N, TI2N>>(ref inverse);
@@ -192,8 +191,8 @@ public static class DifGeoExtensions
     public static MetricTensor<TSM, TN, Lower, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, Upper, TI1N, TI2N> metric)
         where TSM : ISquareMatrix<TSM, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         var inverse = Unsafe.As<MetricTensor<TSM, TN, Upper, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
         return Unsafe.As<TSM, MetricTensor<TSM, TN, Lower, TI1N, TI2N>>(ref inverse);

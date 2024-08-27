@@ -1,4 +1,4 @@
-﻿// <copyright file="InternalIndex2.cs" company="Mathematics.NET">
+﻿// <copyright file="TensorRankInformation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,12 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Symbols;
+namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
-public readonly struct InternalIndex2 : ISymbol
+/// <summary>Holds information about a particular tensor contraction.</summary>
+internal readonly record struct TensorRankInformation
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
-    public const string DisplayString = "InternalIndex2";
+    public TensorRankInformation(int leftRank, int rightRank)
+    {
+        LeftRank = leftRank;
+        RightRank = rightRank;
+    }
 
-    static string ISymbol.DisplayString => DisplayString;
+    public readonly int LeftRank { get; }
+
+    public readonly int RightRank { get; }
 }

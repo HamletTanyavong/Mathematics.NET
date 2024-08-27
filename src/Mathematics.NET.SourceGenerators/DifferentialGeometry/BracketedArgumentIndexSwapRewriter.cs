@@ -50,13 +50,9 @@ internal sealed class BracketedArgumentIndexSwapRewriter : CSharpSyntaxRewriter
     public override SyntaxNode? VisitArgument(ArgumentSyntax node)
     {
         if (node == _indexToContract)
-        {
             return _indexToSwap;
-        }
         else if (node == _indexToSwap)
-        {
             return _indexToContract;
-        }
         return node;
     }
 }

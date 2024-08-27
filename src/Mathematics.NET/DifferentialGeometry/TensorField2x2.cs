@@ -30,7 +30,6 @@ using Mathematics.NET.AutoDiff;
 using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -67,8 +66,8 @@ public class TensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     /// <param name="point">A point on the manifold.</param>
     /// <returns>A rank-two tensor.</returns>
     public Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         tape.IsTracking = false;
 

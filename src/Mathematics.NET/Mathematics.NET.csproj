@@ -35,10 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\docs\images\logo\mathematics.net.png" Pack ="true" PackagePath="\" />
-    <None Include="..\..\LICENSE" Pack ="true" PackagePath="\" />
-    <None Include="..\..\THIRD_PARTY_NOTICES.txt" Pack ="true" PackagePath="\" />
-    <None Update="README.md" Pack ="true" PackagePath="\" />
+    <None Include="..\..\docs\images\logo\mathematics.net.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\..\THIRD_PARTY_NOTICES.txt" Pack="true" PackagePath="\" />
+    <None Update="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

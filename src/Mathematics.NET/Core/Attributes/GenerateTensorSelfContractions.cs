@@ -1,4 +1,4 @@
-﻿// <copyright file="DiagnosticMessage.cs" company="Mathematics.NET">
+﻿// <copyright file="GenerateTensorSelfContractions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,20 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.Public;
+namespace Mathematics.NET.Core.Attributes;
 
-/// <summary>A class for creating diagnostic messages for use in Mathematics.NET source generators.</summary>
-internal static class DiagnosticMessage
-{
-    public static DiagnosticDescriptor CreateInvalidSymbolDeclarationDiagnosticDescriptor()
-    {
-        return new DiagnosticDescriptor(
-            id: "SGS0001",
-            title: "Invalid symbol declaration",
-            messageFormat: "Symbols must be declared in namespaces.",
-            category: "Symbols",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true,
-            helpLinkUri: "https://mathematics.hamlettanyavong.com/guide/diagnostic_messages/symbols/sgs0001.html");
-    }
-}
+/// <summary>Indicates that index permutations of a tensor self-contraction should be generated.</summary>
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+internal sealed class GenerateTensorSelfContractions : Attribute;

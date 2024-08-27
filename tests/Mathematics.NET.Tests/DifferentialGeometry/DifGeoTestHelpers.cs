@@ -28,7 +28,6 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.Tests.DifferentialGeometry;
 
@@ -107,42 +106,42 @@ public static class DifGeoTestHelpers
 // Symbols
 //
 
-public readonly struct Alpha : ISymbol
+public readonly struct Alpha : IIndexName
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.DisplayString"/>
     public const string DisplayString = "Alpha";
 
-    static string ISymbol.DisplayString => DisplayString;
+    static string IIndexName.DisplayString => DisplayString;
 }
 
-public readonly struct Beta : ISymbol
+public readonly struct Beta : IIndexName
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.DisplayString"/>
     public const string DisplayString = "Beta";
 
-    static string ISymbol.DisplayString => DisplayString;
+    static string IIndexName.DisplayString => DisplayString;
 }
 
-public readonly struct Gamma : ISymbol
+public readonly struct Gamma : IIndexName
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.DisplayString"/>
     public const string DisplayString = "Gamma";
 
-    static string ISymbol.DisplayString => DisplayString;
+    static string IIndexName.DisplayString => DisplayString;
 }
 
-public readonly struct Delta : ISymbol
+public readonly struct Delta : IIndexName
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.DisplayString"/>
     public const string DisplayString = "Delta";
 
-    static string ISymbol.DisplayString => DisplayString;
+    static string IIndexName.DisplayString => DisplayString;
 }
 
-public readonly struct Epsilon : ISymbol
+public readonly struct Epsilon : IIndexName
 {
-    /// <inheritdoc cref="ISymbol.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.DisplayString"/>
     public const string DisplayString = "Epsilon";
 
-    static string ISymbol.DisplayString => DisplayString;
+    static string IIndexName.DisplayString => DisplayString;
 }

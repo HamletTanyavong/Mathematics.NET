@@ -75,14 +75,10 @@ internal static class Extensions
     public static NameSyntax? GetNamespaceNameSyntaxFromStructOrDefault(this StructDeclarationSyntax structDeclaration)
     {
         if (structDeclaration.Parent is FileScopedNamespaceDeclarationSyntax fileScopedNamespaceDeclaration)
-        {
             return fileScopedNamespaceDeclaration.Name;
-        }
 
         if (structDeclaration.Parent is NamespaceDeclarationSyntax namespaceDeclaration)
-        {
             return namespaceDeclaration.Name.WithoutTrailingTrivia();
-        }
 
         return default;
     }
@@ -93,14 +89,10 @@ internal static class Extensions
     public static string? GetNameValueOrDefault(this NameSyntax? name)
     {
         if (name is null)
-        {
             return default;
-        }
 
         if (name is SimpleNameSyntax simpleName)
-        {
             return simpleName.Identifier.Text;
-        }
 
         if (name is QualifiedNameSyntax qualifiedName)
         {

@@ -1,4 +1,4 @@
-﻿// <copyright file="DiagnosticMessage.cs" company="Mathematics.NET">
+﻿// <copyright file="DiagnosticMessages.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,7 +29,7 @@ using Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 namespace Mathematics.NET.SourceGenerators;
 
-internal static class DiagnosticMessage
+internal static class DiagnosticMessages
 {
     //
     // Differential Geometry

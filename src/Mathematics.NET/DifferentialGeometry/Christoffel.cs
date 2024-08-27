@@ -29,7 +29,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -45,8 +44,8 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     where TCA : ICubicArray<TCA, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI1 : IIndex
-    where TI2N : ISymbol
-    where TI3N : ISymbol
+    where TI2N : IIndexName
+    where TI3N : IIndexName
 {
     private TCA _array = array;
 
@@ -134,8 +133,8 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Christoffel<TCA, TN, TNI1, TNI2N, TNI3N> WithIndices<TNI1, TNI2N, TNI3N>()
         where TNI1 : IIndex
-        where TNI2N : ISymbol
-        where TNI3N : ISymbol
+        where TNI2N : IIndexName
+        where TNI3N : IIndexName
         => Unsafe.As<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TNI1, TNI2N, TNI3N>>(ref this);
 
     /// <summary>Reinterpret this Christoffel symbol as one with a new index in the first position.</summary>
@@ -151,7 +150,7 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     /// <returns>A Christoffel symbol with a new index name in the second position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Christoffel<TCA, TN, TI1, TNIN, TI3N> WithIndex2Name<TNIN>()
-        where TNIN : ISymbol
+        where TNIN : IIndexName
         => Unsafe.As<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TI1, TNIN, TI3N>>(ref this);
 
     /// <summary>Reinterpret this Christoffel symbol as one with a new index name in the third position.</summary>
@@ -159,7 +158,7 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     /// <returns>A Christoffel symbol with a new index name in the third position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Christoffel<TCA, TN, TI1, TI2N, TNIN> WithIndex3Name<TNIN>()
-        where TNIN : ISymbol
+        where TNIN : IIndexName
         => Unsafe.As<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TI1, TI2N, TNIN>>(ref this);
 
     //

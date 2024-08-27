@@ -68,7 +68,7 @@ internal abstract class TensorContractionBuilderBase
             var actualPosition = (IdentifierNameSyntax)name.TypeArgumentList.Arguments[0];
             if (actualPosition.Identifier.Text != indexPosition)
             {
-                var descriptor = DiagnosticMessage.CreateIncorrectIndexPositionDiagnosticDescriptor(indexPosition);
+                var descriptor = DiagnosticMessages.CreateIncorrectIndexPositionDiagnosticDescriptor(indexPosition);
                 _context.ReportDiagnostic(Diagnostic.Create(descriptor, actualPosition.Identifier.GetLocation()));
                 return false;
             }
@@ -76,14 +76,14 @@ internal abstract class TensorContractionBuilderBase
             var typeParameterName = (IdentifierNameSyntax)name.TypeArgumentList.Arguments[1];
             if (typeParameterName.Identifier.Text != "TCI")
             {
-                var descriptor = DiagnosticMessage.CreateIncorrectTypeParameterNameDiagnosticDescriptor();
+                var descriptor = DiagnosticMessages.CreateIncorrectTypeParameterNameDiagnosticDescriptor();
                 _context.ReportDiagnostic(Diagnostic.Create(descriptor, typeParameterName.Identifier.GetLocation()));
                 return false;
             }
         }
         else
         {
-            var descriptor = DiagnosticMessage.CreateIncorrectIndexToContractDiagnosticDescriptor(location);
+            var descriptor = DiagnosticMessages.CreateIncorrectIndexToContractDiagnosticDescriptor(location);
             _context.ReportDiagnostic(Diagnostic.Create(descriptor, typeArgumentList.Arguments[(int)location].GetLocation()));
             return false;
         }
@@ -95,7 +95,7 @@ internal abstract class TensorContractionBuilderBase
     {
         if (methodDeclaration.Identifier.Text != "Contract")
         {
-            var descriptor = DiagnosticMessage.CreateInvalidMethodNameDiagnosticDescriptor();
+            var descriptor = DiagnosticMessages.CreateInvalidMethodNameDiagnosticDescriptor();
             _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
         }
         return true;

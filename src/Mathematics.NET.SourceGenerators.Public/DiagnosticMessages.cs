@@ -1,4 +1,4 @@
-﻿// <copyright file="GenerateTensorContractionsAttribute.cs" company="Mathematics.NET">
+﻿// <copyright file="DiagnosticMessages.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,8 +25,20 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Core.Attributes.GeneratorAttributes;
+namespace Mathematics.NET.SourceGenerators.Public;
 
-/// <summary>Indicates that index permutations of a tensor contraction should be generated.</summary>
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-internal sealed class GenerateTensorContractionsAttribute : Attribute;
+/// <summary>A class for creating diagnostic messages for use in Mathematics.NET source generators.</summary>
+internal static class DiagnosticMessages
+{
+    public static DiagnosticDescriptor CreateInvalidIndexNameDeclarationDiagnosticDescriptor()
+    {
+        return new DiagnosticDescriptor(
+            id: "DG0001",
+            title: "Invalid index name declaration.",
+            messageFormat: "Index names must be declared in namespaces.",
+            category: "DifGeo",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            helpLinkUri: "https://mathematics.hamlettanyavong.com/guide/diagnostic_messages/difgeo/dg0001.html");
+    }
+}

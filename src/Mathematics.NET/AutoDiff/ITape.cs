@@ -109,19 +109,19 @@ public interface ITape<T>
     /// <param name="x">A dividend.</param>
     /// <param name="y">A divisor.</param>
     /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
-    public Variable<Real> Modulo(Variable<Real> x, Variable<Real> y);
+    public Variable<Real> Modulo(in Variable<Real> x, in Variable<Real> y);
 
     /// <summary>Compute the modulo of a real value given a divisor.</summary>
     /// <param name="c">A real dividend.</param>
     /// <param name="x">A variable divisor.</param>
     /// <returns><paramref name="c"/> mod <paramref name="x"/>.</returns>
-    public Variable<Real> Modulo(Real c, Variable<Real> x);
+    public Variable<Real> Modulo(Real c, in Variable<Real> x);
 
     /// <summary>Compute the modulo of a variable given a divisor.</summary>
     /// <param name="x">A variable dividend.</param>
     /// <param name="c">A real divisor.</param>
     /// <returns><paramref name="x"/> mod <paramref name="c"/>.</returns>
-    public Variable<Real> Modulo(Variable<Real> x, Real c);
+    public Variable<Real> Modulo(in Variable<Real> x, Real c);
 
     /// <summary>Multiply two variables.</summary>
     /// <param name="x">The first variable.</param>
@@ -247,7 +247,7 @@ public interface ITape<T>
     public Variable<T> Atan(Variable<T> x);
 
     /// <inheritdoc cref="IReal{T}.Atan2(T, T)"/>
-    public Variable<Real> Atan2(Variable<Real> y, Variable<Real> x);
+    public Variable<Real> Atan2(in Variable<Real> y, in Variable<Real> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Cos(T)"/>
     public Variable<T> Cos(Variable<T> x);

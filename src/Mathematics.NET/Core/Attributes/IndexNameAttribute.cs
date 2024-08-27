@@ -1,4 +1,4 @@
-﻿// <copyright file="GenerateTensorSelfContractions.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexNameAttribute.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,8 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Core.Attributes.GeneratorAttributes;
+namespace Mathematics.NET.Core.Attributes;
 
-/// <summary>Indicates that index permutations of a tensor self-contraction should be generated.</summary>
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-internal sealed class GenerateTensorSelfContractions : Attribute;
+/// <summary>Indicates that a type represents an index name and that its properties should be generated.</summary>
+[AttributeUsage(AttributeTargets.Struct, AllowMultiple = false)]
+public sealed class IndexNameAttribute : Attribute;

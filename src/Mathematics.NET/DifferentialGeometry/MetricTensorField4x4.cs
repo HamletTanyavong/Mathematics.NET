@@ -28,7 +28,6 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -45,8 +44,8 @@ public abstract class MetricTensorField4x4<TT, TN, TPI> : TensorField4x4<TT, TN,
 
     /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
     public new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         tape.IsTracking = false;
 
@@ -66,8 +65,8 @@ public abstract class MetricTensorField4x4<TT, TN, TPI> : TensorField4x4<TT, TN,
 
     /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.ComputeInverse{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
     public MetricTensor<Matrix4x4<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
-        where TI1N : ISymbol
-        where TI2N : ISymbol
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
         var value = Compute<TI1N, TI2N>(tape, point);
         return value.Inverse();

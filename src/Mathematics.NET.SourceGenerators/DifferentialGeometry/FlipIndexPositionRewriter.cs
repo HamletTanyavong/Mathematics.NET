@@ -38,13 +38,9 @@ internal sealed class FlipIndexPositionRewriter : CSharpSyntaxRewriter
     public override SyntaxNode VisitIdentifierName(IdentifierNameSyntax node)
     {
         if (node.Identifier.Text == "Lower")
-        {
             return s_upper;
-        }
         else if (node.Identifier.Text == "Upper")
-        {
             return s_lower;
-        }
         return node;
     }
 }

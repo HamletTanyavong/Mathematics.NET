@@ -1,4 +1,4 @@
-﻿// <copyright file="RK4IntegrationStepBenchmarks.cs" company="Mathematics.NET">
+﻿// <copyright file="RK4IntegrationBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

@@ -25,11 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Symbols;
+using Mathematics.NET.DifferentialGeometry;
 
 namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 
-public readonly struct Beta : ISymbol
+public readonly struct Beta : IIndexName
 {
     public static string DisplayString => "Beta";
 }

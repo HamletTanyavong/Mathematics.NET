@@ -26,7 +26,6 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -76,8 +75,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
                                 SyntaxKind.UsingKeyword,
                                 TriviaList())),
                     UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
-                    UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace()),
-                    UsingDirective("Mathematics.NET.Symbols".CreateNameSyntaxFromNamespace())]))
+                    UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace())]))
                 .WithMembers(
                     SingletonList<MemberDeclarationSyntax>(
                         FileScopedNamespaceDeclaration(
@@ -92,7 +90,8 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
                                                     Token(SyntaxKind.PartialKeyword)]))
                                             .WithMembers(
                                                 List(memberDeclarations))))))
-            .NormalizeWhitespace();
+            .NormalizeWhitespace()
+            .WithTrailingTrivia(CarriageReturnLineFeed);
     }
 
     private ImmutableArray<MemberDeclarationSyntax> GenerateMembers()
@@ -104,9 +103,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 
             // Validate seed contraction.
             if (!IsValidSeedContraction(method) || !HasSummationComponents(method))
-            {
                 continue;
-            }
 
             method = method.RemoveAttribute("GenerateTensorContractions");
 
@@ -155,9 +152,9 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             .OfType<BinaryExpressionSyntax>()
             .FirstOrDefault(x => x.IsKind(SyntaxKind.MultiplyExpression));
         if (multiplyExpression is null ||
-            multiplyExpression.Parent?.Parent?.Parent?.Parent is null) // Check for for loop
+            multiplyExpression.Parent?.Parent?.Parent?.Parent is null) // Check for for loop.
         {
-            var descriptor = DiagnosticMessage.CreateMissingSummationComponentsDiagnosticDescriptor();
+            var descriptor = DiagnosticMessages.CreateMissingSummationComponentsDiagnosticDescriptor();
             _context.ReportDiagnostic(Diagnostic.Create(descriptor, methodDeclaration.Identifier.GetLocation()));
             return false;
         }
@@ -166,27 +163,21 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
 
     private bool IsValidSeedContraction(MethodDeclarationSyntax methodDeclaration)
     {
-        // Validate method name
+        // Validate method name.
         if (!IsValidMethodName(methodDeclaration))
-        {
             return false;
-        }
 
         var paramList = methodDeclaration.ParameterList()!;
 
-        // Validate left tensor
+        // Validate left tensor.
         var leftArgs = paramList.Parameters[(int)IndexPosition.Left].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, leftArgs, "Lower"))
-        {
             return false;
-        }
 
-        // Validate right tensor
+        // Validate right tensor.
         var rightArgs = paramList.Parameters[(int)IndexPosition.Right].TypeArgumentList()!;
         if (!IsValidIndexPositionAndName(IndexLocation.First, rightArgs, "Upper"))
-        {
             return false;
-        }
 
         return true;
     }

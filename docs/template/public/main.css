@@ -52,6 +52,8 @@ code {
   #interactive-card > .flare,
   #overlay {
     position: absolute;
+    transition: ease-out;
+    transition-duration: 250ms;
     opacity: 0;
     pointer-events: none;
   }

@@ -1,4 +1,4 @@
-﻿// <copyright file="SymbolGenerator.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexNameGenerator.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,23 +29,23 @@ using System.Collections.Immutable;
 using System.Text;
 using Mathematics.NET.SourceGenerators.Public.Models;
 
-namespace Mathematics.NET.SourceGenerators.Public.Symbols;
+namespace Mathematics.NET.SourceGenerators.Public.IndexNames;
 
-/// <summary>A generator for mathematical symbols.</summary>
+/// <summary>A generator for index names.</summary>
 [Generator]
-public sealed class SymbolGenerator : IIncrementalGenerator
+public sealed class IndexNameGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var provider = context.SyntaxProvider
-            .CreateSyntaxProvider(CouldBeSymbolAttribute, GetStructInformationOrNull)
+            .CreateSyntaxProvider(CouldBeIndexNameAttribute, GetStructInformationOrNull)
             .Where(x => x is not null);
         var compilation = context.CompilationProvider.Combine(provider.Collect());
         context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Right));
     }
 
-    private static bool CouldBeSymbolAttribute(SyntaxNode syntaxNode, CancellationToken token)
-        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetLastIdentifierNameValueOrDefault() is "Symbol" or "SymbolAttribute";
+    private static bool CouldBeIndexNameAttribute(SyntaxNode syntaxNode, CancellationToken token)
+        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetLastIdentifierNameValueOrDefault() is "IndexName" or "IndexNameAttribute";
 
     private static StructInformation GetStructInformationOrNull(GeneratorSyntaxContext context, CancellationToken token)
     {
@@ -70,13 +70,13 @@ public sealed class SymbolGenerator : IIncrementalGenerator
                     foreach (var info in selectedInformation)
                     {
                         context.ReportDiagnostic(Diagnostic.Create(
-                            DiagnosticMessage.CreateInvalidSymbolDeclarationDiagnosticDescriptor(),
+                            DiagnosticMessages.CreateInvalidIndexNameDeclarationDiagnosticDescriptor(),
                             info.StructDeclarationSyntax.Identifier.GetLocation()));
                     }
                     continue;
                 }
-                var symbols = new SymbolBuilder(nameSyntax, context, selectedInformation);
-                context.AddSource($"Symbols.{nameSyntax.GetNameValueOrDefault()}.g.cs", symbols.GenerateSource().GetText(Encoding.UTF8).ToString());
+                var indexNames = new IndexNameBuilder(nameSyntax, selectedInformation);
+                context.AddSource($"IndexNames.{nameSyntax.GetNameValueOrDefault()}.g.cs", indexNames.GenerateSource().GetText(Encoding.UTF8).ToString());
             }
         }
     }

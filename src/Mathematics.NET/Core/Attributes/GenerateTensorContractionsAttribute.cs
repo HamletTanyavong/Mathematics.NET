@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorRankInformation.cs" company="Mathematics.NET">
+﻿// <copyright file="GenerateTensorContractionsAttribute.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,18 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry.Models;
+namespace Mathematics.NET.Core.Attributes;
 
-/// <summary>Holds information about a particular tensor contraction.</summary>
-internal readonly record struct TensorRankInformation
-{
-    public TensorRankInformation(int leftRank, int rightRank)
-    {
-        LeftRank = leftRank;
-        RightRank = rightRank;
-    }
-
-    public readonly int LeftRank { get; }
-
-    public readonly int RightRank { get; }
-}
+/// <summary>Indicates that index permutations of a tensor contraction should be generated.</summary>
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+internal sealed class GenerateTensorContractionsAttribute : Attribute;

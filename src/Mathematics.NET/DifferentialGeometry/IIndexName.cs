@@ -1,4 +1,4 @@
-﻿// <copyright file="SymbolAttribute.cs" company="Mathematics.NET">
+﻿// <copyright file="IIndexName.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,8 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Core.Attributes;
+namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Indicates that a type represents a mathematical symbol and that its properties should be generated.</summary>
-[AttributeUsage(AttributeTargets.Struct, AllowMultiple = false)]
-public sealed class SymbolAttribute : Attribute;
+/// <summary>Defines support for index names.</summary>
+public interface IIndexName
+{
+    /// <summary>Get a string representation of this index name.</summary>
+    static abstract string DisplayString { get; }
+}

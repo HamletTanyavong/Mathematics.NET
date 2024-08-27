@@ -1,4 +1,4 @@
-﻿// <copyright file="SymbolBuilder.cs" company="Mathematics.NET">
+﻿// <copyright file="IndexNameBuilder.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,19 +30,17 @@ using Mathematics.NET.SourceGenerators.Public.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators.Public.Symbols;
+namespace Mathematics.NET.SourceGenerators.Public.IndexNames;
 
-/// <summary>Symbols builder.</summary>
-internal sealed class SymbolBuilder
+/// <summary>Index name builder.</summary>
+internal sealed class IndexNameBuilder
 {
     private readonly NameSyntax _namespaceNameSyntax;
-    private readonly SourceProductionContext _context;
     private readonly ImmutableArray<StructInformation> _structInformationArray;
 
-    public SymbolBuilder(NameSyntax namespaceNameSyntax, SourceProductionContext context, ImmutableArray<StructInformation> structInformationArray)
+    public IndexNameBuilder(NameSyntax namespaceNameSyntax, ImmutableArray<StructInformation> structInformationArray)
     {
         _namespaceNameSyntax = namespaceNameSyntax;
-        _context = context;
         _structInformationArray = structInformationArray;
     }
 
@@ -61,7 +59,7 @@ internal sealed class SymbolBuilder
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective("Mathematics.NET.Symbols".CreateNameSyntaxFromNamespace())
+                    UsingDirective("Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(
@@ -101,7 +99,7 @@ internal sealed class SymbolBuilder
         List<MemberDeclarationSyntax> members = [];
         for (int i = 0; i < _structInformationArray.Length; i++)
         {
-            members.Add(GenerateSymbol(_structInformationArray[i].StructDeclarationSyntax, i == _structInformationArray.Length - 1));
+            members.Add(GenerateIndexName(_structInformationArray[i].StructDeclarationSyntax, i == _structInformationArray.Length - 1));
         }
         return members.ToImmutableArray();
     }
@@ -110,13 +108,13 @@ internal sealed class SymbolBuilder
     // Helpers
     //
 
-    private StructDeclarationSyntax GenerateSymbol(StructDeclarationSyntax structDeclaration, bool isLastSymbol)
+    private StructDeclarationSyntax GenerateIndexName(StructDeclarationSyntax structDeclaration, bool isLastIndex)
     {
-        var symbolName = structDeclaration.Identifier.Text;
+        var indexName = structDeclaration.Identifier.Text;
         return StructDeclaration(
                 Identifier(
                     TriviaList(),
-                    symbolName,
+                    indexName,
                     TriviaList(Space)))
             .WithKeyword(
                 Token(
@@ -144,21 +142,21 @@ internal sealed class SymbolBuilder
                             IdentifierName(
                                 Identifier(
                                     TriviaList(),
-                                    "ISymbol",
+                                    "IIndexName",
                                     TriviaList(CarriageReturnLineFeed))))))
                     .WithColonToken(
                         Token(
                             TriviaList(),
                             SyntaxKind.ColonToken,
                             TriviaList(Space))))
-            .WithOpenAndCloseBraceTokens(string.Empty, !isLastSymbol)
+            .WithOpenAndCloseBraceTokens(string.Empty, !isLastIndex)
             .WithMembers(
                 List(new MemberDeclarationSyntax[] {
-                    GenerateDisplayStringField(symbolName),
+                    GenerateDisplayStringField(indexName),
                     GenerateDisplayStringProperty() }));
     }
 
-    private FieldDeclarationSyntax GenerateDisplayStringField(string symbolName)
+    private FieldDeclarationSyntax GenerateDisplayStringField(string indexName)
     {
         return FieldDeclaration(
             VariableDeclaration(
@@ -178,7 +176,7 @@ internal sealed class SymbolBuilder
                             EqualsValueClause(
                                 LiteralExpression(
                                     SyntaxKind.StringLiteralExpression,
-                                    Literal(symbolName)))
+                                    Literal(indexName)))
                             .WithEqualsToken(
                                 Token(
                                     TriviaList(),
@@ -202,7 +200,6 @@ internal sealed class SymbolBuilder
                         TriviaList(),
                         SyntaxKind.SemicolonToken,
                         TriviaList(
-                            CarriageReturnLineFeed,
                             CarriageReturnLineFeed)));
     }
 
@@ -227,7 +224,7 @@ internal sealed class SymbolBuilder
                         TriviaList(Space))))
             .WithExplicitInterfaceSpecifier(
                 ExplicitInterfaceSpecifier(
-                    IdentifierName("ISymbol")))
+                    IdentifierName("IIndexName")))
             .WithExpressionBody(
                 ArrowExpressionClause(
                     IdentifierName("DisplayString"))
@@ -265,7 +262,7 @@ internal sealed class SymbolBuilder
                         SingletonList<XmlAttributeSyntax>(
                             XmlCrefAttribute(
                                 QualifiedCref(
-                                    IdentifierName("ISymbol"),
+                                    IdentifierName("IIndexName"),
                                     NameMemberCref(
                                         IdentifierName("DisplayString")))))),
                 XmlText()

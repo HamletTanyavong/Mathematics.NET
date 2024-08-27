@@ -31,7 +31,6 @@ using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Symbols;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -50,8 +49,8 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     where TSM : ISquareMatrix<TSM, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TIP : IIndexPosition
-    where TI1N : ISymbol
-    where TI2N : ISymbol
+    where TI1N : IIndexName
+    where TI2N : IIndexName
 {
     public static readonly MetricTensor<TSM, TN, TIP, TI1N, TI2N> Euclidean = TSM.Identity;
 
@@ -143,8 +142,8 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     /// <typeparam name="TNI2N">The name of the second index.</typeparam>
     /// <returns>The inverse of this metric tensor with new index names.</returns>
     public MetricTensor<TSM, TN, Upper, TNI1N, TNI2N> Inverse<TNI1N, TNI2N>()
-        where TNI1N : ISymbol
-        where TNI2N : ISymbol
+        where TNI1N : IIndexName
+        where TNI2N : IIndexName
         => new(_matrix.Inverse());
 
     /// <summary>Compute the square root of the determinant of this metric tensor.</summary>
@@ -162,8 +161,8 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     /// <returns>A tensor with new index names.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public MetricTensor<TSM, TN, TIP, TNI1N, TNI2N> WithIndices<TNI1N, TNI2N>()
-        where TNI1N : ISymbol
-        where TNI2N : ISymbol
+        where TNI1N : IIndexName
+        where TNI2N : IIndexName
         => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNI1N, TNI2N>>(ref this);
 
     /// <summary>Reinterpret this metric tensor as one with a new index name in the first position.</summary>
@@ -171,7 +170,7 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     /// <returns>A tensor with a new index name in the first position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public MetricTensor<TSM, TN, TIP, TNIN, TI2N> WithIndex1Name<TNIN>()
-        where TNIN : ISymbol
+        where TNIN : IIndexName
         => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TNIN, TI2N>>(ref this);
 
     /// <summary>Reinterpret this metric tensor as one with a new index name in the second position.</summary>
@@ -179,7 +178,7 @@ public struct MetricTensor<TSM, TN, TIP, TI1N, TI2N>(TSM matrix)
     /// <returns>A tensor with a new index name in the second position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public MetricTensor<TSM, TN, TIP, TI1N, TNIN> WithIndex2Name<TNIN>()
-        where TNIN : ISymbol
+        where TNIN : IIndexName
         => Unsafe.As<MetricTensor<TSM, TN, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TIP, TI1N, TNIN>>(ref this);
 
     //

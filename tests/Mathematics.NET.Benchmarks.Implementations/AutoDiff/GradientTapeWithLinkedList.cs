@@ -166,7 +166,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, x.Value * u);
     }
 
-    public Variable<Real> Modulo(Variable<Real> x, Variable<Real> y)
+    public Variable<Real> Modulo(in Variable<Real> x, in Variable<Real> y)
     {
         if (_isTracking)
         {
@@ -176,7 +176,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, x.Value % y.Value);
     }
 
-    public Variable<Real> Modulo(Real c, Variable<Real> x)
+    public Variable<Real> Modulo(Real c, in Variable<Real> x)
     {
         if (_isTracking)
         {
@@ -186,7 +186,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, c % x.Value);
     }
 
-    public Variable<Real> Modulo(Variable<Real> x, Real c)
+    public Variable<Real> Modulo(in Variable<Real> x, Real c)
     {
         if (_isTracking)
         {
@@ -513,7 +513,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, T.Atan(x.Value));
     }
 
-    public Variable<Real> Atan2(Variable<Real> y, Variable<Real> x)
+    public Variable<Real> Atan2(in Variable<Real> y, in Variable<Real> x)
     {
         if (_isTracking)
         {

@@ -25,7 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.GPU.OpenCL;
+using Mathematics.NET.GPU.OpenCL;
+
+namespace Mathematics.NET.GPU;
 
 /// <summary>Defines support for GPU compute services.</summary>
 public interface IComputeService : IDisposable
@@ -54,7 +56,7 @@ public interface IComputeService : IDisposable
     /// <param name="vector">A vector.</param>
     /// <param name="scalar">A scalar.</param>
     /// <returns>A new vector.</returns>
-    ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, Complex scalar);
+    ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, in Complex scalar);
 
     /// <summary>Multipy two matrices.</summary>
     /// <remarks>Padded matrices should have zeros added to their right and bottom.</remarks>
@@ -69,6 +71,6 @@ public interface IComputeService : IDisposable
     /// <inheritdoc cref="CompMatMul(Device, WorkSize2D, WorkSize2D, ReadOnlySpan2D{Complex}, ReadOnlySpan2D{Complex})"/>
     ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right);
 
-    /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, ReadOnlySpan{Complex}, Complex)"/>
+    /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, ReadOnlySpan{Complex}, in Complex)"/>
     ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar);
 }
