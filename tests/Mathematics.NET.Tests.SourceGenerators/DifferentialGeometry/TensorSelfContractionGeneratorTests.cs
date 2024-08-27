@@ -44,7 +44,7 @@ public sealed class TensorSelfContractionGeneratorTests : VerifyBase
             public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> a)
                 where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
                 where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-                where TCI : ISymbol
+                where TCI : IIndexName
                 where TI1 : IIndex
                 where TI2 : IIndex
             {
@@ -63,7 +63,7 @@ public sealed class TensorSelfContractionGeneratorTests : VerifyBase
             }
             """;
 
-        SetupAndVerify(source);
+        _ = SetupAndVerify(source);
     }
 
     //

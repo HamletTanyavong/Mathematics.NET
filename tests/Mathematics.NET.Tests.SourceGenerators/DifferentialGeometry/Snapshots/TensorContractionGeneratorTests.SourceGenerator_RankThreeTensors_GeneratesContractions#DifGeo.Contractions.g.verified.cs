@@ -8,7 +8,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 public static partial class DifGeo
 {
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -32,7 +32,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -56,7 +56,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -80,7 +80,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -104,7 +104,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI1, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -128,7 +128,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -152,7 +152,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -176,7 +176,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -200,7 +200,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -224,7 +224,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Lower, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -248,7 +248,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, Index<Upper, TCI>, TI2> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -272,7 +272,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -296,7 +296,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI3, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -320,7 +320,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Upper, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -344,7 +344,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, Index<Lower, TCI>, TI4> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -368,7 +368,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Lower, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Upper, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
@@ -392,7 +392,7 @@ public static partial class DifGeo
     }
 
     public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> a, in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> b)
-        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : ISymbol where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
+        where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, TI1, TI2, Index<Upper, TCI>> where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, TI3, TI4, Index<Lower, TCI>> where TN : IComplex<TN>, IDifferentiableFunctions<TN> where TCI : IIndexName where TI1 : IIndex where TI2 : IIndex where TI3 : IIndex where TI4 : IIndex
     {
         Array4x4x4x4<TN> array = new();
         for (int i = 0; i < 4; i++)
