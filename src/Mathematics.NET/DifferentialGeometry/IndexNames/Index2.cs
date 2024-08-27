@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.DifferentialGeometry.Symbols;
+namespace Mathematics.NET.DifferentialGeometry.IndexNames;
 
 internal readonly struct Index2 : IIndexName
 {
