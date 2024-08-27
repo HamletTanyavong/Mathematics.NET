@@ -34,8 +34,18 @@ namespace Mathematics.NET.Core.Operations;
 public interface IMultiplicationOperation<T, U, V>
     where T : IMultiplicationOperation<T, U, V>
 {
+    /// <summary>Multiply the left value by the right value.</summary>
+    /// <param name="left">The left value.</param>
+    /// <param name="right">The right value.</param>
+    /// <returns>The product of the two values.</returns>
     static abstract V operator *(T left, U right);
+
+    /// <inheritdoc cref="operator *(T, U)"/>
     static abstract V operator *(U left, T right);
+
+    /// <inheritdoc cref="operator *(T, U)"/>
     static virtual V operator checked *(T left, U right) => left * right;
+
+    /// <inheritdoc cref="operator *(T, U)"/>
     static virtual V operator checked *(U left, T right) => left * right;
 }

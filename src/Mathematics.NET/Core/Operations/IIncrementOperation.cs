@@ -32,6 +32,11 @@ namespace Mathematics.NET.Core.Operations;
 public interface IIncrementOperation<T>
     where T : IIncrementOperation<T>
 {
+    /// <summary>Increment a value.</summary>
+    /// <param name="value">The value.</param>
+    /// <returns>The value plus one.</returns>
     static abstract T operator ++(T value);
+
+    /// <inheritdoc cref="operator ++(T)"/>
     static virtual T operator checked ++(T value) => ++value;
 }

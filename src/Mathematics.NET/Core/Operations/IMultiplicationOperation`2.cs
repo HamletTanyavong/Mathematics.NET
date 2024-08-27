@@ -33,6 +33,12 @@ namespace Mathematics.NET.Core.Operations;
 public interface IMultiplicationOperation<TInput, TOutput>
     where TInput : IMultiplicationOperation<TInput, TOutput>
 {
+    /// <summary>Multiply the left value by the right value.</summary>
+    /// <param name="left">The left value.</param>
+    /// <param name="right">The right value.</param>
+    /// <returns>The product of the two values.</returns>
     static abstract TOutput operator *(TInput left, TInput right);
+
+    /// <inheritdoc cref="operator *(TInput, TInput)"/>
     static virtual TOutput operator checked *(TInput left, TInput right) => left * right;
 }

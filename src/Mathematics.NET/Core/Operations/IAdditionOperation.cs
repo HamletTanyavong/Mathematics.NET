@@ -33,6 +33,12 @@ namespace Mathematics.NET.Core.Operations;
 public interface IAdditionOperation<TInput, TOutput>
     where TInput : IAdditionOperation<TInput, TOutput>
 {
+    /// <summary>Add two values.</summary>
+    /// <param name="left">The left value.</param>
+    /// <param name="right">The right value.</param>
+    /// <returns>The sum of the two values.</returns>
     static abstract TOutput operator +(TInput left, TInput right);
+
+    /// <inheritdoc cref="operator +(TInput, TInput)"/>
     static virtual TOutput operator checked +(TInput left, TInput right) => left + right;
 }

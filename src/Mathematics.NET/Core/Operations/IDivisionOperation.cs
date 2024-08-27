@@ -33,6 +33,12 @@ namespace Mathematics.NET.Core.Operations;
 public interface IDivisionOperation<TInput, TOutput>
     where TInput : IDivisionOperation<TInput, TOutput>
 {
+    /// <summary>Divide the left value by the right value.</summary>
+    /// <param name="left">The dividend.</param>
+    /// <param name="right">The divisor.</param>
+    /// <returns>The left value divided by the right value.</returns>
     static abstract TOutput operator /(TInput left, TInput right);
+
+    /// <inheritdoc cref="operator /(TInput, TInput)"/>
     static virtual TOutput operator checked /(TInput left, TInput right) => left / right;
 }
