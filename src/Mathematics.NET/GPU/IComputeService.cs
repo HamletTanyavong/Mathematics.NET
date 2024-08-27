@@ -25,7 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.GPU.OpenCL;
+using Mathematics.NET.GPU.OpenCL;
+
+namespace Mathematics.NET.GPU;
 
 /// <summary>Defines support for GPU compute services.</summary>
 public interface IComputeService : IDisposable
