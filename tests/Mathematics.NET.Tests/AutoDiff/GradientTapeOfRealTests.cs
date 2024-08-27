@@ -207,9 +207,13 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 0.334835801674179, -0.1760034342133505)]
     public void Atan2_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Atan2(y, x);
+
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradient(_tape.Atan2, left, right);
+        _tape.ReverseAccumulate(out var actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -218,7 +222,10 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 0.4839493878600246)]
     public void Atan2_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
-        var actual = ComputeValue(_tape.Atan2, left, right);
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+
+        var actual = _tape.Atan2(y, x).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -328,9 +335,10 @@ public sealed class GradientTapeOfRealTests
         var x = _tape.CreateVariable(right);
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
         _ = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u);
-        _tape.ReverseAccumulate(out var actual);
 
         Real[] expected = [expectedLeft, expectedRight];
+
+        _tape.ReverseAccumulate(out var actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -572,9 +580,13 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 1, 0)]
     public void Modulo_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+        _ = _tape.Modulo(x, y);
+
         Real[] expected = [expectedLeft, expectedRight];
 
-        var actual = ComputeGradient(_tape.Modulo, left, right);
+        _tape.ReverseAccumulate(out var actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -583,7 +595,10 @@ public sealed class GradientTapeOfRealTests
     [DataRow(3.14, 2.34, 0.8)]
     public void Modulo_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
-        var actual = ComputeValue(_tape.Modulo, left, right);
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+
+        var actual = _tape.Modulo(x, y).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
