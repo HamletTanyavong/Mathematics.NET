@@ -1,4 +1,4 @@
-#include "GPU\OpenCL\Kernels\complex.h"
+#include "GPU/OpenCL/Kernels/complex.h"
 
 __kernel void comp_mat_mul(__global const complex* matA,
                            __global const complex* matB,
