@@ -33,5 +33,9 @@ namespace Mathematics.NET.Core.Operations;
 public interface IModuloOperation<TInput, TOutput>
     where TInput : IModuloOperation<TInput, TOutput>
 {
+    /// <summary>Compute the left value mod the right value.</summary>
+    /// <param name="left">The dividend.</param>
+    /// <param name="right">The divisor.</param>
+    /// <returns>The left value mod the right value.</returns>
     static abstract TOutput operator %(TInput left, TInput right);
 }

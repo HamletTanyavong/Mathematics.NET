@@ -33,6 +33,11 @@ namespace Mathematics.NET.Core.Operations;
 public interface IUnaryMinusOperation<TInput, TResult>
     where TInput : IUnaryMinusOperation<TInput, TResult>
 {
+    /// <summary>Multiply the value by negative one.</summary>
+    /// <param name="value">The value.</param>
+    /// <returns>The value times negative one.</returns>
     static abstract TResult operator -(TInput value);
+
+    /// <inheritdoc cref="operator -(TInput)"/>
     static virtual TResult operator checked -(TInput value) => -value;
 }

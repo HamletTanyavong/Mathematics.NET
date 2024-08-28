@@ -151,6 +151,37 @@ public sealed class OpenCLService : IComputeService
 
     // TODO: Consider putting this in another file.
 
+    public unsafe void CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Complex> vector, in Complex scalar)
+    {
+        fixed (void* pVector = vector)
+        {
+            // Create buffers.
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * vector.Length), pVector, null);
+
+            // Set kernel arguments.
+            var kernel = _program.Kernels["comp_vec_mul_scalar_overwrite"].Handle;
+            var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
+            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
+#if DEBUG
+            if (error != (int)ErrorCodes.Success)
+                _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_vec_mul_scalar_overwrite"].Name);
+#endif
+
+            // Enqueue NDRange kernel.
+            using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
+            error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
+#if DEBUG
+            if (error != (int)ErrorCodes.Success)
+                _logger.LogDebug(s_enqueueNDRangeKernelError);
+#endif
+            // Enqueue read buffer.
+            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Complex) * vector.Length), pVector, 0, null, null);
+
+            // Release mem objects.
+            _cl.ReleaseMemObject(vectorBuffer);
+        }
+    }
+
     public unsafe ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, in Complex scalar)
     {
         var length = vector.Length;
@@ -182,8 +213,6 @@ public sealed class OpenCLService : IComputeService
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                _cl.Finish(commandQueue.Handle);
-
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
 
@@ -234,8 +263,6 @@ public sealed class OpenCLService : IComputeService
                     if (error != (int)ErrorCodes.Success)
                         _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                    _cl.Finish(commandQueue.Handle);
-
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * result.Length), pResult, 0, null, null);
 
@@ -288,8 +315,6 @@ public sealed class OpenCLService : IComputeService
                     if (error != (int)ErrorCodes.Success)
                         _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                    _cl.Finish(commandQueue.Handle);
-
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * result.Length), pResult, 0, null, null);
 
@@ -302,6 +327,37 @@ public sealed class OpenCLService : IComputeService
         }
 
         return result;
+    }
+
+    public unsafe void VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Real> vector, in Real scalar)
+    {
+        fixed (void* pVector = vector)
+        {
+            // Create buffers.
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * vector.Length), pVector, null);
+
+            // Set kernel arguments.
+            var kernel = _program.Kernels["vec_mul_scalar_overwrite"].Handle;
+            var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
+            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), in scalar);
+#if DEBUG
+            if (error != (int)ErrorCodes.Success)
+                _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar_overwrite"].Name);
+#endif
+
+            // Enqueue NDRange kernel.
+            using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
+            error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
+#if DEBUG
+            if (error != (int)ErrorCodes.Success)
+                _logger.LogDebug(s_enqueueNDRangeKernelError);
+#endif
+            // Enqueue read buffer.
+            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Real) * vector.Length), pVector, 0, null, null);
+
+            // Release mem objects.
+            _cl.ReleaseMemObject(vectorBuffer);
+        }
     }
 
     public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar)
@@ -335,8 +391,6 @@ public sealed class OpenCLService : IComputeService
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                _cl.Finish(commandQueue.Handle);
-
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * length), pResult, 0, null, null);
 

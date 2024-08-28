@@ -33,6 +33,12 @@ namespace Mathematics.NET.Core.Operations;
 public interface ISubtractionOperation<TInput, TOutput>
     where TInput : ISubtractionOperation<TInput, TOutput>
 {
+    /// <summary>Subract the right value from the left value.</summary>
+    /// <param name="left">The left value.</param>
+    /// <param name="right">The right value.</param>
+    /// <returns>The left value minus the right value.</returns>
     static abstract TOutput operator -(TInput left, TInput right);
+
+    /// <inheritdoc cref="operator -(TInput, TInput)"/>
     static virtual TOutput operator checked -(TInput left, TInput right) => left - right;
 }

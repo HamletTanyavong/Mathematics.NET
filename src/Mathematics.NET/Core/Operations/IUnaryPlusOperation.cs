@@ -33,5 +33,8 @@ namespace Mathematics.NET.Core.Operations;
 public interface IUnaryPlusOperation<TInput, TResult>
     where TInput : IUnaryPlusOperation<TInput, TResult>
 {
+    /// <summary>Multiply a value by one.</summary>
+    /// <param name="value">The value.</param>
+    /// <returns>The value times one.</returns>
     static abstract TResult operator +(TInput value);
 }

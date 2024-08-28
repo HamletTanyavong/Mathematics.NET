@@ -33,6 +33,12 @@ namespace Mathematics.NET.Core.Operations;
 public interface IHadamardProductOperation<TInput, TOutput>
     where TInput : IHadamardProductOperation<TInput, TOutput>
 {
+    /// <summary>Multiply the left value by the right value element-wise.</summary>
+    /// <param name="left">The left value.</param>
+    /// <param name="right">The right value.</param>
+    /// <returns>The element-wise product of the two values.</returns>
     static abstract TOutput operator *(TInput left, TInput right);
+
+    /// <inheritdoc cref="operator *(TInput, TInput)"/>
     static virtual TOutput operator checked *(TInput left, TInput right) => left * right;
 }
