@@ -23,4 +23,4 @@ double comp_phase(complex z);
 complex comp_reciprocate(complex z);
 complex comp_sub(complex z, complex w);
 
-#endif
+#endif // COMPLEX_H
