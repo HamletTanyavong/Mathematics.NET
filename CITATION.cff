@@ -1,18 +1,18 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
-authors:
-- family-names: "Tanyavong"
-  given-names: "Hamlet"
-  orcid: "https://orcid.org/0009-0002-0327-881X"
 title: Mathematics.NET
-version: 0.2.0-alpha.8
-date-released: 2024-8-8
-repository-code: "https://github.com/HamletTanyavong/Mathematics.NET"
-url: "https://mathematics.hamlettanyavong.com/"
-license: MIT
+authors:
+- family-names: Tanyavong
+  given-names: Hamlet
+  orcid: 'https://orcid.org/0009-0002-0327-881X'
 type: software
+version: 0.2.0-alpha.8
+license: MIT
+date-released: 2024-8-8
+repository-code: 'https://github.com/HamletTanyavong/Mathematics.NET'
+url: 'https://mathematics.hamlettanyavong.com'
 keywords:
 - mathematics
 - math
 - autodiff
-- "differential geometry"
+- differential geometry
+message: 'If you use this software, please cite it as below.'
