@@ -182,8 +182,6 @@ public sealed class OpenCLService : IComputeService
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                _cl.Finish(commandQueue.Handle);
-
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
 
@@ -234,8 +232,6 @@ public sealed class OpenCLService : IComputeService
                     if (error != (int)ErrorCodes.Success)
                         _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                    _cl.Finish(commandQueue.Handle);
-
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * result.Length), pResult, 0, null, null);
 
@@ -288,8 +284,6 @@ public sealed class OpenCLService : IComputeService
                     if (error != (int)ErrorCodes.Success)
                         _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                    _cl.Finish(commandQueue.Handle);
-
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * result.Length), pResult, 0, null, null);
 
@@ -335,8 +329,6 @@ public sealed class OpenCLService : IComputeService
                 if (error != (int)ErrorCodes.Success)
                     _logger.LogDebug(s_enqueueNDRangeKernelError);
 #endif
-                _cl.Finish(commandQueue.Handle);
-
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * length), pResult, 0, null, null);
 
