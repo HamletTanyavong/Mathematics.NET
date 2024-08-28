@@ -1,7 +1,7 @@
 #ifndef COMPLEX_H
 #define COMPLEX_H
 
-#define COMP_IM = ((complex){ .re = 0, .im = 1 });
+#define IM = ((complex){ .re = 0, .im = 1 });
 #define COMP_INFINITY ((complex){ .re = INFINITY, .im = INFINITY });
 #define COMP_NAN ((complex){ .re = NAN, .im = NAN });
 
