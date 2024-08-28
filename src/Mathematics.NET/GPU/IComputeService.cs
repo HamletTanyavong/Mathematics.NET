@@ -48,6 +48,15 @@ public interface IComputeService : IDisposable
     // Methods
     //
 
+    /// <summary>Multiply a vector by a scalar with overwriting.</summary>
+    /// <remarks>Padded vectors should have zeros added to their ends.</remarks>
+    /// <param name="device">The device to use.</param>
+    /// <param name="globalWorkSize">The global work size.</param>
+    /// <param name="localWorkSize">The local work size.</param>
+    /// <param name="vector">A vector.</param>
+    /// <param name="scalar">A scalar.</param>
+    void CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Complex> vector, in Complex scalar);
+
     /// <summary>Multiply a vector by a scalar.</summary>
     /// <remarks>Padded vectors should have zeros added to their ends.</remarks>
     /// <param name="device">The device to use.</param>
