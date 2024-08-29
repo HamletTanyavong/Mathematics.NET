@@ -241,4 +241,6 @@ public struct SphericalVector : IVector<SphericalVector, Real>
             R * sinT * Real.Sin(Phi),
             R * Real.Cos(Theta));
     }
+
+    public readonly Real[] ToArray() => [R, Theta, Phi];
 }

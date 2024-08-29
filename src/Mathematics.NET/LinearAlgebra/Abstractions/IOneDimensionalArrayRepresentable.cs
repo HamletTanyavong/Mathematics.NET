@@ -43,4 +43,8 @@ public interface IOneDimensionalArrayRepresentable<T, U>
     /// <param name="index">An index.</param>
     /// <returns>The element at the index.</returns>
     U this[int index] { get; set; }
+
+    /// <summary>Get an array representation of this object.</summary>
+    /// <returns>An array.</returns>
+    U[] ToArray();
 }
