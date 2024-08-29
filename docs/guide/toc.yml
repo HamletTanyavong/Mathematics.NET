@@ -18,6 +18,10 @@
     href: autodiff/second-order-reverse-mode.md
   - name: Second-Order, Forward-Mode Automatic Differentiation
     href: autodiff/second-order-forward-mode.md
+- name: GPU
+  items:
+  - name: OpenCL
+    href: gpu/opencl.md
 - name: Diagnostic Messages
   items:
   - name: Mathematics.NET Diagnostic Messages
