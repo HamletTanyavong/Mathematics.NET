@@ -25,9 +25,12 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0058
+
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.LinearAlgebra;
@@ -146,26 +149,56 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
 
     public readonly string ToString(string? format, IFormatProvider? provider)
     {
-        var array = new T[4, 4, 4];
-        CopyTo(ref array);
-        return array.ToDisplayString(format, provider);
+        var maxElementLength = 0;
+        var strings = new string[4, 4, 4];
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    var s = this[i, j, k].ToString(format, provider);
+                    strings[i, j, k] = s;
+                    var length = s.Length + 2;
+                    if (maxElementLength < length)
+                        maxElementLength = length;
+                }
+            }
+        }
+
+        StringBuilder builder = new();
+        var newlineChars = Environment.NewLine.ToCharArray();
+        builder.Append('[');
+        for (int i = 0; i < 4; i++)
+        {
+            builder.Append(i != 0 ? " [" : "[");
+            for (int j = 0; j < 4; j++)
+            {
+                builder.Append(j != 0 ? "  [" : "[");
+                for (int k = 0; k < 4; k++)
+                {
+                    string value = k != 3 ? $"{strings[i, j, k]}, " : strings[i, j, k];
+                    builder.Append(value.PadRight(maxElementLength));
+                }
+                builder.CloseGroup(newlineChars);
+            }
+            builder.CloseGroup(newlineChars);
+        }
+        builder.CloseGroup(newlineChars, true);
+        return string.Format(provider, builder.ToString());
     }
 
     //
     // Methods
     //
 
-    public readonly void CopyTo(ref T[,,] destination)
+    public unsafe T[,,] ToArray()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                for (int k = 0; k < 4; k++)
-                {
-                    destination[i, j, k] = this[i, j, k];
-                }
-            }
-        }
+        var array = new T[4, 4, 4];
+        var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+        var pArray = (void*)handle.AddrOfPinnedObject();
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 64));
+        handle.Free();
+        return array;
     }
 }

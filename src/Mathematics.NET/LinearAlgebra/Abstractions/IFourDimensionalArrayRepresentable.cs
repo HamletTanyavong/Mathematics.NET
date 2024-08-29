@@ -56,7 +56,7 @@ public interface IFourDimensionalArrayRepresentable<T, U>
     /// <returns>The element at the specified indices.</returns>
     U this[int i, int j, int k, int l] { get; set; }
 
-    /// <summary>Copy the values of this object to a 4D array.</summary>
-    /// <param name="destination">The destination array.</param>
-    void CopyTo(ref U[,,,] destination);
+    /// <summary>Get an array representation of this object.</summary>
+    /// <returns>An array.</returns>
+    U[,,,] ToArray();
 }
