@@ -47,4 +47,8 @@ public interface ITwoDimensionalArrayRepresentable<T, U>
     /// <param name="column">The column.</param>
     /// <returns>The element at the specified row and column.</returns>
     U this[int row, int column] { get; set; }
+
+    /// <summary>Get an array representation of this object.</summary>
+    /// <returns>An array.</returns>
+    U[,] ToArray();
 }

@@ -138,31 +138,21 @@ public struct Array2x2x2x2<T> : IHypercubic4DArray<Array2x2x2x2<T>, T>
     // Formatting
     //
 
-    public readonly string ToString(string? format, IFormatProvider? provider)
-    {
-        var array = new T[2, 2, 2, 2];
-        CopyTo(ref array);
-        return array.ToDisplayString(format, provider);
-    }
+    public override string ToString() => ToString(null, null);
+
+    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToDisplayString(format, provider);
 
     //
     // Methods
     //
 
-    public readonly void CopyTo(ref T[,,,] destination)
+    public unsafe T[,,,] ToArray()
     {
-        for (int i = 0; i < 2; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                for (int k = 0; k < 2; k++)
-                {
-                    for (int l = 0; l < 2; l++)
-                    {
-                        destination[i, j, k, l] = this[i, j, k, l];
-                    }
-                }
-            }
-        }
+        var array = new T[2, 2, 2, 2];
+        var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+        var pArray = (void*)handle.AddrOfPinnedObject();
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 16));
+        handle.Free();
+        return array;
     }
 }

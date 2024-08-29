@@ -56,8 +56,7 @@ public sealed class RiemannTests
         var expected = (Real[,,,])values[0];
 
         DifGeo.Riemann(_tape, metric, point, out Tensor<Array2x2x2x2<Real>, Real, Index<Upper, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> result);
-        var actual = new Real[2, 2, 2, 2];
-        result.CopyTo(ref actual);
+        var actual = result.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }

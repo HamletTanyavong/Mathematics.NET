@@ -281,6 +281,16 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     public static bool IsNaM(Matrix3x3<T> matrix)
         => T.IsNaN(matrix.X1.X1) && T.IsNaN(matrix.X2.X2) && T.IsNaN(matrix.X3.X3);
 
+    public unsafe T[,] ToArray()
+    {
+        var array = new T[3, 3];
+        var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+        var pArray = (void*)handle.AddrOfPinnedObject();
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 9));
+        handle.Free();
+        return array;
+    }
+
     public readonly T Trace() => X1.X1 + X2.X2 + X3.X3;
 
     public readonly Matrix3x3<T> Transpose()

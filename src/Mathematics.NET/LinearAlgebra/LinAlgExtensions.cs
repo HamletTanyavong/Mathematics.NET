@@ -276,7 +276,6 @@ public static class LinAlgExtensions
         }
 
         StringBuilder builder = new();
-        var newlineChars = Environment.NewLine.ToCharArray();
         builder.Append('[');
         for (int i = 0; i < rows; i++)
         {
@@ -286,9 +285,9 @@ public static class LinAlgExtensions
                 var value = j != cols - 1 ? $"{strings[i, j]}, " : strings[i, j];
                 builder.Append(value.PadRight(maxElementLength));
             }
-            builder.CloseGroup(newlineChars);
+            builder.CloseGroup();
         }
-        builder.CloseGroup(newlineChars, true);
+        builder.CloseGroup(true);
         return string.Format(provider, builder.ToString());
     }
 
@@ -323,7 +322,6 @@ public static class LinAlgExtensions
         }
 
         StringBuilder builder = new();
-        var newlineChars = Environment.NewLine.ToCharArray();
         builder.Append('[');
         for (int i = 0; i < e0Length; i++)
         {
@@ -336,11 +334,11 @@ public static class LinAlgExtensions
                     string value = k != e2Length - 1 ? $"{strings[i, j, k]}, " : strings[i, j, k];
                     builder.Append(value.PadRight(maxElementLength));
                 }
-                builder.CloseGroup(newlineChars);
+                builder.CloseGroup();
             }
-            builder.CloseGroup(newlineChars);
+            builder.CloseGroup();
         }
-        builder.CloseGroup(newlineChars, true);
+        builder.CloseGroup(true);
         return string.Format(provider, builder.ToString());
     }
 
@@ -379,7 +377,6 @@ public static class LinAlgExtensions
         }
 
         StringBuilder builder = new();
-        var newlineChars = Environment.NewLine.ToCharArray();
         builder.Append('[');
         for (int i = 0; i < e0Length; i++)
         {
@@ -395,19 +392,19 @@ public static class LinAlgExtensions
                         string value = l != e3Length - 1 ? $"{strings[i, j, k, l]}, " : strings[i, j, k, l];
                         builder.Append(value.PadRight(maxElementLength));
                     }
-                    builder.CloseGroup(newlineChars);
+                    builder.CloseGroup();
                 }
-                builder.CloseGroup(newlineChars);
+                builder.CloseGroup();
             }
-            builder.CloseGroup(newlineChars);
+            builder.CloseGroup();
         }
-        builder.CloseGroup(newlineChars, true);
+        builder.CloseGroup(true);
         return string.Format(provider, builder.ToString());
     }
 
-    internal static void CloseGroup(this StringBuilder builder, char[]? unwantedChars, bool isEnd = false)
+    private static void CloseGroup(this StringBuilder builder, bool isEnd = false)
     {
-        builder.TrimEnd(unwantedChars);
+        builder.TrimEnd(Environment.NewLine.ToCharArray());
         if (!isEnd)
             builder.AppendLine("]");
         else

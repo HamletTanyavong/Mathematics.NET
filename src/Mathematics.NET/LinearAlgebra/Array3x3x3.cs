@@ -139,28 +139,21 @@ public struct Array3x3x3<T> : ICubicArray<Array3x3x3<T>, T>
     // Formatting
     //
 
-    public readonly string ToString(string? format, IFormatProvider? provider)
-    {
-        var array = new T[3, 3, 3];
-        CopyTo(ref array);
-        return array.ToDisplayString(format, provider);
-    }
+    public override string ToString() => ToString(null, null);
+
+    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToDisplayString(format, provider);
 
     //
     // Methods
     //
 
-    public readonly void CopyTo(ref T[,,] destination)
+    public unsafe T[,,] ToArray()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                for (int k = 0; k < 3; k++)
-                {
-                    destination[i, j, k] = this[i, j, k];
-                }
-            }
-        }
+        var array = new T[3, 3, 3];
+        var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+        var pArray = (void*)handle.AddrOfPinnedObject();
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 27));
+        handle.Free();
+        return array;
     }
 }

@@ -56,8 +56,7 @@ public sealed class ChristoffelSymbolTests
         var expected = (Real[,,])values[0];
 
         DifGeo.Christoffel(_tape, metric, point, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Beta, Gamma> result);
-        var actual = new Real[4, 4, 4];
-        result.CopyTo(ref actual);
+        var actual = result.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -72,8 +71,7 @@ public sealed class ChristoffelSymbolTests
         var expected = (Real[,,])values[0];
 
         DifGeo.Christoffel(_tape, metric, point, out Christoffel<Array4x4x4<Real>, Real, Index<Upper, Alpha>, Beta, Gamma> result);
-        var actual = new Real[4, 4, 4];
-        result.CopyTo(ref actual);
+        var actual = result.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
     }

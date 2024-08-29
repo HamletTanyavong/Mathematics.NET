@@ -125,7 +125,7 @@ public struct Tensor<TCA, TN, TI1, TI2, TI3>(TCA array)
     // Methods
     //
 
-    public readonly void CopyTo(ref TN[,,] destination) => _array.CopyTo(ref destination);
+    public TN[,,] ToArray() => _array.ToArray();
 
     /// <summary>Reinterpret this tensor as one with new indices.</summary>
     /// <typeparam name="TNI1">A new first index.</typeparam>

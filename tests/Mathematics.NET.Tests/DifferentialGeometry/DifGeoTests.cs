@@ -54,8 +54,7 @@ public sealed class DifGeoTests
         var expected = (Real[,,])values[0];
 
         DifGeo.Derivative(_gradientTape, metric, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> derivative);
-        var actual = new Real[4, 4, 4];
-        derivative.CopyTo(ref actual);
+        var actual = derivative.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-13);
     }
@@ -70,8 +69,7 @@ public sealed class DifGeoTests
         var expected = (Real[,,,])values[0];
 
         DifGeo.SecondDerivative(_hessianTape, metric, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> secondDerivative);
-        var actual = new Real[4, 4, 4, 4];
-        secondDerivative.CopyTo(ref actual);
+        var actual = secondDerivative.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }

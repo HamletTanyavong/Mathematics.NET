@@ -203,6 +203,8 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
         return new(Rho / norm, Phi, Z / norm);
     }
 
+    public readonly Real[] ToArray() => [Rho, Phi, Z];
+
     /// <summary>Convert a vector in cylindrical coordinates to one in Cartesian coordinates.</summary>
     /// <returns>A vector in Cylindrical coordinates.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
