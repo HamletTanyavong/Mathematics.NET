@@ -178,6 +178,10 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     public string ToString(string? format, IFormatProvider? provider)
         => this.AsSpan2D().ToDisplayString(format, provider);
 
+    //
+    // Methods
+    //
+
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
     /// <param name="e11">The $ e_{11} $ component.</param>
     /// <param name="e22">The $ e_{22} $ component.</param>
@@ -199,6 +203,16 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
 
     public static bool IsNaM(Matrix2x2<T> matrix)
         => T.IsNaN(matrix.X1.X1) && T.IsNaN(matrix.X2.X2);
+
+    public unsafe T[,] ToArray()
+    {
+        var array = new T[2, 2];
+        var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+        var pArray = (void*)handle.AddrOfPinnedObject();
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 4));
+        handle.Free();
+        return array;
+    }
 
     public readonly T Trace() => X1.X1 + X2.X2;
 

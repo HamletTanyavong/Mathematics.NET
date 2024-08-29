@@ -128,6 +128,8 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     // Methods
     //
 
+    public TN[,] ToArray() => _matrix.ToArray();
+
     /// <summary>Reinterpret this tensor as one with new indices.</summary>
     /// <typeparam name="TNI1">A new first index.</typeparam>
     /// <typeparam name="TNI2">A new second index.</typeparam>

@@ -338,6 +338,16 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     public static bool IsNaM(Matrix4x4<T> matrix)
         => T.IsNaN(matrix.X1.X1) && T.IsNaN(matrix.X2.X2) && T.IsNaN(matrix.X3.X3) && T.IsNaN(matrix.X4.X4);
 
+    public unsafe T[,] ToArray()
+    {
+        var array = new T[4, 4];
+        var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+        var pArray = (void*)handle.AddrOfPinnedObject();
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 16));
+        handle.Free();
+        return array;
+    }
+
     public readonly T Trace() => X1.X1 + X2.X2 + X3.X3 + X3.X4;
 
     public readonly Matrix4x4<T> Transpose()
