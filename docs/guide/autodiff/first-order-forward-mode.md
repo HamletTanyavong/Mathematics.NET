@@ -1,6 +1,6 @@
 # First-Order, Forward Mode Automatic Differentiation
 
-Support for first-order, forward-mode autodiff is provided by the `Dual<T>` type.
+Support for first-order, forward-mode autodiff is provided by <xref href="Mathematics.NET.AutoDiff.Dual`1" />.
 
 ## Dual Numbers
 

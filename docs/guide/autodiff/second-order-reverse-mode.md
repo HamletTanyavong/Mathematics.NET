@@ -1,10 +1,10 @@
 # Second-Order, Reverse Mode Automatic Differentiation
 
-Support for first-order, reverse-mode autodiff is provided by the `HessianTape` class.
+Support for first-order, reverse-mode autodiff is provided by <xref href="Mathematics.NET.AutoDiff.HessianTape`1" />.
 
 ## Hessian Tapes
 
-The steps needed to perform second-order, reverse-mode autodiff is similar to the steps needed to perform the first-order case. This time, however, we have access to the following overloads and/or versions of `ReverseAccumulate`:
+The steps needed to perform second-order, reverse-mode autodiff is similar to the steps needed to perform the first-order case. This time, however, we have access to the following overloads and/or versions of [ReverseAccumulate](xref:Mathematics.NET.AutoDiff.HessianTape`1.ReverseAccumulate*):
 ```csharp
 HessianTape<Complex> tape = new();
 

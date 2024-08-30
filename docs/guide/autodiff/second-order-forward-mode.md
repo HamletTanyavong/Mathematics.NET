@@ -1,6 +1,6 @@
 # Second-Order, Forward Mode Automatic Differentiation
 
-Support for first-order, forward-mode autodiff is provided by the `HyperDual<T>` type. Because this type is used in a similar manner to `Dual<T>`, please refer to that section for help.
+Support for first-order, forward-mode autodiff is provided by <xref href="Mathematics.NET.AutoDiff.HyperDual`1" />. Because this type is used in a similar manner to <xref href="Mathematics.NET.AutoDiff.Dual`1" />, please refer to that section for help.
 
 ### Second-Order Derivatives
 

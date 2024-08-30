@@ -1,6 +1,6 @@
 # First-Order, Reverse-Mode Automatic Differentiation
 
-Support for first-order, reverse-mode automatic differentiation (autodiff) is provided by the `GradientTape` class.
+Support for first-order, reverse-mode automatic differentiation (autodiff) is provided by <xref href="Mathematics.NET.AutoDiff.GradientTape`1" />.
 
 ## Gradient Tapes
 
@@ -44,7 +44,7 @@ var result = tape.Divide(
     tape.Exp(
         tape.Multiply(-Real.One, x)));
 ```
-which will give us the value of the function at our specified point. At this moment, the derivative has not been calculated, but we are, however, able to examine the nodes which have been added to our tape. We can use the method `LogNodes` to do so, provided we have set up a logger.
+which will give us the value of the function at our specified point. At this moment, the derivative has not been calculated, but we are, however, able to examine the nodes which have been added to our tape. We can use [LogNodes](xref:Mathematics.NET.AutoDiff.GradientTape`1.LogNodes*) to do so, provided we have set up a logger.
 ```csharp
 using Microsoft.Extensions.Logging;
 
@@ -103,7 +103,7 @@ graph BT
     expnegx -- adj(w₅) = adj(w₆) ∂w₆/∂w₅ --> divide
     divide -- adj(f) = adj(w₆) = 1 (seed) --> function["f(x)"]
 ```
-We can then calculate the gradient of our function by using the `ReverseAccumulate` method.
+We can then calculate the gradient of our function by using [ReverseAccumulate](xref:Mathematics.NET.AutoDiff.GradientTape`1.ReverseAccumulate(System.ReadOnlySpan{`0}@)).
 ```csharp
 tape.ReverseAccumulate(out var gradient);
 ```
@@ -158,7 +158,7 @@ var result = tape.Divide(
         tape.Add(x.X1, x.X2),
         tape.Sin(x.X3)));
 ```
-If we want to examine the nodes, we can use the `LogNodes` method that we have already encountered.
+If we want to examine the nodes, we can use `LogNodes` once again.
 ```
 Root Node 0:
     Weights: [0, 0]
@@ -290,7 +290,7 @@ Note that this time, we do not call the method `ReverseAccumulate`. This should 
 
 ## Complex Variables
 
-We can also work with complex numbers and complex derivatives by specifying `Complex` as a type parameter when we create our gradient tape. Suppose we want to find the gradient of the function:
+We can also work with complex numbers and complex derivatives by specifying [Complex](xref:Mathematics.NET.Core.Complex) as a type parameter when we create our gradient tape. Suppose we want to find the gradient of the function:
 $$
     f(z,w)  =   \cos(\sin(z)\sqrt{w})
 $$
