@@ -2,15 +2,15 @@
 
 There are three numeric types that can be used to represent complex, real, and rational numbers in Mathematics.NET.
 
-All Mathematics.NET numbers implement the `IComplex<T>` interface. Particularly useful is the fact that, unlike .NET runtime's [INumberBase\<T\>](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), `IComplex<T>` defines the `Conjugate` method; this is helpful in avoiding code duplication for calculations involving complex and real numbers.
+All Mathematics.NET numbers implement the <xref href="Mathematics.NET.Core.IComplex`1"/> interface. Particularly useful is the fact that, unlike .NET runtime's [INumberBase\<T\>](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), `IComplex<T>` defines the [Conjugate](xref:Mathematics.NET.Core.IComplex`1.Conjugate*) method; this is helpful in avoiding code duplication for calculations involving complex and real numbers.
 
 ## Floating-Point Types
 
-Floating-point Mathematics.NET numbers are backed by the [double](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Double.cs) numeric type.
+Floating-point Mathematics.NET numbers are backed by the @System.Double numeric type.
 
 ### Complex Numbers
 
-The type that represents complex numbers in this package shares the same name with the one defined in `System.Numerics.Complex`. Therefore, if we wish to use this library with `System.Numerics`, we need to create an alias to resolve the ambigious reference. Adding the line `using Complex = Mathematics.NET.Core.Complex;` should suffice.
+The type that represents complex numbers in this package shares the same name with the one defined in @System.Numerics.Complex. Therefore, if we wish to use this library with `System.Numerics`, we need to create an alias to resolve the ambigious reference. Adding the line `using Complex = Mathematics.NET.Core.Complex;` should suffice.
 
 To create a complex number, we can write
 ```csharp
@@ -39,7 +39,7 @@ Rational numbers are the only Mathematics.NET type in this category.
 
 ### Rational Numbers
 
-Rational numbers require a type parameter that implements [IBinaryInteger\<T\>](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/IBinaryInteger.cs). The type specified here is used to represent the numerator and denominator of the rational number.
+Rational numbers require a type parameter that implements <xref href="System.Numerics.IBinaryInteger`1" />. The type specified here is used to represent the numerator and denominator of the rational number.
 
 With this information, we can create the following rational numbers:
 ```csharp
