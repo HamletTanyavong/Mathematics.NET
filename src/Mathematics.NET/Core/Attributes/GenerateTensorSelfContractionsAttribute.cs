@@ -1,4 +1,4 @@
-﻿// <copyright file="GenerateTensorSelfContractions.cs" company="Mathematics.NET">
+﻿// <copyright file="GenerateTensorSelfContractionsAttribute.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,4 +29,4 @@ namespace Mathematics.NET.Core.Attributes;
 
 /// <summary>Indicates that index permutations of a tensor self-contraction should be generated.</summary>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-internal sealed class GenerateTensorSelfContractions : Attribute;
+internal sealed class GenerateTensorSelfContractionsAttribute : Attribute;
