@@ -43,7 +43,7 @@ public readonly struct Complex(Real real, Real imaginary)
       IDifferentiableFunctions<Complex>
 {
     private static readonly Complex s_im = new(Real.Zero, Real.One);
-    private static readonly Complex s_imOverTwo = new(Real.Zero, Real.One / 2.0);
+    private static readonly Complex s_halfIm = new(Real.Zero, Real.One / 2.0);
 
     public static readonly Complex Zero = Real.Zero;
     public static readonly Complex One = Real.One;
@@ -569,7 +569,7 @@ public readonly struct Complex(Real real, Real imaginary)
             return Math.Log(xp1);
     }
 
-    public static Complex Atan(Complex z) => s_imOverTwo * Ln((s_im + z) / (s_im - z));
+    public static Complex Atan(Complex z) => s_halfIm * Ln((s_im + z) / (s_im - z));
 
     public static Complex Cos(Complex z)
     {
