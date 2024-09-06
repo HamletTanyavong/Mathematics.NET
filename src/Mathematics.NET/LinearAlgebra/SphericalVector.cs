@@ -37,6 +37,8 @@ namespace Mathematics.NET.LinearAlgebra;
 [StructLayout(LayoutKind.Sequential)]
 public struct SphericalVector : IVector<SphericalVector, Real>
 {
+    public static readonly SphericalVector Zero = new(Real.Zero, Real.Zero, Real.Zero);
+
     /// <summary>The radius.</summary>
     public Real R;
 
@@ -115,6 +117,13 @@ public struct SphericalVector : IVector<SphericalVector, Real>
         Debug.Assert(index is >= 0 and < 3);
         Unsafe.Add(ref Unsafe.As<SphericalVector, Real>(ref vector), index) = value;
     }
+
+    //
+    // Constants
+    //
+
+    static SphericalVector IVector<SphericalVector, Real>.Zero => Zero;
+
 
     //
     // Operators

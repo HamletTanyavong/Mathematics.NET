@@ -40,6 +40,9 @@ public interface IVector<T, U>
     where T : IVector<T, U>
     where U : IComplex<U>
 {
+    /// <summary>Represents zero for the type.</summary>
+    static abstract T Zero { get; }
+
     /// <summary>Compute the $ L^2 $-norm of the vector.</summary>
     /// <returns>The norm.</returns>
     Real Norm();

@@ -1,12 +1,12 @@
-# Run Mathematics.NET unit tests
+# Run Mathematics.NET Unit Tests
 
-name: "Unit Tests"
+name: Unit Tests
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ main, dev ]
 
 jobs:
   test:

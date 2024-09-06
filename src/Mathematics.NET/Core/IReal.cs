@@ -44,6 +44,9 @@ public interface IReal<T>
       IMinMaxValue<T>
     where T : IReal<T>
 {
+    /// <summary>Represents the smallest possible positive value for the type.</summary>
+    static abstract T Epsilon { get; }
+
     /// <summary>Compute a quadrant-aware arctangent given two values.</summary>
     /// <param name="y">The first value.</param>
     /// <param name="x">The second value.</param>

@@ -47,6 +47,7 @@ public readonly struct Real(double real)
 
     public static readonly Real MaxValue = double.MaxValue;
     public static readonly Real MinValue = double.MinValue;
+    public static readonly Real Epsilon = double.Epsilon;
 
     public static readonly Real NaN = double.NaN;
     public static readonly Real NegativeInfinity = double.NegativeInfinity;
@@ -115,6 +116,7 @@ public readonly struct Real(double real)
     static int IComplex<Real>.Radix => 2;
     static Real IMinMaxValue<Real>.MaxValue => MaxValue;
     static Real IMinMaxValue<Real>.MinValue => MinValue;
+    static Real IReal<Real>.Epsilon => Epsilon;
 
     // IConstants interface
 

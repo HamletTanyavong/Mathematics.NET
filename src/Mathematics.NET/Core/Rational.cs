@@ -45,6 +45,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static readonly Rational<T> MaxValue = T.CreateSaturating(double.MaxValue);
     public static readonly Rational<T> MinValue = T.CreateSaturating(double.MinValue);
+    public static readonly Rational<T> Epsilon = new(T.One, T.CreateSaturating(double.MaxValue));
 
     public static readonly Rational<T> NaN = new(T.Zero, T.Zero);
     public static readonly Rational<T> NegativeInfinity = new(-T.One, T.Zero);
@@ -52,6 +53,12 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     private readonly T _numerator;
     private readonly T _denominator;
+
+    public Rational()
+    {
+        _numerator = T.Zero;
+        _denominator = T.One;
+    }
 
     public Rational(T p)
     {
@@ -80,17 +87,11 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         else
         {
             if (p == T.Zero)
-            {
                 _numerator = p;
-            }
             else if (p > T.Zero)
-            {
                 _numerator = T.One;
-            }
             else
-            {
                 _numerator = -T.One;
-            }
             _denominator = q;
         }
     }
@@ -114,6 +115,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     static int IComplex<Rational<T>>.Radix => 2;
     static Rational<T> IMinMaxValue<Rational<T>>.MaxValue => MaxValue;
     static Rational<T> IMinMaxValue<Rational<T>>.MinValue => MinValue;
+    static Rational<T> IReal<Rational<T>>.Epsilon => Epsilon;
 
     //
     // Operators

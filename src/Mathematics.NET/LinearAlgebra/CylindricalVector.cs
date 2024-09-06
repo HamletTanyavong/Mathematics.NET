@@ -37,6 +37,8 @@ namespace Mathematics.NET.LinearAlgebra;
 [StructLayout(LayoutKind.Sequential)]
 public struct CylindricalVector : IVector<CylindricalVector, Real>
 {
+    public static readonly CylindricalVector Zero = new(Real.Zero, Real.Zero, Real.Zero);
+
     /// <summary>The radial distance.</summary>
     public Real Rho;
 
@@ -112,6 +114,13 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
         Debug.Assert(index is >= 0 and < 3);
         Unsafe.Add(ref Unsafe.As<CylindricalVector, Real>(ref vector), index) = value;
     }
+
+    //
+    // Constants
+    //
+
+    static CylindricalVector IVector<CylindricalVector, Real>.Zero => Zero;
+
 
     //
     // Operators

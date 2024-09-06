@@ -3,10 +3,8 @@
     {
       "src": [
         {
-          "files": [
-            "Mathematics.NET/Mathematics.NET.csproj"
-          ],
-          "src": "../src"
+          "src": "../src",
+          "files": [ "Mathematics.NET/Mathematics.NET.csproj" ]
         }
       ],
       "dest": "api",
@@ -35,9 +33,7 @@
         ]
       }
     ],
-    "xref" : [
-      "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json"
-    ],
+    "xref" : [ "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json" ],
     "output": "_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],

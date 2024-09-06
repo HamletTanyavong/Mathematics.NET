@@ -1,18 +1,18 @@
-# CodeQL analysis for Mathematics.NET
+# CodeQL Analysis for Mathematics.NET
 
-name: "CodeQL"
+name: CodeQL
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ main, dev ]
   schedule:
-  - cron: '00 2 * * 6'
+  - cron: 00 2 * * 6
 
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze Code
     runs-on: ubuntu-latest
     timeout-minutes: 360
     permissions:
@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp' ]
+        language: [ csharp ]
 
     steps:
     - name: Checkout Repository
@@ -40,4 +40,4 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
-        category: "/language:${{ matrix.language }}"
+        category: /language:${{ matrix.language }}

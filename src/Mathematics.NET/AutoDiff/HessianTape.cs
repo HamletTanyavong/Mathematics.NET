@@ -134,9 +134,7 @@ public record class HessianTape<T> : ITape<T>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
-        {
-            throw new Exception("Hessian tape contains no root nodes");
-        }
+            throw new Exception("The Hessian tape contains no root nodes.");
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
@@ -164,9 +162,7 @@ public record class HessianTape<T> : ITape<T>
     public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian, T seed)
     {
         if (_variableCount == 0)
-        {
-            throw new Exception("Hessian tape contains no root nodes");
-        }
+            throw new Exception("The Hessian tape contains no root nodes.");
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
@@ -184,9 +180,7 @@ public record class HessianTape<T> : ITape<T>
 
             EdgePush(hessianSpan, in node, i);
             if (gradientElement != T.Zero)
-            {
                 Accumulate(hessianSpan, in node, gradientElement);
-            }
 
             gradientSpan[node.PX] += gradientElement * node.DX;
             gradientSpan[node.PY] += gradientElement * node.DY;
@@ -206,9 +200,7 @@ public record class HessianTape<T> : ITape<T>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, T seed)
     {
         if (_variableCount == 0)
-        {
-            throw new Exception("Hessian tape contains no root nodes");
-        }
+            throw new Exception("The Hessian tape contains no root nodes.");
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
@@ -226,9 +218,7 @@ public record class HessianTape<T> : ITape<T>
 
             EdgePush(hessianSpan, in node, i);
             if (gradientElement != T.Zero)
-            {
                 Accumulate(hessianSpan, in node, gradientElement);
-            }
 
             gradientSpan[node.PX] += gradientElement * node.DX;
             gradientSpan[node.PY] += gradientElement * node.DY;
@@ -244,9 +234,7 @@ public record class HessianTape<T> : ITape<T>
         for (int p = 0; p <= i; p++)
         {
             if (weight[i, p] == 0 || weight[p, i] == 0)
-            {
                 continue;
-            }
             if (p != i)
             {
                 if (node.PX != p)

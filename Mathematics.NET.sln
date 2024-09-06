@@ -31,10 +31,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks", "tests\Mathematics.NET.Benchmarks\Mathematics.NET.Benchmarks.csproj", "{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9EB26D49-7E18-4404-BDCB-D26B827C4A22}"
+	ProjectSection(SolutionItems) = preProject
+		.github\FUNDING.yml = .github\FUNDING.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B32D7FF-257B-49BB-B495-D64E5E6C4C82}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\branch-enforcer.yml = .github\workflows\branch-enforcer.yml
 		.github\workflows\codeql.yml = .github\workflows\codeql.yml
 		.github\workflows\generate-documentation-site.yml = .github\workflows\generate-documentation-site.yml
 		.github\workflows\unit-tests.yml = .github\workflows\unit-tests.yml
