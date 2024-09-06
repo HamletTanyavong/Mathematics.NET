@@ -44,6 +44,8 @@ namespace Mathematics.NET.LinearAlgebra;
 public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
     where T : IComplex<T>
 {
+    public static readonly Vector4<T> Zero = new(T.Zero, T.Zero, T.Zero, T.Zero);
+
     /// <summary>The first element of the vector.</summary>
     public T X1 = x1;
 
@@ -107,6 +109,12 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
         Debug.Assert(index is >= 0 and < 4);
         Unsafe.Add(ref Unsafe.As<Vector4<T>, T>(ref vector), index) = value;
     }
+
+    //
+    // Constants
+    //
+
+    static Vector4<T> IVector<Vector4<T>, T>.Zero => Zero;
 
     //
     // Operators
