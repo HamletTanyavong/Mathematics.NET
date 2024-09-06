@@ -24,6 +24,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GHP_TOKEN }}
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
