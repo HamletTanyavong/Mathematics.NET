@@ -1,4 +1,4 @@
-# Generate documentation for Mathematics.NET
+# Generate Documentation Site for Mathematics.NET
 
 name: "Generate Documentation Site"
 
@@ -14,7 +14,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
