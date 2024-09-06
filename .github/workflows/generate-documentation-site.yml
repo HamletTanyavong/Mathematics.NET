@@ -1,6 +1,6 @@
 # Generate Documentation Site for Mathematics.NET
 
-name: "Generate Documentation Site"
+name: Generate Documentation Site
 
 on:
   push:
