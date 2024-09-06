@@ -6,9 +6,9 @@ authors:
   given-names: Hamlet
   orcid: 'https://orcid.org/0009-0002-0327-881X'
 type: software
-version: 0.2.0-alpha.10
+version: 0.2.0-alpha.11
 license: MIT
-date-released: 2024-8-8
+date-released: 2024-9-5
 repository-code: 'https://github.com/HamletTanyavong/Mathematics.NET'
 url: 'https://mathematics.hamlettanyavong.com'
 keywords:
