@@ -53,6 +53,12 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     private readonly T _numerator;
     private readonly T _denominator;
 
+    public Rational()
+    {
+        _numerator = T.Zero;
+        _denominator = T.One;
+    }
+
     public Rational(T p)
     {
         _numerator = p;
@@ -80,17 +86,11 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         else
         {
             if (p == T.Zero)
-            {
                 _numerator = p;
-            }
             else if (p > T.Zero)
-            {
                 _numerator = T.One;
-            }
             else
-            {
                 _numerator = -T.One;
-            }
             _denominator = q;
         }
     }
