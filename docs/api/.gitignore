@@ -1,5 +1,4 @@
-###############
-#  temp file  #
-###############
+# Ignore Generated Files
+
 *.yml
 .manifest
