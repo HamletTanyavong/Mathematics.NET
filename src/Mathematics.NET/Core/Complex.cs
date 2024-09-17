@@ -36,8 +36,7 @@ namespace Mathematics.NET.Core;
 /// <summary>Represents a complex number.</summary>
 /// <param name="real">The real part of the complex number.</param>
 /// <param name="imaginary">The imaginary part of the complex number.</param>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public readonly struct Complex(Real real, Real imaginary)
     : IComplex<Complex>,
       IDifferentiableFunctions<Complex>

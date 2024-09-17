@@ -35,8 +35,7 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Represents a rational number.</summary>
 /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public readonly struct Rational<T> : IRational<Rational<T>, T>
     where T : IBinaryInteger<T>
 {
