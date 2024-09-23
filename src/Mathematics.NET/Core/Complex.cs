@@ -131,28 +131,62 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public string ToString(string? format, IFormatProvider? provider)
     {
-        format = string.IsNullOrEmpty(format) ? "ALL" : format.ToUpperInvariant();
+        format = string.IsNullOrEmpty(format) ? string.Empty : format.ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
-        if (format is "ALL")
-            return string.Format(provider, "({0}, {1})", _real.ToString(null, provider), _imaginary.ToString(null, provider));
-        else if (format is "RE")
-            return string.Format(provider, "{0}", _real.ToString(null, provider));
+        if (format is "RE")
+            return _real.ToString(null, provider);
         else if (format is "IM")
-            return string.Format(provider, "{0}", _imaginary.ToString(null, provider));
+            return _imaginary.ToString(null, provider);
         else
-            throw new FormatException($"The \"{format}\" format is not supported.");
+            return $"({_real.ToString(null, provider)}, {_imaginary.ToString(null, provider)})";
     }
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
     {
-        format = format.IsEmpty ? "ALL" : format.ToString().ToUpperInvariant();
+        format = format.IsEmpty ? string.Empty : format.ToString().ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
-        if (format is "ALL")
+        var charsCurrentlyWritten = 0;
+        if (format is "RE")
+        {
+            if (destination.Length < 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            var tryFormatSucceeded = _real.TryFormat(destination, out charsCurrentlyWritten, null, provider);
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
+        }
+        else if (format is "IM")
+        {
+            if (destination.Length < 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            var tryFormatSucceeded = _imaginary.TryFormat(destination, out charsCurrentlyWritten, null, provider);
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
+        }
+        else
         {
             // There are a minimum of 6 characters for "(0, 0)".
-            int charsCurrentlyWritten = 0;
             if (destination.Length < 6)
             {
                 charsWritten = charsCurrentlyWritten;
@@ -195,18 +229,6 @@ public readonly struct Complex(Real real, Real imaginary)
             charsWritten = charsCurrentlyWritten;
             return true;
         }
-        else if (format is "RE")
-        {
-            return _real.TryFormat(destination, out charsWritten, null, provider);
-        }
-        else if (format is "IM")
-        {
-            return _imaginary.TryFormat(destination, out charsWritten, null, provider);
-        }
-        else
-        {
-            throw new FormatException($"The \"{format}\" format is not supported.");
-        }
     }
 
     //
@@ -241,10 +263,12 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Complex result)
     {
+#pragma warning disable EPS06
         s = s.Trim();
         int openParenthesis = s.IndexOf('(');
         int split = s.IndexOf(',');
         int closeParenthesis = s.IndexOf(')');
+#pragma warning restore EPS06
 
         // There a minimum of 5 characters for "(0,0)".
         if (s.Length < 5 || openParenthesis == -1 || split == -1 || closeParenthesis == -1 || openParenthesis > split || openParenthesis > closeParenthesis || split > closeParenthesis)

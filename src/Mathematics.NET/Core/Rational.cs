@@ -37,10 +37,11 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
 [Serializable, StructLayout(LayoutKind.Sequential)]
 public readonly struct Rational<T> : IRational<Rational<T>, T>
-    where T : IBinaryInteger<T>
+    where T : IBinaryInteger<T>, ISignedNumber<T>
 {
     public static readonly Rational<T> Zero = T.Zero;
     public static readonly Rational<T> One = T.One;
+    public static readonly Rational<T> NegativeOne = T.NegativeOne;
 
     public static readonly Rational<T> MaxValue = T.CreateSaturating(double.MaxValue);
     public static readonly Rational<T> MinValue = T.CreateSaturating(double.MinValue);
@@ -181,21 +182,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     //
 
     public static bool operator ==(Rational<T> left, Rational<T> right)
-    {
-        return left._numerator == right._numerator && left._denominator == right._denominator;
-    }
+        => left._numerator == right._numerator && left._denominator == right._denominator;
 
     public static bool operator !=(Rational<T> left, Rational<T> right)
-    {
-        return left._numerator != right._numerator || left._denominator != right._denominator;
-    }
+        => left._numerator != right._numerator || left._denominator != right._denominator;
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is Rational<T> other && Equals(other);
 
     public bool Equals(Rational<T> value)
-    {
-        return _numerator.Equals(value._numerator) && _denominator.Equals(value._denominator);
-    }
+        => _numerator.Equals(value._numerator) && _denominator.Equals(value._denominator);
 
     public override int GetHashCode() => HashCode.Combine(_numerator, _denominator);
 
@@ -203,25 +198,13 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Comparison
     //
 
-    public static bool operator <(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator < y._numerator * x._denominator;
-    }
+    public static bool operator <(Rational<T> x, Rational<T> y) => x._numerator * y._denominator < y._numerator * x._denominator;
 
-    public static bool operator >(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator > y._numerator * x._denominator;
-    }
+    public static bool operator >(Rational<T> x, Rational<T> y) => x._numerator * y._denominator > y._numerator * x._denominator;
 
-    public static bool operator <=(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator <= y._numerator * x._denominator;
-    }
+    public static bool operator <=(Rational<T> x, Rational<T> y) => x._numerator * y._denominator <= y._numerator * x._denominator;
 
-    public static bool operator >=(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator >= y._numerator * x._denominator;
-    }
+    public static bool operator >=(Rational<T> x, Rational<T> y) => x._numerator * y._denominator >= y._numerator * x._denominator;
 
     public int CompareTo(object? obj)
     {
@@ -229,8 +212,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
             return 1;
         if (obj is Rational<T> other)
             return CompareTo(other);
-
-        throw new ArgumentException("Argument is not a rational number");
+        throw new ArgumentException("The argument is not a rational number.");
     }
 
     public int CompareTo(Rational<T> value)
@@ -258,23 +240,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         if (IsNegativeInfinity(this))
             return "-∞";
 
-        format = string.IsNullOrEmpty(format) ? "MINIMAL" : format.ToUpperInvariant();
+        format = string.IsNullOrEmpty(format) ? string.Empty : format.ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
-        if (format is "MINIMAL")
-        {
-            if (_numerator == T.Zero || _denominator == T.One)
-                return string.Format(provider, "{0}", _numerator.ToString(null, provider));
-            return string.Format(provider, "({0} / {1})", _numerator.ToString(null, provider), _denominator.ToString(null, provider));
-        }
-        else if (format is "ALL")
-        {
-            return string.Format(provider, "({0} / {1})", _numerator.ToString(null, provider), _denominator.ToString(null, provider));
-        }
+        if (format is "N")
+            return _numerator.ToString(null, provider);
+        else if (format is "D")
+            return _denominator.ToString(null, provider);
         else
-        {
-            throw new FormatException($"The \"{format}\" format is not supported.");
-        }
+            return $"({_numerator.ToString(null, provider)}, {_denominator.ToString(null, provider)})";
     }
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
@@ -318,64 +292,49 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
             return true;
         }
 
-        format = format.IsEmpty ? "MINIMAL" : format.ToString().ToUpperInvariant();
+        format = format.IsEmpty ? string.Empty : format.ToString().ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
-        if (format is "MINIMAL")
+        var charsCurrentlyWritten = 0;
+        if (format is "N")
         {
-            int charsCurrentlyWritten = 0;
-
-            bool tryFormatSucceeded;
-
-            if (_numerator == T.Zero)
+            if (destination.Length < 1)
             {
-                if (destination.Length < 1)
-                {
-                    charsWritten = charsCurrentlyWritten;
-                    return false;
-                }
-
-                destination[0] = '0';
-                charsWritten = 1;
-                return true;
-            }
-
-            if (_denominator == T.One)
-            {
-                if (destination.Length < 1)
-                {
-                    charsWritten = charsCurrentlyWritten;
-                    return false;
-                }
-
-                tryFormatSucceeded = _numerator.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
-                charsCurrentlyWritten += tryFormatCharsWritten;
-                if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
-                {
-                    charsWritten = charsCurrentlyWritten;
-                    return false;
-                }
-
                 charsWritten = charsCurrentlyWritten;
-                return true;
+                return false;
             }
 
-            return TryFormatAllInternal(_numerator, _denominator, destination, out charsWritten, provider);
+            var tryFormatSucceeded = _numerator.TryFormat(destination, out charsCurrentlyWritten, null, provider);
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
         }
-        else if (format is "ALL")
+        else if (format is "D")
         {
-            return TryFormatAllInternal(_numerator, _denominator, destination, out charsWritten, provider);
+            if (destination.Length < 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            var tryFormatSucceeded = _denominator.TryFormat(destination, out charsCurrentlyWritten, null, provider);
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
         }
         else
         {
-            throw new FormatException($"The \"{format}\" format is not supported.");
-        }
-
-        static bool TryFormatAllInternal(T num, T den, Span<char> destination, out int charsWritten, IFormatProvider? provider)
-        {
-            var charsCurrentlyWritten = 0;
-
-            // There are a minimum of 7 characters for "(0 / 0)"
+            // There are a minimum of 7 characters for "(0 / 0)".
             if (destination.Length < 7)
             {
                 charsWritten = charsCurrentlyWritten;
@@ -384,7 +343,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
             destination[charsCurrentlyWritten++] = '(';
 
-            bool tryFormatSucceeded = num.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
+            bool tryFormatSucceeded = _numerator.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
             charsCurrentlyWritten += tryFormatCharsWritten;
             if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
             {
@@ -411,7 +370,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
                 return false;
             }
 
-            tryFormatSucceeded = den.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
+            tryFormatSucceeded = _denominator.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
             charsCurrentlyWritten += tryFormatCharsWritten;
             if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
             {
@@ -458,10 +417,12 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Rational<T> result)
     {
+#pragma warning disable EPS06
         s = s.Trim();
         int openParenthesis = s.IndexOf('(');
         int split = s.IndexOf('/');
         int closeParenthesis = s.IndexOf(')');
+#pragma warning restore EPS06
 
         // There a minimum of 5 characters for "(0/0)".
         if (s.Length < 5 || openParenthesis == -1 || split == -1 || closeParenthesis == -1 || openParenthesis > split || openParenthesis > closeParenthesis || split > closeParenthesis)
@@ -516,11 +477,18 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
-    // TODO: Find a better implementation
+    /// <summary>Create an instance of type rational of <typeparamref name="T"/> from one of type <see cref="double"/>.</summary>
+    /// <param name="x">A value of type <see cref="double"/>.</param>
+    /// <returns>An instance of type rational of <typeparamref name="T"/> created from <paramref name="x"/>.</returns>
+    /// <exception cref="OverflowException">Thrown when <paramref name="x"/> cannot be represented as a rational of <typeparamref name="T"/>.</exception>
     public static Rational<T> FromDouble(double x)
     {
-        if (double.IsNaN(x) || double.IsInfinity(x))
+        if (double.IsNaN(x))
             return NaN;
+        if (double.IsPositiveInfinity(x))
+            return PositiveInfinity;
+        if (double.IsNegativeInfinity(x))
+            return NegativeInfinity;
 
         checked
         {
@@ -533,7 +501,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
             T num = T.CreateChecked(x);
             T den = T.CreateChecked(Math.Pow(10.0, n));
-            var gcd = GCD(num, den);
+            T gcd = GCD(num, den);
 
             return new(num / gcd, den / gcd);
         }
@@ -589,7 +557,6 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Lerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * start + weight * end;
 
-    // TODO: Find a better implementation for Max and Min
     public static Rational<T> Max(Rational<T> x, Rational<T> y)
     {
         var u = x.Reduce();
@@ -646,36 +613,40 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
-    /// <summary>Try to convert a <see cref="Real"/> into a <see cref="Rational{T}"/> of <see cref="long"/> to within a certain <paramref name="tolerance"/> and with a max denominator of <paramref name="maxDenominator"/>.</summary>
+    /// <summary>Try to convert a <see cref="double"/> into a rational of <see cref="double"/> to within a certain <paramref name="tolerance"/> and with a <paramref name="max"/> denominator size.</summary>
     /// <param name="value">The value to convert.</param>
     /// <param name="tolerance">A tolerance.</param>
-    /// <param name="maxDenominator">The max denominator.</param>
+    /// <param name="max">The max denominator size.</param>
     /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/>.</param>
     /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/>.</returns>
-    public static bool TryConvertFromReal(Real value, Real tolerance, long maxDenominator, out Rational<long> result)
+    /// <exception cref="OverflowException">Thrown when <paramref name="value"/> cannot be represented as a rational of <typeparamref name="T"/>.</exception>
+    public static bool TryConvertFromDouble(double value, double tolerance, T max, out Rational<T> result)
     {
-        if (tolerance < Precision.DblEpsilonVariant || Real.IsNaN(value) || Real.IsInfinity(value))
+        if (double.IsNaN(value) || double.IsInfinity(value))
         {
-            result = Rational<long>.NaN;
+            result = NaN;
             return false;
         }
+        if (tolerance < Precision.DblEpsilonVariant)
+            tolerance = Precision.DblEpsilonVariant;
 
-        var num = 0L;
-        var den = 1L;
+        T num = T.Zero;
+        T den = T.One;
 
-        var quotient = (long)Real.Floor(value);
-        var fractional = value - quotient;
+        var floor = Math.Floor(value);
+        T quotient = T.CreateChecked(floor);
+        var remainder = value - floor;
 
-        while (Real.Abs((Real)num / den - fractional) > tolerance)
+        while (Math.Abs(double.CreateChecked(num) / double.CreateChecked(den) - remainder) > tolerance)
         {
-            if (den > maxDenominator)
+            if (den > max)
             {
-                result = Rational<long>.NaN;
+                result = NaN;
                 return false;
             }
             if (num == den)
             {
-                num = 0L;
+                num = T.Zero;
                 den++;
             }
             num++;
