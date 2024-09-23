@@ -636,36 +636,40 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
-    /// <summary>Try to convert a <see cref="Real"/> into a <see cref="Rational{T}"/> of <see cref="long"/> to within a certain <paramref name="tolerance"/> and with a max denominator of <paramref name="maxDenominator"/>.</summary>
+    /// <summary>Try to convert a <see cref="double"/> into a rational of <see cref="double"/> to within a certain <paramref name="tolerance"/> and with a <paramref name="max"/> denominator size.</summary>
     /// <param name="value">The value to convert.</param>
     /// <param name="tolerance">A tolerance.</param>
-    /// <param name="maxDenominator">The max denominator.</param>
+    /// <param name="max">The max denominator size.</param>
     /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/>.</param>
     /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/>.</returns>
-    public static bool TryConvertFromReal(Real value, Real tolerance, long maxDenominator, out Rational<long> result)
+    /// <exception cref="OverflowException">Thrown when <paramref name="value"/> cannot be represented as a rational of <typeparamref name="T"/>.</exception>
+    public static bool TryConvertFromDouble(double value, double tolerance, T max, out Rational<T> result)
     {
-        if (tolerance < Precision.DblEpsilonVariant || Real.IsNaN(value) || Real.IsInfinity(value))
+        if (double.IsNaN(value) || double.IsInfinity(value))
         {
-            result = Rational<long>.NaN;
+            result = NaN;
             return false;
         }
+        if (tolerance < Precision.DblEpsilonVariant)
+            tolerance = Precision.DblEpsilonVariant;
 
-        var num = 0L;
-        var den = 1L;
+        T num = T.Zero;
+        T den = T.One;
 
-        var quotient = (long)Real.Floor(value);
-        var fractional = value - quotient;
+        var floor = Math.Floor(value);
+        T quotient = T.CreateChecked(floor);
+        var remainder = value - floor;
 
-        while (Real.Abs((Real)num / den - fractional) > tolerance)
+        while (Math.Abs(double.CreateChecked(num) / double.CreateChecked(den) - remainder) > tolerance)
         {
-            if (den > maxDenominator)
+            if (den > max)
             {
-                result = Rational<long>.NaN;
+                result = NaN;
                 return false;
             }
             if (num == den)
             {
-                num = 0L;
+                num = T.Zero;
                 den++;
             }
             num++;
