@@ -62,6 +62,6 @@ public static class Extensions
 
     /// <inheritdoc cref="IRational{T, U}.Reduce(T)" />
     public static Rational<T> Reduce<T>(this Rational<T> value)
-        where T : IBinaryInteger<T>
+        where T : IBinaryInteger<T>, ISignedNumber<T>
         => Rational<T>.Reduce(value);
 }

@@ -37,10 +37,11 @@ namespace Mathematics.NET.Core;
 /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
 [Serializable, StructLayout(LayoutKind.Sequential)]
 public readonly struct Rational<T> : IRational<Rational<T>, T>
-    where T : IBinaryInteger<T>
+    where T : IBinaryInteger<T>, ISignedNumber<T>
 {
     public static readonly Rational<T> Zero = T.Zero;
     public static readonly Rational<T> One = T.One;
+    public static readonly Rational<T> NegativeOne = T.NegativeOne;
 
     public static readonly Rational<T> MaxValue = T.CreateSaturating(double.MaxValue);
     public static readonly Rational<T> MinValue = T.CreateSaturating(double.MinValue);
