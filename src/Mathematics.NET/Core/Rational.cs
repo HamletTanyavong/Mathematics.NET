@@ -181,21 +181,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     //
 
     public static bool operator ==(Rational<T> left, Rational<T> right)
-    {
-        return left._numerator == right._numerator && left._denominator == right._denominator;
-    }
+        => left._numerator == right._numerator && left._denominator == right._denominator;
 
     public static bool operator !=(Rational<T> left, Rational<T> right)
-    {
-        return left._numerator != right._numerator || left._denominator != right._denominator;
-    }
+        => left._numerator != right._numerator || left._denominator != right._denominator;
 
     public override bool Equals([NotNullWhen(true)] object? obj) => obj is Rational<T> other && Equals(other);
 
     public bool Equals(Rational<T> value)
-    {
-        return _numerator.Equals(value._numerator) && _denominator.Equals(value._denominator);
-    }
+        => _numerator.Equals(value._numerator) && _denominator.Equals(value._denominator);
 
     public override int GetHashCode() => HashCode.Combine(_numerator, _denominator);
 
@@ -203,25 +197,13 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Comparison
     //
 
-    public static bool operator <(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator < y._numerator * x._denominator;
-    }
+    public static bool operator <(Rational<T> x, Rational<T> y) => x._numerator * y._denominator < y._numerator * x._denominator;
 
-    public static bool operator >(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator > y._numerator * x._denominator;
-    }
+    public static bool operator >(Rational<T> x, Rational<T> y) => x._numerator * y._denominator > y._numerator * x._denominator;
 
-    public static bool operator <=(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator <= y._numerator * x._denominator;
-    }
+    public static bool operator <=(Rational<T> x, Rational<T> y) => x._numerator * y._denominator <= y._numerator * x._denominator;
 
-    public static bool operator >=(Rational<T> x, Rational<T> y)
-    {
-        return x._numerator * y._denominator >= y._numerator * x._denominator;
-    }
+    public static bool operator >=(Rational<T> x, Rational<T> y) => x._numerator * y._denominator >= y._numerator * x._denominator;
 
     public int CompareTo(object? obj)
     {
