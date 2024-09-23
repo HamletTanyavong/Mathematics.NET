@@ -199,7 +199,9 @@ public static class LinAlgExtensions
     {
         Span<T> span = new T[readOnlySpan.Length];
         readOnlySpan.CopyTo(span);
+#pragma warning disable EPS06
         return span.ToDisplayString(format, provider);
+#pragma warning restore EPS06
     }
 
     /// <summary>Get the string representation of this <see cref="Span{T}"/> object.</summary>
@@ -246,7 +248,9 @@ public static class LinAlgExtensions
     {
         Span2D<T> span = new T[readOnlySpan2D.Height, readOnlySpan2D.Width];
         readOnlySpan2D.CopyTo(span);
+#pragma warning disable EPS06
         return span.ToDisplayString(format, provider);
+#pragma warning restore EPS06
     }
 
     /// <summary>Get the string representation of this <see cref="Span2D{T}"/> object.</summary>
