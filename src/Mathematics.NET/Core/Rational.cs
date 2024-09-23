@@ -417,10 +417,12 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Rational<T> result)
     {
+#pragma warning disable EPS06
         s = s.Trim();
         int openParenthesis = s.IndexOf('(');
         int split = s.IndexOf('/');
         int closeParenthesis = s.IndexOf(')');
+#pragma warning restore EPS06
 
         // There a minimum of 5 characters for "(0/0)".
         if (s.Length < 5 || openParenthesis == -1 || split == -1 || closeParenthesis == -1 || openParenthesis > split || openParenthesis > closeParenthesis || split > closeParenthesis)
