@@ -34,8 +34,7 @@ namespace Mathematics.NET.AutoDiff;
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <param name="d0">The primal part of a hyper-dual number.</param>
 /// <param name="d1">The tangent part of a hyper-dual number.</param>
-[Serializable]
-[StructLayout(LayoutKind.Sequential)]
+[Serializable, StructLayout(LayoutKind.Sequential)]
 public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>, T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
