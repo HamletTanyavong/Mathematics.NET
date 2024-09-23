@@ -241,23 +241,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         if (IsNegativeInfinity(this))
             return "-∞";
 
-        format = string.IsNullOrEmpty(format) ? "MINIMAL" : format.ToUpperInvariant();
+        format = string.IsNullOrEmpty(format) ? string.Empty : format.ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
-        if (format is "MINIMAL")
-        {
-            if (_numerator == T.Zero || _denominator == T.One)
-                return string.Format(provider, "{0}", _numerator.ToString(null, provider));
-            return string.Format(provider, "({0} / {1})", _numerator.ToString(null, provider), _denominator.ToString(null, provider));
-        }
-        else if (format is "ALL")
-        {
-            return string.Format(provider, "({0} / {1})", _numerator.ToString(null, provider), _denominator.ToString(null, provider));
-        }
+        if (format is "N")
+            return _numerator.ToString(null, provider);
+        else if (format is "D")
+            return _denominator.ToString(null, provider);
         else
-        {
-            throw new FormatException($"The \"{format}\" format is not supported.");
-        }
+            return $"({_numerator.ToString(null, provider)}, {_denominator.ToString(null, provider)})";
     }
 
     public bool TryFormat(Span<char> destination, out int charsWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
@@ -301,64 +293,49 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
             return true;
         }
 
-        format = format.IsEmpty ? "MINIMAL" : format.ToString().ToUpperInvariant();
+        format = format.IsEmpty ? string.Empty : format.ToString().ToUpperInvariant();
         provider ??= NumberFormatInfo.InvariantInfo;
 
-        if (format is "MINIMAL")
+        var charsCurrentlyWritten = 0;
+        if (format is "N")
         {
-            int charsCurrentlyWritten = 0;
-
-            bool tryFormatSucceeded;
-
-            if (_numerator == T.Zero)
+            if (destination.Length < 1)
             {
-                if (destination.Length < 1)
-                {
-                    charsWritten = charsCurrentlyWritten;
-                    return false;
-                }
-
-                destination[0] = '0';
-                charsWritten = 1;
-                return true;
-            }
-
-            if (_denominator == T.One)
-            {
-                if (destination.Length < 1)
-                {
-                    charsWritten = charsCurrentlyWritten;
-                    return false;
-                }
-
-                tryFormatSucceeded = _numerator.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
-                charsCurrentlyWritten += tryFormatCharsWritten;
-                if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
-                {
-                    charsWritten = charsCurrentlyWritten;
-                    return false;
-                }
-
                 charsWritten = charsCurrentlyWritten;
-                return true;
+                return false;
             }
 
-            return TryFormatAllInternal(_numerator, _denominator, destination, out charsWritten, provider);
+            var tryFormatSucceeded = _numerator.TryFormat(destination, out charsCurrentlyWritten, null, provider);
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
         }
-        else if (format is "ALL")
+        else if (format is "D")
         {
-            return TryFormatAllInternal(_numerator, _denominator, destination, out charsWritten, provider);
+            if (destination.Length < 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+
+            var tryFormatSucceeded = _denominator.TryFormat(destination, out charsCurrentlyWritten, null, provider);
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = 0;
+                return false;
+            }
+
+            charsWritten = charsCurrentlyWritten;
+            return true;
         }
         else
         {
-            throw new FormatException($"The \"{format}\" format is not supported.");
-        }
-
-        static bool TryFormatAllInternal(T num, T den, Span<char> destination, out int charsWritten, IFormatProvider? provider)
-        {
-            var charsCurrentlyWritten = 0;
-
-            // There are a minimum of 7 characters for "(0 / 0)"
+            // There are a minimum of 7 characters for "(0 / 0)".
             if (destination.Length < 7)
             {
                 charsWritten = charsCurrentlyWritten;
@@ -367,7 +344,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
             destination[charsCurrentlyWritten++] = '(';
 
-            bool tryFormatSucceeded = num.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
+            bool tryFormatSucceeded = _numerator.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
             charsCurrentlyWritten += tryFormatCharsWritten;
             if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
             {
@@ -394,7 +371,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
                 return false;
             }
 
-            tryFormatSucceeded = den.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
+            tryFormatSucceeded = _denominator.TryFormat(destination[charsCurrentlyWritten..], out tryFormatCharsWritten, null, provider);
             charsCurrentlyWritten += tryFormatCharsWritten;
             if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
             {
