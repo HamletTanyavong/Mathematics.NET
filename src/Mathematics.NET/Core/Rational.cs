@@ -212,8 +212,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
             return 1;
         if (obj is Rational<T> other)
             return CompareTo(other);
-
-        throw new ArgumentException("Argument is not a rational number");
+        throw new ArgumentException("The argument is not a rational number.");
     }
 
     public int CompareTo(Rational<T> value)
