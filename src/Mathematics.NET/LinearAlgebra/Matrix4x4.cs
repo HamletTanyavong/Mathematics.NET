@@ -231,7 +231,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     //
 
     public string ToString(string? format, IFormatProvider? provider)
+#pragma warning disable EPS06
         => this.AsSpan2D().ToDisplayString(format, provider);
+#pragma warning restore EPS06
 
     //
     // Methods
