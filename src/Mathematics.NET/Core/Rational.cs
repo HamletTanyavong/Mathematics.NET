@@ -516,11 +516,18 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
-    // TODO: Find a better implementation
+    /// <summary>Create an instance of type rational of <typeparamref name="T"/> from one of type <see cref="double"/>.</summary>
+    /// <param name="x">A value of type <see cref="double"/>.</param>
+    /// <returns>An instance of type rational of <typeparamref name="T"/> created from <paramref name="x"/>.</returns>
+    /// <exception cref="OverflowException">Thrown when <paramref name="x"/> cannot be represented as a rational of <typeparamref name="T"/>.</exception>
     public static Rational<T> FromDouble(double x)
     {
-        if (double.IsNaN(x) || double.IsInfinity(x))
+        if (double.IsNaN(x))
             return NaN;
+        if (double.IsPositiveInfinity(x))
+            return PositiveInfinity;
+        if (double.IsNegativeInfinity(x))
+            return NegativeInfinity;
 
         checked
         {
@@ -533,7 +540,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
             T num = T.CreateChecked(x);
             T den = T.CreateChecked(Math.Pow(10.0, n));
-            var gcd = GCD(num, den);
+            T gcd = GCD(num, den);
 
             return new(num / gcd, den / gcd);
         }
