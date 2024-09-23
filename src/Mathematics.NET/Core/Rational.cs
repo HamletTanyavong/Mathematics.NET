@@ -557,7 +557,6 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Lerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * start + weight * end;
 
-    // TODO: Find a better implementation for Max and Min
     public static Rational<T> Max(Rational<T> x, Rational<T> y)
     {
         var u = x.Reduce();
