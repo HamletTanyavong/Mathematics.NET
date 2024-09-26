@@ -45,7 +45,7 @@ public sealed class Program : IOpenCLObject
         _logger = logger;
 
         var files = Directory
-            .EnumerateFiles(@"GPU\OpenCL\Kernels")
+            .EnumerateFiles(Path.Combine("GPU", "OpenCL", "Kernels"))
             .Where(x => x.EndsWith(".c") || x.EndsWith(".cl"))
             .ToArray();
 
