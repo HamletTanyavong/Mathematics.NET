@@ -230,8 +230,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    dTensor[0, i, j] = gradient[0];
-                    dTensor[1, i, j] = gradient[1];
+                    for (int k = 0; k < 2; k++)
+                    {
+                        dTensor[k, i, j] = gradient[k];
+                    }
                 }
             }
         }
@@ -262,9 +264,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    dTensor[0, i, j] = gradient[0];
-                    dTensor[1, i, j] = gradient[1];
-                    dTensor[2, i, j] = gradient[2];
+                    for (int k = 0; k < 3; k++)
+                    {
+                        dTensor[k, i, j] = gradient[k];
+                    }
                 }
             }
         }
@@ -295,10 +298,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    dTensor[0, i, j] = gradient[0];
-                    dTensor[1, i, j] = gradient[1];
-                    dTensor[2, i, j] = gradient[2];
-                    dTensor[3, i, j] = gradient[3];
+                    for (int k = 0; k < 4; k++)
+                    {
+                        dTensor[k, i, j] = gradient[k];
+                    }
                 }
             }
         }
@@ -329,8 +332,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    dTensor[0, i, j] = gradient[0];
-                    dTensor[1, i, j] = gradient[1];
+                    for (int k = 0; k < 2; k++)
+                    {
+                        dTensor[k, i, j] = gradient[k];
+                    }
                 }
             }
         }
@@ -361,9 +366,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    dTensor[0, i, j] = gradient[0];
-                    dTensor[1, i, j] = gradient[1];
-                    dTensor[2, i, j] = gradient[2];
+                    for (int k = 0; k < 3; k++)
+                    {
+                        dTensor[k, i, j] = gradient[k];
+                    }
                 }
             }
         }
@@ -394,10 +400,10 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out var gradient);
 
-                    dTensor[0, i, j] = gradient[0];
-                    dTensor[1, i, j] = gradient[1];
-                    dTensor[2, i, j] = gradient[2];
-                    dTensor[3, i, j] = gradient[3];
+                    for (int k = 0; k < 4; k++)
+                    {
+                        dTensor[k, i, j] = gradient[k];
+                    }
                 }
             }
         }
@@ -441,11 +447,13 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    d2Tensor[0, 0, i, j] = hessian[0, 0];
-                    d2Tensor[0, 1, i, j] = hessian[0, 1];
-
-                    d2Tensor[1, 0, i, j] = hessian[1, 0];
-                    d2Tensor[1, 1, i, j] = hessian[1, 1];
+                    for (int k = 0; k < 2; k++)
+                    {
+                        for (int l = 0; l < 2; l++)
+                        {
+                            d2Tensor[k, l, i, j] = hessian[k, l];
+                        }
+                    }
                 }
             }
         }
@@ -476,17 +484,13 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    d2Tensor[0, 0, i, j] = hessian[0, 0];
-                    d2Tensor[0, 1, i, j] = hessian[0, 1];
-                    d2Tensor[0, 2, i, j] = hessian[0, 2];
-
-                    d2Tensor[1, 0, i, j] = hessian[1, 0];
-                    d2Tensor[1, 1, i, j] = hessian[1, 1];
-                    d2Tensor[1, 2, i, j] = hessian[1, 2];
-
-                    d2Tensor[2, 0, i, j] = hessian[2, 0];
-                    d2Tensor[2, 1, i, j] = hessian[2, 1];
-                    d2Tensor[2, 2, i, j] = hessian[2, 2];
+                    for (int k = 0; k < 3; k++)
+                    {
+                        for (int l = 0; l < 3; l++)
+                        {
+                            d2Tensor[k, l, i, j] = hessian[k, l];
+                        }
+                    }
                 }
             }
         }
@@ -517,25 +521,13 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    d2Tensor[0, 0, i, j] = hessian[0, 0];
-                    d2Tensor[0, 1, i, j] = hessian[0, 1];
-                    d2Tensor[0, 2, i, j] = hessian[0, 2];
-                    d2Tensor[0, 3, i, j] = hessian[0, 3];
-
-                    d2Tensor[1, 0, i, j] = hessian[1, 0];
-                    d2Tensor[1, 1, i, j] = hessian[1, 1];
-                    d2Tensor[1, 2, i, j] = hessian[1, 2];
-                    d2Tensor[1, 3, i, j] = hessian[1, 3];
-
-                    d2Tensor[2, 0, i, j] = hessian[2, 0];
-                    d2Tensor[2, 1, i, j] = hessian[2, 1];
-                    d2Tensor[2, 2, i, j] = hessian[2, 2];
-                    d2Tensor[2, 3, i, j] = hessian[2, 3];
-
-                    d2Tensor[3, 0, i, j] = hessian[3, 0];
-                    d2Tensor[3, 1, i, j] = hessian[3, 1];
-                    d2Tensor[3, 2, i, j] = hessian[3, 2];
-                    d2Tensor[3, 3, i, j] = hessian[3, 3];
+                    for (int k = 0; k < 4; k++)
+                    {
+                        for (int l = 0; l < 4; l++)
+                        {
+                            d2Tensor[k, l, i, j] = hessian[k, l];
+                        }
+                    }
                 }
             }
         }
@@ -566,11 +558,13 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    d2Tensor[0, 0, i, j] = hessian[0, 0];
-                    d2Tensor[0, 1, i, j] = hessian[0, 1];
-
-                    d2Tensor[1, 0, i, j] = hessian[1, 0];
-                    d2Tensor[1, 1, i, j] = hessian[1, 1];
+                    for (int k = 0; k < 2; k++)
+                    {
+                        for (int l = 0; l < 2; l++)
+                        {
+                            d2Tensor[k, l, i, j] = hessian[k, l];
+                        }
+                    }
                 }
             }
         }
@@ -601,17 +595,13 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    d2Tensor[0, 0, i, j] = hessian[0, 0];
-                    d2Tensor[0, 1, i, j] = hessian[0, 1];
-                    d2Tensor[0, 2, i, j] = hessian[0, 2];
-
-                    d2Tensor[1, 0, i, j] = hessian[1, 0];
-                    d2Tensor[1, 1, i, j] = hessian[1, 1];
-                    d2Tensor[1, 2, i, j] = hessian[1, 2];
-
-                    d2Tensor[2, 0, i, j] = hessian[2, 0];
-                    d2Tensor[2, 1, i, j] = hessian[2, 1];
-                    d2Tensor[2, 2, i, j] = hessian[2, 2];
+                    for (int k = 0; k < 3; k++)
+                    {
+                        for (int l = 0; l < 3; l++)
+                        {
+                            d2Tensor[k, l, i, j] = hessian[k, l];
+                        }
+                    }
                 }
             }
         }
@@ -642,25 +632,13 @@ public static partial class DifGeo
                     _ = function(tape, point);
                     tape.ReverseAccumulate(out ReadOnlySpan2D<TN> hessian);
 
-                    d2Tensor[0, 0, i, j] = hessian[0, 0];
-                    d2Tensor[0, 1, i, j] = hessian[0, 1];
-                    d2Tensor[0, 2, i, j] = hessian[0, 2];
-                    d2Tensor[0, 3, i, j] = hessian[0, 3];
-
-                    d2Tensor[1, 0, i, j] = hessian[1, 0];
-                    d2Tensor[1, 1, i, j] = hessian[1, 1];
-                    d2Tensor[1, 2, i, j] = hessian[1, 2];
-                    d2Tensor[1, 3, i, j] = hessian[1, 3];
-
-                    d2Tensor[2, 0, i, j] = hessian[2, 0];
-                    d2Tensor[2, 1, i, j] = hessian[2, 1];
-                    d2Tensor[2, 2, i, j] = hessian[2, 2];
-                    d2Tensor[2, 3, i, j] = hessian[2, 3];
-
-                    d2Tensor[3, 0, i, j] = hessian[3, 0];
-                    d2Tensor[3, 1, i, j] = hessian[3, 1];
-                    d2Tensor[3, 2, i, j] = hessian[3, 2];
-                    d2Tensor[3, 3, i, j] = hessian[3, 3];
+                    for (int k = 0; k < 4; k++)
+                    {
+                        for (int l = 0; l < 4; l++)
+                        {
+                            d2Tensor[k, l, i, j] = hessian[k, l];
+                        }
+                    }
                 }
             }
         }
@@ -1113,8 +1091,7 @@ public static partial class DifGeo
                 {
                     for (int n = 0; n < 2; n++)
                     {
-                        riemann[r, s, m, n] =
-                            dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
+                        riemann[r, s, m, n] = dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
                     }
                 }
             }
@@ -1147,8 +1124,7 @@ public static partial class DifGeo
                 {
                     for (int n = 0; n < 3; n++)
                     {
-                        riemann[r, s, m, n] =
-                            dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
+                        riemann[r, s, m, n] = dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
                     }
                 }
             }
@@ -1181,8 +1157,7 @@ public static partial class DifGeo
                 {
                     for (int n = 0; n < 4; n++)
                     {
-                        riemann[r, s, m, n] =
-                            dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
+                        riemann[r, s, m, n] = dChristoffel[m, r, s, n] - dChristoffel[n, r, s, m] + cChristoffels[r, m, s, n] - cChristoffels[r, n, s, m];
                     }
                 }
             }
