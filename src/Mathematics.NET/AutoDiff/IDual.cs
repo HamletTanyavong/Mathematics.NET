@@ -27,6 +27,9 @@
 
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.Core.Relations;
+using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.AutoDiff;
 
@@ -74,4 +77,68 @@ public interface IDual<TDN, TN>
     /// <param name="seed">The seed value.</param>
     /// <returns>A seeded value.</returns>
     TDN WithSeed(TN seed);
+
+    //
+    // DifGeo
+    //
+
+    /// <summary>Create an autodiff, rank-one tensor from vectors of initial and seed values.</summary>
+    /// <typeparam name="TI">An index.</typeparam>
+    /// <param name="x">A vector of initial values.</param>
+    /// <param name="seed">A vector of seed values.</param>
+    /// <returns>A rank-one tensor of two initial and seed values.</returns>
+    static abstract AutoDiffTensor2<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Vector2<TN> x, in Vector2<TN> seed)
+        where TI : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from intial and seed values.</summary>
+    /// <typeparam name="TI">An index.</typeparam>
+    /// <param name="x0">The zeroth value.</param>
+    /// <param name="x1">The first value.</param>
+    /// <param name="seed0">The zeroth seed value.</param>
+    /// <param name="seed1">The first seed value.</param>
+    /// <returns>A rank-one tensor of two initial and seed values.</returns>
+    static abstract AutoDiffTensor2<TDN, TN, TI> CreateAutoDiffTensor<TI>(in TN x0, in TN x1, in TN seed0, in TN seed1)
+        where TI : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from vectors of initial and seed values.</summary>
+    /// <typeparam name="TI">An index.</typeparam>
+    /// <param name="x">A vector of initial values.</param>
+    /// <param name="seed">A vector of seed values.</param>
+    /// <returns>A rank-one tensor of three initial and seed values.</returns>
+    static abstract AutoDiffTensor3<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Vector3<TN> x, in Vector3<TN> seed)
+        where TI : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from intial and seed values.</summary>
+    /// <typeparam name="TI">An index.</typeparam>
+    /// <param name="x0">The zeroth value.</param>
+    /// <param name="x1">The first value.</param>
+    /// <param name="x2">The second value.</param>
+    /// <param name="seed0">The zeroth seed value.</param>
+    /// <param name="seed1">The first seed value.</param>
+    /// <param name="seed2">The second seed value.</param>
+    /// <returns>A rank-one tensor of three initial and seed values.</returns>
+    static abstract AutoDiffTensor3<TDN, TN, TI> CreateAutoDiffTensor<TI>(in TN x0, in TN x1, in TN x2, in TN seed0, in TN seed1, in TN seed2)
+        where TI : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from vectors of initial and seed values.</summary>
+    /// <typeparam name="TI">An index.</typeparam>
+    /// <param name="x">A vector of initial values.</param>
+    /// <param name="seed">A vector of seed values.</param>
+    /// <returns>A rank-one tensor of four initial and seed values.</returns>
+    static abstract AutoDiffTensor4<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Vector4<TN> x, in Vector4<TN> seed)
+        where TI : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from intial and seed values.</summary>
+    /// <typeparam name="TI">An index.</typeparam>
+    /// <param name="x0">The zeroth value.</param>
+    /// <param name="x1">The first value.</param>
+    /// <param name="x2">The second value.</param>
+    /// <param name="x3">The third value.</param>
+    /// <param name="seed0">The zeroth seed value.</param>
+    /// <param name="seed1">The first seed value.</param>
+    /// <param name="seed2">The second seed value.</param>
+    /// <param name="seed3">The third seed value.</param>
+    /// <returns>A rank-one tensor of four initial and seed values.</returns>
+    static abstract AutoDiffTensor4<TDN, TN, TI> CreateAutoDiffTensor<TI>(in TN x0, in TN x1, in TN x2, in TN x3, in TN seed0, in TN seed1, in TN seed2, in TN seed3)
+        where TI : IIndex;
 }
