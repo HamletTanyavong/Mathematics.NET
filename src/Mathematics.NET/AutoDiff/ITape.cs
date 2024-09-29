@@ -47,9 +47,9 @@ public interface ITape<T>
     int VariableCount { get; }
 
     /// <summary>Create a variable for the gradient tape to track.</summary>
-    /// <param name="seed">A seed value.</param>
+    /// <param name="value">An initial value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> CreateVariable(T seed);
+    Variable<T> CreateVariable(T value);
 
     /// <summary>Log nodes tracked by the tape.</summary>
     /// <param name="logger">A logger.</param>
@@ -265,51 +265,51 @@ public interface ITape<T>
     // DifGeo
     //
 
-    /// <summary>Create an autodiff, rank-one tensor from a vector.</summary>
+    /// <summary>Create an autodiff, rank-one tensor from a vector of initial values.</summary>
     /// <typeparam name="U">An index.</typeparam>
-    /// <param name="x">A vector of seed values.</param>
+    /// <param name="x">A vector of initial values.</param>
     /// <returns>A rank-one tensor of two variables.</returns>
     AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in Vector2<T> x)
         where U : IIndex;
 
-    /// <summary>Create an autodiff, rank-one tensor from seed values.</summary>
+    /// <summary>Create an autodiff, rank-one tensor from initial values.</summary>
     /// <typeparam name="U">An index.</typeparam>
-    /// <param name="x0Seed">The zeroth seed value.</param>
-    /// <param name="x1Seed">The first seed value.</param>
+    /// <param name="x0">The zeroth value.</param>
+    /// <param name="x1">The first value.</param>
     /// <returns>A rank-one tensor of two variables.</returns>
-    AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed)
+    AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1)
         where U : IIndex;
 
-    /// <summary>Create an autodiff, rank-one tensor from a vector.</summary>
+    /// <summary>Create an autodiff, rank-one tensor from a vector of initial values.</summary>
     /// <typeparam name="U">An index.</typeparam>
-    /// <param name="x">A vector of seed values.</param>
+    /// <param name="x">A vector of initial values.</param>
     /// <returns>A rank-one tensor of three variables.</returns>
     AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in Vector3<T> x)
         where U : IIndex;
 
-    /// <summary>Create an autodiff, rank-one tensor from seed values.</summary>
+    /// <summary>Create an autodiff, rank-one tensor from initial values.</summary>
     /// <typeparam name="U">An index.</typeparam>
-    /// <param name="x0Seed">The zeroth seed value.</param>
-    /// <param name="x1Seed">The first seed value.</param>
-    /// <param name="x2Seed">The second seed value.</param>
-    /// <returns>A rank-one tensor of threes variables.</returns>
-    AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed)
+    /// <param name="x0">The zeroth value.</param>
+    /// <param name="x1">The first value.</param>
+    /// <param name="x2">The second value.</param>
+    /// <returns>A rank-one tensor of three variables.</returns>
+    AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2)
         where U : IIndex;
 
-    /// <summary>Create an autodiff, rank-one tensor from a vector.</summary>
+    /// <summary>Create an autodiff, rank-one tensor from a vector of initial values.</summary>
     /// <typeparam name="U">An index.</typeparam>
-    /// <param name="x">A vector of seed values.</param>
+    /// <param name="x">A vector of initial values.</param>
     /// <returns>A rank-one tensor of four variables.</returns>
     AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in Vector4<T> x)
         where U : IIndex;
 
-    /// <summary>Create an autodiff, rank-one tensor from seed values.</summary>
+    /// <summary>Create an autodiff, rank-one tensor from initial values.</summary>
     /// <typeparam name="U">An index.</typeparam>
-    /// <param name="x0Seed">The zeroth seed value.</param>
-    /// <param name="x1Seed">The first seed value.</param>
-    /// <param name="x2Seed">The second seed value.</param>
-    /// <param name="x3Seed">The third seed value.</param>
+    /// <param name="x0">The zeroth value.</param>
+    /// <param name="x1">The first value.</param>
+    /// <param name="x2">The second value.</param>
+    /// <param name="x3">The third value.</param>
     /// <returns>A rank-one tensor of four variables.</returns>
-    AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed, in T x3Seed)
+    AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T x3)
         where U : IIndex;
 }

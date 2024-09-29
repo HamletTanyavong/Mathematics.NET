@@ -105,10 +105,10 @@ public record class GradientTape<T> : ITape<T>
     // Methods
     //
 
-    public Variable<T> CreateVariable(T seed)
+    public Variable<T> CreateVariable(T value)
     {
         _nodes.Add(new(_variableCount));
-        Variable<T> variable = new(_variableCount++, seed);
+        Variable<T> variable = new(_variableCount++, value);
         return variable;
     }
 
@@ -677,23 +677,23 @@ public record class GradientTape<T> : ITape<T>
         where U : IIndex
         => new(CreateVariable(x.X1), CreateVariable(x.X2));
 
-    public AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed)
+    public AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1)
         where U : IIndex
-        => new(CreateVariable(x0Seed), CreateVariable(x1Seed));
+        => new(CreateVariable(x0), CreateVariable(x1));
 
     public AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in Vector3<T> x)
         where U : IIndex
         => new(CreateVariable(x.X1), CreateVariable(x.X2), CreateVariable(x.X3));
 
-    public AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed)
+    public AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2)
         where U : IIndex
-        => new(CreateVariable(x0Seed), CreateVariable(x1Seed), CreateVariable(x2Seed));
+        => new(CreateVariable(x0), CreateVariable(x1), CreateVariable(x2));
 
     public AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in Vector4<T> x)
         where U : IIndex
         => new(CreateVariable(x.X1), CreateVariable(x.X2), CreateVariable(x.X3), CreateVariable(x.X4));
 
-    public AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed, in T x3Seed)
+    public AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T x3)
         where U : IIndex
-        => new(CreateVariable(x0Seed), CreateVariable(x1Seed), CreateVariable(x2Seed), CreateVariable(x3Seed));
+        => new(CreateVariable(x0), CreateVariable(x1), CreateVariable(x2), CreateVariable(x3));
 }
