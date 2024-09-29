@@ -25,6 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
+using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.AutoDiff;
@@ -257,4 +260,56 @@ public interface ITape<T>
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Tan(T)"/>
     Variable<T> Tan(Variable<T> x);
+
+    //
+    // DifGeo
+    //
+
+    /// <summary>Create an autodiff, rank-one tensor from a vector.</summary>
+    /// <typeparam name="U">An index.</typeparam>
+    /// <param name="x">A vector of seed values.</param>
+    /// <returns>A rank-one tensor of two variables.</returns>
+    AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in Vector2<T> x)
+        where U : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from seed values.</summary>
+    /// <typeparam name="U">An index.</typeparam>
+    /// <param name="x0Seed">The zeroth seed value.</param>
+    /// <param name="x1Seed">The first seed value.</param>
+    /// <returns>A rank-one tensor of two variables.</returns>
+    AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed)
+        where U : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from a vector.</summary>
+    /// <typeparam name="U">An index.</typeparam>
+    /// <param name="x">A vector of seed values.</param>
+    /// <returns>A rank-one tensor of three variables.</returns>
+    AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in Vector3<T> x)
+        where U : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from seed values.</summary>
+    /// <typeparam name="U">An index.</typeparam>
+    /// <param name="x0Seed">The zeroth seed value.</param>
+    /// <param name="x1Seed">The first seed value.</param>
+    /// <param name="x2Seed">The second seed value.</param>
+    /// <returns>A rank-one tensor of threes variables.</returns>
+    AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed)
+        where U : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from a vector.</summary>
+    /// <typeparam name="U">An index.</typeparam>
+    /// <param name="x">A vector of seed values.</param>
+    /// <returns>A rank-one tensor of four variables.</returns>
+    AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in Vector4<T> x)
+        where U : IIndex;
+
+    /// <summary>Create an autodiff, rank-one tensor from seed values.</summary>
+    /// <typeparam name="U">An index.</typeparam>
+    /// <param name="x0Seed">The zeroth seed value.</param>
+    /// <param name="x1Seed">The first seed value.</param>
+    /// <param name="x2Seed">The second seed value.</param>
+    /// <param name="x3Seed">The third seed value.</param>
+    /// <returns>A rank-one tensor of four variables.</returns>
+    AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed, in T x3Seed)
+        where U : IIndex;
 }

@@ -62,6 +62,9 @@
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.AutoDiff;
@@ -665,4 +668,32 @@ public record class GradientTape<T> : ITape<T>
         }
         return new(_nodes.Count, f(x.Value, y.Value));
     }
+
+    //
+    // DifGeo
+    //
+
+    public AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in Vector2<T> x)
+        where U : IIndex
+        => new(CreateVariable(x.X1), CreateVariable(x.X2));
+
+    public AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed)
+        where U : IIndex
+        => new(CreateVariable(x0Seed), CreateVariable(x1Seed));
+
+    public AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in Vector3<T> x)
+        where U : IIndex
+        => new(CreateVariable(x.X1), CreateVariable(x.X2), CreateVariable(x.X3));
+
+    public AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed)
+        where U : IIndex
+        => new(CreateVariable(x0Seed), CreateVariable(x1Seed), CreateVariable(x2Seed));
+
+    public AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in Vector4<T> x)
+        where U : IIndex
+        => new(CreateVariable(x.X1), CreateVariable(x.X2), CreateVariable(x.X3), CreateVariable(x.X4));
+
+    public AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0Seed, in T x1Seed, in T x2Seed, in T x3Seed)
+        where U : IIndex
+        => new(CreateVariable(x0Seed), CreateVariable(x1Seed), CreateVariable(x2Seed), CreateVariable(x3Seed));
 }
