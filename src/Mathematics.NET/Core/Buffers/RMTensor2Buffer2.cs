@@ -1,4 +1,4 @@
-﻿// <copyright file="AutoDiffTensor4Buffer4.cs" company="Mathematics.NET">
+﻿// <copyright file="RMTensor2Buffer2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,15 +34,15 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.Core.Buffers;
 
-/// <summary>Represents a buffer of 4 AutoDiffTensor4 delegates.</summary>
+/// <summary>Represents a buffer of 2 AutoDiffTensor2 delegates.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-[InlineArray(4)]
-internal struct AutoDiffTensor4Buffer4<TT, TN, TPI>
+[InlineArray(2)]
+internal struct RMTensor2Buffer2<TT, TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TPI : IIndex
 {
-    private Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> _element0;
+    private Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> _element0;
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorField4.cs" company="Mathematics.NET">
+﻿// <copyright file="RMTensor3Buffer3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,34 +25,24 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0051
+
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
+using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 
-namespace Mathematics.NET.DifferentialGeometry;
+namespace Mathematics.NET.Core.Buffers;
 
-/// <summary>Represents a rank-one tensor field with four elements.</summary>
+/// <summary>Represents a buffer of 3 AutoDiffTensor3 delegates.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="TIP">An index position.</typeparam>
-/// <typeparam name="TPI">An index.</typeparam>
-public class TensorField4<TT, TN, TIP, TPI> : TensorField<TN, TPI>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
+[InlineArray(3)]
+internal struct RMTensor3Buffer3<TT, TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-    where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private AutoDiffTensor4Buffer4<TT, TN, TPI> _buffer;
-
-    public TensorField4() { }
-
-    public Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> this[int index]
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[index];
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[index] = value;
-    }
+    private Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> _element0;
 }

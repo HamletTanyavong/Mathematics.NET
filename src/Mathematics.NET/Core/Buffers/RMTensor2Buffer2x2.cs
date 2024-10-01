@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorField2.cs" company="Mathematics.NET">
+﻿// <copyright file="RMTensor2Buffer2x2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,34 +25,23 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0051
+
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 
-namespace Mathematics.NET.DifferentialGeometry;
+namespace Mathematics.NET.Core.Buffers;
 
-/// <summary>Represents a rank-one tensor field with two elements.</summary>
+/// <summary>Represents a buffer of 2 RMTensor2Buffer2 buffers.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="TIP">An index position.</typeparam>
-/// <typeparam name="TPI">An index.</typeparam>
-public class TensorField2<TT, TN, TIP, TPI> : TensorField<TN, TPI>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
+[InlineArray(2)]
+internal struct RMTensor2Buffer2x2<TT, TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-    where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private AutoDiffTensor2Buffer2<TT, TN, TPI> _buffer;
-
-    public TensorField2() { }
-
-    public Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> this[int index]
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[index];
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[index] = value;
-    }
+    private RMTensor2Buffer2<TT, TN, TPI> _element0;
 }

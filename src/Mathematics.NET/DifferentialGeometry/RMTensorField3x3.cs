@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorField4x4.cs" company="Mathematics.NET">
+﻿// <copyright file="RMTensorField3x3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -33,24 +33,24 @@ using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensor field with 16 elements.</summary>
+/// <summary>Represents a rank-two tensor field with 9 elements.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
 /// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class TensorField4x4<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
+public class RMTensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI1P : IIndexPosition
     where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private protected AutoDiffTensor4Buffer4x4<TT, TN, TPI> _buffer;
+    private protected RMTensor3Buffer3x3<TT, TN, TPI> _buffer;
 
-    public TensorField4x4() { }
+    public RMTensorField3x3() { }
 
-    public Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> this[int row, int column]
+    public Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> this[int row, int column]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[row][column];
@@ -59,24 +59,24 @@ public class TensorField4x4<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         set => _buffer[row][column] = value;
     }
 
-    /// <inheritdoc cref="TensorField2x2{TT, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
-    public Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
+    /// <inheritdoc cref="RMTensorField2x2{TT, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
+    public Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, TPI> x)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
         tape.IsTracking = false;
 
-        Matrix4x4<TN> result = new();
-        for (int i = 0; i < 4; i++)
+        Matrix3x3<TN> result = new();
+        for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 3; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> function)
-                    result[i, j] = function(tape, point).Value;
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> function)
+                    result[i, j] = function(tape, x).Value;
             }
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
