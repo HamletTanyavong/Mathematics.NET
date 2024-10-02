@@ -27,6 +27,9 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.Benchmarks.Implementations.AutoDiff;
@@ -570,4 +573,15 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         _nodes.AddLast(new GradientNode<T>(dfx(x.Value, y.Value), dfy(x.Value, y.Value), x._index, y._index));
         return new(_nodes.Count - 1, f(x.Value, y.Value));
     }
+
+    //
+    // DifGeo
+    //
+
+    public AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in Vector2<T> x) where U : IIndex => throw new NotImplementedException();
+    public AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1) where U : IIndex => throw new NotImplementedException();
+    public AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in Vector3<T> x) where U : IIndex => throw new NotImplementedException();
+    public AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2) where U : IIndex => throw new NotImplementedException();
+    public AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in Vector4<T> x) where U : IIndex => throw new NotImplementedException();
+    public AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T x3) where U : IIndex => throw new NotImplementedException();
 }

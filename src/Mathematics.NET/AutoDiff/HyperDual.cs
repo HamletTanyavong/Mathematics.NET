@@ -27,6 +27,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.AutoDiff;
 
@@ -275,4 +278,32 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
         Func<Dual<T>, Dual<T>, Dual<T>> dfx,
         Func<Dual<T>, Dual<T>, Dual<T>> dfy)
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
+
+    //
+    // DifGeo
+    //
+
+    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Vector2<T> x, in Vector2<T> seed)
+        where U : IIndex
+        => new(CreateVariable(x.X1, seed.X1), CreateVariable(x.X2, seed.X2));
+
+    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T seed0, in T seed1)
+        where U : IIndex
+        => new(CreateVariable(x0, seed0), CreateVariable(x1, seed1));
+
+    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Vector3<T> x, in Vector3<T> seed)
+        where U : IIndex
+        => new(CreateVariable(x.X1, seed.X1), CreateVariable(x.X2, seed.X2), CreateVariable(x.X3, seed.X3));
+
+    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T seed0, in T seed1, in T seed2)
+        where U : IIndex
+        => new(CreateVariable(x0, seed0), CreateVariable(x1, seed1), CreateVariable(x2, seed2));
+
+    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Vector4<T> x, in Vector4<T> seed)
+        where U : IIndex
+        => new(CreateVariable(x.X1, seed.X1), CreateVariable(x.X2, seed.X2), CreateVariable(x.X3, seed.X3), CreateVariable(x.X4, seed.X4));
+
+    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T x3, in T seed0, in T seed1, in T seed2, in T seed3)
+        where U : IIndex
+        => new(CreateVariable(x0, seed0), CreateVariable(x1, seed1), CreateVariable(x2, seed2), CreateVariable(x3, seed3));
 }
