@@ -51,12 +51,12 @@ public sealed class KernelWorkGroupInformation
         _cl = cl;
 
         // Kernel compile work group size.
-        Span<nuint> kernelCompileWorkGroupSize = new nuint[3];
+        Span<nuint> kernelCompileWorkGroupSize = stackalloc nuint[3];
         _cl.GetKernelWorkGroupInfo(kernel.Handle, device.Handle, KernelWorkGroupInfo.CompileWorkGroupSize, (nuint)(3 * sizeof(nuint)), kernelCompileWorkGroupSize, []);
         KernelCompileWorkGroupSize = kernelCompileWorkGroupSize.ToArray();
 
         // Kernel global work size.
-        Span<nuint> kernelGlobalWorkSize = new nuint[3];
+        Span<nuint> kernelGlobalWorkSize = stackalloc nuint[3];
         var error = _cl.GetKernelWorkGroupInfo(kernel.Handle, device.Handle, KernelWorkGroupInfo.GlobalWorkSize, (nuint)(3 * sizeof(nuint)), kernelGlobalWorkSize, []);
         if (error != (int)ErrorCodes.Success)
         {
