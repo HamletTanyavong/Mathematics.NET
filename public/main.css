@@ -1,0 +1,191 @@
+:root, [data-bs-theme="dark"] {
+  --bg-color-primary: #161616;
+  --bg-color-secondary: #082424;
+  --bg-color-highlight: #a8e8e8;
+}
+
+[data-bs-theme="light"] {
+  --bg-color-primary: #e4e4e4;
+  --bg-color-secondary: #a8e8e8;
+  --bg-color-highlight: #082424;
+}
+
+#logo {
+  width: 32px;
+  height: 32px;
+}
+
+/* Code block font */
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../fonts/JetBrainsMono-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+}
+
+/* Interactive card */
+
+#interactive-card {
+    position: relative;
+    text-align: center;
+  }
+
+  #interactive-card > .flare,
+  #overlay {
+    position: absolute;
+    transition: ease-out;
+    transition-duration: 250ms;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #interactive-card:hover > #overlay,
+  #interactive-card:hover > .flare {
+    opacity: 1;
+  }
+
+#overlay {
+  width: 100%;
+  height: 100%;
+}
+
+#circle-one {
+  background-color: #ffffff80;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+#circle-two {
+  background-color: #ffd70040;
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+}
+
+#circle-three {
+  background-color: #86cefa20;
+  width: 128px;
+  height: 128px;
+  border-radius: 64px;
+}
+
+/* Common */
+
+body {
+  background-color: var(--bg-color-primary);
+}
+
+body > footer {
+  display: flex;
+  align-items: center;
+  padding: 0rem;
+  height: 3rem;
+}
+
+header {
+  --bs-border-width: 0px;
+}
+
+footer {
+  background-color: var(--bg-color-secondary);
+  font-size: 0.75rem;
+}
+
+  footer.border-top{
+    border-top: 0px;
+  }
+
+a {
+  text-decoration: none;
+}
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+.tabGroup > section {
+  border: 0px;
+  border-radius: 0.5rem;
+}
+
+.nav-tabs {
+  margin-bottom: 0.5rem;
+  border-bottom: 0px;
+  --bs-nav-tabs-border-width: 0px;
+  --bs-nav-tabs-border-radius: 0px;
+}
+
+.nav-item:hover {
+  background-color: var(--bg-color-secondary);
+}
+
+.bg-body {
+  background-color: var(--bg-color-secondary);
+}
+
+.dropdown a:hover {
+  text-decoration: none;
+}
+
+.dropdown-menu[data-bs-popper] {
+    background-color: var(--bg-color-secondary);
+    margin-top: 1.125rem;
+}
+
+  .dropdown-menu a:hover {
+    text-decoration: none;
+  }
+
+/* Mermaid */
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
+  svg[id^='mermaid-'] {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: inherit !important;
+  }
+
+  svg[id^='mermaid-'] .node * {
+    stroke-width: 0px !important;
+    fill: var(--bg-color-secondary) !important;
+  }
+
+  svg[id^='mermaid-'] .label * {
+    color: var(--bg-color-highlight) !important;
+  }
+
+  svg[id^='mermaid-'] .flowchart-link {
+    stroke: var(--bg-color-highlight) !important;
+  }
+
+  svg[id^='mermaid-'] .edge-thickness-normal {
+    stroke-width: 1px !important;
+  }
+
+  svg[id^='mermaid-'] .edgeLabel {
+    background-color: var(--bg-color-primary) !important;
+    padding: 1rem 0rem !important;
+  }

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="2148"
+   height="2148"
+   role="img"
+   focusable="false"
+   viewBox="0 -950 2148 2148"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="mathematics.net.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   inkscape:export-filename="mathematics.net.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title6">Mathematics.NET Icon</title>
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="494.97474"
+     inkscape:cy="1404.3141"
+     inkscape:window-width="3440"
+     inkscape:window-height="1417"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient3"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#87cefa;stop-opacity:1;"
+         offset="0"
+         id="stop3" />
+      <stop
+         style="stop-color:#ffd700;stop-opacity:1;"
+         offset="1"
+         id="stop4" />
+    </linearGradient>
+    <path
+       id="MJX-1-TEX-LO-2211"
+       d="m 60,948 q 3,2 605,2 h 602 l 58,-135 q 59,-138 63,-146 h -40 l -7,14 q -21,41 -56,78 -50,48 -111,77 -61,29 -141,43 -80,14 -151,17 -71,3 -183,4 H 574 543 251 l 8,-11 q 463,-633 465,-639 1,-2 0,-6 -3,-3 -264,-302 L 196,-356 q 0,-1 211,-1 52,0 141,0 89,0 128,-1 136,0 220,5 84,5 167,21 83,16 141,49 58,33 103,87 21,26 41,72 h 40 q 0,-1 -7,-21 -7,-20 -25,-65 -18,-45 -31,-84 l -58,-155 -601,-1 q -602,0 -605,2 -6,2 -6,9 0,2 2,6 l 533,610 q 0,1 -33,45 -33,44 -105,144 -72,100 -130,178 L 56,909 55,924 q 0,21 5,24 z" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3"
+       id="linearGradient4"
+       x1="317.35928"
+       y1="-450.0011"
+       x2="1125.6438"
+       y2="950.00208"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     stroke="currentColor"
+     fill="currentColor"
+     stroke-width="0"
+     transform="matrix(1.5342857,0,0,-1.5342857,-32.987133,507.57143)"
+     id="g3"
+     style="mix-blend-mode:hard-light;fill:url(#linearGradient4)">
+    <g
+       data-mml-node="math"
+       id="g2"
+       style="fill:url(#linearGradient4)">
+      <g
+         data-mml-node="mo"
+         id="g1"
+         style="fill:url(#linearGradient4)">
+        <use
+           data-c="2211"
+           xlink:href="#MJX-1-TEX-LO-2211"
+           id="use1"
+           style="fill:url(#linearGradient4)" />
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata3">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Mathematics.NET Icon</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Hamlet Tanyavong</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>mathematics; math; csharp</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:description>An icon for the C# library Mathematics.NET</dc:description>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright © 2023-present Hamlet Tanyavong</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:source>https://github.com/HamletTanyavong/Mathematics.NET</dc:source>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

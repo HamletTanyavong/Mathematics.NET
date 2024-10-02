@@ -1,0 +1,747 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IConstants&lt;T&gt; | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IConstants&lt;T&gt; | Mathematics.NET ">
+      
+      <meta name="description" content="Defines support for common mathematical constants.">
+      <link rel="icon" href="../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/new/main/apiSpec/new?filename=Mathematics_NET_Core_IConstants_1.md&amp;value=---%0Auid%3A%20Mathematics.NET.Core.IConstants%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo/mathematics.net.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Mathematics.NET.Core.IConstants`1">
+
+
+
+  <h1 id="Mathematics_NET_Core_IConstants_1" data-uid="Mathematics.NET.Core.IConstants`1" class="text-break">
+Interface IConstants&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Mathematics.html">Mathematics</a>.<a class="xref" href="Mathematics.NET.html">NET</a>.<a class="xref" href="Mathematics.NET.Core.html">Core</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Mathematics.NET.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Defines support for common mathematical constants.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IConstants&lt;T&gt; : IComplex&lt;T&gt;, IAdditionOperation&lt;T, T&gt;, IDivisionOperation&lt;T, T&gt;, IMultiplicationOperation&lt;T, T&gt;, IUnaryMinusOperation&lt;T, T&gt;, IUnaryPlusOperation&lt;T, T&gt;, ISubtractionOperation&lt;T, T&gt;, IEqualityRelation&lt;T, bool&gt;, IEquatable&lt;T&gt;, ISpanFormattable, IFormattable, ISpanParsable&lt;T&gt;, IParsable&lt;T&gt; where T : IConstants&lt;T&gt;</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The type that implements the interface.</p>
+</dd>
+  </dl>
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Re">IComplex&lt;T&gt;.Re</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Im">IComplex&lt;T&gt;.Im</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Magnitude">IComplex&lt;T&gt;.Magnitude</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Phase">IComplex&lt;T&gt;.Phase</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Zero">IComplex&lt;T&gt;.Zero</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_One">IComplex&lt;T&gt;.One</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_NaN">IComplex&lt;T&gt;.NaN</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Radix">IComplex&lt;T&gt;.Radix</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Abs__0_">IComplex&lt;T&gt;.Abs(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Conjugate__0_">IComplex&lt;T&gt;.Conjugate(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_CreateChecked__1___0_">IComplex&lt;T&gt;.CreateChecked&lt;U&gt;(U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_CreateSaturating__1___0_">IComplex&lt;T&gt;.CreateSaturating&lt;U&gt;(U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_CreateTruncating__1___0_">IComplex&lt;T&gt;.CreateTruncating&lt;U&gt;(U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_FromDouble_System_Double_">IComplex&lt;T&gt;.FromDouble(double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_FromReal_Mathematics_NET_Core_Real_">IComplex&lt;T&gt;.FromReal(Real)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsFinite__0_">IComplex&lt;T&gt;.IsFinite(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsInfinity__0_">IComplex&lt;T&gt;.IsInfinity(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsNaN__0_">IComplex&lt;T&gt;.IsNaN(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_IsZero__0_">IComplex&lt;T&gt;.IsZero(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Parse_System_String_System_Globalization_NumberStyles_System_IFormatProvider_">IComplex&lt;T&gt;.Parse(string, NumberStyles, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Parse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider_">IComplex&lt;T&gt;.Parse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_Reciprocate__0_">IComplex&lt;T&gt;.Reciprocate(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertFromChecked__1___0__0__">IComplex&lt;T&gt;.TryConvertFromChecked&lt;U&gt;(U, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertFromSaturating__1___0__0__">IComplex&lt;T&gt;.TryConvertFromSaturating&lt;U&gt;(U, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertFromTruncating__1___0__0__">IComplex&lt;T&gt;.TryConvertFromTruncating&lt;U&gt;(U, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertToChecked__1__0___0__">IComplex&lt;T&gt;.TryConvertToChecked&lt;U&gt;(T, out U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertToSaturating__1__0___0__">IComplex&lt;T&gt;.TryConvertToSaturating&lt;U&gt;(T, out U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryConvertToTruncating__1__0___0__">IComplex&lt;T&gt;.TryConvertToTruncating&lt;U&gt;(T, out U)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryParse_System_String_System_Globalization_NumberStyles_System_IFormatProvider__0__">IComplex&lt;T&gt;.TryParse(string, NumberStyles, IFormatProvider, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Mathematics.NET.Core.IComplex-1.html#Mathematics_NET_Core_IComplex_1_TryParse_System_ReadOnlySpan_System_Char__System_Globalization_NumberStyles_System_IFormatProvider__0__">IComplex&lt;T&gt;.TryParse(ReadOnlySpan&lt;char&gt;, NumberStyles, IFormatProvider, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals">IEquatable&lt;T&gt;.Equals(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanformattable.tryformat">ISpanFormattable.TryFormat(Span&lt;char&gt;, out int, ReadOnlySpan&lt;char&gt;, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iformattable.tostring">IFormattable.ToString(string, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanparsable-1.parse">ISpanParsable&lt;T&gt;.Parse(ReadOnlySpan&lt;char&gt;, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.ispanparsable-1.tryparse">ISpanParsable&lt;T&gt;.TryParse(ReadOnlySpan&lt;char&gt;, IFormatProvider, out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iparsable-1.parse">IParsable&lt;T&gt;.Parse(string, IFormatProvider)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iparsable-1.tryparse">IParsable&lt;T&gt;.TryParse(string, IFormatProvider, out T)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_E_" data-uid="Mathematics.NET.Core.IConstants`1.E*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_E" data-uid="Mathematics.NET.Core.IConstants`1.E">
+  E
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the natural logarithmic base, <span class="math">\(e\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T E { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_EulerMascheroni_" data-uid="Mathematics.NET.Core.IConstants`1.EulerMascheroni*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_EulerMascheroni" data-uid="Mathematics.NET.Core.IConstants`1.EulerMascheroni">
+  EulerMascheroni
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the Euler-Mascheroni constant, <span class="math">\(\gamma\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T EulerMascheroni { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_GoldenRatio_" data-uid="Mathematics.NET.Core.IConstants`1.GoldenRatio*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_GoldenRatio" data-uid="Mathematics.NET.Core.IConstants`1.GoldenRatio">
+  GoldenRatio
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the golden ratio, <span class="math">\(\phi\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T GoldenRatio { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_Ln10_" data-uid="Mathematics.NET.Core.IConstants`1.Ln10*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_Ln10" data-uid="Mathematics.NET.Core.IConstants`1.Ln10">
+  Ln10
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the natural logarithm of 10, <span class="math">\(\ln(10)\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Ln10 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_Ln2_" data-uid="Mathematics.NET.Core.IConstants`1.Ln2*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_Ln2" data-uid="Mathematics.NET.Core.IConstants`1.Ln2">
+  Ln2
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the natural logarithm of 2, <span class="math">\(\ln(2)\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Ln2 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_Pi_" data-uid="Mathematics.NET.Core.IConstants`1.Pi*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_Pi" data-uid="Mathematics.NET.Core.IConstants`1.Pi">
+  Pi
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the ratio of the circumference of a circle to its diameter, <span class="math">\(π\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Pi { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_PiOverTwo_" data-uid="Mathematics.NET.Core.IConstants`1.PiOverTwo*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_PiOverTwo" data-uid="Mathematics.NET.Core.IConstants`1.PiOverTwo">
+  PiOverTwo
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(π/2\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T PiOverTwo { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_PiSquared_" data-uid="Mathematics.NET.Core.IConstants`1.PiSquared*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_PiSquared" data-uid="Mathematics.NET.Core.IConstants`1.PiSquared">
+  PiSquared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(π^2\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T PiSquared { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_Sqrt2_" data-uid="Mathematics.NET.Core.IConstants`1.Sqrt2*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_Sqrt2" data-uid="Mathematics.NET.Core.IConstants`1.Sqrt2">
+  Sqrt2
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the square root of 2, <span class="math">\(\sqrt{2}\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Sqrt2 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_Sqrt3_" data-uid="Mathematics.NET.Core.IConstants`1.Sqrt3*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_Sqrt3" data-uid="Mathematics.NET.Core.IConstants`1.Sqrt3">
+  Sqrt3
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the square root of 3, <span class="math">\(\sqrt{3}\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Sqrt3 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_Sqrt5_" data-uid="Mathematics.NET.Core.IConstants`1.Sqrt5*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_Sqrt5" data-uid="Mathematics.NET.Core.IConstants`1.Sqrt5">
+  Sqrt5
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the square root of 5, <span class="math">\(\sqrt{5}\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Sqrt5 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_Tau_" data-uid="Mathematics.NET.Core.IConstants`1.Tau*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_Tau" data-uid="Mathematics.NET.Core.IConstants`1.Tau">
+  Tau
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(2π\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T Tau { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_ZetaOf2_" data-uid="Mathematics.NET.Core.IConstants`1.ZetaOf2*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_ZetaOf2" data-uid="Mathematics.NET.Core.IConstants`1.ZetaOf2">
+  ZetaOf2
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents the solution to the Basel problem, <span class="math">\(\zeta(2) = \pi^2/6\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T ZetaOf2 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_ZetaOf3_" data-uid="Mathematics.NET.Core.IConstants`1.ZetaOf3*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_ZetaOf3" data-uid="Mathematics.NET.Core.IConstants`1.ZetaOf3">
+  ZetaOf3
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents Apéry's constant, <span class="math">\(\zeta(3)\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T ZetaOf3 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Mathematics_NET_Core_IConstants_1_ZetaOf4_" data-uid="Mathematics.NET.Core.IConstants`1.ZetaOf4*"></a>
+
+  <h3 id="Mathematics_NET_Core_IConstants_1_ZetaOf4" data-uid="Mathematics.NET.Core.IConstants`1.ZetaOf4">
+  ZetaOf4
+  <a class="header-action link-secondary" title="View source" href="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IConstants.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Represents <span class="math">\(\zeta(4) = \pi^4/90\)</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static abstract T ZetaOf4 { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

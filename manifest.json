@@ -1,0 +1,1736 @@
+{
+  "sitemap": {
+    "baseUrl": "https://mathematics.hamlettanyavong.com/",
+    "changefreq": "weekly",
+    "priority": 0.5
+  },
+  "source_base_path": "/home/runner/work/Mathematics.NET/Mathematics.NET/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.AutoDiffExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.AutoDiffExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.Dual-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.Dual-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.GradientTape-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.GradientTape-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.HessianTape-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.HessianTape-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.HyperDual-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.HyperDual-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.IDual-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.IDual-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.ITape-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.ITape-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.Variable-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.Variable-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.AutoDiff.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.AutoDiff.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Attributes.IndexNameAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Attributes.IndexNameAttribute.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Attributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Complex.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Complex.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Constants.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Constants.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Extensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.IComplex-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.IComplex-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.IConstants-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.IConstants-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.IDifferentiableFunctions-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.IDifferentiableFunctions-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.IRational-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.IRational-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.IReal-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.IReal-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IAdditionOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IAdditionOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IDecrementOperation-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IDecrementOperation-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IDivisionOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IDivisionOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IHadamardProductOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IHadamardProductOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IIncrementOperation-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IIncrementOperation-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IInnerProductOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IInnerProductOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IModuloOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IModuloOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IMultiplicationOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IMultiplicationOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IMultiplicationOperation-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IMultiplicationOperation-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.ISubtractionOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.ISubtractionOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IUnaryMinusOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IUnaryMinusOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.IUnaryPlusOperation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.IUnaryPlusOperation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Operations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Operations.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.ParallelActions.MultiplyByScalarAction-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.ParallelActions.MultiplyByScalarAction-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.ParallelActions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.ParallelActions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Precision.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Precision.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Rational-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Rational-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Real.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Real.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Relations.IEqualityRelation-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Relations.IEqualityRelation-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Relations.IInequalityRelations-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Relations.IInequalityRelations-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.Relations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.Relations.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Core.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IIndex.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IIndex.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IIndexPosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IIndexPosition.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankFourTensor-7.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankFourTensor-7.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankOneTensor-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankOneTensor-4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankThreeTensor-6.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankThreeTensor-6.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankTwoTensor-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.IRankTwoTensor-5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.TensorField-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.TensorField-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Abstractions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor2-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor3-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.AutoDiffTensor4-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Christoffel-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Christoffel-5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.DifGeo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.DifGeo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.DifGeoExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.DifGeoExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.IIndexName.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.IIndexName.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Index-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Index-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Lower.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Lower.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensor-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensor-5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensorField2x2-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensorField2x2-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensorField3x3-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensorField3x3-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensorField4x4-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.MetricTensorField4x4-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.NoIndex.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.NoIndex.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField2-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField2-4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField2x2-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField2x2-5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField3-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField3-4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField3x3-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField3x3-5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField4-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField4-4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField4x4-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.RMTensorField4x4-5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-6.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Tensor-6.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.Upper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.Upper.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.DifferentialGeometry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.DifferentialGeometry.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.IComputeService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.IComputeService.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.CommandQueue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.CommandQueue.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.Context.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.Context.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.Device.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.Device.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.IOpenCLObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.IOpenCLObject.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.Kernel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.Kernel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.KernelWorkGroupInformation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.KernelWorkGroupInformation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.OpenCLService.Vendors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.OpenCLService.Vendors.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.OpenCLService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.OpenCLService.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.Platform.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.Platform.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.Program.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.Program.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.WorkSize2D.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.WorkSize2D.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.OpenCL.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.OpenCL.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GPU.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GPU.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GraphTheory.Abstractions.IGraphComponent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GraphTheory.Abstractions.IGraphComponent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GraphTheory.Abstractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GraphTheory.Abstractions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GraphTheory.Edge.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GraphTheory.Edge.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GraphTheory.Graph-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GraphTheory.Graph-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GraphTheory.Node.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GraphTheory.Node.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.GraphTheory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.GraphTheory.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IArray3D-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IArray3D-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IArray4D-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IArray4D-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IArrayRepresentable-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IArrayRepresentable-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.ICubicArray-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.ICubicArray-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IFourDimensionalArrayRepresentable-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IFourDimensionalArrayRepresentable-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IHypercubic4DArray-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IHypercubic4DArray-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IMatrix-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IMatrix-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IOneDimensionalArrayRepresentable-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IOneDimensionalArrayRepresentable-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.ISquareMatrix-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.ISquareMatrix-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IThreeDimensionalArrayRepresentable-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IThreeDimensionalArrayRepresentable-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.ITwoDimensionalArrayRepresentable-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.ITwoDimensionalArrayRepresentable-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IVector-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.IVector-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Abstractions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Array2x2x2-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Array2x2x2-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Array2x2x2x2-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Array2x2x2x2-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Array3x3x3-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Array3x3x3-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Array3x3x3x3-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Array3x3x3x3-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Array4x4x4-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Array4x4x4-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Array4x4x4x4-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Array4x4x4x4-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector2-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector2-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector2-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector2-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector3-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector3-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector3-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector4-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector4-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector4-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.AutoDiffVector4-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.CylindricalVector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.CylindricalVector.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.LinAlg.QRDecompositionMethod-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.LinAlg.QRDecompositionMethod-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.LinAlg.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.LinAlg.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.LinAlgExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.LinAlgExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Matrix2x2-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Matrix2x2-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Matrix3x3-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Matrix3x3-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Matrix4x4-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Matrix4x4-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.SphericalVector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.SphericalVector.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Vector2-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Vector2-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Vector3-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Vector3-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.Vector4-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.Vector4-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.LinearAlgebra.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.LinearAlgebra.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Mathematics.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Mathematics.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Solvers.RungeKutta4-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Solvers.RungeKutta4-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Solvers.RungeKutta4-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Solvers.RungeKutta4-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Solvers.RungeKutta4-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Solvers.RungeKutta4-4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Solvers.SystemState-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Solvers.SystemState-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Solvers.SystemState-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Solvers.SystemState-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Solvers.SystemState-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Solvers.SystemState-4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Solvers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Solvers.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Utilities.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Utilities.Extensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.Utilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.Utilities.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Mathematics.NET.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Mathematics.NET.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "api/toc.json"
+        },
+        ".html": {
+          "relative_path": "api/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/differential_geometry/tensors.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/differential_geometry/tensors.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "fonts/JetBrainsMono-Bold.woff2",
+      "output": {
+        "resource": {
+          "relative_path": "fonts/JetBrainsMono-Bold.woff2"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "fonts/JetBrainsMono-Italic.woff2",
+      "output": {
+        "resource": {
+          "relative_path": "fonts/JetBrainsMono-Italic.woff2"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "fonts/JetBrainsMono-Regular.woff2",
+      "output": {
+        "resource": {
+          "relative_path": "fonts/JetBrainsMono-Regular.woff2"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/autodiff/first-order-forward-mode.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/autodiff/first-order-forward-mode.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/autodiff/first-order-reverse-mode.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/autodiff/first-order-reverse-mode.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/autodiff/second-order-forward-mode.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/autodiff/second-order-forward-mode.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/autodiff/second-order-reverse-mode.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/autodiff/second-order-reverse-mode.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/diagnostic_messages/diagnostic-messages.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/diagnostic_messages/diagnostic-messages.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/diagnostic_messages/difgeo/dg0001.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/diagnostic_messages/difgeo/dg0001.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/fundamentals/numeric-types.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/fundamentals/numeric-types.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/get_started/installation.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/get_started/installation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/gpu/opencl.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/gpu/opencl.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "guide/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "guide/intro.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "guide/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "guide/toc.json"
+        },
+        ".html": {
+          "relative_path": "guide/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo/mathematics.net.ico",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo/mathematics.net.ico"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo/mathematics.net.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo/mathematics.net.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo/mathematics.net.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo/mathematics.net.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

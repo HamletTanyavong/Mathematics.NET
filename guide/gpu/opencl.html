@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>OpenCL | Mathematics.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="OpenCL | Mathematics.NET ">
+      
+      
+      <link rel="icon" href="../../images/logo/mathematics.net.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/HamletTanyavong/Mathematics.NET/blob/main/docs/guide/gpu/opencl.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo/mathematics.net.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="opencl">OpenCL</h1>
+
+<p>OpenCL via Mathematics.NET is available on Windows and Linux machines with compatible GPUs. Please note that support is limited, and its features are subject to change drastically until an official release of the package has been made.</p>
+<h2 id="matrix-multiplication-example">Matrix Multiplication Example</h2>
+<p>Here is an example of matrix multiplication on an <a href="https://compubench.com/device.jsp?benchmark=compu20d&amp;os=Windows&amp;api=cl&amp;D=NVIDIA+GeForce+RTX+2080+Ti&amp;testgroup=info">NVIDIA GeForce RTX 2080 Ti</a>. More methods will be added in the future that will allow users to get more information about their GPUs.</p>
+<h3 id="setup">Setup</h3>
+<p>One way to set up OpenCL for Mathematics.NET is with the following:</p>
+<pre><code class="lang-csharp">using CommunityToolkit.HighPerformance;
+using Mathematics.NET.Core;
+using Mathematics.NET.GPU;
+using Mathematics.NET.GPU.OpenCL;
+using Mathematics.NET.LinearAlgebra;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+var builder = Host.CreateApplicationBuilder();
+
+// Configure the service.
+builder.Services.AddSingleton&lt;IComputeService, OpenCLService&gt;(provider =&gt;
+{
+    var logger = provider.GetRequiredService&lt;ILogger&lt;OpenCLService&gt;&gt;();
+    return new OpenCLService(
+        logger,
+        OpenCLService.Vendors.NVIDIA,
+        x =&gt; x.Name == &quot;NVIDIA GeForce RTX 2080 Ti&quot;);
+});
+
+// Add logging filters.
+#if DEBUG
+builder.Logging.AddFilter(logLevel =&gt; logLevel &gt;= LogLevel.Debug);
+#elif RELEASE
+builder.Logging.AddFilter(logLevel =&gt; logLevel &gt;= LogLevel.Warning);
+#endif
+
+// Build the application.
+var app = builder.Build();
+</code></pre>
+<p>We can also instantiate <a class="xref" href="../../api/Mathematics.NET.GPU.OpenCL.OpenCLService.html">OpenCLService</a> directly, but for this example, we will use the former. To get the service, use</p>
+<pre><code class="lang-csharp">// Get the OpenCL service.
+using var openCL = app.Services.GetRequiredService&lt;IComputeService&gt;();
+</code></pre>
+<h3 id="matrix-multiplication-without-padding">Matrix Multiplication Without Padding</h3>
+<p>Suppose we want to compute <span class="math">\(M=AB\)</span>, where</p>
+<div class="math">
+\[
+A = \begin{pmatrix}
+0  &amp; 1  &amp; 2  &amp; 3  &amp; 4  &amp; 5  &amp; 6  &amp; 7  &amp; 8  &amp; 9  &amp; 10 &amp; 11 &amp; 12 &amp; 13 &amp; 14 &amp; 15 \\
+16 &amp; 17 &amp; 18 &amp; 19 &amp; 20 &amp; 21 &amp; 22 &amp; 23 &amp; 24 &amp; 25 &amp; 26 &amp; 27 &amp; 28 &amp; 29 &amp; 30 &amp; 31 \\
+32 &amp; 33 &amp; 34 &amp; 35 &amp; 36 &amp; 37 &amp; 38 &amp; 39 &amp; 40 &amp; 41 &amp; 42 &amp; 43 &amp; 44 &amp; 45 &amp; 46 &amp; 47 \\
+48 &amp; 49 &amp; 50 &amp; 51 &amp; 52 &amp; 53 &amp; 54 &amp; 55 &amp; 56 &amp; 57 &amp; 58 &amp; 59 &amp; 60 &amp; 61 &amp; 62 &amp; 63
+\end{pmatrix}
+\]</div>
+<p>and</p>
+<div class="math">
+\[
+B = \begin{pmatrix}
+0   &amp; 1   &amp; 2   &amp; 3   &amp; 4   &amp; 5   &amp; 6   &amp; 7   \\
+8   &amp; 9   &amp; 10  &amp; 11  &amp; 12  &amp; 13  &amp; 14  &amp; 15  \\
+16  &amp; 17  &amp; 18  &amp; 19  &amp; 20  &amp; 21  &amp; 22  &amp; 23  \\
+24  &amp; 25  &amp; 26  &amp; 27  &amp; 28  &amp; 29  &amp; 30  &amp; 31  \\
+32  &amp; 33  &amp; 34  &amp; 35  &amp; 36  &amp; 37  &amp; 38  &amp; 39  \\
+40  &amp; 41  &amp; 42  &amp; 43  &amp; 44  &amp; 45  &amp; 46  &amp; 47  \\
+48  &amp; 49  &amp; 50  &amp; 51  &amp; 52  &amp; 53  &amp; 54  &amp; 55  \\
+56  &amp; 57  &amp; 58  &amp; 59  &amp; 60  &amp; 61  &amp; 62  &amp; 63  \\
+64  &amp; 65  &amp; 66  &amp; 67  &amp; 68  &amp; 69  &amp; 70  &amp; 71  \\
+72  &amp; 73  &amp; 74  &amp; 75  &amp; 76  &amp; 77  &amp; 78  &amp; 79  \\
+80  &amp; 81  &amp; 82  &amp; 83  &amp; 84  &amp; 85  &amp; 86  &amp; 87  \\
+88  &amp; 89  &amp; 90  &amp; 91  &amp; 92  &amp; 93  &amp; 94  &amp; 95  \\
+96  &amp; 97  &amp; 98  &amp; 99  &amp; 100 &amp; 101 &amp; 102 &amp; 103 \\
+104 &amp; 105 &amp; 106 &amp; 107 &amp; 108 &amp; 109 &amp; 110 &amp; 111 \\
+112 &amp; 113 &amp; 114 &amp; 115 &amp; 116 &amp; 117 &amp; 118 &amp; 119 \\
+120 &amp; 121 &amp; 122 &amp; 123 &amp; 124 &amp; 125 &amp; 126 &amp; 127
+\end{pmatrix}
+\]</div>
+<p>We can use the method <a class="xref" href="../../api/Mathematics.NET.GPU.OpenCL.OpenCLService.html#Mathematics_NET_GPU_OpenCL_OpenCLService_MatMul_">MatMul</a> to perform matrix multiplication on the GPU.</p>
+<pre><code class="lang-csharp">// Create and fill the left matrix.
+Span2D&lt;Real&gt; matA = new Real[4, 16];
+for (int i = 0; i &lt; 4; i++)
+{
+    for (int j = 0; j &lt; 16; j++)
+    {
+        matA[i, j] = 16 * i + j;
+    }
+}
+
+// Create and fill the right matrix.
+Span2D&lt;Real&gt; matB = new Real[16, 8];
+for (int i = 0; i &lt; 16; i++)
+{
+    for (int j = 0; j &lt; 8; j++)
+    {
+        matB[i, j] = 8 * i + j;
+    }
+}
+
+// Perform the computation on a chosen device with global and local work sizes of { 4, 8 }.
+var result = openCL.MatMul(openCL.Devices[0], new(4, 8), new(4, 8), matA, matB);
+Console.WriteLine(result.ToDisplayString());
+</code></pre>
+<p>This gives us the following result:</p>
+<div class="math">
+\[
+M = \begin{pmatrix}
+9920  &amp; 10040 &amp; 10160 &amp; 10280 &amp; 10400 &amp; 10520 &amp; 10640 &amp; 10760 \\
+25280 &amp; 25656 &amp; 26032 &amp; 26408 &amp; 26784 &amp; 27160 &amp; 27536 &amp; 27912 \\
+40640 &amp; 41272 &amp; 41904 &amp; 42536 &amp; 43168 &amp; 43800 &amp; 44432 &amp; 45064 \\
+56000 &amp; 56888 &amp; 57776 &amp; 58664 &amp; 59552 &amp; 60440 &amp; 61328 &amp; 62216
+\end{pmatrix}
+\]</div>
+<h3 id="matrix-multiplication-with-padding">Matrix Multiplication with Padding</h3>
+<p>Sometimes, the matrices we want to multiply my not have ideal dimensions; more specifically, the dimensions of the matrices are such that they cannot be evenly divided by our local work size. In such a case, we have to pad our matrices to get them to the proper dimensions. Now, suppose</p>
+<div class="math">
+\[
+A = \begin{pmatrix}
+0  &amp; 1  &amp; 2  &amp; 3  &amp; 4  &amp; 5  &amp; 6  \\
+7  &amp; 8  &amp; 9  &amp; 10 &amp; 11 &amp; 12 &amp; 13 \\
+14 &amp; 15 &amp; 16 &amp; 17 &amp; 18 &amp; 19 &amp; 20
+\end{pmatrix}
+\]</div>
+<p>and</p>
+<div class="math">
+\[
+B = \begin{pmatrix}
+0  &amp; 1  &amp; 2  &amp; 3  &amp; 4  \\
+5  &amp; 6  &amp; 7  &amp; 8  &amp; 9  \\
+10 &amp; 11 &amp; 12 &amp; 13 &amp; 14 \\
+15 &amp; 16 &amp; 17 &amp; 18 &amp; 19 \\
+20 &amp; 21 &amp; 22 &amp; 23 &amp; 24 \\
+25 &amp; 26 &amp; 27 &amp; 28 &amp; 29 \\
+30 &amp; 31 &amp; 32 &amp; 33 &amp; 34
+\end{pmatrix}
+\]</div>
+<p>We can use <a class="xref" href="../../api/Mathematics.NET.LinearAlgebra.LinAlgExtensions.html#Mathematics_NET_LinearAlgebra_LinAlgExtensions_Pad__1_CommunityToolkit_HighPerformance_Span2D___0__System_Int32_System_Int32_">Pad</a> to add zeros to the right and bottom of each of these matrices so that <span class="math">\(A\)</span> and <span class="math">\(B\)</span> have dimensions <code>4 x 8</code> and <code>8 x 8</code>, respectively.</p>
+<pre><code class="lang-csharp">var pMatA = matA.Pad(4, 8);
+var pMatB = matB.Pad(8, 8);
+</code></pre>
+<p>Then using the same method above, we can perform matrix multiplication with the two matrices.</p>
+<pre><code class="lang-csharp">var result = openCL.MatMul(openCL.Devices[0], new(4, 8), new(4, 4), pMatA, pMatB);
+Console.WriteLine(result.Slice(0, 0, 3, 5).ToDisplayString());
+</code></pre>
+<p>Here, we chose a local work size of <code>{ 4, 4 }</code>, which is a multiple of our global work size.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For performance reasons, matrices should only be padded once. When finished, use <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.span-1.slice">Slice</a>, or the 2D version from <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.toolkit.highperformance.span2d-1.slice">CommunityToolkit</a>, to get the unpadded result.</p>
+</div>
+<p>With that, we now have our result:</p>
+<div class="math">
+\[
+M = \begin{pmatrix}
+455  &amp; 476  &amp; 497  &amp; 518  &amp; 539  \\
+1190 &amp; 1260 &amp; 1330 &amp; 1400 &amp; 1470 \\
+1925 &amp; 2044 &amp; 2163 &amp; 2282 &amp; 2401
+\end{pmatrix}
+\]</div>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright &copy; 2024 Hamlet Tanyavong
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
