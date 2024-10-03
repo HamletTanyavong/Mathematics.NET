@@ -29,7 +29,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.AutoDiff;
 
@@ -283,27 +282,30 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     // DifGeo
     //
 
-    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Vector2<T> x, in Vector2<T> seed)
+    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(in Dual{TN}, in Dual{TN})" />
+    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1)
         where U : IIndex
-        => new(CreateVariable(x.X1, seed.X1), CreateVariable(x.X2, seed.X2));
+        => new(x0, x1);
 
-    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T seed0, in T seed1)
+    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(in Dual{TN}, in Dual{TN}, in Dual{TN})" />
+    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1, in HyperDual<T> x2)
         where U : IIndex
-        => new(CreateVariable(x0, seed0), CreateVariable(x1, seed1));
+        => new(x0, x1, x2);
 
-    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Vector3<T> x, in Vector3<T> seed)
+    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(in Dual{TN}, in Dual{TN}, in Dual{TN}, in Dual{TN})"/>
+    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1, in HyperDual<T> x2, in HyperDual<T> x3)
         where U : IIndex
-        => new(CreateVariable(x.X1, seed.X1), CreateVariable(x.X2, seed.X2), CreateVariable(x.X3, seed.X3));
+        => new(x0, x1, x2, x3);
 
-    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T seed0, in T seed1, in T seed2)
+    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Dual<T> x0, in Dual<T> x1)
         where U : IIndex
-        => new(CreateVariable(x0, seed0), CreateVariable(x1, seed1), CreateVariable(x2, seed2));
+        => new(new(x0), new(x1));
 
-    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Vector4<T> x, in Vector4<T> seed)
+    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Dual<T> x0, in Dual<T> x1, in Dual<T> x2)
         where U : IIndex
-        => new(CreateVariable(x.X1, seed.X1), CreateVariable(x.X2, seed.X2), CreateVariable(x.X3, seed.X3), CreateVariable(x.X4, seed.X4));
+        => new(new(x0), new(x1), new(x2));
 
-    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T x3, in T seed0, in T seed1, in T seed2, in T seed3)
+    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Dual<T> x0, in Dual<T> x1, in Dual<T> x2, in Dual<T> x3)
         where U : IIndex
-        => new(CreateVariable(x0, seed0), CreateVariable(x1, seed1), CreateVariable(x2, seed2), CreateVariable(x3, seed3));
+        => new(new(x0), new(x1), new(x2), new(x3));
 }
