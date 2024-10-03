@@ -124,7 +124,7 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
 
     public static HyperDual<T> CreateVariable(T value) => new(new(value, T.Zero));
 
-    public static HyperDual<T> CreateVariable(T value, T seed) => new(new(value, T.One));
+    public static HyperDual<T> CreateVariable(T value, T seed) => new(new(value, seed));
 
     /// <summary>Create an instance of the type with a specified value and two seed values.</summary>
     /// <remarks>Use this to compute mixed second derivatives.</remarks>
