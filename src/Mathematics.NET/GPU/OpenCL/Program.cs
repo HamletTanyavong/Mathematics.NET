@@ -39,7 +39,7 @@ public sealed class Program : IOpenCLObject
     private readonly CL _cl;
     private readonly ILogger<OpenCLService> _logger;
 
-    public unsafe Program(ILogger<OpenCLService> logger, CL cl, Context context, ReadOnlySpan<Device> devices, params string[] options)
+    public unsafe Program(ILogger<OpenCLService> logger, CL cl, Context context, ReadOnlySpan<Device> devices, params ReadOnlySpan<string> options)
     {
         _cl = cl;
         _logger = logger;
@@ -80,7 +80,7 @@ public sealed class Program : IOpenCLObject
 
         fixed (nint* pDevices = devices.ToArray().Select(x => x.Handle).ToArray())
         {
-            var optionsString = Encoding.UTF8.GetBytes(string.Join(' ', options.Where(x => !string.IsNullOrEmpty(x))));
+            var optionsString = Encoding.UTF8.GetBytes(string.Join(' ', options.ToArray().Where(x => !string.IsNullOrEmpty(x))));
             fixed (byte* pOptionsString = optionsString)
             {
                 var error = _cl.BuildProgram(Handle, (uint)devices.Length, pDevices, pOptionsString, null, null);
