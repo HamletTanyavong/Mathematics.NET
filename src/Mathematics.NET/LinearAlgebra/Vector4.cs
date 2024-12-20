@@ -307,39 +307,23 @@ public struct Vector4<T>(T x1, T x2, T x3, T x4) : IVector<Vector4<T>, T>
 
     public readonly Real Norm()
     {
-        Span<double> components = [
-            (X1 * T.Conjugate(X1)).Re.AsDouble(),
-            (X2 * T.Conjugate(X2)).Re.AsDouble(),
-            (X3 * T.Conjugate(X3)).Re.AsDouble(),
-            (X4 * T.Conjugate(X4)).Re.AsDouble()];
-
-        var max = components[0];
-        for (int i = 1; i < 4; i++)
-        {
-            if (components[i] > max)
-            {
-                max = components[i];
-            }
-        }
-
-        var partialSum = 0.0;
-        var maxSquared = max * max;
-        partialSum += components[0] / maxSquared;
-        partialSum += components[1] / maxSquared;
-        partialSum += components[2] / maxSquared;
-        partialSum += components[3] / maxSquared;
-
-        return max * Math.Sqrt(partialSum);
+        var components = Vector256.Create(
+            (X1 * T.Conjugate(X1)).AsDouble(),
+            (X2 * T.Conjugate(X2)).AsDouble(),
+            (X3 * T.Conjugate(X3)).AsDouble(),
+            (X4 * T.Conjugate(X4)).AsDouble());
+        var vector = Vector128.Max(components.GetLower(), components.GetUpper());
+        var max = Math.Max(vector[0], vector[1]);
+        return max * Math.Sqrt(Vector256.Sum(Vector256.Divide(components, Vector256.Create(max * max))));
     }
 
     public readonly Vector4<T> Normalize()
     {
         var norm = Norm();
-        if (norm == T.Zero)
-            throw new DivideByZeroException("Norm must be greater than zero");
-
         if (typeof(T) == typeof(Real))
             return Vector256.Divide(this.AsVector256(), Vector256.Create(norm.AsDouble())).AsVector4<T>();
+        else if (typeof(T) == typeof(Complex))
+            return Vector512.Divide(this.AsVector512(), Vector512.Create(norm.AsDouble())).AsVector4<T>();
         else
             return new(X1 / norm, X2 / norm, X3 / norm, X4 / norm);
     }
