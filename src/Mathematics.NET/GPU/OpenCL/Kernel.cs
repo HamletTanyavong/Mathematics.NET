@@ -33,7 +33,7 @@ using Silk.NET.OpenCL;
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an OpenCL kernel.</summary>
-public sealed class Kernel : IOpenCLObject
+public sealed partial class Kernel : IOpenCLObject
 {
     private CL _cl;
     private ILogger<OpenCLService> _logger;
@@ -46,14 +46,10 @@ public sealed class Kernel : IOpenCLObject
         _logger = logger;
 
         Name = name;
-
         Handle = _cl.CreateKernel(program.Handle, name, out var error);
-#if DEBUG
+
         if (error != (int)ErrorCodes.Success)
-        {
-            _logger.LogDebug("Unable to create kernel.");
-        }
-#endif
+            CouldNotCreateKernel(name);
     }
 
     public void Dispose()
@@ -64,6 +60,9 @@ public sealed class Kernel : IOpenCLObject
             Handle = 0;
         }
     }
+
+    [LoggerMessage(LogLevel.Error, "Unable to create the kernel {Kernel}.")]
+    private partial void CouldNotCreateKernel(string kernel);
 
     public nint Handle { get; private set; }
 

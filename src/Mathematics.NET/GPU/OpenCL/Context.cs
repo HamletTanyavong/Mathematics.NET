@@ -33,7 +33,7 @@ using Silk.NET.OpenCL;
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an OpenCL context.</summary>
-public sealed class Context : IOpenCLObject
+public sealed partial class Context : IOpenCLObject
 {
     // Api.
     private readonly CL _cl;
@@ -44,17 +44,23 @@ public sealed class Context : IOpenCLObject
         _cl = cl;
         _logger = logger;
 
-        // Attempt to create a GPU context. If that does not work, attempt to create a CPU context.
-        var contextProperties = stackalloc nint[3] { (nint)ContextProperties.Platform, platform.Handle, 0 };
-        Handle = _cl.CreateContextFromType(contextProperties, DeviceType.Gpu, null, null, out var error);
-        if (error != (int)ErrorCodes.Success)
+        try
         {
-            _logger.LogDebug("Unable to create GPU context; attempting to create CPU context instead.");
-            Handle = _cl.CreateContextFromType(contextProperties, DeviceType.Cpu, null, null, out error);
+            // Attempt to create a GPU context. If that does not work, attempt to create a CPU context.
+            var contextProperties = stackalloc nint[3] { (nint)ContextProperties.Platform, platform.Handle, 0 };
+            Handle = _cl.CreateContextFromType(contextProperties, DeviceType.Gpu, null, null, out var error);
             if (error != (int)ErrorCodes.Success)
             {
-                throw new Exception("Unable to create context on either the GPU or CPU.");
+                CouldNotCreateGPUContext();
+                Handle = _cl.CreateContextFromType(contextProperties, DeviceType.Cpu, null, null, out error);
+                if (error != (int)ErrorCodes.Success)
+                    throw new Exception("Unable to create context on either the GPU or CPU.");
             }
+        }
+        catch (Exception ex)
+        {
+            CouldNotCreateContext(ex);
+            throw;
         }
     }
 
@@ -66,6 +72,12 @@ public sealed class Context : IOpenCLObject
             Handle = 0;
         }
     }
+
+    [LoggerMessage(LogLevel.Warning, "Unable to create a GPU context; attempting to create a CPU context instead.")]
+    private partial void CouldNotCreateGPUContext();
+
+    [LoggerMessage(LogLevel.Error, "Unable to create a context on either the GPU or CPU.")]
+    private partial void CouldNotCreateContext(Exception ex);
 
     public nint Handle { get; private set; }
 

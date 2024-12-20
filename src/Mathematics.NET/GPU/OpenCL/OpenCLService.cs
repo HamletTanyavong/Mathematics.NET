@@ -26,6 +26,7 @@
 // </copyright>
 
 #pragma warning disable IDE0032
+#pragma warning disable IDE0058
 
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ using Silk.NET.OpenCL;
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an Mathematics.NET OpenCL service.</summary>
-public sealed class OpenCLService : IComputeService
+public sealed partial class OpenCLService : IComputeService
 {
     /// <summary>A class containing names of common vendors.</summary>
     public static class Vendors
@@ -43,9 +44,6 @@ public sealed class OpenCLService : IComputeService
         public const string Intel = "Intel® Corporation";
         public const string NVIDIA = "NVIDIA Corporation";
     }
-
-    private const string s_setKernelArgError = "Unable to set arguments for the kernel {Kernel}.";
-    private const string s_enqueueNDRangeKernelError = "Problem enqueueing NDRange kernel.";
 
     private ILogger<OpenCLService> _logger;
     private CL _cl;
@@ -59,18 +57,13 @@ public sealed class OpenCLService : IComputeService
     {
         _logger = logger;
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            _cl = CL.GetApi();
-        }
-        else
-        {
-            _logger.LogWarning("OpenCLService is not supported on this operating system.");
-            throw new PlatformNotSupportedException();
-        }
-
         try
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                _cl = CL.GetApi();
+            else
+                throw new PlatformNotSupportedException();
+
             // OpenCL platform.
             _cl.GetPlatformIDs(0, null, out var platformsSize);
             Span<nint> platformsSpan = new nint[platformsSize];
@@ -85,9 +78,7 @@ public sealed class OpenCLService : IComputeService
             if (platforms.FirstOrDefault(x => x.Vendor == vendor) is Platform platform)
             {
                 _platform = platform;
-#if DEBUG
-                _logger.LogDebug("Platform vendor: {Vendor}.", _platform.Vendor);
-#endif
+                LogPlatformVendor(_platform.Vendor);
             }
             else
             {
@@ -101,20 +92,24 @@ public sealed class OpenCLService : IComputeService
             _devices = _context.GetDevices(filter, useFirst).ToArray();
             if (_devices.Length == 0)
                 throw new Exception("There are no devices available after filtering.");
-#if DEBUG
+
             for (int i = 0; i < _devices.Length; i++)
             {
-                _logger.LogDebug("Using the device at index {Index} with name: {DeviceName}.", i, _devices.Span[i].Name);
+                LogDeviceUsed(i, _devices.Span[i].Name);
             }
-#endif
 
             // OpenCL program.
             _program = new Program(_logger, _cl, _context, _devices.Span, options);
         }
-        catch (Exception e)
+        catch (PlatformNotSupportedException ex)
+        {
+            PlatformNotSupported(ex);
+            throw;
+        }
+        catch (Exception ex)
         {
             Dispose();
-            _logger.LogCritical(e, "Unable to create the service.");
+            CouldNotCreateOpenCLService(ex);
             throw;
         }
     }
@@ -135,6 +130,32 @@ public sealed class OpenCLService : IComputeService
 
         _cl.Dispose();
     }
+
+    //
+    // Logging
+    //
+
+    [LoggerMessage(LogLevel.Error, "The OpenCL service is not supported on this operating system.")]
+    private partial void PlatformNotSupported(Exception ex);
+
+    [LoggerMessage(LogLevel.Information, "Platform vendor: {Vendor}.")]
+    private partial void LogPlatformVendor(string vendor);
+
+    [LoggerMessage(LogLevel.Information, "Using the device at index, {Index}, with name, {Device}.")]
+    private partial void LogDeviceUsed(int index, string device);
+
+    [LoggerMessage(LogLevel.Error, "Unable to create the OpenCL service.")]
+    private partial void CouldNotCreateOpenCLService(Exception ex);
+
+    [LoggerMessage(LogLevel.Error, "Unable to set arguments for the kernel {Kernel}.")]
+    private partial void CouldNotSetKernelArguments(string kernel);
+
+    [LoggerMessage(LogLevel.Error, "Unable to enqueue the n-dimensional range kernel {Kernel}.")]
+    private partial void CouldNotEnqueueNDRangeKernel(string kernel);
+
+    //
+    // Properties
+    //
 
     public ReadOnlySpan<Device> Devices => _devices.Span;
 
@@ -161,18 +182,15 @@ public sealed class OpenCLService : IComputeService
             var kernel = _program.Kernels["comp_vec_mul_scalar_overwrite"].Handle;
             var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
             error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
-#if DEBUG
             if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_vec_mul_scalar_overwrite"].Name);
-#endif
+                CouldNotSetKernelArguments("comp_vec_mul_scalar_overwrite");
 
             // Enqueue NDRange kernel.
             using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
             error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
             if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                CouldNotEnqueueNDRangeKernel("comp_vec_mul_scalar_overwrite");
+
             // Enqueue read buffer.
             _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Complex) * vector.Length), pVector, 0, null, null);
 
@@ -200,18 +218,15 @@ public sealed class OpenCLService : IComputeService
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
                 error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
                 error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
                 if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_vec_mul_scalar"].Name);
-#endif
+                    CouldNotSetKernelArguments("comp_vec_mul_scalar");
 
                 // Enqueue NDRange kernel.
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                 error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
                 if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                    CouldNotEnqueueNDRangeKernel("comp_vec_mul_scalar");
+
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
 
@@ -250,18 +265,15 @@ public sealed class OpenCLService : IComputeService
                     error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
                     error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
                     error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
                     if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_mat_mul"].Name);
-#endif
+                        CouldNotSetKernelArguments("comp_mat_mul");
 
                     // Enqueue NDRange kernel.
                     using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                     error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
-#if DEBUG
                     if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                        CouldNotEnqueueNDRangeKernel("comp_mat_mul");
+
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * result.Length), pResult, 0, null, null);
 
@@ -302,18 +314,15 @@ public sealed class OpenCLService : IComputeService
                     error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
                     error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
                     error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
                     if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_setKernelArgError, _program.Kernels["mat_mul"].Name);
-#endif
+                        CouldNotSetKernelArguments("mat_mul");
 
                     // Enqueue NDRange kernel.
                     using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                     error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
-#if DEBUG
                     if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                        CouldNotEnqueueNDRangeKernel("mat_mul");
+
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * result.Length), pResult, 0, null, null);
 
@@ -339,18 +348,15 @@ public sealed class OpenCLService : IComputeService
             var kernel = _program.Kernels["vec_mul_scalar_overwrite"].Handle;
             var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
             error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), in scalar);
-#if DEBUG
             if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar_overwrite"].Name);
-#endif
+                CouldNotSetKernelArguments("vec_mul_scalar_overwrite");
 
             // Enqueue NDRange kernel.
             using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
             error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
             if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                CouldNotEnqueueNDRangeKernel("vec_mul_scalar_overwrite");
+
             // Enqueue read buffer.
             _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Real) * vector.Length), pVector, 0, null, null);
 
@@ -378,18 +384,15 @@ public sealed class OpenCLService : IComputeService
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
                 error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), &scalar);
                 error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
                 if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar"].Name);
-#endif
+                    CouldNotSetKernelArguments("vec_mul_scalar");
 
                 // Enqueue NDRange kernel.
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                 error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
                 if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                    CouldNotEnqueueNDRangeKernel("vec_mul_scalar");
+
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * length), pResult, 0, null, null);
 

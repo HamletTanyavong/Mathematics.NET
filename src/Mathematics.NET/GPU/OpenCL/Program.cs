@@ -34,7 +34,7 @@ using Silk.NET.OpenCL;
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an OpenCL program.</summary>
-public sealed class Program : IOpenCLObject
+public sealed partial class Program : IOpenCLObject
 {
     private readonly CL _cl;
     private readonly ILogger<OpenCLService> _logger;
@@ -72,10 +72,8 @@ public sealed class Program : IOpenCLObject
         fixed (nuint* pCodeLengths = codeLengths)
         {
             Handle = _cl.CreateProgramWithSource(context.Handle, (uint)code.Length, code, pCodeLengths, out var error);
-#if DEBUG
             if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug("Unable to create the program from source.");
-#endif
+                CouldNotCreateProgram();
         }
 
         fixed (nint* pDevices = devices.ToArray().Select(x => x.Handle).ToArray())
@@ -114,6 +112,9 @@ public sealed class Program : IOpenCLObject
             Handle = 0;
         }
     }
+
+    [LoggerMessage(LogLevel.Error, "Unable to create the program from source.")]
+    private partial void CouldNotCreateProgram();
 
     public nint Handle { get; private set; }
 
