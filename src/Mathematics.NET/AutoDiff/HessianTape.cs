@@ -112,7 +112,7 @@ public record class HessianTape<T> : ITape<T>
         {
             if (cancellationToken.IsCancellationRequested)
             {
-                logger.LogInformation("Log nodes operation cancelled");
+                logger.LogInformation("Log nodes operation cancelled.");
                 cancellationToken.ThrowIfCancellationRequested();
             }
         }
