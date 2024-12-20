@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Title>Mathematics.NET</Title>
     <PackageId>Physics.NET.Mathematics</PackageId>
@@ -41,6 +41,10 @@
   <ItemGroup>
     <None Include="..\..\docs\images\logo\mathematics.net.png" Pack="true" PackagePath="\" />
     <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\THIRD_PARTY_NOTICES.txt" Pack="true" PackagePath="\" />
     <None Update="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>

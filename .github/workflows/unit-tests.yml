@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        dotnet-version: ['9.x']
+        dotnet-version: ['8.x', '9.x']
 
     steps:
     - name: Checkout Repository
