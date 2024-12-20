@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Operations;
 /// <summary>Defines a mechanism for adding two values.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
 /// <typeparam name="TOutput">The output type.</typeparam>
-public interface IAdditionOperation<TInput, TOutput>
+public interface IAdditionOperation<in TInput, out TOutput>
     where TInput : IAdditionOperation<TInput, TOutput>
 {
     /// <summary>Add two values.</summary>

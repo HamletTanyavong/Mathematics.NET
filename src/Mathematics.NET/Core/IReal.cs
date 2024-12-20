@@ -82,7 +82,7 @@ public interface IReal<T>
     /// <returns><c>true</c> if the value is negative infinity; otherwise, <c>false</c></returns>
     static abstract bool IsNegativeInfinity(T x);
 
-    /// <summary>Check if a valule is positive infinity.</summary>
+    /// <summary>Check if a value is positive infinity.</summary>
     /// <param name="x">The value to check.</param>
     /// <returns><c>true</c> if the value is positive infinity; otherwise, <c>false</c></returns>
     static abstract bool IsPositiveInfinity(T x);

@@ -30,15 +30,15 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.Core.Operations;
 
 /// <summary>Defines a mechanism for computing inner products of vectors.</summary>
-/// <typeparam name="T">A type that implements <see cref="IOneDimensionalArrayRepresentable{T, U}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IInnerProductOperation<T, U>
-    where T : IOneDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
+/// <typeparam name="TInput">A type that implements <see cref="IOneDimensionalArrayRepresentable{T, U}"/>.</typeparam>
+/// <typeparam name="TOutput">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+public interface IInnerProductOperation<in TInput, out TOutput>
+    where TInput : IOneDimensionalArrayRepresentable<TInput, TOutput>
+    where TOutput : IComplex<TOutput>
 {
     /// <summary>Compute the inner product of two vectors.</summary>
-    /// <param name="left">A vector of type <typeparamref name="T"/>.</param>
-    /// <param name="right">A vector of type <typeparamref name="T"/>.</param>
+    /// <param name="left">A vector of type <typeparamref name="TInput"/>.</param>
+    /// <param name="right">A vector of type <typeparamref name="TInput"/>.</param>
     /// <returns>A scalar.</returns>
-    static abstract U InnerProduct(T left, T right);
+    static abstract TOutput InnerProduct(TInput left, TInput right);
 }

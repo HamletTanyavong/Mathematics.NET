@@ -31,8 +31,8 @@ namespace Mathematics.NET.Core;
 
 /// <summary>
 /// A class for working with floating-point numbers.
-/// 
-/// The methods for computing equalities and inequalies come from <i>The Art of Computer Programming: Seminumerical Algorithms</i>, section 4.2.2, <i>Accuracy of Floating Point Arithmetic</i> by Donald Knuth.
+///
+/// The methods for computing equalities and inequalities come from <i>The Art of Computer Programming: Seminumerical Algorithms</i>, section 4.2.2, <i>Accuracy of Floating Point Arithmetic</i> by Donald Knuth.
 /// </summary>
 public static class Precision
 {
@@ -74,7 +74,7 @@ public static class Precision
 
     /// <summary>
     /// Check if two values are approximately equal within a specified threshold $ \epsilon $.
-    /// 
+    ///
     /// If the values are complex, the threshold represents a disk of radius $ \epsilon $ in which the two values must reside.
     /// </summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
@@ -98,7 +98,7 @@ public static class Precision
 
     /// <summary>
     /// Check if two values are essentially equal within a specified threshold $ \epsilon $.
-    /// 
+    ///
     /// If the values are complex, the threshold represents a disk of radius $ \epsilon $ in which the two values must reside.
     /// </summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>

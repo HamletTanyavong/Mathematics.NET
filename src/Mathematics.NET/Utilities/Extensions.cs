@@ -36,15 +36,17 @@ public static class Extensions
     /// <param name="builder">A string builder instance.</param>
     /// <param name="unwantedChars">An array of characters to trim.</param>
     /// <returns>The same string builder with characters removed.</returns>
-    public static StringBuilder TrimEnd(this StringBuilder builder, params char[]? unwantedChars)
+    public static StringBuilder TrimEnd(this StringBuilder builder, params ReadOnlySpan<char> unwantedChars)
     {
-        if (unwantedChars == null || builder.Length == 0 || unwantedChars.Length == 0)
+        if (builder.Length == 0 || unwantedChars.Length == 0)
             return builder;
 
         int i = builder.Length - 1;
         while (i >= 0)
         {
+#pragma warning disable EPS06
             if (!unwantedChars.Contains(builder[i]))
+#pragma warning restore EPS06
                 break;
             i--;
         }

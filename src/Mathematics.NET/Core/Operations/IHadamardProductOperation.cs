@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Operations;
 /// <summary>Defines a mechanism for performing element-wise multiplication on two array-backed objects.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
 /// <typeparam name="TOutput">The output type.</typeparam>
-public interface IHadamardProductOperation<TInput, TOutput>
+public interface IHadamardProductOperation<in TInput, out TOutput>
     where TInput : IHadamardProductOperation<TInput, TOutput>
 {
     /// <summary>Multiply the left value by the right value element-wise.</summary>

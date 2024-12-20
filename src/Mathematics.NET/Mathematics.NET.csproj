@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Title>Mathematics.NET</Title>
     <PackageId>Physics.NET.Mathematics</PackageId>
@@ -41,6 +41,10 @@
   <ItemGroup>
     <None Include="..\..\docs\images\logo\mathematics.net.png" Pack="true" PackagePath="\" />
     <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\THIRD_PARTY_NOTICES.txt" Pack="true" PackagePath="\" />
     <None Update="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
@@ -53,8 +57,8 @@
     <PackageReference Include="ErrorProne.NET.Structs" Version="0.1.2" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
-    <PackageReference Include="Silk.NET.OpenCL.Extensions.KHR" Version="2.21.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Silk.NET.OpenCL.Extensions.KHR" Version="2.22.0" />
     <ProjectReference Include="..\Mathematics.NET.SourceGenerators\Mathematics.NET.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 

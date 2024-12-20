@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Operations;
 /// <summary>Defines a mechanism for dividing two values.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
 /// <typeparam name="TOutput">The output type.</typeparam>
-public interface IDivisionOperation<TInput, TOutput>
+public interface IDivisionOperation<in TInput, out TOutput>
     where TInput : IDivisionOperation<TInput, TOutput>
 {
     /// <summary>Divide the left value by the right value.</summary>

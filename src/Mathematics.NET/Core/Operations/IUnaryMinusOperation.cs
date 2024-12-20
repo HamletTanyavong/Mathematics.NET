@@ -29,15 +29,15 @@ namespace Mathematics.NET.Core.Operations;
 
 /// <summary>Defines a mechanism for negating values.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
-/// <typeparam name="TResult">The output type.</typeparam>
-public interface IUnaryMinusOperation<TInput, TResult>
-    where TInput : IUnaryMinusOperation<TInput, TResult>
+/// <typeparam name="TOutput">The output type.</typeparam>
+public interface IUnaryMinusOperation<in TInput, out TOutput>
+    where TInput : IUnaryMinusOperation<TInput, TOutput>
 {
     /// <summary>Multiply the value by negative one.</summary>
     /// <param name="value">The value.</param>
     /// <returns>The value times negative one.</returns>
-    static abstract TResult operator -(TInput value);
+    static abstract TOutput operator -(TInput value);
 
     /// <inheritdoc cref="operator -(TInput)"/>
-    static virtual TResult operator checked -(TInput value) => -value;
+    static virtual TOutput operator checked -(TInput value) => -value;
 }

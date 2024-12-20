@@ -51,6 +51,7 @@ public static class Extensions
 
     // Do not make the following methods public.
 
+    // The real part of any type that implements IComplex<T> should be aligned at zero.
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static double AsDouble<T>(this T value)
         where T : IComplex<T>

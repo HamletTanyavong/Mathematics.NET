@@ -33,7 +33,7 @@ namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
 
 // The seed tensor contraction should have a lower index for the left argument and an upper
 // index for the right argument. This is purely by choice, but it makes the code generation
-// easier since it provids a consistent pattern to follow. With the source generator, including
+// easier since it provides a consistent pattern to follow. With the source generator, including
 // the self-contraction source generator, we only need to iterate through the index combinations
 // from left to right. The first indices of the left and right tensors in the seed contraction
 // should also be the indices to contract.

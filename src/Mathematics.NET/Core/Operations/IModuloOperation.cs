@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Operations;
 /// <summary>Defines a mechanism for computing modulos.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
 /// <typeparam name="TOutput">The output type.</typeparam>
-public interface IModuloOperation<TInput, TOutput>
+public interface IModuloOperation<in TInput, out TOutput>
     where TInput : IModuloOperation<TInput, TOutput>
 {
     /// <summary>Compute the left value mod the right value.</summary>
