@@ -27,33 +27,27 @@
 
 #pragma warning disable IDE0058
 
+using Mathematics.NET.Exceptions;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an OpenCL kernel.</summary>
-public sealed class Kernel : IOpenCLObject
+public sealed partial class Kernel : IOpenCLObject
 {
     private CL _cl;
-    private ILogger<OpenCLService> _logger;
 
     public readonly string Name;
 
-    public unsafe Kernel(ILogger<OpenCLService> logger, CL cl, Program program, string name)
+    public unsafe Kernel(CL cl, Program program, string name)
     {
         _cl = cl;
-        _logger = logger;
 
         Name = name;
-
         Handle = _cl.CreateKernel(program.Handle, name, out var error);
-#if DEBUG
-        if (error != (int)ErrorCodes.Success)
-        {
-            _logger.LogDebug("Unable to create kernel.");
-        }
-#endif
+
+        ComputeServiceException.ThrowIfNotSuccess(error, "Unable to create the kernel", kernel: name);
     }
 
     public void Dispose()

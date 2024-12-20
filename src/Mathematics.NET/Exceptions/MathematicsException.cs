@@ -1,4 +1,4 @@
-﻿// <copyright file="Platform.cs" company="Mathematics.NET">
+﻿// <copyright file="MathematicsException.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,36 +25,16 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0058
+namespace Mathematics.NET.Exceptions;
 
-using System.Text;
-using Silk.NET.OpenCL;
-
-namespace Mathematics.NET.GPU.OpenCL;
-
-/// <summary>Represents an OpenCL platform.</summary>
-public sealed class Platform : IOpenCLObject
+/// <summary>Represents a mathematics exception.</summary>
+public sealed class MathematicsException : Exception
 {
-    private readonly CL _cl;
+    public MathematicsException() { }
 
-    // Platform information.
-    public readonly string Vendor;
+    public MathematicsException(string message)
+        : base(message) { }
 
-    public unsafe Platform(CL cl, nint handle)
-    {
-        _cl = cl;
-        Handle = handle;
-
-        // Platform vendor.
-        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, 0, null, out var vendorSize);
-        Span<byte> vendorSpan = new byte[vendorSize];
-        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, vendorSize, vendorSpan, []);
-        Vendor = Encoding.UTF8.GetString(vendorSpan).TrimEnd('\0');
-    }
-
-    public void Dispose() => Handle = 0;
-
-    public nint Handle { get; private set; }
-
-    public bool IsValidInstance => Handle != 0;
+    public MathematicsException(string message, Exception innerException)
+        : base(message, innerException) { }
 }

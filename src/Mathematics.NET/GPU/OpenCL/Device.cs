@@ -35,7 +35,6 @@ namespace Mathematics.NET.GPU.OpenCL;
 /// <summary>Represents an OpenCL device.</summary>
 public sealed class Device : IOpenCLObject
 {
-    // Api.
     private readonly CL _cl;
 
     // Device information, listed mostly alphabetically.

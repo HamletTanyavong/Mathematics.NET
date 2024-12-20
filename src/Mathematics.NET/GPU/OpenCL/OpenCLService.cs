@@ -26,15 +26,17 @@
 // </copyright>
 
 #pragma warning disable IDE0032
+#pragma warning disable IDE0058
 
 using System.Runtime.InteropServices;
+using Mathematics.NET.Exceptions;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an Mathematics.NET OpenCL service.</summary>
-public sealed class OpenCLService : IComputeService
+public sealed partial class OpenCLService : IComputeService
 {
     /// <summary>A class containing names of common vendors.</summary>
     public static class Vendors
@@ -43,9 +45,6 @@ public sealed class OpenCLService : IComputeService
         public const string Intel = "Intel® Corporation";
         public const string NVIDIA = "NVIDIA Corporation";
     }
-
-    private const string s_setKernelArgError = "Unable to set arguments for the kernel {Kernel}.";
-    private const string s_enqueueNDRangeKernelError = "Problem enqueueing NDRange kernel.";
 
     private ILogger<OpenCLService> _logger;
     private CL _cl;
@@ -60,14 +59,9 @@ public sealed class OpenCLService : IComputeService
         _logger = logger;
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
             _cl = CL.GetApi();
-        }
         else
-        {
-            _logger.LogWarning("OpenCLService is not supported on this operating system.");
-            throw new PlatformNotSupportedException();
-        }
+            throw new PlatformNotSupportedException("The OpenCL service is only available on Windows and Linux machines.");
 
         try
         {
@@ -85,13 +79,11 @@ public sealed class OpenCLService : IComputeService
             if (platforms.FirstOrDefault(x => x.Vendor == vendor) is Platform platform)
             {
                 _platform = platform;
-#if DEBUG
-                _logger.LogDebug("Platform vendor: {Vendor}.", _platform.Vendor);
-#endif
+                LogPlatformVendor(_platform.Vendor);
             }
             else
             {
-                throw new Exception($"There is no platform with the vendor {vendor}.");
+                throw new ComputeServiceException($"There is no platform with the vendor {vendor}.");
             }
 
             // OpenCL context.
@@ -100,21 +92,20 @@ public sealed class OpenCLService : IComputeService
             // OpenCL device.
             _devices = _context.GetDevices(filter, useFirst).ToArray();
             if (_devices.Length == 0)
-                throw new Exception("There are no devices available after filtering.");
-#if DEBUG
+                throw new ComputeServiceException("There are no devices available after filtering.");
+
             for (int i = 0; i < _devices.Length; i++)
             {
-                _logger.LogDebug("Using the device at index {Index} with name: {DeviceName}.", i, _devices.Span[i].Name);
+                LogDeviceUsed(i, _devices.Span[i].Name);
             }
-#endif
 
             // OpenCL program.
             _program = new Program(_logger, _cl, _context, _devices.Span, options);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             Dispose();
-            _logger.LogCritical(e, "Unable to create the service.");
+            CouldNotCreateOpenCLService(ex);
             throw;
         }
     }
@@ -135,6 +126,23 @@ public sealed class OpenCLService : IComputeService
 
         _cl.Dispose();
     }
+
+    //
+    // Logging
+    //
+
+    [LoggerMessage(LogLevel.Information, "Platform vendor: {Vendor}.")]
+    private partial void LogPlatformVendor(string vendor);
+
+    [LoggerMessage(LogLevel.Information, "Using the device at index, {Index}, with name, {Device}.")]
+    private partial void LogDeviceUsed(int index, string device);
+
+    [LoggerMessage(LogLevel.Error, "Unable to create the OpenCL service.")]
+    private partial void CouldNotCreateOpenCLService(Exception ex);
+
+    //
+    // Properties
+    //
 
     public ReadOnlySpan<Device> Devices => _devices.Span;
 
@@ -161,18 +169,13 @@ public sealed class OpenCLService : IComputeService
             var kernel = _program.Kernels["comp_vec_mul_scalar_overwrite"].Handle;
             var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
             error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
-#if DEBUG
-            if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_vec_mul_scalar_overwrite"].Name);
-#endif
+            ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_vec_mul_scalar_overwrite");
 
             // Enqueue NDRange kernel.
             using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
             error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
-            if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+            ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_vec_mul_scalar_overwrite");
+
             // Enqueue read buffer.
             _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Complex) * vector.Length), pVector, 0, null, null);
 
@@ -200,18 +203,13 @@ public sealed class OpenCLService : IComputeService
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
                 error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
                 error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
-                if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_vec_mul_scalar"].Name);
-#endif
+                ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_vec_mul_scalar");
 
                 // Enqueue NDRange kernel.
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                 error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
-                if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_vec_mul_scalar");
+
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
 
@@ -228,7 +226,7 @@ public sealed class OpenCLService : IComputeService
     {
         var k = left.Width;
         if (k != right.Height)
-            throw new Exception("Cannot multiply two matrices with incompatible dimensions.");
+            throw new MathematicsException("Cannot multiply two matrices with incompatible dimensions.");
         Span2D<Complex> result = new Complex[left.Height, right.Width];
 
         fixed (void* pLeft = left)
@@ -250,18 +248,13 @@ public sealed class OpenCLService : IComputeService
                     error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
                     error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
                     error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
-                    if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_setKernelArgError, _program.Kernels["comp_mat_mul"].Name);
-#endif
+                    ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_mat_mul");
 
                     // Enqueue NDRange kernel.
                     using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                     error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
-#if DEBUG
-                    if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                    ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_mat_mul");
+
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * result.Length), pResult, 0, null, null);
 
@@ -280,7 +273,7 @@ public sealed class OpenCLService : IComputeService
     {
         var k = left.Width;
         if (k != right.Height)
-            throw new Exception("Cannot multiply two matrices with incompatible dimensions.");
+            throw new MathematicsException("Cannot multiply two matrices with incompatible dimensions.");
         Span2D<Real> result = new Real[left.Height, right.Width];
 
         fixed (void* pLeft = left)
@@ -302,18 +295,13 @@ public sealed class OpenCLService : IComputeService
                     error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
                     error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
                     error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
-                    if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_setKernelArgError, _program.Kernels["mat_mul"].Name);
-#endif
+                    ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "mat_mul");
 
                     // Enqueue NDRange kernel.
                     using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                     error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
-#if DEBUG
-                    if (error != (int)ErrorCodes.Success)
-                        _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                    ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "mat_mul");
+
                     // Enqueue read buffer.
                     _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * result.Length), pResult, 0, null, null);
 
@@ -339,18 +327,13 @@ public sealed class OpenCLService : IComputeService
             var kernel = _program.Kernels["vec_mul_scalar_overwrite"].Handle;
             var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
             error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), in scalar);
-#if DEBUG
-            if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar_overwrite"].Name);
-#endif
+            ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "vec_mul_scalar_overwrite");
 
             // Enqueue NDRange kernel.
             using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
             error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
-            if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+            ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "vec_mul_scalar_overwrite");
+
             // Enqueue read buffer.
             _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Real) * vector.Length), pVector, 0, null, null);
 
@@ -378,18 +361,13 @@ public sealed class OpenCLService : IComputeService
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
                 error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), &scalar);
                 error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-#if DEBUG
-                if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_setKernelArgError, _program.Kernels["vec_mul_scalar"].Name);
-#endif
+                ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "vec_mul_scalar");
 
                 // Enqueue NDRange kernel.
                 using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
                 error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-#if DEBUG
-                if (error != (int)ErrorCodes.Success)
-                    _logger.LogDebug(s_enqueueNDRangeKernelError);
-#endif
+                ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "vec_mul_scalar");
+
                 // Enqueue read buffer.
                 _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * length), pResult, 0, null, null);
 

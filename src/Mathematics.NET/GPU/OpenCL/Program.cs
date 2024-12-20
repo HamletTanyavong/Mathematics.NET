@@ -28,21 +28,22 @@
 #pragma warning disable IDE0058
 
 using System.Text;
+using Mathematics.NET.Exceptions;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an OpenCL program.</summary>
-public sealed class Program : IOpenCLObject
+public sealed partial class Program : IOpenCLObject
 {
-    private readonly CL _cl;
     private readonly ILogger<OpenCLService> _logger;
+    private readonly CL _cl;
 
     public unsafe Program(ILogger<OpenCLService> logger, CL cl, Context context, ReadOnlySpan<Device> devices, params ReadOnlySpan<string> options)
     {
-        _cl = cl;
         _logger = logger;
+        _cl = cl;
 
         var files = Directory
             .EnumerateFiles(Path.Combine("GPU", "OpenCL", "Kernels"))
@@ -72,10 +73,7 @@ public sealed class Program : IOpenCLObject
         fixed (nuint* pCodeLengths = codeLengths)
         {
             Handle = _cl.CreateProgramWithSource(context.Handle, (uint)code.Length, code, pCodeLengths, out var error);
-#if DEBUG
-            if (error != (int)ErrorCodes.Success)
-                _logger.LogDebug("Unable to create the program from source.");
-#endif
+            ComputeServiceException.ThrowIfNotSuccess(error, "Unable to create the program from source.");
         }
 
         fixed (nint* pDevices = devices.ToArray().Select(x => x.Handle).ToArray())
@@ -89,7 +87,7 @@ public sealed class Program : IOpenCLObject
                     _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, 0, null, out var infoSize);
                     Span<byte> infoSpan = new byte[infoSize];
                     _cl.GetProgramBuildInfo(Handle, *pDevices, ProgramBuildInfo.BuildLog, infoSize, infoSpan, []);
-                    throw new Exception(Encoding.UTF8.GetString(infoSpan));
+                    throw new ComputeServiceException(Encoding.UTF8.GetString(infoSpan));
                 }
             }
         }
@@ -123,7 +121,7 @@ public sealed class Program : IOpenCLObject
 
     public void CreateKernel(string name)
     {
-        var kernel = new Kernel(_logger, _cl, this, name);
+        var kernel = new Kernel(_cl, this, name);
         Kernels.Add(name, kernel);
     }
 }

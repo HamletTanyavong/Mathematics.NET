@@ -34,7 +34,6 @@ namespace Mathematics.NET.GPU.OpenCL;
 /// <summary>Represents an OpenCL command queue.</summary>
 public sealed class CommandQueue : IOpenCLObject
 {
-    // Api.
     private readonly CL _cl;
 
     public unsafe CommandQueue(CL cl, Context context, Device device, CommandQueueProperties commandQueueProperties)
