@@ -34,6 +34,13 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.x
+          9.x
+
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
 

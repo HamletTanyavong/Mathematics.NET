@@ -44,7 +44,9 @@ public static class Extensions
         int i = builder.Length - 1;
         while (i >= 0)
         {
+#pragma warning disable EPS06
             if (!unwantedChars.Contains(builder[i]))
+#pragma warning restore EPS06
                 break;
             i--;
         }

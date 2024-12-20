@@ -15,26 +15,28 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        dotnet-version: ['8.x', '9.x']
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Setup .NET
+      # We do not specify our dotnet versions in the strategy matrix since we need all versions for the tests.
+    - name: Set up .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ matrix.dotnet-version }}
+        dotnet-version: |
+          8.x
+          9.x
 
     - name: Restore Dependencies
       run: dotnet restore
 
-    - name: Build
+    - name: Build Test Projects
       run: |
         cd tests/Mathematics.NET.Tests
         dotnet build --no-restore
 
-    - name: Test
+    - name: Run Tests
       run: |
         cd tests/Mathematics.NET.Tests
         dotnet test --no-build --verbosity normal
