@@ -27,7 +27,7 @@
 
 using System.Text;
 
-namespace Mathematics.NET.Utilities;
+namespace Mathematics.NET;
 
 /// <summary>A class containing extension methods for external .NET objects.</summary>
 public static class Extensions

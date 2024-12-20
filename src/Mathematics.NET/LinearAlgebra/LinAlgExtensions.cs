@@ -31,7 +31,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using System.Text;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Utilities;
 
 namespace Mathematics.NET.LinearAlgebra;
 
