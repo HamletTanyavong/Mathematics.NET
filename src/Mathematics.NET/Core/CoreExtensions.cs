@@ -1,4 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="Mathematics.NET">
+﻿// <copyright file="CoreExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,11 +30,11 @@ using System.Runtime.CompilerServices;
 
 namespace Mathematics.NET.Core;
 
-/// <summary>Extension methods for Mathematics.NET.</summary>
-public static class Extensions
+/// <summary>Core extension methods for Mathematics.NET.</summary>
+public static class CoreExtensions
 {
     //
-    // Casts and reinterprets
+    // Casts and Reinterprets
     //
 
     /// <summary>Reinterprets a <see cref="Real"/> as a new <see cref="double"/>.</summary>
