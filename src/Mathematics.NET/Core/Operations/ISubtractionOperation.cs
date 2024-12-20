@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Operations;
 /// <summary>Defines a mechanism for subtracting two values.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
 /// <typeparam name="TOutput">The output type.</typeparam>
-public interface ISubtractionOperation<TInput, TOutput>
+public interface ISubtractionOperation<in TInput, out TOutput>
     where TInput : ISubtractionOperation<TInput, TOutput>
 {
     /// <summary>Subtract the right value from the left value.</summary>

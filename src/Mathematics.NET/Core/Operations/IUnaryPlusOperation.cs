@@ -29,12 +29,12 @@ namespace Mathematics.NET.Core.Operations;
 
 /// <summary>Defines support for the unary plus operation.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
-/// <typeparam name="TResult">The output type.</typeparam>
-public interface IUnaryPlusOperation<TInput, TResult>
-    where TInput : IUnaryPlusOperation<TInput, TResult>
+/// <typeparam name="TOutput">The output type.</typeparam>
+public interface IUnaryPlusOperation<in TInput, out TOutput>
+    where TInput : IUnaryPlusOperation<TInput, TOutput>
 {
     /// <summary>Multiply a value by one.</summary>
     /// <param name="value">The value.</param>
     /// <returns>The value times one.</returns>
-    static abstract TResult operator +(TInput value);
+    static abstract TOutput operator +(TInput value);
 }

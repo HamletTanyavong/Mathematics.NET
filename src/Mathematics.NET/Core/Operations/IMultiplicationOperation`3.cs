@@ -28,24 +28,24 @@
 namespace Mathematics.NET.Core.Operations;
 
 /// <summary>Defines a mechanism for multiplying two values of different types.</summary>
-/// <typeparam name="T">An input of the first type.</typeparam>
-/// <typeparam name="U">An input of the second type.</typeparam>
-/// <typeparam name="V">The output type.</typeparam>
-public interface IMultiplicationOperation<T, U, V>
-    where T : IMultiplicationOperation<T, U, V>
+/// <typeparam name="TLeft">An input of the first type.</typeparam>
+/// <typeparam name="TRight">An input of the second type.</typeparam>
+/// <typeparam name="TOutput">The output type.</typeparam>
+public interface IMultiplicationOperation<in TLeft, in TRight, out TOutput>
+    where TLeft : IMultiplicationOperation<TLeft, TRight, TOutput>
 {
     /// <summary>Multiply the left value by the right value.</summary>
     /// <param name="left">The left value.</param>
     /// <param name="right">The right value.</param>
     /// <returns>The product of the two values.</returns>
-    static abstract V operator *(T left, U right);
+    static abstract TOutput operator *(TLeft left, TRight right);
 
-    /// <inheritdoc cref="operator *(T, U)"/>
-    static abstract V operator *(U left, T right);
+    /// <inheritdoc cref="operator *(TLeft, TRight)"/>
+    static abstract TOutput operator *(TRight left, TLeft right);
 
-    /// <inheritdoc cref="operator *(T, U)"/>
-    static virtual V operator checked *(T left, U right) => left * right;
+    /// <inheritdoc cref="operator *(TLeft, TRight)"/>
+    static virtual TOutput operator checked *(TLeft left, TRight right) => left * right;
 
-    /// <inheritdoc cref="operator *(T, U)"/>
-    static virtual V operator checked *(U left, T right) => left * right;
+    /// <inheritdoc cref="operator *(TLeft, TRight)"/>
+    static virtual TOutput operator checked *(TRight left, TLeft right) => left * right;
 }

@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Operations;
 /// <summary>Defines a mechanism for multiplying two values.</summary>
 /// <typeparam name="TInput">The input type.</typeparam>
 /// <typeparam name="TOutput">The output type.</typeparam>
-public interface IMultiplicationOperation<TInput, TOutput>
+public interface IMultiplicationOperation<in TInput, out TOutput>
     where TInput : IMultiplicationOperation<TInput, TOutput>
 {
     /// <summary>Multiply the left value by the right value.</summary>
