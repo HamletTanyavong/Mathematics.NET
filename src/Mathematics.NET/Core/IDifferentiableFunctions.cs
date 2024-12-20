@@ -71,7 +71,7 @@ public interface IDifferentiableFunctions<T>
     static abstract T Atanh(T x);
 
     /// <summary>Compute the hyperbolic cosine of <paramref name="x"/>: $ \cosh(x) $.</summary>
-    /// <param name="x">A valu.</param>
+    /// <param name="x">A value.</param>
     /// <returns>The hyperbolic cosine of <paramref name="x"/>.</returns>
     static abstract T Cosh(T x);
 
@@ -124,9 +124,9 @@ public interface IDifferentiableFunctions<T>
     // Root functions
     //
 
-    /// <summary>Compute the cuberoot of <paramref name="x"/>: $ \sqrt[3]{x} $.</summary>
+    /// <summary>Compute the cube root of <paramref name="x"/>: $ \sqrt[3]{x} $.</summary>
     /// <param name="x">A value.</param>
-    /// <returns>The cuberoot of <paramref name="x"/>.</returns>
+    /// <returns>The cube root of <paramref name="x"/>.</returns>
     static abstract T Cbrt(T x);
 
     /// <summary>Compute the <paramref name="n"/>th root of <paramref name="x"/>: $ \sqrt[n]{x} $.</summary>

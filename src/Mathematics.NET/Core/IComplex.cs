@@ -121,7 +121,7 @@ public interface IComplex<T>
         return result;
     }
 
-    /// <summary>Convert a value to one of another type, and truncate values that fall outside of the representable range.</summary>
+    /// <summary>Convert a value to one of another type, and truncate values that fall outside the representable range.</summary>
     /// <typeparam name="U">The type from which to convert.</typeparam>
     /// <param name="value">The value to convert.</param>
     /// <returns>The result of the conversion.</returns>
@@ -228,7 +228,7 @@ public interface IComplex<T>
     protected static abstract bool TryConvertToChecked<U>(T value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>;
 
-    /// <summary>Try to convert a value to one of another type, and saturate values that fall outside of the representable range.</summary>
+    /// <summary>Try to convert a value to one of another type, and saturate values that fall outside the representable range.</summary>
     /// <typeparam name="U">The target type.</typeparam>
     /// <param name="value">The value to convert.</param>
     /// <param name="result">The result of the conversion.</param>
@@ -236,7 +236,7 @@ public interface IComplex<T>
     protected static abstract bool TryConvertToSaturating<U>(T value, [MaybeNullWhen(false)] out U result)
         where U : INumberBase<U>;
 
-    /// <summary>Try to convert a value to one of another type, and truncate values that fall outside of the representable range.</summary>
+    /// <summary>Try to convert a value to one of another type, and truncate values that fall outside the representable range.</summary>
     /// <typeparam name="U">The target type.</typeparam>
     /// <param name="value">The value to convert.</param>
     /// <param name="result">The result of the conversion.</param>

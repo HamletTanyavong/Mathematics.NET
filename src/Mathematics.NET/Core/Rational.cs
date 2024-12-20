@@ -463,7 +463,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static Rational<T> Clamp(Rational<T> value, Rational<T> min, Rational<T> max)
     {
         if (min > max)
-            throw new ArgumentException("Minimum value must be less than or equal to maximum value");
+            throw new ArgumentException("The minimum value must be less than or equal to maximum value.");
 
         if (value < min)
             return min;
@@ -493,6 +493,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         checked
         {
             var n = 0;
+
+            // We are comparing floats here, but it is okay in this case specifically.
             while (x != Math.Floor(x))
             {
                 x *= 10.0;
@@ -596,7 +598,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     }
 
     public static Real ToReal(Rational<T> x)
-        => checked(double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator));
+        => double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator);
 
     public static bool TryConvertFromChecked<U>(U value, out Rational<T> result)
         where U : INumberBase<U>
