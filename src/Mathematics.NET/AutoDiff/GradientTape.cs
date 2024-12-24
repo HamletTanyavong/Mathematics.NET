@@ -37,9 +37,9 @@
 //                  ┌───────────╳ Cos ────────────┐
 //     Root Node 1: ╳────┐                        │
 //                       ╳ Sum ────┐              ╳ Divide ──── Result
-//     Root Node 2: ╳────┘         |              │
+//     Root Node 2: ╳────┘         │              │
 //                                 ╳ Multiply ────┘
-//                                 |
+//                                 │
 //     Root Node 3: ╳────╳ Sin ────┘
 //
 // Nodes, ╳, are numbered starting at the root in the order they were added using the CreateVariable()
@@ -57,6 +57,9 @@
 // operations:
 //
 //     ╳────╳ '*', '+', '%', etc. and constant ──── Result
+
+// TODO: Add a way of finding and tracking different branches in the tree. This will be useful for checkpointing
+// and improving the efficiency of calculations by not having to perform operations multiple times.
 
 #pragma warning disable IDE0032
 
