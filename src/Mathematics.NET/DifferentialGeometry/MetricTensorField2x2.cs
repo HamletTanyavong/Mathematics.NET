@@ -35,7 +35,7 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public abstract class MetricTensorField2x2<TT, TN, TPI> : RMTensorField2x2<TT, TN, Lower, Lower, TPI>
+public class MetricTensorField2x2<TT, TN, TPI> : RMTensorField2x2<TT, TN, Lower, Lower, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TPI : IIndex

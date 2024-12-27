@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0060
+
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.LinearAlgebra;
@@ -35,12 +37,23 @@ namespace Mathematics.NET.Tests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Riemann")]
 public sealed class RiemannTests
 {
-    private HessianTape<Real> _tape;
+    public static MetricTensorField2x2<HessianTape<Real>, Real, Index<Upper, PIN>> Tensor { get; set; } = new();
+
+    [ClassInitialize]
+    public static void ClassInitialize(TestContext context)
+    {
+        Tensor[0, 0] = (tape, x) => tape.Multiply(x.X0, x.X0);
+        Tensor[0, 1] = (tape, x) => tape.Multiply(x.X0, x.X1);
+        Tensor[1, 0] = (tape, x) => tape.Negate(tape.Multiply(x.X0, x.X1));
+        Tensor[1, 1] = (tape, x) => tape.Multiply(x.X1, x.X1);
+    }
 
     public RiemannTests()
     {
-        _tape = new();
+        Tape = new();
     }
+
+    public HessianTape<Real> Tape { get; set; }
 
     //
     // Tests
@@ -50,12 +63,11 @@ public sealed class RiemannTests
     [DynamicData(nameof(GetRiemannTensorData), DynamicDataSourceType.Method)]
     public void Riemann_FromMetricTensor_ReturnsRiemannTensor(object[] input, object[] values)
     {
-        DifGeoTestHelpers.Test2x2MetricTensorFieldNo1<HessianTape<Real>, Real, Index<Upper, Epsilon>> metric = new();
-        var point = _tape.CreateAutoDiffTensor<Index<Upper, Epsilon>>((double)input[0], (double)input[1]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1]);
 
         var expected = (Real[,,,])values[0];
 
-        DifGeo.Riemann(_tape, metric, point, out Tensor<Array2x2x2x2<Real>, Real, Index<Upper, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> result);
+        DifGeo.Riemann(Tape, Tensor, point, out Tensor<Array2x2x2x2<Real>, Real, Index<Upper, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> result);
         var actual = result.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
