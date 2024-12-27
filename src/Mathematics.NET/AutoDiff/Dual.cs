@@ -252,8 +252,26 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
 
     //
+    // Implicit Operators
+    //
+
+    public static implicit operator Dual<T>(T value) => new(value);
+
+    //
     // DifGeo
     //
+
+    public static AutoDiffTensor2<Dual<T>, T, U> CreateAutoDiffTensor<U>(T x0, T x1)
+        where U : IIndex
+        => new(x0, x1);
+
+    public static AutoDiffTensor3<Dual<T>, T, U> CreateAutoDiffTensor<U>(T x0, T x1, T x2)
+        where U : IIndex
+        => new(x0, x1, x2);
+
+    public static AutoDiffTensor4<Dual<T>, T, U> CreateAutoDiffTensor<U>(T x0, T x1, T x2, T x3)
+        where U : IIndex
+        => new(x0, x1, x2, x3);
 
     public static AutoDiffTensor2<Dual<T>, T, U> CreateAutoDiffTensor<U>(in Dual<T> x0, in Dual<T> x1)
         where U : IIndex

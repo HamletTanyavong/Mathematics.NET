@@ -279,33 +279,55 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
 
     //
+    // Implicit Operators
+    //
+
+    public static implicit operator HyperDual<T>(T value) => new(value);
+
+    /// <summary>Convert a dual number into a hyper-dual number.</summary>
+    /// <param name="value">A dual number.</param>
+    public static implicit operator HyperDual<T>(Dual<T> value) => new(value);
+
+    //
     // DifGeo
     //
 
-    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(in Dual{TN}, in Dual{TN})" />
-    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1)
+    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(T x0, T x1)
         where U : IIndex
         => new(x0, x1);
 
-    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(in Dual{TN}, in Dual{TN}, in Dual{TN})" />
-    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1, in HyperDual<T> x2)
+    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(T x0, T x1, T x2)
         where U : IIndex
         => new(x0, x1, x2);
 
-    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(in Dual{TN}, in Dual{TN}, in Dual{TN}, in Dual{TN})"/>
-    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1, in HyperDual<T> x2, in HyperDual<T> x3)
+    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(T x0, T x1, T x2, T x3)
         where U : IIndex
         => new(x0, x1, x2, x3);
 
     public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Dual<T> x0, in Dual<T> x1)
         where U : IIndex
-        => new(new(x0), new(x1));
+        => new(x0, x1);
 
     public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Dual<T> x0, in Dual<T> x1, in Dual<T> x2)
         where U : IIndex
-        => new(new(x0), new(x1), new(x2));
+        => new(x0, x1, x2);
 
     public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in Dual<T> x0, in Dual<T> x1, in Dual<T> x2, in Dual<T> x3)
         where U : IIndex
-        => new(new(x0), new(x1), new(x2), new(x3));
+        => new(x0, x1, x2, x3);
+
+    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(TN, TN)" />
+    public static AutoDiffTensor2<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1)
+        where U : IIndex
+        => new(x0, x1);
+
+    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(TN, TN, TN)" />
+    public static AutoDiffTensor3<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1, in HyperDual<T> x2)
+        where U : IIndex
+        => new(x0, x1, x2);
+
+    /// <inheritdoc cref="IDual{TDN, TN}.CreateAutoDiffTensor{TI}(TN, TN, TN, TN)"/>
+    public static AutoDiffTensor4<HyperDual<T>, T, U> CreateAutoDiffTensor<U>(in HyperDual<T> x0, in HyperDual<T> x1, in HyperDual<T> x2, in HyperDual<T> x3)
+        where U : IIndex
+        => new(x0, x1, x2, x3);
 }
