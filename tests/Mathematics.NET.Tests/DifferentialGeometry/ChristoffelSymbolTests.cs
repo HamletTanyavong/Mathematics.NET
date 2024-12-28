@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable IDE0060
+
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.LinearAlgebra;
@@ -35,12 +37,38 @@ namespace Mathematics.NET.Tests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Christoffel")]
 public sealed class ChristoffelSymbolTests
 {
-    private GradientTape<Real> _tape;
+    public static MetricTensorField4x4<GradientTape<Real>, Real, Index<Upper, PIN>> Tensor { get; set; } = new();
+
+    [ClassInitialize]
+    public static void ClassInitialize(TestContext context)
+    {
+        Tensor[0, 0] = (tape, x) => tape.Sin(x.X0);
+        Tensor[0, 1] = (tape, x) => tape.Multiply(2, tape.Cos(x.X1));
+        Tensor[0, 2] = (tape, x) => tape.Multiply(3, tape.Exp(x.X2));
+        Tensor[0, 3] = (tape, x) => tape.Multiply(4, tape.Ln(x.X3));
+
+        Tensor[1, 0] = (tape, x) => tape.Multiply(5, tape.Sqrt(x.X1));
+        Tensor[1, 1] = (tape, x) => tape.Multiply(6, tape.Tan(x.X2));
+        Tensor[1, 2] = (tape, x) => tape.Multiply(7, tape.Sinh(x.X3));
+        Tensor[1, 3] = (tape, x) => tape.Multiply(8, tape.Cosh(x.X0));
+
+        Tensor[2, 0] = (tape, x) => tape.Multiply(9, tape.Tanh(x.X2));
+        Tensor[2, 1] = (tape, x) => tape.Divide(10, x.X3);
+        Tensor[2, 2] = (tape, x) => tape.Multiply(11, tape.Pow(x.X0, 2));
+        Tensor[2, 3] = (tape, x) => tape.Multiply(12, tape.Multiply(tape.Sin(x.X1), tape.Cos(x.X1)));
+
+        Tensor[3, 0] = (tape, x) => tape.Multiply(13, tape.Multiply(tape.Exp(x.X3), tape.Sin(x.X0)));
+        Tensor[3, 1] = (tape, x) => tape.Multiply(14, tape.Divide(x.X3, x.X1));
+        Tensor[3, 2] = (tape, x) => tape.Multiply(15, tape.Sin(tape.Subtract(x.X3, tape.Multiply(2, x.X2))));
+        Tensor[3, 3] = (tape, x) => tape.Multiply(16, tape.Multiply(x.X0, tape.Multiply(x.X1, tape.Multiply(x.X2, x.X3))));
+    }
 
     public ChristoffelSymbolTests()
     {
-        _tape = new();
+        Tape = new();
     }
+
+    public GradientTape<Real> Tape { get; set; }
 
     //
     // Tests
@@ -50,12 +78,11 @@ public sealed class ChristoffelSymbolTests
     [DynamicData(nameof(GetChristoffelSymbolOfFirstKindData), DynamicDataSourceType.Method)]
     public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheFirstKind(object[] input, object[] values)
     {
-        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Real, Index<Upper, Delta>> metric = new();
-        var point = _tape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Christoffel(_tape, metric, point, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Beta, Gamma> result);
+        DifGeo.Christoffel(Tape, Tensor, point, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Beta, Gamma> result);
         var actual = result.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
@@ -65,12 +92,11 @@ public sealed class ChristoffelSymbolTests
     [DynamicData(nameof(GetChristoffelSymbolOfSecondKindData), DynamicDataSourceType.Method)]
     public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheSecondKind(object[] input, object[] values)
     {
-        DifGeoTestHelpers.Test4x4MetricTensorFieldNo1<ITape<Real>, Real, Index<Upper, Delta>> metric = new();
-        var point = _tape.CreateAutoDiffTensor<Index<Upper, Delta>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Christoffel(_tape, metric, point, out Christoffel<Array4x4x4<Real>, Real, Index<Upper, Alpha>, Beta, Gamma> result);
+        DifGeo.Christoffel(Tape, Tensor, point, out Christoffel<Array4x4x4<Real>, Real, Index<Upper, Alpha>, Beta, Gamma> result);
         var actual = result.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
