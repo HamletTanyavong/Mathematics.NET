@@ -89,8 +89,8 @@ public sealed class DifGeoReverseModeTests
 
         var expected = (Real[,])values[0];
 
-        DifGeo.Derivative(Tape, R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> derivative);
-        var actual = derivative.ToArray();
+        DifGeo.Derivative(Tape, R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
+        var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -103,8 +103,8 @@ public sealed class DifGeoReverseModeTests
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> derivative);
-        var actual = derivative.ToArray();
+        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> dTensor);
+        var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -117,10 +117,26 @@ public sealed class DifGeoReverseModeTests
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> derivative);
-        var actual = derivative.ToArray();
+        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
+        var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-13);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(GetR1TensorSecondDerivativeData), DynamicDataSourceType.Method)]
+    public void SecondDerivative_RankOneTensor_ReturnsRankThreeTensor(object[] input, object[] values)
+    {
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+
+        var expected = (Real[,,])values[0];
+
+        DifGeo.SecondDerivative(Tape, R1Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
+        var actual = d2Tensor.ToArray();
+
+        Console.WriteLine(d2Tensor);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -131,8 +147,8 @@ public sealed class DifGeoReverseModeTests
 
         var expected = (Real[,,,])values[0];
 
-        DifGeo.SecondDerivative(Tape, MetricTensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> secondDerivative);
-        var actual = secondDerivative.ToArray();
+        DifGeo.SecondDerivative(Tape, MetricTensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> d2Tensor);
+        var actual = d2Tensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -229,6 +245,44 @@ public sealed class DifGeoReverseModeTests
                         { -99.9083713139095,  2.583393035830481,    -108.4372846947553, 0.0894257725193976     },
                         { 0.0876578722667318, -0.00238146677635786, 0.0960322791258335, -0.0000743715905405725 },
                         { -21.22135210759896, 0.5469516019661675,   -23.0619674179585,  0.01887653616804277    }
+                    },
+                }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> GetR1TensorSecondDerivativeData()
+    {
+        yield return new[]
+        {
+            [1.23, 2.34, 3.45, 4.56],
+            new object[]
+            {
+                new Real[,,]
+                {
+                    {
+                        { 0.4154226067712459, 0, 0, -0.017944119924943498 },
+                        { 0.4154226067712459, 0, 0, 0                     },
+                        { 0,                  0, 0, 0                     },
+                        { 0,                  0, 0, -0.017944119924943498 }
+                    },
+                    {
+                        { 0.4154226067712459, 0,                  0, 0 },
+                        { 0.4154226067712459, -0.880829296973609, 0, 0 },
+                        { 0,                  -0.880829296973609, 0, 0 },
+                        { 0,                  0,                  0, 0 }
+                    },
+                    {
+                        { 0, 0,                  0,                  0 },
+                        { 0, -0.880829296973609, 0,                  0 },
+                        { 0, -0.880829296973609, 3010.9171128823823, 0 },
+                        { 0, 0,                  3010.9171128823823, 0 }
+                    },
+                    {
+                        { 0, 0, 0,                  -0.017944119924943498 },
+                        { 0, 0, 0,                  0                     },
+                        { 0, 0, 3010.9171128823823, 0                     },
+                        { 0, 0, 3010.9171128823823, -0.017944119924943498 }
                     },
                 }
             }
