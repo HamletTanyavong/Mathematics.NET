@@ -74,7 +74,7 @@ public sealed class LinAlgTests
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 
     public static void QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix<T>(T[,] matrix)
-        where T : IComplex<T>
+        where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         var expected = matrix.AsSpan2D();
         LinAlg.QRGramSchmidt(expected, out var Q, out var R);

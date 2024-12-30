@@ -1,4 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="Mathematics.NET">
+﻿// <copyright file="MathematicsException.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,34 +25,16 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Text;
+namespace Mathematics.NET.Exceptions;
 
-namespace Mathematics.NET.Utilities;
-
-/// <summary>A class containing extension methods for external .NET objects.</summary>
-public static class Extensions
+/// <summary>Represents a mathematics exception.</summary>
+public sealed class MathematicsException : Exception
 {
-    /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
-    /// <param name="builder">A string builder instance.</param>
-    /// <param name="unwantedChars">An array of characters to trim.</param>
-    /// <returns>The same string builder with characters removed.</returns>
-    public static StringBuilder TrimEnd(this StringBuilder builder, params ReadOnlySpan<char> unwantedChars)
-    {
-        if (builder.Length == 0 || unwantedChars.Length == 0)
-            return builder;
+    public MathematicsException() { }
 
-        int i = builder.Length - 1;
-        while (i >= 0)
-        {
-#pragma warning disable EPS06
-            if (!unwantedChars.Contains(builder[i]))
-#pragma warning restore EPS06
-                break;
-            i--;
-        }
-        if (i < builder.Length - 1)
-            builder.Length = ++i;
+    public MathematicsException(string message)
+        : base(message) { }
 
-        return builder;
-    }
+    public MathematicsException(string message, Exception innerException)
+        : base(message, innerException) { }
 }

@@ -29,6 +29,7 @@ using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -54,5 +55,22 @@ public class RMTensorField2<TT, TN, TIP, TPI> : TensorField<TN, TPI>
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set => _buffer[index] = value;
+    }
+
+    /// <summary>Compute the value of the tensor at a specified point.</summary>
+    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="point">A point.</param>
+    /// <returns>The value of the tensor at the specified point.</returns>
+    public Tensor<Vector2<TN>, TN, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor2<TN, TPI> point)
+        where TIN : IIndexName
+    {
+        Vector2<TN> result = new();
+        for (int i = 0; i < 2; i++)
+        {
+            if (_buffer[i] is Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> function)
+                result[i] = function(tape, point).Value;
+        }
+        return new Tensor<Vector2<TN>, TN, Index<TIP, TIN>>(result);
     }
 }

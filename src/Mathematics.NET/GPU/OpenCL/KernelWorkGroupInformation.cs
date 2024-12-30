@@ -33,9 +33,9 @@ using Silk.NET.OpenCL;
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents a kernel work group info object.</summary>
-public sealed class KernelWorkGroupInformation
+public sealed partial class KernelWorkGroupInformation
 {
-    // Api.
+    private ILogger<OpenCLService> _logger;
     private CL _cl;
 
     // Kernel work group information.
@@ -48,6 +48,7 @@ public sealed class KernelWorkGroupInformation
 
     public unsafe KernelWorkGroupInformation(ILogger<OpenCLService> logger, CL cl, Device device, Kernel kernel)
     {
+        _logger = logger;
         _cl = cl;
 
         // Kernel compile work group size.
@@ -61,7 +62,7 @@ public sealed class KernelWorkGroupInformation
         if (error != (int)ErrorCodes.Success)
         {
             if (error == (int)ErrorCodes.InvalidValue)
-                logger.LogDebug("This device does not support the parameter CL_KERNEL_GLOBAL_WORK_SIZE for clGetKernelWorkGroupInfo.");
+                ParameterNotSupported();
             KernelGlobalWorkSize = Array.Empty<nuint>();
         }
         else
@@ -89,4 +90,7 @@ public sealed class KernelWorkGroupInformation
         _cl.GetKernelWorkGroupInfo(kernel.Handle, device.Handle, KernelWorkGroupInfo.WorkGroupSize, (nuint)sizeof(nuint), &kernelWorkGroupSize, null);
         KernelWorkGroupSize = kernelWorkGroupSize;
     }
+
+    [LoggerMessage(LogLevel.Warning, "This device does not support the parameter CL_KERNEL_GLOBAL_WORK_SIZE for clGetKernelWorkGroupInfo.")]
+    private partial void ParameterNotSupported();
 }

@@ -369,6 +369,19 @@ public sealed class DualOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23)]
+    public void ImplicitOperator_Number_ReturnsDualNumber(double value)
+    {
+        Real input = value;
+
+        Dual<Real> expected = new(input, 0);
+
+        Dual<Real> actual = input;
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 0.813008130081301)]
     public void Ln_DualNumber_ReturnsDerivative(double input, double expected)
     {

@@ -64,7 +64,7 @@ public sealed class Matrix4x4Tests
         => Inverse_Helper_MatrixOfGeneric_ReturnsInverseOfMatrix(input, expected);
 
     public static void Inverse_Helper_MatrixOfGeneric_ReturnsInverseOfMatrix<T>(T[,] inputArray, T[,] expectedArray)
-        where T : IComplex<T>
+        where T : IComplex<T>, IDifferentiableFunctions<T>
     {
         Matrix4x4<T> expected = new(
             expectedArray[0, 0], expectedArray[0, 1], expectedArray[0, 2], expectedArray[0, 3],

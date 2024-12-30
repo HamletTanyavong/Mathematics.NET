@@ -27,34 +27,31 @@
 
 #pragma warning disable IDE0058
 
+using Mathematics.NET.Exceptions;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 
 namespace Mathematics.NET.GPU.OpenCL;
 
 /// <summary>Represents an OpenCL context.</summary>
-public sealed class Context : IOpenCLObject
+public sealed partial class Context : IOpenCLObject
 {
-    // Api.
-    private readonly CL _cl;
     private readonly ILogger<OpenCLService> _logger;
+    private readonly CL _cl;
 
     public unsafe Context(ILogger<OpenCLService> logger, CL cl, Platform platform)
     {
-        _cl = cl;
         _logger = logger;
+        _cl = cl;
 
         // Attempt to create a GPU context. If that does not work, attempt to create a CPU context.
         var contextProperties = stackalloc nint[3] { (nint)ContextProperties.Platform, platform.Handle, 0 };
         Handle = _cl.CreateContextFromType(contextProperties, DeviceType.Gpu, null, null, out var error);
         if (error != (int)ErrorCodes.Success)
         {
-            _logger.LogDebug("Unable to create GPU context; attempting to create CPU context instead.");
+            CouldNotCreateGPUContext();
             Handle = _cl.CreateContextFromType(contextProperties, DeviceType.Cpu, null, null, out error);
-            if (error != (int)ErrorCodes.Success)
-            {
-                throw new Exception("Unable to create context on either the GPU or CPU.");
-            }
+            ComputeServiceException.ThrowIfNotSuccess(error, "Unable to create a context on either the GPU or CPU.");
         }
     }
 
@@ -66,6 +63,9 @@ public sealed class Context : IOpenCLObject
             Handle = 0;
         }
     }
+
+    [LoggerMessage(LogLevel.Warning, "Unable to create a GPU context; attempting to create a CPU context instead.")]
+    private partial void CouldNotCreateGPUContext();
 
     public nint Handle { get; private set; }
 
@@ -101,13 +101,8 @@ public sealed class Context : IOpenCLObject
     public Device[] GetDevices(Func<Device, bool> filter, bool useFirst)
     {
         var devices = GetDevices();
-        if (useFirst)
-        {
-            return devices.FirstOrDefault(filter) is Device device ? [device] : [];
-        }
-        else
-        {
-            return devices.Where(filter).ToArray();
-        }
+        return useFirst
+            ? devices.FirstOrDefault(filter) is Device device ? [device] : []
+            : devices.Where(filter).ToArray();
     }
 }

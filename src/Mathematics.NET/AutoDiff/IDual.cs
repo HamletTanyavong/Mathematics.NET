@@ -78,6 +78,15 @@ public interface IDual<TDN, TN>
     TDN WithSeed(TN seed);
 
     //
+    // Implicit Operators
+    //
+
+    /// <summary>Convert a number into a dual number.</summary>
+    /// <remarks>The tangent parts of the dual number will be zero.</remarks>
+    /// <param name="value">A number.</param>
+    static abstract implicit operator TDN(TN value);
+
+    //
     // DifGeo
     //
 
@@ -86,7 +95,7 @@ public interface IDual<TDN, TN>
     /// <param name="x0">The zeroth value.</param>
     /// <param name="x1">The first value.</param>
     /// <returns>A rank-one tensor of two initial and seed values.</returns>
-    static abstract AutoDiffTensor2<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1)
+    static abstract AutoDiffTensor2<TDN, TN, TI> CreateAutoDiffTensor<TI>(TN x0, TN x1)
         where TI : IIndex;
 
     /// <summary>Create an autodiff, rank-one tensor from initial and seed values.</summary>
@@ -95,7 +104,7 @@ public interface IDual<TDN, TN>
     /// <param name="x1">The first value.</param>
     /// <param name="x2">The second value.</param>
     /// <returns>A rank-one tensor of two initial and seed values.</returns>
-    static abstract AutoDiffTensor3<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1, in Dual<TN> x2)
+    static abstract AutoDiffTensor3<TDN, TN, TI> CreateAutoDiffTensor<TI>(TN x0, TN x1, TN x2)
         where TI : IIndex;
 
     /// <summary>Create an autodiff, rank-one tensor from initial and seed values.</summary>
@@ -105,6 +114,18 @@ public interface IDual<TDN, TN>
     /// <param name="x2">The second value.</param>
     /// <param name="x3">The third value.</param>
     /// <returns>A rank-one tensor of two initial and seed values.</returns>
+    static abstract AutoDiffTensor4<TDN, TN, TI> CreateAutoDiffTensor<TI>(TN x0, TN x1, TN x2, TN x3)
+        where TI : IIndex;
+
+    /// <inheritdoc cref="CreateAutoDiffTensor{TI}(TN, TN)"/>
+    static abstract AutoDiffTensor2<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1)
+        where TI : IIndex;
+
+    /// <inheritdoc cref="CreateAutoDiffTensor{TI}(TN, TN, TN)"/>
+    static abstract AutoDiffTensor3<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1, in Dual<TN> x2)
+        where TI : IIndex;
+
+    /// <inheritdoc cref="CreateAutoDiffTensor{TI}(TN, TN, TN, TN)"/>
     static abstract AutoDiffTensor4<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1, in Dual<TN> x2, in Dual<TN> x3)
         where TI : IIndex;
 }

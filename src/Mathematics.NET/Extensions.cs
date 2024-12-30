@@ -1,4 +1,4 @@
-﻿// <copyright file="Platform.cs" company="Mathematics.NET">
+﻿// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,36 +25,34 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0058
-
 using System.Text;
-using Silk.NET.OpenCL;
 
-namespace Mathematics.NET.GPU.OpenCL;
+namespace Mathematics.NET;
 
-/// <summary>Represents an OpenCL platform.</summary>
-public sealed class Platform : IOpenCLObject
+/// <summary>A class containing extension methods for external .NET objects.</summary>
+public static class Extensions
 {
-    private readonly CL _cl;
-
-    // Platform information.
-    public readonly string Vendor;
-
-    public unsafe Platform(CL cl, nint handle)
+    /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
+    /// <param name="builder">A string builder instance.</param>
+    /// <param name="unwantedChars">An array of characters to trim.</param>
+    /// <returns>The same string builder with characters removed.</returns>
+    public static StringBuilder TrimEnd(this StringBuilder builder, params ReadOnlySpan<char> unwantedChars)
     {
-        _cl = cl;
-        Handle = handle;
+        if (builder.Length == 0 || unwantedChars.Length == 0)
+            return builder;
 
-        // Platform vendor.
-        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, 0, null, out var vendorSize);
-        Span<byte> vendorSpan = new byte[vendorSize];
-        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, vendorSize, vendorSpan, []);
-        Vendor = Encoding.UTF8.GetString(vendorSpan).TrimEnd('\0');
+        int i = builder.Length - 1;
+        while (i >= 0)
+        {
+#pragma warning disable EPS06
+            if (!unwantedChars.Contains(builder[i]))
+#pragma warning restore EPS06
+                break;
+            i--;
+        }
+        if (i < builder.Length - 1)
+            builder.Length = ++i;
+
+        return builder;
     }
-
-    public void Dispose() => Handle = 0;
-
-    public nint Handle { get; private set; }
-
-    public bool IsValidInstance => Handle != 0;
 }

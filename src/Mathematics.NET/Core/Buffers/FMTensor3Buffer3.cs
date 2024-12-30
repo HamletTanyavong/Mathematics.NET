@@ -1,4 +1,4 @@
-﻿// <copyright file="Platform.cs" company="Mathematics.NET">
+﻿// <copyright file="FMTensor3Buffer3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,36 +25,24 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0058
+#pragma warning disable IDE0051
 
-using System.Text;
-using Silk.NET.OpenCL;
+using System.Runtime.CompilerServices;
+using Mathematics.NET.AutoDiff;
+using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 
-namespace Mathematics.NET.GPU.OpenCL;
+namespace Mathematics.NET.Core.Buffers;
 
-/// <summary>Represents an OpenCL platform.</summary>
-public sealed class Platform : IOpenCLObject
+/// <summary>Represents a buffer of 3 AutoDiffTensor3 delegates.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
+[InlineArray(3)]
+internal struct FMTensor3Buffer3<TDN, TN, TPI>
+    where TDN : IDual<TDN, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TPI : IIndex
 {
-    private readonly CL _cl;
-
-    // Platform information.
-    public readonly string Vendor;
-
-    public unsafe Platform(CL cl, nint handle)
-    {
-        _cl = cl;
-        Handle = handle;
-
-        // Platform vendor.
-        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, 0, null, out var vendorSize);
-        Span<byte> vendorSpan = new byte[vendorSize];
-        _cl.GetPlatformInfo(Handle, PlatformInfo.Vendor, vendorSize, vendorSpan, []);
-        Vendor = Encoding.UTF8.GetString(vendorSpan).TrimEnd('\0');
-    }
-
-    public void Dispose() => Handle = 0;
-
-    public nint Handle { get; private set; }
-
-    public bool IsValidInstance => Handle != 0;
+    private Func<AutoDiffTensor3<TDN, TN, TPI>, TDN> _element0;
 }
