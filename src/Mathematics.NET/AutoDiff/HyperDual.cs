@@ -57,6 +57,10 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     /// <summary>Represents the third tangent part, the cross term, of a hyper-dual number.</summary>
     public T D3 => _d1.D1;
 
+    internal Dual<T> Primal => _d0;
+
+    internal Dual<T> Tangent => _d1;
+
     //
     // Operators
     //
@@ -124,6 +128,8 @@ public readonly struct HyperDual<T>(Dual<T> d0, Dual<T> d1) : IDual<HyperDual<T>
     public static HyperDual<T> CreateVariable(T value) => new(new(value, T.Zero));
 
     public static HyperDual<T> CreateVariable(T value, T seed) => new(new(value, seed));
+
+    internal static HyperDual<T> CreateVariable(Dual<T> value, T seed) => new(value, seed);
 
     /// <summary>Create an instance of the type with a specified value and two seed values.</summary>
     /// <remarks>Use this to compute mixed second derivatives.</remarks>

@@ -60,8 +60,22 @@ public sealed class DifGeoForwardModeTests
 
         var expected = (Real[,])values[0];
 
-        DifGeo.Derivative(R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> derivative);
-        var actual = derivative.ToArray();
+        DifGeo.Derivative(R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
+        var actual = dTensor.ToArray();
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(GetR1TensorSecondDerivativeData), DynamicDataSourceType.Method)]
+    public void SecondDerivative_RankOneTensor_ReturnsRankTwoTensor(object[] input, object[] values)
+    {
+        var point = HyperDual<Real>.CreateAutoDiffTensor<Index<Upper, PIN>>(1.23, 2.34, 3.45, 4.56);
+
+        var expected = (Real[,,])values[0];
+
+        DifGeo.SecondDerivative(R1Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
+        var actual = d2Tensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -83,6 +97,44 @@ public sealed class DifGeoForwardModeTests
                     { -0.9096285273579445, 0.47343399708193507, 0,                  0                  },
                     { 0,                   0.47343399708193507, 3010.9171128823823, 0                  },
                     { 0,                   0,                   3010.9171128823823, 0.2077929087308457 }
+                }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> GetR1TensorSecondDerivativeData()
+    {
+        yield return new[]
+        {
+            [1.23, 2.34, 3.45, 4.56],
+            new object[]
+            {
+                new Real[,,]
+                {
+                    {
+                        { 0.4154226067712459, 0, 0, -0.017944119924943498 },
+                        { 0.4154226067712459, 0, 0, 0                     },
+                        { 0,                  0, 0, 0                     },
+                        { 0,                  0, 0, -0.017944119924943498 }
+                    },
+                    {
+                        { 0.4154226067712459, 0,                  0, 0 },
+                        { 0.4154226067712459, -0.880829296973609, 0, 0 },
+                        { 0,                  -0.880829296973609, 0, 0 },
+                        { 0,                  0,                  0, 0 }
+                    },
+                    {
+                        { 0, 0,                  0,                  0 },
+                        { 0, -0.880829296973609, 0,                  0 },
+                        { 0, -0.880829296973609, 3010.9171128823823, 0 },
+                        { 0, 0,                  3010.9171128823823, 0 }
+                    },
+                    {
+                        { 0, 0, 0,                  -0.017944119924943498 },
+                        { 0, 0, 0,                  0                     },
+                        { 0, 0, 3010.9171128823823, 0                     },
+                        { 0, 0, 3010.9171128823823, -0.017944119924943498 }
+                    },
                 }
             }
         };

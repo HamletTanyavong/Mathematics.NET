@@ -755,6 +755,203 @@ public static partial class DifGeo
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
     /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
     /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
+    /// <param name="tensor">A rank-one tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="d2Tensor">A rank-three tensor.</param>
+    public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
+        FMTensorField2<HyperDual<TN>, TN, TI2P, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI2P : IIndexPosition
+        where TI3P : IIndexPosition
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        d2Tensor = new();
+        for (int i = 0; i < 2; i++)
+        {
+            var dSeed = point;
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            for (int j = 0; j < 2; j++)
+            {
+                var d2Seed = dSeed;
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                for (int k = 0; k < 2; k++)
+                {
+                    if (tensor[k] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
+                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="SecondDerivative{TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN}, TN, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
+        FMTensorField3<HyperDual<TN>, TN, TI2P, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI2P : IIndexPosition
+        where TI3P : IIndexPosition
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        d2Tensor = new();
+        for (int i = 0; i < 3; i++)
+        {
+            var dSeed = point;
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            for (int j = 0; j < 3; j++)
+            {
+                var d2Seed = dSeed;
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                for (int k = 0; k < 3; k++)
+                {
+                    if (tensor[k] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
+                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="SecondDerivative{TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN}, TN, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
+        FMTensorField4<HyperDual<TN>, TN, TI2P, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI2P : IIndexPosition
+        where TI3P : IIndexPosition
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        d2Tensor = new();
+        for (int i = 0; i < 4; i++)
+        {
+            var dSeed = point;
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            for (int j = 0; j < 4; j++)
+            {
+                var d2Seed = dSeed;
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                for (int k = 0; k < 4; k++)
+                {
+                    if (tensor[k] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
+                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="SecondDerivative{TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN}, TN, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
+        FMTensorField2<HyperDual<TN>, TN, TI2P, Index<Lower, TPIN>> tensor,
+        AutoDiffTensor2<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI2P : IIndexPosition
+        where TI3P : IIndexPosition
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        d2Tensor = new();
+        for (int i = 0; i < 2; i++)
+        {
+            var dSeed = point;
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            for (int j = 0; j < 2; j++)
+            {
+                var d2Seed = dSeed;
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                for (int k = 0; k < 2; k++)
+                {
+                    if (tensor[k] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
+                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="SecondDerivative{TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN}, TN, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
+        FMTensorField3<HyperDual<TN>, TN, TI2P, Index<Lower, TPIN>> tensor,
+        AutoDiffTensor3<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI2P : IIndexPosition
+        where TI3P : IIndexPosition
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        d2Tensor = new();
+        for (int i = 0; i < 3; i++)
+        {
+            var dSeed = point;
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            for (int j = 0; j < 3; j++)
+            {
+                var d2Seed = dSeed;
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                for (int k = 0; k < 3; k++)
+                {
+                    if (tensor[k] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
+                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="SecondDerivative{TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN}, TN, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
+        FMTensorField4<HyperDual<TN>, TN, TI2P, Index<Lower, TPIN>> tensor,
+        AutoDiffTensor4<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI2P : IIndexPosition
+        where TI3P : IIndexPosition
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        d2Tensor = new();
+        for (int i = 0; i < 4; i++)
+        {
+            var dSeed = point;
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            for (int j = 0; j < 4; j++)
+            {
+                var d2Seed = dSeed;
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                for (int k = 0; k < 4; k++)
+                {
+                    if (tensor[k] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
+                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                }
+            }
+        }
+    }
+
+    /// <summary>Compute the second derivative of rank-one tensor.</summary>
+    /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
     /// <param name="tape">A Hessian tape.</param>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
