@@ -1,9 +1,0 @@
-# Ignore Generated DocFX Items
-
-/**/DROP/
-/**/TEMP/
-/**/packages/
-/**/bin/
-/**/obj/
-
-_site

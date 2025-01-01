@@ -1,3 +1,0 @@
-# Tensors
-
-[work in progress]

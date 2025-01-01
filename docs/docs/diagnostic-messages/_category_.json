@@ -1,0 +1,8 @@
+{
+  "label": "Diagnostic Messages",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Diagnostic messages for Mathematics.NET."
+  }
+}
