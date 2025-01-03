@@ -5,7 +5,7 @@ authors: hamlettanyavong
 tags: [physics, mathematics]
 ---
 
-Mathematics.NET is nearing its first release, but a number of features still need to be implemented.
+Mathematics.NET is closer to its first release, but a number of important features still need to be implemented.
 
 <!-- truncate -->
 
@@ -22,14 +22,14 @@ Here are some core features that will be included in the first release and their
 
 ### AutoDiff
 
-- [ ] Reverse mode autodiff
+- [ ] Reverse-mode autodiff
   - [x] Gradient Tapes
     - [ ] Parallelization
     - [ ] Checkpointing
   - [x] Hessian Tapes
     - [ ] Parallelization
     - [ ] Checkpointing
-- [x] Forward mode autodiff
+- [x] Forward-mode autodiff
   - [x] Dual numbers
   - [x] Hyper-dual numbers
 

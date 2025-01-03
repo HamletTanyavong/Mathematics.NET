@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+description: OpenCL support in Mathematics.NET allows for GPU acceleration on compatible devices.
+keywords: OpenCL, GPU, math, C#, csharp, .NET
 ---
 
 # OpenCL

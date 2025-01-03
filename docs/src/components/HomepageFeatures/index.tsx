@@ -14,7 +14,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'AutoDiff',
-    description: <>Mathematics.NET supports first and second-order, forward and reverse mode automatic differentiation.</>
+    description: <>Mathematics.NET supports first and second-order, forward and reverse-mode automatic differentiation.</>
   },
   {
     title: 'Differential Geometry',

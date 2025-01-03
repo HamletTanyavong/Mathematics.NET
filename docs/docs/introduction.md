@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+description: Mathematics.NET is a C# class library that provides tools for solving advanced mathematical problems.
+keywords: math, C#, csharp, .NET
 ---
 
 # Introduction
@@ -23,6 +25,8 @@ To use Mathematics.NET in your C# project, add the following line to your projec
 ```
 
 ### Polyglot Notebooks
+
+To use Mathematics.NET in a polyglot notebook, add the following line to the first cell:
 
 ```
 #r "nuget: Physics.NET.Mathematics"
