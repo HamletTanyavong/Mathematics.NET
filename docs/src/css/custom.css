@@ -32,8 +32,31 @@
   font-display: swap;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme colors for Mathematics.NET */
 :root {
-  /* Colors */
+  --primary-color: #121212;
+  --primary-color-alternate: #ededed;
+  --background-color: #ededed;
+  --background-color-alternate: #121212;
+  --secondary-background-color: #dbdbdb;
+  --tertiary-background-color: #c9c9c9;
+}
+
+[data-theme='dark'] {
+  --primary-color: #ededed;
+  --primary-color-alternate: #121212;
+  --background-color: #121212;
+  --background-color-alternate: #ededed;
+  --secondary-background-color: #242424;
+  --tertiary-background-color: #363636;
+}
+
+/* Theme colors for Docusaurus */
+:root {
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -48,18 +71,9 @@
   /* Code blocks */
   --ifm-code-font-size: 90%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-
-  /* Theme colors from hamlettanyavong.com */
-  --primary-color: #121212;
-  --primary-color-alternate: #ededed;
-  --background-color: #ededed;
-  --background-color-alternate: #121212;
-  --secondary-background-color: #dbdbdb;
-  --tertiary-background-color: #c9c9c9;
 }
 
-[data-theme='dark'] {
-  /* Colors */
+html[data-theme='dark'] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -70,20 +84,6 @@
 
   /* Code blocks */
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-
-  /* Theme colors from hamlettanyavong.com */
-  --primary-color: #ededed;
-  --primary-color-alternate: #121212;
-  --background-color: #121212;
-  --background-color-alternate: #ededed;
-  --secondary-background-color: #242424;
-  --tertiary-background-color: #363636;
-}
-
-/* Additional theme styles */
-
-.main-wrapper {
-  background-color: var(--background-color);
 }
 
 /* Core HTML elements */
@@ -91,6 +91,17 @@
 pre,
 code {
   font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+}
+
+/* Additional theme styles */
+
+.hero {
+  background-color: var(--secondary-background-color);
+  color: var(--primary-color);
+}
+
+.main-wrapper {
+  background-color: var(--background-color);
 }
 
 /* Sidebar */
