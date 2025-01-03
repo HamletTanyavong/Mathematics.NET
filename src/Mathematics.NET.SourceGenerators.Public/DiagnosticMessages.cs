@@ -39,6 +39,6 @@ internal static class DiagnosticMessages
             category: "DifGeo",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            helpLinkUri: "https://mathematics.hamlettanyavong.com/guide/diagnostic_messages/difgeo/dg0001.html");
+            helpLinkUri: "https://mathematics.hamlettanyavong.com/docs/diagnostic-messages/difgeo/dg0001");
     }
 }

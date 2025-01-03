@@ -1159,7 +1159,7 @@ public static partial class DifGeo
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
-    /// <typeparam name="TI4P">The index position of the fourth idex of the tensor.</typeparam>
+    /// <typeparam name="TI4P">The index position of the fourth index of the tensor.</typeparam>
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
     /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
     /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>

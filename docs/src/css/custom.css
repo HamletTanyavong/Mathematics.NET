@@ -1,0 +1,104 @@
+@import url('https://use.typekit.net/niu3heg.css');
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../static/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../static/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../static/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../../static/fonts/JetBrainsMono-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Colors */
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+
+  /* Fonts */
+  --ifm-font-family-base: neue-haas-unica, Arial, Helvetica, sans-serif;
+
+  /* Code blocks */
+  --ifm-code-font-size: 90%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* Theme colors from hamlettanyavong.com */
+  --primary-color: #121212;
+  --primary-color-alternate: #ededed;
+  --background-color: #ededed;
+  --background-color-alternate: #121212;
+  --secondary-background-color: #dbdbdb;
+  --tertiary-background-color: #c9c9c9;
+}
+
+[data-theme='dark'] {
+  /* Colors */
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+
+  /* Code blocks */
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  /* Theme colors from hamlettanyavong.com */
+  --primary-color: #ededed;
+  --primary-color-alternate: #121212;
+  --background-color: #121212;
+  --background-color-alternate: #ededed;
+  --secondary-background-color: #242424;
+  --tertiary-background-color: #363636;
+}
+
+/* Additional theme styles */
+
+.main-wrapper {
+  background-color: var(--background-color);
+}
+
+/* Core HTML elements */
+
+pre,
+code {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+}
+
+/* Sidebar */
+
+.menu_SIkG {
+  padding: 8px !important;
+}
+
+.menu__caret:hover {
+  background-color: transparent;
+}
