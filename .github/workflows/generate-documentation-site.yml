@@ -4,7 +4,6 @@ name: Generate Documentation Site
 
 on:
   push:
-    # Remove dev later.
     branches: [ main ]
   workflow_dispatch:
 
@@ -31,17 +30,16 @@ jobs:
         with:
           node-version: '22.x'
       - name: Install Dependencies
-        working-directory: /docs
+        working-directory: docs
         run: npm ci
       - name: Build
-        working-directory: /docs
+        working-directory: docs
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: build
       - name: Deploy to GitHub Pages
         id: deployment
