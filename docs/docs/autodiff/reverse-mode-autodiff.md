@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 description: Use first and second-order, reverse-mode automatic differentiation (autodiff) using gradients and Hessian tapes.
-keywords: reverse-mode, autodiff, gradient tape, Hessian, math, C#, csharp, .NET
+keywords: [reverse-mode, autodiff, gradient tape, Hessian, math, C#, csharp, .NET]
 ---
 
 # Reverse-Mode Automatic Differentiation

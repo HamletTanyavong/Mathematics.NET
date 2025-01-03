@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 description: Use first and second-order, forward-mode automatic differentiation (autodiff) using gradients and Hessian tapes.
-keywords: forward-mode, autodiff, dual numbers, hyperdual, math, C#, csharp, .NET
+keywords: [forward-mode, autodiff, dual numbers, hyperdual, math, C#, csharp, .NET]
 ---
 
 # Forward-mode Automatic Differentiation

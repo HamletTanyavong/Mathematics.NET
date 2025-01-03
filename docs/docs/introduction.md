@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 description: Mathematics.NET is a C# class library that provides tools for solving advanced mathematical problems.
-keywords: math, C#, csharp, .NET
+keywords: [math, C#, csharp, .NET]
 ---
 
 # Introduction

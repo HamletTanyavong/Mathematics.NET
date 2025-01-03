@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 description: Mathematics.NET contains custom types for complex, real, and rational numbers.
-keywords: complex, real, rational, numbers, math, C#, csharp, .NET
+keywords: [complex, real, rational, numbers, math, C#, csharp, .NET]
 ---
 
 # Numeric Types
