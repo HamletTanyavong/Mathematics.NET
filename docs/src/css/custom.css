@@ -32,8 +32,68 @@
   font-display: swap;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.5%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.5%;
+    --border: 0 0% 80.5%;
+    --input: 214.3 31.8% 91.4%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 3.5%;
+    --secondary: 0 0% 94.75%;
+    --secondary-foreground: 0 0% 3.5%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 215 20.2% 65.1%;
+    --radius: 0.5rem;
+  }
+
+  [data-theme='dark'] {
+    --background: 0 0% 3.5%;
+    --foreground: 0 0% 96.5%;
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+    --popover: 0 0% 3.5%;
+    --popover-foreground: 0 0% 96.5%;
+    --border: 0 0% 19.5%;
+    --input: 216 34% 17%;
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+    --primary: 0 0% 3.5%;
+    --primary-foreground: 0 0% 96.5%;
+    --secondary: 0 0% 5.25%;
+    --secondary-foreground: 0 0% 96.5%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 216 34% 17%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Theme colors for Docusaurus */
 :root {
-  /* Colors */
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -42,24 +102,20 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
 
+  --ifm-navbar-background-color: hsl(var(--background));
+  --ifm-navbar-shadow: 0 1px 2px 0 hsl(var(--border));
+
+  --ifm-footer-background-color: hsl(var(--secondary));
+
   /* Fonts */
   --ifm-font-family-base: neue-haas-unica, Arial, Helvetica, sans-serif;
 
   /* Code blocks */
   --ifm-code-font-size: 90%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-
-  /* Theme colors from hamlettanyavong.com */
-  --primary-color: #121212;
-  --primary-color-alternate: #ededed;
-  --background-color: #ededed;
-  --background-color-alternate: #121212;
-  --secondary-background-color: #dbdbdb;
-  --tertiary-background-color: #c9c9c9;
 }
 
 [data-theme='dark'] {
-  /* Colors */
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -70,20 +126,6 @@
 
   /* Code blocks */
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-
-  /* Theme colors from hamlettanyavong.com */
-  --primary-color: #ededed;
-  --primary-color-alternate: #121212;
-  --background-color: #121212;
-  --background-color-alternate: #ededed;
-  --secondary-background-color: #242424;
-  --tertiary-background-color: #363636;
-}
-
-/* Additional theme styles */
-
-.main-wrapper {
-  background-color: var(--background-color);
 }
 
 /* Core HTML elements */
@@ -91,6 +133,12 @@
 pre,
 code {
   font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+}
+
+/* Docusaurus elements */
+
+.hero {
+  font-weight: 100;
 }
 
 /* Sidebar */
