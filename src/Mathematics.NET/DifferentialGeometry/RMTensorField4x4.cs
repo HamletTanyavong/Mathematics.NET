@@ -27,9 +27,9 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -78,5 +78,19 @@ public class RMTensorField4x4<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
 
         tape.IsTracking = true;
         return new Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+    }
+}
+
+#pragma warning disable IDE0051
+
+internal static partial class Buffers
+{
+    [InlineArray(4)]
+    internal struct RMTensor4Buffer4x4<TT, TN, TPI>
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPI : IIndex
+    {
+        private RMTensor4Buffer4<TT, TN, TPI> _element0;
     }
 }

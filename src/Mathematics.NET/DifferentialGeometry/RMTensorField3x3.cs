@@ -27,9 +27,9 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -78,5 +78,19 @@ public class RMTensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
 
         tape.IsTracking = true;
         return new Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+    }
+}
+
+#pragma warning disable IDE0051
+
+internal static partial class Buffers
+{
+    [InlineArray(3)]
+    internal struct RMTensor3Buffer3x3<TT, TN, TPI>
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPI : IIndex
+    {
+        private RMTensor3Buffer3<TT, TN, TPI> _element0;
     }
 }

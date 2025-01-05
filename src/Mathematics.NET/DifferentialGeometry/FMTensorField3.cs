@@ -27,9 +27,9 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -67,5 +67,19 @@ public class FMTensorField3<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
                 result[i] = function(point).D0;
         }
         return new Tensor<Vector3<TN>, TN, Index<TIP, TIN>>(result);
+    }
+}
+
+#pragma warning disable IDE0051
+
+internal static partial class Buffers
+{
+    [InlineArray(3)]
+    internal struct FMTensor3Buffer3<TDN, TN, TPI>
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPI : IIndex
+    {
+        private Func<AutoDiffTensor3<TDN, TN, TPI>, TDN> _element0;
     }
 }
