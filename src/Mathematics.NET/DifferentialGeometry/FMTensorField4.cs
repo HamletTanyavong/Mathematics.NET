@@ -57,6 +57,7 @@ public class FMTensorField4<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
         set => _buffer[index] = value;
     }
 
+    /// <inheritdoc cref="FMTensorField2{TDN, TN, TIP, TPI}.Compute{TIN}(AutoDiffTensor2{TDN, TN, TPI})"/>
     public Tensor<Vector4<TN>, TN, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor4<TDN, TN, TPI> point)
         where TIN : IIndexName
     {

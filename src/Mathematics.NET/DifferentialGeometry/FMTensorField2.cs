@@ -57,6 +57,10 @@ public class FMTensorField2<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
         set => _buffer[index] = value;
     }
 
+    /// <summary>Compute the value of the tensor at a specified point.</summary>
+    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <param name="point">A point.</param>
+    /// <returns>The value of the tensor at the specified point.</returns>
     public Tensor<Vector2<TN>, TN, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor2<TDN, TN, TPI> point)
         where TIN : IIndexName
     {
