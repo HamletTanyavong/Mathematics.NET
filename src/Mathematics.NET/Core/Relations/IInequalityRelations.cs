@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Relations;
 /// <summary>Defines a mechanism for ordering values.</summary>
 /// <typeparam name="TSelf">The type that implements the interface.</typeparam>
 /// <typeparam name="TResult">The result type.</typeparam>
-public interface IInequalityRelations<TSelf, TResult>
+public interface IInequalityRelations<in TSelf, out TResult>
     where TSelf : IInequalityRelations<TSelf, TResult>
 {
     static abstract TResult operator <(TSelf left, TSelf right);
