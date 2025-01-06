@@ -74,10 +74,10 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     // Indexer
     //
 
-    public TN this[int row, int column]
+    public TN this[int i, int j]
     {
-        get => _matrix[row, column];
-        set => _matrix[row, column] = value;
+        get => _matrix[i, j];
+        set => _matrix[i, j] = value;
     }
 
     //

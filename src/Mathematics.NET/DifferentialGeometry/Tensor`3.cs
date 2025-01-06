@@ -64,10 +64,10 @@ public struct Tensor<TV, TN, TI>(TV vector) : IRankOneTensor<Tensor<TV, TN, TI>,
     // Indexer
     //
 
-    public TN this[int index]
+    public TN this[int i]
     {
-        get => _vector[index];
-        set => _vector[index] = value;
+        get => _vector[i];
+        set => _vector[i] = value;
     }
 
     //

@@ -48,13 +48,13 @@ public class FMTensorField2<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
 
     public FMTensorField2() { }
 
-    public Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> this[int index]
+    public Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[index];
+        get => _buffer[i];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[index] = value;
+        set => _buffer[i] = value;
     }
 
     /// <summary>Compute the value of the tensor at a specified point.</summary>

@@ -50,13 +50,13 @@ public class RMTensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
 
     public RMTensorField2x2() { }
 
-    public Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> this[int row, int column]
+    public Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[row][column];
+        get => _buffer[i][j];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[row][column] = value;
+        set => _buffer[i][j] = value;
     }
 
     /// <summary>Compute the value of the tensor at a specific point on the manifold.</summary>

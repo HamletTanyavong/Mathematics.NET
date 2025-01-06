@@ -48,13 +48,13 @@ public class RMTensorField3<TT, TN, TIP, TPI> : TensorField<TN, TPI>
 
     public RMTensorField3() { }
 
-    public Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> this[int index]
+    public Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[index];
+        get => _buffer[i];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[index] = value;
+        set => _buffer[i] = value;
     }
 
     /// <inheritdoc cref="RMTensorField2{TT, TN, TIP, TPI}.Compute{TIN}(TT, AutoDiffTensor2{TN, TPI})"/>
