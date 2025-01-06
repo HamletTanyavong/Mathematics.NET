@@ -38,7 +38,7 @@ namespace Mathematics.NET.LinearAlgebra;
 public static class LinAlgExtensions
 {
     //
-    // Casts and reinterprets
+    // Casts and Reinterprets
     //
 
     /// <summary>Reinterprets a <see cref="Matrix2x2{T}"/> as a new <see cref="Span2D{T}"/>.</summary>

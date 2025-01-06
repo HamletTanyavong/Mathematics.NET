@@ -181,7 +181,7 @@ public record class GradientTape<T> : ITape<T>
     }
 
     //
-    // Basic operations
+    // Basic Operations
     //
 
     public Variable<T> Add(Variable<T> x, Variable<T> y)
@@ -338,7 +338,7 @@ public record class GradientTape<T> : ITape<T>
     }
 
     //
-    // Other operations
+    // Other Operations
     //
 
     public Variable<T> Negate(Variable<T> x)
@@ -637,7 +637,7 @@ public record class GradientTape<T> : ITape<T>
     }
 
     //
-    // Custom operations
+    // Custom Operations
     //
 
     /// <summary>Add a node to the gradient tape using a custom unary operation.</summary>
