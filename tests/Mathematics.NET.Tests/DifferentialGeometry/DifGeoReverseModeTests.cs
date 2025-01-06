@@ -39,6 +39,8 @@ public sealed class DifGeoReverseModeTests
 {
     public static RMTensorField4<HessianTape<Real>, Real, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
 
+    public static RMTensorField4x4<HessianTape<Real>, Real, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
+
     public static MetricTensorField4x4<HessianTape<Real>, Real, Index<Upper, PIN>> MetricTensor { get; set; } = new();
 
     [ClassInitialize]
@@ -48,6 +50,26 @@ public sealed class DifGeoReverseModeTests
         R1Tensor[1] = (tape, x) => tape.Cos(tape.Add(x.X1, x.X2));
         R1Tensor[2] = (tape, x) => tape.Exp(tape.Add(x.X2, x.X3));
         R1Tensor[3] = (tape, x) => tape.Sqrt(tape.Add(x.X3, x.X0));
+
+        R2Tensor[0, 0] = (tape, x) => tape.Sin(x.X0);
+        R2Tensor[0, 1] = (tape, x) => tape.Multiply(2, tape.Cos(x.X1));
+        R2Tensor[0, 2] = (tape, x) => tape.Multiply(3, tape.Exp(x.X2));
+        R2Tensor[0, 3] = (tape, x) => tape.Multiply(4, tape.Ln(x.X3));
+
+        R2Tensor[1, 0] = (tape, x) => tape.Multiply(5, tape.Sqrt(x.X1));
+        R2Tensor[1, 1] = (tape, x) => tape.Multiply(6, tape.Tan(x.X2));
+        R2Tensor[1, 2] = (tape, x) => tape.Multiply(7, tape.Sinh(x.X3));
+        R2Tensor[1, 3] = (tape, x) => tape.Multiply(8, tape.Cosh(x.X0));
+
+        R2Tensor[2, 0] = (tape, x) => tape.Multiply(9, tape.Tanh(x.X2));
+        R2Tensor[2, 1] = (tape, x) => tape.Divide(10, x.X3);
+        R2Tensor[2, 2] = (tape, x) => tape.Multiply(11, tape.Pow(x.X0, 2));
+        R2Tensor[2, 3] = (tape, x) => tape.Multiply(12, tape.Multiply(tape.Sin(x.X1), tape.Cos(x.X1)));
+
+        R2Tensor[3, 0] = (tape, x) => tape.Multiply(13, tape.Multiply(tape.Exp(x.X3), tape.Sin(x.X0)));
+        R2Tensor[3, 1] = (tape, x) => tape.Multiply(14, tape.Divide(x.X3, x.X1));
+        R2Tensor[3, 2] = (tape, x) => tape.Multiply(15, tape.Sin(tape.Subtract(x.X3, tape.Multiply(2, x.X2))));
+        R2Tensor[3, 3] = (tape, x) => tape.Multiply(16, tape.Multiply(x.X0, tape.Multiply(x.X1, tape.Multiply(x.X2, x.X3))));
 
         MetricTensor[0, 0] = (tape, x) => tape.Sin(x.X0);
         MetricTensor[0, 1] = (tape, x) => tape.Multiply(2, tape.Cos(x.X1));
@@ -82,7 +104,7 @@ public sealed class DifGeoReverseModeTests
     //
 
     [TestMethod]
-    [DynamicData(nameof(GetR1TenserDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetR1TensorDerivativeData), DynamicDataSourceType.Method)]
     public void Derivative_RankOneTensor_ReturnsRankTwoTensor(object[] input, object[] values)
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -90,6 +112,20 @@ public sealed class DifGeoReverseModeTests
         var expected = (Real[,])values[0];
 
         DifGeo.Derivative(Tape, R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
+        var actual = dTensor.ToArray();
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(GetR2TensorDerivativeData), DynamicDataSourceType.Method)]
+    public void Derivative_RankTwoTensor_ReturnsRankThreeTensor(object[] input, object[] values)
+    {
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+
+        var expected = (Real[,,])values[0];
+
+        DifGeo.Derivative(Tape, R2Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
         var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
@@ -140,8 +176,22 @@ public sealed class DifGeoReverseModeTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetMetricTensorSecondDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetR2TensorSecondDerivativeData), DynamicDataSourceType.Method)]
     public void SecondDerivative_RankTwoTensor_ReturnsRankFourTensor(object[] input, object[] values)
+    {
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+
+        var expected = (Real[,,,])values[0];
+
+        DifGeo.SecondDerivative(Tape, R2Tensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Upper, Gamma>, Index<Upper, Delta>> d2Tensor);
+        var actual = d2Tensor.ToArray();
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(GetMetricTensorSecondDerivativeData), DynamicDataSourceType.Method)]
+    public void SecondDerivative_MetricTensor_ReturnsRankFourTensor(object[] input, object[] values)
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
@@ -157,7 +207,7 @@ public sealed class DifGeoReverseModeTests
     // Helpers
     //
 
-    public static IEnumerable<object[]> GetR1TenserDerivativeData()
+    public static IEnumerable<object[]> GetR1TensorDerivativeData()
     {
         yield return new[]
         {
@@ -170,6 +220,44 @@ public sealed class DifGeoReverseModeTests
                     { -0.9096285273579445, 0.47343399708193507, 0,                  0                  },
                     { 0,                   0.47343399708193507, 3010.9171128823823, 0                  },
                     { 0,                   0,                   3010.9171128823823, 0.2077929087308457 }
+                }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> GetR2TensorDerivativeData()
+    {
+        yield return new[]
+        {
+            [1.23, 2.46, 3.14, 7.13],
+            new object[]
+            {
+                new Real[,,]
+                {
+                    {
+                        { 0.3342377271245026, 0, 0,     0                  },
+                        { 0,                  0, 0,     12.515747834435256 },
+                        { 0,                  0, 27.06, 0                  },
+                        { 5426.483385429979,  0, 0,     881.199552         }
+                    },
+                    {
+                        { 0,                  -1.2600612599917844, 0, 0                 },
+                        { 1.5939417826583457, 0,                   0, 0                 },
+                        { 0,                  0,                   0, 2.473473726407499 },
+                        { 0,                  -16.494811289576308, 0, 440.599776        }
+                    },
+                    {
+                        { 0,                   0,                69.31160057616655,  0                  },
+                        { 0,                   6.00001521929848, 0,                  0                  },
+                        { 0.06719043637160116, 0,                0,                  0                  },
+                        { 0,                   0,                -19.79949437654947, 345.18326399999995 }
+                    },
+                    {
+                        { 0,                 0,                   0,                 0.5610098176718092 },
+                        { 0,                 0,                   4371.072186714249, 0                  },
+                        { 0,                 -0.1967075097025979, 0,                 0                  },
+                        { 15301.68323198016, 5.691056910569106,   9.899747188274736, 152.016192         }
+                    },
                 }
             }
         };
@@ -283,6 +371,124 @@ public sealed class DifGeoReverseModeTests
                         { 0, 0, 0,                  0                     },
                         { 0, 0, 3010.9171128823823, 0                     },
                         { 0, 0, 3010.9171128823823, -0.017944119924943498 }
+                    },
+                }
+            }
+        };
+    }
+
+    public static IEnumerable<object[]> GetR2TensorSecondDerivativeData()
+    {
+        yield return new[]
+        {
+            [1.23, 2.46, 3.14, 7.13],
+            new object[]
+            {
+                new Real[,,,]
+                {
+                    {
+                        {
+                            { -0.942488801931697, 0, 0,  0                 },
+                            { 0,                  0, 0,  14.85408845588213 },
+                            { 0,                  0, 22, 0                 },
+                            { -15301.68323198016, 0, 0,  0                 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 358.2112 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 280.6368 }
+                        },
+                        {
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 5426.483385429979, 0, 0, 123.5904 }
+                        },
+                    },
+                    {
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 358.2112 }
+                        },
+                        {
+                            { 0,                   1.553140567066586, 0, 0                 },
+                            { -0.3239719070443792, 0,                 0, 0                 },
+                            { 0,                   0,                 0, 23.48462711858732 },
+                            { 0,                   13.41041568258237, 0, 0                 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 140.3184 }
+                        },
+                        {
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, -2.313437768524027, 0, 61.7952 }
+                        },
+                    },
+                    {
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 280.6368 }
+                        },
+                        {
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 0        },
+                            { 0, 0, 0, 140.3184 }
+                        },
+                        {
+                            { 0,                   0,                    69.31160057616656,  0 },
+                            { 0,                   -0.01911190771506838, 0,                  0 },
+                            { -0.1338783158199425, 0,                    0,                  0 },
+                            { 0,                   0,                    -45.07682430841755, 0 }
+                        },
+                        {
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 22.53841215420878, 48.41279999999999 }
+                        },
+                    },
+                    {
+                        {
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 0,                 0, 0, 0        },
+                            { 5426.483385429979, 0, 0, 123.5904 }
+                        },
+                        {
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, 0,                  0, 0       },
+                            { 0, -2.313437768524027, 0, 61.7952 }
+                        },
+                        {
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 0,                 0                 },
+                            { 0, 0, 22.53841215420878, 48.41279999999999 }
+                        },
+                        {
+                            { 0,                 0,                   0,                  -0.07868300388103916 },
+                            { 0,                 0,                   4371.066581678536,  0                    },
+                            { 0,                 0.05517742207646505, 0,                  0                    },
+                            { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
+                        },
                     },
                 }
             }
