@@ -30,7 +30,7 @@ namespace Mathematics.NET.Core.Relations;
 /// <summary>Defines a mechanism for determining equality of two values.</summary>
 /// <typeparam name="TSelf">The type that implements the interface.</typeparam>
 /// <typeparam name="TResult">The result type.</typeparam>
-public interface IEqualityRelation<TSelf, TResult>
+public interface IEqualityRelation<in TSelf, out TResult>
     where TSelf : IEqualityRelation<TSelf, TResult>
 {
     static abstract TResult operator ==(TSelf left, TSelf right);

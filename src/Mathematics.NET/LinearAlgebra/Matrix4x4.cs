@@ -96,22 +96,22 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     // Indexer
     //
 
-    public T this[int row, int column]
+    public T this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         readonly get
         {
-            if ((uint)row >= 4)
+            if ((uint)i >= 4)
                 throw new IndexOutOfRangeException();
-            return Unsafe.Add(ref Unsafe.AsRef(in X1), row)[column];
+            return Unsafe.Add(ref Unsafe.AsRef(in X1), i)[j];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set
         {
-            if ((uint)row >= 4)
+            if ((uint)i >= 4)
                 throw new IndexOutOfRangeException();
-            Unsafe.Add(ref X1, row)[column] = value;
+            Unsafe.Add(ref X1, i)[j] = value;
         }
     }
 

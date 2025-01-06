@@ -43,10 +43,10 @@ public interface ITwoDimensionalArrayRepresentable<T, U>
     static abstract int E2Components { get; }
 
     /// <summary>Get the element at the specified row and column.</summary>
-    /// <param name="row">The row.</param>
-    /// <param name="column">The column.</param>
+    /// <param name="i">The row.</param>
+    /// <param name="j">The column.</param>
     /// <returns>The element at the specified row and column.</returns>
-    U this[int row, int column] { get; set; }
+    U this[int i, int j] { get; set; }
 
     /// <summary>Get an array representation of this object.</summary>
     /// <returns>An array.</returns>

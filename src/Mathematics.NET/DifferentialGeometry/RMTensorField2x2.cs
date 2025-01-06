@@ -27,9 +27,9 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -50,13 +50,13 @@ public class RMTensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
 
     public RMTensorField2x2() { }
 
-    public Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> this[int row, int column]
+    public Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[row][column];
+        get => _buffer[i][j];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[row][column] = value;
+        set => _buffer[i][j] = value;
     }
 
     /// <summary>Compute the value of the tensor at a specific point on the manifold.</summary>
@@ -83,5 +83,19 @@ public class RMTensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
 
         tape.IsTracking = true;
         return new Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+    }
+}
+
+#pragma warning disable IDE0051
+
+internal static partial class Buffers
+{
+    [InlineArray(2)]
+    internal struct RMTensor2Buffer2x2<TT, TN, TPI>
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPI : IIndex
+    {
+        private RMTensor2Buffer2<TT, TN, TPI> _element0;
     }
 }

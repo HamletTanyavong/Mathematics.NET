@@ -27,9 +27,9 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -48,13 +48,13 @@ public class RMTensorField3<TT, TN, TIP, TPI> : TensorField<TN, TPI>
 
     public RMTensorField3() { }
 
-    public Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> this[int index]
+    public Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[index];
+        get => _buffer[i];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[index] = value;
+        set => _buffer[i] = value;
     }
 
     /// <inheritdoc cref="RMTensorField2{TT, TN, TIP, TPI}.Compute{TIN}(TT, AutoDiffTensor2{TN, TPI})"/>
@@ -68,5 +68,19 @@ public class RMTensorField3<TT, TN, TIP, TPI> : TensorField<TN, TPI>
                 result[i] = function(tape, point).Value;
         }
         return new Tensor<Vector3<TN>, TN, Index<TIP, TIN>>(result);
+    }
+}
+
+#pragma warning disable IDE0051
+
+internal static partial class Buffers
+{
+    [InlineArray(3)]
+    internal struct RMTensor3Buffer3<TT, TN, TPI>
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPI : IIndex
+    {
+        private Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> _element0;
     }
 }

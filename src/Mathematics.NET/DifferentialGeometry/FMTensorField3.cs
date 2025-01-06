@@ -27,9 +27,9 @@
 
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core.Buffers;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
@@ -48,15 +48,16 @@ public class FMTensorField3<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
 
     public FMTensorField3() { }
 
-    public Func<AutoDiffTensor3<TDN, TN, TPI>, TDN> this[int index]
+    public Func<AutoDiffTensor3<TDN, TN, TPI>, TDN> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[index];
+        get => _buffer[i];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[index] = value;
+        set => _buffer[i] = value;
     }
 
+    /// <inheritdoc cref="FMTensorField2{TDN, TN, TIP, TPI}.Compute{TIN}(AutoDiffTensor2{TDN, TN, TPI})"/>
     public Tensor<Vector3<TN>, TN, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor3<TDN, TN, TPI> point)
         where TIN : IIndexName
     {
@@ -67,5 +68,19 @@ public class FMTensorField3<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
                 result[i] = function(point).D0;
         }
         return new Tensor<Vector3<TN>, TN, Index<TIP, TIN>>(result);
+    }
+}
+
+#pragma warning disable IDE0051
+
+internal static partial class Buffers
+{
+    [InlineArray(3)]
+    internal struct FMTensor3Buffer3<TDN, TN, TPI>
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPI : IIndex
+    {
+        private Func<AutoDiffTensor3<TDN, TN, TPI>, TDN> _element0;
     }
 }

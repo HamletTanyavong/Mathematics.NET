@@ -1,4 +1,4 @@
-﻿// <copyright file="FMTensorField2.cs" company="Mathematics.NET">
+﻿// <copyright file="FMTensorField2x2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -33,44 +33,51 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor field with two elements.</summary>
+/// <summary>Represents a rank-two tensor field with four elements.</summary>
 /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="TIP">The position of the index of the tensor.</typeparam>
+/// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
+/// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class FMTensorField2<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
+public class FMTensorField2x2<TDN, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     where TDN : IDual<TDN, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-    where TIP : IIndexPosition
+    where TI1P : IIndexPosition
+    where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private protected FMTensor2Buffer2<TDN, TN, TPI> _buffer;
+    private protected FMTensor2Buffer2x2<TDN, TN, TPI> _buffer;
 
-    public FMTensorField2() { }
+    public FMTensorField2x2() { }
 
-    public Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> this[int i]
+    public Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[i];
+        get => _buffer[i][j];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[i] = value;
+        set => _buffer[i][j] = value;
     }
 
     /// <summary>Compute the value of the tensor at a specified point.</summary>
-    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
     /// <param name="point">A point.</param>
     /// <returns>The value of the tensor at the specified point.</returns>
-    public Tensor<Vector2<TN>, TN, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor2<TDN, TN, TPI> point)
-        where TIN : IIndexName
+    public Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, TPI> point)
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
-        Vector2<TN> result = new();
+        Matrix2x2<TN> result = new();
         for (int i = 0; i < 2; i++)
         {
-            if (_buffer[i] is Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> function)
-                result[i] = function(point).D0;
+            for (int j = 0; j < 2; j++)
+            {
+                if (_buffer[i][j] is Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> function)
+                    result[i, j] = function(point).D0;
+            }
         }
-        return new Tensor<Vector2<TN>, TN, Index<TIP, TIN>>(result);
+        return new Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
 
@@ -79,11 +86,11 @@ public class FMTensorField2<TDN, TN, TIP, TPI> : TensorField<TN, TPI>
 internal static partial class Buffers
 {
     [InlineArray(2)]
-    public struct FMTensor2Buffer2<TDN, TN, TPI>
+    public struct FMTensor2Buffer2x2<TDN, TN, TPI>
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPI : IIndex
     {
-        private Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> _element0;
+        private FMTensor2Buffer2<TDN, TN, TPI> _element0;
     }
 }

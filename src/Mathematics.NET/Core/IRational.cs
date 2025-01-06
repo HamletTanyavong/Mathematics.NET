@@ -32,7 +32,7 @@ namespace Mathematics.NET.Core;
 /// <summary>Defines support for rational numbers.</summary>
 /// <typeparam name="T">A type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-public interface IRational<T, U> : IReal<T>
+public interface IRational<T, out U> : IReal<T>
     where T : IRational<T, U>
     where U : IBinaryInteger<U>
 {
