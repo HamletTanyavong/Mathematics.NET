@@ -81,7 +81,7 @@ public class FMTensorField4x4<TDN, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
 
 internal static partial class Buffers
 {
-    [InlineArray(2)]
+    [InlineArray(4)]
     public struct FMTensor4Buffer4x4<TDN, TN, TPI>
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
