@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="..\..\docs\images\logo\mathematics.net.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\docs\static\img\mathematics.net.png" Pack="true" PackagePath="\" />
     <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
     <None Update="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
