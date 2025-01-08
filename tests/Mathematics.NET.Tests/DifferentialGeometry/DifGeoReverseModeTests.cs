@@ -41,7 +41,7 @@ public sealed class DifGeoReverseModeTests
 
     public static RMTensorField4x4<HessianTape<Real>, Real, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
 
-    public static MetricTensorField4x4<HessianTape<Real>, Real, Index<Upper, PIN>> MetricTensor { get; set; } = new();
+    public static RMMetricTensorField4x4<HessianTape<Real>, Real, Index<Upper, PIN>> MetricTensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)

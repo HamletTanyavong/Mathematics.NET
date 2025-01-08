@@ -1,4 +1,4 @@
-﻿// <copyright file="MetricTensorField4x4.cs" company="Mathematics.NET">
+﻿// <copyright file="RMMetricTensorField4x4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -35,14 +35,14 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class MetricTensorField4x4<TT, TN, TPI> : RMTensorField4x4<TT, TN, Lower, Lower, TPI>
+public class RMMetricTensorField4x4<TT, TN, TPI> : RMTensorField4x4<TT, TN, Lower, Lower, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TPI : IIndex
 {
-    public MetricTensorField4x4() { }
+    public RMMetricTensorField4x4() { }
 
-    /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
+    /// <inheritdoc cref="RMMetricTensorField2x2{TT, TN, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
     public new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
@@ -63,7 +63,7 @@ public class MetricTensorField4x4<TT, TN, TPI> : RMTensorField4x4<TT, TN, Lower,
         return new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1N, TI2N>(result);
     }
 
-    /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.ComputeInverse{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
+    /// <inheritdoc cref="RMMetricTensorField2x2{TT, TN, TPI}.ComputeInverse{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
     public MetricTensor<Matrix4x4<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
