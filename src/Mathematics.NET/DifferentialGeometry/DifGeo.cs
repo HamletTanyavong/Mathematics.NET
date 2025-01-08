@@ -579,6 +579,129 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="dMetric">A rank-three tensor.</param>
+    public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField2x2<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI2N, Index1>(point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+    }
+
+    /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField3x3<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI2N, Index1>(point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+    }
+
+    /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField4x4<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI2N, Index1>(point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+    }
+
+    public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField2x2<TDN, TN, Index<Lower, TPIN>> metric,
+        AutoDiffTensor2<TDN, TN, Index<Lower, TPIN>> point,
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI2N, Index1>(point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+    }
+
+    /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField3x3<TDN, TN, Index<Lower, TPIN>> metric,
+        AutoDiffTensor3<TDN, TN, Index<Lower, TPIN>> point,
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI2N, Index1>(point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+    }
+
+    /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField4x4<TDN, TN, Index<Lower, TPIN>> metric,
+        AutoDiffTensor4<TDN, TN, Index<Lower, TPIN>> point,
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI2N, Index1>(point);
+        var invMetricL = value.Inverse();
+        var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
+        Derivative(metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
+        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+    }
+
+    /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
+    /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
