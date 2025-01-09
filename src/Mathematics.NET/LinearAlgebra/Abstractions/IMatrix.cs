@@ -36,7 +36,10 @@ public interface IMatrix<T, U>
     : ITwoDimensionalArrayRepresentable<T, U>,
       IAdditionOperation<T, T>,
       ISubtractionOperation<T, T>,
-      IMultiplicationOperation<T, T>
+      IMultiplicationOperation<T, T>,
+      IMultiplicationOperation<T, U, T>,
+      IUnaryMinusOperation<T, T>,
+      IUnaryPlusOperation<T, T>
     where T : IMatrix<T, U>
     where U : IComplex<U>
 {

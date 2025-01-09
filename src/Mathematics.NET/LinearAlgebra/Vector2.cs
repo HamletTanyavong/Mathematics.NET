@@ -107,7 +107,6 @@ public struct Vector2<T>(T x1, T x2) : IVector<Vector2<T>, T>
 
     static Vector2<T> IVector<Vector2<T>, T>.Zero => Zero;
 
-
     //
     // Operators
     //

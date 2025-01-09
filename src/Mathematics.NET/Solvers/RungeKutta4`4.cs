@@ -27,6 +27,7 @@
 
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Helpers;
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -39,7 +40,7 @@ namespace Mathematics.NET.Solvers;
 /// <typeparam name="TI">The index of the tensor.</typeparam>
 /// <param name="function">A function to use for the integration step.</param>
 public sealed class RungeKutta4<TR1T, TV, TN, TI>(Func<TN, TR1T, TR1T> function)
-    where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
+    where TR1T : IRankOneTensor<TR1T, TV, TN, TI>, IMultiplicationOperation<TR1T, TN, TR1T>
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex

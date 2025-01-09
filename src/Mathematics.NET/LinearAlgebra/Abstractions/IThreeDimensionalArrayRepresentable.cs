@@ -30,9 +30,7 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <summary>Defines support for mathematical objects that can be represented by three-dimensional arrays.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IThreeDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<T, U>,
-      IFormattable
+public interface IThreeDimensionalArrayRepresentable<T, U> : IArrayRepresentable<T, U>
     where T : IThreeDimensionalArrayRepresentable<T, U>
     where U : IComplex<U>
 {

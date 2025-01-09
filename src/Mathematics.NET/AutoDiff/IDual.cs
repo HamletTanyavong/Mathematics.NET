@@ -42,9 +42,9 @@ public interface IDual<TDN, TN>
       IUnaryMinusOperation<TDN, TDN>,
       IUnaryPlusOperation<TDN, TDN>,
       ISubtractionOperation<TDN, TDN>,
-      IFormattable,
       IEqualityRelation<TDN, bool>,
       IEquatable<TDN>,
+      IFormattable,
       IDifferentiableFunctions<TDN>
     where TDN : IDual<TDN, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>

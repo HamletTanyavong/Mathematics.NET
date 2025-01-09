@@ -27,6 +27,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -40,7 +41,10 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="TI3N">The name of the third index.</typeparam>
 /// <param name="array">A backing array.</param>
 public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
-    : IRankThreeTensor<Christoffel<TCA, TN, TI1, TI2N, TI3N>, TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>
+    : IRankThreeTensor<Christoffel<TCA, TN, TI1, TI2N, TI3N>, TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>,
+      IMultiplicationOperation<Christoffel<TCA, TN, TI1, TI2N, TI3N>, TN, Tensor<TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>>,
+      IUnaryMinusOperation<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Tensor<TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>>,
+      IUnaryPlusOperation<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TI1, TI2N, TI3N>>
     where TCA : ICubicArray<TCA, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI1 : IIndex
@@ -50,7 +54,7 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     private TCA _array = array;
 
     //
-    // IRankThreeTensor interface
+    // IRankThreeTensor Interface
     //
 
     public readonly IIndex I1 => TI1.Instance;
@@ -60,7 +64,7 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     public readonly IIndex I3 => Index<Lower, TI3N>.Instance;
 
     //
-    // IArrayRepresentable & relevant interfaces
+    // IArrayRepresentable & Relevant Interfaces
     //
 
     public static int Components => TCA.Components;
@@ -85,16 +89,16 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
     // Operators
     //
 
-    public static Christoffel<TCA, TN, TI1, TI2N, TI3N> operator -(Christoffel<TCA, TN, TI1, TI2N, TI3N> christoffel)
+    public static Tensor<TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator -(Christoffel<TCA, TN, TI1, TI2N, TI3N> christoffel)
         => new(-christoffel._array);
 
     public static Christoffel<TCA, TN, TI1, TI2N, TI3N> operator +(Christoffel<TCA, TN, TI1, TI2N, TI3N> christoffel)
         => christoffel;
 
-    public static Christoffel<TCA, TN, TI1, TI2N, TI3N> operator *(TN c, Christoffel<TCA, TN, TI1, TI2N, TI3N> christoffel)
+    public static Tensor<TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator *(TN c, Christoffel<TCA, TN, TI1, TI2N, TI3N> christoffel)
         => new(c * christoffel._array);
 
-    public static Christoffel<TCA, TN, TI1, TI2N, TI3N> operator *(Christoffel<TCA, TN, TI1, TI2N, TI3N> christoffel, TN c)
+    public static Tensor<TCA, TN, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator *(Christoffel<TCA, TN, TI1, TI2N, TI3N> christoffel, TN c)
         => new(christoffel._array * c);
 
     //
@@ -162,7 +166,7 @@ public struct Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA array)
         => Unsafe.As<Christoffel<TCA, TN, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TI1, TI2N, TNIN>>(ref this);
 
     //
-    // Implicit operators
+    // Implicit Operators
     //
 
     public static implicit operator Christoffel<TCA, TN, TI1, TI2N, TI3N>(TCA value) => new(value);

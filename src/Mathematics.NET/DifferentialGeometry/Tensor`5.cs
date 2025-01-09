@@ -28,6 +28,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -42,7 +43,10 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <param name="array">A backing array.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Tensor<TCA, TN, TI1, TI2, TI3>(TCA array)
-    : IRankThreeTensor<Tensor<TCA, TN, TI1, TI2, TI3>, TCA, TN, TI1, TI2, TI3>
+    : IRankThreeTensor<Tensor<TCA, TN, TI1, TI2, TI3>, TCA, TN, TI1, TI2, TI3>,
+      IMultiplicationOperation<Tensor<TCA, TN, TI1, TI2, TI3>, TN, Tensor<TCA, TN, TI1, TI2, TI3>>,
+      IUnaryMinusOperation<Tensor<TCA, TN, TI1, TI2, TI3>, Tensor<TCA, TN, TI1, TI2, TI3>>,
+      IUnaryPlusOperation<Tensor<TCA, TN, TI1, TI2, TI3>, Tensor<TCA, TN, TI1, TI2, TI3>>
     where TCA : ICubicArray<TCA, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI1 : IIndex
@@ -52,7 +56,7 @@ public struct Tensor<TCA, TN, TI1, TI2, TI3>(TCA array)
     private TCA _array = array;
 
     //
-    // IRankThreeTensor interface
+    // IRankThreeTensor Interface
     //
 
     public readonly IIndex I1 => TI1.Instance;
@@ -62,7 +66,7 @@ public struct Tensor<TCA, TN, TI1, TI2, TI3>(TCA array)
     public readonly IIndex I3 => TI3.Instance;
 
     //
-    // IArrayRepresentable & relevant interfaces
+    // IArrayRepresentable & Relevant Interfaces
     //
 
     public static int Components => TCA.Components;
@@ -164,7 +168,7 @@ public struct Tensor<TCA, TN, TI1, TI2, TI3>(TCA array)
         => Unsafe.As<Tensor<TCA, TN, TI1, TI2, TI3>, Tensor<TCA, TN, TI1, TI2, TNI>>(ref this);
 
     //
-    // Implicit operators
+    // Implicit Operators
     //
 
     public static implicit operator Tensor<TCA, TN, TI1, TI2, TI3>(TCA value) => new(value);

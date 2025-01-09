@@ -30,9 +30,7 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <summary>Defines support for the mathematical objects that can be represented by four-dimensional arrays.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IFourDimensionalArrayRepresentable<T, U>
-    : IArrayRepresentable<T, U>,
-      IFormattable
+public interface IFourDimensionalArrayRepresentable<T, U> : IArrayRepresentable<T, U>
     where T : IFourDimensionalArrayRepresentable<T, U>
     where U : IComplex<U>
 {
