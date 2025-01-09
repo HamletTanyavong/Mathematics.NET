@@ -170,8 +170,6 @@ public sealed class DifGeoReverseModeTests
         DifGeo.SecondDerivative(Tape, R1Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
         var actual = d2Tensor.ToArray();
 
-        Console.WriteLine(d2Tensor);
-
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
@@ -257,7 +255,7 @@ public sealed class DifGeoReverseModeTests
                         { 0,                 0,                   4371.072186714249, 0                  },
                         { 0,                 -0.1967075097025979, 0,                 0                  },
                         { 15301.68323198016, 5.691056910569106,   9.899747188274736, 152.016192         }
-                    },
+                    }
                 }
             }
         };
@@ -295,7 +293,7 @@ public sealed class DifGeoReverseModeTests
                         { 0,                 0,                   4371.072186714249, 0                  },
                         { 0,                 -0.1967075097025979, 0,                 0                  },
                         { 15301.68323198016, 5.691056910569106,   9.899747188274736, 152.016192         }
-                    },
+                    }
                 }
             }
         };
@@ -333,7 +331,7 @@ public sealed class DifGeoReverseModeTests
                         { -99.9083713139095,  2.583393035830481,    -108.4372846947553, 0.0894257725193976     },
                         { 0.0876578722667318, -0.00238146677635786, 0.0960322791258335, -0.0000743715905405725 },
                         { -21.22135210759896, 0.5469516019661675,   -23.0619674179585,  0.01887653616804277    }
-                    },
+                    }
                 }
             }
         };
@@ -371,7 +369,7 @@ public sealed class DifGeoReverseModeTests
                         { 0, 0, 0,                  0                     },
                         { 0, 0, 3010.9171128823823, 0                     },
                         { 0, 0, 3010.9171128823823, -0.017944119924943498 }
-                    },
+                    }
                 }
             }
         };
@@ -410,7 +408,7 @@ public sealed class DifGeoReverseModeTests
                             { 0,                 0, 0, 0        },
                             { 0,                 0, 0, 0        },
                             { 5426.483385429979, 0, 0, 123.5904 }
-                        },
+                        }
                     },
                     {
                         {
@@ -436,7 +434,7 @@ public sealed class DifGeoReverseModeTests
                             { 0, 0,                  0, 0       },
                             { 0, 0,                  0, 0       },
                             { 0, -2.313437768524027, 0, 61.7952 }
-                        },
+                        }
                     },
                     {
                         {
@@ -462,7 +460,7 @@ public sealed class DifGeoReverseModeTests
                             { 0, 0, 0,                 0                 },
                             { 0, 0, 0,                 0                 },
                             { 0, 0, 22.53841215420878, 48.41279999999999 }
-                        },
+                        }
                     },
                     {
                         {
@@ -488,8 +486,8 @@ public sealed class DifGeoReverseModeTests
                             { 0,                 0,                   4371.066581678536,  0                    },
                             { 0,                 0.05517742207646505, 0,                  0                    },
                             { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
-                        },
-                    },
+                        }
+                    }
                 }
             }
         };
@@ -528,7 +526,7 @@ public sealed class DifGeoReverseModeTests
                             { 0,                 0, 0, 0        },
                             { 0,                 0, 0, 0        },
                             { 5426.483385429979, 0, 0, 123.5904 }
-                        },
+                        }
                     },
                     {
                         {
@@ -554,7 +552,7 @@ public sealed class DifGeoReverseModeTests
                             { 0, 0,                  0, 0       },
                             { 0, 0,                  0, 0       },
                             { 0, -2.313437768524027, 0, 61.7952 }
-                        },
+                        }
                     },
                     {
                         {
@@ -580,7 +578,7 @@ public sealed class DifGeoReverseModeTests
                             { 0, 0, 0,                 0                 },
                             { 0, 0, 0,                 0                 },
                             { 0, 0, 22.53841215420878, 48.41279999999999 }
-                        },
+                        }
                     },
                     {
                         {
@@ -606,8 +604,8 @@ public sealed class DifGeoReverseModeTests
                             { 0,                 0,                   4371.066581678536,  0                    },
                             { 0,                 0.05517742207646505, 0,                  0                    },
                             { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
-                        },
-                    },
+                        }
+                    }
                 }
             }
         };
