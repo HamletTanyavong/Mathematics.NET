@@ -36,7 +36,6 @@ public interface IMatrix<T, U>
     : ITwoDimensionalArrayRepresentable<T, U>,
       IAdditionOperation<T, T>,
       ISubtractionOperation<T, T>,
-      IMultiplicationOperation<T, T>,
       IMultiplicationOperation<T, U, T>,
       IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>
@@ -51,8 +50,4 @@ public interface IMatrix<T, U>
     /// <param name="matrix">The value to check.</param>
     /// <returns><see langword="true"/> if the value is not a matrix; otherwise, <see langword="false"/>.</returns>
     static abstract bool IsNaM(T matrix);
-
-    /// <summary>Compute the transpose of the matrix.</summary>
-    /// <returns>The transpose.</returns>
-    T Transpose();
 }

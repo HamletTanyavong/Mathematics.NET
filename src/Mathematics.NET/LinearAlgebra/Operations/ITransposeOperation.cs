@@ -1,4 +1,4 @@
-﻿// <copyright file="ISquareMatrix.cs" company="Mathematics.NET">
+﻿// <copyright file="ITransposeOperation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,33 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Operations;
-using Mathematics.NET.LinearAlgebra.Operations;
+using Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+namespace Mathematics.NET.LinearAlgebra.Operations;
 
-/// <summary>Defines support for square matrices.</summary>
-/// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface ISquareMatrix<T, U>
-    : IMatrix<T, U>,
-      IMultiplicationOperation<T, T>,
-      ITransposeOperation<T, U>
-    where T : ISquareMatrix<T, U>
-    where U : IComplex<U>
+/// <summary>Defines support for the matrix transpose operation.</summary>
+/// <typeparam name="TM">A type that implements <see cref="IMatrix{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+public interface ITransposeOperation<out TM, TN>
+    where TM : IMatrix<TM, TN>
+    where TN : IComplex<TN>
 {
-    /// <summary>Gets the multiplicative identiy matrix.</summary>
-    static abstract T Identity { get; }
-
-    /// <summary>Compute the determinant of the matrix.</summary>
-    /// <returns>The determinant.</returns>
-    U Determinant();
-
-    /// <summary>Compute the inverse of the matrix.</summary>
-    /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="IMatrix{T, U}.NaM"/>.</returns>
-    T Inverse();
-
-    /// <summary>Compute the trace of the matrix.</summary>
-    /// <returns>The trace.</returns>
-    U Trace();
+    /// <summary>Compute the transpose of the matrix.</summary>
+    /// <returns>The transpose.</returns>
+    TM Transpose();
 }
