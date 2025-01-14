@@ -31,7 +31,7 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore
 
-    - name: Build Test Projects
+    - name: Build Test Project
       working-directory: tests/Mathematics.NET.Tests
       run: dotnet build --no-restore
 
