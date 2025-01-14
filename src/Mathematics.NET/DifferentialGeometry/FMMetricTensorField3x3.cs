@@ -1,4 +1,4 @@
-﻿// <copyright file="MetricTensorField4x4.cs" company="Mathematics.NET">
+﻿// <copyright file="FMMetricTensorField3x3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -31,44 +31,38 @@ using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a 4x4 metric tensor field.</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+/// <summary>Represents a 3x3 metric tensor field.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class MetricTensorField4x4<TT, TN, TPI> : RMTensorField4x4<TT, TN, Lower, Lower, TPI>
-    where TT : ITape<TN>
+public class FMMetricTensorField3x3<TDN, TN, TPI> : FMTensorField3x3<TDN, TN, Lower, Lower, TPI>
+    where TDN : IDual<TDN, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TPI : IIndex
 {
-    public MetricTensorField4x4() { }
-
-    /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
-    public new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
+    /// <inheritdoc cref="FMMetricTensorField2x2{TDN, TN, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, TPI})"/>
+    public new MetricTensor<Matrix3x3<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        tape.IsTracking = false;
-
-        Matrix4x4<TN> result = new();
-        for (int i = 0; i < 4; i++)
+        Matrix3x3<TN> result = new();
+        for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 3; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor4<TN, TPI>, Variable<TN>> function)
-                    result[i, j] = function(tape, point).Value;
+                if (_buffer[i][j] is Func<AutoDiffTensor3<TDN, TN, TPI>, TDN> function)
+                    result[i, j] = function(point).D0;
             }
         }
-
-        tape.IsTracking = true;
-        return new MetricTensor<Matrix4x4<TN>, TN, Lower, TI1N, TI2N>(result);
+        return new MetricTensor<Matrix3x3<TN>, TN, Lower, TI1N, TI2N>(result);
     }
 
-    /// <inheritdoc cref="MetricTensorField2x2{TT, TN, TPI}.ComputeInverse{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
-    public MetricTensor<Matrix4x4<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, TPI> point)
+    /// <inheritdoc cref="FMMetricTensorField2x2{TDN, TN, TPI}.ComputeInverse{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, TPI})"/>
+    public MetricTensor<Matrix3x3<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        var value = Compute<TI1N, TI2N>(tape, point);
+        var value = Compute<TI1N, TI2N>(point);
         return value.Inverse();
     }
 }

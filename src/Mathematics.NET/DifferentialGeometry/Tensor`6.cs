@@ -28,6 +28,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -43,7 +44,10 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <param name="array">A backing array.</param>
 [StructLayout(LayoutKind.Sequential)]
 public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
-    : IRankFourTensor<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, TH4DA, TN, TI1, TI2, TI3, TI4>
+    : IRankFourTensor<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, TH4DA, TN, TI1, TI2, TI3, TI4>,
+      IMultiplicationOperation<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, TN, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>>,
+      IUnaryMinusOperation<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>>,
+      IUnaryPlusOperation<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>>
     where TH4DA : IHypercubic4DArray<TH4DA, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI1 : IIndex
@@ -54,7 +58,7 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
     private TH4DA _array = array;
 
     //
-    // IRankFourTensor interface
+    // IRankFourTensor Interface
     //
 
     public readonly IIndex I1 => TI1.Instance;
@@ -66,7 +70,7 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
     public readonly IIndex I4 => TI4.Instance;
 
     //
-    // IArrayRepresentable & relevant interfaces
+    // IArrayRepresentable & Relevant Interfaces
     //
 
     public static int Components => TH4DA.Components;
@@ -180,7 +184,7 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
         => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TNI>>(ref this);
 
     //
-    // Implicit operators
+    // Implicit Operators
     //
 
     public static implicit operator Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA value) => new(value);

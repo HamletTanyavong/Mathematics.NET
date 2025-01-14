@@ -25,7 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Operations;
 using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
@@ -35,9 +34,7 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IArrayRepresentable<T, U>
     : IEqualityRelation<T, bool>,
-      IMultiplicationOperation<T, U, T>,
-      IUnaryMinusOperation<T, T>,
-      IUnaryPlusOperation<T, T>
+      IFormattable
     where T : IArrayRepresentable<T, U>
     where U : IComplex<U>
 {

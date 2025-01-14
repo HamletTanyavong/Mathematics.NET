@@ -32,11 +32,9 @@ jobs:
       run: dotnet restore
 
     - name: Build Test Projects
-      run: |
-        cd tests/Mathematics.NET.Tests
-        dotnet build --no-restore
+      working-directory: tests/Mathematics.NET.Tests
+      run: dotnet build --no-restore
 
     - name: Run Tests
-      run: |
-        cd tests/Mathematics.NET.Tests
-        dotnet test --no-build --verbosity normal
+      working-directory: tests/Mathematics.NET.Tests
+      run: dotnet test --no-build --verbosity normal

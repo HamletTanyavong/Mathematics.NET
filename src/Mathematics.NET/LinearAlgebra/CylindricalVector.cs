@@ -150,6 +150,9 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
         return new(Real.Hypot(x, y), Real.Atan2(y, x), z);
     }
 
+    public static CylindricalVector operator *(CylindricalVector left, CylindricalVector right)
+        => new(left.Rho * right.Rho, left.Phi * right.Phi, left.Z * right.Z);
+
     public static CylindricalVector operator *(Real left, CylindricalVector right) => new(left * right.Rho, right.Phi, left * right.Z);
 
     public static CylindricalVector operator *(CylindricalVector left, Real right) => new(left.Rho * right, left.Phi, left.Z * right);

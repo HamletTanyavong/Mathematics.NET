@@ -28,6 +28,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -39,7 +40,11 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="TI">An index.</typeparam>
 /// <param name="vector">A backing vector.</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<TV, TN, TI>(TV vector) : IRankOneTensor<Tensor<TV, TN, TI>, TV, TN, TI>
+public struct Tensor<TV, TN, TI>(TV vector)
+    : IRankOneTensor<Tensor<TV, TN, TI>, TV, TN, TI>,
+      IMultiplicationOperation<Tensor<TV, TN, TI>, TN, Tensor<TV, TN, TI>>,
+      IUnaryMinusOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>,
+      IUnaryPlusOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex
@@ -47,7 +52,7 @@ public struct Tensor<TV, TN, TI>(TV vector) : IRankOneTensor<Tensor<TV, TN, TI>,
     private TV _vector = vector;
 
     //
-    // IArrayRepresentable & relevant interfaces
+    // IArrayRepresentable & Relevant Interfaces
     //
 
     public static int Components => TV.Components;
@@ -55,7 +60,7 @@ public struct Tensor<TV, TN, TI>(TV vector) : IRankOneTensor<Tensor<TV, TN, TI>,
     public static int E1Components => TV.E1Components;
 
     //
-    // IRankOneTensor interface
+    // IRankOneTensor Interface
     //
 
     public readonly IIndex I1 => TI.Instance;
@@ -129,7 +134,7 @@ public struct Tensor<TV, TN, TI>(TV vector) : IRankOneTensor<Tensor<TV, TN, TI>,
         => Unsafe.As<Tensor<TV, TN, TI>, Tensor<TV, TN, TNI>>(ref this);
 
     //
-    // Implicit operators
+    // Implicit Operators
     //
 
     public static implicit operator Tensor<TV, TN, TI>(TV input) => new(input);

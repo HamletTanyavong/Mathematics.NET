@@ -1,4 +1,4 @@
-﻿// <copyright file="MetricTensorField2x2.cs" company="Mathematics.NET">
+﻿// <copyright file="RMMetricTensorField2x2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -35,12 +35,12 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class MetricTensorField2x2<TT, TN, TPI> : RMTensorField2x2<TT, TN, Lower, Lower, TPI>
+public class RMMetricTensorField2x2<TT, TN, TPI> : RMTensorField2x2<TT, TN, Lower, Lower, TPI>
     where TT : ITape<TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TPI : IIndex
 {
-    public MetricTensorField2x2() { }
+    public RMMetricTensorField2x2() { }
 
     /// <summary>Compute the value of the metric tensor at a specific point on the manifold.</summary>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>

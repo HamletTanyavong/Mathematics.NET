@@ -49,7 +49,7 @@ builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Warning);
 var app = builder.Build();
 ```
 
-We can also instantiate [OpenCLService] directly, but for this example, we will use the former. To get the service, use
+We can also instantiate `OpenCLService` directly, but for this example, we will use the former. To get the service, use
 
 ```csharp
 // Get the OpenCL service.
@@ -92,7 +92,7 @@ B = \begin{pmatrix}
     \end{pmatrix}
 $$
 
-We can use the method [MatMul] to perform matrix multiplication on the GPU.
+We can use the method `MatMul` to perform matrix multiplication on the GPU.
 
 ```csharp
 // Create and fill the left matrix.
@@ -157,7 +157,7 @@ B = \begin{pmatrix}
     \end{pmatrix}
 $$
 
-We can use [Pad] to add zeros to the right and bottom of each of these matrices so that $ A $ and $ B $ have dimensions `4 x 8` and `8 x 8`, respectively.
+We can use `Pad` to add zeros to the right and bottom of each of these matrices so that $ A $ and $ B $ have dimensions `4 x 8` and `8 x 8`, respectively.
 
 ```csharp
 var pMatA = matA.Pad(4, 8);
@@ -175,7 +175,7 @@ Here, we chose a local work size of `{ 4, 4 }`, which is a multiple of our globa
 
 :::note
 
-For performance reasons, matrices should only be padded once. When finished, use [Slice], or the 2D version from [CommunityToolkit](https://learn.microsoft.com/en-us/dotnet/api/microsoft.toolkit.highperformance.span2d-1.slice), to get the unpadded result.
+For performance reasons, matrices should only be padded once. When finished, use `Slice`, or the 2D version from [CommunityToolkit](https://learn.microsoft.com/en-us/dotnet/api/microsoft.toolkit.highperformance.span2d-1.slice), to get the unpadded result.
 
 :::
 

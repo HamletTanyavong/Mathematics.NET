@@ -44,7 +44,10 @@ namespace Mathematics.NET.DifferentialGeometry;
 public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     : IRankTwoTensor<Tensor<TSM, TN, TI1, TI2>, TSM, TN, TI1, TI2>,
       IAdditionOperation<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TI2>>,
-      ISubtractionOperation<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TI2>>
+      ISubtractionOperation<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TI2>>,
+      IMultiplicationOperation<Tensor<TSM, TN, TI1, TI2>, TN, Tensor<TSM, TN, TI1, TI2>>,
+      IUnaryMinusOperation<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TI2>>,
+      IUnaryPlusOperation<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TI2>>
     where TSM : ISquareMatrix<TSM, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI1 : IIndex
@@ -53,7 +56,7 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     private TSM _matrix = matrix;
 
     //
-    // IRankTwoTensor interface
+    // IRankTwoTensor Interface
     //
 
     public readonly IIndex I1 => TI1.Instance;
@@ -61,7 +64,7 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
     public readonly IIndex I2 => TI2.Instance;
 
     //
-    // IArrayRepresentable & relevant interfaces
+    // IArrayRepresentable & Relevant Interfaces
     //
 
     public static int Components => TSM.Components;
@@ -157,7 +160,7 @@ public struct Tensor<TSM, TN, TI1, TI2>(TSM matrix)
         => Unsafe.As<Tensor<TSM, TN, TI1, TI2>, Tensor<TSM, TN, TI1, TNI>>(ref this);
 
     //
-    // Implicit operators
+    // Implicit Operators
     //
 
     public static implicit operator Tensor<TSM, TN, TI1, TI2>(TSM input) => new(input);
