@@ -3,13 +3,14 @@
       <img src="https://raw.githubusercontent.com/HamletTanyavong/Mathematics.NET/main/docs/static/img/mathematics.net.svg" width="128" height="128" alt="Mathematics.NET Logo">
   </a>
   <h1>Mathematics.NET</h1>
-  <p>Mathematics.NET is a C# class library that provides tools for solving mathematical problems.</p>
+  <p>Mathematics.NET is a C# class library that provides tools for solving advanced mathematical problems.</p>
 </div>
 
 [![GitHub](https://img.shields.io/github/license/HamletTanyavong/Mathematics.NET?style=flat-square&logo=github&labelColor=87cefa&color=ffd700)](https://github.com/HamletTanyavong/Mathematics.NET)
 [![GitHub Repo Stars](https://img.shields.io/github/stars/HamletTanyavong/Mathematics.NET?color=87cefa&style=flat-square&logo=github)](https://github.com/HamletTanyavong/Mathematics.NET/stargazers)
-[![NuGet](https://img.shields.io/nuget/v/Physics.NET.Mathematics?style=flat-square&logo=nuget)](https://www.nuget.org/packages/Physics.NET.Mathematics)
-[![NuGet](https://img.shields.io/nuget/dt/Physics.NET.Mathematics?style=flat-square&logo=nuget)](https://www.nuget.org/packages/Physics.NET.Mathematics)
+[![NuGet Package](https://img.shields.io/nuget/v/Physics.NET.Mathematics?style=flat-square&logo=nuget&color=green)](https://www.nuget.org/packages/Physics.NET.Mathematics)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Physics.NET.Mathematics?style=flat-square&logo=nuget&color=green)](https://www.nuget.org/packages/Physics.NET.Mathematics)
+[![Unit Tests](https://img.shields.io/github/actions/workflow/status/HamletTanyavong/Mathematics.NET/unit-tests.yml?label=Unit%20Tests&style=flat-square&logo=github&color=87cefa)](https://github.com/HamletTanyavong/Mathematics.NET/actions/workflows/unit-tests.yml)
 
 ## About
 
