@@ -84,6 +84,6 @@ internal static partial class Buffers
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPI : IIndex
     {
-        private Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> _element0;
+        private Func<AutoDiffTensor2<TDN, TN, TPI>, TDN> _element;
     }
 }
