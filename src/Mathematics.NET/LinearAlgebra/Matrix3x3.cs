@@ -118,8 +118,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static Matrix3x3<T> operator +(Matrix3x3<T> matrix)
-        => matrix;
+    public static Matrix3x3<T> operator +(Matrix3x3<T> matrix) => matrix;
 
     public static Matrix3x3<T> operator +(Matrix3x3<T> left, Matrix3x3<T> right)
     {
@@ -162,24 +161,24 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static Matrix3x3<T> operator *(T c, Matrix3x3<T> matrix)
+    public static Matrix3x3<T> operator *(T left, Matrix3x3<T> right)
     {
         Unsafe.SkipInit(out Matrix3x3<T> result);
 
-        result.X1 = c * matrix.X1;
-        result.X2 = c * matrix.X2;
-        result.X3 = c * matrix.X3;
+        result.X1 = left * right.X1;
+        result.X2 = left * right.X2;
+        result.X3 = left * right.X3;
 
         return result;
     }
 
-    public static Matrix3x3<T> operator *(Matrix3x3<T> matrix, T c)
+    public static Matrix3x3<T> operator *(Matrix3x3<T> left, T right)
     {
         Unsafe.SkipInit(out Matrix3x3<T> result);
 
-        result.X1 = matrix.X1 * c;
-        result.X2 = matrix.X2 * c;
-        result.X3 = matrix.X3 * c;
+        result.X1 = left.X1 * right;
+        result.X2 = left.X2 * right;
+        result.X3 = left.X3 * right;
 
         return result;
     }
@@ -288,7 +287,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         var array = new T[3, 3];
         var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
         var pArray = (void*)handle.AddrOfPinnedObject();
-        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 9));
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * Components));
         handle.Free();
         return array;
     }

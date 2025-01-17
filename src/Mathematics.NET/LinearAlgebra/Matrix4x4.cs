@@ -131,8 +131,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static Matrix4x4<T> operator +(Matrix4x4<T> matrix)
-        => matrix;
+    public static Matrix4x4<T> operator +(Matrix4x4<T> matrix) => matrix;
 
     public static Matrix4x4<T> operator +(Matrix4x4<T> left, Matrix4x4<T> right)
     {
@@ -185,26 +184,26 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static Matrix4x4<T> operator *(T c, Matrix4x4<T> matrix)
+    public static Matrix4x4<T> operator *(T left, Matrix4x4<T> right)
     {
         Unsafe.SkipInit(out Matrix4x4<T> result);
 
-        result.X1 = c * matrix.X1;
-        result.X2 = c * matrix.X2;
-        result.X3 = c * matrix.X3;
-        result.X4 = c * matrix.X4;
+        result.X1 = left * right.X1;
+        result.X2 = left * right.X2;
+        result.X3 = left * right.X3;
+        result.X4 = left * right.X4;
 
         return result;
     }
 
-    public static Matrix4x4<T> operator *(Matrix4x4<T> matrix, T c)
+    public static Matrix4x4<T> operator *(Matrix4x4<T> left, T right)
     {
         Unsafe.SkipInit(out Matrix4x4<T> result);
 
-        result.X1 = matrix.X1 * c;
-        result.X2 = matrix.X2 * c;
-        result.X3 = matrix.X3 * c;
-        result.X4 = matrix.X4 * c;
+        result.X1 = left.X1 * right;
+        result.X2 = left.X2 * right;
+        result.X3 = left.X3 * right;
+        result.X4 = left.X4 * right;
 
         return result;
     }
@@ -345,7 +344,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         var array = new T[4, 4];
         var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
         var pArray = (void*)handle.AddrOfPinnedObject();
-        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 16));
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * Components));
         handle.Free();
         return array;
     }
