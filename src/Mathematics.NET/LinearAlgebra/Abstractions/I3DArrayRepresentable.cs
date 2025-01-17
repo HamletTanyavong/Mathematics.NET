@@ -1,4 +1,4 @@
-﻿// <copyright file="IOneDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="I3DArrayRepresentable.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,22 +27,30 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays.</summary>
+/// <summary>Defines support for mathematical objects that can be represented by three-dimensional arrays.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IOneDimensionalArrayRepresentable<T, U> : IArrayRepresentable<T, U>
-    where T : IOneDimensionalArrayRepresentable<T, U>
+public interface I3DArrayRepresentable<T, U> : IArrayRepresentable<T, U>
+    where T : I3DArrayRepresentable<T, U>
     where U : IComplex<U>
 {
-    /// <summary>The number of components in the one-dimensional array.</summary>
+    /// <summary>The number of elements in the first dimension of the array.</summary>
     static abstract int E1Components { get; }
 
-    /// <summary>Get the element at the specified index.</summary>
-    /// <param name="index">An index.</param>
-    /// <returns>The element at the index.</returns>
-    U this[int index] { get; set; }
+    /// <summary>The number of elements in the second dimension of the array.</summary>
+    static abstract int E2Components { get; }
+
+    /// <summary>The number of elements in the third dimension of the array.</summary>
+    static abstract int E3Components { get; }
+
+    /// <summary>Get the element at the specified indices.</summary>
+    /// <param name="i">The first index.</param>
+    /// <param name="j">The second index.</param>
+    /// <param name="k">The third index.</param>
+    /// <returns>The element at the specified indices.</returns>
+    U this[int i, int j, int k] { get; set; }
 
     /// <summary>Get an array representation of this object.</summary>
     /// <returns>An array.</returns>
-    U[] ToArray();
+    U[,,] ToArray();
 }

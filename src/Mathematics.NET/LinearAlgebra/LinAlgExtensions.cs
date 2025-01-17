@@ -48,7 +48,7 @@ public static class LinAlgExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(this ref Matrix2x2<T> matrix)
         where T : IComplex<T>
-        => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix2x2<T>.E1Components, Matrix2x2<T>.E2Components, 0);
+        => new(Unsafe.AsPointer(ref matrix), Matrix2x2<T>.E1Components, Matrix2x2<T>.E2Components, 0);
 
     /// <summary>Reinterprets a <see cref="Matrix3x3{T}"/> as a new <see cref="Span2D{T}"/>.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
@@ -57,7 +57,7 @@ public static class LinAlgExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(this ref Matrix3x3<T> matrix)
         where T : IComplex<T>
-        => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix3x3<T>.E1Components, Matrix3x3<T>.E2Components, 0);
+        => new(Unsafe.AsPointer(ref matrix), Matrix3x3<T>.E1Components, Matrix3x3<T>.E2Components, 0);
 
     /// <summary>Reinterprets a <see cref="Matrix4x4{T}"/> as a new <see cref="Span2D{T}"/>.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
@@ -66,7 +66,7 @@ public static class LinAlgExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe Span2D<T> AsSpan2D<T>(this ref Matrix4x4<T> matrix)
         where T : IComplex<T>
-        => new(Unsafe.AsPointer(ref matrix.X1.X1), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
+        => new(Unsafe.AsPointer(ref matrix), Matrix4x4<T>.E1Components, Matrix4x4<T>.E2Components, 0);
 
     /// <summary>Reinterprets a <see cref="Vector4{Real}"/> as a new <see cref="Vector256{Double}"/>.</summary>
     /// <param name="value">The vector to reinterpret.</param>

@@ -33,7 +33,7 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <typeparam name="T">The type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IVector<T, U>
-    : IOneDimensionalArrayRepresentable<T, U>,
+    : I1DArrayRepresentable<T, U>,
       IAdditionOperation<T, T>,
       ISubtractionOperation<T, T>,
       IHadamardProductOperation<T, T>,

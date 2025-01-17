@@ -37,7 +37,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TI2">An index.</typeparam>
 /// <typeparam name="TI3">An index.</typeparam>
 /// <typeparam name="TI4">An index.</typeparam>
-public interface IRankFourTensor<TR4T, TH4DA, TN, TI1, TI2, TI3, TI4> : IFourDimensionalArrayRepresentable<TR4T, TN>
+public interface IRankFourTensor<TR4T, TH4DA, TN, TI1, TI2, TI3, TI4> : I4DArrayRepresentable<TR4T, TN>
     where TR4T : IRankFourTensor<TR4T, TH4DA, TN, TI1, TI2, TI3, TI4>
     where TH4DA : IHypercubic4DArray<TH4DA, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>

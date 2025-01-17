@@ -45,7 +45,7 @@ public readonly struct LeviCivita2<TN, TI1, TI2>
     where TI1 : IIndex
     where TI2 : IIndex
 {
-    private static readonly Matrix2x2<TN> s_matrix;
+    private static Matrix2x2<TN> s_matrix;
 
     static LeviCivita2()
     {

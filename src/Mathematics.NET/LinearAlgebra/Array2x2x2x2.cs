@@ -52,10 +52,10 @@ public struct Array2x2x2x2<T> : IHypercubic4DArray<Array2x2x2x2<T>, T>
     //
 
     static int IArrayRepresentable<Array2x2x2x2<T>, T>.Components => Components;
-    static int IFourDimensionalArrayRepresentable<Array2x2x2x2<T>, T>.E1Components => E1Components;
-    static int IFourDimensionalArrayRepresentable<Array2x2x2x2<T>, T>.E2Components => E2Components;
-    static int IFourDimensionalArrayRepresentable<Array2x2x2x2<T>, T>.E3Components => E3Components;
-    static int IFourDimensionalArrayRepresentable<Array2x2x2x2<T>, T>.E4Components => E4Components;
+    static int I4DArrayRepresentable<Array2x2x2x2<T>, T>.E1Components => E1Components;
+    static int I4DArrayRepresentable<Array2x2x2x2<T>, T>.E2Components => E2Components;
+    static int I4DArrayRepresentable<Array2x2x2x2<T>, T>.E3Components => E3Components;
+    static int I4DArrayRepresentable<Array2x2x2x2<T>, T>.E4Components => E4Components;
 
     //
     // Indexer

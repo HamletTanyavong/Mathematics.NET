@@ -91,6 +91,6 @@ internal static partial class Buffers
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPI : IIndex
     {
-        private RMTensor4Buffer4<TT, TN, TPI> _element0;
+        private RMTensor4Buffer4<TT, TN, TPI> _element;
     }
 }

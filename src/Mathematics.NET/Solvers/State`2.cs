@@ -1,4 +1,4 @@
-﻿// <copyright file="SystemState`4.cs" company="Mathematics.NET">
+﻿// <copyright file="State`2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,27 +25,22 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents the state of a system.</summary>
-/// <typeparam name="TR1T">A rank-one tensor.</typeparam>
-/// <typeparam name="TV">The backing type of the tensor.</typeparam>
+/// <typeparam name="TV">A type that implements <see cref="IVector{T, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="TI">The index of the tensor.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class SystemState<TR1T, TV, TN, TI>(Memory<TR1T> system, TN time)
-    where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
+public sealed class State<TV, TN>(Memory<TV> system, TN time)
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-    where TI : IIndex
 {
-    /// <inheritdoc cref="SystemState{T}.System"/>
-    public Memory<TR1T> System = system;
+    /// <inheritdoc cref="State{T}.System"/>
+    public Memory<TV> System = system;
 
-    /// <inheritdoc cref="SystemState{T}.Time"/>
+    /// <inheritdoc cref="State{T}.Time"/>
     public TN Time = time;
 }

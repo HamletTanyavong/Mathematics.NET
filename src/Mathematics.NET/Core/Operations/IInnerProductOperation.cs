@@ -30,10 +30,10 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.Core.Operations;
 
 /// <summary>Defines a mechanism for computing inner products of vectors.</summary>
-/// <typeparam name="TInput">A type that implements <see cref="IOneDimensionalArrayRepresentable{T, U}"/>.</typeparam>
+/// <typeparam name="TInput">A type that implements <see cref="I1DArrayRepresentable{T, U}"/>.</typeparam>
 /// <typeparam name="TOutput">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IInnerProductOperation<in TInput, out TOutput>
-    where TInput : IOneDimensionalArrayRepresentable<TInput, TOutput>
+    where TInput : I1DArrayRepresentable<TInput, TOutput>
     where TOutput : IComplex<TOutput>
 {
     /// <summary>Compute the inner product of two vectors.</summary>

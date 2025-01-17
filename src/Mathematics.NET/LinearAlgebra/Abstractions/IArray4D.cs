@@ -33,7 +33,7 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <typeparam name="T">The type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IArray4D<T, U>
-    : IFourDimensionalArrayRepresentable<T, U>,
+    : I4DArrayRepresentable<T, U>,
       IMultiplicationOperation<T, U, T>,
       IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>

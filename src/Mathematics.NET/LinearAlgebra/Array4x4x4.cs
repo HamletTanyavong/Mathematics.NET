@@ -53,9 +53,9 @@ public struct Array4x4x4<T> : ICubicArray<Array4x4x4<T>, T>
     //
 
     static int IArrayRepresentable<Array4x4x4<T>, T>.Components => Components;
-    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E1Components => E1Components;
-    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E2Components => E2Components;
-    static int IThreeDimensionalArrayRepresentable<Array4x4x4<T>, T>.E3Components => E3Components;
+    static int I3DArrayRepresentable<Array4x4x4<T>, T>.E1Components => E1Components;
+    static int I3DArrayRepresentable<Array4x4x4<T>, T>.E2Components => E2Components;
+    static int I3DArrayRepresentable<Array4x4x4<T>, T>.E3Components => E3Components;
 
     //
     // Indexer

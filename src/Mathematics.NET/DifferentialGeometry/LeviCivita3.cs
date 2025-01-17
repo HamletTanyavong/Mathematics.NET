@@ -47,7 +47,7 @@ public readonly struct LeviCivita3<TN, TI1, TI2, TI3>
     where TI2 : IIndex
     where TI3 : IIndex
 {
-    private static readonly Array3x3x3<TN> s_array;
+    private static Array3x3x3<TN> s_array;
 
     static LeviCivita3()
     {

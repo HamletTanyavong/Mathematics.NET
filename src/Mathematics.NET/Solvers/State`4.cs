@@ -1,4 +1,4 @@
-﻿// <copyright file="ITwoDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="State`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,28 +25,27 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.LinearAlgebra.Abstractions;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by two-dimensional arrays.</summary>
-/// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface ITwoDimensionalArrayRepresentable<T, U> : IArrayRepresentable<T, U>
-    where T : ITwoDimensionalArrayRepresentable<T, U>
-    where U : IComplex<U>
+namespace Mathematics.NET.Solvers;
+
+/// <summary>Represents the state of a system.</summary>
+/// <typeparam name="TR1T">A rank-one tensor.</typeparam>
+/// <typeparam name="TV">The backing type of the tensor.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TI">The index of the tensor.</typeparam>
+/// <param name="system">The system.</param>
+/// <param name="time">The time.</param>
+public sealed class State<TR1T, TV, TN, TI>(Memory<TR1T> system, TN time)
+    where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
+    where TV : IVector<TV, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TI : IIndex
 {
-    /// <summary>The number of rows in the array.</summary>
-    static abstract int E1Components { get; }
+    /// <inheritdoc cref="State{T}.System"/>
+    public Memory<TR1T> System = system;
 
-    /// <summary>The number of columns in the array.</summary>
-    static abstract int E2Components { get; }
-
-    /// <summary>Get the element at the specified row and column.</summary>
-    /// <param name="i">The row.</param>
-    /// <param name="j">The column.</param>
-    /// <returns>The element at the specified row and column.</returns>
-    U this[int i, int j] { get; set; }
-
-    /// <summary>Get an array representation of this object.</summary>
-    /// <returns>An array.</returns>
-    U[,] ToArray();
+    /// <inheritdoc cref="State{T}.Time"/>
+    public TN Time = time;
 }

@@ -91,6 +91,6 @@ internal static partial class Buffers
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPI : IIndex
     {
-        private FMTensor2Buffer2<TDN, TN, TPI> _element0;
+        private FMTensor2Buffer2<TDN, TN, TPI> _element;
     }
 }

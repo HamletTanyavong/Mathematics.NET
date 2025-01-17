@@ -1,4 +1,4 @@
-﻿// <copyright file="SystemState`1.cs" company="Mathematics.NET">
+﻿// <copyright file="State`1.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -31,7 +31,7 @@ namespace Mathematics.NET.Solvers;
 /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class SystemState<T>(Memory<T> system, T time)
+public sealed class State<T>(Memory<T> system, T time)
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
     /// <summary>The system.</summary>

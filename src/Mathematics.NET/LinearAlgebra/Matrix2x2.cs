@@ -65,8 +65,8 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     //
 
     static int IArrayRepresentable<Matrix2x2<T>, T>.Components => Components;
-    static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E1Components => E1Components;
-    static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E2Components => E2Components;
+    static int I2DArrayRepresentable<Matrix2x2<T>, T>.E1Components => E1Components;
+    static int I2DArrayRepresentable<Matrix2x2<T>, T>.E2Components => E2Components;
     static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.Identity => s_identity;
     static Matrix2x2<T> IMatrix<Matrix2x2<T>, T>.NaM => NaM;
 
@@ -105,8 +105,7 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         return result;
     }
 
-    public static Matrix2x2<T> operator +(Matrix2x2<T> matrix)
-        => matrix;
+    public static Matrix2x2<T> operator +(Matrix2x2<T> matrix) => matrix;
 
     public static Matrix2x2<T> operator +(Matrix2x2<T> left, Matrix2x2<T> right)
     {
@@ -134,22 +133,22 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         return result;
     }
 
-    public static Matrix2x2<T> operator *(T c, Matrix2x2<T> matrix)
+    public static Matrix2x2<T> operator *(T left, Matrix2x2<T> right)
     {
         Unsafe.SkipInit(out Matrix2x2<T> result);
 
-        result.X1 = c * matrix.X1;
-        result.X2 = c * matrix.X2;
+        result.X1 = left * right.X1;
+        result.X2 = left * right.X2;
 
         return result;
     }
 
-    public static Matrix2x2<T> operator *(Matrix2x2<T> matrix, T c)
+    public static Matrix2x2<T> operator *(Matrix2x2<T> left, T right)
     {
         Unsafe.SkipInit(out Matrix2x2<T> result);
 
-        result.X1 = matrix.X1 * c;
-        result.X2 = matrix.X2 * c;
+        result.X1 = left.X1 * right;
+        result.X2 = left.X2 * right;
 
         return result;
     }
@@ -211,7 +210,7 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
         var array = new T[2, 2];
         var handle = GCHandle.Alloc(array, GCHandleType.Pinned);
         var pArray = (void*)handle.AddrOfPinnedObject();
-        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * 4));
+        Unsafe.CopyBlock(pArray, Unsafe.AsPointer(ref this), (uint)(Unsafe.SizeOf<T>() * Components));
         handle.Free();
         return array;
     }

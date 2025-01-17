@@ -1,4 +1,4 @@
-﻿// <copyright file="IRankThreeTensor.cs" company="Mathematics.NET">
+﻿// <copyright file="State`3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,35 +25,30 @@
 // SOFTWARE.
 // </copyright>
 
+using Mathematics.NET.Core.Operations;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.DifferentialGeometry.Abstractions;
+namespace Mathematics.NET.Solvers;
 
-/// <summary>Defines support for rank-three tensors and similar mathematical objects.</summary>
-/// <typeparam name="TR3T">The type that implements the interface.</typeparam>
-/// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-/// <typeparam name="TI1">An index.</typeparam>
-/// <typeparam name="TI2">An index.</typeparam>
-/// <typeparam name="TI3">An index.</typeparam>
-public interface IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3> : I3DArrayRepresentable<TR3T, TN>
-    where TR3T : IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3>
-    where TCA : ICubicArray<TCA, TN>
+/// <summary>Represents the state of a system.</summary>
+/// <typeparam name="TSC">A type that implements <see cref="IStateItem{TSC, TA, TN}"/>.</typeparam>
+/// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <param name="system">The system.</param>
+/// <param name="time">The time.</param>
+public sealed class State<TSC, TA, TN>(Memory<TSC> system, TN time)
+    where TSC : IStateItem<TSC, TA, TN>
+    where TA
+    : I1DArrayRepresentable<TA, TN>,
+      IAdditionOperation<TA, TA>,
+      ISubtractionOperation<TA, TA>,
+      IMultiplicationOperation<TA, TN, TA>,
+      IUnaryMinusOperation<TA, TA>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-    where TI1 : IIndex
-    where TI2 : IIndex
-    where TI3 : IIndex
 {
-    /// <summary>The first index.</summary>
-    IIndex I1 { get; }
+    /// <inheritdoc cref="State{T}.System"/>
+    public Memory<TSC> System = system;
 
-    /// <summary>The second index.</summary>
-    IIndex I2 { get; }
-
-    /// <summary>The third index.</summary>
-    IIndex I3 { get; }
-
-    /// <summary>Convert a value that implements <see cref="ICubicArray{T, U}"/>.</summary>
-    /// <param name="value">The value to convert.</param>
-    static abstract implicit operator TR3T(TCA value);
+    /// <inheritdoc cref="State{T}.Time"/>
+    public TN Time = time;
 }
