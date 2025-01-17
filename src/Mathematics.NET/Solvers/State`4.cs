@@ -1,4 +1,4 @@
-﻿// <copyright file="SystemState`4.cs" company="Mathematics.NET">
+﻿// <copyright file="State`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -37,15 +37,15 @@ namespace Mathematics.NET.Solvers;
 /// <typeparam name="TI">The index of the tensor.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class SystemState<TR1T, TV, TN, TI>(Memory<TR1T> system, TN time)
+public sealed class State<TR1T, TV, TN, TI>(Memory<TR1T> system, TN time)
     where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
     where TV : IVector<TV, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
     where TI : IIndex
 {
-    /// <inheritdoc cref="SystemState{T}.System"/>
+    /// <inheritdoc cref="State{T}.System"/>
     public Memory<TR1T> System = system;
 
-    /// <inheritdoc cref="SystemState{T}.Time"/>
+    /// <inheritdoc cref="State{T}.Time"/>
     public TN Time = time;
 }

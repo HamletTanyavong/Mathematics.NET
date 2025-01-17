@@ -58,7 +58,7 @@ public sealed class RungeKutta4<T>(Func<T, T, T> function)
     /// <summary>Solve for the system state.</summary>
     /// <param name="state">The system state.</param>
     /// <param name="dt">The time step.</param>
-    public void Integrate(SystemState<T> state, T dt)
+    public void Integrate(State<T> state, T dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -77,7 +77,7 @@ public sealed class RungeKutta4<T>(Func<T, T, T> function)
     /// <summary>Solve for the system state in parallel.</summary>
     /// <param name="state">The system state.</param>
     /// <param name="dt">The time step.</param>
-    public void IntegrateParallel(SystemState<T> state, T dt)
+    public void IntegrateParallel(State<T> state, T dt)
     {
         ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;

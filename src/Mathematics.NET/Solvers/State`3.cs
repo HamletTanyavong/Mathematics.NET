@@ -46,9 +46,9 @@ public sealed class State<TSC, TA, TN>(Memory<TSC> system, TN time)
       IUnaryMinusOperation<TA, TA>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
 {
-    /// <inheritdoc cref="SystemState{T}.System"/>
+    /// <inheritdoc cref="State{T}.System"/>
     public Memory<TSC> System = system;
 
-    /// <inheritdoc cref="SystemState{T}.Time"/>
+    /// <inheritdoc cref="State{T}.Time"/>
     public TN Time = time;
 }

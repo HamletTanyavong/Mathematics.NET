@@ -64,8 +64,8 @@ public sealed class RungeKutta4<TR1T, TV, TN, TI>(Func<TN, TR1T, TR1T> function)
 
     private readonly Func<TN, TR1T, TR1T> _function = function;
 
-    /// <inheritdoc cref="RungeKutta4{T}.Integrate(SystemState{T}, T)"/>
-    public void Integrate(SystemState<TR1T, TV, TN, TI> state, TN dt)
+    /// <inheritdoc cref="RungeKutta4{T}.Integrate(State{T}, T)"/>
+    public void Integrate(State<TR1T, TV, TN, TI> state, TN dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -81,8 +81,8 @@ public sealed class RungeKutta4<TR1T, TV, TN, TI>(Func<TN, TR1T, TR1T> function)
         state.Time += dt;
     }
 
-    /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(SystemState{T}, T)"/>
-    public void IntegrateParallel(SystemState<TR1T, TV, TN, TI> state, TN dt)
+    /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(State{T}, T)"/>
+    public void IntegrateParallel(State<TR1T, TV, TN, TI> state, TN dt)
     {
         ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;

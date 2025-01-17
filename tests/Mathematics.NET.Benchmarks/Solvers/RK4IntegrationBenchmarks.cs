@@ -34,8 +34,8 @@ namespace Mathematics.NET.Benchmarks.Solvers;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class RK4IntegrationBenchmarks
 {
-    public SystemState<Real> SystemStateA;
-    public SystemState<Real> SystemStateB;
+    public State<Real> SystemStateA;
+    public State<Real> SystemStateB;
     public RungeKutta4<Real> RK4 = new((t, x) => Real.Pow(Real.Sin(t), 2) * x);
 
     [GlobalSetup]

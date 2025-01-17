@@ -1,4 +1,4 @@
-﻿// <copyright file="SystemState`1.cs" company="Mathematics.NET">
+﻿// <copyright file="State`2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,18 +25,22 @@
 // SOFTWARE.
 // </copyright>
 
+using Mathematics.NET.LinearAlgebra.Abstractions;
+
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents the state of a system.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TV">A type that implements <see cref="IVector{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class SystemState<T>(Memory<T> system, T time)
-    where T : IComplex<T>, IDifferentiableFunctions<T>
+public sealed class State<TV, TN>(Memory<TV> system, TN time)
+    where TV : IVector<TV, TN>
+    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
 {
-    /// <summary>The system.</summary>
-    public Memory<T> System = system;
+    /// <inheritdoc cref="State{T}.System"/>
+    public Memory<TV> System = system;
 
-    /// <summary>The time.</summary>
-    public T Time = time;
+    /// <inheritdoc cref="State{T}.Time"/>
+    public TN Time = time;
 }
