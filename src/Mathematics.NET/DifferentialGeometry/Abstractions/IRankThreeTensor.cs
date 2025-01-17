@@ -36,7 +36,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TI1">An index.</typeparam>
 /// <typeparam name="TI2">An index.</typeparam>
 /// <typeparam name="TI3">An index.</typeparam>
-public interface IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3> : IThreeDimensionalArrayRepresentable<TR3T, TN>
+public interface IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3> : I3DArrayRepresentable<TR3T, TN>
     where TR3T : IRankThreeTensor<TR3T, TCA, TN, TI1, TI2, TI3>
     where TCA : ICubicArray<TCA, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>

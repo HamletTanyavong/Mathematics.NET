@@ -1,4 +1,4 @@
-﻿// <copyright file="ITwoDimensionalArrayRepresentable.cs" company="Mathematics.NET">
+﻿// <copyright file="I1DArrayRepresentable.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,26 +27,22 @@
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
-/// <summary>Defines support for mathematical objects that can be represented by two-dimensional arrays.</summary>
+/// <summary>Defines support for mathematical objects that can be represented by one-dimensional arrays.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface ITwoDimensionalArrayRepresentable<T, U> : IArrayRepresentable<T, U>
-    where T : ITwoDimensionalArrayRepresentable<T, U>
+public interface I1DArrayRepresentable<T, U> : IArrayRepresentable<T, U>
+    where T : I1DArrayRepresentable<T, U>
     where U : IComplex<U>
 {
-    /// <summary>The number of rows in the array.</summary>
+    /// <summary>The number of components in the one-dimensional array.</summary>
     static abstract int E1Components { get; }
 
-    /// <summary>The number of columns in the array.</summary>
-    static abstract int E2Components { get; }
-
-    /// <summary>Get the element at the specified row and column.</summary>
-    /// <param name="i">The row.</param>
-    /// <param name="j">The column.</param>
-    /// <returns>The element at the specified row and column.</returns>
-    U this[int i, int j] { get; set; }
+    /// <summary>Get the element at the specified index.</summary>
+    /// <param name="index">An index.</param>
+    /// <returns>The element at the index.</returns>
+    U this[int index] { get; set; }
 
     /// <summary>Get an array representation of this object.</summary>
     /// <returns>An array.</returns>
-    U[,] ToArray();
+    U[] ToArray();
 }

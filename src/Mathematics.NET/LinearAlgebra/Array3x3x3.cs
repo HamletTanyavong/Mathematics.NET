@@ -52,9 +52,9 @@ public struct Array3x3x3<T> : ICubicArray<Array3x3x3<T>, T>
     //
 
     static int IArrayRepresentable<Array3x3x3<T>, T>.Components => Components;
-    static int IThreeDimensionalArrayRepresentable<Array3x3x3<T>, T>.E1Components => E1Components;
-    static int IThreeDimensionalArrayRepresentable<Array3x3x3<T>, T>.E2Components => E2Components;
-    static int IThreeDimensionalArrayRepresentable<Array3x3x3<T>, T>.E3Components => E3Components;
+    static int I3DArrayRepresentable<Array3x3x3<T>, T>.E1Components => E1Components;
+    static int I3DArrayRepresentable<Array3x3x3<T>, T>.E2Components => E2Components;
+    static int I3DArrayRepresentable<Array3x3x3<T>, T>.E3Components => E3Components;
 
     //
     // Indexer

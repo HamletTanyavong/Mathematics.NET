@@ -36,7 +36,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
 public interface IRankOneTensor<TR1T, TV, TN, TI>
-    : IOneDimensionalArrayRepresentable<TR1T, TN>,
+    : I1DArrayRepresentable<TR1T, TN>,
       IAdditionOperation<TR1T, TR1T>,
       ISubtractionOperation<TR1T, TR1T>
     where TR1T : IRankOneTensor<TR1T, TV, TN, TI>

@@ -65,8 +65,8 @@ public struct Matrix2x2<T> : ISquareMatrix<Matrix2x2<T>, T>
     //
 
     static int IArrayRepresentable<Matrix2x2<T>, T>.Components => Components;
-    static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E1Components => E1Components;
-    static int ITwoDimensionalArrayRepresentable<Matrix2x2<T>, T>.E2Components => E2Components;
+    static int I2DArrayRepresentable<Matrix2x2<T>, T>.E1Components => E1Components;
+    static int I2DArrayRepresentable<Matrix2x2<T>, T>.E2Components => E2Components;
     static Matrix2x2<T> ISquareMatrix<Matrix2x2<T>, T>.Identity => s_identity;
     static Matrix2x2<T> IMatrix<Matrix2x2<T>, T>.NaM => NaM;
 

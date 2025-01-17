@@ -35,7 +35,7 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 /// <typeparam name="TI1">An index.</typeparam>
 /// <typeparam name="TI2">An index.</typeparam>
-public interface IRankTwoTensor<TR2T, TSM, TN, TI1, TI2> : ITwoDimensionalArrayRepresentable<TR2T, TN>
+public interface IRankTwoTensor<TR2T, TSM, TN, TI1, TI2> : I2DArrayRepresentable<TR2T, TN>
     where TR2T : IRankTwoTensor<TR2T, TSM, TN, TI1, TI2>
     where TSM : ISquareMatrix<TSM, TN>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>

@@ -42,7 +42,7 @@ public interface IStateItem<TSC, TA, TN>
       IUnaryMinusOperation<TSC, TSC>
     where TSC : IStateItem<TSC, TA, TN>
     where TA
-    : IOneDimensionalArrayRepresentable<TA, TN>,
+    : I1DArrayRepresentable<TA, TN>,
       IAdditionOperation<TA, TA>,
       ISubtractionOperation<TA, TA>,
       IMultiplicationOperation<TA, TN, TA>,

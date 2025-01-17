@@ -39,7 +39,7 @@ namespace Mathematics.NET.Solvers;
 public sealed class State<TSC, TA, TN>(Memory<TSC> system, TN time)
     where TSC : IStateItem<TSC, TA, TN>
     where TA
-    : IOneDimensionalArrayRepresentable<TA, TN>,
+    : I1DArrayRepresentable<TA, TN>,
       IAdditionOperation<TA, TA>,
       ISubtractionOperation<TA, TA>,
       IMultiplicationOperation<TA, TN, TA>,

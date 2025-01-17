@@ -75,8 +75,8 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     //
 
     static int IArrayRepresentable<Matrix3x3<T>, T>.Components => Components;
-    static int ITwoDimensionalArrayRepresentable<Matrix3x3<T>, T>.E1Components => E1Components;
-    static int ITwoDimensionalArrayRepresentable<Matrix3x3<T>, T>.E2Components => E2Components;
+    static int I2DArrayRepresentable<Matrix3x3<T>, T>.E1Components => E1Components;
+    static int I2DArrayRepresentable<Matrix3x3<T>, T>.E2Components => E2Components;
     static Matrix3x3<T> ISquareMatrix<Matrix3x3<T>, T>.Identity => s_identity;
     static Matrix3x3<T> IMatrix<Matrix3x3<T>, T>.NaM => NaM;
 

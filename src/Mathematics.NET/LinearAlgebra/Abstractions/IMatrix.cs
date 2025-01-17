@@ -33,7 +33,7 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 /// <typeparam name="T">The type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
 public interface IMatrix<T, U>
-    : ITwoDimensionalArrayRepresentable<T, U>,
+    : I2DArrayRepresentable<T, U>,
       IAdditionOperation<T, T>,
       ISubtractionOperation<T, T>,
       IMultiplicationOperation<T, U, T>,

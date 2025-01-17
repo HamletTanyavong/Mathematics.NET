@@ -40,7 +40,7 @@ namespace Mathematics.NET.Solvers;
 [StructLayout(LayoutKind.Sequential)]
 public struct StateItem3<TA, TN> : IStateItem<StateItem3<TA, TN>, TA, TN>
     where TA
-    : IOneDimensionalArrayRepresentable<TA, TN>,
+    : I1DArrayRepresentable<TA, TN>,
       IAdditionOperation<TA, TA>,
       ISubtractionOperation<TA, TA>,
       IMultiplicationOperation<TA, TN, TA>,
