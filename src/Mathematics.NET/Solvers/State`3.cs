@@ -31,13 +31,13 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents the state of a system.</summary>
-/// <typeparam name="TSC">A type that implements <see cref="IStateItem{TSC, TA, TN}"/>.</typeparam>
+/// <typeparam name="TSI">A type that implements <see cref="IStateItem{TSC, TA, TN}"/>.</typeparam>
 /// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class State<TSC, TA, TN>(Memory<TSC> system, TN time)
-    where TSC : IStateItem<TSC, TA, TN>
+public sealed class State<TSI, TA, TN>(Memory<TSI> system, TN time)
+    where TSI : IStateItem<TSI, TA, TN>
     where TA
     : I1DArrayRepresentable<TA, TN>,
       IAdditionOperation<TA, TA>,
@@ -47,7 +47,7 @@ public sealed class State<TSC, TA, TN>(Memory<TSC> system, TN time)
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
 {
     /// <inheritdoc cref="State{T}.System"/>
-    public Memory<TSC> System = system;
+    public Memory<TSI> System = system;
 
     /// <inheritdoc cref="State{T}.Time"/>
     public TN Time = time;

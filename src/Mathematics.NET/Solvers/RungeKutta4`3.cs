@@ -33,12 +33,12 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents a fourth-order Runge-Kutta solver.</summary>
-/// <typeparam name="TSC">A type that implements <see cref="IStateItem{TSC, TA, TN}"/>.</typeparam>
+/// <typeparam name="TSI">A type that implements <see cref="IStateItem{TSC, TA, TN}"/>.</typeparam>
 /// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <param name="function">A function to use for the integration step.</param>
-public sealed class RungeKutta4<TSC, TA, TN>(Func<TN, TSC, TSC> function)
-    where TSC : IStateItem<TSC, TA, TN>
+public sealed class RungeKutta4<TSI, TA, TN>(Func<TN, TSI, TSI> function)
+    where TSI : IStateItem<TSI, TA, TN>
     where TA
     : I1DArrayRepresentable<TA, TN>,
       IAdditionOperation<TA, TA>,
@@ -47,14 +47,14 @@ public sealed class RungeKutta4<TSC, TA, TN>(Func<TN, TSC, TSC> function)
       IUnaryMinusOperation<TA, TA>
     where TN : IComplex<TN>, IDifferentiableFunctions<TN>
 {
-    private readonly struct RK4IntegrateAction(Func<TN, TSC, TSC> function, TN time, TN dt) : IRefAction<TSC>
+    private readonly struct RK4IntegrateAction(Func<TN, TSI, TSI> function, TN time, TN dt) : IRefAction<TSI>
     {
-        private readonly Func<TN, TSC, TSC> _function = function;
+        private readonly Func<TN, TSI, TSI> _function = function;
         private readonly TN _time = time;
         private readonly TN _dt = dt;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invoke(ref TSC value)
+        public void Invoke(ref TSI value)
         {
             var k1 = _function(_time, value);
             var k2 = _function(_time + 0.5 * _dt, value + 0.5 * k1 * _dt);
@@ -64,10 +64,10 @@ public sealed class RungeKutta4<TSC, TA, TN>(Func<TN, TSC, TSC> function)
         }
     }
 
-    private readonly Func<TN, TSC, TSC> _function = function;
+    private readonly Func<TN, TSI, TSI> _function = function;
 
     /// <inheritdoc cref="RungeKutta4{T}.Integrate(State{T}, T)"/>
-    public void Integrate(State<TSC, TA, TN> state, TN dt)
+    public void Integrate(State<TSI, TA, TN> state, TN dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -84,7 +84,7 @@ public sealed class RungeKutta4<TSC, TA, TN>(Func<TN, TSC, TSC> function)
     }
 
     /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(State{T}, T)"/>
-    public void IntegrateParallel(State<TSC, TA, TN> state, TN dt)
+    public void IntegrateParallel(State<TSI, TA, TN> state, TN dt)
     {
         ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;
