@@ -352,7 +352,7 @@ public record class GradientTape<T> : ITape<T>
         return new(_nodes.Count, -x.Value);
     }
 
-    // Exponential functions
+    // Exponential functions.
 
     public Variable<T> Exp(Variable<T> x)
     {
@@ -387,7 +387,7 @@ public record class GradientTape<T> : ITape<T>
         return new(_nodes.Count, exp10);
     }
 
-    // Hyperbolic functions
+    // Hyperbolic functions.
 
     public Variable<T> Acosh(Variable<T> x)
     {
@@ -450,7 +450,7 @@ public record class GradientTape<T> : ITape<T>
         return new(_nodes.Count, T.Tanh(x.Value));
     }
 
-    // Logarithmic functions
+    // Logarithmic functions.
 
     public Variable<T> Ln(Variable<T> x)
     {
@@ -493,7 +493,7 @@ public record class GradientTape<T> : ITape<T>
         return new(_nodes.Count, T.Log10(x.Value));
     }
 
-    // Power functions
+    // Power functions.
 
     public Variable<T> Pow(Variable<T> x, Variable<T> y)
     {
@@ -528,7 +528,7 @@ public record class GradientTape<T> : ITape<T>
         return new(_nodes.Count, pow);
     }
 
-    // Root functions
+    // Root functions.
 
     public Variable<T> Cbrt(Variable<T> x)
     {
@@ -563,7 +563,7 @@ public record class GradientTape<T> : ITape<T>
         return new(_nodes.Count, sqrt);
     }
 
-    // Trigonometric functions
+    // Trigonometric functions.
 
     public Variable<T> Acos(Variable<T> x)
     {

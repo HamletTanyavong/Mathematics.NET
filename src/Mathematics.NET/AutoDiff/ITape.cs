@@ -70,7 +70,7 @@ public interface ITape<T>
     void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed);
 
     //
-    // Basic operations
+    // Basic Operations
     //
 
     /// <summary>Add two variables.</summary>
@@ -164,7 +164,7 @@ public interface ITape<T>
     Variable<T> Subtract(Variable<T> x, T y);
 
     //
-    // Other operations
+    // Other Operations
     //
 
     /// <summary>Negate a variable.</summary>
@@ -172,7 +172,7 @@ public interface ITape<T>
     /// <returns>Minus one times the variable.</returns>
     Variable<T> Negate(Variable<T> x);
 
-    // Exponential functions
+    // Exponential functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp(T)"/>
     Variable<T> Exp(Variable<T> x);
@@ -183,7 +183,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp10(T)"/>
     Variable<T> Exp10(Variable<T> x);
 
-    // Hyperbolic functions
+    // Hyperbolic functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Acosh(T)"/>
     Variable<T> Acosh(Variable<T> x);
@@ -203,7 +203,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Tanh(T)"/>
     Variable<T> Tanh(Variable<T> x);
 
-    // Logarithmic functions
+    // Logarithmic functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Ln(T)"/>
     Variable<T> Ln(Variable<T> x);
@@ -217,7 +217,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Log10(T)"/>
     Variable<T> Log10(Variable<T> x);
 
-    // Power functions
+    // Power functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     Variable<T> Pow(Variable<T> x, Variable<T> y);
@@ -228,7 +228,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
     Variable<T> Pow(T x, Variable<T> y);
 
-    // Root functions
+    // Root functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Cbrt(T)"/>
     Variable<T> Cbrt(Variable<T> x);
@@ -239,7 +239,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Sqrt(T)"/>
     Variable<T> Sqrt(Variable<T> x);
 
-    // Trigonometric function
+    // Trigonometric function.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Acos(T)"/>
     Variable<T> Acos(Variable<T> x);
