@@ -31,6 +31,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.Exceptions;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
@@ -123,21 +124,21 @@ public record class HessianTape<T> : ITape<T>
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
     /// <param name="hessian">The Hessian.</param>
-    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulate(out hessian, T.One);
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
     /// <param name="gradient">The gradient.</param>
     /// <param name="hessian">The Hessian.</param>
-    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulate(out gradient, out hessian, T.One);
 
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
-            throw new Exception("The Hessian tape contains no root nodes.");
+            throw new AutoDiffException("The Hessian tape contains no root nodes.");
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
@@ -161,11 +162,11 @@ public record class HessianTape<T> : ITape<T>
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
     /// <param name="hessian">The Hessian.</param>
     /// <param name="seed">A seed value.</param>
-    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian, T seed)
     {
         if (_variableCount == 0)
-            throw new Exception("The Hessian tape contains no root nodes.");
+            throw new AutoDiffException("The Hessian tape contains no root nodes.");
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
@@ -199,11 +200,11 @@ public record class HessianTape<T> : ITape<T>
     /// <param name="gradient">The gradient.</param>
     /// <param name="hessian">The Hessian.</param>
     /// <param name="seed">A seed value.</param>
-    /// <exception cref="Exception">The Hessian tape does not have any tracked variables.</exception>
+    /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, T seed)
     {
         if (_variableCount == 0)
-            throw new Exception("The Hessian tape contains no root nodes.");
+            throw new AutoDiffException("The Hessian tape contains no root nodes.");
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);

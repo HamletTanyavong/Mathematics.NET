@@ -67,6 +67,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.Exceptions;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
@@ -159,7 +160,7 @@ public record class GradientTape<T> : ITape<T>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
-            throw new Exception("The gradient tape contains no root nodes.");
+            throw new AutoDiffException("The gradient tape contains no root nodes.");
 
         ReadOnlySpan<GradientNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
