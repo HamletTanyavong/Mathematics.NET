@@ -297,24 +297,24 @@ public record class HessianTape<T> : ITape<T>
         return new(_nodes.Count, x.Value + y.Value);
     }
 
-    public Variable<T> Add(T c, Variable<T> x)
+    public Variable<T> Add(T x, Variable<T> y)
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, c + x.Value);
+            _nodes.Add(new(T.One, T.Zero, y._index, _nodes.Count));
+            return new(_nodes.Count - 1, x + y.Value);
         }
-        return new(_nodes.Count, c + x.Value);
+        return new(_nodes.Count, x + y.Value);
     }
 
-    public Variable<T> Add(Variable<T> x, T c)
+    public Variable<T> Add(Variable<T> x, T y)
     {
         if (_isTracking)
         {
             _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, x.Value + c);
+            return new(_nodes.Count - 1, x.Value + y);
         }
-        return new(_nodes.Count, x.Value + c);
+        return new(_nodes.Count, x.Value + y);
     }
 
     public Variable<T> Divide(Variable<T> x, Variable<T> y)
@@ -329,21 +329,21 @@ public record class HessianTape<T> : ITape<T>
         return new(_nodes.Count, x.Value * u);
     }
 
-    public Variable<T> Divide(T c, Variable<T> x)
+    public Variable<T> Divide(T x, Variable<T> y)
     {
-        var u = T.One / x.Value;
+        var u = T.One / y.Value;
         if (_isTracking)
         {
             var dfxy = -u * u;
-            _nodes.Add(new(c * dfxy, -2.0 * u * c * dfxy, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, c * u);
+            _nodes.Add(new(x * dfxy, -2.0 * u * x * dfxy, y._index, _nodes.Count));
+            return new(_nodes.Count - 1, x * u);
         }
-        return new(_nodes.Count, c * u);
+        return new(_nodes.Count, x * u);
     }
 
-    public Variable<T> Divide(Variable<T> x, T c)
+    public Variable<T> Divide(Variable<T> x, T y)
     {
-        var u = T.One / c;
+        var u = T.One / y;
         if (_isTracking)
         {
             _nodes.Add(new(u, T.Zero, x._index, _nodes.Count));
@@ -362,24 +362,24 @@ public record class HessianTape<T> : ITape<T>
         return new(_nodes.Count, x.Value % y.Value);
     }
 
-    public Variable<Real> Modulo(Real c, in Variable<Real> x)
+    public Variable<Real> Modulo(Real x, in Variable<Real> y)
     {
         if (_isTracking)
         {
-            _nodes.Add(new(c * Real.Floor(c / x.Value), T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, c % x.Value);
+            _nodes.Add(new(x * Real.Floor(x / y.Value), T.Zero, y._index, _nodes.Count));
+            return new(_nodes.Count - 1, x % y.Value);
         }
-        return new(_nodes.Count, c % x.Value);
+        return new(_nodes.Count, x % y.Value);
     }
 
-    public Variable<Real> Modulo(in Variable<Real> x, Real c)
+    public Variable<Real> Modulo(in Variable<Real> x, Real y)
     {
         if (_isTracking)
         {
             _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, x.Value % c);
+            return new(_nodes.Count - 1, x.Value % y);
         }
-        return new(_nodes.Count, x.Value % c);
+        return new(_nodes.Count, x.Value % y);
     }
 
     public Variable<T> Multiply(Variable<T> x, Variable<T> y)
@@ -392,24 +392,24 @@ public record class HessianTape<T> : ITape<T>
         return new(_nodes.Count, x.Value * y.Value);
     }
 
-    public Variable<T> Multiply(T c, Variable<T> x)
+    public Variable<T> Multiply(T x, Variable<T> y)
     {
         if (_isTracking)
         {
-            _nodes.Add(new(c, T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, c * x.Value);
+            _nodes.Add(new(x, T.Zero, y._index, _nodes.Count));
+            return new(_nodes.Count - 1, x * y.Value);
         }
-        return new(_nodes.Count, c * x.Value);
+        return new(_nodes.Count, x * y.Value);
     }
 
-    public Variable<T> Multiply(Variable<T> x, T c)
+    public Variable<T> Multiply(Variable<T> x, T y)
     {
         if (_isTracking)
         {
-            _nodes.Add(new(c, T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, x.Value * c);
+            _nodes.Add(new(y, T.Zero, x._index, _nodes.Count));
+            return new(_nodes.Count - 1, x.Value * y);
         }
-        return new(_nodes.Count, x.Value * c);
+        return new(_nodes.Count, x.Value * y);
     }
 
     public Variable<T> Subtract(Variable<T> x, Variable<T> y)
@@ -422,24 +422,24 @@ public record class HessianTape<T> : ITape<T>
         return new(_nodes.Count, x.Value - y.Value);
     }
 
-    public Variable<T> Subtract(T c, Variable<T> x)
+    public Variable<T> Subtract(T x, Variable<T> y)
     {
         if (_isTracking)
         {
-            _nodes.Add(new(-T.One, T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, c - x.Value);
+            _nodes.Add(new(-T.One, T.Zero, y._index, _nodes.Count));
+            return new(_nodes.Count - 1, x - y.Value);
         }
-        return new(_nodes.Count, c - x.Value);
+        return new(_nodes.Count, x - y.Value);
     }
 
-    public Variable<T> Subtract(Variable<T> x, T c)
+    public Variable<T> Subtract(Variable<T> x, T y)
     {
         if (_isTracking)
         {
             _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
-            return new(_nodes.Count - 1, x.Value - c);
+            return new(_nodes.Count - 1, x.Value - y);
         }
-        return new(_nodes.Count, x.Value - c);
+        return new(_nodes.Count, x.Value - y);
     }
 
     //

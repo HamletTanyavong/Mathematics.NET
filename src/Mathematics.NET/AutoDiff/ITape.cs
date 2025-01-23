@@ -80,16 +80,16 @@ public interface ITape<T>
     Variable<T> Add(Variable<T> x, Variable<T> y);
 
     /// <summary>Add a constant value and a variable.</summary>
-    /// <param name="c">A constant value.</param>
-    /// <param name="x">A variable.</param>
+    /// <param name="x">A constant value.</param>
+    /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Add(T c, Variable<T> x);
+    Variable<T> Add(T x, Variable<T> y);
 
     /// <summary>Add a variable and a constant value.</summary>
     /// <param name="x">A variable.</param>
-    /// <param name="c">A constant value.</param>
+    /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Add(Variable<T> x, T c);
+    Variable<T> Add(Variable<T> x, T y);
 
     /// <summary>Divide two variables.</summary>
     /// <param name="x">A dividend.</param>
@@ -98,16 +98,16 @@ public interface ITape<T>
     Variable<T> Divide(Variable<T> x, Variable<T> y);
 
     /// <summary>Divide a constant value by a variable.</summary>
-    /// <param name="c">A constant dividend.</param>
-    /// <param name="x">A variable divisor.</param>
+    /// <param name="x">A constant dividend.</param>
+    /// <param name="y">A variable divisor.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Divide(T c, Variable<T> x);
+    Variable<T> Divide(T x, Variable<T> y);
 
     /// <summary>Divide a variable by a constant value.</summary>
     /// <param name="x">A variable dividend.</param>
-    /// <param name="c">A constant divisor.</param>
+    /// <param name="y">A constant divisor.</param>
     /// <returns>A variabl.</returns>
-    Variable<T> Divide(Variable<T> x, T c);
+    Variable<T> Divide(Variable<T> x, T y);
 
     /// <summary>Compute the modulo of a variable given a divisor.</summary>
     /// <param name="x">A dividend.</param>
@@ -116,16 +116,16 @@ public interface ITape<T>
     Variable<Real> Modulo(in Variable<Real> x, in Variable<Real> y);
 
     /// <summary>Compute the modulo of a real value given a divisor.</summary>
-    /// <param name="c">A real dividend.</param>
-    /// <param name="x">A variable divisor.</param>
-    /// <returns><paramref name="c"/> mod <paramref name="x"/>.</returns>
-    Variable<Real> Modulo(Real c, in Variable<Real> x);
+    /// <param name="x">A real dividend.</param>
+    /// <param name="y">A variable divisor.</param>
+    /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
+    Variable<Real> Modulo(Real x, in Variable<Real> y);
 
     /// <summary>Compute the modulo of a variable given a divisor.</summary>
     /// <param name="x">A variable dividend.</param>
-    /// <param name="c">A real divisor.</param>
-    /// <returns><paramref name="x"/> mod <paramref name="c"/>.</returns>
-    Variable<Real> Modulo(in Variable<Real> x, Real c);
+    /// <param name="y">A real divisor.</param>
+    /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
+    Variable<Real> Modulo(in Variable<Real> x, Real y);
 
     /// <summary>Multiply two variables.</summary>
     /// <param name="x">The first variable.</param>
@@ -134,16 +134,16 @@ public interface ITape<T>
     Variable<T> Multiply(Variable<T> x, Variable<T> y);
 
     /// <summary>Multiply a constant value by a variable.</summary>
-    /// <param name="c">A constant value.</param>
-    /// <param name="x">A variable.</param>
+    /// <param name="x">A constant value.</param>
+    /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Multiply(T c, Variable<T> x);
+    Variable<T> Multiply(T x, Variable<T> y);
 
     /// <summary>Multiply a variable by a constant value.</summary>
     /// <param name="x">A variable.</param>
-    /// <param name="c">A constant value.</param>
+    /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Multiply(Variable<T> x, T c);
+    Variable<T> Multiply(Variable<T> x, T y);
 
     /// <summary>Subract two variables.</summary>
     /// <param name="x">The first variable.</param>
@@ -152,16 +152,16 @@ public interface ITape<T>
     Variable<T> Subtract(Variable<T> x, Variable<T> y);
 
     /// <summary>Subtract a variable from a constant value.</summary>
-    /// <param name="c">A constant value.</param>
-    /// <param name="x">A variable.</param>
+    /// <param name="x">A constant value.</param>
+    /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Subtract(T c, Variable<T> x);
+    Variable<T> Subtract(T x, Variable<T> y);
 
     /// <summary>Subtract a constant value from a variable.</summary>
     /// <param name="x">A variable.</param>
-    /// <param name="c">A constant value.</param>
+    /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Subtract(Variable<T> x, T c);
+    Variable<T> Subtract(Variable<T> x, T y);
 
     //
     // Other operations
