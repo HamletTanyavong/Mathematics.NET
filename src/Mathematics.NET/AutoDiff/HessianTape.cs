@@ -122,11 +122,22 @@ public record class HessianTape<T> : ITape<T>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient)
         => ReverseAccumulate(out gradient, T.One);
 
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index)
+        => ReverseAccumulate(out gradient, T.One, index);
+
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting Hessian.</summary>
     /// <param name="hessian">The Hessian.</param>
     /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulate(out hessian, T.One);
+
+    /// <summary>Perform reverse accumulation on the Hessian tape starting at a specific node and output the resulting Hessian.</summary>
+    /// <param name="hessian">The Hessian.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian, int index)
+        => ReverseAccumulate(out hessian, T.One, index);
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
     /// <param name="gradient">The gradient.</param>
@@ -135,6 +146,15 @@ public record class HessianTape<T> : ITape<T>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian)
         => ReverseAccumulate(out gradient, out hessian, T.One);
 
+    /// <summary>Perform reverse accumulation on the Hessian tape starting at a specific node and output the resulting gradient and Hessian.</summary>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="hessian">The Hessian.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, int index)
+        => ReverseAccumulate(out gradient, out hessian, T.One, index);
+
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
@@ -142,12 +162,38 @@ public record class HessianTape<T> : ITape<T>
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
-        var length = nodes.Length;
 
+        var length = nodes.Length;
         Span<T> gradientSpan = new T[length];
         gradientSpan[length - 1] = seed;
 
         for (int i = length - 1; i >= _variableCount; i--)
+        {
+            var node = Unsafe.Add(ref start, i);
+            var gradientElement = gradientSpan[i];
+
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            gradientSpan[node.PY] += gradientElement * node.DY;
+        }
+
+        gradient = gradientSpan[.._variableCount];
+    }
+
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed, int index)
+    {
+        if (_variableCount == 0)
+            throw new AutoDiffException("The Hessian tape contains no root nodes.");
+
+        if (index < _variableCount || index >= _nodes.Count)
+            throw new IndexOutOfRangeException();
+
+        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ref var start = ref MemoryMarshal.GetReference(nodes);
+
+        Span<T> gradientSpan = new T[index + 1];
+        gradientSpan[index] = seed;
+
+        for (int i = index; i >= _variableCount; i--)
         {
             var node = Unsafe.Add(ref start, i);
             var gradientElement = gradientSpan[i];
@@ -170,14 +216,52 @@ public record class HessianTape<T> : ITape<T>
 
         ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
-        var length = nodes.Length;
 
+        var length = nodes.Length;
         Span<T> gradientSpan = new T[length];
         gradientSpan[length - 1] = seed;
 
         Span2D<T> hessianSpan = new T[length, length];
 
         for (int i = length - 1; i >= _variableCount; i--)
+        {
+            var node = Unsafe.Add(ref start, i);
+            var gradientElement = gradientSpan[i];
+
+            EdgePush(hessianSpan, in node, i);
+            if (gradientElement != T.Zero)
+                Accumulate(hessianSpan, in node, gradientElement);
+
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            gradientSpan[node.PY] += gradientElement * node.DY;
+        }
+
+        hessian = hessianSpan.Slice(0, 0, _variableCount, _variableCount);
+    }
+
+    /// <summary>Perform reverse accumulation on the Hessian tape starting at a specific node and output the resulting Hessian.</summary>
+    /// <param name="hessian">The Hessian.</param>
+    /// <param name="seed">A seed value.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The Hessian tape contains no root nodes.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian, T seed, int index)
+    {
+        if (_variableCount == 0)
+            throw new AutoDiffException("The Hessian tape contains no root nodes.");
+
+        if (index < _variableCount || index >= _nodes.Count)
+            throw new IndexOutOfRangeException();
+
+        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ref var start = ref MemoryMarshal.GetReference(nodes);
+
+        Span<T> gradientSpan = new T[index + 1];
+        gradientSpan[index] = seed;
+
+        Span2D<T> hessianSpan = new T[index + 1, index + 1];
+
+        for (int i = index; i >= _variableCount; i--)
         {
             var node = Unsafe.Add(ref start, i);
             var gradientElement = gradientSpan[i];
@@ -216,6 +300,46 @@ public record class HessianTape<T> : ITape<T>
         Span2D<T> hessianSpan = new T[length, length];
 
         for (int i = length - 1; i >= _variableCount; i--)
+        {
+            var node = Unsafe.Add(ref start, i);
+            var gradientElement = gradientSpan[i];
+
+            EdgePush(hessianSpan, in node, i);
+            if (gradientElement != T.Zero)
+                Accumulate(hessianSpan, in node, gradientElement);
+
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            gradientSpan[node.PY] += gradientElement * node.DY;
+        }
+
+        gradient = gradientSpan[.._variableCount];
+        hessian = hessianSpan.Slice(0, 0, _variableCount, _variableCount);
+    }
+
+    /// <summary>Perform reverse accumulation on the Hessian tape starting at a specific node and output the resulting gradient and Hessian.</summary>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="hessian">The Hessian.</param>
+    /// <param name="seed">A seed value.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The Hessian tape contains no root nodes.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, T seed, int index)
+    {
+        if (_variableCount == 0)
+            throw new AutoDiffException("The Hessian tape contains no root nodes.");
+
+        if (index < _variableCount || index >= _nodes.Count)
+            throw new IndexOutOfRangeException();
+
+        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ref var start = ref MemoryMarshal.GetReference(nodes);
+
+        Span<T> gradientSpan = new T[index + 1];
+        gradientSpan[index] = seed;
+
+        Span2D<T> hessianSpan = new T[index + 1, index + 1];
+
+        for (int i = index; i >= _variableCount; i--)
         {
             var node = Unsafe.Add(ref start, i);
             var gradientElement = gradientSpan[i];

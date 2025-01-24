@@ -25,10 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.Exceptions;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
@@ -36,6 +36,9 @@ namespace Mathematics.NET.Benchmarks.Implementations.AutoDiff;
 
 // For small tapes, this seems to be slower. This may be different for large
 // tapes because of the way lists expand internally.
+
+#pragma warning disable IDE0032
+#pragma warning disable IDE0058
 
 public record class GradientTapeWithLinkedList<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
@@ -71,17 +74,16 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
     public void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100)
         => throw new NotImplementedException();
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient)
         => ReverseAccumulate(out gradient, T.One);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index)
+        => ReverseAccumulate(out gradient, T.One, index);
+
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
-        {
-            throw new Exception("Gradient tape contains no root nodes");
-        }
+            throw new AutoDiffException("Gradient tape contains no root nodes");
 
         var length = _nodes.Count;
         Span<T> gradientSpan = new T[length];
@@ -102,8 +104,33 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         gradient = gradientSpan[.._variableCount];
     }
 
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed, int index)
+    {
+        if (_variableCount == 0)
+            throw new AutoDiffException("The gradient tape contains no root nodes.");
+
+        if (index < _variableCount || index >= _nodes.Count)
+            throw new IndexOutOfRangeException();
+
+        Span<T> gradientSpan = new T[index + 1];
+        gradientSpan[index] = seed;
+
+#nullable disable
+        LinkedListNode<GradientNode<T>> current = _nodes.Last;
+        for (int i = index; i >= _variableCount; i--)
+        {
+            var gradientElement = gradientSpan[i];
+
+            gradientSpan[current.Value.PX] += gradientElement * current.Value.DX;
+            gradientSpan[current.Value.PY] += gradientElement * current.Value.DY;
+        }
+#nullable enable
+
+        gradient = gradientSpan[.._variableCount];
+    }
+
     //
-    // Basic operations
+    // Basic Operations
     //
 
     public Variable<T> Add(Variable<T> x, Variable<T> y)
@@ -260,7 +287,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
     }
 
     //
-    // Other operations
+    // Other Operations
     //
 
     public Variable<T> Negate(Variable<T> x)
@@ -273,7 +300,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, -x.Value);
     }
 
-    // Exponential functions
+    // Exponential functions.
 
     public Variable<T> Exp(Variable<T> x)
     {
@@ -308,7 +335,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, exp10);
     }
 
-    // Hyperbolic functions
+    // Hyperbolic functions.
 
     public Variable<T> Acosh(Variable<T> x)
     {
@@ -371,7 +398,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, T.Tanh(x.Value));
     }
 
-    // Logarithmic functions
+    // Logarithmic functions.
 
     public Variable<T> Ln(Variable<T> x)
     {
@@ -414,7 +441,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, T.Log10(x.Value));
     }
 
-    // Power functions
+    // Power functions.
 
     public Variable<T> Pow(Variable<T> x, Variable<T> y)
     {
@@ -449,7 +476,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, pow);
     }
 
-    // Root functions
+    // Root functions.
 
     public Variable<T> Cbrt(Variable<T> x)
     {
@@ -484,7 +511,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
         return new(_nodes.Count, sqrt);
     }
 
-    // Trigonometric functions
+    // Trigonometric functions.
 
     public Variable<T> Acos(Variable<T> x)
     {
@@ -559,7 +586,7 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
     }
 
     //
-    // Custom operations
+    // Custom Operations
     //
 
     public Variable<T> CustomOperation(Variable<T> x, Func<T, T> f, Func<T, T> df)

@@ -58,16 +58,31 @@ public interface ITape<T>
     /// <param name="limit">The total number of nodes to log.</param>
     void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100);
 
-    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the result.</summary>
     /// <param name="gradient">The gradient.</param>
     /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
     void ReverseAccumulate(out ReadOnlySpan<T> gradient);
 
-    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the result.</summary>
     /// <param name="gradient">The gradient.</param>
     /// <param name="seed">A seed value.</param>
     /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
     void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed);
+
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape starting at a specific node and output the result.</summary>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index);
+
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape starting at a specific node and output the result.</summary>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="seed">A seed value.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed, int index);
 
     //
     // Basic Operations

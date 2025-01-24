@@ -157,6 +157,9 @@ public record class GradientTape<T> : ITape<T>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient)
         => ReverseAccumulate(out gradient, T.One);
 
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index)
+        => ReverseAccumulate(out gradient, T.One, index);
+
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
     {
         if (_variableCount == 0)
@@ -170,6 +173,32 @@ public record class GradientTape<T> : ITape<T>
         gradientSpan[length - 1] = seed;
 
         for (int i = length - 1; i >= _variableCount; i--)
+        {
+            var node = Unsafe.Add(ref start, i);
+            var gradientElement = gradientSpan[i];
+
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            gradientSpan[node.PY] += gradientElement * node.DY;
+        }
+
+        gradient = gradientSpan[.._variableCount];
+    }
+
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed, int index)
+    {
+        if (_variableCount == 0)
+            throw new AutoDiffException("The gradient tape contains no root nodes.");
+
+        if (index < _variableCount || index >= _nodes.Count)
+            throw new IndexOutOfRangeException();
+
+        ReadOnlySpan<GradientNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+        ref var start = ref MemoryMarshal.GetReference(nodes);
+
+        Span<T> gradientSpan = new T[index + 1];
+        gradientSpan[index] = seed;
+
+        for (int i = index; i >= _variableCount; i--)
         {
             var node = Unsafe.Add(ref start, i);
             var gradientElement = gradientSpan[i];
