@@ -235,13 +235,13 @@ public interface ITape<T>
     // Power functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(Variable<T> x, Variable<T> y);
+    Variable<T> Pow(Variable<T> x, Variable<T> n);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(Variable<T> x, T y);
+    Variable<T> Pow(Variable<T> x, T n);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(T x, Variable<T> y);
+    Variable<T> Pow(T x, Variable<T> n);
 
     // Root functions.
 

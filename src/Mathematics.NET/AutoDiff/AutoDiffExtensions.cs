@@ -33,10 +33,8 @@ namespace Mathematics.NET.AutoDiff;
 public static class AutoDiffExtensions
 {
     //
-    // Vector calculus
+    // Vector Calculus
     //
-
-    // TODO: Improve performance; perhaps see if caching is possible for some of these methods
 
     /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation: $ (\nabla\times\textbf{F})(\textbf{x}) $.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>

@@ -78,16 +78,31 @@ namespace Mathematics.NET.AutoDiff;
 public record class GradientTape<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
+    private record struct Checkpoint
+    {
+        public Memory<T> Value;
+        public HashSet<int> Visited;
+
+        public Checkpoint()
+        {
+            Visited = [];
+        }
+    }
+
+    private static NodeIndexComparer s_comparer = new();
+
     private bool _isTracking;
-    private List<GradientNode<T>> _nodes;
     private int _variableCount;
+    private List<GradientNode<T>> _nodes;
+    private Dictionary<int, Checkpoint> _checkpoints;
 
     /// <summary>Create an instance of a gradient tape.</summary>
     /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public GradientTape(bool isTracking = true)
     {
-        _nodes = [];
         _isTracking = isTracking;
+        _nodes = [];
+        _checkpoints = [];
     }
 
     /// <summary>Create an instance of a gradient tape that will hold an expected number of nodes.</summary>
@@ -95,8 +110,9 @@ public record class GradientTape<T> : ITape<T>
     /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public GradientTape(int n, bool isTracking = true)
     {
-        _nodes = new(n);
         _isTracking = isTracking;
+        _nodes = new(n);
+        _checkpoints = new(n);
     }
 
     public bool IsTracking { get => _isTracking; set => _isTracking = value; }
@@ -108,6 +124,61 @@ public record class GradientTape<T> : ITape<T>
     //
     // Methods
     //
+
+    public Variable<T> CreateCheckpoint(Variable<T> x)
+    {
+        if (!_checkpoints.ContainsKey(x.Index))
+        {
+            if (_variableCount == 0)
+                throw new AutoDiffException("The gradient tape contains no root nodes.");
+
+            ReadOnlySpan<GradientNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
+            ref var start = ref MemoryMarshal.GetReference(nodes);
+
+            // TODO: Figure out the ideal initial capacity.
+            PriorityQueue<int, int> indices = new(_nodes.Count, s_comparer);
+            HashSet<int> visited = new(_nodes.Count);
+            indices.Enqueue(x.Index, x.Index);
+
+            Span<T> gradientSpan = new T[x.Index + 1];
+            gradientSpan[x.Index] = T.One;
+
+            while (indices.Count > 0)
+            {
+                var i = indices.Dequeue();
+                var node = Unsafe.Add(ref start, i);
+
+                if (visited.Add(node.PX) && node.PX >= _variableCount)
+                    indices.Enqueue(node.PX, node.PX);
+                if (node.PY != i && visited.Add(node.PY) && node.PY >= _variableCount)
+                    indices.Enqueue(node.PY, node.PY);
+
+                var gradientElement = gradientSpan[i];
+
+                if (_checkpoints.TryGetValue(i, out var checkpoint))
+                {
+                    var checkpointSpan = checkpoint.Value.Span;
+                    for (int j = 0; j < _variableCount; j++)
+                    {
+                        gradientSpan[j] += checkpointSpan[j] * gradientElement;
+                    }
+                    visited.UnionWith(checkpoint.Visited);
+                    continue;
+                }
+
+                gradientSpan[node.PX] += gradientElement * node.DX;
+                gradientSpan[node.PY] += gradientElement * node.DY;
+            }
+
+            _checkpoints.Add(x.Index, new()
+            {
+                Value = gradientSpan[.._variableCount].ToArray(),
+                Visited = visited
+            });
+        }
+
+        return x;
+    }
 
     public Variable<T> CreateVariable(T value)
     {
@@ -155,53 +226,53 @@ public record class GradientTape<T> : ITape<T>
     }
 
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient)
-        => ReverseAccumulate(out gradient, T.One);
+        => ReverseAccumulate(out gradient, T.One, _nodes.Count - 1);
 
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index)
         => ReverseAccumulate(out gradient, T.One, index);
 
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
-    {
-        if (_variableCount == 0)
-            throw new AutoDiffException("The gradient tape contains no root nodes.");
-
-        ReadOnlySpan<GradientNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
-        ref var start = ref MemoryMarshal.GetReference(nodes);
-
-        var length = nodes.Length;
-        Span<T> gradientSpan = new T[length];
-        gradientSpan[length - 1] = seed;
-
-        for (int i = length - 1; i >= _variableCount; i--)
-        {
-            var node = Unsafe.Add(ref start, i);
-            var gradientElement = gradientSpan[i];
-
-            gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
-        }
-
-        gradient = gradientSpan[.._variableCount];
-    }
+        => ReverseAccumulate(out gradient, seed, _nodes.Count - 1);
 
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed, int index)
     {
         if (_variableCount == 0)
             throw new AutoDiffException("The gradient tape contains no root nodes.");
-
         if (index < _variableCount || index >= _nodes.Count)
             throw new IndexOutOfRangeException();
 
         ReadOnlySpan<GradientNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
         ref var start = ref MemoryMarshal.GetReference(nodes);
 
+        PriorityQueue<int, int> indices = new(_nodes.Count, s_comparer);
+        HashSet<int> visited = new(_nodes.Count);
+        indices.Enqueue(index, index);
+
         Span<T> gradientSpan = new T[index + 1];
         gradientSpan[index] = seed;
 
-        for (int i = index; i >= _variableCount; i--)
+        while (indices.Count > 0)
         {
+            var i = indices.Dequeue();
             var node = Unsafe.Add(ref start, i);
+
+            if (visited.Add(node.PX) && node.PX >= _variableCount)
+                indices.Enqueue(node.PX, node.PX);
+            if (node.PY != i && visited.Add(node.PY) && node.PY >= _variableCount)
+                indices.Enqueue(node.PY, node.PY);
+
             var gradientElement = gradientSpan[i];
+
+            if (_checkpoints.TryGetValue(i, out var checkpoint))
+            {
+                var checkpointSpan = checkpoint.Value.Span;
+                for (int j = 0; j < _variableCount; j++)
+                {
+                    gradientSpan[j] += checkpointSpan[j] * gradientElement;
+                }
+                visited.UnionWith(checkpoint.Visited);
+                continue;
+            }
 
             gradientSpan[node.PX] += gradientElement * node.DX;
             gradientSpan[node.PY] += gradientElement * node.DY;
@@ -218,7 +289,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.One, x._index, y._index));
+            _nodes.Add(new(T.One, T.One, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value + y.Value);
         }
         return new(_nodes.Count, x.Value + y.Value);
@@ -228,7 +299,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, y._index, _nodes.Count));
+            _nodes.Add(new(T.One, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x + y.Value);
         }
         return new(_nodes.Count, x + y.Value);
@@ -238,7 +309,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, x._index, _nodes.Count));
+            _nodes.Add(new(T.One, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value + y);
         }
         return new(_nodes.Count, x.Value + y);
@@ -249,7 +320,7 @@ public record class GradientTape<T> : ITape<T>
         var u = T.One / y.Value;
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / y.Value, -x.Value * u * u, x._index, y._index));
+            _nodes.Add(new(T.One / y.Value, -x.Value * u * u, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value * u);
         }
         return new(_nodes.Count, x.Value * u);
@@ -260,7 +331,7 @@ public record class GradientTape<T> : ITape<T>
         var u = T.One / y.Value;
         if (_isTracking)
         {
-            _nodes.Add(new(-x * u * u, y._index, _nodes.Count));
+            _nodes.Add(new(-x * u * u, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x * u);
         }
         return new(_nodes.Count, x * u);
@@ -271,7 +342,7 @@ public record class GradientTape<T> : ITape<T>
         var u = T.One / y;
         if (_isTracking)
         {
-            _nodes.Add(new(u, x._index, _nodes.Count));
+            _nodes.Add(new(u, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value * u);
         }
         return new(_nodes.Count, x.Value * u);
@@ -281,7 +352,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, x.Value * Real.Floor(x.Value / y.Value), x._index, y._index));
+            _nodes.Add(new(T.One, x.Value * Real.Floor(x.Value / y.Value), x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value % y.Value);
         }
         return new(_nodes.Count, x.Value % y.Value);
@@ -291,7 +362,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(x * Real.Floor(x / y.Value), y._index, _nodes.Count));
+            _nodes.Add(new(x * Real.Floor(x / y.Value), y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x % y.Value);
         }
         return new(_nodes.Count, x % y.Value);
@@ -301,7 +372,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, x._index, _nodes.Count));
+            _nodes.Add(new(T.One, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value % y);
         }
         return new(_nodes.Count, x.Value % y);
@@ -311,7 +382,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(y.Value, x.Value, x._index, y._index));
+            _nodes.Add(new(y.Value, x.Value, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value * y.Value);
         }
         return new(_nodes.Count, x.Value * y.Value);
@@ -321,7 +392,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(x, y._index, _nodes.Count));
+            _nodes.Add(new(x, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x * y.Value);
         }
         return new(_nodes.Count, x * y.Value);
@@ -331,7 +402,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(y, x._index, _nodes.Count));
+            _nodes.Add(new(y, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value * y);
         }
         return new(_nodes.Count, x.Value * y);
@@ -341,7 +412,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, -T.One, x._index, y._index));
+            _nodes.Add(new(T.One, -T.One, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value - y.Value);
         }
         return new(_nodes.Count, x.Value - y.Value);
@@ -351,7 +422,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(-T.One, y._index, _nodes.Count));
+            _nodes.Add(new(-T.One, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x - y.Value);
         }
         return new(_nodes.Count, x - y.Value);
@@ -361,7 +432,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, x._index, _nodes.Count));
+            _nodes.Add(new(T.One, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value - y);
         }
         return new(_nodes.Count, x.Value - y);
@@ -375,7 +446,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(-T.One, x._index, _nodes.Count));
+            _nodes.Add(new(-T.One, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, -x.Value);
         }
         return new(_nodes.Count, -x.Value);
@@ -388,7 +459,7 @@ public record class GradientTape<T> : ITape<T>
         var exp = T.Exp(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(exp, x._index, _nodes.Count));
+            _nodes.Add(new(exp, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, exp);
         }
         return new(_nodes.Count, exp);
@@ -399,7 +470,7 @@ public record class GradientTape<T> : ITape<T>
         var exp2 = T.Exp2(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(Real.Ln2 * exp2, x._index, _nodes.Count));
+            _nodes.Add(new(Real.Ln2 * exp2, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, exp2);
         }
         return new(_nodes.Count, exp2);
@@ -410,7 +481,7 @@ public record class GradientTape<T> : ITape<T>
         var exp10 = T.Exp10(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(Real.Ln10 * exp10, x._index, _nodes.Count));
+            _nodes.Add(new(Real.Ln10 * exp10, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, exp10);
         }
         return new(_nodes.Count, exp10);
@@ -422,7 +493,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / (T.Sqrt(x.Value - T.One) * T.Sqrt(x.Value + T.One)), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / (T.Sqrt(x.Value - T.One) * T.Sqrt(x.Value + T.One)), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Acosh(x.Value));
         }
         return new(_nodes.Count, T.Acosh(x.Value));
@@ -432,7 +503,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / T.Sqrt(x.Value * x.Value + T.One), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / T.Sqrt(x.Value * x.Value + T.One), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Asinh(x.Value));
         }
         return new(_nodes.Count, T.Asinh(x.Value));
@@ -442,7 +513,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / (T.One - x.Value * x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / (T.One - x.Value * x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Atanh(x.Value));
         }
         return new(_nodes.Count, T.Atanh(x.Value));
@@ -452,7 +523,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.Sinh(x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.Sinh(x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Cosh(x.Value));
         }
         return new(_nodes.Count, T.Cosh(x.Value));
@@ -462,7 +533,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.Cosh(x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.Cosh(x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Sinh(x.Value));
         }
         return new(_nodes.Count, T.Sinh(x.Value));
@@ -473,7 +544,7 @@ public record class GradientTape<T> : ITape<T>
         if (_isTracking)
         {
             var u = T.One / T.Cosh(x.Value);
-            _nodes.Add(new(u * u, x._index, _nodes.Count));
+            _nodes.Add(new(u * u, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Tanh(x.Value));
         }
         return new(_nodes.Count, T.Tanh(x.Value));
@@ -485,7 +556,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / x.Value, x._index, _nodes.Count));
+            _nodes.Add(new(T.One / x.Value, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Ln(x.Value));
         }
         return new(_nodes.Count, T.Ln(x.Value));
@@ -496,7 +567,7 @@ public record class GradientTape<T> : ITape<T>
         if (_isTracking)
         {
             var lnB = T.Ln(b.Value);
-            _nodes.Add(new(T.One / (x.Value * lnB), -T.Ln(x.Value) / (b.Value * lnB * lnB), x._index, b._index));
+            _nodes.Add(new(T.One / (x.Value * lnB), -T.Ln(x.Value) / (b.Value * lnB * lnB), x.Index, b.Index));
             return new(_nodes.Count - 1, T.Log(x.Value, b.Value));
         }
         return new(_nodes.Count, T.Log(x.Value, b.Value));
@@ -506,7 +577,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / (Real.Ln2 * x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / (Real.Ln2 * x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Log2(x.Value));
         }
         return new(_nodes.Count, T.Log2(x.Value));
@@ -516,7 +587,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / (Real.Ln10 * x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / (Real.Ln10 * x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Log10(x.Value));
         }
         return new(_nodes.Count, T.Log10(x.Value));
@@ -524,34 +595,34 @@ public record class GradientTape<T> : ITape<T>
 
     // Power functions.
 
-    public Variable<T> Pow(Variable<T> x, Variable<T> y)
+    public Variable<T> Pow(Variable<T> x, Variable<T> n)
     {
-        var pow = T.Pow(x.Value, y.Value);
+        var pow = T.Pow(x.Value, n.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(y.Value * T.Pow(x.Value, y.Value - T.One), T.Ln(x.Value) * pow, x._index, y._index));
+            _nodes.Add(new(n.Value * T.Pow(x.Value, n.Value - T.One), T.Ln(x.Value) * pow, x.Index, n.Index));
             return new(_nodes.Count - 1, pow);
         }
         return new(_nodes.Count, pow);
     }
 
-    public Variable<T> Pow(Variable<T> x, T y)
+    public Variable<T> Pow(Variable<T> x, T n)
     {
-        var pow = T.Pow(x.Value, y);
+        var pow = T.Pow(x.Value, n);
         if (_isTracking)
         {
-            _nodes.Add(new(y * T.Pow(x.Value, y - T.One), x._index, _nodes.Count));
+            _nodes.Add(new(n * T.Pow(x.Value, n - T.One), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, pow);
         }
         return new(_nodes.Count, pow);
     }
 
-    public Variable<T> Pow(T x, Variable<T> y)
+    public Variable<T> Pow(T x, Variable<T> n)
     {
-        var pow = T.Pow(x, y.Value);
+        var pow = T.Pow(x, n.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(T.Ln(x) * pow, y._index, _nodes.Count));
+            _nodes.Add(new(T.Ln(x) * pow, n.Index, _nodes.Count));
             return new(_nodes.Count - 1, pow);
         }
         return new(_nodes.Count, pow);
@@ -564,7 +635,7 @@ public record class GradientTape<T> : ITape<T>
         var cbrt = T.Cbrt(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / (3.0 * cbrt * cbrt), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / (3.0 * cbrt * cbrt), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, cbrt);
         }
         return new(_nodes.Count, cbrt);
@@ -575,7 +646,7 @@ public record class GradientTape<T> : ITape<T>
         var root = T.Root(x.Value, n.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(root / (n.Value * x.Value), -T.Ln(x.Value) * root / (n.Value * n.Value), x._index, n._index));
+            _nodes.Add(new(root / (n.Value * x.Value), -T.Ln(x.Value) * root / (n.Value * n.Value), x.Index, n.Index));
             return new(_nodes.Count - 1, root);
         }
         return new(_nodes.Count, root);
@@ -586,7 +657,7 @@ public record class GradientTape<T> : ITape<T>
         var sqrt = T.Sqrt(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(0.5 / sqrt, x._index, _nodes.Count));
+            _nodes.Add(new(0.5 / sqrt, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, sqrt);
         }
         return new(_nodes.Count, sqrt);
@@ -598,7 +669,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(-T.One / T.Sqrt(T.One - x.Value * x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(-T.One / T.Sqrt(T.One - x.Value * x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Acos(x.Value));
         }
         return new(_nodes.Count, T.Acos(x.Value));
@@ -608,7 +679,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / T.Sqrt(T.One - x.Value * x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / T.Sqrt(T.One - x.Value * x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Asin(x.Value));
         }
         return new(_nodes.Count, T.Asin(x.Value));
@@ -618,7 +689,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / (T.One + x.Value * x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / (T.One + x.Value * x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Atan(x.Value));
         }
         return new(_nodes.Count, T.Atan(x.Value));
@@ -629,7 +700,7 @@ public record class GradientTape<T> : ITape<T>
         if (_isTracking)
         {
             var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-            _nodes.Add(new(x.Value * u, -y.Value * u, y._index, x._index));
+            _nodes.Add(new(x.Value * u, -y.Value * u, y.Index, x.Index));
             return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
         }
         return new(_nodes.Count, Real.Atan2(y.Value, x.Value));
@@ -639,7 +710,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(-T.Sin(x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(-T.Sin(x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Cos(x.Value));
         }
         return new(_nodes.Count, T.Cos(x.Value));
@@ -649,7 +720,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.Cos(x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(T.Cos(x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Sin(x.Value));
         }
         return new(_nodes.Count, T.Sin(x.Value));
@@ -660,7 +731,7 @@ public record class GradientTape<T> : ITape<T>
         if (_isTracking)
         {
             var sec = T.One / T.Cos(x.Value);
-            _nodes.Add(new(sec * sec, x._index, _nodes.Count));
+            _nodes.Add(new(sec * sec, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Tan(x.Value));
         }
         return new(_nodes.Count, T.Tan(x.Value));
@@ -679,7 +750,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(df(x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(df(x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, f(x.Value));
         }
         return new(_nodes.Count, f(x.Value));
@@ -696,7 +767,7 @@ public record class GradientTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(dfx(x.Value, y.Value), dfy(x.Value, y.Value), x._index, y._index));
+            _nodes.Add(new(dfx(x.Value, y.Value), dfy(x.Value, y.Value), x.Index, y.Index));
             return new(_nodes.Count - 1, f(x.Value, y.Value));
         }
         return new(_nodes.Count, f(x.Value, y.Value));

@@ -27,6 +27,7 @@
 
 using System.Data;
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Tests.AutoDiff;
 
@@ -803,6 +804,26 @@ public sealed class GradientTapeOfRealTests
         var actual = _tape.Pow(x, right).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    public void ReverseAccumulate_WithCheckpointing_ReturnsGradients()
+    {
+        var vector = _tape.CreateAutoDiffVector(1.23, 2.34, 3.45, 4.56);
+
+        var u = _tape.CreateCheckpoint(_tape.Cos(_tape.Multiply(_tape.Sin(_tape.Multiply(vector.X1, vector.X2)), vector.X4)));
+        var v = _tape.CreateCheckpoint(_tape.Divide(_tape.Exp(_tape.Multiply(vector.X3, vector.X2)), u));
+        var x = _tape.Exp(_tape.Divide(u, _tape.Sqrt(_tape.Multiply(_tape.Multiply(vector.X3, vector.X4), vector.X2))));
+        var y = _tape.Add(u, _tape.Multiply(_tape.Ln(_tape.Divide(vector.X3, vector.X4)), _tape.Multiply(v, vector.X1)));
+
+        Real[] expectedX = [1.67479908078448, 0.866325347771631, -0.00950769726936101, -0.04951809751601818];
+        Real[] expectedY = [72675.93346228106, 29314.79027740105, -3824.679197396951, -4208.3704226546];
+
+        _tape.ReverseAccumulate(out var actualX, x.Index);
+        _tape.ReverseAccumulate(out var actualY, y.Index);
+
+        Assert<Real>.AreApproximatelyEqual(expectedX, actualX, 1e-14);
+        Assert<Real>.AreApproximatelyEqual(expectedY, actualY, 1e-14);
     }
 
     [TestMethod]

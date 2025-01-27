@@ -415,7 +415,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, T.Zero, T.One, T.Zero, x._index, y._index));
+            _nodes.Add(new(T.One, T.Zero, T.Zero, T.One, T.Zero, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value + y.Value);
         }
         return new(_nodes.Count, x.Value + y.Value);
@@ -425,7 +425,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, y._index, _nodes.Count));
+            _nodes.Add(new(T.One, T.Zero, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x + y.Value);
         }
         return new(_nodes.Count, x + y.Value);
@@ -435,7 +435,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
+            _nodes.Add(new(T.One, T.Zero, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value + y);
         }
         return new(_nodes.Count, x.Value + y);
@@ -447,7 +447,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var dfxy = -u * u;
-            _nodes.Add(new(u, T.Zero, dfxy, x.Value * dfxy, -2.0 * u * x.Value * dfxy, x._index, y._index));
+            _nodes.Add(new(u, T.Zero, dfxy, x.Value * dfxy, -2.0 * u * x.Value * dfxy, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value * u);
         }
         return new(_nodes.Count, x.Value * u);
@@ -459,7 +459,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var dfxy = -u * u;
-            _nodes.Add(new(x * dfxy, -2.0 * u * x * dfxy, y._index, _nodes.Count));
+            _nodes.Add(new(x * dfxy, -2.0 * u * x * dfxy, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x * u);
         }
         return new(_nodes.Count, x * u);
@@ -470,7 +470,7 @@ public record class HessianTape<T> : ITape<T>
         var u = T.One / y;
         if (_isTracking)
         {
-            _nodes.Add(new(u, T.Zero, x._index, _nodes.Count));
+            _nodes.Add(new(u, T.Zero, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value * u);
         }
         return new(_nodes.Count, x.Value * u);
@@ -480,7 +480,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, T.Zero, x.Value * Real.Floor(x.Value / y.Value), T.Zero, x._index, y._index));
+            _nodes.Add(new(T.One, T.Zero, T.Zero, x.Value * Real.Floor(x.Value / y.Value), T.Zero, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value % y.Value);
         }
         return new(_nodes.Count, x.Value % y.Value);
@@ -490,7 +490,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(x * Real.Floor(x / y.Value), T.Zero, y._index, _nodes.Count));
+            _nodes.Add(new(x * Real.Floor(x / y.Value), T.Zero, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x % y.Value);
         }
         return new(_nodes.Count, x % y.Value);
@@ -500,7 +500,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
+            _nodes.Add(new(T.One, T.Zero, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value % y);
         }
         return new(_nodes.Count, x.Value % y);
@@ -510,7 +510,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(y.Value, T.Zero, T.One, x.Value, T.Zero, x._index, y._index));
+            _nodes.Add(new(y.Value, T.Zero, T.One, x.Value, T.Zero, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value * y.Value);
         }
         return new(_nodes.Count, x.Value * y.Value);
@@ -520,7 +520,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(x, T.Zero, y._index, _nodes.Count));
+            _nodes.Add(new(x, T.Zero, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x * y.Value);
         }
         return new(_nodes.Count, x * y.Value);
@@ -530,7 +530,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(y, T.Zero, x._index, _nodes.Count));
+            _nodes.Add(new(y, T.Zero, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value * y);
         }
         return new(_nodes.Count, x.Value * y);
@@ -540,7 +540,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, T.Zero, -T.One, T.Zero, x._index, y._index));
+            _nodes.Add(new(T.One, T.Zero, T.Zero, -T.One, T.Zero, x.Index, y.Index));
             return new(_nodes.Count - 1, x.Value - y.Value);
         }
         return new(_nodes.Count, x.Value - y.Value);
@@ -550,7 +550,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(-T.One, T.Zero, y._index, _nodes.Count));
+            _nodes.Add(new(-T.One, T.Zero, y.Index, _nodes.Count));
             return new(_nodes.Count - 1, x - y.Value);
         }
         return new(_nodes.Count, x - y.Value);
@@ -560,7 +560,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(T.One, T.Zero, x._index, _nodes.Count));
+            _nodes.Add(new(T.One, T.Zero, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, x.Value - y);
         }
         return new(_nodes.Count, x.Value - y);
@@ -574,7 +574,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(-T.One, T.Zero, x._index, _nodes.Count));
+            _nodes.Add(new(-T.One, T.Zero, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, -x.Value);
         }
         return new(_nodes.Count, -x.Value);
@@ -587,7 +587,7 @@ public record class HessianTape<T> : ITape<T>
         var exp = T.Exp(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(exp, exp, x._index, _nodes.Count));
+            _nodes.Add(new(exp, exp, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, exp);
         }
         return new(_nodes.Count, exp);
@@ -599,7 +599,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var df = Real.Ln2 * exp2;
-            _nodes.Add(new(df, Real.Ln2 * df, x._index, _nodes.Count));
+            _nodes.Add(new(df, Real.Ln2 * df, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, exp2);
         }
         return new(_nodes.Count, exp2);
@@ -611,7 +611,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var df = Real.Ln10 * exp10;
-            _nodes.Add(new(df, Real.Ln10 * df, x._index, _nodes.Count));
+            _nodes.Add(new(df, Real.Ln10 * df, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, exp10);
         }
         return new(_nodes.Count, exp10);
@@ -625,7 +625,7 @@ public record class HessianTape<T> : ITape<T>
         {
             var u = x.Value - T.One;
             var v = x.Value + T.One;
-            _nodes.Add(new(T.One / (T.Sqrt(u) * T.Sqrt(v)), -x.Value * T.Pow(u, -1.5) * T.Pow(v, -1.5), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / (T.Sqrt(u) * T.Sqrt(v)), -x.Value * T.Pow(u, -1.5) * T.Pow(v, -1.5), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Acosh(x.Value));
         }
         return new(_nodes.Count, T.Acosh(x.Value));
@@ -636,7 +636,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var u = T.One + x.Value * x.Value;
-            _nodes.Add(new(T.One / T.Sqrt(u), -x.Value * T.Pow(u, -1.5), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / T.Sqrt(u), -x.Value * T.Pow(u, -1.5), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Asinh(x.Value));
         }
         return new(_nodes.Count, T.Asinh(x.Value));
@@ -647,7 +647,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var df = T.One / (T.One - x.Value * x.Value);
-            _nodes.Add(new(df, 2.0 * df * x.Value * df, x._index, _nodes.Count));
+            _nodes.Add(new(df, 2.0 * df * x.Value * df, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Atanh(x.Value));
         }
         return new(_nodes.Count, T.Atanh(x.Value));
@@ -658,7 +658,7 @@ public record class HessianTape<T> : ITape<T>
         var cosh = T.Cosh(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(T.Sinh(x.Value), cosh, x._index, _nodes.Count));
+            _nodes.Add(new(T.Sinh(x.Value), cosh, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, cosh);
         }
         return new(_nodes.Count, cosh);
@@ -669,7 +669,7 @@ public record class HessianTape<T> : ITape<T>
         var sinh = T.Sinh(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(T.Cosh(x.Value), sinh, x._index, _nodes.Count));
+            _nodes.Add(new(T.Cosh(x.Value), sinh, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, sinh);
         }
         return new(_nodes.Count, sinh);
@@ -682,7 +682,7 @@ public record class HessianTape<T> : ITape<T>
         {
             var u = T.One / T.Cosh(x.Value);
             var df = u * u;
-            _nodes.Add(new(df, -2.0 * df * tanh, x._index, _nodes.Count));
+            _nodes.Add(new(df, -2.0 * df * tanh, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, tanh);
         }
         return new(_nodes.Count, tanh);
@@ -695,7 +695,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var df = T.One / x.Value;
-            _nodes.Add(new(df, -df * df, x._index, _nodes.Count));
+            _nodes.Add(new(df, -df * df, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Ln(x.Value));
         }
         return new(_nodes.Count, T.Ln(x.Value));
@@ -709,7 +709,7 @@ public record class HessianTape<T> : ITape<T>
             var lnb = T.Ln(b.Value);
             var dfx = T.One / (lnb * x.Value);
             var dfb = -lnx / (lnb * lnb * b.Value);
-            _nodes.Add(new(dfx, -dfx / x.Value, -dfx / (lnb * b.Value), dfb, -dfb * (2.0 / lnb + T.One) / b.Value, x._index, b._index));
+            _nodes.Add(new(dfx, -dfx / x.Value, -dfx / (lnb * b.Value), dfb, -dfb * (2.0 / lnb + T.One) / b.Value, x.Index, b.Index));
             return new(_nodes.Count - 1, T.Log(x.Value, b.Value));
         }
         return new(_nodes.Count, T.Log(x.Value, b.Value));
@@ -721,7 +721,7 @@ public record class HessianTape<T> : ITape<T>
         {
             var u = T.One / x.Value;
             var df = u / Real.Ln2;
-            _nodes.Add(new(df, -u * u / Real.Ln2, x._index, _nodes.Count));
+            _nodes.Add(new(df, -u * u / Real.Ln2, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Log2(x.Value));
         }
         return new(_nodes.Count, T.Log2(x.Value));
@@ -733,7 +733,7 @@ public record class HessianTape<T> : ITape<T>
         {
             var u = T.One / x.Value;
             var df = u / Real.Ln10;
-            _nodes.Add(new(df, -u * u / Real.Ln10, x._index, _nodes.Count));
+            _nodes.Add(new(df, -u * u / Real.Ln10, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Log10(x.Value));
         }
         return new(_nodes.Count, T.Log10(x.Value));
@@ -741,45 +741,45 @@ public record class HessianTape<T> : ITape<T>
 
     // Power functions.
 
-    public Variable<T> Pow(Variable<T> x, Variable<T> y)
+    public Variable<T> Pow(Variable<T> x, Variable<T> n)
     {
-        var pow = T.Pow(x.Value, y.Value);
+        var pow = T.Pow(x.Value, n.Value);
         if (_isTracking)
         {
             var lnx = T.Ln(x.Value);
-            var pownmo = T.Pow(x.Value, y.Value - T.One);
+            var pownmo = T.Pow(x.Value, n.Value - T.One);
             var dfn = lnx * pow;
             _nodes.Add(new(
-                y.Value * pownmo,
-                (y.Value - T.One) * y.Value * T.Pow(x.Value, y.Value - 2.0),
-                (T.One + lnx * y.Value) * pownmo,
+                n.Value * pownmo,
+                (n.Value - T.One) * n.Value * T.Pow(x.Value, n.Value - 2.0),
+                (T.One + lnx * n.Value) * pownmo,
                 dfn,
                 lnx * dfn,
-                x._index,
-                y._index));
+                x.Index,
+                n.Index));
             return new(_nodes.Count - 1, pow);
         }
         return new(_nodes.Count, pow);
     }
 
-    public Variable<T> Pow(Variable<T> x, T y)
+    public Variable<T> Pow(Variable<T> x, T n)
     {
-        var pow = T.Pow(x.Value, y);
+        var pow = T.Pow(x.Value, n);
         if (_isTracking)
         {
-            _nodes.Add(new(y * T.Pow(x.Value, y - T.One), (y - T.One) * y * T.Pow(x.Value, y - 2.0), x._index, _nodes.Count));
+            _nodes.Add(new(n * T.Pow(x.Value, n - T.One), (n - T.One) * n * T.Pow(x.Value, n - 2.0), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, pow);
         }
         return new(_nodes.Count, pow);
     }
 
-    public Variable<T> Pow(T x, Variable<T> y)
+    public Variable<T> Pow(T x, Variable<T> n)
     {
-        var pow = T.Pow(x, y.Value);
+        var pow = T.Pow(x, n.Value);
         if (_isTracking)
         {
             var lnx = T.Ln(x);
-            _nodes.Add(new(lnx * pow, lnx * lnx * pow, y._index, _nodes.Count));
+            _nodes.Add(new(lnx * pow, lnx * lnx * pow, n.Index, _nodes.Count));
             return new(_nodes.Count - 1, pow);
         }
         return new(_nodes.Count - 1, pow);
@@ -793,7 +793,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var df = T.One / (3.0 * cbrt * cbrt);
-            _nodes.Add(new(df, -2.0 * df / (3.0 * x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(df, -2.0 * df / (3.0 * x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, cbrt);
         }
         return new(_nodes.Count, cbrt);
@@ -816,8 +816,8 @@ public record class HessianTape<T> : ITape<T>
                 -root * (lnx * u + T.One) * v * uu,
                 dfn,
                 -(2.0 * u + lnx * uu) * dfn,
-                x._index,
-                n._index));
+                x.Index,
+                n.Index));
             return new(_nodes.Count - 1, root);
         }
         return new(_nodes.Count, root);
@@ -829,7 +829,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var df = 0.5 / sqrt;
-            _nodes.Add(new(df, -0.5 / x.Value * df, x._index, _nodes.Count));
+            _nodes.Add(new(df, -0.5 / x.Value * df, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, sqrt);
         }
         return new(_nodes.Count, sqrt);
@@ -842,7 +842,7 @@ public record class HessianTape<T> : ITape<T>
         var cos = T.Cos(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(-T.Sin(x.Value), -cos, x._index, _nodes.Count));
+            _nodes.Add(new(-T.Sin(x.Value), -cos, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, cos);
         }
         return new(_nodes.Count, cos);
@@ -853,7 +853,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var u = T.One - x.Value * x.Value;
-            _nodes.Add(new(-T.One / T.Sqrt(u), -x.Value * T.Pow(u, -1.5), x._index, _nodes.Count));
+            _nodes.Add(new(-T.One / T.Sqrt(u), -x.Value * T.Pow(u, -1.5), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Acos(x.Value));
         }
         return new(_nodes.Count, T.Acos(x.Value));
@@ -864,7 +864,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var u = T.One - x.Value * x.Value;
-            _nodes.Add(new(T.One / T.Sqrt(u), x.Value * T.Pow(u, -1.5), x._index, _nodes.Count));
+            _nodes.Add(new(T.One / T.Sqrt(u), x.Value * T.Pow(u, -1.5), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Asin(x.Value));
         }
         return new(_nodes.Count, T.Asin(x.Value));
@@ -875,7 +875,7 @@ public record class HessianTape<T> : ITape<T>
         if (_isTracking)
         {
             var df = T.One / (T.One + x.Value * x.Value);
-            _nodes.Add(new(df, -2.0 * df * x.Value * df, x._index, _nodes.Count));
+            _nodes.Add(new(df, -2.0 * df * x.Value * df, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, T.Atan(x.Value));
         }
         return new(_nodes.Count, T.Atan(x.Value));
@@ -896,8 +896,8 @@ public record class HessianTape<T> : ITape<T>
                 (u - v) * b,
                 -y.Value * a,
                 -dfyy,
-                y._index,
-                x._index));
+                y.Index,
+                x.Index));
             return new(_nodes.Count - 1, Real.Atan2(y.Value, x.Value));
         }
         return new(_nodes.Count, Real.Atan2(y.Value, x.Value));
@@ -908,7 +908,7 @@ public record class HessianTape<T> : ITape<T>
         var sin = T.Sin(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(T.Cos(x.Value), -sin, x._index, _nodes.Count));
+            _nodes.Add(new(T.Cos(x.Value), -sin, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, sin);
         }
         return new(_nodes.Count, sin);
@@ -921,7 +921,7 @@ public record class HessianTape<T> : ITape<T>
         {
             var sec = T.One / T.Cos(x.Value);
             var df = sec * sec;
-            _nodes.Add(new(df, 2.0 * df * tan, x._index, _nodes.Count));
+            _nodes.Add(new(df, 2.0 * df * tan, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, tan);
         }
         return new(_nodes.Count, tan);
@@ -941,7 +941,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(dfx(x.Value), dfxx(x.Value), x._index, _nodes.Count));
+            _nodes.Add(new(dfx(x.Value), dfxx(x.Value), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, f(x.Value));
         }
         return new(_nodes.Count, f(x.Value));
@@ -969,7 +969,7 @@ public record class HessianTape<T> : ITape<T>
     {
         if (_isTracking)
         {
-            _nodes.Add(new(dfx(x.Value, y.Value), dfxx(x.Value, y.Value), dfxy(x.Value, y.Value), dfy(x.Value, y.Value), dfyy(x.Value, y.Value), x._index, y._index));
+            _nodes.Add(new(dfx(x.Value, y.Value), dfxx(x.Value, y.Value), dfxy(x.Value, y.Value), dfy(x.Value, y.Value), dfyy(x.Value, y.Value), x.Index, y.Index));
             return new(_nodes.Count - 1, f(x.Value, y.Value));
         }
         return new(_nodes.Count, f(x.Value, y.Value));
