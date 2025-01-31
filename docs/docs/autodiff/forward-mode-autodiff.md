@@ -4,7 +4,7 @@ description: Use first and second-order, forward-mode automatic differentiation 
 keywords: [forward-mode, autodiff, dual numbers, hyperdual, math, C#, csharp, .NET]
 ---
 
-# Forward-mode Automatic Differentiation
+# Forward-Mode Automatic Differentiation
 
 Support for first and second-order, forward-mode autodiff are provided by dual and hyperdual numbers.
 
