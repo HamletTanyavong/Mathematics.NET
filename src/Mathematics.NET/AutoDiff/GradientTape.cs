@@ -148,9 +148,10 @@ public record class GradientTape<T> : ITape<T>
                 var i = indices.Dequeue();
                 var node = Unsafe.Add(ref start, i);
 
-                if (visited.Add(node.PX) && node.PX >= _variableCount)
+                // Do not change the order of checks within the if statements without careful consideration.
+                if (node.PX >= _variableCount && visited.Add(node.PX))
                     indices.Enqueue(node.PX, node.PX);
-                if (node.PY != i && visited.Add(node.PY) && node.PY >= _variableCount)
+                if (node.PY != i && node.PY >= _variableCount && visited.Add(node.PY))
                     indices.Enqueue(node.PY, node.PY);
 
                 var gradientElement = gradientSpan[i];
@@ -256,9 +257,9 @@ public record class GradientTape<T> : ITape<T>
             var i = indices.Dequeue();
             var node = Unsafe.Add(ref start, i);
 
-            if (visited.Add(node.PX) && node.PX >= _variableCount)
+            if (node.PX >= _variableCount && visited.Add(node.PX))
                 indices.Enqueue(node.PX, node.PX);
-            if (node.PY != i && visited.Add(node.PY) && node.PY >= _variableCount)
+            if (node.PY != i && node.PY >= _variableCount && visited.Add(node.PY))
                 indices.Enqueue(node.PY, node.PY);
 
             var gradientElement = gradientSpan[i];
