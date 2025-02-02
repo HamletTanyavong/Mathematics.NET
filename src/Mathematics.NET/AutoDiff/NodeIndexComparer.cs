@@ -1,4 +1,4 @@
-﻿// <copyright file="Variable.cs" company="Mathematics.NET">
+﻿// <copyright file="NodeIndexComparer.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,27 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.InteropServices;
-
 namespace Mathematics.NET.AutoDiff;
 
-/// <summary>Represents a variable used in reverse-mode automatic differentiation.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-[StructLayout(LayoutKind.Sequential)]
-public readonly unsafe record struct Variable<T>
-    where T : IComplex<T>
+internal sealed class NodeIndexComparer : IComparer<int>
 {
-    /// <summary>The index of the variable.</summary>
-    public readonly int Index;
-
-    /// <summary>The value of the variable.</summary>
-    public readonly T Value;
-
-    internal Variable(int index, T value)
-    {
-        Index = index;
-        Value = value;
-    }
-
-    public override string? ToString() => Value.ToString();
+    // There should be no duplicate indices to compare, so we can ignore the case where both are equal.
+    public int Compare(int x, int y) => x > y ? -1 : 1;
 }

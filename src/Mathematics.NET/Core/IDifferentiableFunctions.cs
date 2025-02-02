@@ -114,11 +114,11 @@ public interface IDifferentiableFunctions<T>
     // Power functions
     //
 
-    /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="y"/>: $ x^y $ </summary>
+    /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>: $ x^y $ </summary>
     /// <param name="x">A value.</param>
-    /// <param name="y">A power.</param>
-    /// <returns><paramref name="x"/> raised to the power of <paramref name="y"/>.</returns>
-    static abstract T Pow(T x, T y);
+    /// <param name="n">A power.</param>
+    /// <returns><paramref name="x"/> raised to the power of <paramref name="n"/>.</returns>
+    static abstract T Pow(T x, T n);
 
     //
     // Root functions

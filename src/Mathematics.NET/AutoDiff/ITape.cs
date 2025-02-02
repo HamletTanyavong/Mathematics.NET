@@ -27,6 +27,7 @@
 
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
+using Mathematics.NET.Exceptions;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
@@ -57,19 +58,34 @@ public interface ITape<T>
     /// <param name="limit">The total number of nodes to log.</param>
     void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100);
 
-    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the result.</summary>
     /// <param name="gradient">The gradient.</param>
-    /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
+    /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
     void ReverseAccumulate(out ReadOnlySpan<T> gradient);
 
-    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the resulting gradient.</summary>
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the result.</summary>
     /// <param name="gradient">The gradient.</param>
     /// <param name="seed">A seed value.</param>
-    /// <exception cref="Exception">The gradient tape does not have any tracked variables.</exception>
+    /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
     void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed);
 
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape starting at a specific node and output the result.</summary>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index);
+
+    /// <summary>Perform reverse accumulation on the gradient or Hessian tape starting at a specific node and output the result.</summary>
+    /// <param name="gradient">The gradient.</param>
+    /// <param name="seed">A seed value.</param>
+    /// <param name="index">The index of the starting node.</param>
+    /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
+    /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
+    void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed, int index);
+
     //
-    // Basic operations
+    // Basic Operations
     //
 
     /// <summary>Add two variables.</summary>
@@ -79,16 +95,16 @@ public interface ITape<T>
     Variable<T> Add(Variable<T> x, Variable<T> y);
 
     /// <summary>Add a constant value and a variable.</summary>
-    /// <param name="c">A constant value.</param>
-    /// <param name="x">A variable.</param>
+    /// <param name="x">A constant value.</param>
+    /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Add(T c, Variable<T> x);
+    Variable<T> Add(T x, Variable<T> y);
 
     /// <summary>Add a variable and a constant value.</summary>
     /// <param name="x">A variable.</param>
-    /// <param name="c">A constant value.</param>
+    /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Add(Variable<T> x, T c);
+    Variable<T> Add(Variable<T> x, T y);
 
     /// <summary>Divide two variables.</summary>
     /// <param name="x">A dividend.</param>
@@ -97,16 +113,16 @@ public interface ITape<T>
     Variable<T> Divide(Variable<T> x, Variable<T> y);
 
     /// <summary>Divide a constant value by a variable.</summary>
-    /// <param name="c">A constant dividend.</param>
-    /// <param name="x">A variable divisor.</param>
+    /// <param name="x">A constant dividend.</param>
+    /// <param name="y">A variable divisor.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Divide(T c, Variable<T> x);
+    Variable<T> Divide(T x, Variable<T> y);
 
     /// <summary>Divide a variable by a constant value.</summary>
     /// <param name="x">A variable dividend.</param>
-    /// <param name="c">A constant divisor.</param>
+    /// <param name="y">A constant divisor.</param>
     /// <returns>A variabl.</returns>
-    Variable<T> Divide(Variable<T> x, T c);
+    Variable<T> Divide(Variable<T> x, T y);
 
     /// <summary>Compute the modulo of a variable given a divisor.</summary>
     /// <param name="x">A dividend.</param>
@@ -115,16 +131,16 @@ public interface ITape<T>
     Variable<Real> Modulo(in Variable<Real> x, in Variable<Real> y);
 
     /// <summary>Compute the modulo of a real value given a divisor.</summary>
-    /// <param name="c">A real dividend.</param>
-    /// <param name="x">A variable divisor.</param>
-    /// <returns><paramref name="c"/> mod <paramref name="x"/>.</returns>
-    Variable<Real> Modulo(Real c, in Variable<Real> x);
+    /// <param name="x">A real dividend.</param>
+    /// <param name="y">A variable divisor.</param>
+    /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
+    Variable<Real> Modulo(Real x, in Variable<Real> y);
 
     /// <summary>Compute the modulo of a variable given a divisor.</summary>
     /// <param name="x">A variable dividend.</param>
-    /// <param name="c">A real divisor.</param>
-    /// <returns><paramref name="x"/> mod <paramref name="c"/>.</returns>
-    Variable<Real> Modulo(in Variable<Real> x, Real c);
+    /// <param name="y">A real divisor.</param>
+    /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
+    Variable<Real> Modulo(in Variable<Real> x, Real y);
 
     /// <summary>Multiply two variables.</summary>
     /// <param name="x">The first variable.</param>
@@ -133,16 +149,16 @@ public interface ITape<T>
     Variable<T> Multiply(Variable<T> x, Variable<T> y);
 
     /// <summary>Multiply a constant value by a variable.</summary>
-    /// <param name="c">A constant value.</param>
-    /// <param name="x">A variable.</param>
+    /// <param name="x">A constant value.</param>
+    /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Multiply(T c, Variable<T> x);
+    Variable<T> Multiply(T x, Variable<T> y);
 
     /// <summary>Multiply a variable by a constant value.</summary>
     /// <param name="x">A variable.</param>
-    /// <param name="c">A constant value.</param>
+    /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Multiply(Variable<T> x, T c);
+    Variable<T> Multiply(Variable<T> x, T y);
 
     /// <summary>Subract two variables.</summary>
     /// <param name="x">The first variable.</param>
@@ -151,19 +167,19 @@ public interface ITape<T>
     Variable<T> Subtract(Variable<T> x, Variable<T> y);
 
     /// <summary>Subtract a variable from a constant value.</summary>
-    /// <param name="c">A constant value.</param>
-    /// <param name="x">A variable.</param>
+    /// <param name="x">A constant value.</param>
+    /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Subtract(T c, Variable<T> x);
+    Variable<T> Subtract(T x, Variable<T> y);
 
     /// <summary>Subtract a constant value from a variable.</summary>
     /// <param name="x">A variable.</param>
-    /// <param name="c">A constant value.</param>
+    /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Subtract(Variable<T> x, T c);
+    Variable<T> Subtract(Variable<T> x, T y);
 
     //
-    // Other operations
+    // Other Operations
     //
 
     /// <summary>Negate a variable.</summary>
@@ -171,7 +187,7 @@ public interface ITape<T>
     /// <returns>Minus one times the variable.</returns>
     Variable<T> Negate(Variable<T> x);
 
-    // Exponential functions
+    // Exponential functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp(T)"/>
     Variable<T> Exp(Variable<T> x);
@@ -182,7 +198,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp10(T)"/>
     Variable<T> Exp10(Variable<T> x);
 
-    // Hyperbolic functions
+    // Hyperbolic functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Acosh(T)"/>
     Variable<T> Acosh(Variable<T> x);
@@ -202,7 +218,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Tanh(T)"/>
     Variable<T> Tanh(Variable<T> x);
 
-    // Logarithmic functions
+    // Logarithmic functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Ln(T)"/>
     Variable<T> Ln(Variable<T> x);
@@ -216,18 +232,18 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Log10(T)"/>
     Variable<T> Log10(Variable<T> x);
 
-    // Power functions
+    // Power functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(Variable<T> x, Variable<T> y);
+    Variable<T> Pow(Variable<T> x, Variable<T> n);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(Variable<T> x, T y);
+    Variable<T> Pow(Variable<T> x, T n);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(T x, Variable<T> y);
+    Variable<T> Pow(T x, Variable<T> n);
 
-    // Root functions
+    // Root functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Cbrt(T)"/>
     Variable<T> Cbrt(Variable<T> x);
@@ -238,7 +254,7 @@ public interface ITape<T>
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Sqrt(T)"/>
     Variable<T> Sqrt(Variable<T> x);
 
-    // Trigonometric function
+    // Trigonometric function.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Acos(T)"/>
     Variable<T> Acos(Variable<T> x);

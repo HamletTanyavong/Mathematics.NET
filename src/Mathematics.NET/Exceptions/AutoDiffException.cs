@@ -1,4 +1,4 @@
-﻿// <copyright file="Variable.cs" company="Mathematics.NET">
+﻿// <copyright file="AutoDiffException.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,27 +25,16 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.InteropServices;
+namespace Mathematics.NET.Exceptions;
 
-namespace Mathematics.NET.AutoDiff;
-
-/// <summary>Represents a variable used in reverse-mode automatic differentiation.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-[StructLayout(LayoutKind.Sequential)]
-public readonly unsafe record struct Variable<T>
-    where T : IComplex<T>
+/// <summary>Represents an autodiff exception.</summary>
+public sealed class AutoDiffException : Exception
 {
-    /// <summary>The index of the variable.</summary>
-    public readonly int Index;
+    public AutoDiffException() { }
 
-    /// <summary>The value of the variable.</summary>
-    public readonly T Value;
+    public AutoDiffException(string message)
+        : base(message) { }
 
-    internal Variable(int index, T value)
-    {
-        Index = index;
-        Value = value;
-    }
-
-    public override string? ToString() => Value.ToString();
+    public AutoDiffException(string message, Exception innerException)
+        : base(message, innerException) { }
 }
