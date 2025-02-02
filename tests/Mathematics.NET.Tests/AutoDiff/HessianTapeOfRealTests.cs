@@ -27,6 +27,7 @@
 
 using CommunityToolkit.HighPerformance;
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Tests.AutoDiff;
 
@@ -1234,6 +1235,40 @@ public sealed class HessianTapeOfRealTests
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
+
+    // NOTE: Uncomment this when testing checkpointing implementations for Hessian tapes.
+
+    //[TestMethod]
+    //public void ReverseAccumulate_WithCheckpointing_ReturnsHessians()
+    //{
+    //    var vector = _tape.CreateAutoDiffVector(1.23, 2.34, 3.45, 4.56);
+
+    //    var u = _tape.CreateCheckpoint(_tape.Cos(_tape.Multiply(_tape.Sin(_tape.Multiply(vector.X1, vector.X2)), vector.X4)));
+    //    var v = _tape.CreateCheckpoint(_tape.Divide(_tape.Exp(_tape.Multiply(vector.X3, vector.X2)), u));
+    //    var x = _tape.Exp(_tape.Divide(u, _tape.Sqrt(_tape.Multiply(_tape.Multiply(vector.X3, vector.X4), vector.X2))));
+    //    var y = _tape.Add(u, _tape.Multiply(_tape.Ln(_tape.Divide(vector.X3, vector.X4)), _tape.Multiply(v, vector.X1)));
+
+    //    Real[,] expectedX = new Real[4, 4]
+    //    {
+    //        { -3.269111440669215,  -1.382588686878912,  -0.2576955176979706,  0.2816358989885482   },
+    //        { -1.382588686878911,  -1.29349964200687,   -0.1332984723661985,  0.1592727857914262   },
+    //        { -0.2576955176979706, -0.1332984723661985, 0.004218770637959509, 0.007619177680006728 },
+    //        { 0.2816358989885482,  0.1592727857914262,  0.007619177680006728, 0.00950636476047293  }
+    //    };
+    //    Real[,] expectedY = new Real[4, 4]
+    //    {
+    //        { -3974963.896171443, -1838701.006587713, 94531.7459783768,   176781.9853341257  },
+    //        { -1838701.006587713, -894765.86272895,   35189.07508929406,  80204.1648122194   },
+    //        { 94531.7459783768,   35189.07508929406,  -2686.604369731605, -7876.060456864863 },
+    //        { 176781.9853341257,  80204.1648122194,   -7876.060456864863, -5122.315081861823 }
+    //    };
+
+    //    _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actualX, x.Index);
+    //    _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actualY, y.Index);
+
+    //    Assert<Real>.AreApproximatelyEqual(expectedX, actualX, 1e-14);
+    //    Assert<Real>.AreApproximatelyEqual(expectedY, actualY, 1e-14);
+    //}
 
     [TestMethod]
     [DataRow(1.23, 2.34, 0.3795771135606888, -0.04130373687338086)]
