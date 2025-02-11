@@ -58,10 +58,7 @@
 //
 //     ╳────╳ '*', '+', '%', etc. and constant ──── Result
 
-// TODO: Add a way of finding and tracking different branches in the tree. This will be useful for checkpointing
-// and improving the efficiency of calculations by not having to perform operations multiple times.
-
-#pragma warning disable IDE0032
+#pragma warning disable IDE0032, IDE0058
 
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -138,7 +135,9 @@ public record class GradientTape<T> : ITape<T>
             // TODO: Figure out the ideal initial capacity.
             PriorityQueue<int, int> indices = new(_nodes.Count, s_comparer);
             HashSet<int> visited = new(_nodes.Count);
+
             indices.Enqueue(x.Index, x.Index);
+            visited.Add(x.Index);
 
             Span<T> gradientSpan = new T[x.Index + 1];
             gradientSpan[x.Index] = T.One;
@@ -146,13 +145,8 @@ public record class GradientTape<T> : ITape<T>
             while (indices.Count > 0)
             {
                 var i = indices.Dequeue();
+
                 var node = Unsafe.Add(ref start, i);
-
-                if (visited.Add(node.PX) && node.PX >= _variableCount)
-                    indices.Enqueue(node.PX, node.PX);
-                if (node.PY != i && visited.Add(node.PY) && node.PY >= _variableCount)
-                    indices.Enqueue(node.PY, node.PY);
-
                 var gradientElement = gradientSpan[i];
 
                 if (_checkpoints.TryGetValue(i, out var checkpoint))
@@ -167,7 +161,14 @@ public record class GradientTape<T> : ITape<T>
                 }
 
                 gradientSpan[node.PX] += gradientElement * node.DX;
-                gradientSpan[node.PY] += gradientElement * node.DY;
+                if (node.PY != i)
+                    gradientSpan[node.PY] += gradientElement * node.DY;
+
+                // Do not change the order of checks within the if statements without careful consideration.
+                if (node.PX >= _variableCount && visited.Add(node.PX))
+                    indices.Enqueue(node.PX, node.PX);
+                if (node.PY != i && node.PY >= _variableCount && visited.Add(node.PY))
+                    indices.Enqueue(node.PY, node.PY);
             }
 
             _checkpoints.Add(x.Index, new()
@@ -246,7 +247,9 @@ public record class GradientTape<T> : ITape<T>
 
         PriorityQueue<int, int> indices = new(_nodes.Count, s_comparer);
         HashSet<int> visited = new(_nodes.Count);
+
         indices.Enqueue(index, index);
+        visited.Add(index);
 
         Span<T> gradientSpan = new T[index + 1];
         gradientSpan[index] = seed;
@@ -254,13 +257,8 @@ public record class GradientTape<T> : ITape<T>
         while (indices.Count > 0)
         {
             var i = indices.Dequeue();
+
             var node = Unsafe.Add(ref start, i);
-
-            if (visited.Add(node.PX) && node.PX >= _variableCount)
-                indices.Enqueue(node.PX, node.PX);
-            if (node.PY != i && visited.Add(node.PY) && node.PY >= _variableCount)
-                indices.Enqueue(node.PY, node.PY);
-
             var gradientElement = gradientSpan[i];
 
             if (_checkpoints.TryGetValue(i, out var checkpoint))
@@ -275,7 +273,13 @@ public record class GradientTape<T> : ITape<T>
             }
 
             gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
+            if (node.PY != i)
+                gradientSpan[node.PY] += gradientElement * node.DY;
+
+            if (node.PX >= _variableCount && visited.Add(node.PX))
+                indices.Enqueue(node.PX, node.PX);
+            if (node.PY != i && node.PY >= _variableCount && visited.Add(node.PY))
+                indices.Enqueue(node.PY, node.PY);
         }
 
         gradient = gradientSpan[.._variableCount];

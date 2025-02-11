@@ -25,6 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
+// TODO: Find out if there is a way to add checkpoiting for Hessian tapes. The method used
+// for gradient tapes does not work for Hessian tapes since previously computed gradients
+// need to be known to compute second derivatives.
+
 #pragma warning disable IDE0032
 
 using System.Runtime.CompilerServices;
@@ -43,15 +47,15 @@ public record class HessianTape<T> : ITape<T>
     where T : IComplex<T>, IDifferentiableFunctions<T>
 {
     private bool _isTracking;
-    private List<HessianNode<T>> _nodes;
     private int _variableCount;
+    private List<HessianNode<T>> _nodes;
 
     /// <summary>Create an instance of a Hessian tape.</summary>
     /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public HessianTape(bool isTracking = true)
     {
-        _nodes = [];
         _isTracking = isTracking;
+        _nodes = [];
     }
 
     /// <summary>Create an instance of a Hessian tape that will hold an expected number of nodes.</summary>
@@ -59,8 +63,8 @@ public record class HessianTape<T> : ITape<T>
     /// <param name="isTracking">Whether or not the tape should be tracking nodes.</param>
     public HessianTape(int n, bool isTracking = true)
     {
-        _nodes = new(n);
         _isTracking = isTracking;
+        _nodes = new(n);
     }
 
     public bool IsTracking { get => _isTracking; set => _isTracking = value; }
@@ -156,28 +160,7 @@ public record class HessianTape<T> : ITape<T>
         => ReverseAccumulate(out gradient, out hessian, T.One, index);
 
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed)
-    {
-        if (_variableCount == 0)
-            throw new AutoDiffException("The Hessian tape contains no root nodes.");
-
-        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
-        ref var start = ref MemoryMarshal.GetReference(nodes);
-
-        var length = nodes.Length;
-        Span<T> gradientSpan = new T[length];
-        gradientSpan[length - 1] = seed;
-
-        for (int i = length - 1; i >= _variableCount; i--)
-        {
-            var node = Unsafe.Add(ref start, i);
-            var gradientElement = gradientSpan[i];
-
-            gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
-        }
-
-        gradient = gradientSpan[.._variableCount];
-    }
+        => ReverseAccumulate(out gradient, seed, _nodes.Count - 1);
 
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, T seed, int index)
     {
@@ -199,7 +182,8 @@ public record class HessianTape<T> : ITape<T>
             var gradientElement = gradientSpan[i];
 
             gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
+            if (node.PY != i)
+                gradientSpan[node.PY] += gradientElement * node.DY;
         }
 
         gradient = gradientSpan[.._variableCount];
@@ -210,34 +194,7 @@ public record class HessianTape<T> : ITape<T>
     /// <param name="seed">A seed value.</param>
     /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan2D<T> hessian, T seed)
-    {
-        if (_variableCount == 0)
-            throw new AutoDiffException("The Hessian tape contains no root nodes.");
-
-        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
-        ref var start = ref MemoryMarshal.GetReference(nodes);
-
-        var length = nodes.Length;
-        Span<T> gradientSpan = new T[length];
-        gradientSpan[length - 1] = seed;
-
-        Span2D<T> hessianSpan = new T[length, length];
-
-        for (int i = length - 1; i >= _variableCount; i--)
-        {
-            var node = Unsafe.Add(ref start, i);
-            var gradientElement = gradientSpan[i];
-
-            EdgePush(hessianSpan, in node, i);
-            if (gradientElement != T.Zero)
-                Accumulate(hessianSpan, in node, gradientElement);
-
-            gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
-        }
-
-        hessian = hessianSpan.Slice(0, 0, _variableCount, _variableCount);
-    }
+        => ReverseAccumulate(out hessian, seed, _nodes.Count - 1);
 
     /// <summary>Perform reverse accumulation on the Hessian tape starting at a specific node and output the resulting Hessian.</summary>
     /// <param name="hessian">The Hessian.</param>
@@ -266,18 +223,19 @@ public record class HessianTape<T> : ITape<T>
             var node = Unsafe.Add(ref start, i);
             var gradientElement = gradientSpan[i];
 
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            if (node.PY != i)
+                gradientSpan[node.PY] += gradientElement * node.DY;
+
             EdgePush(hessianSpan, in node, i);
             if (gradientElement != T.Zero)
                 Accumulate(hessianSpan, in node, gradientElement);
-
-            gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
         }
 
         hessian = hessianSpan.Slice(0, 0, _variableCount, _variableCount);
     }
 
-    // The following method uses the edge-pushing algorithm outlined by Gower and Mello: https://arxiv.org/pdf/2007.15040.pdf.
+    // The following method was inspired by the edge-pushing algorithm outlined by Gower and Mello: https://arxiv.org/pdf/2007.15040.pdf.
     // TODO: use newer variations/versions of this algorithm since they are more performant
 
     /// <summary>Perform reverse accumulation on the Hessian tape and output the resulting gradient and Hessian.</summary>
@@ -286,35 +244,7 @@ public record class HessianTape<T> : ITape<T>
     /// <param name="seed">A seed value.</param>
     /// <exception cref="AutoDiffException">The Hessian tape does not have any tracked variables.</exception>
     public void ReverseAccumulate(out ReadOnlySpan<T> gradient, out ReadOnlySpan2D<T> hessian, T seed)
-    {
-        if (_variableCount == 0)
-            throw new AutoDiffException("The Hessian tape contains no root nodes.");
-
-        ReadOnlySpan<HessianNode<T>> nodes = CollectionsMarshal.AsSpan(_nodes);
-        ref var start = ref MemoryMarshal.GetReference(nodes);
-        var length = nodes.Length;
-
-        Span<T> gradientSpan = new T[length];
-        gradientSpan[length - 1] = seed;
-
-        Span2D<T> hessianSpan = new T[length, length];
-
-        for (int i = length - 1; i >= _variableCount; i--)
-        {
-            var node = Unsafe.Add(ref start, i);
-            var gradientElement = gradientSpan[i];
-
-            EdgePush(hessianSpan, in node, i);
-            if (gradientElement != T.Zero)
-                Accumulate(hessianSpan, in node, gradientElement);
-
-            gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
-        }
-
-        gradient = gradientSpan[.._variableCount];
-        hessian = hessianSpan.Slice(0, 0, _variableCount, _variableCount);
-    }
+        => ReverseAccumulate(out gradient, out hessian, seed, _nodes.Count - 1);
 
     /// <summary>Perform reverse accumulation on the Hessian tape starting at a specific node and output the resulting gradient and Hessian.</summary>
     /// <param name="gradient">The gradient.</param>
@@ -344,12 +274,13 @@ public record class HessianTape<T> : ITape<T>
             var node = Unsafe.Add(ref start, i);
             var gradientElement = gradientSpan[i];
 
+            gradientSpan[node.PX] += gradientElement * node.DX;
+            if (node.PY != i)
+                gradientSpan[node.PY] += gradientElement * node.DY;
+
             EdgePush(hessianSpan, in node, i);
             if (gradientElement != T.Zero)
                 Accumulate(hessianSpan, in node, gradientElement);
-
-            gradientSpan[node.PX] += gradientElement * node.DX;
-            gradientSpan[node.PY] += gradientElement * node.DY;
         }
 
         gradient = gradientSpan[.._variableCount];
