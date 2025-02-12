@@ -25,7 +25,7 @@ Here are some core features that will be included in the first release and their
 - [ ] Reverse-mode autodiff
   - [x] Gradient Tapes
     - [ ] Parallelization
-    - [ ] Checkpointing
+    - [x] Checkpointing
   - [x] Hessian Tapes
     - [ ] Parallelization
     - [ ] Checkpointing
@@ -54,13 +54,13 @@ Here are some core features that will be included in the first release and their
 - [x] Christoffel symbols
 - [x] Riemann curvature tensors
 - [x] Metric tensors
-- [ ] Levi-Civita symbols
+- [x] Levi-Civita symbols
 
 ### Other Features
 
 - [ ] Solvers
   - [x] Runge-Kutta solvers
-    - [ ] Solvers for differential geometry
+    - [x] Solvers for differential geometry
 - [ ] QR decomposition
   - [x] Gram-Schmidt process
   - [ ] Householder reflections
