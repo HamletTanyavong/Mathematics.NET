@@ -97,7 +97,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     }
 
     //
-    // Rational number properties
+    // Rational Number Properties
     //
 
     public T Num => _numerator;
@@ -451,7 +451,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Methods
     //
 
-    public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), T.Abs(x._denominator));
+    public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), x._denominator);
 
     public static Rational<T> Ceiling(Rational<T> x)
     {
@@ -494,7 +494,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         {
             var n = 0;
 
-            // We are comparing floats here, but it is okay in this case specifically.
+            // We are comparing floats here, but it is okay in just this case.
             while (x != Math.Floor(x))
             {
                 x *= 10.0;
@@ -528,15 +528,28 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> InverseLerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * end + weight * start;
 
+    // T.IsPositive will return false for -0 so we check again using T.Zero; we accept a zero in the denominator for Rational<T>.NaN;
+    public static bool IsCanonical(Rational<T> x) => T.IsPositive(x._denominator) || T.IsZero(x._denominator);
+
+    public static bool IsComplex(Rational<T> x) => false;
+
     public static bool IsFinite(Rational<T> x) => !T.IsZero(x._denominator);
+
+    public static bool IsImaginary(Rational<T> x) => false;
 
     public static bool IsInfinity(Rational<T> x) => T.IsZero(x._denominator);
 
     public static bool IsNaN(Rational<T> x) => T.IsZero(x._numerator) && T.IsZero(x._denominator);
 
+    public static bool IsReal(Rational<T> x) => true;
+
     public static bool IsZero(Rational<T> x) => T.IsZero(x._numerator) && x._denominator == T.One;
 
+    public static bool IsNegative(Rational<T> x) => T.IsNegative(x._numerator);
+
     public static bool IsNegativeInfinity(Rational<T> x) => x._numerator == -T.One && T.IsZero(x._denominator);
+
+    public static bool IsPositive(Rational<T> x) => T.IsPositive(x._numerator);
 
     public static bool IsPositiveInfinity(Rational<T> x) => x._numerator == T.One && T.IsZero(x._denominator);
 
@@ -567,6 +580,10 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return u._numerator * v._denominator >= v._numerator * u._denominator ? x : y;
     }
 
+    public static Rational<T> MaxMagnitude(Rational<T> x, Rational<T> y) => x > y || IsNaN(x) ? x : y;
+
+    static Rational<T> IComplex<Rational<T>>.MaxMagnitudeNumber(Rational<T> x, Rational<T> y) => x > y || IsNaN(y) ? x : y;
+
     public static Rational<T> Min(Rational<T> x, Rational<T> y)
     {
         var u = x.Reduce();
@@ -574,6 +591,10 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
         return u._numerator * v._denominator <= v._numerator * u._denominator ? x : y;
     }
+
+    public static Rational<T> MinMagnitude(Rational<T> x, Rational<T> y) => x < y || IsNaN(x) ? x : y;
+
+    static Rational<T> IComplex<Rational<T>>.MinMagnitudeNumber(Rational<T> x, Rational<T> y) => x < y || IsNaN(y) ? x : y;
 
     public static Rational<T> Reciprocate(Rational<T> x)
     {
@@ -714,7 +735,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     }
 
     //
-    // Implicit operators
+    // Implicit Operators
     //
 
     public static implicit operator Rational<T>(T p) => new(p);

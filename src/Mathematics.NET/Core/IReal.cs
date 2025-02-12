@@ -77,10 +77,20 @@ public interface IReal<T>
     /// <returns>The inversely interpolated value.</returns>
     static abstract T InverseLerp(T start, T end, T weight);
 
+    /// <summary>Check if a value is negative.</summary>
+    /// <param name="x">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is negative; otherwise, <see langword="false"/>.</returns>
+    static abstract bool IsNegative(T x);
+
     /// <summary>Check if a value is negative infinity.</summary>
     /// <param name="x">The value to check.</param>
     /// <returns><c>true</c> if the value is negative infinity; otherwise, <c>false</c></returns>
     static abstract bool IsNegativeInfinity(T x);
+
+    /// <summary>Check if a value is positive.</summary>
+    /// <param name="x">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is positive; otherwise, <see langword="false"/>.</returns>
+    static abstract bool IsPositive(T x);
 
     /// <summary>Check if a value is positive infinity.</summary>
     /// <param name="x">The value to check.</param>

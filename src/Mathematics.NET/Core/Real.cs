@@ -100,7 +100,7 @@ public readonly struct Real(double real)
     private readonly double _value = real;
 
     //
-    // Real number properties
+    // Real Number Properties
     //
 
     public Real Re => _value;
@@ -117,7 +117,7 @@ public readonly struct Real(double real)
     static Real IMinMaxValue<Real>.MinValue => MinValue;
     static Real IReal<Real>.Epsilon => Epsilon;
 
-    // IConstants interface
+    // IConstants interface.
 
     static Real IConstants<Real>.E => E;
     static Real IConstants<Real>.Pi => Pi;
@@ -272,15 +272,27 @@ public readonly struct Real(double real)
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Real InverseLerp(Real start, Real end, Real weight) => (One - weight) * end + weight * start;
 
+    public static bool IsCanonical(Real x) => true;
+
+    public static bool IsComplex(Real x) => false;
+
     public static bool IsFinite(Real x) => double.IsFinite(x._value);
+
+    public static bool IsImaginary(Real x) => false;
 
     public static bool IsInfinity(Real x) => double.IsInfinity(x._value);
 
     public static bool IsNaN(Real x) => double.IsNaN(x._value);
 
+    public static bool IsReal(Real z) => true;
+
     public static bool IsZero(Real x) => x._value == 0.0;
 
+    public static bool IsNegative(Real x) => double.IsNegative(x._value);
+
     public static bool IsNegativeInfinity(Real x) => double.IsNegativeInfinity(x._value);
+
+    public static bool IsPositive(Real x) => double.IsPositive(x._value);
 
     public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
@@ -288,6 +300,14 @@ public readonly struct Real(double real)
     public static Real Lerp(Real start, Real end, Real weight) => (One - weight) * start + weight * end;
 
     public static Real Max(Real x, Real y) => Math.Max(x._value, y._value);
+
+    public static Real MaxMagnitude(Real x, Real y) => Math.MaxMagnitude(x._value, y._value);
+
+    static Real IComplex<Real>.MaxMagnitudeNumber(Real x, Real y) => double.MaxMagnitudeNumber(x._value, y._value);
+
+    public static Real MinMagnitude(Real x, Real y) => Math.MinMagnitude(x._value, y._value);
+
+    static Real IComplex<Real>.MinMagnitudeNumber(Real x, Real y) => double.MinMagnitude(x._value, y._value);
 
     public static Real Min(Real x, Real y) => Math.Min(x._value, y._value);
 
@@ -345,10 +365,10 @@ public readonly struct Real(double real)
     }
 
     //
-    // IDifferentiableFunctions interface
+    // IDifferentiableFunctions Interface
     //
 
-    // Exponential functions
+    // Exponential functions.
 
     public static Real Exp(Real x) => Math.Exp(x._value);
 
@@ -356,7 +376,7 @@ public readonly struct Real(double real)
 
     public static Real Exp10(Real x) => double.Exp10(x._value);
 
-    // Hyperbolic functions
+    // Hyperbolic functions.
 
     public static Real Acosh(Real x) => Math.Acosh(x._value);
 
@@ -370,7 +390,7 @@ public readonly struct Real(double real)
 
     public static Real Tanh(Real x) => Math.Tanh(x._value);
 
-    // Logarithmic functions
+    // Logarithmic functions.
 
     public static Real Ln(Real x) => Math.Log(x._value);
 
@@ -380,11 +400,11 @@ public readonly struct Real(double real)
 
     public static Real Log10(Real x) => Math.Log10(x._value);
 
-    // Power functions
+    // Power functions.
 
     public static Real Pow(Real x, Real y) => Math.Pow(x._value, y._value);
 
-    // Root functions
+    // Root functions.
 
     public static Real Cbrt(Real x) => Math.Cbrt(x._value);
 
@@ -392,7 +412,7 @@ public readonly struct Real(double real)
 
     public static Real Sqrt(Real x) => Math.Sqrt(x._value);
 
-    // Trigonometric functions
+    // Trigonometric functions.
 
     public static Real Acos(Real x) => Math.Acos(x._value);
 

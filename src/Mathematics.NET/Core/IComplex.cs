@@ -151,10 +151,26 @@ public interface IComplex<T>
     /// <returns>An instance of type <typeparamref name="T"/> created from <paramref name="x"/>.</returns>
     static abstract T FromReal(Real x);
 
+    /// <summary>Check if a value is in canonical form.</summary>
+    /// <param name="z">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is in canonical form; otherwise, <see langword="false"/>.</returns>
+    static abstract bool IsCanonical(T z);
+
+    /// <summary>Check if a value is complex.</summary>
+    /// <remarks>This method will return <see langword="false"/> if the value is purely real or imaginary.</remarks>
+    /// <param name="z">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is complex; otherwise, <see langword="false"/>.</returns>
+    static virtual bool IsComplex(T z) => !T.IsReal(z) && !T.IsImaginary(z);
+
     /// <summary>Check if a value is finite.</summary>
     /// <param name="z">The value to check.</param>
     /// <returns><see langword="true"/> if the value is finite; otherwise, <see langword="false"/>.</returns>
     static abstract bool IsFinite(T z);
+
+    /// <summary>Check if a value is purely imaginary.</summary>
+    /// <param name="z">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is purely imaginary; otherwise, <see langword="false"/>.</returns>
+    static abstract bool IsImaginary(T z);
 
     /// <summary>Check if a value is infinity.</summary>
     /// <param name="z">The value to check.</param>
@@ -166,10 +182,39 @@ public interface IComplex<T>
     /// <returns><see langword="true"/> if the value is not a number; otherwise, <see langword="false"/>.</returns>
     static abstract bool IsNaN(T z);
 
+    /// <summary>Check if a value is purely real.</summary>
+    /// <param name="z">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is purely real; otherwise, <see langword="false"/>.</returns>
+    static abstract bool IsReal(T z);
+
     /// <summary>Check if a value is zero.</summary>
     /// <param name="z">The value to check.</param>
     /// <returns><see langword="true"/> if the value is zero; otherwise, <see langword="false"/>.</returns>
     static abstract bool IsZero(T z);
+
+    /// <summary>Compares two values and returns whichever has the greatest magnitude.</summary>
+    /// <param name="z">The left value.</param>
+    /// <param name="w">The right value.</param>
+    /// <returns>The value with the greatest magnitude.</returns>
+    static abstract T MaxMagnitude(T z, T w);
+
+    /// <summary>Compares two values and returns whichever has the greatest magnitude or returns the non-<c>NaN</c> value.</summary>
+    /// <param name="z">The left value.</param>
+    /// <param name="w">The right value.</param>
+    /// <returns>The value with the greatest magnitude or non-<c>NaN</c> value.</returns>
+    static abstract T MaxMagnitudeNumber(T z, T w);
+
+    /// <summary>Compares two values and returns whichever has the lesser magnitude.</summary>
+    /// <param name="z">The left value.</param>
+    /// <param name="w">The right value.</param>
+    /// <returns>The value with the lesser magnitude.</returns>
+    static abstract T MinMagnitude(T z, T w);
+
+    /// <summary>Compares two values and returns whichever has the lesser magnitude or returns the non-<c>NaN</c> value.</summary>
+    /// <param name="z">The left value.</param>
+    /// <param name="w">The right value.</param>
+    /// <returns>The value with the lesser magnitude or non-<c>NaN</c> value.</returns>
+    static abstract T MinMagnitudeNumber(T z, T w);
 
     /// <summary>Parse a string into a value.</summary>
     /// <param name="s">The string to parse.</param>
