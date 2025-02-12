@@ -90,7 +90,7 @@ public sealed class ComplexTests
     [DataRow(1, 2, 3, 4, 0.44, 0.08)]
     [DataRow(2, 1.5, 5, 3, 0.4264705882352942, 0.04411764705882351)]
     [DataRow(5, 3.5, 7, 0, 0.7142857142857142, 0.5)]
-    public void Division_Complexs_ReturnsComplex(double dividendRe, double dividendIm, double divisorRe, double divisorIm, double expectedRe, double expectedIm)
+    public void Division_Complex_ReturnsComplex(double dividendRe, double dividendIm, double divisorRe, double divisorIm, double expectedRe, double expectedIm)
     {
         Complex dividend = new(dividendRe, dividendIm);
         Complex divisor = new(divisorRe, divisorIm);
@@ -101,6 +101,36 @@ public sealed class ComplexTests
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
+    }
+
+    [TestMethod]
+    public void IsNaN_ImaginaryPartNaN_ReturnsTrue()
+    {
+        Complex input = new(0, double.NaN);
+
+        var actual = Complex.IsNaN(input);
+
+        Assert.IsTrue(actual);
+    }
+
+    [TestMethod]
+    public void IsNaN_RealAndImaginaryPartsNaN_ReturnsTrue()
+    {
+        Complex input = new(double.NaN, double.NaN);
+
+        var actual = Complex.IsNaN(input);
+
+        Assert.IsTrue(actual);
+    }
+
+    [TestMethod]
+    public void IsNaN_RealPartNaN_ReturnsTrue()
+    {
+        Complex input = new(double.NaN, 0);
+
+        var actual = Complex.IsNaN(input);
+
+        Assert.IsTrue(actual);
     }
 
     [TestMethod]

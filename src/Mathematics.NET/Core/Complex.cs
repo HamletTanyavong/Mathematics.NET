@@ -56,7 +56,7 @@ public readonly struct Complex(Real real, Real imaginary)
     public Complex(Real real) : this(real, 0.0) { }
 
     //
-    // Complex number properties
+    // Complex Number Properties
     //
 
     public Real Re => _real;
@@ -311,7 +311,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     private static double Hypot(double x, double y)
     {
-        // Factor out the larger value to avoid possible overflow
+        // Factor out the larger value to avoid possible overflow.
         x = Math.Abs(x);
         y = Math.Abs(y);
 
@@ -346,17 +346,85 @@ public readonly struct Complex(Real real, Real imaginary)
     public static Complex InverseLerp(in Complex start, in Complex end, Real weight)
         => new(Real.InverseLerp(start._real, end._real, weight), Real.InverseLerp(start._imaginary, end._imaginary, weight));
 
+    public static bool IsCanonical(Complex z) => true;
+
+    public static bool IsComplex(Complex z) => !IsReal(z) && !IsImaginary(z);
+
     public static bool IsFinite(Complex z) => Real.IsFinite(z._real) && Real.IsFinite(z._imaginary);
+
+    public static bool IsImaginary(Complex z) => Real.IsZero(z._real) && !Real.IsZero(z._imaginary);
 
     public static bool IsInfinity(Complex z) => Real.IsInfinity(z._real) || Real.IsInfinity(z._imaginary);
 
     public static bool IsNaN(Complex z) => !IsInfinity(z) && !IsFinite(z);
+
+    public static bool IsReal(Complex z) => !Real.IsZero(z._real) && Real.IsZero(z._imaginary);
 
     public static bool IsZero(Complex z) => Real.IsZero(z._real) && Real.IsZero(z._imaginary);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Complex Lerp(in Complex start, in Complex end, Real weight)
         => new(Real.Lerp(start._real, end._real, weight), Real.Lerp(start._imaginary, end._imaginary, weight));
+
+    public static Complex MaxMagnitude(Complex z, Complex w) => z.Magnitude >= w.Magnitude || IsNaN(z) ? z : w;
+
+    static Complex IComplex<Complex>.MaxMagnitudeNumber(Complex z, Complex w)
+    {
+        var mz = z.Magnitude;
+        var mw = w.Magnitude;
+
+        if (mz > mw || Real.IsNaN(mw))
+            return z;
+
+        if (mz == mw)
+        {
+            if (Real.IsNegative(w._real))
+            {
+                if (Real.IsNegative(w._imaginary))
+                    return z;
+                else
+                    return Real.IsNegative(z._real) ? w : z;
+            }
+            else if (Real.IsNegative(w._imaginary))
+            {
+                return Real.IsNegative(z._real) ? w : z;
+            }
+        }
+
+        return w;
+    }
+
+    public static Complex MinMagnitude(Complex z, Complex w) => z.Magnitude <= w.Magnitude || IsNaN(z) ? z : w;
+
+    static Complex IComplex<Complex>.MinMagnitudeNumber(Complex z, Complex w)
+    {
+        var mz = z.Magnitude;
+        var mw = w.Magnitude;
+
+        if (mz < mw || Real.IsNaN(mw))
+            return z;
+
+        if (mz == mw)
+        {
+            if (Real.IsNegative(w._real))
+            {
+                if (Real.IsNegative(w._imaginary))
+                    return w;
+                else
+                    return Real.IsNegative(z._real) ? z : w;
+            }
+            else if (Real.IsNegative(w._imaginary))
+            {
+                return Real.IsNegative(z._real) ? z : w;
+            }
+            else
+            {
+                return z;
+            }
+        }
+
+        return w;
+    }
 
     public static Complex Reciprocate(Complex z)
     {
@@ -415,10 +483,10 @@ public readonly struct Complex(Real real, Real imaginary)
     }
 
     //
-    // IDifferentiableFunctions interface
+    // IDifferentiableFunctions Interface
     //
 
-    // Exponential functions
+    // Exponential functions.
 
     public static Complex Exp(Complex z)
     {
@@ -430,7 +498,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static Complex Exp10(Complex z) => Exp(Real.Ln10 * z);
 
-    // Hyperbolic functions
+    // Hyperbolic functions.
 
     public static Complex Acosh(Complex z) => Ln(z + Sqrt(z * z - One));
 
@@ -446,7 +514,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static Complex Tanh(Complex z) => Sinh(z) / Cosh(z);
 
-    // Logarithmic functions
+    // Logarithmic functions.
 
     public static Complex Ln(Complex z) => new(Real.Ln(Hypot(z._real.AsDouble(), z._imaginary.AsDouble())), Real.Atan2(z._imaginary, z._real));
 
@@ -456,11 +524,11 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static Complex Log10(Complex z) => Ln(z) / Ln(Real.Ln10);
 
-    // Power functions
+    // Power functions.
 
     public static Complex Pow(Complex z, Complex w) => Exp(w * Ln(z));
 
-    // Root functions
+    // Root functions.
 
     public static Complex Cbrt(Complex z) => Exp(Ln(z) / 3.0);
 
@@ -468,7 +536,7 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static Complex Sqrt(Complex z) => Exp(0.5 * Ln(z));
 
-    // Trigonometric functions
+    // Trigonometric functions.
 
     public static Complex Acos(Complex z)
     {
@@ -633,7 +701,7 @@ public readonly struct Complex(Real real, Real imaginary)
     }
 
     //
-    // Implicit operators
+    // Implicit Operators
     //
 
     public static implicit operator Complex(double x) => new(x);
