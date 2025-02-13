@@ -366,7 +366,31 @@ public readonly struct Complex(Real real, Real imaginary)
     public static Complex Lerp(in Complex start, in Complex end, Real weight)
         => new(Real.Lerp(start._real, end._real, weight), Real.Lerp(start._imaginary, end._imaginary, weight));
 
-    public static Complex MaxMagnitude(Complex z, Complex w) => z.Magnitude >= w.Magnitude || IsNaN(z) ? z : w;
+    public static Complex MaxMagnitude(Complex z, Complex w)
+    {
+        var mz = z.Magnitude;
+        var mw = w.Magnitude;
+
+        if (mz > mw || Real.IsNaN(mz))
+            return z;
+
+        if (mz == mw)
+        {
+            if (Real.IsNegative(w._real))
+            {
+                if (Real.IsNegative(w._imaginary))
+                    return z;
+                else
+                    return Real.IsNegative(z._real) ? w : z;
+            }
+            else if (Real.IsNegative(w._imaginary))
+            {
+                return Real.IsNegative(z._real) ? w : z;
+            }
+        }
+
+        return w;
+    }
 
     static Complex IComplex<Complex>.MaxMagnitudeNumber(Complex z, Complex w)
     {
@@ -394,7 +418,35 @@ public readonly struct Complex(Real real, Real imaginary)
         return w;
     }
 
-    public static Complex MinMagnitude(Complex z, Complex w) => z.Magnitude <= w.Magnitude || IsNaN(z) ? z : w;
+    public static Complex MinMagnitude(Complex z, Complex w)
+    {
+        var mz = z.Magnitude;
+        var mw = w.Magnitude;
+
+        if (mz < mw || Real.IsNaN(mz))
+            return z;
+
+        if (mz == mw)
+        {
+            if (Real.IsNegative(w._real))
+            {
+                if (Real.IsNegative(w._imaginary))
+                    return w;
+                else
+                    return Real.IsNegative(z._real) ? z : w;
+            }
+            else if (Real.IsNegative(w._imaginary))
+            {
+                return Real.IsNegative(z._real) ? z : w;
+            }
+            else
+            {
+                return z;
+            }
+        }
+
+        return w;
+    }
 
     static Complex IComplex<Complex>.MinMagnitudeNumber(Complex z, Complex w)
     {
