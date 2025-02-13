@@ -46,7 +46,7 @@ Once we are satisfied, we may use these in our equations.
 Suppose we want to compute the derivative of the function
 
 $$
-    f(x) = \frac{\sin{x}\ln{x}}{e^{-x}}\quad\text{for }x>0
+f(x) = \frac{\sin{x}\ln{x}}{e^{-x}}\quad\text{for }x>0
 $$
 
 at the point $ x=1.23 $. We can write
@@ -149,7 +149,7 @@ var z = tape.CreateVariable(2.34);
 Now, if we wanted to compute the gradient of the function
 
 $$
-    f(x,y,z) = \frac{\cos{x}}{(x+y)\sin{z}}
+f(x,y,z) = \frac{\cos{x}}{(x+y)\sin{z}}
 $$
 
 at the points $ x=1.23 $, $ y=0.66 $, and $ z=2.34 $, we can write
@@ -301,7 +301,7 @@ Note that this time, we do not call the method `ReverseAccumulate` since the `JV
 We can also work with complex numbers and complex derivatives by specifying [Complex] as a type parameter when we create our gradient tape. Suppose we want to find the gradient of the function:
 
 $$
-    f(z,w)  =   \cos(\sin{z}\sqrt{w})
+f(z,w)  =   \cos(\sin{z}\sqrt{w})
 $$
 
 at the points $ z=1.23+i2.34 $ and $ w=-0.66+i0.23 $. We can write
@@ -428,7 +428,7 @@ $$
 Note that, in the future, we will not have to do this manually since there will be a method made specifically to compute Laplacians in spherical coordinates. For now, if we wanted to compute the Laplacian of the function
 
 $$
-    f(r,\theta,\phi) = \frac{\cos{r}}{(r+\theta)\sin{\phi}}
+f(r,\theta,\phi) = \frac{\cos{r}}{(r+\theta)\sin{\phi}}
 $$
 
 we can write
