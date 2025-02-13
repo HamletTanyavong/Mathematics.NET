@@ -46,20 +46,20 @@ using Chart = Plotly.NET.CSharp.Chart;
 State<Vector2<Real>, Real> state = new(new Vector2<Real>[] { new(2.34, 1.23) }, 0);
 RungeKutta4<Vector2<Real>, Real> rk4 = new((t, x) => new(2 * Real.Sin(t) - 4 * x.X1 - x.X2, x.X1));
 
-var points = 200;
-Vector2<Real>[] point = new Vector2<Real>[points];
+var count = 200;
+Vector2<Real>[] points = new Vector2<Real>[count];
 
-for (int i = 0; i < points; i++)
+for (int i = 0; i < count; i++)
 {
     rk4.Integrate(state, 0.1);
 
-    point[i].X1 = state.Time;
-    point[i].X2 = state.System.Span[0].X2;
+    points[i].X1 = state.Time;
+    points[i].X2 = state.System.Span[0].X2;
 }
 
 var chart = Chart.Line<double, double, string>(
-    x: point.Select(x => x.X1.AsDouble()),
-    y: point.Select(x => x.X2.AsDouble()),
+    x: points.Select(x => x.X1.AsDouble()),
+    y: points.Select(x => x.X2.AsDouble()),
     Name: "X(t)",
     ShowLegend: true);
 chart.Show();
