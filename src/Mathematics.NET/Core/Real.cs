@@ -267,6 +267,9 @@ public readonly struct Real(double real)
 
     public static Real FromReal(Real x) => x;
 
+    /// <inheritdoc cref="Math.FusedMultiplyAdd(double, double, double)"/>
+    public static Real FusedMultiplyAdd(Real x, Real y, Real addend) => Math.FusedMultiplyAdd(x._value, y._value, addend._value);
+
     public static Real Hypot(Real x, Real y) => double.Hypot(x._value, y._value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -310,6 +313,11 @@ public readonly struct Real(double real)
     static Real IComplex<Real>.MinMagnitudeNumber(Real x, Real y) => double.MinMagnitude(x._value, y._value);
 
     public static Real Min(Real x, Real y) => Math.Min(x._value, y._value);
+
+#if NET9_0_OR_GREATER
+    /// <inheritdoc cref="double.MultiplyAddEstimate(double, double, double)"/>
+    public static Real MultiplyAddEstimate(Real x, Real y, Real addend) => double.MultiplyAddEstimate(x._value, y._value, addend._value);
+#endif
 
     public static Real Reciprocate(Real x)
     {

@@ -33,7 +33,7 @@ var y = CreateVariable(2.34);
 Suppose we want to compute the partial derivative of the function
 
 $$
-    f(x,y) = \frac{\sin(x + y)e^{-y}}{x^2+y^2+1}
+f(x,y) = \frac{\sin(x + y)e^{-y}}{x^2+y^2+1}
 $$
 
 at the points $ x=1.23 $ and $ y=2.34 $ with respect to $ x $. We write
@@ -116,7 +116,7 @@ Second-order, forward-mode autodiff can be performed using [hperdual numbers](ht
 Suppose we wanted to find the second derivative of the complex function
 
 $$
-    f(z,w) = \sin(\tan{z}\log{w})
+f(z,w) = \sin(\tan{z}\log{w})
 $$
 
 with respect to $ z $, at the points $ z=1.23+i0.66 $ and $ w=2.34-i0.25 $. We can do so by writing
