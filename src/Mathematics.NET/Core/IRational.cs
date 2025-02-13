@@ -40,7 +40,7 @@ public interface IRational<T, out U> : IReal<T>
     U Num { get; }
 
     /// <summary>Get the denominator of the rational number.</summary>
-    public virtual U Den => U.One;
+    virtual U Den => U.One;
 
     /// <summary>Compute the absolute value of a number.</summary>
     /// <param name="x">A rational number.</param>
