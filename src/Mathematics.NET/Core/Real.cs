@@ -299,6 +299,8 @@ public readonly struct Real(double real)
 
     public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
+    public static bool IsSubnormal(Real x) => double.IsSubnormal(x._value);
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Real Lerp(Real start, Real end, Real weight) => (One - weight) * start + weight * end;
 
