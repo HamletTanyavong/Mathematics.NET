@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector2MultiplicationBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Vector2MultiplicationBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+using Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;
@@ -44,8 +44,8 @@ public class Vector2MultiplicationBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Vector2<Real> MultiplyNaive() => Vector2Implementations.MultiplyNaive(U, V);
+    public Vector2<Real> MultiplyNaive() => Vector2Impl.MultiplyNaive(U, V);
 
     [Benchmark]
-    public Vector2<Real> MultiplySimd() => Vector2Implementations.MultiplySimd(U, V);
+    public Vector2<Real> MultiplySimd() => Vector2Impl.MultiplySimd(U, V);
 }

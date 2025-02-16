@@ -9,6 +9,8 @@ file_header_template = <copyright file="{fileName}" company="Mathematics.NET">\n
 
 #### Core EditorConfig Options ####
 
+charset = utf-8
+
 # Indentation and spacing
 indent_size = 2
 indent_style = space

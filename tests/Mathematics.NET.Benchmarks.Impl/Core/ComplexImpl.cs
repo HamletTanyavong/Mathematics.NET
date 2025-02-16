@@ -1,4 +1,4 @@
-// <copyright file="Vector4AdditionBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="ComplexImpl.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,30 +25,30 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
-using Mathematics.NET.LinearAlgebra;
+using System.Runtime.Intrinsics.X86;
 
-namespace Mathematics.NET.Benchmarks.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Impl.Core;
 
-[MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class Vector4AdditionBenchmarks
+public static class ComplexImpl
 {
-    public Vector4<Real> U { get; set; }
+    public static Complex MultiplyNaive(Complex left, Complex right)
+        => new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
 
-    public Vector4<Real> V { get; set; }
-
-    [GlobalSetup]
-    public void GlobalSetup()
+    public static Complex MultiplySimd(Complex left, Complex right)
     {
-        U = new(1, 2, 3, 4);
-        V = new(2, 4, 6, 8);
+        if (Avx.IsSupported)
+        {
+            var vecL = left.AsVector128();
+            var vecR = right.AsVector128();
+
+            var mulStraight = Sse2.Multiply(vecL, vecR);
+            var mulCross = Sse2.Multiply(vecL, Avx.Permute(vecR, 0b00011001));
+
+            return Sse3.AddSubtract(Sse2.UnpackLow(mulStraight, mulCross), Sse2.UnpackHigh(mulStraight, mulCross)).AsComplex();
+        }
+        else
+        {
+            return new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
+        }
     }
-
-    [Benchmark(Baseline = true)]
-    public Vector4<Real> AddNaive() => Vector4Impl.AddNaive(U, V);
-
-    [Benchmark]
-    public Vector4<Real> AddSimd() => Vector4Impl.AddSimd(U, V);
 }

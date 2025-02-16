@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Vector4NormBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+using Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;

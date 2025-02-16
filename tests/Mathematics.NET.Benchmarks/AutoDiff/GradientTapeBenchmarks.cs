@@ -1,4 +1,4 @@
-﻿// <copyright file="GradientTapeBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="GradientTapeBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -26,7 +26,7 @@
 // </copyright>
 
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Benchmarks.Implementations.AutoDiff;
+using Mathematics.NET.Benchmarks.Impl.AutoDiff;
 
 namespace Mathematics.NET.Benchmarks.AutoDiff;
 

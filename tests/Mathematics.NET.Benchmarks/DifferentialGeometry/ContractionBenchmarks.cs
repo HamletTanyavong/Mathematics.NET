@@ -1,4 +1,4 @@
-﻿// <copyright file="ContractionBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="ContractionBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,8 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry;
-using Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
+using Mathematics.NET.Benchmarks.Impl.DifferentialGeometry;
+using Mathematics.NET.Benchmarks.Impl.DifferentialGeometry.Symbols;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.LinearAlgebra;
 
@@ -71,30 +71,30 @@ public class ContractionBenchmarks
     [Benchmark]
     public Real ContractRankOneTensorsWithNoInKeyword()
     {
-        return DifGeoImplementations.ContractRankOneTensorWithNoInKeyword(RankOneTensorA, RankOneTensorB);
+        return DifGeoImpl.ContractRankOneTensorWithNoInKeyword(RankOneTensorA, RankOneTensorB);
     }
 
     [Benchmark]
     public Real ContractRankOneTensorsWithInKeyword()
     {
-        return DifGeoImplementations.ContractRankOneTensorWithInKeyword(RankOneTensorA, RankOneTensorB);
+        return DifGeoImpl.ContractRankOneTensorWithInKeyword(RankOneTensorA, RankOneTensorB);
     }
 
     [Benchmark]
     public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithNoInKeyword()
     {
-        return DifGeoImplementations.ContractRankThreeTensorWithNoInKeyword(RankThreeTensorA, RankThreeTensorB);
+        return DifGeoImpl.ContractRankThreeTensorWithNoInKeyword(RankThreeTensorA, RankThreeTensorB);
     }
 
     [Benchmark]
     public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithInKeyword()
     {
-        return DifGeoImplementations.ContractRankThreeTensorWithInKeyword(RankThreeTensorA, RankThreeTensorB);
+        return DifGeoImpl.ContractRankThreeTensorWithInKeyword(RankThreeTensorA, RankThreeTensorB);
     }
 
     [Benchmark]
     public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithRefReadonlyKeyword()
     {
-        return DifGeoImplementations.ContractRankThreeTensorWithRefReadonlyKeyword(in RankThreeTensorA, in RankThreeTensorB);
+        return DifGeoImpl.ContractRankThreeTensorWithRefReadonlyKeyword(in RankThreeTensorA, in RankThreeTensorB);
     }
 }

@@ -1,4 +1,4 @@
-// <copyright file="Vector4AdditionBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Delta.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,30 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
-using Mathematics.NET.LinearAlgebra;
+using Mathematics.NET.DifferentialGeometry;
 
-namespace Mathematics.NET.Benchmarks.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Impl.DifferentialGeometry.Symbols;
 
-[MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class Vector4AdditionBenchmarks
+public readonly struct Delta : IIndexName
 {
-    public Vector4<Real> U { get; set; }
-
-    public Vector4<Real> V { get; set; }
-
-    [GlobalSetup]
-    public void GlobalSetup()
-    {
-        U = new(1, 2, 3, 4);
-        V = new(2, 4, 6, 8);
-    }
-
-    [Benchmark(Baseline = true)]
-    public Vector4<Real> AddNaive() => Vector4Impl.AddNaive(U, V);
-
-    [Benchmark]
-    public Vector4<Real> AddSimd() => Vector4Impl.AddSimd(U, V);
+    public static string DisplayString => "Delta";
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="RK4IntegrationBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="RK4IntegrationBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,8 +34,8 @@ namespace Mathematics.NET.Benchmarks.Solvers;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class RK4IntegrationBenchmarks
 {
-    public State<Real> SystemStateA;
-    public State<Real> SystemStateB;
+    public State<Real>? SystemStateA;
+    public State<Real>? SystemStateB;
     public RungeKutta4<Real> RK4 = new((t, x) => Real.Pow(Real.Sin(t), 2) * x);
 
     [GlobalSetup]
@@ -59,7 +59,7 @@ public class RK4IntegrationBenchmarks
     {
         for (int i = 0; i < 10; i++)
         {
-            RK4.Integrate(SystemStateA, 0.01);
+            RK4.Integrate(SystemStateA!, 0.01);
         }
     }
 
@@ -68,7 +68,7 @@ public class RK4IntegrationBenchmarks
     {
         for (int i = 0; i < 10; i++)
         {
-            RK4.IntegrateParallel(SystemStateB, 0.01);
+            RK4.IntegrateParallel(SystemStateB!, 0.01);
         }
     }
 }

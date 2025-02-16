@@ -1,0 +1,15 @@
+{
+  Diagnostics: [
+    {
+      Id: DG0001,
+      Title: Invalid index name declaration.,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: : (0,34)-(0,39),
+      HelpLink: https://mathematics.hamlettanyavong.com/docs/diagnostic-messages/difgeo/dg0001,
+      MessageFormat: Index names must be declared in namespaces.,
+      Message: Index names must be declared in namespaces.,
+      Category: DifGeo
+    }
+  ]
+}

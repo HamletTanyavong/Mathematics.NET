@@ -1,4 +1,4 @@
-﻿// <copyright file="ComplexMultiplicationBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="ComplexMultiplicationBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.Core;
+using Mathematics.NET.Benchmarks.Impl.Core;
 
 namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 
@@ -45,8 +45,8 @@ public class ComplexMultiplicationBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Complex MultiplyNaive() => ComplexImplementations.MultiplyNaive(Z, W);
+    public Complex MultiplyNaive() => ComplexImpl.MultiplyNaive(Z, W);
 
     [Benchmark]
-    public Complex MultiplySimd() => ComplexImplementations.MultiplySimd(Z, W);
+    public Complex MultiplySimd() => ComplexImpl.MultiplySimd(Z, W);
 }
