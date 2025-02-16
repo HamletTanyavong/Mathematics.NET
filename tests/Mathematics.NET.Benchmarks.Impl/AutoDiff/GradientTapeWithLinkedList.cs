@@ -1,4 +1,4 @@
-﻿// <copyright file="GradientTapeWithLinkedList.cs" company="Mathematics.NET">
+// <copyright file="GradientTapeWithLinkedList.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,7 +32,7 @@ using Mathematics.NET.Exceptions;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
-namespace Mathematics.NET.Benchmarks.Implementations.AutoDiff;
+namespace Mathematics.NET.Benchmarks.Impl.AutoDiff;
 
 // For small tapes, this seems to be slower. This may be different for large
 // tapes because of the way lists expand internally.

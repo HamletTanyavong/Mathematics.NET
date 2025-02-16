@@ -1,4 +1,4 @@
-﻿// <copyright file="Gamma.cs" company="Mathematics.NET">
+// <copyright file="Alpha.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,9 +27,9 @@
 
 using Mathematics.NET.DifferentialGeometry;
 
-namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
+namespace Mathematics.NET.Benchmarks.Impl.DifferentialGeometry.Symbols;
 
-public readonly struct Gamma : IIndexName
+public readonly struct Alpha : IIndexName
 {
-    public static string DisplayString => "Gamma";
+    public static string DisplayString => "Alpha";
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="LinearAlgebraImplementationExtensions.cs" company="Mathematics.NET">
+// <copyright file="LinearAlgebraImplExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,9 +29,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 
-internal static class LinearAlgebraImplementationExtensions
+internal static class LinearAlgebraImplExtensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector128<double> AsVector128<T>(this Vector2<T> value)

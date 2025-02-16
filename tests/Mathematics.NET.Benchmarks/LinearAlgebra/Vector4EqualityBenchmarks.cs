@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4EqualityBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Vector4EqualityBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+using Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;
@@ -47,8 +47,8 @@ public class Vector4EqualityBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public bool AddNaive() => Vector4Implmentations.EqualsNaive(U, V);
+    public bool AddNaive() => Vector4Impl.EqualsNaive(U, V);
 
     [Benchmark]
-    public bool AddSimd() => Vector4Implmentations.EqualsSimd(U, V);
+    public bool AddSimd() => Vector4Impl.EqualsSimd(U, V);
 }

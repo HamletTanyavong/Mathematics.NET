@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4Implmentations.cs" company="Mathematics.NET">
+// <copyright file="Vector4Impl.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -29,9 +29,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 
-public static class Vector4Implmentations
+public static class Vector4Impl
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector4<T> AddNaive<T>(Vector4<T> left, Vector4<T> right)

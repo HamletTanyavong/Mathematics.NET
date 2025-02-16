@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector4AdditionBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Vector4AdditionBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+using Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;
@@ -47,8 +47,8 @@ public class Vector4AdditionBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Vector4<Real> AddNaive() => Vector4Implmentations.AddNaive(U, V);
+    public Vector4<Real> AddNaive() => Vector4Impl.AddNaive(U, V);
 
     [Benchmark]
-    public Vector4<Real> AddSimd() => Vector4Implmentations.AddSimd(U, V);
+    public Vector4<Real> AddSimd() => Vector4Impl.AddSimd(U, V);
 }

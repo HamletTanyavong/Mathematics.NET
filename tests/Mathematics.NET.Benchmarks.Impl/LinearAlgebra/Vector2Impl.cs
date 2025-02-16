@@ -1,4 +1,4 @@
-﻿// <copyright file="Vector2Implementations.cs" company="Mathematics.NET">
+// <copyright file="Vector2Impl.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,9 +30,9 @@ using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 
-public static class Vector2Implementations
+public static class Vector2Impl
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector2<T> AddNaive<T>(Vector2<T> left, Vector2<T> right)
@@ -48,9 +48,7 @@ public static class Vector2Implementations
         where T : IComplex<T>
     {
         if (typeof(T) == typeof(Real))
-        {
             return Vector128.Add(left.AsVector128(), right.AsVector128()).AsVector2<T>();
-        }
         else if (typeof(T) == typeof(Complex))
         {
             return Vector256.Add(left.AsVector256(), right.AsVector256()).AsVector2<T>();
@@ -77,9 +75,7 @@ public static class Vector2Implementations
         where T : IComplex<T>
     {
         if (typeof(T) == typeof(Real))
-        {
-            return Avx.Multiply(left.AsVector128(), right.AsVector128()).AsVector2<T>();
-        }
+            return Sse2.Multiply(left.AsVector128(), right.AsVector128()).AsVector2<T>();
         else if (typeof(T) == typeof(Complex))
         {
             return Vector256.Multiply(left.AsVector256(), right.AsVector256()).AsVector2<T>();

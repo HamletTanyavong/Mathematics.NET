@@ -1,4 +1,4 @@
-﻿// <copyright file="Matrix4x4Implementations.cs" company="Mathematics.NET">
+// <copyright file="Matrix4x4Impl.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,9 +30,9 @@ using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
 
-public static class Matrix4x4Implementations
+public static class Matrix4x4Impl
 {
     public static Matrix4x4<T> TransposeNaive<T>(this Matrix4x4<T> matrix)
         where T : IComplex<T>

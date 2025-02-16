@@ -1,4 +1,4 @@
-﻿// <copyright file="ComplexImplementations.cs" company="Mathematics.NET">
+// <copyright file="ComplexImpl.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,9 +27,9 @@
 
 using System.Runtime.Intrinsics.X86;
 
-namespace Mathematics.NET.Benchmarks.Implementations.Core;
+namespace Mathematics.NET.Benchmarks.Impl.Core;
 
-public static class ComplexImplementations
+public static class ComplexImpl
 {
     public static Complex MultiplyNaive(Complex left, Complex right)
         => new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
@@ -41,10 +41,10 @@ public static class ComplexImplementations
             var vecL = left.AsVector128();
             var vecR = right.AsVector128();
 
-            var mulStraight = Avx.Multiply(vecL, vecR);
-            var mulCross = Avx.Multiply(vecL, Avx.Permute(vecR, 0b00011001));
+            var mulStraight = Sse2.Multiply(vecL, vecR);
+            var mulCross = Sse2.Multiply(vecL, Avx.Permute(vecR, 0b00011001));
 
-            return Avx.AddSubtract(Avx.UnpackLow(mulStraight, mulCross), Avx.UnpackHigh(mulStraight, mulCross)).AsComplex();
+            return Sse3.AddSubtract(Sse2.UnpackLow(mulStraight, mulCross), Sse2.UnpackHigh(mulStraight, mulCross)).AsComplex();
         }
         else
         {

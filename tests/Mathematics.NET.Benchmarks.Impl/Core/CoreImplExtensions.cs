@@ -1,4 +1,4 @@
-﻿// <copyright file="CoreImplementationExtensions.cs" company="Mathematics.NET">
+// <copyright file="CoreImplExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,9 +28,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 
-namespace Mathematics.NET.Benchmarks.Implementations.Core;
+namespace Mathematics.NET.Benchmarks.Impl.Core;
 
-public static class CoreImplementationExtensions
+public static class CoreImplExtensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Complex AsComplex(this Vector128<double> value)

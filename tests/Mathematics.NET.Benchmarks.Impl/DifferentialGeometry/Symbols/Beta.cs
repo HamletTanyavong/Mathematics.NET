@@ -1,4 +1,4 @@
-﻿// <copyright file="Delta.cs" company="Mathematics.NET">
+// <copyright file="Beta.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,9 +27,9 @@
 
 using Mathematics.NET.DifferentialGeometry;
 
-namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
+namespace Mathematics.NET.Benchmarks.Impl.DifferentialGeometry.Symbols;
 
-public readonly struct Delta : IIndexName
+public readonly struct Beta : IIndexName
 {
-    public static string DisplayString => "Delta";
+    public static string DisplayString => "Beta";
 }

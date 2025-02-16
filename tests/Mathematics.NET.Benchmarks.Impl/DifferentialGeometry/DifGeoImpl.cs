@@ -1,4 +1,4 @@
-﻿// <copyright file="DifGeoImplementations.cs" company="Mathematics.NET">
+// <copyright file="DifGeoImpl.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -31,9 +31,9 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry;
+namespace Mathematics.NET.Benchmarks.Impl.DifferentialGeometry;
 
-public static class DifGeoImplementations
+public static class DifGeoImpl
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static W ContractRankOneTensorWithNoInKeyword<T, U, V, W, IC>(IRankOneTensor<T, V, W, Index<Lower, IC>> a, IRankOneTensor<U, V, W, Index<Upper, IC>> b)
