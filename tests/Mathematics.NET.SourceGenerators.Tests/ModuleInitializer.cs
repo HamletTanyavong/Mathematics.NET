@@ -1,4 +1,4 @@
-﻿// <copyright file="ModuleInitializer.cs" company="Mathematics.NET">
+// <copyright file="ModuleInitializer.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,7 +27,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Mathematics.NET.Tests.SourceGenerators;
+namespace Mathematics.NET.SourceGenerators.Tests;
 
 public static class ModuleInitializer
 {

@@ -46,11 +46,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.DevApp", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks.Implementations", "tests\Mathematics.NET.Benchmarks.Implementations\Mathematics.NET.Benchmarks.Implementations.csproj", "{DFC7E4A6-FA68-4552-BD73-73DFE4636945}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Tests.SourceGenerators", "tests\Mathematics.NET.Tests.SourceGenerators\Mathematics.NET.Tests.SourceGenerators.csproj", "{56D57E0D-4E88-43F3-AAE9-1727DCA11031}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.SourceGenerators.Public", "src\Mathematics.NET.SourceGenerators.Public\Mathematics.NET.SourceGenerators.Public.csproj", "{322F4C06-B98A-4600-88CB-17C73EED0C06}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Tests.SourceGenerators.Public", "tests\Mathematics.NET.Tests.SourceGenerators.Public\Mathematics.NET.Tests.SourceGenerators.Public.csproj", "{CCB1A777-2317-4866-8A9E-B8E75879B40F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.SourceGenerators.Tests", "tests\Mathematics.NET.SourceGenerators.Tests\Mathematics.NET.SourceGenerators.Tests.csproj", "{FC1AB808-4856-A6E2-5078-45597C0EBF9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.SourceGenerators.Public.Tests", "tests\Mathematics.NET.SourceGenerators.Public.Tests\Mathematics.NET.SourceGenerators.Public.Tests.csproj", "{098FBB78-1348-EC74-9118-284D72FD24F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,18 +82,18 @@ Global
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56D57E0D-4E88-43F3-AAE9-1727DCA11031}.Release|Any CPU.Build.0 = Release|Any CPU
 		{322F4C06-B98A-4600-88CB-17C73EED0C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{322F4C06-B98A-4600-88CB-17C73EED0C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{322F4C06-B98A-4600-88CB-17C73EED0C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{322F4C06-B98A-4600-88CB-17C73EED0C06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCB1A777-2317-4866-8A9E-B8E75879B40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCB1A777-2317-4866-8A9E-B8E75879B40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCB1A777-2317-4866-8A9E-B8E75879B40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCB1A777-2317-4866-8A9E-B8E75879B40F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1AB808-4856-A6E2-5078-45597C0EBF9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1AB808-4856-A6E2-5078-45597C0EBF9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1AB808-4856-A6E2-5078-45597C0EBF9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1AB808-4856-A6E2-5078-45597C0EBF9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{098FBB78-1348-EC74-9118-284D72FD24F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{098FBB78-1348-EC74-9118-284D72FD24F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{098FBB78-1348-EC74-9118-284D72FD24F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{098FBB78-1348-EC74-9118-284D72FD24F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,9 +106,9 @@ Global
 		{1B32D7FF-257B-49BB-B495-D64E5E6C4C82} = {9EB26D49-7E18-4404-BDCB-D26B827C4A22}
 		{89C3482F-0027-483E-AAD7-5E12453915B3} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 		{DFC7E4A6-FA68-4552-BD73-73DFE4636945} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
-		{56D57E0D-4E88-43F3-AAE9-1727DCA11031} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{322F4C06-B98A-4600-88CB-17C73EED0C06} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
-		{CCB1A777-2317-4866-8A9E-B8E75879B40F} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
+		{FC1AB808-4856-A6E2-5078-45597C0EBF9E} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
+		{098FBB78-1348-EC74-9118-284D72FD24F5} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D9282-B1D9-42EC-A6A0-C1970012ED73}

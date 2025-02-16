@@ -1,4 +1,4 @@
-﻿// <copyright file="IndexNameGeneratorTests.cs" company="Mathematics.NET">
+// <copyright file="TensorSelfContractionGeneratorTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,59 +25,50 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.SourceGenerators.Public.IndexNames;
+using Mathematics.NET.SourceGenerators.DifferentialGeometry;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Mathematics.NET.Tests.SourceGenerators.Public.IndexNames;
+namespace Mathematics.NET.SourceGenerators.Tests.DifferentialGeometry;
 
 [TestClass]
 [TestCategory("Source Generator"), TestCategory("DifGeo")]
-public sealed class IndexNameGeneratorTests : VerifyBase
+public sealed class TensorSelfContractionGeneratorTests : VerifyBase
 {
     [TestMethod]
-    public void SourceGenerator_StructWithIndexNameAttribute_AutoImplementsIIndexName()
+    public void SourceGenerator_RankFourTensor_GeneratesSelfContractions()
     {
         var source = """
-            namespace A
-            {
-                [IndexName] public partial struct Alpha;
-                [IndexName] public partial struct Beta;
-            }
+            namespace TestNamespace;
 
-            namespace A
+            [GenerateTensorSelfContractions]
+            public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> a)
+                where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
+                where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+                where TCI : IIndexName
+                where TI1 : IIndex
+                where TI2 : IIndex
             {
-                [IndexName] public partial struct Gamma;
-            }
-
-            namespace A.B
-            {
-                [IndexName] public partial struct Delta;
-            }
-
-            namespace B.C
-            {
-                [IndexName] public partial struct Epsilon;
-            }
-
-            namespace B.C.D
-            {
-                [IndexName] public partial struct Zeta;
-                [IndexName] public partial struct Eta;
+                Matrix4x4<TN> matrix = new();
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            matrix[i, j] += a[k, k, i, j];
+                        }
+                    }
+                }
+                return new(matrix);
             }
             """;
 
         _ = SetupAndVerify(source);
     }
 
-    [TestMethod]
-    public void SourceGenerator_IndexNameNotDeclaredInANamespace_ReturnsAnError()
-    {
-        var source = """
-            [IndexName] public partial struct Alpha;
-            """;
-
-        _ = SetupAndVerify(source);
-    }
+    //
+    // Helpers
+    //
 
     public Task SetupAndVerify(string source)
     {
@@ -86,7 +77,7 @@ public sealed class IndexNameGeneratorTests : VerifyBase
             assemblyName: "TestAssembly",
             syntaxTrees: [syntaxTree]);
 
-        var generator = new IndexNameGenerator();
+        var generator = new TensorSelfContractionGenerator();
         var driver = CSharpGeneratorDriver.Create(generator);
 
         driver = (CSharpGeneratorDriver)driver.RunGenerators(compilation);

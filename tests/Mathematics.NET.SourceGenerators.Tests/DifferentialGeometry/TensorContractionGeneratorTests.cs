@@ -1,4 +1,4 @@
-﻿// <copyright file="TensorSelfContractionGeneratorTests.cs" company="Mathematics.NET">
+// <copyright file="TensorContractionGeneratorTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,38 +28,49 @@
 using Mathematics.NET.SourceGenerators.DifferentialGeometry;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Mathematics.NET.Tests.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Tests.DifferentialGeometry;
 
 [TestClass]
 [TestCategory("Source Generator"), TestCategory("DifGeo")]
-public sealed class TensorSelfContractionGeneratorTests : VerifyBase
+public sealed class TensorContractionGeneratorTests : VerifyBase
 {
     [TestMethod]
-    public void SourceGenerator_RankFourTensor_GeneratesSelfContractions()
+    public void SourceGenerator_RankThreeTensors_GeneratesContractions()
     {
         var source = """
             namespace TestNamespace;
 
-            [GenerateTensorSelfContractions]
-            public static Tensor<Matrix4x4<TN>, TN, TI1, TI2> Contract<TR4T, TN, TCI, TI1, TI2>(in IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2> a)
-                where TR4T : IRankFourTensor<TR4T, Array4x4x4x4<TN>, TN, Index<Lower, TCI>, Index<Upper, TCI>, TI1, TI2>
+            [GenerateTensorContractions]
+            public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
+                in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a,
+                in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> b)
+                where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
+                where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4>
                 where TN : IComplex<TN>, IDifferentiableFunctions<TN>
                 where TCI : IIndexName
                 where TI1 : IIndex
                 where TI2 : IIndex
+                where TI3 : IIndex
+                where TI4 : IIndex
             {
-                Matrix4x4<TN> matrix = new();
+                Array4x4x4x4<TN> array = new();
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
                     {
                         for (int k = 0; k < 4; k++)
                         {
-                            matrix[i, j] += a[k, k, i, j];
+                            for (int l = 0; l < 4; l++)
+                            {
+                                for (int m = 0; m < 4; m++)
+                                {
+                                    array[i, j, k, l] += a[m, i, j] * b[m, k, l];
+                                }
+                            }
                         }
                     }
                 }
-                return new(matrix);
+                return new(array);
             }
             """;
 
@@ -77,7 +88,7 @@ public sealed class TensorSelfContractionGeneratorTests : VerifyBase
             assemblyName: "TestAssembly",
             syntaxTrees: [syntaxTree]);
 
-        var generator = new TensorSelfContractionGenerator();
+        var generator = new TensorContractionGenerator();
         var driver = CSharpGeneratorDriver.Create(generator);
 
         driver = (CSharpGeneratorDriver)driver.RunGenerators(compilation);
