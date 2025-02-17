@@ -77,8 +77,6 @@ public class FMTensorField4x4<TDN, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     }
 }
 
-#pragma warning disable IDE0051
-
 internal static partial class Buffers
 {
     [InlineArray(4)]

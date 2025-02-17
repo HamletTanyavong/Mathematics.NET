@@ -93,8 +93,6 @@ public static class Mathematics
     // Methods
     //
 
-    // Integer-related
-
     /// <summary>The binomial coefficient.</summary>
     /// <param name="n">A total of <paramref name="n"/> elements.</param>
     /// <param name="k">An unordered subset of <paramref name="k"/> elements.</param>

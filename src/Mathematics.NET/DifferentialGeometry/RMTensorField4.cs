@@ -71,8 +71,6 @@ public class RMTensorField4<TT, TN, TIP, TPI> : TensorField<TN, TPI>
     }
 }
 
-#pragma warning disable IDE0051
-
 internal static partial class Buffers
 {
     [InlineArray(4)]

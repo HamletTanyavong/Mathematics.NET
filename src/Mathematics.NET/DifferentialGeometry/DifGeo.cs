@@ -72,7 +72,7 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>>, TDN> function)
@@ -97,7 +97,7 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>>, TDN> function)
@@ -122,7 +122,7 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>>, TDN> function)
@@ -147,7 +147,7 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor2<TDN, TN, Index<Lower, TPIN>>, TDN> function)
@@ -172,7 +172,7 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor3<TDN, TN, Index<Lower, TPIN>>, TDN> function)
@@ -197,7 +197,7 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor4<TDN, TN, Index<Lower, TPIN>>, TDN> function)
@@ -236,7 +236,7 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 for (int k = 0; k < 2; k++)
@@ -266,7 +266,7 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 for (int k = 0; k < 3; k++)
@@ -296,7 +296,7 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 for (int k = 0; k < 4; k++)
@@ -326,7 +326,7 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 for (int k = 0; k < 2; k++)
@@ -356,7 +356,7 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 for (int k = 0; k < 3; k++)
@@ -386,7 +386,7 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 for (int k = 0; k < 4; k++)
@@ -1089,11 +1089,11 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
@@ -1120,11 +1120,11 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
@@ -1151,11 +1151,11 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
@@ -1182,11 +1182,11 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
@@ -1213,11 +1213,11 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
@@ -1244,11 +1244,11 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
@@ -1288,11 +1288,11 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     for (int l = 0; l < 2; l++)
@@ -1323,11 +1323,11 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     for (int l = 0; l < 3; l++)
@@ -1358,11 +1358,11 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     for (int l = 0; l < 4; l++)
@@ -1393,11 +1393,11 @@ public static partial class DifGeo
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     for (int l = 0; l < 2; l++)
@@ -1428,11 +1428,11 @@ public static partial class DifGeo
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     for (int l = 0; l < 3; l++)
@@ -1463,11 +1463,11 @@ public static partial class DifGeo
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     for (int l = 0; l < 4; l++)
@@ -1524,7 +1524,6 @@ public static partial class DifGeo
             }
         }
     }
-
 
     /// <inheritdoc cref="SecondDerivative{TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN}, RMTensorField2{HessianTape{TN}, TN, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
@@ -1927,7 +1926,7 @@ public static partial class DifGeo
     }
 
     //
-    // Christoffel symbols.
+    // Christoffel Symbols
     //
 
     /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
@@ -1953,9 +1952,9 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
 
+        christoffel = new();
         for (int k = 0; k < 2; k++)
         {
             for (int i = 0; i < 2; i++)
@@ -1981,9 +1980,9 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
 
+        christoffel = new();
         for (int k = 0; k < 3; k++)
         {
             for (int i = 0; i < 3; i++)
@@ -2009,9 +2008,9 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
 
+        christoffel = new();
         for (int k = 0; k < 4; k++)
         {
             for (int i = 0; i < 4; i++)
@@ -2334,7 +2333,7 @@ public static partial class DifGeo
     }
 
     //
-    // Riemann tensors.
+    // Riemann tensors
     //
 
     /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
@@ -2447,7 +2446,7 @@ public static partial class DifGeo
     }
 
     //
-    // Tensor contractions
+    // Tensor Contractions
     //
 
     // Rank-one and rank-one.

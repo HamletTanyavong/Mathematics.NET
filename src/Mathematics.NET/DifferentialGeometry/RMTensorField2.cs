@@ -75,8 +75,6 @@ public class RMTensorField2<TT, TN, TIP, TPI> : TensorField<TN, TPI>
     }
 }
 
-#pragma warning disable IDE0051
-
 internal static partial class Buffers
 {
     [InlineArray(2)]
