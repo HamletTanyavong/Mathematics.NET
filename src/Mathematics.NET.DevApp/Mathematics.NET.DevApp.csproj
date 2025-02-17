@@ -17,4 +17,10 @@
     <ProjectReference Include="..\Mathematics.NET.SourceGenerators.Public\Mathematics.NET.SourceGenerators.Public.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
