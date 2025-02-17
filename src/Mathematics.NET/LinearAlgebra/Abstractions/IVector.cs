@@ -1,4 +1,4 @@
-﻿// <copyright file="IVector.cs" company="Mathematics.NET">
+// <copyright file="IVector.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

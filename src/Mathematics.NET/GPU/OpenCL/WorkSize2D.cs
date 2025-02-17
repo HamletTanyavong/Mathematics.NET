@@ -1,4 +1,4 @@
-﻿// <copyright file="WorkSize2D.cs" company="Mathematics.NET">
+// <copyright file="WorkSize2D.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

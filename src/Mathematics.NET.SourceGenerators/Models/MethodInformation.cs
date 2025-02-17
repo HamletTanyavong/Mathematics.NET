@@ -1,4 +1,4 @@
-﻿// <copyright file="MethodInformation.cs" company="Mathematics.NET">
+// <copyright file="MethodInformation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

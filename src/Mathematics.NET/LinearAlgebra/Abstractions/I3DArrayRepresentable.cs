@@ -1,4 +1,4 @@
-﻿// <copyright file="I3DArrayRepresentable.cs" company="Mathematics.NET">
+// <copyright file="I3DArrayRepresentable.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
