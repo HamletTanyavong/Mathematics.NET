@@ -33,10 +33,11 @@ public sealed class RationalTests
 {
     [TestMethod]
     [DataRow(2, 4, 5, 3, 13, 6)]
-    public void Add_TwoRationalsOfInt_ReturnsReducedSum(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
+    public void Add_TwoRationalsOfInt_ReturnsReducedSum(int xNum, int xDen, int yNum, int yDen, int expectedNum, int expectedDen)
     {
-        Rational<int> x = new(inANum, inADen);
-        Rational<int> y = new(inBNum, inBDen);
+        Rational<int> x = new(xNum, xDen);
+        Rational<int> y = new(yNum, yDen);
+
         Rational<int> expected = new(expectedNum, expectedDen);
 
         var actual = x + y;
@@ -54,15 +55,31 @@ public sealed class RationalTests
 
     [TestMethod]
     [DataRow(2, 3, 4, 8, 1, 3)]
-    public void Multiply_TwoRationalsOfInt_ReturnsReducedProduct(int inANum, int inADen, int inBNum, int inBDen, int expectedNum, int expectedDen)
+    public void Multiply_TwoRationalsOfInt_ReturnsReducedProduct(int xNum, int xDen, int yNum, int yDen, int expectedNum, int expectedDen)
     {
-        Rational<int> x = new(inANum, inADen);
-        Rational<int> y = new(inBNum, inBDen);
+        Rational<int> x = new(xNum, xDen);
+        Rational<int> y = new(yNum, yDen);
+
         Rational<int> expected = new(expectedNum, expectedDen);
 
         var actual = x * y;
 
         Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    [DataRow(11, 5, 3, 4, 2, 14, 15)]
+    public void QuoRem_TwoRationalsOfInt_ReturnsQuotientAndRemainder(int xNum, int xDen, int yNum, int yDen, int expectedQuo, int expectedRemNum, int expectedRemDen)
+    {
+        Rational<int> x = new(xNum, xDen);
+        Rational<int> y = new(yNum, yDen);
+
+        Rational<int> expectedRem = new(expectedRemNum, expectedRemDen);
+
+        var (actualQuo, actualRem) = Rational<int>.QuoRem(x, y);
+
+        Assert.AreEqual(expectedQuo, actualQuo);
+        Assert.AreEqual(expectedRem, actualRem);
     }
 
     [TestMethod]

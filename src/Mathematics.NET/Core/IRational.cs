@@ -32,7 +32,7 @@ namespace Mathematics.NET.Core;
 /// <summary>Defines support for rational numbers.</summary>
 /// <typeparam name="T">A type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-public interface IRational<T, out U> : IReal<T>
+public interface IRational<T, U> : IReal<T>
     where T : IRational<T, U>
     where U : IBinaryInteger<U>
 {
@@ -47,8 +47,25 @@ public interface IRational<T, out U> : IReal<T>
     /// <returns>The absolute value.</returns>
     static new abstract T Abs(T x);
 
+    /// <summary>Divide two rational numbers and get the quotient and remainder.</summary>
+    /// <param name="dividend">The dividend.</param>
+    /// <param name="divisor">The remainder.</param>
+    /// <returns>The quotient as an integer and the remainder as a rational number.</returns>
+    static abstract (U Quotient, T Remainder) QuoRem(T dividend, T divisor);
+
     /// <summary>Reduce a rational number.</summary>
     /// <param name="x">The value to reduce.</param>
     /// <returns>A reduced fraction if the number was reducible; otherwise, itself.</returns>
     static abstract T Reduce(T x);
+
+    /// <summary>Convert a mixed fraction into an improper fraction.</summary>
+    /// <param name="quotient">The quotient.</param>
+    /// <param name="remainder">The remainder.</param>
+    /// <returns>An improper fraction.</returns>
+    static abstract T ToImproper(U quotient, T remainder);
+
+    /// <summary>Convert a fraction into a mixed fraction if it is improper.</summary>
+    /// <param name="x">A fraction.</param>
+    /// <returns>A mixed fraction if the input fraction is improper; otherwise, the original fraction as the remainder.</returns>
+    static abstract (U Quotient, T Remainder) ToMixed(T x);
 }

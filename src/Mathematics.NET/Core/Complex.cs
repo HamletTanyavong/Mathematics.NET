@@ -356,6 +356,8 @@ public readonly struct Complex(Real real, Real imaginary)
 
     public static bool IsInfinity(Complex z) => Real.IsInfinity(z._real) || Real.IsInfinity(z._imaginary);
 
+    public static bool IsInteger(Complex z) => Real.IsZero(z._imaginary) && Real.IsInteger(z._real);
+
     public static bool IsNaN(Complex z) => !IsInfinity(z) && !IsFinite(z);
 
     public static bool IsReal(Complex z) => !Real.IsZero(z._real) && Real.IsZero(z._imaginary);
