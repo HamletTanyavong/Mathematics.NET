@@ -1,4 +1,4 @@
-﻿// <copyright file="IOpenCLObject.cs" company="Mathematics.NET">
+// <copyright file="IOpenCLObject.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

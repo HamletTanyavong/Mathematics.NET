@@ -1,4 +1,4 @@
-﻿// <copyright file="IReal.cs" company="Mathematics.NET">
+// <copyright file="IReal.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

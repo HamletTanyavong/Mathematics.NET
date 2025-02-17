@@ -1,4 +1,4 @@
-﻿// <copyright file="Constants.cs" company="Mathematics.NET">
+// <copyright file="Constants.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

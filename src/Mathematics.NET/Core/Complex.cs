@@ -1,4 +1,4 @@
-﻿// <copyright file="Complex.cs" company="Mathematics.NET">
+// <copyright file="Complex.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -355,6 +355,8 @@ public readonly struct Complex(Real real, Real imaginary)
     public static bool IsImaginary(Complex z) => Real.IsZero(z._real) && !Real.IsZero(z._imaginary);
 
     public static bool IsInfinity(Complex z) => Real.IsInfinity(z._real) || Real.IsInfinity(z._imaginary);
+
+    public static bool IsInteger(Complex z) => Real.IsZero(z._imaginary) && Real.IsInteger(z._real);
 
     public static bool IsNaN(Complex z) => !IsInfinity(z) && !IsFinite(z);
 

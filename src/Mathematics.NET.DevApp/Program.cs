@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Mathematics.NET">
+// <copyright file="Program.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -40,13 +40,6 @@ var builder = Host.CreateApplicationBuilder();
 // Configure services.
 builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
 builder.Services.AddHttpClient();
-
-// Configure logging.
-#if DEBUG
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Debug);
-#elif RELEASE
-builder.Logging.AddFilter(logLevel => logLevel >= LogLevel.Warning);
-#endif
 
 // Build the application.
 var app = builder.Build();

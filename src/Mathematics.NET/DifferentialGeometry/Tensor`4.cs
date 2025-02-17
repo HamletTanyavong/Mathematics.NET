@@ -1,4 +1,4 @@
-﻿// <copyright file="Tensor`4.cs" company="Mathematics.NET">
+// <copyright file="Tensor`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

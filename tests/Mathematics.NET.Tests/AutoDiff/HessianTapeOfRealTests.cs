@@ -27,7 +27,6 @@
 
 using CommunityToolkit.HighPerformance;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Tests.AutoDiff;
 

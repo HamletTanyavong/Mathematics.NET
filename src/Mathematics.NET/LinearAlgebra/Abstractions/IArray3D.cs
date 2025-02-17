@@ -1,4 +1,4 @@
-﻿// <copyright file="IArray3D.cs" company="Mathematics.NET">
+// <copyright file="IArray3D.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

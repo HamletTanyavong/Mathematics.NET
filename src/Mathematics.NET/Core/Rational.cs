@@ -1,4 +1,4 @@
-﻿// <copyright file="Rational.cs" company="Mathematics.NET">
+// <copyright file="Rational.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -156,9 +156,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static Rational<T> operator /(Rational<T> x, Rational<T> y)
     {
         if (y._numerator == T.Zero)
-        {
             return NaN;
-        }
 
         var num = x._numerator * y._denominator;
         var den = x._denominator * y._numerator;
@@ -169,9 +167,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static Rational<T> operator %(Rational<T> x, Rational<T> y)
     {
         if (y._denominator == T.Zero)
-        {
             return NaN;
-        }
 
         var q = x / y;
         return T.DivRem(q._numerator, q._denominator).Remainder;
@@ -475,6 +471,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     public static Rational<T> Conjugate(Rational<T> x) => x;
 
+    public static (T Quotient, Rational<T> Remainder) QuoRem(Rational<T> dividend, Rational<T> divisor)
+        => ToMixed(dividend / divisor);
+
     public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
     /// <summary>Create an instance of type rational of <typeparamref name="T"/> from one of type <see cref="double"/>.</summary>
@@ -538,6 +537,8 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public static bool IsImaginary(Rational<T> x) => false;
 
     public static bool IsInfinity(Rational<T> x) => T.IsZero(x._denominator);
+
+    public static bool IsInteger(Rational<T> x) => x._denominator == T.One;
 
     public static bool IsNaN(Rational<T> x) => T.IsZero(x._numerator) && T.IsZero(x._denominator);
 
@@ -616,6 +617,14 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         if (x == Zero)
             return 0;
         return x._numerator > T.Zero ? 1 : -1;
+    }
+
+    public static Rational<T> ToImproper(T quotient, Rational<T> remainder) => quotient + remainder;
+
+    public static (T Quotient, Rational<T> Remainder) ToMixed(Rational<T> x)
+    {
+        var (quotient, remainder) = T.DivRem(x._numerator, x._denominator);
+        return new(quotient, new(remainder, x._denominator));
     }
 
     public static Real ToReal(Rational<T> x)

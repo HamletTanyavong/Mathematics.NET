@@ -1,4 +1,4 @@
-﻿// <copyright file="Real.cs" company="Mathematics.NET">
+// <copyright file="Real.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -255,6 +255,10 @@ public readonly struct Real(double real)
 
     public static Real Abs(Real x) => Math.Abs(x._value);
 
+    public static Real BitDecrement(Real x) => Math.BitDecrement(x._value);
+
+    public static Real BitIncrement(Real x) => Math.BitIncrement(x._value);
+
     public static Real Ceiling(Real x) => Math.Ceiling(x._value);
 
     public static Real Clamp(Real value, Real min, Real max) => Math.Clamp(value._value, min._value, max._value);
@@ -285,11 +289,11 @@ public readonly struct Real(double real)
 
     public static bool IsInfinity(Real x) => double.IsInfinity(x._value);
 
+    public static bool IsInteger(Real x) => double.IsInteger(x._value);
+
     public static bool IsNaN(Real x) => double.IsNaN(x._value);
 
     public static bool IsReal(Real z) => true;
-
-    public static bool IsZero(Real x) => x._value == 0.0;
 
     public static bool IsNegative(Real x) => double.IsNegative(x._value);
 
@@ -300,6 +304,8 @@ public readonly struct Real(double real)
     public static bool IsPositiveInfinity(Real x) => double.IsPositiveInfinity(x._value);
 
     public static bool IsSubnormal(Real x) => double.IsSubnormal(x._value);
+
+    public static bool IsZero(Real x) => !double.IsNaN(x._value) && x._value == 0.0;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Real Lerp(Real start, Real end, Real weight) => (One - weight) * start + weight * end;

@@ -1,4 +1,4 @@
-﻿// <copyright file="DifGeoForwardModeTests.cs" company="Mathematics.NET">
+// <copyright file="DifGeoForwardModeTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

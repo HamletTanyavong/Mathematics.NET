@@ -1,4 +1,4 @@
-﻿// <copyright file="Matrix4x4Tests.cs" company="Mathematics.NET">
+// <copyright file="Matrix4x4Tests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

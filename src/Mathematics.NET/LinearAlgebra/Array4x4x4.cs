@@ -1,4 +1,4 @@
-﻿// <copyright file="Array4x4x4.cs" company="Mathematics.NET">
+// <copyright file="Array4x4x4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

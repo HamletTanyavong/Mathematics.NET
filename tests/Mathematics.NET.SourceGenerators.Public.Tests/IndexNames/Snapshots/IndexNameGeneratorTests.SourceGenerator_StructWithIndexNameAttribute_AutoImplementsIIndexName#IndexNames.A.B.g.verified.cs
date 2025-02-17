@@ -1,4 +1,4 @@
-﻿//HintName: IndexNames.A.B.g.cs
+//HintName: IndexNames.A.B.g.cs
 // Auto-generated code
 
 using Mathematics.NET.DifferentialGeometry;

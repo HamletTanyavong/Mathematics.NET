@@ -1,4 +1,4 @@
-﻿// <copyright file="Edge.cs" company="Mathematics.NET">
+// <copyright file="Edge.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //

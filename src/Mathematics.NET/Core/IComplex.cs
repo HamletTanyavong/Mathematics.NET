@@ -1,4 +1,4 @@
-﻿// <copyright file="IComplex.cs" company="Mathematics.NET">
+// <copyright file="IComplex.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -176,6 +176,11 @@ public interface IComplex<T>
     /// <param name="z">The value to check.</param>
     /// <returns><see langword="true"/> if the value is infinity; otherwise, <see langword="false"/>.</returns>
     static abstract bool IsInfinity(T z);
+
+    /// <summary>Check if a value is an integer.</summary>
+    /// <param name="z">The value to check.</param>
+    /// <returns><see langword="true"/> if the value is an integer; otherwise, <see langword="false"/>.</returns>
+    static abstract bool IsInteger(T z);
 
     /// <summary>Checks if a value is not a number.</summary>
     /// <param name="z">The value to check.</param>
