@@ -28,7 +28,7 @@ Here are some core features that will be included in the first release and their
     - [x] Checkpointing
   - [x] Hessian Tapes
     - [ ] Parallelization
-    - [ ] Checkpointing
+    - [ ] Checkpointing (if possible)
 - [x] Forward-mode autodiff
   - [x] Dual numbers
   - [x] Hyper-dual numbers
@@ -45,11 +45,10 @@ Here are some core features that will be included in the first release and their
 ### Differential Geometry
 
 - [x] Rank one, two, three, and four tensors
-- [ ] DifGeo methods
+- [x] DifGeo methods
   - [x] Index raising and lowering
   - [x] Index contractions
-  - [ ] Covariant derivatives
-  - [ ] Contravariant derivatives
+  - [x] Covariant derivatives of rank-one, covariant and contravariant tensors
   - [x] Tensor products
 - [x] Christoffel symbols
 - [x] Riemann curvature tensors
