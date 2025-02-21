@@ -42,8 +42,6 @@ public static partial class DifGeo
     // General Calculus
     //
 
-    // TODO: Optimize the following methods.
-
     // First derivatives.
 
     /// <summary>Compute the derivative of rank-one tensor.</summary>
@@ -56,11 +54,11 @@ public static partial class DifGeo
     /// <typeparam name="TI2N">The name of the second index of the tensor.</typeparam>
     /// <param name="tensor">A rank-one tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="dTensor">A rank-two tensor.</param>
+    /// <param name="derivative">A rank-two tensor.</param>
     public static void Derivative<TDN, TN, TPIN, TI2P, TI1N, TI2N>(
         FMTensorField2<TDN, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -68,15 +66,15 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>>, TDN> function)
-                    dTensor[i, j] = function(seed).D1;
+                    derivative[i, j] = function(seed).D1;
             }
         }
     }
@@ -85,7 +83,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI1N, TI2N>(
         FMTensorField3<TDN, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -93,15 +91,15 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>>, TDN> function)
-                    dTensor[i, j] = function(seed).D1;
+                    derivative[i, j] = function(seed).D1;
             }
         }
     }
@@ -110,7 +108,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI1N, TI2N>(
         FMTensorField4<TDN, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -118,15 +116,15 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>>, TDN> function)
-                    dTensor[i, j] = function(seed).D1;
+                    derivative[i, j] = function(seed).D1;
             }
         }
     }
@@ -135,7 +133,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI1N, TI2N>(
         FMTensorField2<TDN, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Matrix2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -143,15 +141,15 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor2<TDN, TN, Index<Lower, TPIN>>, TDN> function)
-                    dTensor[i, j] = function(seed).D1;
+                    derivative[i, j] = function(seed).D1;
             }
         }
     }
@@ -160,7 +158,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI1N, TI2N>(
         FMTensorField3<TDN, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Matrix3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -168,15 +166,15 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor3<TDN, TN, Index<Lower, TPIN>>, TDN> function)
-                    dTensor[i, j] = function(seed).D1;
+                    derivative[i, j] = function(seed).D1;
             }
         }
     }
@@ -185,7 +183,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI1N, TI2N>(
         FMTensorField4<TDN, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Matrix4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -193,15 +191,15 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 if (tensor[j] is Func<AutoDiffTensor4<TDN, TN, Index<Lower, TPIN>>, TDN> function)
-                    dTensor[i, j] = function(seed).D1;
+                    derivative[i, j] = function(seed).D1;
             }
         }
     }
@@ -218,11 +216,11 @@ public static partial class DifGeo
     /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="dTensor">A rank-three tensor.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TDN, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField2x2<TDN, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -232,17 +230,17 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 for (int k = 0; k < 2; k++)
                 {
                     if (tensor[j, k] is Func<AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>>, TDN> function)
-                        dTensor[i, j, k] = function(seed).D1;
+                        derivative[i, j, k] = function(seed).D1;
                 }
             }
         }
@@ -252,7 +250,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField3x3<TDN, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -262,17 +260,17 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 for (int k = 0; k < 3; k++)
                 {
                     if (tensor[j, k] is Func<AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>>, TDN> function)
-                        dTensor[i, j, k] = function(seed).D1;
+                        derivative[i, j, k] = function(seed).D1;
                 }
             }
         }
@@ -282,7 +280,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField4x4<TDN, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -292,17 +290,17 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 for (int k = 0; k < 4; k++)
                 {
                     if (tensor[j, k] is Func<AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>>, TDN> function)
-                        dTensor[i, j, k] = function(seed).D1;
+                        derivative[i, j, k] = function(seed).D1;
                 }
             }
         }
@@ -312,7 +310,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField2x2<TDN, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -322,17 +320,17 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 for (int k = 0; k < 2; k++)
                 {
                     if (tensor[j, k] is Func<AutoDiffTensor2<TDN, TN, Index<Lower, TPIN>>, TDN> function)
-                        dTensor[i, j, k] = function(seed).D1;
+                        derivative[i, j, k] = function(seed).D1;
                 }
             }
         }
@@ -342,7 +340,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField3x3<TDN, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -352,17 +350,17 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 for (int k = 0; k < 3; k++)
                 {
                     if (tensor[j, k] is Func<AutoDiffTensor3<TDN, TN, Index<Lower, TPIN>>, TDN> function)
-                        dTensor[i, j, k] = function(seed).D1;
+                        derivative[i, j, k] = function(seed).D1;
                 }
             }
         }
@@ -372,7 +370,7 @@ public static partial class DifGeo
     public static void Derivative<TDN, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField4x4<TDN, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -382,17 +380,17 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             var seed = point;
-            seed[i] = TDN.CreateVariable(seed[i].D0, 1);
+            seed[i] = TDN.CreateVariable(seed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 for (int k = 0; k < 4; k++)
                 {
                     if (tensor[j, k] is Func<AutoDiffTensor4<TDN, TN, Index<Lower, TPIN>>, TDN> function)
-                        dTensor[i, j, k] = function(seed).D1;
+                        derivative[i, j, k] = function(seed).D1;
                 }
             }
         }
@@ -409,12 +407,12 @@ public static partial class DifGeo
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="tensor">A rank-one tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="dTensor">A rank-two tensor.</param>
+    /// <param name="derivative">A rank-two tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI2P, TI1N, TI2N>(
         TT tape,
         RMTensorField2<TT, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -422,7 +420,7 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             if (tensor[i] is Func<TT, AutoDiffTensor2<TN, Index<Upper, TPIN>>, Variable<TN>> function)
@@ -431,7 +429,7 @@ public static partial class DifGeo
                 tape.ReverseAccumulate(out var gradient);
                 for (int j = 0; j < 2; j++)
                 {
-                    dTensor[j, i] = gradient[j];
+                    derivative[j, i] = gradient[j];
                 }
             }
         }
@@ -442,7 +440,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField3<TT, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -450,7 +448,7 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             if (tensor[i] is Func<TT, AutoDiffTensor3<TN, Index<Upper, TPIN>>, Variable<TN>> function)
@@ -459,7 +457,7 @@ public static partial class DifGeo
                 tape.ReverseAccumulate(out var gradient);
                 for (int j = 0; j < 3; j++)
                 {
-                    dTensor[j, i] = gradient[j];
+                    derivative[j, i] = gradient[j];
                 }
             }
         }
@@ -470,7 +468,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField4<TT, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -478,7 +476,7 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             if (tensor[i] is Func<TT, AutoDiffTensor4<TN, Index<Upper, TPIN>>, Variable<TN>> function)
@@ -487,7 +485,7 @@ public static partial class DifGeo
                 tape.ReverseAccumulate(out var gradient);
                 for (int j = 0; j < 4; j++)
                 {
-                    dTensor[j, i] = gradient[j];
+                    derivative[j, i] = gradient[j];
                 }
             }
         }
@@ -498,7 +496,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField2<TT, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Matrix2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -506,7 +504,7 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             if (tensor[i] is Func<TT, AutoDiffTensor2<TN, Index<Lower, TPIN>>, Variable<TN>> function)
@@ -515,7 +513,7 @@ public static partial class DifGeo
                 tape.ReverseAccumulate(out var gradient);
                 for (int j = 0; j < 2; j++)
                 {
-                    dTensor[j, i] = gradient[j];
+                    derivative[j, i] = gradient[j];
                 }
             }
         }
@@ -526,7 +524,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField3<TT, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Matrix3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -534,7 +532,7 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             if (tensor[i] is Func<TT, AutoDiffTensor3<TN, Index<Lower, TPIN>>, Variable<TN>> function)
@@ -543,7 +541,7 @@ public static partial class DifGeo
                 tape.ReverseAccumulate(out var gradient);
                 for (int j = 0; j < 3; j++)
                 {
-                    dTensor[j, i] = gradient[j];
+                    derivative[j, i] = gradient[j];
                 }
             }
         }
@@ -554,7 +552,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField4<TT, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Matrix4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> dTensor)
+        out Tensor<Matrix4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -562,7 +560,7 @@ public static partial class DifGeo
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             if (tensor[i] is Func<TT, AutoDiffTensor4<TN, Index<Lower, TPIN>>, Variable<TN>> function)
@@ -571,7 +569,7 @@ public static partial class DifGeo
                 tape.ReverseAccumulate(out var gradient);
                 for (int j = 0; j < 4; j++)
                 {
-                    dTensor[j, i] = gradient[j];
+                    derivative[j, i] = gradient[j];
                 }
             }
         }
@@ -587,11 +585,11 @@ public static partial class DifGeo
     /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
     /// <param name="metric">A metric tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="dMetric">A rank-three tensor.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
         FMMetricTensorField2x2<TDN, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -603,14 +601,14 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
         FMMetricTensorField3x3<TDN, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -622,14 +620,14 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
         FMMetricTensorField4x4<TDN, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -641,13 +639,13 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
         FMMetricTensorField2x2<TDN, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -659,14 +657,14 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
         FMMetricTensorField3x3<TDN, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -678,14 +676,14 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
         FMMetricTensorField4x4<TDN, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TDN : IDual<TDN, TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -697,7 +695,7 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
@@ -711,12 +709,12 @@ public static partial class DifGeo
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="metric">A metric tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="dMetric">A rank-three tensor.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         RMMetricTensorField2x2<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -728,8 +726,7 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -737,7 +734,7 @@ public static partial class DifGeo
         TT tape,
         RMMetricTensorField3x3<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -749,8 +746,7 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -758,7 +754,7 @@ public static partial class DifGeo
         TT tape,
         RMMetricTensorField4x4<TT, TN, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -770,8 +766,7 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <summary>Compute the derivative of a metric tensor.</summary>
@@ -785,12 +780,12 @@ public static partial class DifGeo
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="metric">A metric tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="dMetric">A rank-three tensor.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
         RMMetricTensorField2x2<TT, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -802,8 +797,7 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, Index{Lower, TPIN}}, AutoDiffTensor2{TN, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -811,7 +805,7 @@ public static partial class DifGeo
         TT tape,
         RMMetricTensorField3x3<TT, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -823,8 +817,7 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <inheritdoc cref="Derivative{TT, TN, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, Index{Lower, TPIN}}, AutoDiffTensor2{TN, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
@@ -832,7 +825,7 @@ public static partial class DifGeo
         TT tape,
         RMMetricTensorField4x4<TT, TN, Index<Lower, TPIN>> metric,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> dMetric)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -844,8 +837,7 @@ public static partial class DifGeo
         var invMetricL = value.Inverse();
         var invMetricR = invMetricL.WithIndices<Index2, TI3N>();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, Index1>, Index<Lower, Index2>> dTensor);
-
-        dMetric = -Contract(Contract(dTensor, invMetricL), invMetricR);
+        derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
     /// <summary>Compute the derivative of rank-two tensor.</summary>
@@ -861,12 +853,12 @@ public static partial class DifGeo
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="dTensor">A rank-three tensor.</param>
+    /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
         RMTensorField2x2<TT, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -876,7 +868,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -887,7 +879,7 @@ public static partial class DifGeo
                     tape.ReverseAccumulate(out var gradient);
                     for (int k = 0; k < 2; k++)
                     {
-                        dTensor[k, i, j] = gradient[k];
+                        derivative[k, i, j] = gradient[k];
                     }
                 }
             }
@@ -899,7 +891,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField3x3<TT, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -909,7 +901,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -920,7 +912,7 @@ public static partial class DifGeo
                     tape.ReverseAccumulate(out var gradient);
                     for (int k = 0; k < 3; k++)
                     {
-                        dTensor[k, i, j] = gradient[k];
+                        derivative[k, i, j] = gradient[k];
                     }
                 }
             }
@@ -932,7 +924,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField4x4<TT, TN, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -942,7 +934,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -953,7 +945,7 @@ public static partial class DifGeo
                     tape.ReverseAccumulate(out var gradient);
                     for (int k = 0; k < 4; k++)
                     {
-                        dTensor[k, i, j] = gradient[k];
+                        derivative[k, i, j] = gradient[k];
                     }
                 }
             }
@@ -965,7 +957,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField2x2<TT, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -975,7 +967,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -986,7 +978,7 @@ public static partial class DifGeo
                     tape.ReverseAccumulate(out var gradient);
                     for (int k = 0; k < 2; k++)
                     {
-                        dTensor[k, i, j] = gradient[k];
+                        derivative[k, i, j] = gradient[k];
                     }
                 }
             }
@@ -998,7 +990,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField3x3<TT, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -1008,7 +1000,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -1019,7 +1011,7 @@ public static partial class DifGeo
                     tape.ReverseAccumulate(out var gradient);
                     for (int k = 0; k < 3; k++)
                     {
-                        dTensor[k, i, j] = gradient[k];
+                        derivative[k, i, j] = gradient[k];
                     }
                 }
             }
@@ -1031,7 +1023,7 @@ public static partial class DifGeo
         TT tape,
         RMTensorField4x4<TT, TN, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> dTensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN>
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
@@ -1041,7 +1033,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        dTensor = new();
+        derivative = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -1052,7 +1044,7 @@ public static partial class DifGeo
                     tape.ReverseAccumulate(out var gradient);
                     for (int k = 0; k < 4; k++)
                     {
-                        dTensor[k, i, j] = gradient[k];
+                        derivative[k, i, j] = gradient[k];
                     }
                 }
             }
@@ -1072,11 +1064,11 @@ public static partial class DifGeo
     /// <typeparam name="TI3N">The name of the third index of the tensor.</typeparam>
     /// <param name="tensor">A rank-one tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="d2Tensor">A rank-three tensor.</param>
+    /// <param name="secondDerivative">A rank-three tensor.</param>
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField2<HyperDual<TN>, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1085,19 +1077,19 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
-                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                        secondDerivative[i, j, k] = function(d2Seed).D3;
                 }
             }
         }
@@ -1107,7 +1099,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField3<HyperDual<TN>, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1116,19 +1108,19 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
-                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                        secondDerivative[i, j, k] = function(d2Seed).D3;
                 }
             }
         }
@@ -1138,7 +1130,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField4<HyperDual<TN>, TN, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1147,19 +1139,19 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
-                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                        secondDerivative[i, j, k] = function(d2Seed).D3;
                 }
             }
         }
@@ -1169,7 +1161,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField2<HyperDual<TN>, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1178,19 +1170,19 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
-                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                        secondDerivative[i, j, k] = function(d2Seed).D3;
                 }
             }
         }
@@ -1200,7 +1192,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField3<HyperDual<TN>, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1209,19 +1201,19 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
-                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                        secondDerivative[i, j, k] = function(d2Seed).D3;
                 }
             }
         }
@@ -1231,7 +1223,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         FMTensorField4<HyperDual<TN>, TN, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1240,19 +1232,19 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     if (tensor[k] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
-                        d2Tensor[i, j, k] = function(d2Seed).D3;
+                        secondDerivative[i, j, k] = function(d2Seed).D3;
                 }
             }
         }
@@ -1270,11 +1262,11 @@ public static partial class DifGeo
     /// <typeparam name="TI4N">The name of the fourth index of the tensor.</typeparam>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="d2Tensor">A rank-four tensor.</param>
+    /// <param name="secondDerivative">A rank-four tensor.</param>
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         FMTensorField2x2<HyperDual<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1284,21 +1276,21 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     for (int l = 0; l < 2; l++)
                     {
                         if (tensor[k, l] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
-                            d2Tensor[i, j, k, l] = function(d2Seed).D3;
+                            secondDerivative[i, j, k, l] = function(d2Seed).D3;
                     }
                 }
             }
@@ -1309,7 +1301,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         FMTensorField3x3<HyperDual<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1319,21 +1311,21 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     for (int l = 0; l < 3; l++)
                     {
                         if (tensor[k, l] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
-                            d2Tensor[i, j, k, l] = function(d2Seed).D3;
+                            secondDerivative[i, j, k, l] = function(d2Seed).D3;
                     }
                 }
             }
@@ -1344,7 +1336,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         FMTensorField4x4<HyperDual<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1354,21 +1346,21 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     for (int l = 0; l < 4; l++)
                     {
                         if (tensor[k, l] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>>, HyperDual<TN>> function)
-                            d2Tensor[i, j, k, l] = function(d2Seed).D3;
+                            secondDerivative[i, j, k, l] = function(d2Seed).D3;
                     }
                 }
             }
@@ -1379,7 +1371,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         FMTensorField2x2<HyperDual<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1389,21 +1381,21 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 2; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 2; k++)
                 {
                     for (int l = 0; l < 2; l++)
                     {
                         if (tensor[k, l] is Func<AutoDiffTensor2<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
-                            d2Tensor[i, j, k, l] = function(d2Seed).D3;
+                            secondDerivative[i, j, k, l] = function(d2Seed).D3;
                     }
                 }
             }
@@ -1414,7 +1406,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         FMTensorField3x3<HyperDual<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1424,21 +1416,21 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 3; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 3; k++)
                 {
                     for (int l = 0; l < 3; l++)
                     {
                         if (tensor[k, l] is Func<AutoDiffTensor3<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
-                            d2Tensor[i, j, k, l] = function(d2Seed).D3;
+                            secondDerivative[i, j, k, l] = function(d2Seed).D3;
                     }
                 }
             }
@@ -1449,7 +1441,7 @@ public static partial class DifGeo
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         FMTensorField4x4<HyperDual<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN>, TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1459,21 +1451,21 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             var dSeed = point;
-            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, 1);
+            dSeed[i] = HyperDual<TN>.CreateVariable(dSeed[i].D0, TN.One);
             for (int j = 0; j < 4; j++)
             {
                 var d2Seed = dSeed;
-                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, 1);
+                d2Seed[j] = HyperDual<TN>.CreateVariable(dSeed[j].Primal, TN.One);
                 for (int k = 0; k < 4; k++)
                 {
                     for (int l = 0; l < 4; l++)
                     {
                         if (tensor[k, l] is Func<AutoDiffTensor4<HyperDual<TN>, TN, Index<Lower, TPIN>>, HyperDual<TN>> function)
-                            d2Tensor[i, j, k, l] = function(d2Seed).D3;
+                            secondDerivative[i, j, k, l] = function(d2Seed).D3;
                     }
                 }
             }
@@ -1492,12 +1484,12 @@ public static partial class DifGeo
     /// <param name="tape">A Hessian tape.</param>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="d2Tensor">A rank-two tensor.</param>
+    /// <param name="secondDerivative">A rank-two tensor.</param>
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN> tape,
         RMTensorField2<HessianTape<TN>, TN, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1506,7 +1498,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             if (tensor[i] is Func<HessianTape<TN>, AutoDiffTensor2<TN, Index<Upper, TPIN>>, Variable<TN>> function)
@@ -1518,20 +1510,19 @@ public static partial class DifGeo
                 {
                     for (int k = 0; k < 2; k++)
                     {
-                        d2Tensor[j, k, i] = hessian[j, k];
+                        secondDerivative[j, k, i] = hessian[j, k];
                     }
                 }
             }
         }
     }
 
-
     /// <inheritdoc cref="SecondDerivative{TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN}, RMTensorField2{HessianTape{TN}, TN, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN}, TN, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN> tape,
         RMTensorField3<HessianTape<TN>, TN, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1540,7 +1531,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             if (tensor[i] is Func<HessianTape<TN>, AutoDiffTensor3<TN, Index<Upper, TPIN>>, Variable<TN>> function)
@@ -1552,7 +1543,7 @@ public static partial class DifGeo
                 {
                     for (int k = 0; k < 3; k++)
                     {
-                        d2Tensor[j, k, i] = hessian[j, k];
+                        secondDerivative[j, k, i] = hessian[j, k];
                     }
                 }
             }
@@ -1564,7 +1555,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField4<HessianTape<TN>, TN, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1573,7 +1564,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             if (tensor[i] is Func<HessianTape<TN>, AutoDiffTensor4<TN, Index<Upper, TPIN>>, Variable<TN>> function)
@@ -1585,7 +1576,7 @@ public static partial class DifGeo
                 {
                     for (int k = 0; k < 4; k++)
                     {
-                        d2Tensor[j, k, i] = hessian[j, k];
+                        secondDerivative[j, k, i] = hessian[j, k];
                     }
                 }
             }
@@ -1597,7 +1588,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField2<HessianTape<TN>, TN, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1606,7 +1597,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             if (tensor[i] is Func<HessianTape<TN>, AutoDiffTensor2<TN, Index<Lower, TPIN>>, Variable<TN>> function)
@@ -1618,7 +1609,7 @@ public static partial class DifGeo
                 {
                     for (int k = 0; k < 2; k++)
                     {
-                        d2Tensor[j, k, i] = hessian[j, k];
+                        secondDerivative[j, k, i] = hessian[j, k];
                     }
                 }
             }
@@ -1630,7 +1621,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField3<HessianTape<TN>, TN, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1639,7 +1630,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             if (tensor[i] is Func<HessianTape<TN>, AutoDiffTensor3<TN, Index<Lower, TPIN>>, Variable<TN>> function)
@@ -1651,7 +1642,7 @@ public static partial class DifGeo
                 {
                     for (int k = 0; k < 3; k++)
                     {
-                        d2Tensor[j, k, i] = hessian[j, k];
+                        secondDerivative[j, k, i] = hessian[j, k];
                     }
                 }
             }
@@ -1663,7 +1654,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField4<HessianTape<TN>, TN, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> d2Tensor)
+        out Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI2P : IIndexPosition
@@ -1672,7 +1663,7 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             if (tensor[i] is Func<HessianTape<TN>, AutoDiffTensor4<TN, Index<Lower, TPIN>>, Variable<TN>> function)
@@ -1684,7 +1675,7 @@ public static partial class DifGeo
                 {
                     for (int k = 0; k < 4; k++)
                     {
-                        d2Tensor[j, k, i] = hessian[j, k];
+                        secondDerivative[j, k, i] = hessian[j, k];
                     }
                 }
             }
@@ -1704,12 +1695,12 @@ public static partial class DifGeo
     /// <param name="tape">A Hessian tape.</param>
     /// <param name="tensor">A rank-two tensor field.</param>
     /// <param name="point">A point on the manifold.</param>
-    /// <param name="d2Tensor">A rank-four tensor.</param>
+    /// <param name="secondDerivative">A rank-four tensor.</param>
     public static void SecondDerivative<TN, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN> tape,
         RMTensorField2x2<HessianTape<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1719,7 +1710,7 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -1733,7 +1724,7 @@ public static partial class DifGeo
                     {
                         for (int l = 0; l < 2; l++)
                         {
-                            d2Tensor[k, l, i, j] = hessian[k, l];
+                            secondDerivative[k, l, i, j] = hessian[k, l];
                         }
                     }
                 }
@@ -1746,7 +1737,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField3x3<HessianTape<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1756,7 +1747,7 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -1770,7 +1761,7 @@ public static partial class DifGeo
                     {
                         for (int l = 0; l < 3; l++)
                         {
-                            d2Tensor[k, l, i, j] = hessian[k, l];
+                            secondDerivative[k, l, i, j] = hessian[k, l];
                         }
                     }
                 }
@@ -1783,7 +1774,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField4x4<HessianTape<TN>, TN, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
-        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1793,7 +1784,7 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -1807,7 +1798,7 @@ public static partial class DifGeo
                     {
                         for (int l = 0; l < 4; l++)
                         {
-                            d2Tensor[k, l, i, j] = hessian[k, l];
+                            secondDerivative[k, l, i, j] = hessian[k, l];
                         }
                     }
                 }
@@ -1820,7 +1811,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField2x2<HessianTape<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1830,7 +1821,7 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
@@ -1844,7 +1835,7 @@ public static partial class DifGeo
                     {
                         for (int l = 0; l < 2; l++)
                         {
-                            d2Tensor[k, l, i, j] = hessian[k, l];
+                            secondDerivative[k, l, i, j] = hessian[k, l];
                         }
                     }
                 }
@@ -1857,7 +1848,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField3x3<HessianTape<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1867,7 +1858,7 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -1881,7 +1872,7 @@ public static partial class DifGeo
                     {
                         for (int l = 0; l < 3; l++)
                         {
-                            d2Tensor[k, l, i, j] = hessian[k, l];
+                            secondDerivative[k, l, i, j] = hessian[k, l];
                         }
                     }
                 }
@@ -1894,7 +1885,7 @@ public static partial class DifGeo
         HessianTape<TN> tape,
         RMTensorField4x4<HessianTape<TN>, TN, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, Index<Lower, TPIN>> point,
-        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> d2Tensor)
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN>, IDifferentiableFunctions<TN>
         where TPIN : IIndexName
         where TI3P : IIndexPosition
@@ -1904,7 +1895,7 @@ public static partial class DifGeo
         where TI3N : IIndexName
         where TI4N : IIndexName
     {
-        d2Tensor = new();
+        secondDerivative = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -1918,7 +1909,7 @@ public static partial class DifGeo
                     {
                         for (int l = 0; l < 4; l++)
                         {
-                            d2Tensor[k, l, i, j] = hessian[k, l];
+                            secondDerivative[k, l, i, j] = hessian[k, l];
                         }
                     }
                 }
@@ -1927,8 +1918,479 @@ public static partial class DifGeo
     }
 
     //
-    // Christoffel symbols.
+    // Tensor Calculus
     //
+
+    /// <summary>Compute the covariant derivative of a rank-one, contravariant tensor.</summary>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <param name="metric">A metric tensor.</param>
+    /// <param name="tensor">A rank-one tensor.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
+    public static void CovariantDerivative<TDN, TN, TIN, TPIN>(
+        FMMetricTensorField2x2<TDN, TN, Index<Upper, TPIN>> metric,
+        FMTensorField2<TDN, TN, Upper, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tensor, point, out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> dTensor);
+        Christoffel(metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TIN>, TPIN, Index1> christoffel);
+        var value = tensor.Compute<Index1>(point);
+        var contraction = Contract(christoffel, value);
+
+        derivative = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                derivative[i, j] = dTensor[i, j] + contraction[j, i];
+            }
+        }
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    public static void CovariantDerivative<TDN, TN, TIN, TPIN>(
+        FMMetricTensorField3x3<TDN, TN, Index<Upper, TPIN>> metric,
+        FMTensorField3<TDN, TN, Upper, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tensor, point, out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> dTensor);
+        Christoffel(metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TIN>, TPIN, Index1> christoffel);
+        var value = tensor.Compute<Index1>(point);
+        var contraction = Contract(christoffel, value);
+
+        derivative = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                derivative[i, j] = dTensor[i, j] + contraction[j, i];
+            }
+        }
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    public static void CovariantDerivative<TDN, TN, TIN, TPIN>(
+        FMMetricTensorField4x4<TDN, TN, Index<Upper, TPIN>> metric,
+        FMTensorField4<TDN, TN, Upper, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tensor, point, out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> dTensor);
+        Christoffel(metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TIN>, TPIN, Index1> christoffel);
+        var value = tensor.Compute<Index1>(point);
+        var contraction = Contract(christoffel, value);
+
+        derivative = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                derivative[i, j] = dTensor[i, j] + contraction[j, i];
+            }
+        }
+    }
+
+    /// <summary>Compute the covariant derivative of a rank-one, covariant tensor.</summary>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <param name="metric">A metric tensor.</param>
+    /// <param name="tensor">A rank-one tensor.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
+    public static void CovariantDerivative<TDN, TN, TIN, TPIN>(
+        FMMetricTensorField2x2<TDN, TN, Index<Upper, TPIN>> metric,
+        FMTensorField2<TDN, TN, Lower, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tensor, point, out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> dTensor);
+        Christoffel(metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, Index1>, TPIN, TIN> christoffel);
+        var value = tensor.Compute<Index1>(point);
+        var contraction = Contract(christoffel, value);
+        derivative = dTensor + contraction;
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    public static void CovariantDerivative<TDN, TN, TIN, TPIN>(
+        FMMetricTensorField3x3<TDN, TN, Index<Upper, TPIN>> metric,
+        FMTensorField3<TDN, TN, Lower, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tensor, point, out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> dTensor);
+        Christoffel(metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, Index1>, TPIN, TIN> christoffel);
+        var value = tensor.Compute<Index1>(point);
+        var contraction = Contract(christoffel, value);
+        derivative = dTensor + contraction;
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    public static void CovariantDerivative<TDN, TN, TIN, TPIN>(
+        FMMetricTensorField4x4<TDN, TN, Index<Upper, TPIN>> metric,
+        FMTensorField4<TDN, TN, Lower, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tensor, point, out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> dTensor);
+        Christoffel(metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, Index1>, TPIN, TIN> christoffel);
+        var value = tensor.Compute<Index1>(point);
+        var contraction = Contract(christoffel, value);
+        derivative = dTensor + contraction;
+    }
+
+    /// <summary>Compute the covariant derivative of a rank-one, contravariant tensor.</summary>
+    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="metric">A metric tensor.</param>
+    /// <param name="tensor">A rank-one tensor.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
+    public static void CovariantDerivative<TT, TN, TIN, TPIN>(
+        TT tape,
+        RMMetricTensorField2x2<TT, TN, Index<Upper, TPIN>> metric,
+        RMTensorField2<TT, TN, Upper, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tape, tensor, point, out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> dTensor);
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TIN>, TPIN, Index1> christoffel);
+        var value = tensor.Compute<Index1>(tape, point);
+        var contraction = Contract(christoffel, value);
+
+        derivative = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                derivative[i, j] = dTensor[i, j] + contraction[j, i];
+            }
+        }
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, RMTensorField2{TT, TN, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    public static void CovariantDerivative<TT, TN, TIN, TPIN>(
+        TT tape,
+        RMMetricTensorField3x3<TT, TN, Index<Upper, TPIN>> metric,
+        RMTensorField3<TT, TN, Upper, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tape, tensor, point, out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> dTensor);
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TIN>, TPIN, Index1> christoffel);
+        var value = tensor.Compute<Index1>(tape, point);
+        var contraction = Contract(christoffel, value);
+
+        derivative = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                derivative[i, j] = dTensor[i, j] + contraction[j, i];
+            }
+        }
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, RMTensorField2{TT, TN, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    public static void CovariantDerivative<TT, TN, TIN, TPIN>(
+        TT tape,
+        RMMetricTensorField4x4<TT, TN, Index<Upper, TPIN>> metric,
+        RMTensorField4<TT, TN, Upper, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tape, tensor, point, out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Upper, TIN>> dTensor);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TIN>, TPIN, Index1> christoffel);
+        var value = tensor.Compute<Index1>(tape, point);
+        var contraction = Contract(christoffel, value);
+
+        derivative = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                derivative[i, j] = dTensor[i, j] + contraction[j, i];
+            }
+        }
+    }
+
+    /// <summary>Compute the covariant derivative of a rank-one, covariant tensor.</summary>
+    /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <typeparam name="TPIN">The name of the point index.</typeparam>
+    /// <param name="tape">A gradient or Hessian tape.</param>
+    /// <param name="metric">A metric tensor.</param>
+    /// <param name="tensor">A rank-one tensor.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
+    public static void CovariantDerivative<TT, TN, TIN, TPIN>(
+        TT tape,
+        RMMetricTensorField2x2<TT, TN, Index<Upper, TPIN>> metric,
+        RMTensorField2<TT, TN, Lower, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor2<TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tape, tensor, point, out Tensor<Matrix2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> dTensor);
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, Index1>, TPIN, TIN> christoffel);
+        var value = tensor.Compute<Index1>(tape, point);
+        var contraction = Contract(christoffel, value);
+        derivative = dTensor + contraction;
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, RMTensorField2{TT, TN, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    public static void CovariantDerivative<TT, TN, TIN, TPIN>(
+        TT tape,
+        RMMetricTensorField3x3<TT, TN, Index<Upper, TPIN>> metric,
+        RMTensorField3<TT, TN, Lower, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor3<TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tape, tensor, point, out Tensor<Matrix3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> dTensor);
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, Index1>, TPIN, TIN> christoffel);
+        var value = tensor.Compute<Index1>(tape, point);
+        var contraction = Contract(christoffel, value);
+        derivative = dTensor + contraction;
+    }
+
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, Index{Upper, TPIN}}, RMTensorField2{TT, TN, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TN, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN}, TN, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    public static void CovariantDerivative<TT, TN, TIN, TPIN>(
+        TT tape,
+        RMMetricTensorField4x4<TT, TN, Index<Upper, TPIN>> metric,
+        RMTensorField4<TT, TN, Lower, Index<Upper, TPIN>> tensor,
+        AutoDiffTensor4<TN, Index<Upper, TPIN>> point,
+        out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
+        where TT : ITape<TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TIN : IIndexName
+        where TPIN : IIndexName
+    {
+        Derivative(tape, tensor, point, out Tensor<Matrix4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TIN>> dTensor);
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, Index1>, TPIN, TIN> christoffel);
+        var value = tensor.Compute<Index1>(tape, point);
+        var contraction = Contract(christoffel, value);
+        derivative = dTensor + contraction;
+    }
+
+    //
+    // Christoffel Symbols
+    //
+
+    /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI2N">The second index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI3N">The third index of the Christoffel symbol.</typeparam>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="christoffel">The result.</param>
+    public static void Christoffel<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField2x2<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
+        out Christoffel<Array2x2x2<TN>, TN, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        Derivative(metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
+
+        christoffel = new();
+        for (int k = 0; k < 2; k++)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    christoffel[k, i, j] = 0.5 * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="Christoffel{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN}, TN, Index{Lower, TI1N}, TI2N, TI3N})"/>
+    public static void Christoffel<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField3x3<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
+        out Christoffel<Array3x3x3<TN>, TN, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        Derivative(metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
+
+        christoffel = new();
+        for (int k = 0; k < 3; k++)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    christoffel[k, i, j] = 0.5 * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="Christoffel{TDN, TN, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN}, TN, Index{Lower, TI1N}, TI2N, TI3N})"/>
+    public static void Christoffel<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField4x4<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
+        out Christoffel<Array4x4x4<TN>, TN, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        Derivative(metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
+
+        christoffel = new();
+        for (int k = 0; k < 4; k++)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    christoffel[k, i, j] = 0.5 * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                }
+            }
+        }
+    }
+
+    /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI2N">The second index of the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI3N">The third index of the Christoffel symbol.</typeparam>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="christoffel">The result.</param>
+    public static void Christoffel<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField2x2<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor2<TDN, TN, Index<Upper, TPIN>> point,
+        out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI1N, Index1>(point);
+        var invMetric = value.Inverse();
+        Christoffel(metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFirst);
+        var result = Contract(invMetric, christoffelFirst);
+        christoffel = Unsafe.As<
+            Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
+            Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N>
+            >(ref result);
+    }
+
+    public static void Christoffel<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField3x3<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor3<TDN, TN, Index<Upper, TPIN>> point,
+        out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI1N, Index1>(point);
+        var invMetric = value.Inverse();
+        Christoffel(metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFirst);
+        var result = Contract(invMetric, christoffelFirst);
+        christoffel = Unsafe.As<
+            Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
+            Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N>
+            >(ref result);
+    }
+
+    public static void Christoffel<TDN, TN, TPIN, TI1N, TI2N, TI3N>(
+        FMMetricTensorField4x4<TDN, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<TDN, TN, Index<Upper, TPIN>> point,
+        out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
+        where TDN : IDual<TDN, TN>
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+    {
+        var value = metric.Compute<TI1N, Index1>(point);
+        var invMetric = value.Inverse();
+        Christoffel(metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFirst);
+        var result = Contract(invMetric, christoffelFirst);
+        christoffel = Unsafe.As<
+            Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
+            Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N>
+            >(ref result);
+    }
 
     /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
@@ -1953,9 +2415,9 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
 
+        christoffel = new();
         for (int k = 0; k < 2; k++)
         {
             for (int i = 0; i < 2; i++)
@@ -1981,9 +2443,9 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
 
+        christoffel = new();
         for (int k = 0; k < 3; k++)
         {
             for (int i = 0; i < 3; i++)
@@ -2009,9 +2471,9 @@ public static partial class DifGeo
         where TI2N : IIndexName
         where TI3N : IIndexName
     {
-        christoffel = new();
         Derivative(tape, metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TPIN>, Index<Lower, TI1N>, Index<Lower, TI2N>> derivative);
 
+        christoffel = new();
         for (int k = 0; k < 4; k++)
         {
             for (int i = 0; i < 4; i++)
@@ -2049,10 +2511,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
-
-        var result = Contract(invMetric, christoffelFK);
-
+        Christoffel(tape, metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFirst);
+        var result = Contract(invMetric, christoffelFirst);
         christoffel = Unsafe.As<
             Tensor<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
             Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N>
@@ -2074,10 +2534,8 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
-
-        var result = Contract(invMetric, christoffelFK);
-
+        Christoffel(tape, metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFirst);
+        var result = Contract(invMetric, christoffelFirst);
         christoffel = Unsafe.As<
             Tensor<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
             Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N>
@@ -2099,14 +2557,228 @@ public static partial class DifGeo
     {
         var value = metric.Compute<TI1N, Index1>(tape, point);
         var invMetric = value.Inverse();
-        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFK);
-
-        var result = Contract(invMetric, christoffelFK);
-
+        Christoffel(tape, metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI2N, TI3N> christoffelFirst);
+        var result = Contract(invMetric, christoffelFirst);
         christoffel = Unsafe.As<
             Tensor<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>>,
             Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, TI2N, TI3N>
             >(ref result);
+    }
+
+    /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index.</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index.</typeparam>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The result.</param>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField2x2<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        SecondDerivative(metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
+
+        derivative = new();
+        for (int m = 0; m < 2; m++)
+        {
+            for (int k = 0; k < 2; k++)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
+                        derivative[m, k, i, j] = 0.5 * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                    }
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField3x3<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        SecondDerivative(metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
+
+        derivative = new();
+        for (int m = 0; m < 3; m++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        derivative[m, k, i, j] = 0.5 * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                    }
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField4x4<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        SecondDerivative(metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> d2Metric);
+
+        derivative = new();
+        for (int m = 0; m < 4; m++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        derivative[m, k, i, j] = 0.5 * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index.</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index.</typeparam>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="derivative">The result.</param>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField2x2<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        Derivative(metric, point, out Tensor<Array2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(point);
+        DerivativeOfChristoffel(metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+
+        var firstPart = Contract(dInvMetric, christoffel);
+        var secondPart = Contract(invMetric, dChristoffel);
+
+        derivative = new();
+        for (int m = 0; m < 2; m++)
+        {
+            for (int k = 0; k < 2; k++)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
+                        derivative[m, k, i, j] = firstPart[m, k, i, j] + secondPart[k, m, i, j];
+                    }
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField3x3<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        Derivative(metric, point, out Tensor<Array3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(point);
+        DerivativeOfChristoffel(metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+
+        var firstPart = Contract(dInvMetric, christoffel);
+        var secondPart = Contract(invMetric, dChristoffel);
+
+        derivative = new();
+        for (int m = 0; m < 3; m++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        derivative[m, k, i, j] = firstPart[m, k, i, j] + secondPart[k, m, i, j];
+                    }
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN}, TN, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    public static void DerivativeOfChristoffel<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField4x4<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        Derivative(metric, point, out Tensor<Array4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, Index1>> dInvMetric);
+        Christoffel(metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Lower, Index1>, TI3N, TI4N> christoffel);
+        var invMetric = metric.ComputeInverse<TI2N, Index1>(point);
+        DerivativeOfChristoffel(metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI1N>, Index<Lower, Index1>, Index<Lower, TI3N>, Index<Lower, TI4N>> dChristoffel);
+
+        var firstPart = Contract(dInvMetric, christoffel);
+        var secondPart = Contract(invMetric, dChristoffel);
+
+        derivative = new();
+        for (int m = 0; m < 4; m++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        derivative[m, k, i, j] = firstPart[m, k, i, j] + secondPart[k, m, i, j];
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
@@ -2334,8 +3006,113 @@ public static partial class DifGeo
     }
 
     //
-    // Riemann tensors.
+    // Riemann tensors
     //
+
+    /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor.</typeparam>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <typeparam name="TI3N">The name of the third index.</typeparam>
+    /// <typeparam name="TI4N">The name of the fourth index.</typeparam>
+    /// <param name="metric">A metric tensor field.</param>
+    /// <param name="point">A point on the manifold.</param>
+    /// <param name="riemann">The result.</param>
+    public static void Riemann<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField2x2<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor2<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array2x2x2x2<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        DerivativeOfChristoffel(metric, point, out Tensor<Array2x2x2x2<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
+        Christoffel(metric, point, out Christoffel<Array2x2x2<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
+
+        riemann = new();
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                for (int k = 0; k < 2; k++)
+                {
+                    for (int l = 0; l < 2; l++)
+                    {
+                        riemann[i, j, k, l] = dChristoffel[k, i, j, l] - dChristoffel[l, i, j, k] + cChristoffels[i, k, j, l] - cChristoffels[i, l, j, k];
+                    }
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="Riemann{TN, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN}, TN, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    public static void Riemann<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField3x3<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor3<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array3x3x3x3<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        DerivativeOfChristoffel(metric, point, out Tensor<Array3x3x3x3<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
+        Christoffel(metric, point, out Christoffel<Array3x3x3<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
+
+        riemann = new();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    for (int l = 0; l < 3; l++)
+                    {
+                        riemann[i, j, k, l] = dChristoffel[k, i, j, l] - dChristoffel[l, i, j, k] + cChristoffels[i, k, j, l] - cChristoffels[i, l, j, k];
+                    }
+                }
+            }
+        }
+    }
+
+    /// <inheritdoc cref="Riemann{TN, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN}, TN, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN}, TN, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN}, TN, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    public static void Riemann<TN, TPIN, TI1N, TI2N, TI3N, TI4N>(
+        FMMetricTensorField4x4<HyperDual<TN>, TN, Index<Upper, TPIN>> metric,
+        AutoDiffTensor4<HyperDual<TN>, TN, Index<Upper, TPIN>> point,
+        out Tensor<Array4x4x4x4<TN>, TN, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
+        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+        where TPIN : IIndexName
+        where TI1N : IIndexName
+        where TI2N : IIndexName
+        where TI3N : IIndexName
+        where TI4N : IIndexName
+    {
+        DerivativeOfChristoffel(metric, point, out Tensor<Array4x4x4x4<TN>, TN, Index<Lower, TI3N>, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI4N>> dChristoffel);
+        Christoffel(metric, point, out Christoffel<Array4x4x4<TN>, TN, Index<Upper, TI1N>, Index1, TI3N> christoffel);
+        var cChristoffels = Contract(christoffel, christoffel.WithIndices<Index<Upper, Index1>, TI2N, TI4N>());
+
+        riemann = new();
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                for (int k = 0; k < 4; k++)
+                {
+                    for (int l = 0; l < 4; l++)
+                    {
+                        riemann[i, j, k, l] = dChristoffel[k, i, j, l] - dChristoffel[l, i, j, k] + cChristoffels[i, k, j, l] - cChristoffels[i, l, j, k];
+                    }
+                }
+            }
+        }
+    }
 
     /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
     /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
@@ -2447,7 +3224,7 @@ public static partial class DifGeo
     }
 
     //
-    // Tensor contractions
+    // Tensor Contractions
     //
 
     // Rank-one and rank-one.
