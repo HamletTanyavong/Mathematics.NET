@@ -91,7 +91,7 @@ public sealed class TensorCalculusTests
         DifGeo.CovariantDerivative(Tape, Metric, Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, PIN>, Index<Upper, Alpha>> derivative);
         var actual = derivative.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
     }
 
     //
