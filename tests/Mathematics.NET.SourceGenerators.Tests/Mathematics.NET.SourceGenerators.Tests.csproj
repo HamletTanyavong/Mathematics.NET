@@ -15,10 +15,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.13.1" />
-    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="1.6.0" />
-    <PackageReference Include="MSTest" Version="3.8.0" />
-    <PackageReference Include="Verify.MSTest" Version="28.11.0" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="1.6.2" />
+    <PackageReference Include="MSTest" Version="3.8.2" />
+    <PackageReference Include="Verify.MSTest" Version="28.13.0" />
     <PackageReference Include="Verify.SourceGenerators" Version="2.5.0" />
   </ItemGroup>
 
