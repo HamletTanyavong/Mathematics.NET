@@ -35,7 +35,7 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Represents a real number.</summary>
 /// <param name="real">The value of the number.</param>
-[Serializable, StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Sequential), Serializable]
 public readonly struct Real(double real)
     : IReal<Real>,
       IConstants<Real>,
