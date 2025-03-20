@@ -1,0 +1,24 @@
+# Dependabot Configuration for Mathematics.NET
+
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+  reviewers:
+  - HamletTanyavong
+
+- package-ecosystem: npm
+  directory: "docs"
+  schedule:
+    interval: daily
+  reviewers:
+  - HamletTanyavong
+
+- package-ecosystem: github-actions
+  directory: ".github/workflows"
+  schedule:
+    interval: daily
+  reviewers:
+  - HamletTanyavong
