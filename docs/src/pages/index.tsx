@@ -13,7 +13,6 @@ function HomepageHeader() {
     <header className={clsx('hero bg-secondary text-secondary-foreground overflow-hidden', styles.heroBanner)}>
       <AnimatedGridPattern
         numSquares={32}
-        maxOpacity={0.25}
         className="inset-y-[-50%] h-[200%] skew-x-6 skew-y-6 [mask-image:radial-gradient(50vw_circle_at_center,white,transparent)]"
       />
       <div className="z-10 container">
