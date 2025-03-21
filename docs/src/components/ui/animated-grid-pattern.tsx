@@ -92,7 +92,7 @@ export default function AnimatedGridPattern({
   }, [containerRef]);
 
   return (
-    <svg ref={containerRef} aria-hidden="true" className={cn('pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30', className)} {...props}>
+    <svg ref={containerRef} aria-hidden="true" className={cn('pointer-events-none absolute inset-0 h-full w-full bg-blue-500/10 stroke-gray-500/20', className)} {...props}>
       <defs>
         <pattern id={id} width={width} height={height} patternUnits="userSpaceOnUse" x={x} y={y}>
           <path d={`M.5 ${height}V.5H${width}`} fill="none" strokeDasharray={strokeDasharray} />
@@ -102,6 +102,7 @@ export default function AnimatedGridPattern({
       <svg x={x} y={y} className="overflow-visible">
         {squares.map(({ pos: [x, y], id }, index) => (
           <motion.rect
+            className={cn('fill-theme-blue')}
             initial={{ opacity: 0 }}
             animate={{ opacity: maxOpacity }}
             transition={{
@@ -116,7 +117,6 @@ export default function AnimatedGridPattern({
             height={height - 1}
             x={x * width + 1}
             y={y * height + 1}
-            fill="currentColor"
             strokeWidth="0"
           />
         ))}

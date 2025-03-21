@@ -1,100 +1,162 @@
-@import url('https://use.typekit.net/niu3heg.css');
+@import url('https://use.typekit.net/niu3heg.css') layer(base);
+@import 'tailwindcss';
 
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('../../static/fonts/JetBrainsMono-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('../../static/fonts/JetBrainsMono-Italic.woff2') format('woff2');
-  font-weight: normal;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('../../static/fonts/JetBrainsMono-Bold.woff2') format('woff2');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  src: url('../../static/fonts/JetBrainsMono-BoldItalic.woff2') format('woff2');
-  font-weight: bold;
-  font-style: italic;
-  font-display: swap;
-}
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@plugin 'tailwindcss-animate';
 
 @layer base {
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../../static/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../../static/fonts/JetBrainsMono-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../../static/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../../static/fonts/JetBrainsMono-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+  }
+}
+
+@custom-variant dark (&:is([data-theme="dark"] *));
+
+/*
+  Tailwind Colors
+
+  See: https://tailwindcss.com/docs/colors#customizing-your-colors
+*/
+@theme {
+  --color-theme-gold: var(--theme-color-gold);
+  --color-theme-blue: var(--theme-color-blue);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@layer base {
+  /*
+    The default border color has changed to `currentColor` in Tailwind CSS v4,
+    so we've added these compatibility styles to make sure everything still
+    looks the same as it did with Tailwind CSS v3.
+
+    If we ever want to remove these styles, we need to add an explicit border
+    color utility to any element that depends on these defaults.
+  */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 7.1%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7.1%;
-    --border: 0 0% 80.5%;
-    --input: 214.3 31.8% 91.4%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 7.1%;
-    --secondary: 0 0% 94.75%;
-    --secondary-foreground: 0 0% 7.1%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 215 20.2% 65.1%;
+    --theme-color-gold: oklch(88.68% 0.182186 95.3305);
+    --theme-color-blue: oklch(82.06% 0.0945 236.75);
+
+    --background: oklch(100% 0 0);
+    --foreground: oklch(18.27% 0 0);
+    --accent: oklch(96.84% 0.0068 247.9);
+    --accent-foreground: oklch(20.79% 0.0399 265.73);
+    --muted: oklch(96.84% 0.0068 247.9);
+    --muted-foreground: oklch(55.47% 0.0407 257.44);
+    --popover: oklch(100% 0 0);
+    --popover-foreground: oklch(18.27% 0 0);
+    --border: oklch(84.92% 0 0);
+    --input: oklch(92.9% 0.0126 255.53);
+    --card: oklch(100% 0 0);
+    --card-foreground: oklch(20.79% 0.0399 265.73);
+    --primary: oklch(100% 0 0);
+    --primary-foreground: oklch(18.27% 0 0);
+    --secondary: oklch(96% 0 0);
+    --secondary-foreground: oklch(18.27% 0 0);
+    --destructive: oklch(62.8% 0.2577 29.23);
+    --destructive-foreground: oklch(98.38% 0.0035 247.86);
+    --ring: oklch(71.07% 0.0351 256.79);
     --radius: 0.5rem;
   }
 
   [data-theme='dark'] {
-    --background: 0 0% 7.1%;
-    --foreground: 0 0% 96.5%;
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-    --popover: 0 0% 7.1%;
-    --popover-foreground: 0 0% 96.5%;
-    --border: 0 0% 19.5%;
-    --input: 216 34% 17%;
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
-    --primary: 0 0% 7.1%;
-    --primary-foreground: 0 0% 96.5%;
-    --secondary: 0 0% 5.25%;
-    --secondary-foreground: 0 0% 96.5%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 216 34% 17%;
+    --background: oklch(18.22% 0 0);
+    --foreground: oklch(97.34% 0 0);
+    --accent: oklch(27.63% 0.0369 258.3);
+    --accent-foreground: oklch(98.38% 0.0035 247.86);
+    --muted: oklch(20.52% 0.0395 266.62);
+    --muted-foreground: oklch(64.18% 0.036 257.43);
+    --popover: oklch(18.27% 0 0);
+    --popover-foreground: oklch(97.34% 0 0);
+    --border: oklch(31.6% 0 0);
+    --input: oklch(27.63% 0.0369 258.3);
+    --card: oklch(12.84% 0.0267 261.59);
+    --card-foreground: oklch(92.64% 0.0127 253.31);
+    --primary: oklch(18.27% 0 0);
+    --primary-foreground: oklch(97.34% 0 0);
+    --secondary: oklch(16.09% 0 0);
+    --secondary-foreground: oklch(97.34% 0 0);
+    --destructive: oklch(39.96% 0.1348 25.77);
+    --destructive-foreground: oklch(98.38% 0.0035 247.86);
+    --ring: oklch(27.63% 0.0369 258.3);
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   html {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 }
 
 /* Theme colors for Docusaurus */
 :root {
-  --ifm-color-primary: #2e8555;
+  --ifm-color-primary: black;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
   --ifm-color-primary-darkest: #205d3b;
@@ -102,10 +164,11 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
 
-  --ifm-navbar-background-color: hsl(var(--background));
-  --ifm-navbar-shadow: 0 1px 2px 0 hsl(var(--border));
+  --ifm-navbar-background-color: var(--background);
+  --ifm-navbar-shadow: 0 1px 2px 0 var(--border);
 
-  --ifm-footer-background-color: hsl(var(--secondary));
+  --ifm-hero-background-color: var(--background);
+  --ifm-footer-background-color: var(--secondary);
 
   /* Fonts */
   --ifm-font-family-base: neue-haas-unica, Arial, Helvetica, sans-serif;
@@ -115,14 +178,16 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-[data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
+html[data-theme='dark'] {
+  --ifm-color-primary: white;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
   --ifm-color-primary-darkest: #1a8870;
   --ifm-color-primary-light: #29d5b0;
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
+
+  --ifm-background-color: #121212;
 
   /* Code blocks */
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
@@ -143,6 +208,23 @@ code {
 
 /* Sidebar */
 
-.menu__caret:hover {
-  background-color: transparent;
+.menu__caret {
+  display: none;
+}
+
+/* Footer */
+
+.footer__link-item {
+  opacity: 0.75;
+}
+
+.footer__copyright {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+/* Miscellaneous */
+
+.iconExternalLink_nPIU {
+  display: none;
 }
