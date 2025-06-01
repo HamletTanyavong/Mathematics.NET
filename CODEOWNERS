@@ -1,0 +1,8 @@
+# Codeowners for Mathematics.NET
+
+# Global owner/s.
+* @HamletTanyavong
+
+# CODEOWNERS file owner/s.
+# Add this to make sure owner/s for the file are not changed by accident.
+.github/CODEOWNERS @HamletTanyavong
