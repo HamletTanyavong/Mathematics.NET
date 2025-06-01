@@ -20,5 +20,3 @@ updates:
   directory: ".github/workflows"
   schedule:
     interval: daily
-  reviewers:
-  - HamletTanyavong
