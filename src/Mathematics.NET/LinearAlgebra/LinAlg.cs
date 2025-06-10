@@ -88,7 +88,7 @@ public static class LinAlg
         where T : IComplex<T>
     {
         if (left.Width != right.Height)
-            throw new ArgumentException("Cannot multiply matrices of incompatible dimensions");
+            throw new ArgumentException("Cannot multiply matrices of incompatible dimensions.");
 
         Span2D<T> result = new T[left.Height, right.Width];
         for (int i = 0; i < left.Height; i++)

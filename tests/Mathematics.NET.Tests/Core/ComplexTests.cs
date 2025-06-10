@@ -246,7 +246,6 @@ public sealed class ComplexTests
     [DataRow(1.23, 45.678, 1, 0)]
     [DataRow(0, 1.2345, 6, 4)]
     [DataRow(1.2345, 0, 6, 1)]
-    [DataRow(1.2345, 0, 6, 1)]
     [DataRow(1.2345, 0, 7, 7)]
     [DataRow(1.2345, 0, 8, 8)]
     public void TryFormat_ComplexWithInadequateDestinationLength_ReturnsCorrectNumberOfCharsWritten(double inReal, double inImaginary, int length, int expected)
