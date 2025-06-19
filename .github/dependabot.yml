@@ -6,15 +6,11 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-  reviewers:
-  - HamletTanyavong
 
 - package-ecosystem: npm
   directory: "docs"
   schedule:
     interval: daily
-  reviewers:
-  - HamletTanyavong
 
 - package-ecosystem: github-actions
   directory: ".github/workflows"
