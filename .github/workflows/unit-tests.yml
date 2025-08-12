@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
       # We do not specify dotnet versions in the strategy matrix since we may need many versions for tests.
     - name: Set up .NET
