@@ -39,7 +39,7 @@ jobs:
     - name: Set up Pages
       uses: actions/configure-pages@v5
     - name: Upload Artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v4
       with:
         path: docs/build
     - name: Deploy to GitHub Pages
