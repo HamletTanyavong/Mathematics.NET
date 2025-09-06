@@ -22,7 +22,7 @@ jobs:
 
       # We do not specify dotnet versions in the strategy matrix since we may need many versions for tests.
     - name: Set up .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
           8.x
