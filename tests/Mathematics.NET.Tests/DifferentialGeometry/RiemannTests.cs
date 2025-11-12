@@ -60,7 +60,7 @@ public sealed class RiemannTests
     //
 
     [TestMethod]
-    [DynamicData(nameof(GetRiemannTensorData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetRiemannTensorData))]
     public void Riemann_FromMetricTensor_ReturnsRiemannTensor(object[] input, object[] values)
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1]);
