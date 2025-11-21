@@ -59,7 +59,7 @@ public sealed class Matrix4x4Tests
     // Tests
 
     [TestMethod]
-    [DynamicData(nameof(GetRealInputAndInverseData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetRealInputAndInverseData))]
     public void Inverse_MatrixOfReal_ReturnsInverseOfMatrix(Real[,] input, Real[,] expected)
         => Inverse_Helper_MatrixOfGeneric_ReturnsInverseOfMatrix(input, expected);
 
