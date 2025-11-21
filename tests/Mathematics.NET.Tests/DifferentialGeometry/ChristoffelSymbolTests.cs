@@ -75,7 +75,7 @@ public sealed class ChristoffelSymbolTests
     //
 
     [TestMethod]
-    [DynamicData(nameof(GetChristoffelSymbolOfFirstKindData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetChristoffelSymbolOfFirstKindData))]
     public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheFirstKind(object[] input, object[] values)
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -89,7 +89,7 @@ public sealed class ChristoffelSymbolTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetChristoffelSymbolOfSecondKindData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetChristoffelSymbolOfSecondKindData))]
     public void Christoffel_FromMetricTensor_ReturnsChristoffelSymbolOfTheSecondKind(object[] input, object[] values)
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);

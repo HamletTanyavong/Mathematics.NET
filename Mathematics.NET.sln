@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.7.34024.191
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11217.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET", "src\Mathematics.NET\Mathematics.NET.csproj", "{558EB964-1CE7-4786-9656-6EEC36A7072E}"
 EndProject
@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9EB2
 		.github\CODEOWNERS = .github\CODEOWNERS
 		.github\dependabot.yml = .github\dependabot.yml
 		.github\FUNDING.yml = .github\FUNDING.yml
+		global.json = global.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B32D7FF-257B-49BB-B495-D64E5E6C4C82}"

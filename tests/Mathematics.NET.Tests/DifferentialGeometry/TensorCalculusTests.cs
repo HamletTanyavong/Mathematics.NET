@@ -81,7 +81,7 @@ public sealed class TensorCalculusTests
     //
 
     [TestMethod]
-    [DynamicData(nameof(GetCovariantDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetCovariantDerivativeData))]
     public void CovariantDerivative_WithMetricTensorAndRankOneTensor_ReturnsCovariantDerivative(object[] input, object[] values)
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);

@@ -64,12 +64,12 @@ public sealed class LinAlgTests
     // Tests
 
     [TestMethod]
-    [DynamicData(nameof(GetComplexInputData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetComplexInputData))]
     public void QRGramSchmidt_MatrixOfComplex_ReturnsQRDecompositionOfMatrix(Complex[,] matrix)
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 
     [TestMethod]
-    [DynamicData(nameof(GetRealInputData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetRealInputData))]
     public void QRGramSchmidt_MatrixOfReal_ReturnsQRDecompositionOfMatrix(Real[,] matrix)
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 

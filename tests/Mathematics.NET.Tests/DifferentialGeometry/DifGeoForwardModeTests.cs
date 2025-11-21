@@ -98,7 +98,7 @@ public sealed class DifGeoForwardModeTests
     //
 
     [TestMethod]
-    [DynamicData(nameof(GetR1TensorDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetR1TensorDerivativeData))]
     public void Derivative_RankOneTensor_ReturnsRankTwoTensor(object[] input, object[] values)
     {
         var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -112,7 +112,7 @@ public sealed class DifGeoForwardModeTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetR2TensorDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetR2TensorDerivativeData))]
     public void Derivative_RankTwoTensor_ReturnsRankThreeTensor(object[] input, object[] values)
     {
         var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -126,7 +126,7 @@ public sealed class DifGeoForwardModeTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetMetricTensorDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetMetricTensorDerivativeData))]
     public void Derivative_Metric_ReturnsRankThreeTensor(object[] input, object[] values)
     {
         var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -140,7 +140,7 @@ public sealed class DifGeoForwardModeTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetInverseMetricTensorDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetInverseMetricTensorDerivativeData))]
     public void Derivative_InverseMetric_ReturnsRankThreeTensor(object[] input, object[] values)
     {
         var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -154,7 +154,7 @@ public sealed class DifGeoForwardModeTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetR1TensorSecondDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetR1TensorSecondDerivativeData))]
     public void SecondDerivative_RankOneTensor_ReturnsRankTwoTensor(object[] input, object[] values)
     {
         var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -168,7 +168,7 @@ public sealed class DifGeoForwardModeTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetR2TensorSecondDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetR2TensorSecondDerivativeData))]
     public void SecondDerivative_RankTwoTensor_ReturnsRankFourTensor(object[] input, object[] values)
     {
         var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
@@ -182,7 +182,7 @@ public sealed class DifGeoForwardModeTests
     }
 
     [TestMethod]
-    [DynamicData(nameof(GetMetricTensorSecondDerivativeData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetMetricTensorSecondDerivativeData))]
     public void SecondDerivative_MetricTensor_ReturnsRankFourTensor(object[] input, object[] values)
     {
         var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
