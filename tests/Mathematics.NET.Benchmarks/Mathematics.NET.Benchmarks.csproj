@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Mathematics.NET\Mathematics.NET.csproj" />
-    <ProjectReference Include="..\Mathematics.NET.Benchmarks.Impl\Mathematics.NET.Benchmarks.Impl.csproj" />
+    <ProjectReference Include="..\Mathematics.NET.Benchmarks.Implementations\Mathematics.NET.Benchmarks.Implementations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -29,7 +29,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 
 public static class Vector4Impl
 {

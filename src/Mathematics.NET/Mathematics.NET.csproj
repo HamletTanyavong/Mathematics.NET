@@ -67,7 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Mathematics.NET.Benchmarks.Impl" />
+    <InternalsVisibleTo Include="Mathematics.NET.Benchmarks.Implementations" />
   </ItemGroup>
 
 </Project>

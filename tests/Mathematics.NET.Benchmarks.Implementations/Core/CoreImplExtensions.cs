@@ -1,4 +1,4 @@
-// <copyright file="Beta.cs" company="Mathematics.NET">
+// <copyright file="CoreImplExtensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,11 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 
-namespace Mathematics.NET.Benchmarks.Impl.DifferentialGeometry.Symbols;
+namespace Mathematics.NET.Benchmarks.Implementations.Core;
 
-public readonly struct Beta : IIndexName
+public static class CoreImplExtensions
 {
-    public static string DisplayString => "Beta";
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Complex AsComplex(this Vector128<double> value)
+        => Unsafe.As<Vector128<double>, Complex>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector128<double> AsVector128(this Complex value)
+        => Unsafe.As<Complex, Vector128<double>>(ref value);
 }

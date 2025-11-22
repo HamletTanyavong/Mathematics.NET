@@ -30,7 +30,7 @@ using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
+namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 
 public static class Vector2Impl
 {

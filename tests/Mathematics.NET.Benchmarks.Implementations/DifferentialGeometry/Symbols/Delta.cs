@@ -1,4 +1,4 @@
-// <copyright file="ComplexImpl.cs" company="Mathematics.NET">
+// <copyright file="Delta.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,30 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.Intrinsics.X86;
+using Mathematics.NET.DifferentialGeometry;
 
-namespace Mathematics.NET.Benchmarks.Impl.Core;
+namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 
-public static class ComplexImpl
+public readonly struct Delta : IIndexName
 {
-    public static Complex MultiplyNaive(Complex left, Complex right)
-        => new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
-
-    public static Complex MultiplySimd(Complex left, Complex right)
-    {
-        if (Avx.IsSupported)
-        {
-            var vecL = left.AsVector128();
-            var vecR = right.AsVector128();
-
-            var mulStraight = Sse2.Multiply(vecL, vecR);
-            var mulCross = Sse2.Multiply(vecL, Avx.Permute(vecR, 0b00011001));
-
-            return Sse3.AddSubtract(Sse2.UnpackLow(mulStraight, mulCross), Sse2.UnpackHigh(mulStraight, mulCross)).AsComplex();
-        }
-        else
-        {
-            return new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
-        }
-    }
+    public static string DisplayString => "Delta";
 }

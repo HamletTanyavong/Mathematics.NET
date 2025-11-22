@@ -27,7 +27,7 @@
 
 using Mathematics.NET.DifferentialGeometry;
 
-namespace Mathematics.NET.Benchmarks.Impl.DifferentialGeometry.Symbols;
+namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 
 public readonly struct Alpha : IIndexName
 {

@@ -31,7 +31,7 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.Benchmarks.Impl.DifferentialGeometry;
+namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry;
 
 public static class DifGeoImpl
 {

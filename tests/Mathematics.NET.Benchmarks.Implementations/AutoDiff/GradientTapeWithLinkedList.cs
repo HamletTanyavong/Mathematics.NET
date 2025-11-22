@@ -32,7 +32,7 @@ using Mathematics.NET.Exceptions;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
-namespace Mathematics.NET.Benchmarks.Impl.AutoDiff;
+namespace Mathematics.NET.Benchmarks.Implementations.AutoDiff;
 
 // For small tapes, this seems to be slower. This may be different for large
 // tapes because of the way lists expand internally.

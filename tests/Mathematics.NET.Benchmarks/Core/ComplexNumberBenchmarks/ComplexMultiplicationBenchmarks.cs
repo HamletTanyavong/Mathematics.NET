@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Impl.Core;
+using Mathematics.NET.Benchmarks.Implementations.Core;
 
 namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 
