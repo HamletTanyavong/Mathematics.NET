@@ -25,8 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Impl.DifferentialGeometry;
-using Mathematics.NET.Benchmarks.Impl.DifferentialGeometry.Symbols;
+using Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry;
+using Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.LinearAlgebra;
 

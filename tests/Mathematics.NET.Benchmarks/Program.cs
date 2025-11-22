@@ -33,5 +33,5 @@ BenchmarkSwitcher
     .FromAssembly(typeof(Program).Assembly)
     .Run(args, new DebugInProcessConfig());
 #else
-Console.WriteLine("Must be in release mode to run benchmarks");
+Console.WriteLine("Benchmarks must be run in release mode.");
 #endif

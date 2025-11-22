@@ -25,68 +25,20 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.SourceGenerators.DifferentialGeometry;
-
 namespace Mathematics.NET.SourceGenerators;
 
+/// <summary>A class for creating diagnostic messages for use in Mathematics.NET source generators.</summary>
 internal static class DiagnosticMessages
 {
-    //
-    // Differential Geometry
-    //
-
-    public static DiagnosticDescriptor CreateInvalidMethodNameDiagnosticDescriptor()
+    public static DiagnosticDescriptor CreateInvalidIndexNameDeclarationDiagnosticDescriptor()
     {
         return new DiagnosticDescriptor(
-            id: "ISGDG0001",
-            title: "Invalid method name",
-            messageFormat: "Methods marked with attributes for generating contractions must be named \"Contract.\"",
+            id: "DG0001",
+            title: "Invalid index name declaration.",
+            messageFormat: "Index names must be declared in namespaces.",
             category: "DifGeo",
             defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
-    }
-
-    public static DiagnosticDescriptor CreateIncorrectIndexToContractDiagnosticDescriptor(IndexLocation indexLocation)
-    {
-        return new DiagnosticDescriptor(
-            id: "ISGDG0002",
-            title: "Incorrect index to contract",
-            messageFormat: $"The {(indexLocation == IndexLocation.First ? "first" : "second")} index of the tensor must be the index to contract.",
-            category: "DifGeo",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
-    }
-
-    public static DiagnosticDescriptor CreateIncorrectIndexPositionDiagnosticDescriptor(string indexPosition)
-    {
-        return new DiagnosticDescriptor(
-            id: "ISGDG0003",
-            title: "Incorrect index position",
-            messageFormat: $"The index position of the index to contract must be \"{indexPosition}.\"",
-            category: "DifGeo",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
-    }
-
-    public static DiagnosticDescriptor CreateIncorrectTypeParameterNameDiagnosticDescriptor()
-    {
-        return new DiagnosticDescriptor(
-            id: "ISGDG0004",
-            title: "Incorrect type parameter name",
-            messageFormat: "The type parameter name of the index to contract must be \"TCI.\"",
-            category: "DifGeo",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
-    }
-
-    public static DiagnosticDescriptor CreateMissingSummationComponentsDiagnosticDescriptor()
-    {
-        return new DiagnosticDescriptor(
-            id: "ISGDG0005",
-            title: "Missing summation components",
-            messageFormat: "Tensor contraction implementations are expected to have summation components—at least one for-loop and an add-assignment expression, as well as a multiplication expression for general contractions.",
-            category: "DifGeo",
-            defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true);
+            isEnabledByDefault: true,
+            helpLinkUri: "https://mathematics.hamlettanyavong.com/docs/diagnostic-messages/difgeo/dg0001");
     }
 }

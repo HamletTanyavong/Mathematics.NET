@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Benchmarks.Impl.LinearAlgebra;
+using Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;

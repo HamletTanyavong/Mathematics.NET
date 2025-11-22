@@ -26,7 +26,7 @@
 // </copyright>
 
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Benchmarks.Impl.AutoDiff;
+using Mathematics.NET.Benchmarks.Implementations.AutoDiff;
 
 namespace Mathematics.NET.Benchmarks.AutoDiff;
 

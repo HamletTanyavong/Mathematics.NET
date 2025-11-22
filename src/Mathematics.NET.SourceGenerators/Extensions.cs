@@ -26,7 +26,8 @@
 // </copyright>
 
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
+using System.Text;
+using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Mathematics.NET.SourceGenerators;
@@ -35,54 +36,25 @@ namespace Mathematics.NET.SourceGenerators;
 internal static class Extensions
 {
     /// <summary>Create a name syntax from a namespace.</summary>
-    /// <param name="namespaceString">A string representing a namespace.</param>
+    /// <param name="namespaceName">A string representing a namespace.</param>
     /// <returns>A name syntax.</returns>
-    public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceString)
+    public static NameSyntax CreateNameSyntaxFromNamespace(this string namespaceName)
     {
-        Debug.Assert(!namespaceString.Contains(' '), "The namespace string must not contain any spaces.");
-        ReadOnlySpan<string> names = namespaceString.Split('.');
+        Debug.Assert(!namespaceName.Contains(' '), "The namespace string must not contain any spaces.");
+        ReadOnlySpan<string> names = namespaceName.Split('.');
 
         NameSyntax result = IdentifierName(names[0]);
         for (int i = 1; i < names.Length; i++)
+        {
             result = QualifiedName(result, IdentifierName(names[i]));
+        }
 
         return result;
-    }
-
-    /// <summary>Remove an attribute from a method declaration syntax.</summary>
-    /// <param name="methodDeclarationSyntax">A method declaration syntax.</param>
-    /// <param name="attributeName">The name of the attribute.</param>
-    /// <returns>A method declaration syntax without the specified attribute.</returns>
-    public static MethodDeclarationSyntax RemoveAttribute(this MethodDeclarationSyntax methodDeclarationSyntax, string attributeName)
-    {
-        if (attributeName.EndsWith("Attribute"))
-            attributeName = attributeName.Remove(attributeName.Length - 9);
-        var attributeNode = methodDeclarationSyntax
-            .DescendantNodes()
-            .OfType<AttributeSyntax>()
-            .First(x => x.Name.GetLastIdentifierNameValueOrDefault() == attributeName);
-
-        if (attributeNode.Parent!.ChildNodes().Count() > 1)
-            return methodDeclarationSyntax.RemoveNode(attributeNode, SyntaxRemoveOptions.KeepNoTrivia)!;
-        else
-            return methodDeclarationSyntax.RemoveNode(attributeNode.Parent, SyntaxRemoveOptions.KeepNoTrivia)!;
     }
 
     //
     // Syntax helper
     //
-
-    /// <summary>Get the parameter list from a member declaration syntax.</summary>
-    /// <param name="memberDeclaration">A member declaration syntax.</param>
-    /// <returns>A parameter list syntax.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ParameterListSyntax? ParameterList(this MemberDeclarationSyntax memberDeclaration)
-    {
-        return memberDeclaration
-            .DescendantNodes()
-            .OfType<ParameterListSyntax>()
-            .FirstOrDefault();
-    }
 
     /// <summary>Get the value of the last identifier name in a name syntax.</summary>
     /// <param name="name">A type that derives from name syntax.</param>
@@ -97,15 +69,74 @@ internal static class Extensions
         };
     }
 
-    /// <summary>Get the type argument list from a parameter syntax.</summary>
-    /// <param name="parameter">A parameter syntax.</param>
-    /// <returns>A type argument list syntax.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static TypeArgumentListSyntax? TypeArgumentList(this ParameterSyntax parameter)
+    /// <summary>Get the namespace name syntax from a struct.</summary>
+    /// <param name="structDeclaration">A struct declaration syntax.</param>
+    /// <returns>A name syntax.</returns>
+    public static NameSyntax? GetNamespaceNameSyntaxFromStructOrDefault(this StructDeclarationSyntax structDeclaration)
     {
-        return parameter
-            .DescendantNodes()
-            .OfType<TypeArgumentListSyntax>()
-            .FirstOrDefault();
+        if (structDeclaration.Parent is FileScopedNamespaceDeclarationSyntax fileScopedNamespaceDeclaration)
+            return fileScopedNamespaceDeclaration.Name;
+
+        if (structDeclaration.Parent is NamespaceDeclarationSyntax namespaceDeclaration)
+            return namespaceDeclaration.Name.WithoutTrailingTrivia();
+
+        return default;
+    }
+
+    /// <summary>Get the value of a name syntax.</summary>
+    /// <param name="name">A name syntax.</param>
+    /// <returns>A string.</returns>
+    public static string? GetNameValueOrDefault(this NameSyntax? name)
+    {
+        if (name is null)
+            return default;
+
+        if (name is SimpleNameSyntax simpleName)
+            return simpleName.Identifier.Text;
+
+        if (name is QualifiedNameSyntax qualifiedName)
+        {
+            Stack<string> stack = new();
+            stack.Push(qualifiedName.Right.Identifier.Text);
+            while (qualifiedName.Left is QualifiedNameSyntax innerQualifiedName)
+            {
+                qualifiedName = innerQualifiedName;
+                stack.Push(qualifiedName.Right.Identifier.Text);
+            }
+            stack.Push(((SimpleNameSyntax)qualifiedName.Left).Identifier.Text);
+
+            StringBuilder builder = new();
+            while (stack.Count > 0)
+            {
+                _ = builder.Append(stack.Pop());
+                _ = builder.Append('.');
+            }
+            _ = builder.Remove(builder.Length - 1, 1);
+            return builder.ToString();
+        }
+
+        return default;
+    }
+
+    /// <summary>Create a struct declaration syntax with both open and close parenthesis.</summary>
+    /// <param name="structDeclarationSyntax">A struct declaration syntax.</param>
+    /// <param name="whitespace">Indentation whitespace characeters.</param>
+    /// <param name="extraNewLine">Whether or not to add an extra new line.</param>
+    /// <returns>A struct declaration syntax.</returns>
+    public static StructDeclarationSyntax WithOpenAndCloseBraceTokens(this StructDeclarationSyntax structDeclarationSyntax, string whitespace, bool extraNewLine)
+    {
+        return structDeclarationSyntax
+            .WithOpenBraceToken(
+                Token(
+                    TriviaList(
+                        Whitespace(whitespace)),
+                    SyntaxKind.OpenBraceToken,
+                    TriviaList(CarriageReturnLineFeed)))
+            .WithCloseBraceToken(
+                Token(
+                    TriviaList(
+                        Whitespace(whitespace)),
+                    SyntaxKind.CloseBraceToken,
+                    extraNewLine ? TriviaList(CarriageReturnLineFeed, CarriageReturnLineFeed) : TriviaList(CarriageReturnLineFeed)));
     }
 }
