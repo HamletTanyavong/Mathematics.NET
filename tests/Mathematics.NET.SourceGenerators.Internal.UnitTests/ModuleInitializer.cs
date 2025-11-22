@@ -1,4 +1,4 @@
-// <copyright file="MethodInformation.cs" company="Mathematics.NET">
+// <copyright file="ModuleInitializer.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,18 +25,12 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.Models;
+using System.Runtime.CompilerServices;
 
-/// <summary>A class containing information about a specific method.</summary>
-internal sealed class MethodInformation
+namespace Mathematics.NET.SourceGenerators.Internal.UnitTests;
+
+public static class ModuleInitializer
 {
-    public MethodInformation(AttributeSyntax attributeSyntax, MethodDeclarationSyntax methodDeclaration)
-    {
-        AttributeSyntax = attributeSyntax;
-        MethodDeclaration = methodDeclaration;
-    }
-
-    public AttributeSyntax AttributeSyntax { get; }
-
-    public MethodDeclarationSyntax MethodDeclaration { get; }
+    [ModuleInitializer]
+    public static void Initialize() => VerifySourceGenerators.Initialize();
 }

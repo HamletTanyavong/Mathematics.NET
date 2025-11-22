@@ -27,7 +27,7 @@
 
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
 /// <summary>A C# syntax rewriter that swaps indices in a type argument list.</summary>
 internal sealed class TypeArgumentIndexSwapRewriter : CSharpSyntaxRewriter

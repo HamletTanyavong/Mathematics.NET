@@ -1,4 +1,4 @@
-// <copyright file="BracketedArgumentIndexSwapRewriter.cs" company="Mathematics.NET">
+// <copyright file="FlipIndexPositionRewriter.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,32 +27,20 @@
 
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
-/// <summary>A C# syntax rewriter that swaps indices in a bracketed argument list.</summary>
-internal sealed class BracketedArgumentIndexSwapRewriter : CSharpSyntaxRewriter
+/// <summary>A C# syntax rewriter that flips lower indices to upper indices and vice versa.</summary>
+internal sealed class FlipIndexPositionRewriter : CSharpSyntaxRewriter
 {
-    private readonly ArgumentSyntax _indexToContract;
-    private readonly ArgumentSyntax _indexToSwap;
+    private static readonly IdentifierNameSyntax s_lower = SyntaxFactory.IdentifierName("Lower");
+    private static readonly IdentifierNameSyntax s_upper = SyntaxFactory.IdentifierName("Upper");
 
-    public BracketedArgumentIndexSwapRewriter(BracketedArgumentListSyntax bracketedArgumentList, string indexName)
+    public override SyntaxNode VisitIdentifierName(IdentifierNameSyntax node)
     {
-        _indexToContract = bracketedArgumentList.Arguments.Last(x => x.Expression is IdentifierNameSyntax name && name.Identifier.Text == indexName);
-        _indexToSwap = GetIndexToSwap(bracketedArgumentList);
-    }
-
-    private ArgumentSyntax GetIndexToSwap(BracketedArgumentListSyntax bracketedArgumentList)
-    {
-        var index = bracketedArgumentList.Arguments.IndexOf(_indexToContract);
-        return bracketedArgumentList.Arguments[index + 1];
-    }
-
-    public override SyntaxNode? VisitArgument(ArgumentSyntax node)
-    {
-        if (node == _indexToContract)
-            return _indexToSwap;
-        else if (node == _indexToSwap)
-            return _indexToContract;
+        if (node.Identifier.Text == "Lower")
+            return s_upper;
+        else if (node.Identifier.Text == "Upper")
+            return s_lower;
         return node;
     }
 }

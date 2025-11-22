@@ -1,4 +1,4 @@
-// <copyright file="ModuleInitializer.cs" company="Mathematics.NET">
+// <copyright file="IndexLocation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,12 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.CompilerServices;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
-namespace Mathematics.NET.SourceGenerators.Tests;
-
-public static class ModuleInitializer
+public enum IndexLocation : byte
 {
-    [ModuleInitializer]
-    public static void Initialize() => VerifySourceGenerators.Initialize();
+    First = 3,
+    Second = 4
 }

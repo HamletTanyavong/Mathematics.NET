@@ -29,7 +29,7 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
 /// <summary>A base class for tensor contraction builders.</summary>
 internal abstract class TensorContractionBuilderBase

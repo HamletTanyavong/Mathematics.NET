@@ -25,10 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.SourceGenerators.DifferentialGeometry;
+using Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Mathematics.NET.SourceGenerators.Tests.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.UnitTests.DifferentialGeometry;
 
 [TestClass]
 [TestCategory("Source Generator"), TestCategory("DifGeo")]

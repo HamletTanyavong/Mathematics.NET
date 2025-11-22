@@ -25,9 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.SourceGenerators.DifferentialGeometry;
+using Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
-namespace Mathematics.NET.SourceGenerators;
+namespace Mathematics.NET.SourceGenerators.Internal;
 
 internal static class DiagnosticMessages
 {

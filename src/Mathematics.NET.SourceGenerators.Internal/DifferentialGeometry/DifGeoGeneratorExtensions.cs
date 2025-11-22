@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
 /// <summary>Syntax helper for differential geometry generators.</summary>
 internal static class DifGeoGeneratorExtensions

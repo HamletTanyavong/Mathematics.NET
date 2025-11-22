@@ -29,7 +29,7 @@ using System.Collections.Immutable;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
 // The seed tensor contraction should have a lower index for the left argument and an upper
 // index for the right argument. This is purely by choice, but it makes the code generation

@@ -1,4 +1,4 @@
-// <copyright file="TensorContractionGenerator.cs" company="Mathematics.NET">
+// <copyright file="TensorSelfContractionGenerator.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,25 +28,25 @@
 using System.Collections.Immutable;
 using System.Text;
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
-/// <summary>A generator for tensor contractions.</summary>
+/// <summary>A generator for tensor self-contractions.</summary>
 [Generator]
-public sealed class TensorContractionGenerator : IIncrementalGenerator
+public sealed class TensorSelfContractionGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var provider = context.SyntaxProvider
-            .CreateSyntaxProvider(CouldBeGenerateTensorContractionAttribute, GetTensorContractionOrNull)
+            .CreateSyntaxProvider(CouldBeTensorSelfContractionAttribute, GetTensorSelfContractionOrNull)
             .Where(x => x is not null);
         var compilation = context.CompilationProvider.Combine(provider.Collect());
         context.RegisterSourceOutput(compilation, (context, source) => GenerateCode(context, source.Right));
     }
 
-    private static bool CouldBeGenerateTensorContractionAttribute(SyntaxNode syntaxNode, CancellationToken token)
-        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetLastIdentifierNameValueOrDefault() is "GenerateTensorContractions" or "GenerateTensorContractionsAttribute";
+    private static bool CouldBeTensorSelfContractionAttribute(SyntaxNode syntaxNode, CancellationToken token)
+        => syntaxNode is AttributeSyntax attributeSyntax && attributeSyntax.Name.GetLastIdentifierNameValueOrDefault() is "GenerateTensorSelfContractions" or "GenerateTensorSelfContractionsAttribute";
 
-    private static MethodInformation GetTensorContractionOrNull(GeneratorSyntaxContext context, CancellationToken token)
+    private static MethodInformation GetTensorSelfContractionOrNull(GeneratorSyntaxContext context, CancellationToken token)
     {
         // The method syntax will not be null if attribute syntax is not null since the attribute can only be applied to methods.
         var attribute = (AttributeSyntax)context.Node;
@@ -55,7 +55,7 @@ public sealed class TensorContractionGenerator : IIncrementalGenerator
 
     private void GenerateCode(SourceProductionContext context, ImmutableArray<MethodInformation> information)
     {
-        var tensorContractions = new TensorContractionBuilder(context, information);
-        context.AddSource("DifGeo.Contractions.g.cs", tensorContractions.GenerateSource().GetText(Encoding.UTF8).ToString());
+        var tensorSelfContractions = new TensorSelfContractionBuilder(context, information);
+        context.AddSource("DifGeo.SelfContractions.g.cs", tensorSelfContractions.GenerateSource().GetText(Encoding.UTF8).ToString());
     }
 }

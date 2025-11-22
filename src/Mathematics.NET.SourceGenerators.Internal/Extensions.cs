@@ -29,7 +29,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators;
+namespace Mathematics.NET.SourceGenerators.Internal;
 
 /// <summary>Extension methods for source generators.</summary>
 internal static class Extensions

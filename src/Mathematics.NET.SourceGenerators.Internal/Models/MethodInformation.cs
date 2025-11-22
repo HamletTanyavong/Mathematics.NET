@@ -1,4 +1,4 @@
-// <copyright file="IndexLocation.cs" company="Mathematics.NET">
+// <copyright file="MethodInformation.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,10 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.DifferentialGeometry;
+namespace Mathematics.NET.SourceGenerators.Internal.Models;
 
-public enum IndexLocation : byte
+/// <summary>A class containing information about a specific method.</summary>
+internal sealed class MethodInformation
 {
-    First = 3,
-    Second = 4
+    public MethodInformation(AttributeSyntax attributeSyntax, MethodDeclarationSyntax methodDeclaration)
+    {
+        AttributeSyntax = attributeSyntax;
+        MethodDeclaration = methodDeclaration;
+    }
+
+    public AttributeSyntax AttributeSyntax { get; }
+
+    public MethodDeclarationSyntax MethodDeclaration { get; }
 }
