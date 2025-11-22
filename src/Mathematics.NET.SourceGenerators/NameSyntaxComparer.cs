@@ -1,4 +1,4 @@
-// <copyright file="StructInformation.cs" company="Mathematics.NET">
+// <copyright file="NameSyntaxComparer.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,21 +25,16 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.SourceGenerators.Public.Models;
+namespace Mathematics.NET.SourceGenerators;
 
-/// <summary>A class containing information about an index name struct.</summary>
-internal sealed class StructInformation
+internal sealed class NameSyntaxComparer : IEqualityComparer<NameSyntax?>
 {
-    public StructInformation(NameSyntax? namespaceNameSyntax, AttributeSyntax attributeSyntax, StructDeclarationSyntax structDeclarationSyntax)
+    public bool Equals(NameSyntax? x, NameSyntax? y)
     {
-        AttributeSyntax = attributeSyntax;
-        NamespaceNameSyntax = namespaceNameSyntax;
-        StructDeclarationSyntax = structDeclarationSyntax;
+        if (x is not null && y is not null)
+            return x.GetNameValueOrDefault() == y.GetNameValueOrDefault();
+        return x == y;
     }
 
-    public AttributeSyntax AttributeSyntax { get; }
-
-    public NameSyntax? NamespaceNameSyntax { get; }
-
-    public StructDeclarationSyntax StructDeclarationSyntax { get; }
+    public int GetHashCode(NameSyntax? obj) => obj?.GetNameValueOrDefault()?.GetHashCode() ?? 0;
 }

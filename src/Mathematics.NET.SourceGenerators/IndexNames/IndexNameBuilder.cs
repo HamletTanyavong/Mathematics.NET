@@ -26,11 +26,11 @@
 // </copyright>
 
 using System.Collections.Immutable;
-using Mathematics.NET.SourceGenerators.Public.Models;
+using Mathematics.NET.SourceGenerators.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators.Public.IndexNames;
+namespace Mathematics.NET.SourceGenerators.IndexNames;
 
 /// <summary>Index name builder.</summary>
 internal sealed class IndexNameBuilder

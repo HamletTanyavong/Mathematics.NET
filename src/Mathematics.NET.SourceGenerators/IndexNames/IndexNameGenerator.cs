@@ -27,9 +27,9 @@
 
 using System.Collections.Immutable;
 using System.Text;
-using Mathematics.NET.SourceGenerators.Public.Models;
+using Mathematics.NET.SourceGenerators.Models;
 
-namespace Mathematics.NET.SourceGenerators.Public.IndexNames;
+namespace Mathematics.NET.SourceGenerators.IndexNames;
 
 /// <summary>A generator for index names.</summary>
 [Generator]

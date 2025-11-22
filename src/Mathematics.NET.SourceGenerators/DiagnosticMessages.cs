@@ -1,4 +1,4 @@
-// <copyright file="ModuleInitializer.cs" company="Mathematics.NET">
+// <copyright file="DiagnosticMessages.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,12 +25,20 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.CompilerServices;
+namespace Mathematics.NET.SourceGenerators;
 
-namespace Mathematics.NET.SourceGenerators.Public.Tests;
-
-public static class ModuleInitializer
+/// <summary>A class for creating diagnostic messages for use in Mathematics.NET source generators.</summary>
+internal static class DiagnosticMessages
 {
-    [ModuleInitializer]
-    public static void Initialize() => VerifySourceGenerators.Initialize();
+    public static DiagnosticDescriptor CreateInvalidIndexNameDeclarationDiagnosticDescriptor()
+    {
+        return new DiagnosticDescriptor(
+            id: "DG0001",
+            title: "Invalid index name declaration.",
+            messageFormat: "Index names must be declared in namespaces.",
+            category: "DifGeo",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            helpLinkUri: "https://mathematics.hamlettanyavong.com/docs/diagnostic-messages/difgeo/dg0001");
+    }
 }

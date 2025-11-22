@@ -30,7 +30,7 @@ using System.Text;
 using Microsoft.CodeAnalysis.CSharp;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Mathematics.NET.SourceGenerators.Public;
+namespace Mathematics.NET.SourceGenerators;
 
 /// <summary>Extension methods for source generators.</summary>
 internal static class Extensions

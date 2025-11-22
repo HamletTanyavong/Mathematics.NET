@@ -25,10 +25,10 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.SourceGenerators.Public.IndexNames;
+using Mathematics.NET.SourceGenerators.IndexNames;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Mathematics.NET.SourceGenerators.Public.Tests.IndexNames;
+namespace Mathematics.NET.SourceGenerators.UnitTests.IndexNames;
 
 [TestClass]
 [TestCategory("Source Generator"), TestCategory("DifGeo")]
