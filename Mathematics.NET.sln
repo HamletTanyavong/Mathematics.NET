@@ -24,8 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{91DB0FE7
 		tests\.runsettings = tests\.runsettings
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Tests", "tests\Mathematics.NET.Tests\Mathematics.NET.Tests.csproj", "{A608C0E2-D431-45E9-AD05-A49115BE59AB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mathematics.NET.Benchmarks", "tests\Mathematics.NET.Benchmarks\Mathematics.NET.Benchmarks.csproj", "{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{9EB26D49-7E18-4404-BDCB-D26B827C4A22}"
@@ -55,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.SourceGener
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.SourceGenerators.UnitTests", "tests\Mathematics.NET.SourceGenerators.UnitTests\Mathematics.NET.SourceGenerators.UnitTests.csproj", "{D8E33FB7-FCE0-8086-697D-D27F7589EBB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mathematics.NET.UnitTests", "tests\Mathematics.NET.UnitTests\Mathematics.NET.UnitTests.csproj", "{AF4E27C9-02C2-1C1D-7336-1D1066B7D0D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +65,6 @@ Global
 		{558EB964-1CE7-4786-9656-6EEC36A7072E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{558EB964-1CE7-4786-9656-6EEC36A7072E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{558EB964-1CE7-4786-9656-6EEC36A7072E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A608C0E2-D431-45E9-AD05-A49115BE59AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A608C0E2-D431-45E9-AD05-A49115BE59AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A608C0E2-D431-45E9-AD05-A49115BE59AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A608C0E2-D431-45E9-AD05-A49115BE59AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -97,13 +93,16 @@ Global
 		{D8E33FB7-FCE0-8086-697D-D27F7589EBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8E33FB7-FCE0-8086-697D-D27F7589EBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8E33FB7-FCE0-8086-697D-D27F7589EBB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF4E27C9-02C2-1C1D-7336-1D1066B7D0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF4E27C9-02C2-1C1D-7336-1D1066B7D0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF4E27C9-02C2-1C1D-7336-1D1066B7D0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF4E27C9-02C2-1C1D-7336-1D1066B7D0D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{558EB964-1CE7-4786-9656-6EEC36A7072E} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
-		{A608C0E2-D431-45E9-AD05-A49115BE59AB} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{DD2741ED-C10C-4D76-8CEB-C378F3626D0D} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{1B32D7FF-257B-49BB-B495-D64E5E6C4C82} = {9EB26D49-7E18-4404-BDCB-D26B827C4A22}
 		{89C3482F-0027-483E-AAD7-5E12453915B3} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
@@ -112,6 +111,7 @@ Global
 		{71F969A6-3DD6-FA11-2C45-80C8021F81F5} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 		{3D05A7E5-AB4E-4A63-82DD-E34BFCE13D82} = {DAD16084-D255-4DF4-A20D-077E92B88EC5}
 		{D8E33FB7-FCE0-8086-697D-D27F7589EBB2} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
+		{AF4E27C9-02C2-1C1D-7336-1D1066B7D0D2} = {91DB0FE7-BAA4-4D16-8A39-65332DD53662}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {179D9282-B1D9-42EC-A6A0-C1970012ED73}

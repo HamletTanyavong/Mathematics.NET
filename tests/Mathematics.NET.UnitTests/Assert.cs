@@ -29,7 +29,7 @@ using CommunityToolkit.HighPerformance;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
-namespace Mathematics.NET.Tests;
+namespace Mathematics.NET.UnitTests;
 
 /// <summary>Assert helpers for Mathemtics.NET.</summary>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>

@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Tests.Core;
+namespace Mathematics.NET.UnitTests.Core;
 
 [TestClass]
 [TestCategory("Core"), TestCategory("Precision")]

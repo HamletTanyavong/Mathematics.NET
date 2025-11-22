@@ -27,7 +27,7 @@
 
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Tests.LinearAlgebra;
+namespace Mathematics.NET.UnitTests.LinearAlgebra;
 
 [TestClass]
 [TestCategory("Linear Algebra")]

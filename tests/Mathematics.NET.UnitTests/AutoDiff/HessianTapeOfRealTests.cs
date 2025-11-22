@@ -1,4 +1,4 @@
-// <copyright file="GradientTapeOfRealTests.cs" company="Mathematics.NET">
+// <copyright file="HessianTapeOfRealTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,19 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Data;
+using CommunityToolkit.HighPerformance;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Tests.AutoDiff;
+namespace Mathematics.NET.UnitTests.AutoDiff;
 
 [TestClass]
-[TestCategory("AutoDiff"), TestCategory("Gradient Tape")]
-public sealed class GradientTapeOfRealTests
+[TestCategory("AutoDiff"), TestCategory("Hessian Tape")]
+public sealed class HessianTapeOfRealTests
 {
-    private GradientTape<Real> _tape;
+    private HessianTape<Real> _tape;
 
-    public GradientTapeOfRealTests()
+    public HessianTapeOfRealTests()
     {
         _tape = new();
     }
@@ -56,6 +55,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(0.123, -0.125845035324435)]
+    public void Acos_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Acos, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(0.123, 1.447484051603025)]
     public void Acos_Variable_ReturnsValue(double input, double expected)
     {
@@ -69,6 +77,15 @@ public sealed class GradientTapeOfRealTests
     public void Acosh_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Acosh, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -3.348544407755665)]
+    public void Acosh_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Acosh, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -94,6 +111,17 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, 0, 0, 0)]
+    public void Add_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        var actual = ComputeHessian(_tape.Add, left, right);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 3.57)]
     public void Add_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
@@ -108,9 +136,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Add(left, x);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Add_ConstantAndVariable_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Add(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -132,9 +173,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Add(x, right);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Add_VariableAndConstant_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Add(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -160,6 +214,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(0.123, 0.125845035324435)]
+    public void Asin_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Asin, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(0.123, 0.123312275191872)]
     public void Asin_Variable_ReturnsValue(double input, double expected)
     {
@@ -173,6 +236,15 @@ public sealed class GradientTapeOfRealTests
     public void Asinh_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Asinh, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.3087751219667227)]
+    public void Asinh_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Asinh, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -196,6 +268,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, -0.3895692725912341)]
+    public void Atan_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Atan, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 0.88817377437768)]
     public void Atan_Variable_ReturnsValue(double input, double expected)
     {
@@ -214,9 +295,24 @@ public sealed class GradientTapeOfRealTests
 
         Real[] expected = [expectedLeft, expectedRight];
 
-        _tape.ReverseAccumulate(out var actual);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, -0.1178645019844717, -0.081137805227897, 0.1178645019844717)]
+    public void Atan2_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Atan2(y, x);
+
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
     }
 
     [TestMethod]
@@ -241,6 +337,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 9.35125088756106)]
+    public void Atanh_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Atanh, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(0.123, 0.1236259811831301)]
     public void Atanh_Variable_ReturnsValue(double input, double expected)
     {
@@ -254,6 +359,15 @@ public sealed class GradientTapeOfRealTests
     public void Cbrt_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Cbrt, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.1573785841306649)]
+    public void Cbrt_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Cbrt, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -277,6 +391,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, -0.3342377271245026)]
+    public void Cos_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Cos, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 0.3342377271245026)]
     public void Cos_Variable_ReturnsValue(double input, double expected)
     {
@@ -290,6 +413,15 @@ public sealed class GradientTapeOfRealTests
     public void Cosh_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Cosh, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 1.856761056985266)]
+    public void Cosh_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Cosh, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -335,13 +467,52 @@ public sealed class GradientTapeOfRealTests
         var y = _tape.CreateVariable(left);
         var x = _tape.CreateVariable(right);
         var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-        _ = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u);
+
+        _ = _tape.CustomOperation(
+            y,
+            x,
+            Real.Atan2,
+            (y, x) => x * u,
+            (y, x) => Real.Zero, // Not of interest
+            (y, x) => Real.Zero, // Not of interest
+            (y, x) => -y * u,
+            (y, x) => Real.Zero); // Not of interest
 
         Real[] expected = [expectedLeft, expectedRight];
 
-        _tape.ReverseAccumulate(out var actual);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, -0.1178645019844717, -0.081137805227897, 0.1178645019844717)]
+    public void CustomOperation_Binary_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+
+        var u = y.Value * y.Value;
+        var v = x.Value * x.Value;
+        var a = Real.One / (u + v);
+        var b = a * a;
+        var dfyy = -2.0 * x.Value * b * y.Value;
+
+        _ = _tape.CustomOperation(
+            y,
+            x,
+            Real.Atan2,
+            (y, x) => x * a,
+            (y, x) => dfyy,
+            (y, x) => (u - v) * b,
+            (y, x) => -y * a,
+            (y, x) => -dfyy);
+
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
     }
 
     [TestMethod]
@@ -350,9 +521,22 @@ public sealed class GradientTapeOfRealTests
     {
         var y = _tape.CreateVariable(left);
         var x = _tape.CreateVariable(right);
-        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
 
-        var actual = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u).Value;
+        var u = y.Value * y.Value;
+        var v = x.Value * x.Value;
+        var a = Real.One / (u + v);
+        var b = a * a;
+        var dfyy = -2.0 * x.Value * b * y.Value;
+
+        var actual = _tape.CustomOperation(
+            y,
+            x,
+            Real.Atan2,
+            (y, x) => x * a,
+            (y, x) => dfyy,
+            (y, x) => (u - v) * b,
+            (y, x) => -y * a,
+            (y, x) => -dfyy).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -362,10 +546,27 @@ public sealed class GradientTapeOfRealTests
     public void CustomOperation_Unary_ReturnsGradient(double input, double expected)
     {
         var x = _tape.CreateVariable(input);
-        _ = _tape.CustomOperation(x, Real.Sin, Real.Cos);
-        _tape.ReverseAccumulate(out var gradient);
+        _ = _tape.CustomOperation(
+            x,
+            Real.Sin,
+            Real.Cos,
+            x => Real.Zero); // Not of interest
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.942488801931697)]
+    public void CustomOperation_Unary_ReturnsHessian(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+        _ = _tape.CustomOperation(x, Real.Sin, Real.Cos, x => -Real.Sin(x));
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -376,7 +577,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
 
-        var actual = _tape.CustomOperation(x, Real.Sin, Real.Cos).Value;
+        var actual = _tape.CustomOperation(x, Real.Sin, Real.Cos, x => -Real.Sin(x)).Value;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -388,6 +589,17 @@ public sealed class GradientTapeOfRealTests
         Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Divide, left, right);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0, -0.1826283877565929, 0.1919939461030848)]
+    public void Divide_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        var actual = ComputeHessian(_tape.Divide, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -407,9 +619,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Divide(left, x);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.1919939461030848)]
+    public void Divide_ConstantAndVariable_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Divide(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -431,11 +656,24 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Divide(x, right);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Divide_VariableAndConstant_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Divide(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
 
     [TestMethod]
@@ -460,6 +698,15 @@ public sealed class GradientTapeOfRealTests
 
     [TestMethod]
     [DataRow(1.23, 3.421229536289673)]
+    public void Exp_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Exp, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 3.421229536289673)]
     public void Exp_Variable_ReturnsValue(double input, double expected)
     {
         var actual = ComputeValue(_tape.Exp, input);
@@ -472,6 +719,15 @@ public sealed class GradientTapeOfRealTests
     public void Exp2_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Exp2, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 1.126984172374114)]
+    public void Exp2_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Exp2, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -495,6 +751,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 90.0391481211886)]
+    public void Exp10_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Exp10, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 16.98243652461744)]
     public void Exp10_Variable_ReturnsValue(double input, double expected)
     {
@@ -508,6 +773,15 @@ public sealed class GradientTapeOfRealTests
     public void Ln_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Ln, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.6609822195782934)]
+    public void Ln_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Ln, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -533,6 +807,17 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, -0.7774880868134957, -0.4807142135095495, 0.1753670976636016)]
+    public void Log_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        var actual = ComputeHessian(_tape.Log, left, right);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 0.2435028442982799)]
     public void Log_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
@@ -546,6 +831,15 @@ public sealed class GradientTapeOfRealTests
     public void Log2_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Log2, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.953595770301384)]
+    public void Log2_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Log2, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -569,6 +863,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, -0.2870609305990163)]
+    public void Log10_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Log10, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 0.0899051114393979)]
     public void Log10_Variable_ReturnsValue(double input, double expected)
     {
@@ -587,7 +890,22 @@ public sealed class GradientTapeOfRealTests
 
         Real[] expected = [expectedLeft, expectedRight];
 
-        _tape.ReverseAccumulate(out var actual);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0, 0, 0)]
+    public void Modulo_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+        _ = _tape.Modulo(x, y);
+
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -610,9 +928,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Modulo(left, x);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Modulo_ConstantAndVariable_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Modulo(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -634,9 +965,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Modulo(x, right);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Modulo_VariableAndConstant_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Modulo(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -664,6 +1008,17 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, 0, 1, 0)]
+    public void Multiply_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        var actual = ComputeHessian(_tape.Multiply, left, right);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 2.8782)]
     public void Multiply_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
@@ -678,11 +1033,24 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Multiply(left, x);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Multiply_ConstantAndVariable_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Multiply(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
 
     [TestMethod]
@@ -702,11 +1070,24 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Multiply(x, right);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Multiply_VariableAndConstant_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Multiply(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
 
     [TestMethod]
@@ -725,6 +1106,17 @@ public sealed class GradientTapeOfRealTests
     public void Negate_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Negate, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0)]
+    public void Negate_Variable_ReturnsHessian(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+
+        var actual = ComputeHessian(_tape.Negate, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -750,6 +1142,17 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, 3.364251027050465, 1.958969363947686, 0.06956296832768787)]
+    public void Pow_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        var actual = ComputeHessian(_tape.Pow, left, right);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, 1.623222151685371)]
     public void Pow_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
@@ -764,9 +1167,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Pow(left, x);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.06956296832768787)]
+    public void Pow_ConstantAndVariable_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Pow(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -788,9 +1204,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Pow(x, right);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 3.364251027050465)]
+    public void Pow_VariableAndConstant_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Pow(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -806,25 +1235,39 @@ public sealed class GradientTapeOfRealTests
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
-    [TestMethod]
-    public void ReverseAccumulate_WithCheckpointing_ReturnsGradients()
-    {
-        var vector = _tape.CreateAutoDiffVector(1.23, 2.34, 3.45, 4.56);
+    // NOTE: Uncomment this when testing checkpointing implementations for Hessian tapes.
 
-        var u = _tape.CreateCheckpoint(_tape.Cos(_tape.Multiply(_tape.Sin(_tape.Multiply(vector.X1, vector.X2)), vector.X4)));
-        var v = _tape.CreateCheckpoint(_tape.Divide(_tape.Exp(_tape.Multiply(vector.X3, vector.X2)), u));
-        var x = _tape.Exp(_tape.Divide(u, _tape.Sqrt(_tape.Multiply(_tape.Multiply(vector.X3, vector.X4), vector.X2))));
-        var y = _tape.Add(u, _tape.Multiply(_tape.Ln(_tape.Divide(vector.X3, vector.X4)), _tape.Multiply(v, vector.X1)));
+    //[TestMethod]
+    //public void ReverseAccumulate_WithCheckpointing_ReturnsHessians()
+    //{
+    //    var vector = _tape.CreateAutoDiffVector(1.23, 2.34, 3.45, 4.56);
 
-        Real[] expectedX = [1.67479908078448, 0.866325347771631, -0.00950769726936101, -0.04951809751601818];
-        Real[] expectedY = [72675.93346228106, 29314.79027740105, -3824.679197396951, -4208.3704226546];
+    //    var u = _tape.CreateCheckpoint(_tape.Cos(_tape.Multiply(_tape.Sin(_tape.Multiply(vector.X1, vector.X2)), vector.X4)));
+    //    var v = _tape.CreateCheckpoint(_tape.Divide(_tape.Exp(_tape.Multiply(vector.X3, vector.X2)), u));
+    //    var x = _tape.Exp(_tape.Divide(u, _tape.Sqrt(_tape.Multiply(_tape.Multiply(vector.X3, vector.X4), vector.X2))));
+    //    var y = _tape.Add(u, _tape.Multiply(_tape.Ln(_tape.Divide(vector.X3, vector.X4)), _tape.Multiply(v, vector.X1)));
 
-        _tape.ReverseAccumulate(out var actualX, x.Index);
-        _tape.ReverseAccumulate(out var actualY, y.Index);
+    //    Real[,] expectedX = new Real[4, 4]
+    //    {
+    //        { -3.269111440669215,  -1.382588686878912,  -0.2576955176979706,  0.2816358989885482   },
+    //        { -1.382588686878911,  -1.29349964200687,   -0.1332984723661985,  0.1592727857914262   },
+    //        { -0.2576955176979706, -0.1332984723661985, 0.004218770637959509, 0.007619177680006728 },
+    //        { 0.2816358989885482,  0.1592727857914262,  0.007619177680006728, 0.00950636476047293  }
+    //    };
+    //    Real[,] expectedY = new Real[4, 4]
+    //    {
+    //        { -3974963.896171443, -1838701.006587713, 94531.7459783768,   176781.9853341257  },
+    //        { -1838701.006587713, -894765.86272895,   35189.07508929406,  80204.1648122194   },
+    //        { 94531.7459783768,   35189.07508929406,  -2686.604369731605, -7876.060456864863 },
+    //        { 176781.9853341257,  80204.1648122194,   -7876.060456864863, -5122.315081861823 }
+    //    };
 
-        Assert<Real>.AreApproximatelyEqual(expectedX, actualX, 1e-14);
-        Assert<Real>.AreApproximatelyEqual(expectedY, actualY, 1e-14);
-    }
+    //    _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actualX, x.Index);
+    //    _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actualY, y.Index);
+
+    //    Assert<Real>.AreApproximatelyEqual(expectedX, actualX, 1e-14);
+    //    Assert<Real>.AreApproximatelyEqual(expectedY, actualY, 1e-14);
+    //}
 
     [TestMethod]
     [DataRow(1.23, 2.34, 0.3795771135606888, -0.04130373687338086)]
@@ -833,6 +1276,17 @@ public sealed class GradientTapeOfRealTests
         Real[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Root, left, right);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, -0.1767192454212087, -0.1765629860861052, 0.03686389570982799)]
+    public void Root_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        var actual = ComputeHessian(_tape.Root, left, right);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -851,6 +1305,15 @@ public sealed class GradientTapeOfRealTests
     public void Sin_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Sin, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.942488801931697)]
+    public void Sin_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Sin, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -875,6 +1338,15 @@ public sealed class GradientTapeOfRealTests
 
     [TestMethod]
     [DataRow(1.23, 1.564468479304407)]
+    public void Sinh_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Sinh, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 1.564468479304407)]
     public void Sinh_Variable_ReturnsValue(double input, double expected)
     {
         var actual = ComputeValue(_tape.Sinh, input);
@@ -887,6 +1359,15 @@ public sealed class GradientTapeOfRealTests
     public void Sqrt_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Sqrt, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.1832661859080147)]
+    public void Sqrt_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Sqrt, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -912,6 +1393,17 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 2.34, 0, 0, 0)]
+    public void Subtract_TwoVariables_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        var actual = ComputeHessian(_tape.Subtract, left, right);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.34, -1.11)]
     public void Subtract_TwoVariables_ReturnsValue(double left, double right, double expected)
     {
@@ -926,9 +1418,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(right);
         _ = _tape.Subtract(left, x);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Subtract_ConstantAndVariable_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(right);
+        _ = _tape.Subtract(left, x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -950,9 +1455,22 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(left);
         _ = _tape.Subtract(x, right);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
 
         var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0)]
+    public void Subtract_VariableAndConstant_ReturnsHessian(double left, double right, double expected)
+    {
+        var x = _tape.CreateVariable(left);
+        _ = _tape.Subtract(x, right);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
     }
@@ -978,6 +1496,15 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
+    [DataRow(1.23, 50.4823759141874)]
+    public void Tan_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Tan, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
     [DataRow(1.23, 2.819815734268152)]
     public void Tan_Variable_ReturnsValue(double input, double expected)
     {
@@ -991,6 +1518,15 @@ public sealed class GradientTapeOfRealTests
     public void Tanh_Variable_ReturnsGradient(double input, double expected)
     {
         var actual = ComputeGradient(_tape.Tanh, input);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.4887972531670078)]
+    public void Tanh_Variable_ReturnsHessian(double input, double expected)
+    {
+        var actual = ComputeHessian(_tape.Tanh, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
@@ -1012,7 +1548,7 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
         _ = function(x);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
         return gradient[0];
     }
 
@@ -1021,8 +1557,25 @@ public sealed class GradientTapeOfRealTests
         var x = _tape.CreateVariable(left);
         var y = _tape.CreateVariable(right);
         _ = function(x, y);
-        _tape.ReverseAccumulate(out var gradient);
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
         return gradient.ToArray();
+    }
+
+    private Real ComputeHessian(Func<Variable<Real>, Variable<Real>> function, Real input)
+    {
+        var x = _tape.CreateVariable(input);
+        _ = function(x);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+        return hessian[0, 0];
+    }
+
+    private Real[,] ComputeHessian(Func<Variable<Real>, Variable<Real>, Variable<Real>> function, Real left, Real right)
+    {
+        var x = _tape.CreateVariable(left);
+        var y = _tape.CreateVariable(right);
+        _ = function(x, y);
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+        return hessian.ToArray();
     }
 
     private Real ComputeValue(Func<Variable<Real>, Variable<Real>> function, Real input)

@@ -31,7 +31,7 @@ using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.LinearAlgebra;
 
-namespace Mathematics.NET.Tests.DifferentialGeometry;
+namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 
 [TestClass]
 [TestCategory("DifGeo"), TestCategory("Christoffel")]

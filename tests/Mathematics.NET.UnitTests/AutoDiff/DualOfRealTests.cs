@@ -27,7 +27,7 @@
 
 using Mathematics.NET.AutoDiff;
 
-namespace Mathematics.NET.Tests.AutoDiff;
+namespace Mathematics.NET.UnitTests.AutoDiff;
 
 [TestClass]
 [TestCategory("AutoDiff"), TestCategory("Dual Number")]

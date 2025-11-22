@@ -1,4 +1,4 @@
-// <copyright file="DifGeoForwardModeTests.cs" company="Mathematics.NET">
+// <copyright file="DifGeoReverseModeTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,68 +30,74 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.LinearAlgebra;
-using static Mathematics.NET.AutoDiff.HyperDual<Mathematics.NET.Core.Real>;
 
-namespace Mathematics.NET.Tests.DifferentialGeometry;
+namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 
 [TestClass]
 [TestCategory("DifGeo")]
-public sealed class DifGeoForwardModeTests
+public sealed class DifGeoReverseModeTests
 {
-    public static FMTensorField4<HyperDual<Real>, Real, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
+    public static RMTensorField4<HessianTape<Real>, Real, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
 
-    public static FMTensorField4x4<HyperDual<Real>, Real, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
+    public static RMTensorField4x4<HessianTape<Real>, Real, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
 
-    public static FMMetricTensorField4x4<HyperDual<Real>, Real, Index<Upper, PIN>> MetricTensor { get; set; } = new();
+    public static RMMetricTensorField4x4<HessianTape<Real>, Real, Index<Upper, PIN>> MetricTensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
     {
-        R1Tensor[0] = x => Sin(x.X0 + x.X1);
-        R1Tensor[1] = x => Cos(x.X1 + x.X2);
-        R1Tensor[2] = x => Exp(x.X2 + x.X3);
-        R1Tensor[3] = x => Sqrt(x.X3 + x.X0);
+        R1Tensor[0] = (tape, x) => tape.Sin(tape.Add(x.X0, x.X1));
+        R1Tensor[1] = (tape, x) => tape.Cos(tape.Add(x.X1, x.X2));
+        R1Tensor[2] = (tape, x) => tape.Exp(tape.Add(x.X2, x.X3));
+        R1Tensor[3] = (tape, x) => tape.Sqrt(tape.Add(x.X3, x.X0));
 
-        R2Tensor[0, 0] = x => Sin(x.X0);
-        R2Tensor[0, 1] = x => 2 * Cos(x.X1);
-        R2Tensor[0, 2] = x => 3 * Exp(x.X2);
-        R2Tensor[0, 3] = x => 4 * Ln(x.X3);
+        R2Tensor[0, 0] = (tape, x) => tape.Sin(x.X0);
+        R2Tensor[0, 1] = (tape, x) => tape.Multiply(2, tape.Cos(x.X1));
+        R2Tensor[0, 2] = (tape, x) => tape.Multiply(3, tape.Exp(x.X2));
+        R2Tensor[0, 3] = (tape, x) => tape.Multiply(4, tape.Ln(x.X3));
 
-        R2Tensor[1, 0] = x => 5 * Sqrt(x.X1);
-        R2Tensor[1, 1] = x => 6 * Tan(x.X2);
-        R2Tensor[1, 2] = x => 7 * Sinh(x.X3);
-        R2Tensor[1, 3] = x => 8 * Cosh(x.X0);
+        R2Tensor[1, 0] = (tape, x) => tape.Multiply(5, tape.Sqrt(x.X1));
+        R2Tensor[1, 1] = (tape, x) => tape.Multiply(6, tape.Tan(x.X2));
+        R2Tensor[1, 2] = (tape, x) => tape.Multiply(7, tape.Sinh(x.X3));
+        R2Tensor[1, 3] = (tape, x) => tape.Multiply(8, tape.Cosh(x.X0));
 
-        R2Tensor[2, 0] = x => 9 * Tanh(x.X2);
-        R2Tensor[2, 1] = x => 10 / x.X3;
-        R2Tensor[2, 2] = x => 11 * Pow(x.X0, 2);
-        R2Tensor[2, 3] = x => 12 * Sin(x.X1) * Cos(x.X1);
+        R2Tensor[2, 0] = (tape, x) => tape.Multiply(9, tape.Tanh(x.X2));
+        R2Tensor[2, 1] = (tape, x) => tape.Divide(10, x.X3);
+        R2Tensor[2, 2] = (tape, x) => tape.Multiply(11, tape.Pow(x.X0, 2));
+        R2Tensor[2, 3] = (tape, x) => tape.Multiply(12, tape.Multiply(tape.Sin(x.X1), tape.Cos(x.X1)));
 
-        R2Tensor[3, 0] = x => 13 * Exp(x.X3) * Sin(x.X0);
-        R2Tensor[3, 1] = x => 14 * x.X3 / x.X1;
-        R2Tensor[3, 2] = x => 15 * Sin(x.X3 - 2 * x.X2);
-        R2Tensor[3, 3] = x => 16 * x.X0 * x.X1 * x.X2 * x.X3;
+        R2Tensor[3, 0] = (tape, x) => tape.Multiply(13, tape.Multiply(tape.Exp(x.X3), tape.Sin(x.X0)));
+        R2Tensor[3, 1] = (tape, x) => tape.Multiply(14, tape.Divide(x.X3, x.X1));
+        R2Tensor[3, 2] = (tape, x) => tape.Multiply(15, tape.Sin(tape.Subtract(x.X3, tape.Multiply(2, x.X2))));
+        R2Tensor[3, 3] = (tape, x) => tape.Multiply(16, tape.Multiply(x.X0, tape.Multiply(x.X1, tape.Multiply(x.X2, x.X3))));
 
-        MetricTensor[0, 0] = x => Sin(x.X0);
-        MetricTensor[0, 1] = x => 2 * Cos(x.X1);
-        MetricTensor[0, 2] = x => 3 * Exp(x.X2);
-        MetricTensor[0, 3] = x => 4 * Ln(x.X3);
+        MetricTensor[0, 0] = (tape, x) => tape.Sin(x.X0);
+        MetricTensor[0, 1] = (tape, x) => tape.Multiply(2, tape.Cos(x.X1));
+        MetricTensor[0, 2] = (tape, x) => tape.Multiply(3, tape.Exp(x.X2));
+        MetricTensor[0, 3] = (tape, x) => tape.Multiply(4, tape.Ln(x.X3));
 
-        MetricTensor[1, 0] = x => 5 * Sqrt(x.X1);
-        MetricTensor[1, 1] = x => 6 * Tan(x.X2);
-        MetricTensor[1, 2] = x => 7 * Sinh(x.X3);
-        MetricTensor[1, 3] = x => 8 * Cosh(x.X0);
+        MetricTensor[1, 0] = (tape, x) => tape.Multiply(5, tape.Sqrt(x.X1));
+        MetricTensor[1, 1] = (tape, x) => tape.Multiply(6, tape.Tan(x.X2));
+        MetricTensor[1, 2] = (tape, x) => tape.Multiply(7, tape.Sinh(x.X3));
+        MetricTensor[1, 3] = (tape, x) => tape.Multiply(8, tape.Cosh(x.X0));
 
-        MetricTensor[2, 0] = x => 9 * Tanh(x.X2);
-        MetricTensor[2, 1] = x => 10 / x.X3;
-        MetricTensor[2, 2] = x => 11 * Pow(x.X0, 2);
-        MetricTensor[2, 3] = x => 12 * Sin(x.X1) * Cos(x.X1);
+        MetricTensor[2, 0] = (tape, x) => tape.Multiply(9, tape.Tanh(x.X2));
+        MetricTensor[2, 1] = (tape, x) => tape.Divide(10, x.X3);
+        MetricTensor[2, 2] = (tape, x) => tape.Multiply(11, tape.Pow(x.X0, 2));
+        MetricTensor[2, 3] = (tape, x) => tape.Multiply(12, tape.Multiply(tape.Sin(x.X1), tape.Cos(x.X1)));
 
-        MetricTensor[3, 0] = x => 13 * Exp(x.X3) * Sin(x.X0);
-        MetricTensor[3, 1] = x => 14 * x.X3 / x.X1;
-        MetricTensor[3, 2] = x => 15 * Sin(x.X3 - 2 * x.X2);
-        MetricTensor[3, 3] = x => 16 * x.X0 * x.X1 * x.X2 * x.X3;
+        MetricTensor[3, 0] = (tape, x) => tape.Multiply(13, tape.Multiply(tape.Exp(x.X3), tape.Sin(x.X0)));
+        MetricTensor[3, 1] = (tape, x) => tape.Multiply(14, tape.Divide(x.X3, x.X1));
+        MetricTensor[3, 2] = (tape, x) => tape.Multiply(15, tape.Sin(tape.Subtract(x.X3, tape.Multiply(2, x.X2))));
+        MetricTensor[3, 3] = (tape, x) => tape.Multiply(16, tape.Multiply(x.X0, tape.Multiply(x.X1, tape.Multiply(x.X2, x.X3))));
     }
+
+    public DifGeoReverseModeTests()
+    {
+        Tape = new();
+    }
+
+    public HessianTape<Real> Tape { get; set; }
 
     //
     // Tests
@@ -101,11 +107,11 @@ public sealed class DifGeoForwardModeTests
     [DynamicData(nameof(GetR1TensorDerivativeData))]
     public void Derivative_RankOneTensor_ReturnsRankTwoTensor(object[] input, object[] values)
     {
-        var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,])values[0];
 
-        DifGeo.Derivative(R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
+        DifGeo.Derivative(Tape, R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
         var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
@@ -115,11 +121,11 @@ public sealed class DifGeoForwardModeTests
     [DynamicData(nameof(GetR2TensorDerivativeData))]
     public void Derivative_RankTwoTensor_ReturnsRankThreeTensor(object[] input, object[] values)
     {
-        var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Derivative(R2Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
+        DifGeo.Derivative(Tape, R2Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
         var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
@@ -129,11 +135,11 @@ public sealed class DifGeoForwardModeTests
     [DynamicData(nameof(GetMetricTensorDerivativeData))]
     public void Derivative_Metric_ReturnsRankThreeTensor(object[] input, object[] values)
     {
-        var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Derivative(MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Delta>> dTensor);
+        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> dTensor);
         var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
@@ -143,11 +149,11 @@ public sealed class DifGeoForwardModeTests
     [DynamicData(nameof(GetInverseMetricTensorDerivativeData))]
     public void Derivative_InverseMetric_ReturnsRankThreeTensor(object[] input, object[] values)
     {
-        var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.Derivative(MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Delta>> dTensor);
+        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
         var actual = dTensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-13);
@@ -155,13 +161,13 @@ public sealed class DifGeoForwardModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetR1TensorSecondDerivativeData))]
-    public void SecondDerivative_RankOneTensor_ReturnsRankTwoTensor(object[] input, object[] values)
+    public void SecondDerivative_RankOneTensor_ReturnsRankThreeTensor(object[] input, object[] values)
     {
-        var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,])values[0];
 
-        DifGeo.SecondDerivative(R1Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
+        DifGeo.SecondDerivative(Tape, R1Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
         var actual = d2Tensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
@@ -171,11 +177,11 @@ public sealed class DifGeoForwardModeTests
     [DynamicData(nameof(GetR2TensorSecondDerivativeData))]
     public void SecondDerivative_RankTwoTensor_ReturnsRankFourTensor(object[] input, object[] values)
     {
-        var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,,])values[0];
 
-        DifGeo.SecondDerivative(R2Tensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Upper, Gamma>, Index<Upper, Delta>> d2Tensor);
+        DifGeo.SecondDerivative(Tape, R2Tensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Upper, Gamma>, Index<Upper, Delta>> d2Tensor);
         var actual = d2Tensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
@@ -185,11 +191,11 @@ public sealed class DifGeoForwardModeTests
     [DynamicData(nameof(GetMetricTensorSecondDerivativeData))]
     public void SecondDerivative_MetricTensor_ReturnsRankFourTensor(object[] input, object[] values)
     {
-        var point = CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real[,,,])values[0];
 
-        DifGeo.SecondDerivative(MetricTensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> d2Tensor);
+        DifGeo.SecondDerivative(Tape, MetricTensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> d2Tensor);
         var actual = d2Tensor.ToArray();
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
