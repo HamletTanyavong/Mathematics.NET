@@ -76,20 +76,19 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
                                 TriviaList())),
                     UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
                     UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace())]))
-                .WithMembers(
-                    SingletonList<MemberDeclarationSyntax>(
-                        FileScopedNamespaceDeclaration(
-                            "Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
-                                .WithMembers(
-                                    SingletonList<MemberDeclarationSyntax>(
-                                        ClassDeclaration("DifGeo")
-                                            .WithModifiers(
-                                                TokenList([
-                                                    Token(SyntaxKind.PublicKeyword),
-                                                    Token(SyntaxKind.StaticKeyword),
-                                                    Token(SyntaxKind.PartialKeyword)]))
-                                            .WithMembers(
-                                                List(memberDeclarations))))))
+            .WithMembers(
+                SingletonList<MemberDeclarationSyntax>(
+                    FileScopedNamespaceDeclaration("Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
+                        .WithMembers(
+                            SingletonList<MemberDeclarationSyntax>(
+                                ClassDeclaration("DifGeo")
+                                    .WithModifiers(
+                                        TokenList([
+                                            Token(SyntaxKind.PublicKeyword),
+                                            Token(SyntaxKind.StaticKeyword),
+                                            Token(SyntaxKind.PartialKeyword)]))
+                                    .WithMembers(
+                                        List(memberDeclarations))))))
             .NormalizeWhitespace()
             .WithTrailingTrivia(CarriageReturnLineFeed);
     }

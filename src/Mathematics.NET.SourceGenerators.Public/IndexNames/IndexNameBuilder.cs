@@ -112,10 +112,10 @@ internal sealed class IndexNameBuilder
     {
         var indexName = structDeclaration.Identifier.Text;
         return StructDeclaration(
-                Identifier(
-                    TriviaList(),
-                    indexName,
-                    TriviaList(Space)))
+            Identifier(
+                TriviaList(),
+                indexName,
+                TriviaList(Space)))
             .WithKeyword(
                 Token(
                     TriviaList(),
@@ -172,49 +172,48 @@ internal sealed class IndexNameBuilder
                                 TriviaList(),
                                 "DisplayString",
                                 TriviaList(Space)))
-                        .WithInitializer(
-                            EqualsValueClause(
-                                LiteralExpression(
-                                    SyntaxKind.StringLiteralExpression,
-                                    Literal(indexName)))
-                            .WithEqualsToken(
-                                Token(
-                                    TriviaList(),
-                                    SyntaxKind.EqualsToken,
-                                    TriviaList(Space)))))))
-                .WithModifiers(
-                    TokenList(
-                        Token(
-                            TriviaList(
-                                Whitespace("    "),
-                                Trivia(GenerateDocumentationComment()),
-                                Whitespace("    ")),
-                            SyntaxKind.PublicKeyword,
-                            TriviaList(Space)),
-                        Token(
-                            TriviaList(),
-                            SyntaxKind.ConstKeyword,
-                            TriviaList(Space))))
-                .WithSemicolonToken(
+                            .WithInitializer(
+                                EqualsValueClause(
+                                    LiteralExpression(
+                                        SyntaxKind.StringLiteralExpression,
+                                        Literal(indexName)))
+                                    .WithEqualsToken(
+                                        Token(
+                                            TriviaList(),
+                                            SyntaxKind.EqualsToken,
+                                            TriviaList(Space)))))))
+            .WithModifiers(
+                TokenList(
+                    Token(
+                        TriviaList(
+                            Whitespace("    "),
+                            Trivia(GenerateDocumentationComment()),
+                            Whitespace("    ")),
+                        SyntaxKind.PublicKeyword,
+                        TriviaList(Space)),
                     Token(
                         TriviaList(),
-                        SyntaxKind.SemicolonToken,
-                        TriviaList(
-                            CarriageReturnLineFeed)));
+                        SyntaxKind.ConstKeyword,
+                        TriviaList(Space))))
+            .WithSemicolonToken(
+                Token(
+                    TriviaList(),
+                    SyntaxKind.SemicolonToken,
+                    TriviaList(CarriageReturnLineFeed)));
     }
 
     private PropertyDeclarationSyntax GenerateDisplayStringProperty()
     {
         return PropertyDeclaration(
-                PredefinedType(
-                    Token(
-                        TriviaList(),
-                        SyntaxKind.StringKeyword,
-                        TriviaList(Space))),
-                Identifier(
+            PredefinedType(
+                Token(
                     TriviaList(),
-                    "DisplayString",
-                    TriviaList(Space)))
+                    SyntaxKind.StringKeyword,
+                    TriviaList(Space))),
+            Identifier(
+                TriviaList(),
+                "DisplayString",
+                TriviaList(Space)))
             .WithModifiers(
                 TokenList(
                     Token(
@@ -228,11 +227,11 @@ internal sealed class IndexNameBuilder
             .WithExpressionBody(
                 ArrowExpressionClause(
                     IdentifierName("DisplayString"))
-                .WithArrowToken(
-                    Token(
-                        TriviaList(),
-                        SyntaxKind.EqualsGreaterThanToken,
-                        TriviaList(Space))))
+                    .WithArrowToken(
+                        Token(
+                            TriviaList(),
+                            SyntaxKind.EqualsGreaterThanToken,
+                            TriviaList(Space))))
             .WithSemicolonToken(
                 Token(
                     TriviaList(),

@@ -39,9 +39,9 @@ internal abstract class TensorContractionBuilderBase
             .WithTypeArgumentList(
                 TypeArgumentList(
                     SeparatedList<TypeSyntax>(new SyntaxNodeOrToken[] {
-                            IdentifierName("Lower"),
-                            Token(SyntaxKind.CommaToken),
-                            IdentifierName("TCI") })));
+                        IdentifierName("Lower"),
+                        Token(SyntaxKind.CommaToken),
+                        IdentifierName("TCI") })));
 
     private protected static readonly GenericNameSyntax s_rightIndex = GenericName(
         Identifier("Index"))
