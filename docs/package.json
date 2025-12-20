@@ -25,7 +25,7 @@
     "motion": "^12.23.26",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.2.3",
-    "react-dom": "^19.2.1",
+    "react-dom": "^19.2.3",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
   },
