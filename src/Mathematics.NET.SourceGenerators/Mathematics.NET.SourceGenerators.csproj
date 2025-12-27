@@ -6,7 +6,7 @@
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <Title>Mathematics.NET.SourceGenerators</Title>
-    <PackageId>Physics.NET.Mathematics.SourceGenerators</PackageId>
+    <PackageId>Mathematics.NET.SourceGenerators</PackageId>
     <Description>Mathematics.NET.SourceGenerators is a source generator for use with Mathematics.NET.</Description>
     <PackageIcon>mathematics.net.png</PackageIcon>
     <PackageTags>autodiff; complex; math; mathematics; physics; rational; source generators; tensors;</PackageTags>

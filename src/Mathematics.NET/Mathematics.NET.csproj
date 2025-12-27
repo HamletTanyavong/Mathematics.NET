@@ -4,7 +4,7 @@
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Title>Mathematics.NET</Title>
-    <PackageId>Physics.NET.Mathematics</PackageId>
+    <PackageId>Mathematics.NET</PackageId>
     <PackageIcon>mathematics.net.png</PackageIcon>
     <Description>Mathematics.NET is a C# class library that provides tools for solving mathematical problems. Included are custom types for real, complex, and rational numbers as well as other mathematical objects such as vectors, matrices, and tensors. The library also contains methods for performing first and second-order, forward and reverse-mode automatic differentiation.</Description>
     <PackageTags>autodiff; complex; math; mathematics; physics; rational; tensors;</PackageTags>
