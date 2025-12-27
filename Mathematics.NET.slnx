@@ -1,0 +1,37 @@
+<Solution>
+  <Folder Name="/.github/">
+    <File Path=".github/CODEOWNERS" />
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/FUNDING.yml" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/codeql.yml" />
+    <File Path=".github/workflows/generate-documentation-site.yml" />
+    <File Path=".github/workflows/unit-tests.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="CITATION.cff" />
+    <File Path="Directory.Build.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="THIRD_PARTY_NOTICES.txt" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Mathematics.NET.DevApp/Mathematics.NET.DevApp.csproj" />
+    <Project Path="src/Mathematics.NET.SourceGenerators.Internal/Mathematics.NET.SourceGenerators.Internal.csproj" />
+    <Project Path="src/Mathematics.NET.SourceGenerators/Mathematics.NET.SourceGenerators.csproj" />
+    <Project Path="src/Mathematics.NET/Mathematics.NET.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/.runsettings" />
+    <Project Path="tests/Mathematics.NET.Benchmarks.Implementations/Mathematics.NET.Benchmarks.Implementations.csproj" />
+    <Project Path="tests/Mathematics.NET.Benchmarks/Mathematics.NET.Benchmarks.csproj" />
+    <Project Path="tests/Mathematics.NET.SourceGenerators.Internal.UnitTests/Mathematics.NET.SourceGenerators.Internal.UnitTests.csproj" />
+    <Project Path="tests/Mathematics.NET.SourceGenerators.UnitTests/Mathematics.NET.SourceGenerators.UnitTests.csproj" />
+    <Project Path="tests/Mathematics.NET.UnitTests/Mathematics.NET.UnitTests.csproj" />
+  </Folder>
+</Solution>
