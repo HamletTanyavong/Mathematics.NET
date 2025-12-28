@@ -44,7 +44,7 @@ jobs:
 
     - name: Pack ${{ matrix.project }}
       working-directory: src/${{ matrix.project }}
-      run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output ../../${{ vars.PACKAGES_DIR }}
+      run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output ${{ vars.PACKAGES_DIR }}
 
   upload-artifacts:
     name: Upload Artifacts
