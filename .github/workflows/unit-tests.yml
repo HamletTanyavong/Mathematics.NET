@@ -5,8 +5,14 @@ name: Unit Tests
 on:
   push:
     branches: [ main, dev ]
+    paths:
+    - src/Mathematics.NET/**
+    - src/Mathematics.NET.SourceGenerators/**
   pull_request:
     branches: [ main, dev ]
+    paths:
+    - src/Mathematics.NET/**
+    - src/Mathematics.NET.SourceGenerators/**
 
 jobs:
   test:
