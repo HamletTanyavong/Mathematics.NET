@@ -17,6 +17,8 @@ on:
 jobs:
   test:
     name: Run Unit Tests
+    permissions:
+      contents: read
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
