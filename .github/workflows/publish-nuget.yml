@@ -34,7 +34,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Create Packages Directory
-      run: mkdir -p ${{ env.PACKAGES_DIR }}
+      run: mkdir -p ${{ vars.PACKAGES_DIR }}
 
     - name: Set Package Version
       id: get_version
@@ -45,13 +45,13 @@ jobs:
 
     - name: Pack ${{ matrix.project }}
       working-directory: src/${{ matrix.project }}
-      run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output ../../${{ env.PACKAGES_DIR }}
+      run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output ../../${{ vars.PACKAGES_DIR }}
 
     - name: Upload Packages
       uses: actions/upload-artifact@v6
       with:
         name: nuget-packages
-        path: ${{ env.PACKAGES_DIR }}
+        path: ${{ vars.PACKAGES_DIR }}
 
   publish:
     name: Publish NuGet Packages
@@ -66,7 +66,7 @@ jobs:
       uses: actions/download-artifact@v7
       with:
         name: nuget-packages
-        path: ${{ env.PACKAGES_DIR }}
+        path: ${{ vars.PACKAGES_DIR }}
 
     - name: NuGet Login
       uses: NuGet/login@v1
@@ -77,13 +77,13 @@ jobs:
     - name: Push Packages
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        for pkg in ${{ env.PACKAGES_DIR }}/*.nupkg; do
+        for pkg in ${{ vars.PACKAGES_DIR }}/*.nupkg; do
           dotnet nuget push "$pkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
         done
 
     - name: Push Symbols Packages
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        for sympkg in ${{ env.PACKAGES_DIR }}/*.snupkg; do
+        for sympkg in ${{ vars.PACKAGES_DIR }}/*.snupkg; do
           dotnet nuget push "$sympkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
         done
