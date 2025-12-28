@@ -9,7 +9,6 @@
     <Platforms>AnyCPU</Platforms>
     
     <!-- Package information -->
-    <Version>0.4.0-alpha.1</Version>
     <Authors>Hamlet Tanyavong</Authors>
     <Copyright>Copyright (c) 2023-present Hamlet Tanyavong</Copyright>
     <PackageProjectUrl>https://mathematics.hamlettanyavong.com</PackageProjectUrl>
