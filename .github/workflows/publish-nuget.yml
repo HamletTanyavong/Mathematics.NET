@@ -5,12 +5,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
-    name: Build and Publish NuGet Packages
+  build-and-pack:
+    name: Build and Pack NuGet Packages
     permissions:
       contents: read
       id-token: write
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [ Mathematics.NET, Mathematics.NET.SourceGenerators ]
 
     steps:
     - name: Checkout Repository
@@ -26,22 +29,33 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore
 
-    - name: Build Mathematics.NET Project
-      working-directory: src/Mathematics.NET
+    - name: Build ${{ matrix.project }}
+      working-directory: src/${{ matrix.project }}
       run: dotnet build --configuration Release --no-restore
 
-    - name: Pack Mathematics.NET
-      working-directory: src/Mathematics.NET
-      run: dotnet pack --configuration Release --p:Version=${{github.ref_name}} --no-build --output artifacts/packages/release
+    - name: Create Packages Directory
+      run: mkdir -p artifacts/packages
 
-    - name: Build Mathematics.NET.SourceGenerators Project
-      working-directory: src/Mathematics.NET.SourceGenerators
-      run: dotnet build --configuration Release --no-restore
+    - name: Set Package Version
+      id: get_version
+      run: |
+        TAG_NAME="${{ github.ref_name }}"
+        VERSION=${TAG_NAME#v}
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-    - name: Pack Mathematics.NET.SourceGenerators
-      working-directory: src/Mathematics.NET.SourceGenerators
-      run: dotnet pack --configuration Release --p:Version=${{github.ref_name}} --no-build --output artifacts/packages/release
+    - name: Pack ${{ matrix.project }}
+      working-directory: src/${{ matrix.project }}
+      run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output artifacts/packages
 
+  publish:
+    name: Publish NuGet Packages
+    needs: build-and-pack
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
     - name: NuGet Login
       uses: NuGet/login@v1
       id: login
@@ -51,13 +65,13 @@ jobs:
     - name: Push Packages
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        for pkg in artifacts/packages/release/*.nupkg; do
+        for pkg in artifacts/packages/*.nupkg; do
           dotnet nuget push "$pkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
         done
 
     - name: Push Symbols Packages
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        for sympkg in artifacts/packages/release/*.snupkg; do
+        for sympkg in artifacts/packages/*.snupkg; do
           dotnet nuget push "$sympkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
         done
