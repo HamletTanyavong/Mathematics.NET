@@ -9,6 +9,7 @@ jobs:
     name: Build and Pack NuGet Packages
     permissions:
       contents: read
+      id-token: write
     runs-on: ubuntu-latest
     strategy:
       matrix:
