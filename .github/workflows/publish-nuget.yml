@@ -62,7 +62,7 @@ jobs:
 
   publish:
     name: Publish NuGet Packages
-    needs: build-and-pack
+    needs: upload-artifacts
     permissions:
       id-token: write
     runs-on: ubuntu-latest
