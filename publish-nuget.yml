@@ -27,11 +27,21 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore
 
-    - name: Build Projects
+    - name: Build Mathematics.NET Project
+      working-directory: src/Mathematics.NET
       run: dotnet build --configuration Release --no-restore
 
-    - name: .NET Pack
-      run: dotnet pack --configuration Release --no-build --verbosity normal
+    - name: Pack Mathematics.NET
+      working-directory: src/Mathematics.NET
+      run: dotnet pack --configuration Release --no-build --output artifacts/packages/release
+
+    - name: Build Mathematics.NET.SourceGenerators Project
+      working-directory: src/Mathematics.NET.SourceGenerators
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Pack Mathematics.NET.SourceGenerators
+      working-directory: src/Mathematics.NET.SourceGenerators
+      run: dotnet pack --configuration Release --no-build --output artifacts/packages/release
 
     - name: NuGet Login
       uses: NuGet/login@v1
@@ -41,7 +51,7 @@ jobs:
 
     - name: Push Packages
       run: |
-        for pkg in artifacts/package/release/*.nupkg; do
+        for pkg in artifacts/packages/release/*.nupkg; do
           dotnet nuget push "$pkg"
             --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
             --source https://api.nuget.org/v3/index.json
@@ -50,7 +60,7 @@ jobs:
 
     - name: Push Symbols Packages
       run: |
-        for sympkg in artifacts/package/release/*.snupkg; do
+        for sympkg in artifacts/packages/release/*.snupkg; do
           dotnet nuget push "$sympkg"
             --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
             --source https://api.nuget.org/v3/index.json
