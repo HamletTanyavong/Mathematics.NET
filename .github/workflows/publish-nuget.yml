@@ -46,26 +46,6 @@ jobs:
       working-directory: src/${{ matrix.project }}
       run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output ${{ vars.PACKAGES_DIR }}
 
-    - name: Upload Packages
-      uses: actions/upload-artifact@v6
-      with:
-        name: ${{ matrix.project }} NuGet Packages
-        path: ${{ vars.PACKAGES_DIR }}
-
-  publish:
-    name: Publish NuGet Packages
-    needs: build-and-pack
-    permissions:
-      id-token: write
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Download Packages
-      uses: actions/download-artifact@v7
-      with:
-        name: nuget-packages
-        path: ${{ vars.PACKAGES_DIR }}
-
     - name: NuGet Login
       uses: NuGet/login@v1
       id: login
