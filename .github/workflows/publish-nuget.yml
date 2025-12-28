@@ -9,7 +9,6 @@ jobs:
     name: Build and Pack NuGet Packages
     permissions:
       contents: read
-      id-token: write
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -47,17 +46,24 @@ jobs:
       working-directory: src/${{ matrix.project }}
       run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output ../../${{ vars.PACKAGES_DIR }}
 
-    - name: Upload Packages
-      uses: actions/upload-artifact@v6
-      with:
-        name: nuget-packages
-        path: ${{ vars.PACKAGES_DIR }}
+  upload-artifacts:
+    name: Upload Artifacts
+    needs: build-and-pack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Upload Packages
+        uses: actions/upload-artifact@v6
+        with:
+          name: nuget-packages
+          path: ${{ vars.PACKAGES_DIR }}
 
   publish:
     name: Publish NuGet Packages
     needs: build-and-pack
     permissions:
-      contents: read
       id-token: write
     runs-on: ubuntu-latest
 
