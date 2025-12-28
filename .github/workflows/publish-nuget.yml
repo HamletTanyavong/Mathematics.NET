@@ -59,13 +59,3 @@ jobs:
         for pkg in ${{ vars.PACKAGES_DIR }}/*.nupkg; do
           dotnet nuget push "$pkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
         done
-
-    - name: Push Symbols Packages
-      if: startsWith(github.ref, 'refs/tags/')
-      run: |
-        shopt -s nullglob
-        for sympkg in ${{ vars.PACKAGES_DIR }}/*.snupkg; do
-          if [ -f "$sympkg" ]; then
-            dotnet nuget push "$sympkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-          fi
-        done
