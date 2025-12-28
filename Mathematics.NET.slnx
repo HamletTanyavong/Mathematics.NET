@@ -9,6 +9,7 @@
     <File Path=".github/workflows/codeql.yml" />
     <File Path=".github/workflows/generate-documentation-site.yml" />
     <File Path=".github/workflows/unit-tests.yml" />
+    <File Path="publish.yml" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />

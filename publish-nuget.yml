@@ -1,0 +1,58 @@
+# Publish Mathematics.NET NuGet Packages
+
+name: Publish NuGet Packages
+on:
+  push:
+    workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    name: Build and Publish NuGet Packages
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: |
+          9.x
+          10.x
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build Projects
+      run: dotnet build --configuration Release --no-restore
+
+    - name: .NET Pack
+      run: dotnet pack --configuration Release --no-build --verbosity normal
+
+    - name: NuGet Login
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ${{ secrets.NUGET_USERNAME }}
+
+    - name: Push Packages
+      run: |
+        for pkg in artifacts/package/release/*.nupkg; do
+          dotnet nuget push "$pkg"
+            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
+            --source https://api.nuget.org/v3/index.json
+            --skip-duplicate
+        done
+
+    - name: Push Symbols Packages
+      run: |
+        for sympkg in artifacts/package/release/*.snupkg; do
+          dotnet nuget push "$sympkg"
+            --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
+            --source https://api.nuget.org/v3/index.json
+            --skip-duplicate
+        done
