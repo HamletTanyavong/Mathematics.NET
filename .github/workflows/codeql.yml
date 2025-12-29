@@ -6,10 +6,12 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
+    - .devcontainer/**
     - .github/**
   pull_request:
     branches: [ main ]
     paths-ignore:
+    - .devcontainer/**
     - .github/**
   schedule:
   - cron: 00 2 * * 6
