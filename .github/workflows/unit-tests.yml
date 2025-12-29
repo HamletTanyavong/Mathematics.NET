@@ -16,15 +16,16 @@ jobs:
       pull-requests: read
     runs-on: ubuntu-latest
     outputs:
-      mathematics: ${{ steps.filter.outputs.mathematics }}
-      source_generators: ${{ steps.filter.outputs.source_generators }}
-      source_generators_internal: ${{ steps.filter.outputs.source_generators_internal }}
+      mathematics: ${{ steps.filters.outputs.mathematics }}
+      source_generators: ${{ steps.filters.outputs.source_generators }}
+      source_generators_internal: ${{ steps.filters.outputs.source_generators_internal }}
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v6
 
     - name: Filter Changes
-      id: filter
+      id: filters
       uses:
         dorny/paths-filter@v3
       with:
