@@ -16,9 +16,9 @@ jobs:
       pull-requests: read
     runs-on: ubuntu-latest
     outputs:
-      mathematics: ${{ steps.changes.outputs.mathematics }}
-      source_generators: ${{ steps.changes.outputs.source_generators }}
-      source_generators_internal: ${{ steps.changes.outputs.source_generators_internal }}
+      mathematics: ${{ steps.filter.outputs.mathematics }}
+      source_generators: ${{ steps.filter.outputs.source_generators }}
+      source_generators_internal: ${{ steps.filter.outputs.source_generators_internal }}
     steps:
     - name: Filter Changes
       id: filter
