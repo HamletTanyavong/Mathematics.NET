@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
-    name: Build and Publish NuGet Packages
+  publish:
+    name: Publish NuGet Packages
     permissions:
       contents: read
       id-token: write
@@ -29,21 +29,21 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore
 
-    - name: Build ${{ matrix.project }}
+    - name: Build Project
       working-directory: src/${{ matrix.project }}
       run: dotnet build --configuration Release --no-restore
 
     - name: Create Packages Directory
       run: mkdir -p ${{ vars.PACKAGES_DIR }}
 
-    - name: Set Package Version
+    - name: Get Version Numbers
       id: get_version
       run: |
         TAG_NAME="${{ github.ref_name }}"
         VERSION=${TAG_NAME#v}
         echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-    - name: Pack ${{ matrix.project }}
+    - name: Create Packages
       working-directory: src/${{ matrix.project }}
       run: dotnet pack --configuration Release --p:Version=${{ steps.get_version.outputs.version }} --no-build --output ${{ vars.PACKAGES_DIR }}
 
@@ -53,7 +53,7 @@ jobs:
       with:
         user: ${{ secrets.NUGET_USERNAME }}
 
-    - name: Publish Packages
+    - name: Push Packages
       if: startsWith(github.ref, 'refs/tags/')
       run: |
         for pkg in ${{ vars.PACKAGES_DIR }}/*.nupkg; do
