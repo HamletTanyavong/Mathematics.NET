@@ -11,3 +11,5 @@ Mathematics.NET is a C# class library that provides tools for solving advanced m
 ## About
 
 Mathematics.NET provides custom types for complex, real, and rational numbers as well as other mathematical objects such as vectors, matrices, and tensors. (Please visit the [documentation site](https://mathematics.hamlettanyavong.com) for detailed information.)
+
+Consider using [Mathematics.NET.SourceGenerators](https://www.nuget.org/packages/Mathematics.NET.SourceGenerators) with this library.
