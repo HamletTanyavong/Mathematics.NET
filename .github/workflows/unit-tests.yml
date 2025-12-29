@@ -5,30 +5,49 @@ name: Unit Tests
 on:
   push:
     branches: [ main, dev ]
-    paths:
-    - src/Mathematics.NET/**
-    - src/Mathematics.NET.SourceGenerators/**
   pull_request:
     branches: [ main, dev ]
-    paths:
-    - src/Mathematics.NET/**
-    - src/Mathematics.NET.SourceGenerators/**
 
 jobs:
-  test:
-    name: Run Unit Tests
+  changes:
+    name: Detect Changes
     permissions:
-      contents: read
-    runs-on: ${{ matrix.os }}
+      pull-requests: read
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+    outputs:
+      mathematics: ${{ steps.changes.outputs.mathematics }}
+      source_generators: ${{ steps.changes.outputs.source_generators }}
+      source_generators_internal: ${{ steps.changes.outputs.source_generators_internal }}
+    steps:
+    - name: Filter Changes
+      id: filter
+      uses:
+        dorny/paths-filter@v3
+      with:
+        filters: |
+          mathematics:
+          - src/Mathematics.NET/**
+          source_generators:
+          - src/Mathematics.NET.SourceGenerators/**
+          source_generators_internal:
+          - src/Mathematics.NET.SourceGenerators.Internal/**
+
+  mathematics:
+    name: Run Mathematics.NET Unit Tests
+    needs: changes
+    if: ${{ needs.changes.outputs.mathematics == 'true' }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v6
 
-      # We do not specify dotnet versions in the strategy matrix since we may need many versions for tests.
     - name: Set up .NET
       uses: actions/setup-dotnet@v5
       with:
@@ -45,4 +64,66 @@ jobs:
 
     - name: Run Tests
       working-directory: tests/Mathematics.NET.UnitTests
+      run: dotnet test --no-build --verbosity normal
+
+  source_generators:
+    name: Run Mathematics.NET.SourceGenerators Unit Tests
+    needs: changes
+    if: ${{ needs.changes.outputs.source_generators == 'true' }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: |
+          9.x
+          10.x
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build Test Project
+      working-directory: tests/Mathematics.NET.SourceGenerators.UnitTests
+      run: dotnet build --no-restore
+
+    - name: Run Tests
+      working-directory: tests/Mathematics.NET.SourceGenerators.UnitTests
+      run: dotnet test --no-build --verbosity normal
+
+  source_generators_internal:
+    name: Run Mathematics.NET.SourceGenerators.Internal Unit Tests
+    needs: changes
+    if: ${{ needs.changes.outputs.source_generators_internal == 'true' }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: |
+          9.x
+          10.x
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build Test Project
+      working-directory: tests/Mathematics.NET.SourceGenerators.Internal.UnitTests
+      run: dotnet build --no-restore
+
+    - name: Run Tests
+      working-directory: tests/Mathematics.NET.SourceGenerators.Internal.UnitTests
       run: dotnet test --no-build --verbosity normal
