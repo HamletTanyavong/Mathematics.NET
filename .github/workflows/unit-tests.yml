@@ -20,6 +20,9 @@ jobs:
       source_generators: ${{ steps.filter.outputs.source_generators }}
       source_generators_internal: ${{ steps.filter.outputs.source_generators_internal }}
     steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+
     - name: Filter Changes
       id: filter
       uses:
@@ -27,11 +30,11 @@ jobs:
       with:
         filters: |
           mathematics:
-          - src/Mathematics.NET/**
+            - src/Mathematics.NET/**
           source_generators:
-          - src/Mathematics.NET.SourceGenerators/**
+            - src/Mathematics.NET.SourceGenerators/**
           source_generators_internal:
-          - src/Mathematics.NET.SourceGenerators.Internal/**
+            - src/Mathematics.NET.SourceGenerators.Internal/**
 
   mathematics:
     name: Run Mathematics.NET Unit Tests
