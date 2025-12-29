@@ -43,7 +43,7 @@ Reverse-mode automatic differentiation can be performed using gradient tapes. To
 GradientTape<Real> tape = new();
 ```
 
-Variables can be created using the `.CreateVarible()` method. To work with functions of three variables with intial values $x=1.23$, $y=0.66$, and $z=2.34$, write
+Variables can be created using the `.CreateVariable()` method. To work with functions of three variables with intial values $x=1.23$, $y=0.66$, and $z=2.34$, write
 
 ```csharp
 var x = tape.CreateVariable(1.23);
