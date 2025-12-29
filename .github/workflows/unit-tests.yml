@@ -13,10 +13,7 @@ jobs:
     name: Detect Changes
     permissions:
       pull-requests: read
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     outputs:
       mathematics: ${{ steps.changes.outputs.mathematics }}
       source_generators: ${{ steps.changes.outputs.source_generators }}
