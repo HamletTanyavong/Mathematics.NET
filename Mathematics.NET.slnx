@@ -3,13 +3,12 @@
     <File Path=".github/CODEOWNERS" />
     <File Path=".github/dependabot.yml" />
     <File Path=".github/FUNDING.yml" />
-    <File Path="global.json" />
   </Folder>
   <Folder Name="/.github/workflows/">
     <File Path=".github/workflows/codeql.yml" />
     <File Path=".github/workflows/generate-documentation-site.yml" />
+    <File Path=".github/workflows/publish-nuget.yml" />
     <File Path=".github/workflows/unit-tests.yml" />
-    <File Path="publish.yml" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
@@ -17,6 +16,7 @@
     <File Path=".gitignore" />
     <File Path="CITATION.cff" />
     <File Path="Directory.Build.props" />
+    <File Path="global.json" />
     <File Path="LICENSE" />
     <File Path="README.md" />
     <File Path="THIRD_PARTY_NOTICES.txt" />
