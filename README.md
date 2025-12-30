@@ -11,6 +11,7 @@
 [![NuGet Package](https://img.shields.io/nuget/v/Mathematics.NET?style=flat-square&logo=nuget&color=green)](https://www.nuget.org/packages/Mathematics.NET)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Mathematics.NET?style=flat-square&logo=nuget&color=green)](https://www.nuget.org/packages/Mathematics.NET)
 [![Unit Tests](https://img.shields.io/github/actions/workflow/status/HamletTanyavong/Mathematics.NET/unit-tests.yml?label=Unit%20Tests&style=flat-square&logo=github&color=87cefa)](https://github.com/HamletTanyavong/Mathematics.NET/actions/workflows/unit-tests.yml)
+[![Discord](https://img.shields.io/discord/1079097990939148308?style=flat-square&label=Discord&logo=discord&logoColor=white&color=5865F2)](https://discord.gg/haqS9TVK8B)
 
 ## About
 
