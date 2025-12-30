@@ -160,4 +160,12 @@ Console.Writeline(laplacian);
 
 </details>
 
+## Contributing
+
+Contributions are welcome and appreciated; filing issues is a good way to do so. However, please start a discussion before starting any work as not all implementations or features will be accepted.
+
+## License
+
+Mathematics.NET falls under the [MIT](LICENSE) license.
+
 [^1]: Please visit the [documentation site](https://mathematics.hamlettanyavong.com) for detailed information.
