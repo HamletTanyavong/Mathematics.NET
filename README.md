@@ -16,7 +16,7 @@
 
 Mathematics.NET provides custom types for complex, real, and rational numbers as well as other mathematical objects such as vectors, matrices, and tensors.[^1] Mathematics.NET also supports first and second-order, forward and reverse-mode automatic differentiation.
 
-## Examples
+## Features
 
 The examples below highlight some of the features of Mathematics.NET.
 
@@ -36,6 +36,12 @@ var reciprocal = number.Reciprocate();
 ```
 
 ### Automatic Differentiation
+
+Support for automatic differentiation (autodiff) is provided by gradient tapes, Hessian tapes, dual numbers, and hyper-dual numbers.
+
+<details>
+
+<summary><b>First-Order, Reverse-Mode AutoDiff</b></summary>
 
 Reverse-mode automatic differentiation can be performed using gradient tapes. To create a gradient tape, use
 
@@ -85,5 +91,72 @@ Console.WriteLine($"df/dz = {gradient[2]}");
 // df/dz = 0.2382974299363868
 
 ```
+
+</details>
+
+<details>
+
+<summary><b>Second-Order, Reverse-Mode AutoDiff</b></summary>
+
+We can use Hessian tapes to perform second-order, reverse-mode automatic differentiation. To create a Hessian tape, use
+
+```csharp
+HessianTape<Real> tape = new();
+```
+
+Then, we can use the `.CreateAutoDiffVector()` method to create a vector with initial values. Write
+
+```csharp
+var x = tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
+```
+
+to create a vector with the initial values $x=1.23$, $y=0.66$, and $z=2.34$. Now suppose we want to find the Laplacian of the function
+
+$$
+  f(r,\theta,\phi) = \frac{\cos r}{(r+\theta)\sin\phi}.
+$$
+
+We can use the formula
+
+$$
+  \begin{align*}
+    \nabla^2f &= \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial f}{\partial r}\right)+\frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial f}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2f}{\partial\phi^2} \\
+    &=\frac{2}{r}\frac{\partial f}{\partial r}+\frac{\partial^2f}{\partial r^2}+\frac{1}{r^2\sin\theta}\left(\cos\theta\frac{\partial f}{\partial\theta}+\sin\theta\frac{\partial^2f}{\partial\theta^2}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2f}{\partial\phi^2}
+  \end{align*}
+$$
+
+and write
+
+```csharp
+// f(r, θ, ϕ) = cos(r) / ((r + θ) * sin(ϕ))
+_ = tape.Divide(
+  tape.Cos(x.X1),
+  tape.Multiply(
+    tape.Add(x.X1, x.X2),
+    tape.Sin(x.X3)));
+```
+
+Use the `.ReverseAccumulate()` method to get our gradient and Hessian.
+
+```csharp
+tape.ReverseAccumulate(out var gradient, our var Hessian);
+```
+
+Finally, use those values to compute our Laplacian.
+
+```csharp
+var u = Real.One / (x.X1.Value * Real.Sin(x.X2.Value)); // 1 / (r * Sin(θ))
+var laplacian =
+  2.0 * gradient[0] / x.X1.Value +
+  hessian[0, 0] +
+  u * Real.Cos(x.X2.Value) * gradient[1] / x.X1.Value +
+  hessian[1, 1] / (x.X1.Value * x.X1.Value) +
+  u * u * hessian[2, 2];
+
+Console.Writeline(laplacian);
+// 48.80966092022821
+```
+
+</details>
 
 [^1]: Please visit the [documentation site](https://mathematics.hamlettanyavong.com) for detailed information.
