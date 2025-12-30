@@ -122,6 +122,7 @@ public record class GradientTape<T> : ITape<T>
     // Methods
     //
 
+    // TODO: Add a diagnostic message to remind consumers to use the checkpoint if it is not being used.
     public Variable<T> CreateCheckpoint(Variable<T> x)
     {
         if (!_checkpoints.ContainsKey(x.Index))
