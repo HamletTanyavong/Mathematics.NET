@@ -16,12 +16,14 @@ One focus of this library is in the field of differential geometry, where suppor
 
 ## Get Started
 
+The package can be used in the following environments:
+
 ### Package Reference
 
 To use Mathematics.NET in your C# project, add the following line to your project's `.csproj` file:
 
 ```xml
-<PackageReference Include="Physics.NET.Mathematics" Version="0.2.0-alpha.12" />
+<PackageReference Include="Physics.NET.Mathematics" Version="*" />
 ```
 
 ### Polyglot Notebooks
@@ -29,5 +31,19 @@ To use Mathematics.NET in your C# project, add the following line to your projec
 To use Mathematics.NET in a polyglot notebook, add the following line to the first cell:
 
 ```
-#r "nuget: Physics.NET.Mathematics"
+#r "nuget: Physics.NET.Mathematics, *",
 ```
+
+### File-Based Apps
+
+To use Mathematics.NET in a file-based application, add the following line to the top of the file:
+
+```csharp
+#:package Mathematics.NET@*
+```
+
+:::note
+
+Use `*` to get the latest stable version of the package or `*-*` to get the latest pre-release version.
+
+:::
