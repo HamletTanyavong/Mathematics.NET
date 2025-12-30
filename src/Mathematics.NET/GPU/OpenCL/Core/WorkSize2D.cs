@@ -31,11 +31,11 @@ namespace Mathematics.NET.GPU.OpenCL.Core;
 
 /// <summary>Represents a struct of 2D work sizes.</summary>
 /// <remarks>A struct that represents kernel work sizes.</remarks>
-/// <param name="ws0">The work size in the first dimension.</param>
-/// <param name="ws1">The work size in the second dimension.</param>
+/// <param name="workSize0">The work size in the first dimension.</param>
+/// <param name="workSize1">The work size in the second dimension.</param>
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct WorkSize2D(nuint ws0, nuint ws1)
+public readonly struct WorkSize2D(nuint workSize0, nuint workSize1)
 {
-    private readonly nuint _ws0 = ws0;
-    private readonly nuint _ws1 = ws1;
+    private readonly nuint _workSize0 = workSize0;
+    private readonly nuint _workSize1 = workSize1;
 }
