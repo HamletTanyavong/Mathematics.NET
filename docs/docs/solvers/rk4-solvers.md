@@ -51,17 +51,17 @@ Vector2<Real>[] points = new Vector2<Real>[count];
 
 for (int i = 0; i < count; i++)
 {
-    rk4.Integrate(state, 0.1);
+  rk4.Integrate(state, 0.1);
 
-    points[i].X1 = state.Time;
-    points[i].X2 = state.System.Span[0].X2;
+  points[i].X1 = state.Time;
+  points[i].X2 = state.System.Span[0].X2;
 }
 
 var chart = Chart.Line<double, double, string>(
-    x: points.Select(x => x.X1.AsDouble()),
-    y: points.Select(x => x.X2.AsDouble()),
-    Name: "X(t)",
-    ShowLegend: true);
+  x: points.Select(x => x.X1.AsDouble()),
+  y: points.Select(x => x.X2.AsDouble()),
+  Name: "X(t)",
+  ShowLegend: true);
 chart.Show();
 ```
 
