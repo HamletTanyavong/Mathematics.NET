@@ -123,7 +123,6 @@ $$
 and write
 
 ```csharp
-// f(r, θ, ϕ) = cos(r) / ((r + θ) * sin(ϕ))
 _ = tape.Divide(
   tape.Cos(x.X1),
   tape.Multiply(
@@ -134,7 +133,7 @@ _ = tape.Divide(
 Use the `.ReverseAccumulate()` method to get our gradient and Hessian.
 
 ```csharp
-tape.ReverseAccumulate(out var gradient, our var Hessian);
+tape.ReverseAccumulate(out var gradient, our var hessian);
 ```
 
 Finally, use those values to compute our Laplacian.
@@ -148,9 +147,12 @@ var laplacian =
   hessian[1, 1] / (x.X1.Value * x.X1.Value) +
   u * u * hessian[2, 2];
 
-Console.Writeline(laplacian);
-// 48.80966092022821
+Console.Writeline(laplacian); // 48.80966092022821
 ```
+
+## Samples
+
+For more examples of how to use this library, please check out the [samples](samples/Samples.md) folder.
 
 ## Contributing
 
