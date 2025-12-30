@@ -8,11 +8,13 @@ on:
     paths-ignore:
     - .devcontainer/**
     - .github/**
+    - samples/**
   pull_request:
     branches: [ main ]
     paths-ignore:
     - .devcontainer/**
     - .github/**
+    - samples/**
   schedule:
   - cron: 00 2 * * 6
 

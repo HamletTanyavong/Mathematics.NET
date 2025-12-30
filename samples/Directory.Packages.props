@@ -1,0 +1,11 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Mathematics.NET" Version="*-*" />
+    <PackageVersion Include="Mathematics.NET.SourceGenerators" Version="*-*" />
+    <PackageVersion Include="Plotly.NET.CSharp" Version="*" />
+  </ItemGroup>
+</Project>
