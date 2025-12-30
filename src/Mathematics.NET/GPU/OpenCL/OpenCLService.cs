@@ -160,46 +160,4 @@ public sealed partial class OpenCLService : IComputeService
     //
 
     public KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel) => new(_logger, _cl, device, kernel);
-
-    #region Interface Implementations
-
-    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar)
-    {
-        var length = vector.Length;
-        var result = new Real[length];
-
-        fixed (void* pVector = vector)
-        {
-            // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * length), pVector, null);
-
-            fixed (void* pResult = result)
-            {
-                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * length), pResult, null);
-
-                // Set kernel arguments.
-                var kernel = _program.Kernels["vec_mul_scalar"].Handle;
-                var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), &scalar);
-                error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-                ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "vec_mul_scalar");
-
-                // Enqueue NDRange kernel.
-                using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-                ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "vec_mul_scalar");
-
-                // Enqueue read buffer.
-                _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * length), pResult, 0, null, null);
-
-                // Release mem objects.
-                _cl.ReleaseMemObject(resultBuffer);
-            }
-            _cl.ReleaseMemObject(vectorBuffer);
-        }
-
-        return result;
-    }
-
-    #endregion
 }
