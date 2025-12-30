@@ -40,9 +40,7 @@ var reciprocal = number.Reciprocate();
 
 Support for automatic differentiation (autodiff) is provided by gradient tapes, Hessian tapes, dual numbers, and hyper-dual numbers.
 
-<details>
-
-<summary><b>First-Order, Reverse-Mode AutoDiff</b></summary>
+#### First-Order, Reverse-Mode AutoDiff
 
 Reverse-mode automatic differentiation can be performed using gradient tapes. To create a gradient tape, use
 
@@ -93,11 +91,7 @@ Console.WriteLine($"df/dz = {gradient[2]}");
 
 ```
 
-</details>
-
-<details>
-
-<summary><b>Second-Order, Reverse-Mode AutoDiff</b></summary>
+#### Second-Order, Reverse-Mode AutoDiff
 
 We can use Hessian tapes to perform second-order, reverse-mode automatic differentiation. To create a Hessian tape, use
 
@@ -157,8 +151,6 @@ var laplacian =
 Console.Writeline(laplacian);
 // 48.80966092022821
 ```
-
-</details>
 
 ## Contributing
 
