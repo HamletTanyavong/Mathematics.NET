@@ -163,44 +163,6 @@ public sealed partial class OpenCLService : IComputeService
 
     #region Interface Implementations
 
-    public unsafe ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, in Complex scalar)
-    {
-        var length = vector.Length;
-        var result = new Complex[length];
-
-        fixed (void* pVector = vector)
-        {
-            // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * length), pVector, null);
-
-            fixed (void* pResult = result)
-            {
-                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * length), pResult, null);
-
-                // Set kernel arguments.
-                var kernel = _program.Kernels["comp_vec_mul_scalar"].Handle;
-                var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
-                error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-                ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_vec_mul_scalar");
-
-                // Enqueue NDRange kernel.
-                using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-                ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_vec_mul_scalar");
-
-                // Enqueue read buffer.
-                _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
-
-                // Release mem objects.
-                _cl.ReleaseMemObject(resultBuffer);
-            }
-            _cl.ReleaseMemObject(vectorBuffer);
-        }
-
-        return result;
-    }
-
     public unsafe ReadOnlySpan2D<Complex> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex> left, ReadOnlySpan2D<Complex> right)
     {
         var k = left.Width;
