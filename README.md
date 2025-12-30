@@ -59,7 +59,7 @@ var z = tape.CreateVariable(2.34);
 Now suppose we want to find the gradient of the function
 
 $$
-  f(x,y,z) = \frac{\cos x}{(x+y)\sin z}
+f(x,y,z) = \frac{\cos x}{(x+y)\sin z}
 $$
 
 at the specified points. We write
@@ -108,16 +108,16 @@ var x = tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
 to create a vector with the initial values $x=1.23$, $y=0.66$, and $z=2.34$. Now suppose we want to find the Laplacian of the function
 
 $$
-  f(r,\theta,\phi) = \frac{\cos r}{(r+\theta)\sin\phi}.
+f(r,\theta,\phi) = \frac{\cos r}{(r+\theta)\sin\phi}.
 $$
 
 We can use the formula
 
 $$
-  \begin{align*}
-    \nabla^2f &= \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial f}{\partial r}\right)+\frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial f}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2f}{\partial\phi^2} \\
-    &=\frac{2}{r}\frac{\partial f}{\partial r}+\frac{\partial^2f}{\partial r^2}+\frac{1}{r^2\sin\theta}\left(\cos\theta\frac{\partial f}{\partial\theta}+\sin\theta\frac{\partial^2f}{\partial\theta^2}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2f}{\partial\phi^2}
-  \end{align*}
+\begin{align*}
+  \nabla^2f &= \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial f}{\partial r}\right)+\frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial f}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2f}{\partial\phi^2} \\
+  &=\frac{2}{r}\frac{\partial f}{\partial r}+\frac{\partial^2f}{\partial r^2}+\frac{1}{r^2\sin\theta}\left(\cos\theta\frac{\partial f}{\partial\theta}+\sin\theta\frac{\partial^2f}{\partial\theta^2}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2f}{\partial\phi^2}
+\end{align*}
 $$
 
 and write

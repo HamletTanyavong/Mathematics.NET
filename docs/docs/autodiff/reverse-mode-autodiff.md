@@ -8,7 +8,7 @@ keywords: [reverse-mode, autodiff, gradient tape, Hessian, math, C#, csharp, .NE
 
 Support for first and second-order, reverse-mode autodiff are provided by gradient and Hessian tapes.
 
-## First Order
+## First-Order
 
 First-order, reverse-mode autodiff can be performed using [Gradient tapes](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/GradientTape.cs).
 
@@ -27,9 +27,8 @@ var x = tape.CreateVariable(1.23);
 We also have to pass in an initial value—the point at which the gradients are calculated—to the variable creation method. If we want to track multiple variables, we can simply write
 
 ```csharp
-GradientTape<Real> tape = new();
-var x = tape.CreateVariable(1.23);
 var y = tape.CreateVariable(0.66);
+var z = tape.CreateVariable(2.34);
 // Add more variables as needed.
 ```
 
@@ -46,26 +45,21 @@ Once we are satisfied, we may use these in our equations.
 Suppose we want to compute the derivative of the function
 
 $$
-f(x) = \frac{\sin{x}\ln{x}}{e^{-x}}\quad\text{for }x>0
+f(x) = \frac{\sin x\ln{x}}{e^{-x}}\quad\text{for }x>0
 $$
 
 at the point $ x=1.23 $. We can write
 
 ```csharp
 var result = tape.Divide(
-    tape.Multiply(tape.Sin(x), tape.Ln(x)),
-    tape.Exp(
-        tape.Multiply(-Real.One, x)));
+  tape.Multiply(tape.Sin(x), tape.Ln(x)),
+  tape.Exp(
+    tape.Multiply(-Real.One, x)));
 ```
 
-which will give us the value of the function at our specified point. At this moment, the derivative has not been calculated, but we are, however, able to examine the nodes that have been added to our tape. We can use [`LogNodes`](https://github.com/HamletTanyavong/Mathematics.NET/blob/42cb7ec544baafeca6bd842dfb5ddd8634179593/src/Mathematics.NET/AutoDiff/GradientTape.cs#L118) to do so, provided we have set up a logger.
+which will give us the value of the function at our specified point. At this moment, the derivative has not been calculated, but we are, however, able to examine the nodes that have been added to our tape. We can use [`.LogNodes()`](https://github.com/HamletTanyavong/Mathematics.NET/blob/42cb7ec544baafeca6bd842dfb5ddd8634179593/src/Mathematics.NET/AutoDiff/GradientTape.cs#L118) to do so, provided we have a logger.
 
 ```csharp
-using Microsoft.Extensions.Logging;
-
-using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-var logger = loggerFactory.CreateLogger<GradientTape<Real>>();
-
 tape.LogNodes(logger, CancellationToken.None);
 ```
 
@@ -124,7 +118,7 @@ graph BT
   div_node -- "$$\text{adj}(f(x))=\text{adj}(w_6)=1\quad\text{seed}$$" --> function["$$f(x)$$"]
 ```
 
-Finally, we can calculate the gradient of our function by using [`ReverseAccumulate`](https://github.com/HamletTanyavong/Mathematics.NET/blob/42cb7ec544baafeca6bd842dfb5ddd8634179593/src/Mathematics.NET/AutoDiff/GradientTape.cs#L156).
+Finally, we can calculate the gradient of our function by using [`.ReverseAccumulate()`](https://github.com/HamletTanyavong/Mathematics.NET/blob/42cb7ec544baafeca6bd842dfb5ddd8634179593/src/Mathematics.NET/AutoDiff/GradientTape.cs#L156).
 
 ```csharp
 tape.ReverseAccumulate(out var gradient);
@@ -149,20 +143,20 @@ var z = tape.CreateVariable(2.34);
 Now, if we wanted to compute the gradient of the function
 
 $$
-f(x,y,z) = \frac{\cos{x}}{(x+y)\sin{z}}
+f(x,y,z) = \frac{\cos x}{(x+y)\sin{z}}
 $$
 
 at the points $ x=1.23 $, $ y=0.66 $, and $ z=2.34 $, we can write
 
 ```csharp
 var result = tape.Divide(
-    tape.Cos(x.X1),
-    tape.Multiply(
-        tape.Add(x.X1, x.X2),
-        tape.Sin(x.X3)));
+  tape.Cos(x),
+  tape.Multiply(
+    tape.Add(x, y),
+    tape.Sin(z)));
 ```
 
-If we want to examine the nodes, we can once again use `LogNodes`.
+If we want to examine the nodes, we can once again use `.LogNodes()`.
 
 ```
 Root Node 0:
@@ -215,7 +209,7 @@ graph BT
   div_node -- "$$\text{adj}(f(x))=\text{adj}(w_7)=1\quad\text{seed}$$" --> function["$$f(x, y, z)$$"]
 ```
 
-As before, we can use `ReverseAccumulate` to get our gradients and write them to the console:
+As before, we can use `.ReverseAccumulate()` to get our gradients and write them to the console:
 
 ```csharp
 tape.ReverseAccumulate(out var gradient);
@@ -227,9 +221,9 @@ which, for clarity, represents the following equations:
 $$
 \begin{align}
   \begin{split}
-    \frac{\partial}{\partial x}f(x,y,z) & =-\frac{\csc{z}}{x+y}\left(\frac{\cos{x}}{x+y}+\sin{x}\right) \\
-    \frac{\partial}{\partial y}f(x,y,z) & =-\frac{\cos{x}\csc{x}}{(x+y)^2} \\
-    \frac{\partial}{\partial z}f(x,y,z) & =-\frac{\cos{x}\cot{z}\csc{z}}{x+y}
+    \frac{\partial}{\partial x}f(\mathbf{x}) & =-\frac{\csc z}{x+y}\left(\frac{\cos x}{x+y}+\sin x\right) \\
+    \frac{\partial}{\partial y}f(\mathbf{x}) & =-\frac{\cos x\csc{x}}{(x+y)^2} \\
+    \frac{\partial}{\partial z}f(\mathbf{x}) & =-\frac{\cos x\cot{z}\csc z}{x+y}
   \end{split}
 \end{align}
 $$
@@ -247,9 +241,9 @@ We can use this to calculate, for example, a Jacobian-vector product with the ve
 $$
 \begin{align}
   \begin{split}
-    f_1(\textbf{x}) & =\sin(x_1)(\cos(x_2)+\sqrt{x_3})    \\
-    f_2(\textbf{x}) & =\sqrt{x_1+x_2+x_3} \\
-    f_3(\textbf{x}) & =\sinh\left(\frac{e^xy}{z}\right)
+    f_1(\mathbf{x}) & =\sin(x_1)(\cos(x_2)+\sqrt{x_3}) \\
+    f_2(\mathbf{x}) & =\sqrt{x_1+x_2+x_3} \\
+    f_3(\mathbf{x}) & =\sinh\left(\frac{e^{x_1}x_2}{x_3}\right)
   \end{split}
 \end{align}
 $$
@@ -263,45 +257,43 @@ GradientTape<Real> tape = new();
 var x = tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
 Vector3<Real> v = new(0.23, 1.57, -1.71);
 
-var result = tape.JVP(F1, F2, F3, x, v);
-
-Console.WriteLine(result);
+_ = tape.JVP(F1, F2, F3, x, v);
 
 // f(x, y, z) = Sin(x) * (Cos(y) + Sqrt(z))
 static Variable F1(GradientTape tape, AutoDiffVector3 x)
 {
-    return tape.Multiply(
-        tape.Sin(x.X1),
-        tape.Add(tape.Cos(x.X2), tape.Sqrt(x.X3)));
+  return tape.Multiply(
+    tape.Sin(x.X1),
+    tape.Add(tape.Cos(x.X2), tape.Sqrt(x.X3)));
 }
 
 // f(x, y, z) = Sqrt(x + y + z)
 static Variable F2(GradientTape tape, AutoDiffVector3 x)
 {
-    return tape.Sqrt(
-        tape.Add(
-            tape.Add(x.X1, x.X2),
-            x.X3));
+  return tape.Sqrt(
+    tape.Add(
+      tape.Add(x.X1, x.X2),
+      x.X3));
 }
 
 // f(x, y, z) = Sinh(Exp(x) * y / z)
 static Variable F3(GradientTape tape, AutoDiffVector3 x)
 {
-    return tape.Sinh(
-        tape.Multiply(
-            tape.Exp(x.X1),
-            tape.Divide(x.X2, x.X3)));
+  return tape.Sinh(
+    tape.Multiply(
+      tape.Exp(x.X1),
+      tape.Divide(x.X2, x.X3)));
 }
 ```
 
-Note that this time, we do not call the method `ReverseAccumulate` since the `JVP` does it for us. This should give us the following result: `(-1.2556937075301358, 0.021879748724684178, 4.842981131678516)`.
+Note that this time, we do not call the method `.ReverseAccumulate()` since the `.JVP()` does it for us. This should give us the following result: `(-1.2556937075301358, 0.021879748724684178, 4.842981131678516)`.
 
 ### Complex Variables
 
 We can also work with complex numbers and complex derivatives by specifying [Complex] as a type parameter when we create our gradient tape. Suppose we want to find the gradient of the function:
 
 $$
-f(z,w)  =   \cos(\sin{z}\sqrt{w})
+f(z,w) = \cos(\sin{z}\sqrt{w})
 $$
 
 at the points $ z=1.23+i2.34 $ and $ w=-0.66+i0.23 $. We can write
@@ -315,9 +307,9 @@ var z = tape.CreateVariable(new(1.23, 2.34));
 var w = tape.CreateVariable(new(-0.66, 0.23));
 
 var result = tape.Cos(
-    tape.Multiply(
-        tape.Sin(z),
-        tape.Sqrt(w)));
+  tape.Multiply(
+    tape.Sin(z),
+    tape.Sqrt(w)));
 
 // Optional: examine the nodes on the gradient tape
 tape.LogNodes(logger, CancellationToken.None);
@@ -331,7 +323,7 @@ Console.WriteLine("Value: {0}", result);
 Console.WriteLine("Gradient: {0}", gradient.ToDisplayString());
 ```
 
-This is similar to the code we would have written in the real number case. (Note that some methods such as `Atan2` are not available for complex gradient tapes.) This outputs the following to the console:
+This is similar to the code we would have written in the real number case. (Note that some methods such as `.Atan2()` are not available for complex gradient tapes.) This outputs the following to the console:
 
 ```
 Root Node 0:
@@ -359,16 +351,16 @@ Gradient: [(126.28638563049401, -98.74954259806483),  (-38.801295827094066, -109
 
 ### Custom Operations
 
-If there is a function we need that is not provided in the class, we are still able to use it for our gradient tape provided we know its derivative. Suppose, for example, we did not have the `Sin` method. Since we know its derivative is `Cos`, we could write the following:
+If there is a function we need that is not provided in the class, we are still able to use it for our gradient tape provided we know its derivative. Suppose, for example, we did not have the `Sin()` method. Since we know its derivative is `Cos()`, we could write the following:
 
 ```csharp
 GradientTape tape = new();
 var x = tape.CreateVariable(1.23);
 
 var result = tape.CustomOperation(
-    x,                 // A variable
-    x => Real.Sin(x),  // The function
-    x => Real.Cos(x)); // The derivative of the function
+  x,                 // A variable
+  x => Real.Sin(x),  // The function
+  x => Real.Cos(x)); // The derivative of the function
 
 tape.ReverseAccumulate(out var gradient);
 Console.WriteLine("Value: {0}", result);
@@ -379,11 +371,11 @@ For custom binary operations in general, we can write
 
 ```csharp
 _ = tape.CustomOperation(
-    x,
-    y,
-    (x, y) => // f(x, y)
-    (x, y) => // ∂f/∂x
-    (x, y) => // ∂f/∂y
+  x,
+  y,
+  (x, y) => // f(x, y)
+  (x, y) => // ∂f/∂x
+  (x, y) => // ∂f/∂y
 );
 ```
 
@@ -393,7 +385,7 @@ Using variables in loops is not recommended since each iteration will add nodes 
 
 :::
 
-## Second Order
+## Second-Order
 
 Second-order, reverse-mode autodiff can be performed using [Hessian tapes](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/HessianTape.cs).
 
@@ -419,7 +411,7 @@ The last version may be useful for calculations such as finding the Laplacian of
 $$
 \begin{align}
   \begin{split}
-    \nabla^2f(r,\theta,\phi) & =\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial f}{\partial r}\right)+\frac{1}{r^2\sin{\theta}}\frac{\partial}{\partial\theta}\left(\sin{\theta}\frac{\partial f}{\partial\theta}\right)+\frac{1}{r^2\sin^2{\theta}}\frac{\partial^2f}{\partial\phi^2} \\
+    \nabla^2f & =\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial f}{\partial r}\right)+\frac{1}{r^2\sin{\theta}}\frac{\partial}{\partial\theta}\left(\sin{\theta}\frac{\partial f}{\partial\theta}\right)+\frac{1}{r^2\sin^2{\theta}}\frac{\partial^2f}{\partial\phi^2} \\
     & =\frac{2}{r}\frac{\partial f}{\partial r}+\frac{\partial^2f}{\partial r^2}+\frac{1}{r^2\sin{\theta}}\left(\cos{\theta}\frac{\partial f}{\partial\theta}+\sin{\theta}\frac{\partial^2f}{\partial\theta^2}\right)+\frac{1}{r^2\sin^2{\theta}}\frac{\partial^2f}{\partial\phi^2}
   \end{split}
 \end{align}
@@ -442,20 +434,21 @@ var x = tape.CreateAutoDiffVector(1.23, 0.66, 0.23);
 
 // f(r, θ, ϕ) = cos(r) / ((r + θ) * sin(ϕ))
 _ = tape.Divide(
-        tape.Cos(x.X1),
-        tape.Multiply(
-            tape.Add(x.X1, x.X2),
-            tape.Sin(x.X3)));
+  tape.Cos(x.X1),
+  tape.Multiply(
+    tape.Add(x.X1, x.X2),
+    tape.Sin(x.X3)));
 
 tape.ReverseAccumulate(out var gradient, out var hessian);
 
 // Manual Laplacian computation
 var u = Real.One / (x.X1.Value * Real.Sin(x.X2.Value)); // 1 / (r * sin(θ))
-var laplacian = 2.0 * gradient[0] / x.X1.Value +
-                hessian[0, 0] +
-                u * Real.Cos(x.X2.Value) * gradient[1] / x.X1.Value +
-                hessian[1, 1] / (x.X1.Value * x.X1.Value) +
-                u * u * hessian[2, 2];
+var laplacian =
+  2.0 * gradient[0] / x.X1.Value +
+  hessian[0, 0] +
+  u * Real.Cos(x.X2.Value) * gradient[1] / x.X1.Value +
+  hessian[1, 1] / (x.X1.Value * x.X1.Value) +
+  u * u * hessian[2, 2];
 
 Console.WriteLine(laplacian);
 ```

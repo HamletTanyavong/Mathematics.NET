@@ -8,7 +8,7 @@ keywords: [forward-mode, autodiff, dual numbers, hyperdual, math, C#, csharp, .N
 
 Support for first and second-order, forward-mode autodiff are provided by dual and hyperdual numbers.
 
-## First Order
+## First-Order
 
 First-order, forward-mode autodiff can be performed using [dual numbers](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/Dual.cs).
 
@@ -86,7 +86,7 @@ $$
   \begin{split}
     f_1(\textbf{x}) & =\sin(x_1)(\cos(x_2)+\sqrt{x_3})    \\
     f_2(\textbf{x}) & =\sqrt{x_1+x_2+x_3} \\
-    f_3(\textbf{x}) & =\sinh\left(\frac{e^xy}{z}\right)
+    f_3(\textbf{x}) & =\sinh\left(\frac{e^{x_1}x_2}{x_3}\right)
   \end{split}
 \end{align}
 $$
@@ -98,16 +98,16 @@ AutoDiffVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), Create
 Vector3<Real> v = new(0.23, 1.57, -1.71);
 
 var result = AutoDiffVector3<Real>.VJP(
-    v,
-    x => Sin(x.X1) * (Cos(x.X2) + Sqrt(x.X3)),
-    x => Sqrt(x.X1 + x.X2 + x.X3),
-    x => Sinh(Exp(x.X1) * x.X2 / x.X3),
-    x);
+  v,
+  x => Sin(x.X1) * (Cos(x.X2) + Sqrt(x.X3)),
+  x => Sqrt(x.X1 + x.X2 + x.X3),
+  x => Sinh(Exp(x.X1) * x.X2 / x.X3),
+  x);
 
 Console.WriteLine(result); // (-1.9198130659708643, -3.508528536106042, 1.5122861260495055)
 ```
 
-## Second Order
+## Second-Order
 
 Second-order, forward-mode autodiff can be performed using [hperdual numbers](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/AutoDiff/HyperDual.cs).
 
