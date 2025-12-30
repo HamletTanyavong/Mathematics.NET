@@ -6,7 +6,7 @@ keywords: [complex, real, rational, numbers, math, C#, csharp, .NET]
 
 # Numeric Types
 
-All numeric types in Mathematics.NET implement the [`IComplex`](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IComplex.cs) interface. Unlike [`INumberBase`](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), this interface defines the method `Conjugate`, which makes operations that accept either complex or real numbers as parameters more robust.
+All numeric types in Mathematics.NET implement the [`IComplex`](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IComplex.cs) interface. Unlike [`INumberBase`](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), this interface defines the method `.Conjugate()`, which makes operations that accept either complex or real numbers as parameters more robust.
 
 ## Complex Numbers
 
@@ -32,7 +32,7 @@ The following are some important methods related to complex numbers. Note that t
 
 #### Conjugate
 
-As mentioned before, one important method is `Conjugate`.
+As mentioned before, one important method is `.Conjugate()`.
 
 ```csharp
 z.Conjugate(); // 3-i4
@@ -57,7 +57,7 @@ z.Phase; // 0.9272952180016122
 
 ## Real Numbers
 
-Real numbers are represented by the [real](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs) type and function as expected. This type implements the `IReal` interface, which inherits from `IComplex`, and contains additional methods such as `Max` and `Min`. To create one, simply write
+Real numbers are represented by the [real](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs) type and function as expected. This type implements the `IReal` interface, which inherits from `IComplex`, and contains additional methods such as `Max()` and `Min()`. To create one, simply write
 
 ```csharp
 Real x = 1;
@@ -65,7 +65,7 @@ Real x = 1;
 
 ## Rational Numbers
 
-Rational numbers are represented by the [rational](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Rational.cs) type. This type implements the `IRational` interface, which inherits from `IReal`, and contains addition mathods such as `Reciprocate` and `GCD`.
+Rational numbers are represented by the [rational](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Rational.cs) type. This type implements the `IRational` interface, which inherits from `IReal`, and contains addition mathods such as `.Reciprocate()` and `.GCD()`.
 
 To create rational numbers, we can write
 
@@ -84,7 +84,7 @@ These methods are specific to rational numbers.
 
 #### Reduce
 
-The `Reduce` method simplifies rational numbers by dividing the numerator and denominator by their greatest common divisor.
+The `.Reduce()` method simplifies rational numbers by dividing the numerator and denominator by their greatest common divisor.
 
 ```csharp
 Rational<int> p = new(6, 9);
@@ -99,7 +99,7 @@ Operations involving rational numbers automatically reduce their results.
 
 #### Reciprocate
 
-The `Reciprocate` method returns the reciprocal of a rational number.
+The `.Reciprocate()` method returns the reciprocal of a rational number.
 
 ```csharp
 Rational<int> p = new(3, 5);
