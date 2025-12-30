@@ -28,8 +28,12 @@
 #pragma warning disable IDE0032
 #pragma warning disable IDE0058
 
+#if NET10_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 using System.Runtime.InteropServices;
 using Mathematics.NET.Exceptions;
+using Mathematics.NET.GPU.OpenCL.Core;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 
@@ -54,6 +58,9 @@ public sealed partial class OpenCLService : IComputeService
     private Context _context;
     private Program _program;
 
+#if NET10_0_OR_GREATER
+    [Experimental("EXP0001", Message = "This is an experimental implementaion of OpenCL in Mathematics.NET", UrlFormat = "https://mathematics.hamlettanyavong.com/docs/diagnostic-messages/experimental/exp0001")]
+#endif
     public unsafe OpenCLService(ILogger<OpenCLService> logger, string vendor, Func<Device, bool> filter, bool useFirst = false, params ReadOnlySpan<string> options)
     {
         _logger = logger;
@@ -153,232 +160,4 @@ public sealed partial class OpenCLService : IComputeService
     //
 
     public KernelWorkGroupInformation GetKernelWorkGroupInfo(Device device, Kernel kernel) => new(_logger, _cl, device, kernel);
-
-    #region Interface Implementations
-
-    // TODO: Consider putting this in another file.
-
-    public unsafe void CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Complex> vector, in Complex scalar)
-    {
-        fixed (void* pVector = vector)
-        {
-            // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * vector.Length), pVector, null);
-
-            // Set kernel arguments.
-            var kernel = _program.Kernels["comp_vec_mul_scalar_overwrite"].Handle;
-            var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
-            ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_vec_mul_scalar_overwrite");
-
-            // Enqueue NDRange kernel.
-            using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-            error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-            ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_vec_mul_scalar_overwrite");
-
-            // Enqueue read buffer.
-            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Complex) * vector.Length), pVector, 0, null, null);
-
-            // Release mem objects.
-            _cl.ReleaseMemObject(vectorBuffer);
-        }
-    }
-
-    public unsafe ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, in Complex scalar)
-    {
-        var length = vector.Length;
-        var result = new Complex[length];
-
-        fixed (void* pVector = vector)
-        {
-            // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * length), pVector, null);
-
-            fixed (void* pResult = result)
-            {
-                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * length), pResult, null);
-
-                // Set kernel arguments.
-                var kernel = _program.Kernels["comp_vec_mul_scalar"].Handle;
-                var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
-                error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-                ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_vec_mul_scalar");
-
-                // Enqueue NDRange kernel.
-                using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-                ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_vec_mul_scalar");
-
-                // Enqueue read buffer.
-                _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
-
-                // Release mem objects.
-                _cl.ReleaseMemObject(resultBuffer);
-            }
-            _cl.ReleaseMemObject(vectorBuffer);
-        }
-
-        return result;
-    }
-
-    public unsafe ReadOnlySpan2D<Complex> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex> left, ReadOnlySpan2D<Complex> right)
-    {
-        var k = left.Width;
-        if (k != right.Height)
-            throw new MathematicsException("Cannot multiply two matrices with incompatible dimensions.");
-        Span2D<Complex> result = new Complex[left.Height, right.Width];
-
-        fixed (void* pLeft = left)
-        {
-            // Create buffers.
-            nint leftBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * left.Length), pLeft, null);
-
-            fixed (void* pRight = right)
-            {
-                nint rightBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * right.Length), pRight, null);
-
-                fixed (void* pResult = result)
-                {
-                    nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * result.Length), pResult, null);
-
-                    // Set kernel arguments.
-                    var kernel = _program.Kernels["comp_mat_mul"].Handle;
-                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &leftBuffer);
-                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
-                    error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
-                    error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
-                    ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_mat_mul");
-
-                    // Enqueue NDRange kernel.
-                    using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
-                    ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_mat_mul");
-
-                    // Enqueue read buffer.
-                    _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * result.Length), pResult, 0, null, null);
-
-                    // Release mem objects.
-                    _cl.ReleaseMemObject(resultBuffer);
-                }
-                _cl.ReleaseMemObject(rightBuffer);
-            }
-            _cl.ReleaseMemObject(leftBuffer);
-        }
-
-        return result;
-    }
-
-    public unsafe ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right)
-    {
-        var k = left.Width;
-        if (k != right.Height)
-            throw new MathematicsException("Cannot multiply two matrices with incompatible dimensions.");
-        Span2D<Real> result = new Real[left.Height, right.Width];
-
-        fixed (void* pLeft = left)
-        {
-            // Create buffers.
-            nint leftBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * left.Length), pLeft, null);
-
-            fixed (void* pRight = right)
-            {
-                nint rightBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * right.Length), pRight, null);
-
-                fixed (void* pResult = result)
-                {
-                    nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * result.Length), pResult, null);
-
-                    // Set kernel arguments.
-                    var kernel = _program.Kernels["mat_mul"].Handle;
-                    var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &leftBuffer);
-                    error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(nint), &rightBuffer);
-                    error |= _cl.SetKernelArg(kernel, 2, sizeof(int), &k);
-                    error |= _cl.SetKernelArg(kernel, 3, (nuint)sizeof(nint), &resultBuffer);
-                    ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "mat_mul");
-
-                    // Enqueue NDRange kernel.
-                    using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                    error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 2, null, (nuint*)&globalWorkSize, (nuint*)&localWorkSize, 0, null, null);
-                    ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "mat_mul");
-
-                    // Enqueue read buffer.
-                    _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * result.Length), pResult, 0, null, null);
-
-                    // Release mem objects.
-                    _cl.ReleaseMemObject(resultBuffer);
-                }
-                _cl.ReleaseMemObject(rightBuffer);
-            }
-            _cl.ReleaseMemObject(leftBuffer);
-        }
-
-        return result;
-    }
-
-    public unsafe void VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Real> vector, in Real scalar)
-    {
-        fixed (void* pVector = vector)
-        {
-            // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * vector.Length), pVector, null);
-
-            // Set kernel arguments.
-            var kernel = _program.Kernels["vec_mul_scalar_overwrite"].Handle;
-            var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), in scalar);
-            ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "vec_mul_scalar_overwrite");
-
-            // Enqueue NDRange kernel.
-            using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-            error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-            ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "vec_mul_scalar_overwrite");
-
-            // Enqueue read buffer.
-            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Real) * vector.Length), pVector, 0, null, null);
-
-            // Release mem objects.
-            _cl.ReleaseMemObject(vectorBuffer);
-        }
-    }
-
-    public unsafe ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar)
-    {
-        var length = vector.Length;
-        var result = new Real[length];
-
-        fixed (void* pVector = vector)
-        {
-            // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Real) * length), pVector, null);
-
-            fixed (void* pResult = result)
-            {
-                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * length), pResult, null);
-
-                // Set kernel arguments.
-                var kernel = _program.Kernels["vec_mul_scalar"].Handle;
-                var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), &scalar);
-                error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
-                ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "vec_mul_scalar");
-
-                // Enqueue NDRange kernel.
-                using var commandQueue = _context.CreateCommandQueue(device, CommandQueueProperties.None);
-                error = _cl.EnqueueNdrangeKernel(commandQueue.Handle, kernel, 1, null, &globalWorkSize, &localWorkSize, 0, null, null);
-                ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "vec_mul_scalar");
-
-                // Enqueue read buffer.
-                _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Real) * length), pResult, 0, null, null);
-
-                // Release mem objects.
-                _cl.ReleaseMemObject(resultBuffer);
-            }
-            _cl.ReleaseMemObject(vectorBuffer);
-        }
-
-        return result;
-    }
-
-    #endregion
 }

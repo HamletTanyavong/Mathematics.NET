@@ -55,10 +55,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
     <PackageReference Include="Silk.NET.OpenCL.Extensions.KHR" Version="2.22.0" />
-    <ProjectReference
-      Include="..\Mathematics.NET.SourceGenerators.Internal\Mathematics.NET.SourceGenerators.Internal.csproj"
-      OutputItemType="Analyzer"
-      ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Mathematics.NET.SourceGenerators.Internal\Mathematics.NET.SourceGenerators.Internal.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>

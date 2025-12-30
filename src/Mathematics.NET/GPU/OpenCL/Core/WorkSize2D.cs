@@ -1,4 +1,4 @@
-// <copyright file="CommandQueue.cs" company="Mathematics.NET">
+// <copyright file="WorkSize2D.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,33 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0058
+using System.Runtime.InteropServices;
 
-using Silk.NET.OpenCL;
+namespace Mathematics.NET.GPU.OpenCL.Core;
 
-namespace Mathematics.NET.GPU.OpenCL;
-
-/// <summary>Represents an OpenCL command queue.</summary>
-public sealed class CommandQueue : IOpenCLObject
+/// <summary>Represents a struct of 2D work sizes.</summary>
+/// <remarks>A struct that represents kernel work sizes.</remarks>
+/// <param name="workSize0">The work size in the first dimension.</param>
+/// <param name="workSize1">The work size in the second dimension.</param>
+[StructLayout(LayoutKind.Sequential)]
+public readonly struct WorkSize2D(nuint workSize0, nuint workSize1)
 {
-    private readonly CL _cl;
-
-    public unsafe CommandQueue(CL cl, Context context, Device device, CommandQueueProperties commandQueueProperties)
-    {
-        _cl = cl;
-        Handle = _cl.CreateCommandQueue(context.Handle, device.Handle, commandQueueProperties, out _);
-    }
-
-    public void Dispose()
-    {
-        if (Handle != 0)
-        {
-            _cl.ReleaseCommandQueue(Handle);
-            Handle = 0;
-        }
-    }
-
-    public nint Handle { get; private set; }
-
-    public bool IsValidInstance => Handle != 0;
+    private readonly nuint _workSize0 = workSize0;
+    private readonly nuint _workSize1 = workSize1;
 }

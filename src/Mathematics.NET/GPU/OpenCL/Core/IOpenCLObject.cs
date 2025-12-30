@@ -1,4 +1,4 @@
-// <copyright file="WorkSize2D.cs" company="Mathematics.NET">
+// <copyright file="IOpenCLObject.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,17 +25,14 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.InteropServices;
+namespace Mathematics.NET.GPU.OpenCL.Core;
 
-namespace Mathematics.NET.GPU.OpenCL;
-
-/// <summary>Represents a struct of 2D work sizes.</summary>
-/// <remarks>A struct that represents kernel work sizes.</remarks>
-/// <param name="ws0">The work size in the first dimension.</param>
-/// <param name="ws1">The work size in the second dimension.</param>
-[StructLayout(LayoutKind.Sequential)]
-public readonly struct WorkSize2D(nuint ws0, nuint ws1)
+/// <summary>Defines support for OpenCL objects.</summary>
+public interface IOpenCLObject : IDisposable
 {
-    private readonly nuint _ws0 = ws0;
-    private readonly nuint _ws1 = ws1;
+    /// <summary>The handle to the object.</summary>
+    nint Handle { get; }
+
+    ////<summary>Check if the OpenCL object is valid and has not been released.</summary>
+    bool IsValidInstance { get; }
 }

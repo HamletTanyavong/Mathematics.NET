@@ -30,7 +30,7 @@
 using System.Text;
 using Silk.NET.OpenCL;
 
-namespace Mathematics.NET.GPU.OpenCL;
+namespace Mathematics.NET.GPU.OpenCL.Core;
 
 /// <summary>Represents an OpenCL device.</summary>
 public sealed class Device : IOpenCLObject

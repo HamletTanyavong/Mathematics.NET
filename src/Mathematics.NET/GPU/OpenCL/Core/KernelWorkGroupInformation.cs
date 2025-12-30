@@ -27,6 +27,7 @@
 
 #pragma warning disable IDE0058
 
+using Mathematics.NET.GPU.OpenCL.Core;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 
