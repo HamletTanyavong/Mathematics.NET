@@ -1,4 +1,4 @@
-// <copyright file="IOpenCLObject.cs" company="Mathematics.NET">
+// <copyright file="Kernel.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,14 +25,40 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.GPU.OpenCL;
+#pragma warning disable IDE0058
 
-/// <summary>Defines support for OpenCL objects.</summary>
-public interface IOpenCLObject : IDisposable
+using Mathematics.NET.Exceptions;
+using Silk.NET.OpenCL;
+
+namespace Mathematics.NET.GPU.OpenCL.Core;
+
+/// <summary>Represents an OpenCL kernel.</summary>
+public sealed partial class Kernel : IOpenCLObject
 {
-    /// <summary>The handle to the object.</summary>
-    nint Handle { get; }
+    private CL _cl;
 
-    ////<summary>Check if the OpenCL object is valid and has not been released.</summary>
-    bool IsValidInstance { get; }
+    public readonly string Name;
+
+    public unsafe Kernel(CL cl, Program program, string name)
+    {
+        _cl = cl;
+
+        Name = name;
+        Handle = _cl.CreateKernel(program.Handle, name, out var error);
+
+        ComputeServiceException.ThrowIfNotSuccess(error, "Unable to create the kernel", kernel: name);
+    }
+
+    public void Dispose()
+    {
+        if (Handle != 0)
+        {
+            _cl.ReleaseKernel(Handle);
+            Handle = 0;
+        }
+    }
+
+    public nint Handle { get; private set; }
+
+    public bool IsValidInstance => Handle != 0;
 }

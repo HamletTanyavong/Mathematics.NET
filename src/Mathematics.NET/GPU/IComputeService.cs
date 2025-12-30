@@ -26,6 +26,7 @@
 // </copyright>
 
 using Mathematics.NET.GPU.OpenCL;
+using Mathematics.NET.GPU.OpenCL.Core;
 
 namespace Mathematics.NET.GPU;
 

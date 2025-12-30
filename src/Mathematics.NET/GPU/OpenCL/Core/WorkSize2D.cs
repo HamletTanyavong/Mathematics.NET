@@ -27,7 +27,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Mathematics.NET.GPU.OpenCL;
+namespace Mathematics.NET.GPU.OpenCL.Core;
 
 /// <summary>Represents a struct of 2D work sizes.</summary>
 /// <remarks>A struct that represents kernel work sizes.</remarks>

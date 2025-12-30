@@ -32,7 +32,7 @@ using Mathematics.NET.Exceptions;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 
-namespace Mathematics.NET.GPU.OpenCL;
+namespace Mathematics.NET.GPU.OpenCL.Core;
 
 /// <summary>Represents an OpenCL program.</summary>
 public sealed partial class Program : IOpenCLObject

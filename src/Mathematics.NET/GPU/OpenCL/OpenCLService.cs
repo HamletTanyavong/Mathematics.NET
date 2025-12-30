@@ -33,6 +33,7 @@ using System.Diagnostics.CodeAnalysis;
 #endif
 using System.Runtime.InteropServices;
 using Mathematics.NET.Exceptions;
+using Mathematics.NET.GPU.OpenCL.Core;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 

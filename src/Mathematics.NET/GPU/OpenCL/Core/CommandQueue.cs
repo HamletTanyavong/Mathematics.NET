@@ -1,4 +1,4 @@
-// <copyright file="Kernel.cs" company="Mathematics.NET">
+// <copyright file="CommandQueue.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,33 +27,26 @@
 
 #pragma warning disable IDE0058
 
-using Mathematics.NET.Exceptions;
 using Silk.NET.OpenCL;
 
-namespace Mathematics.NET.GPU.OpenCL;
+namespace Mathematics.NET.GPU.OpenCL.Core;
 
-/// <summary>Represents an OpenCL kernel.</summary>
-public sealed partial class Kernel : IOpenCLObject
+/// <summary>Represents an OpenCL command queue.</summary>
+public sealed class CommandQueue : IOpenCLObject
 {
-    private CL _cl;
+    private readonly CL _cl;
 
-    public readonly string Name;
-
-    public unsafe Kernel(CL cl, Program program, string name)
+    public unsafe CommandQueue(CL cl, Context context, Device device, CommandQueueProperties commandQueueProperties)
     {
         _cl = cl;
-
-        Name = name;
-        Handle = _cl.CreateKernel(program.Handle, name, out var error);
-
-        ComputeServiceException.ThrowIfNotSuccess(error, "Unable to create the kernel", kernel: name);
+        Handle = _cl.CreateCommandQueue(context.Handle, device.Handle, commandQueueProperties, out _);
     }
 
     public void Dispose()
     {
         if (Handle != 0)
         {
-            _cl.ReleaseKernel(Handle);
+            _cl.ReleaseCommandQueue(Handle);
             Handle = 0;
         }
     }

@@ -1,4 +1,4 @@
-// <copyright file="CommandQueue.cs" company="Mathematics.NET">
+// <copyright file="IOpenCLObject.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,33 +25,14 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0058
+namespace Mathematics.NET.GPU.OpenCL.Core;
 
-using Silk.NET.OpenCL;
-
-namespace Mathematics.NET.GPU.OpenCL;
-
-/// <summary>Represents an OpenCL command queue.</summary>
-public sealed class CommandQueue : IOpenCLObject
+/// <summary>Defines support for OpenCL objects.</summary>
+public interface IOpenCLObject : IDisposable
 {
-    private readonly CL _cl;
+    /// <summary>The handle to the object.</summary>
+    nint Handle { get; }
 
-    public unsafe CommandQueue(CL cl, Context context, Device device, CommandQueueProperties commandQueueProperties)
-    {
-        _cl = cl;
-        Handle = _cl.CreateCommandQueue(context.Handle, device.Handle, commandQueueProperties, out _);
-    }
-
-    public void Dispose()
-    {
-        if (Handle != 0)
-        {
-            _cl.ReleaseCommandQueue(Handle);
-            Handle = 0;
-        }
-    }
-
-    public nint Handle { get; private set; }
-
-    public bool IsValidInstance => Handle != 0;
+    ////<summary>Check if the OpenCL object is valid and has not been released.</summary>
+    bool IsValidInstance { get; }
 }
