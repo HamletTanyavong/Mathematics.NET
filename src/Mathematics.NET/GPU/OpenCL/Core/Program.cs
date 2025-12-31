@@ -119,7 +119,7 @@ public sealed partial class Program : IOpenCLObject
 
     public Dictionary<string, Kernel> Kernels { get; } = [];
 
-    public void CreateKernel(string name)
+    private void CreateKernel(string name)
     {
         var kernel = new Kernel(_cl, this, name);
         Kernels.Add(name, kernel);
