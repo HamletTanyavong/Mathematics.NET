@@ -25,8 +25,14 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0058
+// TODO: Consider making a method to retrieve file names.
+// Mathematics.NET.GPU.OpenCL.Kernels.{name}.cl
+//                                    ^    ^
+//                                   35   ^3
 
+#pragma warning disable IDE0058, IDE0305
+
+using System.Reflection;
 using System.Text;
 using Mathematics.NET.Exceptions;
 using Microsoft.Extensions.Logging;
@@ -45,29 +51,51 @@ public sealed partial class Program : IOpenCLObject
         _logger = logger;
         _cl = cl;
 
-        var files = Directory
-            .EnumerateFiles(Path.Combine("GPU", "OpenCL", "Kernels"))
-            .Where(x => x.EndsWith(".c") || x.EndsWith(".cl"))
+        // This only works if the contents of the header file are copied to every kernel that would have used an #include directive.
+        // Make sure that all contents of the Kernel folder are marked as embedded resources in the project file.
+
+        var assembly = Assembly.GetExecutingAssembly();
+
+        var files = assembly.GetManifestResourceNames()
+            .Where(x => x.StartsWith("Mathematics.NET.GPU.OpenCL.Kernels") && (x.EndsWith(".c") || x.EndsWith(".cl")))
             .ToArray();
 
         var code = new string[files.Length];
         var codeLengths = new nuint[files.Length];
         List<string> kernels = [];
 
+        var headers = ParseHeaders(assembly);
+
+        StringBuilder builder = new();
         for (int i = 0; i < files.Length; i++)
         {
-            var text = File.ReadAllText(files[i]);
+            using var stream = assembly.GetManifestResourceStream(files[i]) ?? throw new Exception("Unable to get manifest resource stream.");
+            using var reader = new StreamReader(stream);
+
+            while (reader.ReadLine() is string line)
+            {
+                if (line.StartsWith("#include"))
+                {
+                    var quoteStart = line.IndexOf('"') + 1;
+                    if (headers.TryGetValue(line[quoteStart..^1], out var contents))
+                        builder.AppendLine(contents);
+                    else
+                        throw new ComputeServiceException($"Unable to locate header file: {line[quoteStart..^1]}.");
+                }
+                else
+                {
+                    builder.AppendLine(line);
+                }
+            }
+
+            var text = builder.ToString();
             code[i] = text;
             codeLengths[i] = (nuint)text.Length;
 
-            // Make sure all kernels are in the Mathematics.NET.GPU.OpenCL.Kernels folder.
-            //
-            // GPU\OpenCL\Kernels\{name}.cl
-            //                    ^    ^
-            // Index:             19   ^3
-
             if (files[i].EndsWith(".cl"))
-                kernels.Add(files[i][19..^3]);
+                kernels.Add(files[i][35..^3]);
+
+            builder.Clear();
         }
 
         fixed (nuint* pCodeLengths = codeLengths)
@@ -123,5 +151,25 @@ public sealed partial class Program : IOpenCLObject
     {
         var kernel = new Kernel(_cl, this, name);
         Kernels.Add(name, kernel);
+    }
+
+    private static Dictionary<string, string> ParseHeaders(Assembly assembly)
+    {
+        var headers = assembly.GetManifestResourceNames()
+            .Where(x => x.StartsWith("Mathematics.NET.GPU.OpenCL.Kernels") && x.EndsWith(".h"))
+            .ToArray();
+
+        Dictionary<string, string> contents = [];
+        foreach (var header in headers)
+        {
+            var name = Path.GetFileName(header)[35..];
+            using var stream = assembly.GetManifestResourceStream(header) ?? throw new Exception("Unable to get manifest resource stream.");
+            using var reader = new StreamReader(stream!);
+            char[] text = new char[stream.Length - 1];
+            reader.Read(text, 0, (int)stream.Length - 1);
+            contents.Add(name, new(text));
+        }
+
+        return contents;
     }
 }

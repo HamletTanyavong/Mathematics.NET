@@ -28,14 +28,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="GPU\OpenCL\Kernels\complex.c" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
-    <Content Include="GPU\OpenCL\Kernels\complex.h" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
-    <Content Include="GPU\OpenCL\Kernels\comp_mat_mul.cl" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
-    <Content Include="GPU\OpenCL\Kernels\comp_vec_mul_scalar.cl" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
-    <Content Include="GPU\OpenCL\Kernels\comp_vec_mul_scalar_overwrite.cl" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
-    <Content Include="GPU\OpenCL\Kernels\mat_mul.cl" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
-    <Content Include="GPU\OpenCL\Kernels\vec_mul_scalar.cl" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
-    <Content Include="GPU\OpenCL\Kernels\vec_mul_scalar_overwrite.cl" CopyToOutputDirectory="Always" PackageCopyToOutput="true" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\complex.c" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\complex.h" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\comp_mat_mul.cl" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\comp_vec_mul_scalar.cl" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\comp_vec_mul_scalar_overwrite.cl" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\mat_mul.cl" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\vec_mul_scalar.cl" />
+    <EmbeddedResource Include="GPU\OpenCL\Kernels\vec_mul_scalar_overwrite.cl" />
   </ItemGroup>
 
   <ItemGroup>
