@@ -141,7 +141,7 @@ public sealed partial class OpenCLService : IComputeService
     [LoggerMessage(LogLevel.Information, "Platform vendor: {Vendor}.")]
     private partial void LogPlatformVendor(string vendor);
 
-    [LoggerMessage(LogLevel.Information, "Using the device at index, {Index}, with name, {Device}.")]
+    [LoggerMessage(LogLevel.Information, "Using the device at index {Index} with name {Device}.")]
     private partial void LogDeviceUsed(int index, string device);
 
     [LoggerMessage(LogLevel.Error, "Unable to create the OpenCL service.")]
