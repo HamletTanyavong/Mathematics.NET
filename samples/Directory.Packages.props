@@ -6,6 +6,7 @@
   <ItemGroup>
     <PackageVersion Include="Mathematics.NET" Version="*-*" />
     <PackageVersion Include="Mathematics.NET.SourceGenerators" Version="*-*" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="*" />
     <PackageVersion Include="Plotly.NET.CSharp" Version="*" />
   </ItemGroup>
 </Project>
