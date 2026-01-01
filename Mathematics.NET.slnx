@@ -14,6 +14,7 @@
     <File Path="samples/Directory.Packages.props" />
     <File Path="samples/Samples.GradientTape.cs" />
     <File Path="samples/Samples.md" />
+    <File Path="samples/Samples.OpenCLService.CompMatMul.cs" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
