@@ -1,6 +1,4 @@
-
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
   <PropertyGroup>
     <!-- Project settings -->
     <ImplicitUsings>enable</ImplicitUsings>
@@ -23,5 +21,4 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
-
 </Project>
