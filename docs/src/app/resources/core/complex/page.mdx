@@ -1,0 +1,254 @@
+export const metadata = {
+  title: 'Complex',
+  description:
+    'The Complex type provides support for working with complex numbers in Mathematics.NET.',
+}
+
+# Complex
+
+The `Complex` type provides support for working with complex numbers in Mathematics.NET. {{ className: 'lead' }}
+
+## Overview
+
+Any <b>complex number</b> $z$ can be written in the form
+
+$$
+z = x + iy,
+$$
+
+where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the property $i^2=-1$. The set of complex numbers is denoted by $\mathbb{C}$.[^1]
+
+[^1]: See <i>Complex Variables and Applications</i> by James Ward Brown and Ruel V. Churchill for an introduction to Complex Analysis.
+
+### Implements
+
+<Properties>
+  <Property name="IComplex{T}" type="interface">
+    Defines support for complex numbers.
+  </Property>
+  <Property name="IDifferentiableFunctions{T}" type="interface">
+    Defines support for common differentiable functions.
+  </Property>
+</Properties>
+
+---
+
+## Re {{ tag: 'PROPERTY', label: 'Re' }}
+
+<Row>
+  <Col>
+
+    Get the real part of a complex number.
+
+    ### Return Type
+
+    <Properties>
+      <Property name="result" type="Real">
+        A real number.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="PROPERTY" label="Re">
+
+    ```csharp
+    Complex z = new(1, 2);
+    z.Re;
+    ```
+
+    </CodeGroup>
+
+    ```{{ title: 'Result' }}
+    1
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Im {{ tag: 'PROPERTY', label: 'Im' }}
+
+<Row>
+  <Col>
+
+    Get the imaginary part of a complex number.
+
+    ### Return Type
+
+    <Properties>
+      <Property name="result" type="Real">
+        A real number.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="PROPERTY" label="Re">
+
+    ```csharp
+    Complex z = new(1, 2);
+    z.Re;
+    ```
+
+    </CodeGroup>
+
+    ```{{ title: 'Result' }}
+    2
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Magnitude {{ tag: 'PROPERTY', label: 'Magnitude' }}
+
+<Row>
+  <Col>
+
+    Get the magnitude of a complex number.
+
+    Let $z=x+iy$, where $x$ and $y$ are real numbers and $i$ is the complex unit. The, the magnitude of $z$, written as $|z|$, is
+
+    $$
+    \begin{align*}
+      |z| &= \sqrt{x^2+y^2}.
+    \end{align*}
+    $$
+
+    <Note>
+    The magnitude of a complex number is non-negative.
+    </Note>
+
+    ### Return Type
+
+    <Properties>
+      <Property name="result" type="Real">
+        A real number.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="PROPERTY" label="Magnitude">
+
+    ```csharp
+    Complex z = new(3, 4);
+    z.Magnitude;
+    ```
+
+    </CodeGroup>
+
+    ```{{ title: 'Result' }}
+    5
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Phase {{ tag: 'PROPERTY', label: 'Phase' }}
+
+<Row>
+  <Col>
+
+    Get the phase of a complex number.
+
+    Let $z=x+iy$, where $x$ and $y$ are real numbers and $i$ is the complex unit. The, the magnitude of $z$, written as $\arg z$, is
+
+    $$
+    \begin{align*}
+      \arg z &= \atan{y}{x},
+    \end{align*}
+    $$
+
+    where $-\pi<\arg z\leq\pi$.
+
+    <Note>
+    For the single-argument arctangent, $\phi=\arctan z$, the domain of the result will be different, $-\pi/2<\phi<\pi/2$.
+    </Note>
+
+    ### Return Type
+
+    <Properties>
+      <Property name="result" type="Real">
+        A real number.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="PROPERTY" label="Phase">
+
+    ```csharp
+    Complex z = new(3, 4);
+    z.Phase;
+    ```
+
+    </CodeGroup>
+
+    ```{{ title: 'Result' }}
+    0.9272952180016122
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Conjugate {{ tag: 'FUNCTION', label: 'Conjugate' }}
+
+<Row>
+  <Col>
+
+    Compute the conjugate, $\overline{z}$, of a complex number.
+
+    Let $z=x+iy$, where $x$ and $y$ are real numbers and $i$ is the complex unit. Then, the complex conjugate of $z$, written as $\overline{z}$, is
+    $$
+    \begin{align*}
+      \overline{z} &= \overline{x+iy} \\
+      &= x-iy.
+    \end{align*}
+    $$
+
+    ### Required Parameters
+
+    <Properties>
+      <Property name="z" type="Complex">
+        A complex number.
+      </Property>
+    </Properties>
+
+    ### Return Type
+
+    <Properties>
+      <Property name="result" type="Complex">
+        A complex number.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="FUNCTION" label="Conjugate">
+
+    ```csharp
+    Complex z = new(1, 2);
+    Complex.Conjugate(z);
+    ```
+
+    </CodeGroup>
+
+    ```{{ title: 'Result' }}
+    (1,-2)
+    ```
+
+  </Col>
+</Row>

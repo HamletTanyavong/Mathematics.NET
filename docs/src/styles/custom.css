@@ -1,0 +1,28 @@
+@layer utilities {
+  .footnotes {
+    font-size: 0.75rem;
+    max-width: none;
+    margin: 1em calc(50% - min(50%, var(--container-lg)));
+
+    &::before {
+      content: '';
+      display: block;
+      max-width: none;
+      border-top: 1px solid var(--tw-prose-hr);
+      margin: 4rem 0rem;
+    }
+
+    & p {
+      margin: 0rem;
+    }
+  }
+
+  .data-footnote-backref {
+    font-size: 0rem;
+
+    &::after {
+      content: "↑";
+      font-size: 0.75rem;
+    }
+  }
+}
