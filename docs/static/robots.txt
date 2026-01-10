@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /fonts
-Disallow: /img
-
-Sitemap: https://mathematics.hamlettanyavong.com/sitemap.xml
