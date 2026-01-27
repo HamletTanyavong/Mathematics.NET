@@ -24,7 +24,7 @@
     "lucide-react": "^0.562.0",
     "motion": "^12.25.0",
     "prism-react-renderer": "^2.3.0",
-    "react": "^19.2.3",
+    "react": "^19.2.4",
     "react-dom": "^19.2.3",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
