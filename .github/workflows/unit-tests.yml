@@ -27,7 +27,7 @@ jobs:
     - name: Filter Changes
       id: filters
       uses:
-        dorny/paths-filter@v3
+        dorny/paths-filter@v4
       with:
         filters: |
           mathematics:
