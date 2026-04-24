@@ -245,6 +245,14 @@ export const navigation: Array<NavGroup> = [
     ],
   },
   {
+    title: 'Automatic Differentiation',
+    links: [
+      { title: 'AutoDiff', href: '/autodiff' },
+      { title: 'Reverse-Mode AutoDiff', href: '/reverse-mode-autodiff' },
+      { title: 'Forward-Mode AutoDiff', href: '/forward-mode-autodiff' },
+    ]
+  },
+  {
     title: 'Resources',
     links: [
       { title: 'Contacts', href: '/contacts' },

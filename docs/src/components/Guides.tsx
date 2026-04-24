@@ -8,6 +8,11 @@ const guides = [
     description: 'Learn how to authenticate your API requests.',
   },
   {
+    href: '/autodiff',
+    name: 'Automatic Differentiation',
+    description: 'Learn the basics of automatic differentiation.',
+  },
+  {
     href: '/pagination',
     name: 'Pagination',
     description: 'Understand how to work with paginated responses.',
