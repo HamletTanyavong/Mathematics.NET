@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="MSTest" Version="4.2.1" />
-    <PackageReference Include="Verify.MSTest" Version="31.16.1" />
+    <PackageReference Include="Verify.MSTest" Version="31.16.2" />
     <PackageReference Include="Verify.SourceGenerators" Version="2.5.0" />
   </ItemGroup>
 
