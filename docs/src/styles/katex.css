@@ -1,0 +1,38 @@
+@theme {
+  --ease-in-out: cubic-bezier(.5,0,.5,1);
+}
+
+@media (width < 1024px) {
+  .katex-display {
+    margin: auto !important;
+  }
+}
+
+@media (1024px <= width) {
+  .katex-display {
+    margin: 1em calc(50% - min(50%, var(--container-lg))) !important;
+  }
+}
+
+@layer base {
+  /* When equations are too big horizontally, allow scrolling. */
+  .katex {
+    @apply overflow-x-auto overflow-y-hidden transition duration-250 ease-in-out;
+
+    &:hover {
+      color: var(--text-math-hover);
+    }
+  }
+
+  /* Fix the margin of equation numbers. */
+  .tag {
+    > .vlist-t2 {
+      margin-right: 0 !important;
+    }
+
+    .vlist-s {
+      min-width: 0 !important;
+      width: 0 !important;
+    }
+  }
+}

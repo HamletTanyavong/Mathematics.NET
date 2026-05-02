@@ -1,0 +1,29 @@
+export const metadata = {
+  title: 'Getting Started',
+  description:
+    'Get started with using Mathematics.NET.',
+}
+
+# Getting Started
+
+Get started with any of the following environments: {{ className: 'lead' }}
+
+## Package Reference {{ anchor: false }}
+
+To use Mathematics.NET in your C# project, add the following line to your `.csproj` file:
+
+```xml
+<PackageReference Include="Physics.NET.Mathematics" Version="*" />
+```
+
+## File-Based Apps {{ anchor: false }}
+
+To use Mathematics.NET in a file-based app, add the following line to the top of the file:
+
+```csharp
+#:package Mathematics.NET@*
+```
+
+<Note>
+Use `*` to get the latest stable version of the package or `*-*` to get the latest pre-release version.
+</Note>
