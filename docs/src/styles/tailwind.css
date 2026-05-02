@@ -1,10 +1,10 @@
+@import url('fonts.css');
+@import url('katex.css');
+@import url('custom.css');
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 @config '../../typography.ts';
 @custom-variant dark (&:where(.dark, .dark *));
-@import url('fonts.css');
-@import url('katex.css');
-@import url('custom.css');
 
 @theme {
   --text-2xs: 0.75rem;
