@@ -47,10 +47,10 @@ jobs:
       with:
         path: |
           ~/.npm
-          ${{ github.workspace }}/.next/cache
-        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          docs/.next/cache
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('docs/package-lock.json') }}-${{ hashFiles('docs/**/*.js', 'docs/**/*.jsx', 'docs/**/*.ts', 'docs/**/*.tsx') }}
         restore-keys: |
-          ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+          ${{ runner.os }}-nextjs-${{ hashFiles('docs/package-lock.json') }}-
 
     - name: Build Project
       working-directory: docs
@@ -62,7 +62,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v4
       with:
-        path: docs/build
+        path: docs/out
 
     - name: Deploy to GitHub Pages
       id: deployment
