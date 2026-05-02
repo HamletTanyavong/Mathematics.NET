@@ -1,0 +1,39 @@
+export const metadata = {
+  title: 'Invalid Index Name Declaration',
+  description: 'An index name was defined outside the scope of a namespace.',
+}
+
+# DG0001: Invalid Index Name Declaration
+
+## Cause
+
+An index name was defined outside the scope of a namespace.
+
+## How to Fix Violations
+
+Place the index name in a namespace.
+
+## Example
+
+The following violates the rule:
+
+```csharp
+[IndexName] public partial struct Alpha;
+```
+
+The following are valid:
+
+```csharp
+namespace DG0001;
+
+[IndexName] public partial struct Alpha;
+```
+
+and
+
+```csharp
+namespace DG0001
+{
+  [IndexName] public partial struct Alpha;
+}
+```
