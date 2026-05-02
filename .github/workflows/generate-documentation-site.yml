@@ -38,6 +38,20 @@ jobs:
       working-directory: docs
       run: npm ci
 
+    - name: Install Playwright
+      working-directory: docs
+      run: npx playwright install chromium
+
+    - name: Restore Cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.npm
+          ${{ github.workspace }}/.next/cache
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+        restore-keys: |
+          ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
     - name: Build Project
       working-directory: docs
       run: npm run build
