@@ -1,23 +1,27 @@
-@theme {
-  --ease-in-out: cubic-bezier(.5,0,.5,1);
-}
-
-@media (width < 1024px) {
-  .katex-display {
-    margin: auto !important;
-  }
-}
-
-@media (1024px <= width) {
-  .katex-display {
-    margin: 1em calc(50% - min(50%, var(--container-lg))) !important;
-  }
-}
-
 @layer base {
+  /* Set the margin of equations. */
+  @media (width < 1024px) {
+    .katex-display {
+      margin: auto !important;
+    }
+  }
+
+  @media (1024px <= width) {
+    .katex-display {
+      margin: 1em calc(50% - min(50%, var(--container-lg))) !important;
+    }
+  }
+
   /* When equations are too big horizontally, allow scrolling. */
   .katex {
-    @apply overflow-x-auto overflow-y-hidden transition duration-250 ease-in-out;
+    overflow-x: auto;
+    overflow-y: hidden;
+    transition: 250ms ease-in-out;
+    transition-timing-function: cubic-bezier(0.5,0,0.5,1);
+
+    .katex-html {
+      padding: 1px 0;
+    }
 
     &:hover {
       color: var(--text-math-hover);
