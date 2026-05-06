@@ -119,6 +119,27 @@ function getSections(node) {
   return sections
 }
 
+function rehypeCenterMermaid() {
+  return (tree) => {
+    visit(tree, 'element', (node, index, parent) => {
+      if (node.tagName === 'svg' && node.properties?.id?.startsWith('mermaid')) {
+        const wrapper = {
+          type: 'element',
+          tagName: 'div',
+          properties: {
+            style: 'display: flex; justify-content: center; width: 100%;',
+            class: 'mermaid-container',
+          },
+          children: [node],
+        }
+        if (parent && index !== undefined) {
+          parent.children[index] = wrapper
+        }
+      }
+    })
+  }
+}
+
 export const rehypePlugins = [
   [rehypeKatex, {
     displayMode: true,
@@ -157,6 +178,7 @@ export const rehypePlugins = [
       }
     }
   ],
+  rehypeCenterMermaid,
   mdxAnnotations.rehype,
   rehypeParseCodeBlocks,
   rehypeShiki,
