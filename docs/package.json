@@ -56,7 +56,7 @@
     "eslint-config-next": "^16.1.6",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "sharp": "0.34.3"
+    "sharp": "0.34.5"
   },
   "overrides": {
     "@types/react": "19.2.14",
