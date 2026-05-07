@@ -364,7 +364,7 @@ If there is a function we need that is not provided in the class, we are still a
 GradientTape tape = new();
 var x = tape.CreateVariable(1.23);
 
-var result = tape.CustomOperation(
+var result = tape.Operation(
   x,                 // A variable
   x => Real.Sin(x),  // The function
   x => Real.Cos(x)); // The derivative of the function
@@ -377,7 +377,7 @@ Console.WriteLine("Gradient: {0}", gradient.ToDisplayString());
 For custom binary operations in general, we can write
 
 ```csharp
-_ = tape.CustomOperation(
+_ = tape.Operation(
   x,
   y,
   (x, y) => // f(x, y)

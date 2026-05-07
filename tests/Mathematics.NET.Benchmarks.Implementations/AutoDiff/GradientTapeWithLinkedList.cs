@@ -589,13 +589,13 @@ public record class GradientTapeWithLinkedList<T> : ITape<T>
     // Custom Operations
     //
 
-    public Variable<T> CustomOperation(Variable<T> x, Func<T, T> f, Func<T, T> df)
+    public Variable<T> Operation(Variable<T> x, Func<T, T> f, Func<T, T> df)
     {
         _nodes.AddLast(new GradientNode<T>(df(x.Value), x.Index, _nodes.Count));
         return new(_nodes.Count - 1, f(x.Value));
     }
 
-    public Variable<T> CustomOperation(Variable<T> x, Variable<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
+    public Variable<T> Operation(Variable<T> x, Variable<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
     {
         _nodes.AddLast(new GradientNode<T>(dfx(x.Value, y.Value), dfy(x.Value, y.Value), x.Index, y.Index));
         return new(_nodes.Count - 1, f(x.Value, y.Value));

@@ -228,43 +228,6 @@ public sealed class DualOfRealTests
     }
 
     [TestMethod]
-    [DataRow(1.23, 2.34, 0.334835801674179)]
-    public void CustomOperation_Binary_ReturnsDerivativeWithRespectToLeft(double left, double right, double expected)
-    {
-        Dual<Real> y = new(left, Real.One);
-        Dual<Real> x = new(right, Real.Zero);
-        var u = Real.One / (x.D0 * x.D0 + y.D0 * y.D0);
-
-        var actual = Dual<Real>.CustomOperation(x, y, Real.Atan2, (x, y) => x.AsDouble() * u, (x, y) => -y.AsDouble() * u).D1;
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 2.34, -0.1760034342133505)]
-    public void CustomOperation_Binary_ReturnsDerivativeWithRespectToRight(double left, double right, double expected)
-    {
-        Dual<Real> y = new(left, Real.Zero);
-        Dual<Real> x = new(right, Real.One);
-        var u = Real.One / (x.D0 * x.D0 + y.D0 * y.D0);
-
-        var actual = Dual<Real>.CustomOperation(x, y, Real.Atan2, (x, y) => x * u, (x, y) => -y * u).D1;
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 0.3342377271245026)]
-    public void CustomOperation_Unary_ReturnsDerivative(double input, double expected)
-    {
-        Dual<Real> x = new(input, Real.One);
-
-        var actual = Dual<Real>.CustomOperation(x, Real.Sin, Real.Cos).D1;
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
     [DataRow(1.23, 2.34, 0.4273504273504274)]
     public void Divide_TwoDualNumbers_ReturnsDerivativeWithRespectToLeft(double left, double right, double expected)
     {
@@ -565,6 +528,43 @@ public sealed class DualOfRealTests
         Dual<Real> x = new(input, Real.One);
 
         var actual = (-x).D1;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.334835801674179)]
+    public void Operation_Binary_ReturnsDerivativeWithRespectToLeft(double left, double right, double expected)
+    {
+        Dual<Real> y = new(left, Real.One);
+        Dual<Real> x = new(right, Real.Zero);
+        var u = Real.One / (x.D0 * x.D0 + y.D0 * y.D0);
+
+        var actual = Dual<Real>.Operation(x, y, Real.Atan2, (x, y) => x.AsDouble() * u, (x, y) => -y.AsDouble() * u).D1;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, -0.1760034342133505)]
+    public void Operation_Binary_ReturnsDerivativeWithRespectToRight(double left, double right, double expected)
+    {
+        Dual<Real> y = new(left, Real.Zero);
+        Dual<Real> x = new(right, Real.One);
+        var u = Real.One / (x.D0 * x.D0 + y.D0 * y.D0);
+
+        var actual = Dual<Real>.Operation(x, y, Real.Atan2, (x, y) => x * u, (x, y) => -y * u).D1;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0.3342377271245026)]
+    public void Operation_Unary_ReturnsDerivative(double input, double expected)
+    {
+        Dual<Real> x = new(input, Real.One);
+
+        var actual = Dual<Real>.Operation(x, Real.Sin, Real.Cos).D1;
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }

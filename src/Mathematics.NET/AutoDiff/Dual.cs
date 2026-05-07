@@ -239,7 +239,7 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     /// <param name="f">A function.</param>
     /// <param name="df">The derivative of the function.</param>
     /// <returns>A dual number.</returns>
-    public static Dual<T> CustomOperation(Dual<T> x, Func<T, T> f, Func<T, T> df) => new(f(x._d0), x._d1 * df(x._d0));
+    public static Dual<T> Operation(Dual<T> x, Func<T, T> f, Func<T, T> df) => new(f(x._d0), x._d1 * df(x._d0));
 
     /// <summary>Perform forward-mode autodiff using a custom binary operation.</summary>
     /// <param name="x">A variable.</param>
@@ -248,7 +248,7 @@ public readonly struct Dual<T>(T d0, T d1) : IDual<Dual<T>, T>
     /// <param name="dfx">The derivative of the function with respect to the left variable.</param>
     /// <param name="dfy">The derivative of the function with respect to the right variable.</param>
     /// <returns>A dual number.</returns>
-    public static Dual<T> CustomOperation(Dual<T> x, Dual<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
+    public static Dual<T> Operation(Dual<T> x, Dual<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
         => new(f(x._d0, y._d0), dfy(x._d0, y._d0) * x._d1 + dfx(x._d0, y._d1) * y._d1);
 
     //

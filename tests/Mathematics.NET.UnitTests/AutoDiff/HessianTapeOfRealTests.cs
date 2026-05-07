@@ -461,128 +461,6 @@ public sealed class HessianTapeOfRealTests
     }
 
     [TestMethod]
-    [DataRow(1.23, 2.34, 0.334835801674179, -0.1760034342133505)]
-    public void CustomOperation_Binary_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
-    {
-        var y = _tape.CreateVariable(left);
-        var x = _tape.CreateVariable(right);
-        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-
-        _ = _tape.CustomOperation(
-            y,
-            x,
-            Real.Atan2,
-            (y, x) => x * u,
-            (y, x) => Real.Zero, // Not of interest
-            (y, x) => Real.Zero, // Not of interest
-            (y, x) => -y * u,
-            (y, x) => Real.Zero); // Not of interest
-
-        Real[] expected = [expectedLeft, expectedRight];
-
-        _tape.ReverseAccumulate(out ReadOnlySpan<Real> actual);
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 2.34, -0.1178645019844717, -0.081137805227897, 0.1178645019844717)]
-    public void CustomOperation_Binary_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
-    {
-        var y = _tape.CreateVariable(left);
-        var x = _tape.CreateVariable(right);
-
-        var u = y.Value * y.Value;
-        var v = x.Value * x.Value;
-        var a = Real.One / (u + v);
-        var b = a * a;
-        var dfyy = -2.0 * x.Value * b * y.Value;
-
-        _ = _tape.CustomOperation(
-            y,
-            x,
-            Real.Atan2,
-            (y, x) => x * a,
-            (y, x) => dfyy,
-            (y, x) => (u - v) * b,
-            (y, x) => -y * a,
-            (y, x) => -dfyy);
-
-        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
-
-        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 2.34, 0.4839493878600246)]
-    public void CustomOperation_Binary_ReturnsValue(double left, double right, double expected)
-    {
-        var y = _tape.CreateVariable(left);
-        var x = _tape.CreateVariable(right);
-
-        var u = y.Value * y.Value;
-        var v = x.Value * x.Value;
-        var a = Real.One / (u + v);
-        var b = a * a;
-        var dfyy = -2.0 * x.Value * b * y.Value;
-
-        var actual = _tape.CustomOperation(
-            y,
-            x,
-            Real.Atan2,
-            (y, x) => x * a,
-            (y, x) => dfyy,
-            (y, x) => (u - v) * b,
-            (y, x) => -y * a,
-            (y, x) => -dfyy).Value;
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 0.3342377271245026)]
-    public void CustomOperation_Unary_ReturnsGradient(double input, double expected)
-    {
-        var x = _tape.CreateVariable(input);
-        _ = _tape.CustomOperation(
-            x,
-            Real.Sin,
-            Real.Cos,
-            x => Real.Zero); // Not of interest
-        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
-
-        var actual = gradient[0];
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, -0.942488801931697)]
-    public void CustomOperation_Unary_ReturnsHessian(double input, double expected)
-    {
-        var x = _tape.CreateVariable(input);
-        _ = _tape.CustomOperation(x, Real.Sin, Real.Cos, x => -Real.Sin(x));
-        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
-
-        var actual = hessian[0, 0];
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 0.942488801931697)]
-    public void CustomOperation_Unary_ReturnsValue(double input, double expected)
-    {
-        var x = _tape.CreateVariable(input);
-
-        var actual = _tape.CustomOperation(x, Real.Sin, Real.Cos, x => -Real.Sin(x)).Value;
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
     [DataRow(1.23, 2.34, 0.4273504273504274, -0.2246329169406093)]
     public void Divide_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
@@ -1128,6 +1006,128 @@ public sealed class HessianTapeOfRealTests
         var actual = ComputeValue(_tape.Negate, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.334835801674179, -0.1760034342133505)]
+    public void Operation_Binary_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
+    {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
+
+        _ = _tape.Operation(
+            y,
+            x,
+            Real.Atan2,
+            (y, x) => x * u,
+            (y, x) => Real.Zero, // Not of interest
+            (y, x) => Real.Zero, // Not of interest
+            (y, x) => -y * u,
+            (y, x) => Real.Zero); // Not of interest
+
+        Real[] expected = [expectedLeft, expectedRight];
+
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, -0.1178645019844717, -0.081137805227897, 0.1178645019844717)]
+    public void Operation_Binary_ReturnsHessian(double left, double right, double expectedXX, double expectedXY, double expectedYY)
+    {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+
+        var u = y.Value * y.Value;
+        var v = x.Value * x.Value;
+        var a = Real.One / (u + v);
+        var b = a * a;
+        var dfyy = -2.0 * x.Value * b * y.Value;
+
+        _ = _tape.Operation(
+            y,
+            x,
+            Real.Atan2,
+            (y, x) => x * a,
+            (y, x) => dfyy,
+            (y, x) => (u - v) * b,
+            (y, x) => -y * a,
+            (y, x) => -dfyy);
+
+        Real[,] expected = new Real[2, 2] { { expectedXX, expectedXY }, { expectedXY, expectedYY } };
+
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.4839493878600246)]
+    public void Operation_Binary_ReturnsValue(double left, double right, double expected)
+    {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+
+        var u = y.Value * y.Value;
+        var v = x.Value * x.Value;
+        var a = Real.One / (u + v);
+        var b = a * a;
+        var dfyy = -2.0 * x.Value * b * y.Value;
+
+        var actual = _tape.Operation(
+            y,
+            x,
+            Real.Atan2,
+            (y, x) => x * a,
+            (y, x) => dfyy,
+            (y, x) => (u - v) * b,
+            (y, x) => -y * a,
+            (y, x) => -dfyy).Value;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0.3342377271245026)]
+    public void Operation_Unary_ReturnsGradient(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+        _ = _tape.Operation(
+            x,
+            Real.Sin,
+            Real.Cos,
+            x => Real.Zero); // Not of interest
+        _tape.ReverseAccumulate(out ReadOnlySpan<Real> gradient);
+
+        var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, -0.942488801931697)]
+    public void Operation_Unary_ReturnsHessian(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+        _ = _tape.Operation(x, Real.Sin, Real.Cos, x => -Real.Sin(x));
+        _tape.ReverseAccumulate(out ReadOnlySpan2D<Real> hessian);
+
+        var actual = hessian[0, 0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0.942488801931697)]
+    public void Operation_Unary_ReturnsValue(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+
+        var actual = _tape.Operation(x, Real.Sin, Real.Cos, x => -Real.Sin(x)).Value;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
