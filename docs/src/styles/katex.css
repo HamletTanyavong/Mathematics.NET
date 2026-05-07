@@ -39,4 +39,9 @@
       width: 0 !important;
     }
   }
+
+  .wide-math {
+    position: relative !important;
+    margin-left: 1em;
+  }
 }
