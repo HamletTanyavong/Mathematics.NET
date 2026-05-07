@@ -19,6 +19,32 @@ function rehypeParseCodeBlocks() {
   }
 }
 
+function rehypeAddMathContainer() {
+  return async (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'span' || !node.properties?.className?.includes('katex-html')) return
+
+      const bases = []
+      const tags = []
+
+      for (const child of node.children) {
+        const className = child.properties?.className
+        Array.isArray(className) && className.includes('tag') ? tags.push(child) : bases.push(child)
+      }
+
+      node.children = [{
+        type: 'element',
+        tagName: 'span',
+        properties: {
+          style: 'container-type: inline-size; container-name: math-container;',
+          className: 'math-container',
+        },
+        children: bases,
+      }, ...tags]
+    })
+  }
+}
+
 let highlighter
 
 function rehypeShiki() {
@@ -35,9 +61,7 @@ function rehypeShiki() {
         // Adjust here if dollar signs continue to be an issue in non-KaTeX contexts.
         // For example, adding the condition: node.properties.language !== 'php'.
         const isKaTeX = textNode.value.startsWith('$') && textNode.value.endsWith('$')
-        if (isKaTeX) {
-          return
-        }
+        if (isKaTeX) return
 
         node.properties.code = textNode.value
 
@@ -153,6 +177,7 @@ export const rehypePlugins = [
       '\\atan': '\\mathrm{atan2}\\left(\\frac{#1}{#2}\\right)'
     }
   }],
+  rehypeAddMathContainer,
   [
     rehypeMermaid,
     {
