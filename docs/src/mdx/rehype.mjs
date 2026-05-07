@@ -171,7 +171,7 @@ export const rehypePlugins = [
     errorColor: '#ff0000',
     trust: true,
     macros: {
-      '\\dd': '\\,\\mathrm{d}#1',
+      '\\dd': '\\mathrm{d}#1',
       '\\dv': '\\frac{\\mathrm{d}#1}{\\mathrm{d}#2}',
       '\\pdv': '\\frac{\\partial#1}{\\partial#2}',
       '\\atan': '\\mathrm{atan2}\\left(\\frac{#1}{#2}\\right)'
