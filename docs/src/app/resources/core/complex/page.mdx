@@ -23,11 +23,19 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
 ### Implements
 
 <Properties>
-  <Property name="IComplex{T}" type="interface">
+  <Property name="IComplex<T>" type="interface">
     Defines support for complex numbers.
   </Property>
-  <Property name="IDifferentiableFunctions{T}" type="interface">
+  <Property name="IDifferentiableFunctions<T>" type="interface">
     Defines support for common differentiable functions.
+  </Property>
+</Properties>
+
+### Constraints
+
+<Properties>
+  <Property name="T" type="generic type constraint">
+    A type that implements `IComplex<T>` and `IDifferentiableFunctions<T>`.
   </Property>
 </Properties>
 
@@ -203,7 +211,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
 
 ---
 
-## Conjugate {{ tag: 'FUNCTION', label: 'Conjugate' }}
+## Conjugate {{ tag: 'METHOD', label: 'Conjugate' }}
 
 <Row>
   <Col>
@@ -237,7 +245,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
   </Col>
   <Col sticky>
 
-    <CodeGroup title="Snippet" tag="FUNCTION" label="Conjugate">
+    <CodeGroup title="Snippet" tag="METHOD" label="Conjugate">
 
     ```csharp
     Complex z = new(1, 2);

@@ -21,20 +21,17 @@ function useMathTagStyles() {
 const handleResize = () => {
   const math = document.querySelectorAll('.katex-html')
   math.forEach((parent) => {
-    // Not all equations have numbers; skip if they do not;
+    // Not all equations have numbers; skip if they do not.
     const tag = parent.querySelector('.tag')
     if (!tag) return
 
     const container = parent.querySelector('.math-container')
     if (!container) return
 
-    const parentWidth = parent.getBoundingClientRect().width;
-    const containerWidth = container.getBoundingClientRect().width;
-    const tagWidth = tag.getBoundingClientRect().width;
-
-    const emSize = parseFloat(
-      window.getComputedStyle(container).fontSize
-    );
+    const parentWidth = parent.getBoundingClientRect().width
+    const containerWidth = container.getBoundingClientRect().width
+    const tagWidth = tag.getBoundingClientRect().width
+    const emSize = parseFloat(window.getComputedStyle(container).fontSize)
 
     if (containerWidth + tagWidth + 2 * emSize > parentWidth) {
       tag.classList.add('wide-math')

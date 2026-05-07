@@ -189,7 +189,7 @@ export const rehypePlugins = [
           primaryColor: '#1d1d20',
           edgeLabelBackground: '#1d1d20',
           fontFamily: 'JetBrains Mono',
-          fontSize: 12
+          fontSize: '1em'
         },
         themeCSS: `
           .flowchart-link, .marker {

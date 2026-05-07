@@ -13,7 +13,7 @@ Get started with any of the following environments: {{ className: 'lead' }}
 To use Mathematics.NET in your C# project, add the following line to your `.csproj` file:
 
 ```xml
-<PackageReference Include="Physics.NET.Mathematics" Version="*" />
+<PackageReference Include="Mathematics.NET" Version="*" />
 ```
 
 ## File-Based Apps {{ anchor: false }}
@@ -27,3 +27,17 @@ To use Mathematics.NET in a file-based app, add the following line to the top of
 <Note>
 Use `*` to get the latest stable version of the package or `*-*` to get the latest pre-release version.
 </Note>
+
+## Optional Package
+
+It is also recommended that users add the source generators package, which helps with code generation and provides diagnostic messages. As a package reference, use
+
+```xml
+<PackageReference Include="Mathematics.NET.SourceGenerators" Version="*" />
+```
+
+and in a file-based app, use
+
+```csharp
+#:package Mathematics.NET.SourceGenerators@*
+```

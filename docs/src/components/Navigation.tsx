@@ -253,6 +253,7 @@ export const navigation: Array<NavGroup> = [
     links: [
       { title: 'Resources', href: '/resources' },
       { title: 'Complex', href: '/resources/core/complex' },
+      { title: 'Gradient Tape', href: '/resources/autodiff/gradienttape' },
       { title: 'Runge-Kutta 4', href: '/resources/solvers/rungekutta4' },
     ],
   },
