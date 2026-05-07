@@ -12,14 +12,19 @@ const colorStyles = {
       'ring-yellow-300 dark:ring-yellow-400/30 bg-yellow-400/10 text-yellow-500 dark:text-yellow-400',
   },
   blue: {
-    small: 'text-blue-500',
+    small: 'text-blue-500 dark:text-blue-500',
     medium:
       'ring-blue-300 bg-blue-400/10 text-blue-500 dark:ring-blue-400/30 dark:bg-blue-400/10 dark:text-blue-400',
   },
   rose: {
-    small: 'text-red-500 dark:text-rose-500',
+    small: 'text-rose-500 dark:text-rose-500',
     medium:
       'ring-rose-200 bg-rose-50 text-red-500 dark:ring-rose-500/20 dark:bg-rose-400/10 dark:text-rose-400',
+  },
+  green: {
+    small: 'text-green-500 dark:text-green-500',
+    medium:
+      'ring-green-200 bg-green-50 text-green-500 dark:ring-green-500/20 dark:bg-green-400/10 dark:text-green-400',
   },
   zinc: {
     small: 'text-zinc-400 dark:text-zinc-500',
@@ -29,9 +34,10 @@ const colorStyles = {
 }
 
 const valueColorMap = {
-  PROPERTY: 'yellow',
-  FUNCTION: 'blue',
+  CONSTRUCTOR: 'green',
   OPERATOR: 'rose',
+  PROPERTY: 'yellow',
+  METHOD: 'blue',
 } as Record<string, keyof typeof colorStyles>
 
 export function Tag({

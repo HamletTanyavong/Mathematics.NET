@@ -1,0 +1,166 @@
+export const metadata = {
+  title: 'Gradient Tape',
+  description:
+    'Gradient tapes provide support for performing reverse-mode, automatic differentiation.',
+}
+
+# Gradient Tape
+
+Gradient tapes provide support for performing reverse-mode, automatic differentiation. {{ className: 'lead' }}
+
+## Overview
+
+To use gradient tapes, first add the following using directives:
+
+```csharp
+using Mathematics.NET.Core;
+using Mathematics.NET.AutoDiff;
+```
+
+To create a gradient tape, write
+
+```csharp
+GradientTape<Complex> tape = new();
+```
+
+### Implements
+
+<Properties>
+  <Property name="ITape<T>" type="interface">
+    Defines support for tapes.
+  </Property>
+</Properties>
+
+### Constraints
+
+<Properties>
+  <Property name="T" type="generic type constraint">
+    A type that implements `IComplex<T>` and `IDifferentiableFunctions<T>`.
+  </Property>
+</Properties>
+
+---
+
+## GradientTape · 1 {{ tag: 'CONSTRUCTOR', label: 'GradientTape' }}
+
+<Row>
+  <Col>
+
+    Create an instance of a gradient tape.
+
+    ### Optional Parameters
+
+    <Properties>
+      <Property name="isTracking" type="bool">
+        Whether or not the tape should be tracking nodes. This can be changed with the `IsTracking` property.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="CONSTRUCTOR" label="GradientTape">
+
+    ```csharp
+    // No optional parameters.
+    GradientTape<Complex> tape = new();
+    // With optional parameters.
+    GradientTape<Complex> tape = new(true);
+    ```
+
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## GradientTape · 2 {{ tag: 'CONSTRUCTOR', label: 'GradientTape' }}
+
+<Row>
+  <Col>
+
+    Create an instance of a gradient tape that will hold an expected number of nodes.
+
+    ### Required Parameters
+
+    <Properties>
+      <Property name="n" type="int">
+        The initial capacity of the gradient tape.
+      </Property>
+    </Properties>
+
+    ### Optional Parameters
+
+    <Properties>
+      <Property name="isTracking" type="bool">
+        Whether or not the tape should be tracking nodes. This can be changed with the `IsTracking` property.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="CONSTRUCTOR" label="GradientTape">
+
+    ```csharp
+    // No optional parameters.
+    GradientTape<Complex> tape = new(64);
+    // With optional parameters.
+    GradientTape<Complex> tape = new(64, true);
+    ```
+
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## CreateCheckpoint {{ tag: 'METHOD', label: 'CreateCheckpoint' }}
+
+<Row>
+  <Col>
+
+    Create a checkpoint on a gradient tape. During reverse accumulation, once a node with a checkpoint is reached, further computation along its branches will be skipped, and its precomputed value be used instead.
+
+    ### Required Parameters
+
+    <Properties>
+      <Property name="x" type="Variable<T>">
+        A variable type used in reverse-mode, autodiff.
+      </Property>
+    </Properties>
+
+    ### Return Type
+
+    <Properties>
+      <Property name="x" type="Variable<T>">
+        A variable type used in reverse-mode, autodiff.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Snippet" tag="METHOD" label="CreateCheckpoint">
+
+    ```csharp
+    GradientTape<Complex> tape = new();
+
+    var x = tape.CreateVariable(1.23);
+    var y = tape.CreateVariable(4.56);
+
+    var checkpoint = tape.CreateCheckpoint(tape.Multiply(x, y));
+    ```
+
+    </CodeGroup>
+
+    ```{{ title: 'Result' }}
+    checkpoint
+    ```
+
+  </Col>
+</Row>
+
+---

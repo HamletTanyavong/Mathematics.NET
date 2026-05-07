@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { GridPattern } from '@/components/GridPattern'
 import { Heading } from '@/components/Heading'
 import { FunctionIcon } from '@/components/icons/FunctionIcon'
+import { TapeIcon } from '@/components/icons/TapeIcon'
 
 interface Resource {
   href: string
@@ -34,6 +35,20 @@ const resources: Array<Resource> = [
       y: 16,
       squares: [
         [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: '/resources/autodiff/gradienttape',
+    name: 'Gradient Tapes',
+    description:
+      'Learn about gradient tapes and how they can be used for automatic differentiation.',
+    icon: TapeIcon,
+    pattern: {
+      y: -6,
+      squares: [
+        [-1, 2],
         [1, 3],
       ],
     },
