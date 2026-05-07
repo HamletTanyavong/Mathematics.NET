@@ -99,7 +99,7 @@ We can use Hessian tapes to perform second-order, reverse-mode automatic differe
 HessianTape<Real> tape = new();
 ```
 
-Then, we can use the `.CreateAutoDiffVector()` method to create a vector with initial values. Write
+Then, we can use the `CreateAutoDiffVector` method to create a vector with initial values. Write
 
 ```csharp
 var x = tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
