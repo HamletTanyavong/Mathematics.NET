@@ -25,16 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Numerics;
-using System.Runtime.CompilerServices;
 using Complex = Mathematics.NET.Core.Complex;
 
 namespace Mathematics.NET;
 
-/// <summary>Provides Mathematics.NET functionality.</summary>
-/// <remarks>
-/// This class contains constants and static methods for general mathematical purposes. Complicated mathematical operations may be found in their respective classes, and a list of all available operations can be found in the <see href="https://mathematics.hamlettanyavong.com/api/index.html">documentation.</see>.
-/// </remarks>
+/// <summary>Provides basic methods.</summary>
 public static class Mathematics
 {
     //
@@ -88,101 +83,4 @@ public static class Mathematics
 
     /// <inheritdoc cref="Constants.ZetaOf4"/>
     public static Real ZetaOf4 => Real.ZetaOf4;
-
-    //
-    // Methods
-    //
-
-    /// <summary>The binomial coefficient.</summary>
-    /// <param name="n">A total of <paramref name="n"/> elements.</param>
-    /// <param name="k">An unordered subset of <paramref name="k"/> elements.</param>
-    /// <returns><paramref name="n"/> choose <paramref name="k"/>.</returns>
-    public static Real Binomial(uint n, uint k)
-    {
-        var result = 1.0;
-        for (uint i = 0; i < k; i++)
-        {
-            result *= (double)(n - i) / (i + 1);
-        }
-        return result;
-    }
-
-    /// <summary>The binomial coefficient.</summary>
-    /// <remarks>This method works with <c>BigInteger</c>. Be aware that this method may take a long time.</remarks>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-    /// <param name="n">A total of <paramref name="n"/> elements.</param>
-    /// <param name="k">An unordered subset of <paramref name="k"/> elements.</param>
-    /// <param name="cancellationToken">A cancellation token.</param>
-    /// <returns><paramref name="n"/> choose <paramref name="k"/>.</returns>
-    /// <exception cref="OverflowException"></exception>
-    public static T Binomial<T>(T n, T k, CancellationToken cancellationToken)
-        where T : IBinaryInteger<T>
-    {
-        var result = T.One;
-        checked
-        {
-            T u = T.One;
-            for (T i = T.Zero; i < k; i++)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                result *= n - i;
-                u *= i + T.One;
-
-                var gcd = GCD(result, u);
-                if (gcd != T.One)
-                {
-                    result /= gcd;
-                    u /= gcd;
-                }
-            }
-        }
-        return result;
-    }
-
-    /// <summary>Compute the greatest common divisor of two integers.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-    /// <param name="p">An integer.</param>
-    /// <param name="q">An integer.</param>
-    /// <returns>The GCD of the two values.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T GCD<T>(T p, T q)
-        where T : IBinaryInteger<T>
-    {
-        p = T.Abs(p);
-        q = T.Abs(q);
-        while (p != T.Zero && q != T.Zero)
-        {
-            if (p > q)
-                p %= q;
-            else
-                q %= p;
-        }
-        return p | q;
-    }
-
-    /// <summary>The multinomial coefficient.</summary>
-    /// <param name="span">A read-only span of positive integers.</param>
-    /// <param name="cancellationToken">A cancellation token.</param>
-    /// <returns>The coefficient associated with a term with powers given by <paramref name="span"/>.</returns>
-    /// <exception cref="OverflowException"></exception>
-    public static T Multinomial<T>(ReadOnlySpan<T> span, CancellationToken cancellationToken)
-        where T : IBinaryInteger<T>
-    {
-        var result = T.One;
-        checked
-        {
-            var partialSum = span[0];
-            for (int i = 1; i < span.Length; i++)
-            {
-                var element = span[i];
-                if (element < T.Zero)
-                {
-                    throw new ArgumentException("Elements of the span must be positive.");
-                }
-                partialSum += element;
-                result *= Binomial(partialSum, element, cancellationToken);
-            }
-        }
-        return result;
-    }
 }
