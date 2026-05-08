@@ -751,7 +751,7 @@ public record class GradientTape<T> : ITape<T>
     /// <param name="f">A function.</param>
     /// <param name="df">The derivative of the function.</param>
     /// <returns>A variable.</returns>
-    public Variable<T> CustomOperation(Variable<T> x, Func<T, T> f, Func<T, T> df)
+    public Variable<T> Operation(Variable<T> x, Func<T, T> f, Func<T, T> df)
     {
         if (_isTracking)
         {
@@ -768,7 +768,7 @@ public record class GradientTape<T> : ITape<T>
     /// <param name="dfx">The derivative of the function with respect to the first variable.</param>
     /// <param name="dfy">The derivative of the function with respect to the second variable.</param>
     /// <returns>A variable.</returns>
-    public Variable<T> CustomOperation(Variable<T> x, Variable<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
+    public Variable<T> Operation(Variable<T> x, Variable<T> y, Func<T, T, T> f, Func<T, T, T> dfx, Func<T, T, T> dfy)
     {
         if (_isTracking)
         {

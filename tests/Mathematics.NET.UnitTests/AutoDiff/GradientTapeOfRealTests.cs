@@ -329,59 +329,6 @@ public sealed class GradientTapeOfRealTests
     }
 
     [TestMethod]
-    [DataRow(1.23, 2.34, 0.334835801674179, -0.1760034342133505)]
-    public void CustomOperation_Binary_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
-    {
-        var y = _tape.CreateVariable(left);
-        var x = _tape.CreateVariable(right);
-        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-        _ = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u);
-
-        Real[] expected = [expectedLeft, expectedRight];
-
-        _tape.ReverseAccumulate(out var actual);
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 2.34, 0.4839493878600246)]
-    public void CustomOperation_Binary_ReturnsValue(double left, double right, double expected)
-    {
-        var y = _tape.CreateVariable(left);
-        var x = _tape.CreateVariable(right);
-        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-
-        var actual = _tape.CustomOperation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u).Value;
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 0.3342377271245026)]
-    public void CustomOperation_Unary_ReturnsGradient(double input, double expected)
-    {
-        var x = _tape.CreateVariable(input);
-        _ = _tape.CustomOperation(x, Real.Sin, Real.Cos);
-        _tape.ReverseAccumulate(out var gradient);
-
-        var actual = gradient[0];
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
-    [DataRow(1.23, 0.942488801931697)]
-    public void CustomOperation_Unary_ReturnsValue(double input, double expected)
-    {
-        var x = _tape.CreateVariable(input);
-
-        var actual = _tape.CustomOperation(x, Real.Sin, Real.Cos).Value;
-
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
-    }
-
-    [TestMethod]
     [DataRow(1.23, 2.34, 0.4273504273504274, -0.2246329169406093)]
     public void Divide_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
@@ -736,6 +683,59 @@ public sealed class GradientTapeOfRealTests
         var actual = ComputeValue(_tape.Negate, input);
 
         Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.334835801674179, -0.1760034342133505)]
+    public void Operation_Binary_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
+    {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
+        _ = _tape.Operation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u);
+
+        Real[] expected = [expectedLeft, expectedRight];
+
+        _tape.ReverseAccumulate(out var actual);
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 2.34, 0.4839493878600246)]
+    public void Operation_Binary_ReturnsValue(double left, double right, double expected)
+    {
+        var y = _tape.CreateVariable(left);
+        var x = _tape.CreateVariable(right);
+        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
+
+        var actual = _tape.Operation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u).Value;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0.3342377271245026)]
+    public void Operation_Unary_ReturnsGradient(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+        _ = _tape.Operation(x, Real.Sin, Real.Cos);
+        _tape.ReverseAccumulate(out var gradient);
+
+        var actual = gradient[0];
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    [TestMethod]
+    [DataRow(1.23, 0.942488801931697)]
+    public void Operation_Unary_ReturnsValue(double input, double expected)
+    {
+        var x = _tape.CreateVariable(input);
+
+        var actual = _tape.Operation(x, Real.Sin, Real.Cos).Value;
+
+        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
