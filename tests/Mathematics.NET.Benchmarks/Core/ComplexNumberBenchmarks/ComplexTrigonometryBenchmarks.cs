@@ -41,7 +41,7 @@ public class ComplexTrigonometryBenchmarks
     public void GlobalSetup()
     {
         Z = new(1.23, 2.34);
-        ImOverTwo = Mathematics.Im / 2.0;
+        ImOverTwo = Constants.Im / 2.0;
 
         W = new(1.23, 2.34);
     }
@@ -61,12 +61,12 @@ public class ComplexTrigonometryBenchmarks
     //[Benchmark]
     public Complex Atan_WithoutConstImOverTwo()
     {
-        return Mathematics.Im / 2.0 * Complex.Ln((Mathematics.Im + Z) / (Mathematics.Im - Z));
+        return Constants.Im / 2.0 * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
     }
 
     //[Benchmark]
     public Complex Atan_WithConstImOverTwo()
     {
-        return ImOverTwo * Complex.Ln((Mathematics.Im + Z) / (Mathematics.Im - Z));
+        return ImOverTwo * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
     }
 }
