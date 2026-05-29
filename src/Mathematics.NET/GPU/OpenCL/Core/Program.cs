@@ -34,7 +34,6 @@
 
 using System.Reflection;
 using System.Text;
-using Mathematics.NET.Exceptions;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
 

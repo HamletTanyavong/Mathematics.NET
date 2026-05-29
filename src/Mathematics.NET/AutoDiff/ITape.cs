@@ -27,7 +27,6 @@
 
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
-using Mathematics.NET.Exceptions;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
 
