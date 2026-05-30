@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 namespace Mathematics.NET.Core;
 
 /// <summary>Represents a rational number.</summary>
-/// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/> and <see cref="ISignedNumber{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential), Serializable]
 public readonly struct Rational<T> : IRational<Rational<T>, T>
     where T : IBinaryInteger<T>, ISignedNumber<T>
@@ -597,6 +597,52 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
 
     static Rational<T> IComplex<Rational<T>>.MinMagnitudeNumber(Rational<T> x, Rational<T> y) => x < y || IsNaN(y) ? x : y;
 
+    /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
+    /// <param name="x">The base.</param>
+    /// <param name="n">The exponent.</param>
+    /// <returns><paramref name="x"/> raised to the power of <paramref name="n"/>.</returns>
+    public static Rational<T> Pow(T x, T n)
+    {
+        if (T.IsZero(n))
+            return T.One;
+        if (T.IsZero(x))
+            return T.Zero;
+        if (x == T.One)
+            return T.One;
+        if (x == T.NegativeOne)
+            return T.IsEvenInteger(n) ? T.One : T.NegativeOne;
+
+        if (T.IsPositive(n))
+        {
+            return Compute(ref x, ref n);
+        }
+        else
+        {
+            n = -n;
+            var pow = Compute(ref x, ref n);
+            return new(T.One, pow);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static T Compute(ref T x, ref T n)
+        {
+            var y = T.One;
+            while (n > T.One)
+            {
+                if (T.IsOddInteger(n))
+                {
+                    y *= x;
+                    n--;
+                }
+                x *= x;
+                n /= IBinaryInteger<T>.Two;
+            }
+            return x * y;
+        }
+    }
+
+    public static Rational<T> Pow(Rational<T> x, T y) => Pow(x.Num, y) / Pow(x.Den, y);
+
     public static Rational<T> Reciprocate(Rational<T> x)
     {
         if (x._numerator == T.Zero)
@@ -640,53 +686,81 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
         else
         {
-            result = default;
+            result = NaN;
             return false;
         }
     }
 
-    /// <summary>Try to convert a <see cref="double"/> into a rational of <see cref="double"/> to within a certain <paramref name="tolerance"/> and with a <paramref name="max"/> denominator size.</summary>
+    /// <summary>Try to convert a <see cref="double"/> into a rational of <typeparamref name="T"/> to within a certain <paramref name="tolerance"/> and with a <paramref name="max"/> denominator size.</summary>
     /// <param name="value">The value to convert.</param>
     /// <param name="tolerance">A tolerance.</param>
     /// <param name="max">The max denominator size.</param>
     /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/>.</param>
     /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/>.</returns>
-    /// <exception cref="OverflowException">Thrown when <paramref name="value"/> cannot be represented as a rational of <typeparamref name="T"/>.</exception>
+    [Experimental("CORE0001", UrlFormat = "https://mathematics.hamlettanyavong.com/diagnostic-messages/experimental/core0001")]
     public static bool TryConvertFromDouble(double value, double tolerance, T max, out Rational<T> result)
     {
-        if (double.IsNaN(value) || double.IsInfinity(value))
+        if (double.IsNaN(value))
         {
             result = NaN;
-            return false;
+            return true;
         }
+        if (value == 0)
+        {
+            result = Zero;
+            return true;
+        }
+        if (double.IsPositiveInfinity(value))
+        {
+            result = PositiveInfinity;
+            return true;
+        }
+        if (double.IsNegativeInfinity(value))
+        {
+            result = NegativeInfinity;
+            return true;
+        }
+
         if (tolerance < Precision.DblEpsilonVariant)
             tolerance = Precision.DblEpsilonVariant;
 
         T num = T.Zero;
         T den = T.One;
 
-        var floor = Math.Floor(value);
-        T quotient = T.CreateChecked(floor);
-        var remainder = value - floor;
-
-        while (Math.Abs(double.CreateChecked(num) / double.CreateChecked(den) - remainder) > tolerance)
+        try
         {
-            if (den > max)
+            checked
             {
-                result = NaN;
-                return false;
-            }
-            if (num == den)
-            {
-                num = T.Zero;
-                den++;
-            }
-            num++;
-        }
+                var floor = Math.Floor(value);
+                T quotient = T.CreateChecked(floor);
+                var remainder = value - floor;
 
-        // There is no need to reduce our fraction since if it were simpler, it would have been returned already.
-        result = new(num + quotient * den, den);
-        return true;
+                // TODO: Don't increment through every possible numerator for a given denominator to improve performance.
+                while (Math.Abs(double.CreateChecked(num) / double.CreateChecked(den) - remainder) > tolerance)
+                {
+                    if (den > max)
+                    {
+                        result = NaN;
+                        return false;
+                    }
+                    if (num == den)
+                    {
+                        num = T.Zero;
+                        den++;
+                    }
+                    num++;
+                }
+
+                // There is no need to reduce our fraction since if it were simpler, it would have been returned already.
+                result = new(num + quotient * den, den);
+                return true;
+            }
+        }
+        catch (OverflowException)
+        {
+            result = NaN;
+            return false;
+        }
     }
 
     public static bool TryConvertFromSaturating<U>(U value, out Rational<T> result)
@@ -699,7 +773,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
         else
         {
-            result = default;
+            result = NaN;
             return false;
         }
     }
@@ -714,7 +788,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
         else
         {
-            result = default;
+            result = NaN;
             return false;
         }
     }

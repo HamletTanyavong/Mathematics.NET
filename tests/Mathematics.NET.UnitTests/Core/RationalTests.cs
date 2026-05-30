@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable CORE0001
+
 namespace Mathematics.NET.UnitTests.Core;
 
 [TestClass]
@@ -68,6 +70,26 @@ public sealed class RationalTests
     }
 
     [TestMethod]
+    [DataRow(-3, 5, -3, -125, 27)]
+    [DataRow(-1, 2, 5, -1, 32)]
+    [DataRow(-1, 1, 2, 1, 1)]
+    [DataRow(-1, 1, 3, -1, 1)]
+    [DataRow(0, 1, 2, 0, 1)]
+    [DataRow(1, 1, 2, 1, 1)]
+    [DataRow(2, 3, -3, 27, 8)]
+    [DataRow(5, 4, 2, 25, 16)]
+    public void Pow_RationalOfIntAndInt_ReturnsRationalToThePowerOfInt(int xNum, int xDen, int y, int expectedNum, int expectedDen)
+    {
+        Rational<int> x = new(xNum, xDen);
+
+        Rational<int> expected = new(expectedNum, expectedDen);
+
+        var actual = Rational<int>.Pow(x, y);
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
     [DataRow(11, 5, 3, 4, 2, 14, 15)]
     public void QuoRem_TwoRationalsOfInt_ReturnsQuotientAndRemainder(int xNum, int xDen, int yNum, int yDen, int expectedQuo, int expectedRemNum, int expectedRemDen)
     {
@@ -90,6 +112,17 @@ public sealed class RationalTests
         Rational<int> expected = new(expectedNum, expectedDen);
 
         var actual = p.Reduce();
+
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    [DataRow(0.33333333, 0.01, 4, 1, 3)]
+    public void TryConvertFromDouble_ValidDouble_ReturnsRationalApproximation(double value, double tolerance, int max, int expectedNum, int expectedDen)
+    {
+        Rational<int> expected = new(expectedNum, expectedDen);
+
+        _ = Rational<int>.TryConvertFromDouble(value, tolerance, max, out var actual);
 
         Assert.AreEqual(expected, actual);
     }

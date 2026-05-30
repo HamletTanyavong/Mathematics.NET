@@ -1,4 +1,4 @@
-// <copyright file="LinAlgExtensions.cs" company="Mathematics.NET">
+// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -35,7 +35,7 @@ using Mathematics.NET.AutoDiff;
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>A class containing linear algebra extension methods.</summary>
-public static class LinAlgExtensions
+public static class Extensions
 {
     //
     // Casts and Reinterprets

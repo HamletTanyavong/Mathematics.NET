@@ -1,4 +1,4 @@
-// <copyright file="CoreExtensions.cs" company="Mathematics.NET">
+// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -31,7 +31,7 @@ using System.Runtime.CompilerServices;
 namespace Mathematics.NET.Core;
 
 /// <summary>Core extension methods for Mathematics.NET.</summary>
-public static class CoreExtensions
+public static class Extensions
 {
     //
     // Casts and Reinterprets
@@ -56,6 +56,56 @@ public static class CoreExtensions
     internal static double AsDouble<T>(this T value)
         where T : IComplex<T>
         => Unsafe.As<T, double>(ref value);
+
+    //
+    // .NET Types
+    //
+
+    extension<T>(IBinaryInteger<T> source)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
+    {
+        // The first 5 prime numbers.
+
+        /// <summary>Represents the number 2.</summary>
+        public static T Two => T.CreateChecked(2);
+        /// <summary>Represents the number 3.</summary>
+        public static T Three => T.CreateChecked(3);
+        /// <summary>Represents the number 5.</summary>
+        public static T Five => T.CreateChecked(5);
+        /// <summary>Represents the number 7.</summary>
+        public static T Seven => T.CreateChecked(7);
+        /// <summary>Represents the number 11.</summary>
+        public static T Eleven => T.CreateChecked(11);
+
+        /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
+        /// <param name="x">An integer.</param>
+        /// <param name="n">A positive power.</param>
+        /// <returns><paramref name="x"/> to the power of <paramref name="n"/>.</returns>
+        public static T Pow(T x, T n)
+        {
+            if (T.IsZero(n))
+                return T.One;
+            if (T.IsZero(x))
+                return T.Zero;
+            if (x == T.One)
+                return T.One;
+            if (x == T.NegativeOne)
+                return T.IsEvenInteger(n) ? T.One : T.NegativeOne;
+
+            var y = T.One;
+            while (n > T.One)
+            {
+                if (T.IsOddInteger(n))
+                {
+                    y *= x;
+                    n--;
+                }
+                x *= x;
+                n /= IBinaryInteger<T>.Two;
+            }
+            return x * y;
+        }
+    }
 
     //
     // Rational

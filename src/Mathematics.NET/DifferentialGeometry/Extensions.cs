@@ -1,4 +1,4 @@
-// <copyright file="DifGeoExtensions.cs" company="Mathematics.NET">
+// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -31,7 +31,7 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>A class containing difgeo extension methods.</summary>
-public static class DifGeoExtensions
+public static class Extensions
 {
     //
     // Calculus
