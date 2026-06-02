@@ -1,4 +1,4 @@
-// <copyright file="ComplexTrigonometryBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Wheel2357.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,48 +25,25 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
+namespace Mathematics.NET.NumberTheory;
 
-[MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class ComplexTrigonometryBenchmarks
+/// <summary>Represents a 2-3-5-7 wheel.</summary>
+public sealed class Wheel2357 : Wheel<int>
 {
-    public Complex Z { get; set; }
-    public Complex ImOverTwo { get; set; }
+    public Wheel2357()
+        : base(
+            [2, 3, 5, 7],
+            [11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 121, 127, 131, 137, 139, 143, 149, 151, 157, 163, 167, 169, 173, 179, 181, 187, 191, 193, 197, 199, 209, 211, 221],
+            [2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, 6, 4, 6, 8, 4, 2, 4, 2, 4, 8, 6, 4, 6, 2, 4, 6, 2, 6, 6, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 10, 2, 10]
+        )
+    { }
 
-    public SystemComplex W { get; set; }
-
-    [GlobalSetup]
-    public void GlobalSetup()
+    public override int this[int i]
     {
-        Z = new(1.23, 2.34);
-        ImOverTwo = Constants.Im / 2.0;
-
-        W = new(1.23, 2.34);
-    }
-
-    [Benchmark(Baseline = true)]
-    public SystemComplex Atan_System()
-    {
-        return SystemComplex.Atan(W);
-    }
-
-    [Benchmark]
-    public Complex Atan_MathNET()
-    {
-        return Complex.Atan(Z);
-    }
-
-    //[Benchmark]
-    public Complex Atan_WithoutConstImOverTwo()
-    {
-        return Constants.Im / 2.0 * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
-    }
-
-    //[Benchmark]
-    public Complex Atan_WithConstImOverTwo()
-    {
-        return ImOverTwo * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
+        get
+        {
+            var (quotient, remainder) = int.DivRem(i, IncrementCount);
+            return Size * quotient + _spokes[remainder];
+        }
     }
 }

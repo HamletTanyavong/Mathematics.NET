@@ -1,4 +1,4 @@
-// <copyright file="ComplexTrigonometryBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Algebra.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,48 +25,32 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
-[MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class ComplexTrigonometryBenchmarks
+namespace Mathematics.NET.Core;
+
+/// <summary>A class containing methods for Algebra.</summary>
+public static class Algebra
 {
-    public Complex Z { get; set; }
-    public Complex ImOverTwo { get; set; }
-
-    public SystemComplex W { get; set; }
-
-    [GlobalSetup]
-    public void GlobalSetup()
+    /// <summary>Compute the greatest common divisor of two integers.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="p">An integer.</param>
+    /// <param name="q">An integer.</param>
+    /// <returns>The GCD of the two values.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T GCD<T>(T p, T q)
+        where T : IBinaryInteger<T>
     {
-        Z = new(1.23, 2.34);
-        ImOverTwo = Constants.Im / 2.0;
-
-        W = new(1.23, 2.34);
-    }
-
-    [Benchmark(Baseline = true)]
-    public SystemComplex Atan_System()
-    {
-        return SystemComplex.Atan(W);
-    }
-
-    [Benchmark]
-    public Complex Atan_MathNET()
-    {
-        return Complex.Atan(Z);
-    }
-
-    //[Benchmark]
-    public Complex Atan_WithoutConstImOverTwo()
-    {
-        return Constants.Im / 2.0 * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
-    }
-
-    //[Benchmark]
-    public Complex Atan_WithConstImOverTwo()
-    {
-        return ImOverTwo * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
+        p = T.Abs(p);
+        q = T.Abs(q);
+        while (p != T.Zero && q != T.Zero)
+        {
+            if (p > q)
+                p %= q;
+            else
+                q %= p;
+        }
+        return p | q;
     }
 }

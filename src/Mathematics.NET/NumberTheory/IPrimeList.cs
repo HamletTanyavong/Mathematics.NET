@@ -1,4 +1,4 @@
-// <copyright file="CoreImplExtensions.cs" company="Mathematics.NET">
+// <copyright file="IPrimeList.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,18 +25,13 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics;
+namespace Mathematics.NET.NumberTheory;
 
-namespace Mathematics.NET.Benchmarks.Implementations.Core;
-
-public static class CoreImplExtensions
+/// <summary>Defines support for prime number lists and retrieving their values.</summary>
+public interface IPrimeList
 {
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Complex AsComplex(this Vector128<double> value)
-        => Unsafe.As<Vector128<double>, Complex>(ref value);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector128<double> AsVector128(this Complex value)
-        => Unsafe.As<Complex, Vector128<double>>(ref value);
+    /// <summary>Get the prime number at a certain index.</summary>
+    /// <param name="index">The index.</param>
+    /// <returns>A prime number.</returns>
+    int GetPrime(int index);
 }

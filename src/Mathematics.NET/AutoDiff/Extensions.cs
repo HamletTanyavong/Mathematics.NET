@@ -1,4 +1,4 @@
-// <copyright file="AutoDiffExtensions.cs" company="Mathematics.NET">
+// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -30,7 +30,7 @@ using Mathematics.NET.LinearAlgebra;
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>A class containing AutoDiff extension methods.</summary>
-public static class AutoDiffExtensions
+public static class Extensions
 {
     //
     // Vector Calculus

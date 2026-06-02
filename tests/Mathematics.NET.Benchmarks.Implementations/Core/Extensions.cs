@@ -1,4 +1,4 @@
-// <copyright file="ComplexTrigonometryBenchmarks.cs" company="Mathematics.NET">
+// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,48 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics;
 
-[MemoryDiagnoser]
-[RankColumn]
-[Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class ComplexTrigonometryBenchmarks
+namespace Mathematics.NET.Benchmarks.Implementations.Core;
+
+public static class Extensions
 {
-    public Complex Z { get; set; }
-    public Complex ImOverTwo { get; set; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Complex AsComplex(this Vector128<double> value)
+        => Unsafe.As<Vector128<double>, Complex>(ref value);
 
-    public SystemComplex W { get; set; }
-
-    [GlobalSetup]
-    public void GlobalSetup()
-    {
-        Z = new(1.23, 2.34);
-        ImOverTwo = Constants.Im / 2.0;
-
-        W = new(1.23, 2.34);
-    }
-
-    [Benchmark(Baseline = true)]
-    public SystemComplex Atan_System()
-    {
-        return SystemComplex.Atan(W);
-    }
-
-    [Benchmark]
-    public Complex Atan_MathNET()
-    {
-        return Complex.Atan(Z);
-    }
-
-    //[Benchmark]
-    public Complex Atan_WithoutConstImOverTwo()
-    {
-        return Constants.Im / 2.0 * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
-    }
-
-    //[Benchmark]
-    public Complex Atan_WithConstImOverTwo()
-    {
-        return ImOverTwo * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector128<double> AsVector128(this Complex value)
+        => Unsafe.As<Complex, Vector128<double>>(ref value);
 }

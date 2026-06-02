@@ -1,4 +1,4 @@
-// <copyright file="LinearAlgebraImplExtensions.cs" company="Mathematics.NET">
+// <copyright file="Extensions.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -31,7 +31,7 @@ using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 
-internal static class LinearAlgebraImplExtensions
+internal static class Extensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector128<double> AsVector128<T>(this Vector2<T> value)

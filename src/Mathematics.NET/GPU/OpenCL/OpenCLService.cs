@@ -28,11 +28,8 @@
 #pragma warning disable IDE0032
 #pragma warning disable IDE0058
 
-#if NET10_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
-#endif
 using System.Runtime.InteropServices;
-using Mathematics.NET.Exceptions;
 using Mathematics.NET.GPU.OpenCL.Core;
 using Microsoft.Extensions.Logging;
 using Silk.NET.OpenCL;
@@ -58,9 +55,7 @@ public sealed partial class OpenCLService : IComputeService
     private Context _context;
     private Program _program;
 
-#if NET10_0_OR_GREATER
-    [Experimental("EXP0001", Message = "This is an experimental implementaion of OpenCL in Mathematics.NET", UrlFormat = "https://mathematics.hamlettanyavong.com/diagnostic-messages/experimental/exp0001")]
-#endif
+    [Experimental("EXP0001", UrlFormat = "https://mathematics.hamlettanyavong.com/diagnostic-messages/experimental/exp0001")]
     public unsafe OpenCLService(ILogger<OpenCLService> logger, string vendor, Func<Device, bool> filter, bool useFirst = false, params ReadOnlySpan<string> options)
     {
         _logger = logger;
