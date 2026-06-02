@@ -38,14 +38,14 @@ public static class Combinatorics
     /// <param name="k">The <paramref name="k"/> in <paramref name="n"/> choose <paramref name="k"/>.</param>
     /// <returns><paramref name="n"/> choose <paramref name="k"/>.</returns>
     public static T Binomial<T>(int n, int k)
-        where T : IBinaryInteger<T>
+        where T : IBinaryInteger<T>, ISignedNumber<T>
     {
         Wheel2357 wheel = new();
         T result = T.One;
         foreach (var prime in Prime.SieveOfEratosthenes(wheel, n))
         {
             var exponent = PAdic.Kummer(prime, n, k);
-            result *= T.CreateTruncating(int.Pow(prime, exponent));
+            result *= IBinaryInteger<T>.Pow(T.CreateTruncating(prime), T.CreateTruncating(exponent));
         }
         return result;
     }
@@ -55,14 +55,14 @@ public static class Combinatorics
     /// <param name="k">An array of positive integers.</param>
     /// <returns>The sum of all elements of <paramref name="k"/> choose the elements of <paramref name="k"/>.</returns>
     public static T Multinomial<T>(params int[] k)
-        where T : IBinaryInteger<T>
+        where T : IBinaryInteger<T>, ISignedNumber<T>
     {
         Wheel2357 wheel = new();
         T result = T.One;
         foreach (var prime in Prime.SieveOfEratosthenes(wheel, k.Sum()))
         {
             var exponent = PAdic.Kummer(prime, k);
-            result *= T.CreateTruncating(int.Pow(prime, exponent));
+            result *= IBinaryInteger<T>.Pow(T.CreateTruncating(prime), T.CreateTruncating(exponent));
         }
         return result;
     }
