@@ -1,4 +1,8 @@
-import { type SearchOptions } from 'flexsearch'
+declare module '*.css'
+
+declare module '*.scss'
+
+declare module '*.sass'
 
 declare module '@/mdx/search.mjs' {
   export type Result = {
@@ -7,5 +11,8 @@ declare module '@/mdx/search.mjs' {
     pageTitle?: string
   }
 
-  export function search(query: string, options?: SearchOptions): Array<Result>
+  export function search(
+    query: string,
+    options?: import('flexsearch').SearchOptions,
+  ): Array<Result>
 }
