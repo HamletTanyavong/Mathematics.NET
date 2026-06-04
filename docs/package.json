@@ -34,7 +34,7 @@
     "playwright": "^1.60.0",
     "prettier-plugin-organize-imports": "^4.2.0",
     "react": "19.2.6",
-    "react-dom": "19.2.7",
+    "react-dom": "19.2.6",
     "react-highlight-words": "^0.21.0",
     "rehype-katex": "^7.0.1",
     "rehype-mermaid": "^3.0.0",
