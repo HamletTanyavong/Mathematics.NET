@@ -258,6 +258,13 @@ export const navigation: Array<NavGroup> = [
     ],
   },
   {
+    title: 'Resources',
+    links: [
+      { title: 'Introduction', href: '/resources' },
+      { title: 'Calculus', href: '/resources/calculus' },
+    ],
+  },
+  {
     title: 'Diagnostic Messages',
     links: [
       { title: 'Diagnostic Messages', href: '/diagnostic-messages' },
