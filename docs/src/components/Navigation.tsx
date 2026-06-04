@@ -249,12 +249,12 @@ export const navigation: Array<NavGroup> = [
     ]
   },
   {
-    title: 'Resources',
+    title: 'Package',
     links: [
-      { title: 'Resources', href: '/resources' },
-      { title: 'Complex', href: '/resources/core/complex' },
-      { title: 'Gradient Tape', href: '/resources/autodiff/gradienttape' },
-      { title: 'Runge-Kutta 4', href: '/resources/solvers/rungekutta4' },
+      { title: 'Introduction', href: '/package' },
+      { title: 'Complex', href: '/package/core/complex' },
+      { title: 'Gradient Tape', href: '/package/autodiff/gradienttape' },
+      { title: 'Runge-Kutta 4', href: '/package/solvers/rungekutta4' },
     ],
   },
   {
@@ -272,7 +272,7 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
     <nav {...props}>
       <ul role="list">
         <TopLevelNavItem href="/">Documentation</TopLevelNavItem>
-        <TopLevelNavItem href="/resources">Resources</TopLevelNavItem>
+        <TopLevelNavItem href="/package">Package</TopLevelNavItem>
         <TopLevelNavItem href="https://github.com/HamletTanyavong/Mathematics.NET/discussions">Support</TopLevelNavItem>
         {navigation.map((group, groupIndex) => (
           <NavigationGroup

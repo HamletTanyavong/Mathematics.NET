@@ -8,8 +8,8 @@ const guides = [
     description: 'Learn the basics of automatic differentiation.',
   },
   {
-    href: '/resources',
-    name: 'Resources',
+    href: '/package',
+    name: 'Package',
     description: 'Learn about the various features of Mathematics.NET.',
   },
   {
