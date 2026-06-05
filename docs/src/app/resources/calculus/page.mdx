@@ -52,17 +52,17 @@ $$
 $$
 $$
 \begin{align}
-  \dv{}{x} a^x = a^x \ln a
+  \dv{}{x} a^x = a^x \ln a,\quad a > 0
 \end{align}
 $$
 $$
 \begin{align}
-  \dv{}{x} \ln |x| = \frac{1}{x}
+  \dv{}{x} \ln |x| = \frac{1}{x},\quad |x| \neq 0
 \end{align}
 $$
 $$
 \begin{align}
-  \dv{}{x} \log_a x = \frac{1}{x \ln a}
+  \dv{}{x} \log_a x = \frac{1}{x \ln a},\quad a > 0
 \end{align}
 $$
 
@@ -96,5 +96,109 @@ $$
 $$
 \begin{align}
   \dv{}{x} \cot x = -\csc^2 x
+\end{align}
+$$
+
+### Inverse Trigonometric Functions
+
+$$
+\begin{align}
+  \dv{}{x} \sin^{-1} x = \frac{1}{\sqrt{1-x^2}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \cos^{-1} x = -\frac{1}{\sqrt{1-x^2}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \tan^{-1} x = \frac{1}{1+x^2}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \csc^{-1} x = -\frac{1}{|x|\sqrt{x^2-1}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \sec^{-1} x = \frac{1}{|x|\sqrt{x^2-1}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \cot^{-1} x = -\frac{1}{1+x^2}
+\end{align}
+$$
+
+### Hyperbolic Functions
+
+$$
+\begin{align}
+  \dv{}{x} \sinh x = \cosh x
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \cosh x = \sinh x
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \tanh x = \sech^2 x
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \csch x = -\csch x \coth x
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \sech x = -\sech x \tanh x
+\end{align}
+$$
+
+### Inverse Hyperbolic Functions
+
+$$
+\begin{align}
+  \dv{}{x} \sinh^{-1} x = \frac{1}{\sqrt{1+x^2}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \cosh^{-1} x = \frac{1}{\sqrt{x^2-1}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \tanh^{-1} x = \frac{1}{1-x^2}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \csch^{-1} x = -\frac{1}{|x|\sqrt{1+x^2}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \sech^{-1} x = -\frac{1}{x\sqrt{1-x^2}}
+\end{align}
+$$
+$$
+\begin{align}
+  \dv{}{x} \coth^{-1} x = \frac{1}{1-x^2}
+\end{align}
+$$
+
+### Higher-Order Derivatives
+
+General Leibniz rule: If $f(x)$ and $g(x)$ are $n$-differentiable functions, then
+
+$$
+\begin{align}
+  \ndv{n}{}{x}[f(x)g(x)] = \sum_{k=0}^n \binom{n}{k} \ndv{n-k}{}{x}f(x)\ndv{k}{}{x}g(x).
 \end{align}
 $$

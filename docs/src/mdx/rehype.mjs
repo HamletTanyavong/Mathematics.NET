@@ -173,8 +173,11 @@ export const rehypePlugins = [
     macros: {
       '\\dd': '\\mathrm{d}#1',
       '\\dv': '\\frac{\\mathrm{d}#1}{\\mathrm{d}#2}',
+      '\\ndv': '\\frac{\\mathrm{d}^{#1}#2}{\\mathrm{d}#3^{#1}}',
       '\\pdv': '\\frac{\\partial#1}{\\partial#2}',
-      '\\atan': '\\mathrm{atan2}\\left(\\frac{#1}{#2}\\right)'
+      '\\atan': '\\mathrm{atan2}\\left(\\frac{#1}{#2}\\right)',
+      '\\sech': '\\mathrm{sech}\\, #1',
+      '\\csch': '\\mathrm{csch}\\, #1',
     }
   }],
   rehypeAddMathContainer,
