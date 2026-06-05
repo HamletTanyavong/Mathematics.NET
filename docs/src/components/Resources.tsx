@@ -26,7 +26,7 @@ interface Resource {
 
 const resources: Array<Resource> = [
   {
-    href: '/resources/core/complex',
+    href: '/package/core/complex',
     name: 'Complex Numbers',
     description:
       'Learn about complex numbers and how to work with them in Mathematics.NET.',
@@ -40,7 +40,7 @@ const resources: Array<Resource> = [
     },
   },
   {
-    href: '/resources/autodiff/gradienttape',
+    href: '/package/autodiff/gradienttape',
     name: 'Gradient Tapes',
     description:
       'Learn about gradient tapes and how they can be used for automatic differentiation.',

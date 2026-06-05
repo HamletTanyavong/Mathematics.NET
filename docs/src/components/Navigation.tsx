@@ -249,19 +249,19 @@ export const navigation: Array<NavGroup> = [
     ]
   },
   {
+    title: 'Articles',
+    links: [
+      { title: 'Introduction', href: '/articles' },
+      { title: 'Calculus Tables', href: '/articles/calculus-tables' },
+    ],
+  },
+  {
     title: 'Package',
     links: [
       { title: 'Introduction', href: '/package' },
       { title: 'Complex', href: '/package/core/complex' },
       { title: 'Gradient Tape', href: '/package/autodiff/gradienttape' },
       { title: 'Runge-Kutta 4', href: '/package/solvers/rungekutta4' },
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      { title: 'Introduction', href: '/resources' },
-      { title: 'Calculus', href: '/resources/calculus' },
     ],
   },
   {
