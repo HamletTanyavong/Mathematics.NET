@@ -258,10 +258,10 @@ export const navigation: Array<NavGroup> = [
     ],
   },
   {
-    title: 'Resources',
+    title: 'Articles',
     links: [
-      { title: 'Introduction', href: '/resources' },
-      { title: 'Calculus', href: '/resources/calculus' },
+      { title: 'Introduction', href: '/articles' },
+      { title: 'Calculus', href: '/articles/calculus' },
     ],
   },
   {
