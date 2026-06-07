@@ -228,7 +228,48 @@ $$
 $$
 $$
 \begin{align}
-  \int \frac{1}{x^2-a^2}\,\dd{x} = \frac{1}{2a}\ln\left|\frac{x-a}{x+a}\right| + C
+  \int \frac{1}{x^2-a^2}\,\dd{x} = \frac{1}{2a}\ln\left|\frac{x-a}{x+a}\right| + C = \begin{cases}
+    -\dfrac{1}{a}\tanh^{-1}\dfrac{x}{a} + C = \dfrac{1}{2a}\ln\dfrac{a-x}{a+x} + C,\quad |x|<|a| \\[1em]
+    -\dfrac{1}{a}\coth^{-1}\dfrac{x}{a} + C = \dfrac{1}{2a}\ln\dfrac{x-a}{x+a} + C,\quad |x|>|a|
+  \end{cases}
+\end{align}
+$$
+$$
+\begin{align}
+  \int \frac{x}{x^2+a^2}\,\dd{x} = \frac{1}{2}\ln\left|x^2+a^2\right| + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int \frac{x^2}{x^2+a^2}\,\dd{x} = x - a\tan^{-1}\frac{x}{a} + C
+\end{align}
+$$
+
+### Exponential and Logarithmic Functions
+
+$$
+\begin{align}
+  \int e^{ax}\,\dd{x} = \frac{1}{a}e^{ax} + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int a^{x}\,\dd{x} = \frac{a^x}{\ln a} + C,\quad a > 0
+\end{align}
+$$
+$$
+\begin{align}
+  \int \ln x\,\dd{x} = x\ln x - x + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int x^n \ln x\,\dd{x} = \frac{x^{n+1}}{(n+1)^2}\left[(n+1)\ln x-1\right] + C,\quad n \neq -1
+\end{align}
+$$
+$$
+\begin{align}
+  \int \log_a x\,\dd{x} = \frac{x}{\ln a}(\ln x - 1) + C,\quad a > 0
 \end{align}
 $$
 
@@ -411,5 +452,43 @@ $$
 $$
 \begin{align}
   \int \arccoth\,x\,\dd{x} = x\,\arccoth\,x+\frac{1}{2}\ln\left(x^2-1\right) + C,\quad |x| > 1
+\end{align}
+$$
+
+### Functions Involving Radicals
+
+$$
+\begin{align}
+  \int \sqrt{a^2+x^2}\,\dd{x} = \frac{x}{2}\sqrt{a^2+x^2}+\frac{a^2}{2}\ln\left(x+\sqrt{a^2+x^2}\right) + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int \sqrt{x^2-a^2}\,\dd{x} = \frac{x}{2}\sqrt{x^2-a^2}-\frac{a^2}{2}\ln\left|x+\sqrt{x^2-a^2}\right| + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int \frac{1}{\sqrt{a^2+x^2}}\,\dd{x} = \ln\left(x+\sqrt{a^2+x^2}\right) + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int \frac{1}{\sqrt{a^2-x^2}}\,\dd{x} = \sin^{-1}\frac{x}{a} + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int \frac{1}{\sqrt{x^2-a^2}}\,\dd{x} = \ln\left|x+\sqrt{x^2-a^2}\right| + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int \frac{1}{x\sqrt{x^2-a^2}}\,\dd{x} = \frac{1}{a}\sec^{-1}\frac{x}{a} + C
+\end{align}
+$$
+$$
+\begin{align}
+  \int \frac{1}{x\sqrt{a^2-x^2}}\,\dd{x} = -\frac{1}{a}\ln\left|\frac{a+\sqrt{a^2-x^2}}{x}\right| + C
 \end{align}
 $$
