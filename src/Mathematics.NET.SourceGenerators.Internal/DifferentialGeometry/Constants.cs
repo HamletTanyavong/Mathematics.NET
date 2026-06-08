@@ -1,4 +1,4 @@
-// <copyright file="TensorField.cs" company="Mathematics.NET">
+// <copyright file="Constants.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,18 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Numerics;
+namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
-namespace Mathematics.NET.DifferentialGeometry.Abstractions;
-
-/// <summary>A base class for tensor fields and similar mathematical objects.</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <typeparam name="TI">An index.</typeparam>
-public abstract class TensorField<TN, U, TI>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-    where TI : IIndex
+internal static class Constants
 {
-    protected TensorField() { }
+    public const int IndexOfFirstIndex = 5;
 }

@@ -25,14 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
+
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents the state of a system.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class State<T>(Memory<T> system, T time)
-    where T : IComplex<T>, IDifferentiableFunctions<T>
+public sealed class State<T, U>(Memory<T> system, T time)
+    where T : IComplex<T, U, U>, IDifferentiableFunctions<T>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     /// <summary>The system.</summary>
     public Memory<T> System = system;

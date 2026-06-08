@@ -37,30 +37,84 @@ public static class Extensions
     // Casts and Reinterprets
     //
 
-    /// <summary>Reinterprets a <see cref="Real"/> as a new <see cref="double"/>.</summary>
+    /// <summary>Reinterprets a <see cref="Real{T}"/> as a new <typeparamref name="T"/>.</summary>
     /// <param name="value">The real number to reinterpret.</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="double"/>.</returns>
+    /// <returns><paramref name="value"/> reinterpreted as a new <typeparamref name="T"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double AsDouble(this Real value) => Unsafe.As<Real, double>(ref value);
+    public static T AsBackingType<T>(this Real<T> value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<Real<T>, T>(ref value);
 
-    /// <summary>Reinterprets a <see cref="double"/> as a new <see cref="Real"/>.</summary>
-    /// <param name="value">The double to reinterpret.</param>
-    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Real"/>.</returns>
+    /// <summary>Reinterprets a <typeparamref name="T"/> as a new <see cref="Real{T}"/>.</summary>
+    /// <param name="value">The <typeparamref name="T"/> to reinterpret.</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Real{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Real AsReal(this double value) => Unsafe.As<double, Real>(ref value);
+    public static Real<T> AsReal<T>(this T value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<T, Real<T>>(ref value);
 
+    #region Keep Private
+
+    //
     // Do not make the following methods public.
+    //
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static T AsBackingType<T>(this float value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<float, T>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static T AsBackingType<T>(this double value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<double, T>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static U AsFloat<T, U>(this T value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        where U : IBinaryFloatingPointIeee754<U>
+        => Unsafe.As<T, U>(ref value);
 
     // The real part of any type that implements IComplex<T> should be aligned at zero.
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static double AsDouble<T>(this T value)
-        where T : IComplex<T>
-        => Unsafe.As<T, double>(ref value);
+    internal static V AsFloat<T, U, V>(this T value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        where V : IBinaryFloatingPointIeee754<V>
+        => Unsafe.As<T, V>(ref value);
 
     //
-    // .NET Types
+    // Rational
     //
 
+    /// <inheritdoc cref="IRational{T, U, V}.Reduce(T)" />
+    public static Rational<T, U> Reduce<T, U>(this Rational<T, U> value)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Rational<T, U>.Reduce(value);
+
+    #endregion
+}
+
+internal static class BinaryFloatingPointExtensionsIeee754
+{
+    extension<T>(IBinaryFloatingPointIeee754<T> source)
+        where T : IBinaryFloatingPointIeee754<T>
+    {
+        public static T DblMinPositive => T.CreateChecked(Precision.DblMinPositive);
+
+        public static T Half => T.CreateChecked(0.5);
+        public static T OneAndHalf => T.CreateChecked(1.5);
+        public static T Two => T.CreateChecked(2);
+        public static T Three => T.CreateChecked(3);
+        public static T Four => T.CreateChecked(4);
+        public static T Six => T.CreateChecked(6);
+        public static T Ten => T.CreateChecked(10);
+    }
+}
+
+internal static class BinaryIntegerExtensions
+{
     extension<T>(IBinaryInteger<T> source)
         where T : IBinaryInteger<T>, ISignedNumber<T>
     {
@@ -106,13 +160,4 @@ public static class Extensions
             return x * y;
         }
     }
-
-    //
-    // Rational
-    //
-
-    /// <inheritdoc cref="IRational{T, U}.Reduce(T)" />
-    public static Rational<T> Reduce<T>(this Rational<T> value)
-        where T : IBinaryInteger<T>, ISignedNumber<T>
-        => Rational<T>.Reduce(value);
 }

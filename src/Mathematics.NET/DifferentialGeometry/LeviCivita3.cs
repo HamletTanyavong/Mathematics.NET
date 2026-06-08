@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
@@ -33,32 +34,34 @@ using Mathematics.NET.LinearAlgebra;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a three-dimensional Levi-Civita symbol.</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1">The first index.</typeparam>
 /// <typeparam name="TI2">The second index.</typeparam>
 /// <typeparam name="TI3">The third index.</typeparam>
-public readonly struct LeviCivita3<TN, TI1, TI2, TI3>
-    : IRankThreeTensor<LeviCivita3<TN, TI1, TI2, TI3>, Array3x3x3<TN>, TN, TI1, TI2, TI3>,
-      IMultiplicationOperation<LeviCivita3<TN, TI1, TI2, TI3>, TN, Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3>>,
-      IUnaryMinusOperation<LeviCivita3<TN, TI1, TI2, TI3>, Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3>>,
-      IUnaryPlusOperation<LeviCivita3<TN, TI1, TI2, TI3>, LeviCivita3<TN, TI1, TI2, TI3>>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public readonly struct LeviCivita3<TN, TB, TI1, TI2, TI3>
+    : IRankThreeTensor<LeviCivita3<TN, TB, TI1, TI2, TI3>, Array3x3x3<TN, TB>, TN, TB, TB, TI1, TI2, TI3>,
+      IMultiplicationOperation<LeviCivita3<TN, TB, TI1, TI2, TI3>, TN, Tensor<Array3x3x3<TN, TB>, TN, TB, TI1, TI2, TI3>>,
+      IUnaryMinusOperation<LeviCivita3<TN, TB, TI1, TI2, TI3>, Tensor<Array3x3x3<TN, TB>, TN, TB, TI1, TI2, TI3>>,
+      IUnaryPlusOperation<LeviCivita3<TN, TB, TI1, TI2, TI3>, LeviCivita3<TN, TB, TI1, TI2, TI3>>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TI1 : IIndex
     where TI2 : IIndex
     where TI3 : IIndex
 {
-    private static Array3x3x3<TN> s_array;
+    private static Array3x3x3<TN, TB> s_array;
 
     static LeviCivita3()
     {
         s_array = new();
 
-        s_array[0, 1, 2] = +1;
-        s_array[0, 2, 1] = -1;
-        s_array[1, 0, 2] = -1;
-        s_array[1, 2, 0] = +1;
-        s_array[2, 0, 1] = +1;
-        s_array[2, 1, 0] = -1;
+        s_array[0, 1, 2] = +TN.One;
+        s_array[0, 2, 1] = -TN.One;
+        s_array[1, 0, 2] = -TN.One;
+        s_array[1, 2, 0] = +TN.One;
+        s_array[2, 0, 1] = +TN.One;
+        s_array[2, 1, 0] = -TN.One;
     }
 
     //
@@ -75,13 +78,13 @@ public readonly struct LeviCivita3<TN, TI1, TI2, TI3>
     // IArrayRepresentable & Relevant Interfaces
     //
 
-    public static int Components => Array3x3x3<TN>.Components;
+    public static int Components => Array3x3x3<TN, TB>.Components;
 
-    public static int E1Components => Array3x3x3<TN>.E1Components;
+    public static int E1Components => Array3x3x3<TN, TB>.E1Components;
 
-    public static int E2Components => Array3x3x3<TN>.E2Components;
+    public static int E2Components => Array3x3x3<TN, TB>.E2Components;
 
-    public static int E3Components => Array3x3x3<TN>.E3Components;
+    public static int E3Components => Array3x3x3<TN, TB>.E3Components;
 
     //
     // Indexer
@@ -97,30 +100,30 @@ public readonly struct LeviCivita3<TN, TI1, TI2, TI3>
     // Operators
     //
 
-    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> operator -(LeviCivita3<TN, TI1, TI2, TI3> tensor)
+    public static Tensor<Array3x3x3<TN, TB>, TN, TB, TI1, TI2, TI3> operator -(LeviCivita3<TN, TB, TI1, TI2, TI3> tensor)
         => new(-s_array);
 
-    public static LeviCivita3<TN, TI1, TI2, TI3> operator +(LeviCivita3<TN, TI1, TI2, TI3> tensor)
+    public static LeviCivita3<TN, TB, TI1, TI2, TI3> operator +(LeviCivita3<TN, TB, TI1, TI2, TI3> tensor)
         => tensor;
 
-    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> operator *(TN c, LeviCivita3<TN, TI1, TI2, TI3> tensor)
+    public static Tensor<Array3x3x3<TN, TB>, TN, TB, TI1, TI2, TI3> operator *(TN c, LeviCivita3<TN, TB, TI1, TI2, TI3> tensor)
         => new(c * s_array);
 
-    public static Tensor<Array3x3x3<TN>, TN, TI1, TI2, TI3> operator *(LeviCivita3<TN, TI1, TI2, TI3> tensor, TN c)
+    public static Tensor<Array3x3x3<TN, TB>, TN, TB, TI1, TI2, TI3> operator *(LeviCivita3<TN, TB, TI1, TI2, TI3> tensor, TN c)
         => new(s_array * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(LeviCivita3<TN, TI1, TI2, TI3> left, LeviCivita3<TN, TI1, TI2, TI3> right) => true;
+    public static bool operator ==(LeviCivita3<TN, TB, TI1, TI2, TI3> left, LeviCivita3<TN, TB, TI1, TI2, TI3> right) => true;
 
-    public static bool operator !=(LeviCivita3<TN, TI1, TI2, TI3> left, LeviCivita3<TN, TI1, TI2, TI3> right) => false;
+    public static bool operator !=(LeviCivita3<TN, TB, TI1, TI2, TI3> left, LeviCivita3<TN, TB, TI1, TI2, TI3> right) => false;
 
 #pragma warning disable EPC11
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is LeviCivita3<TN, TI1, TI2, TI3>;
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is LeviCivita3<TN, TB, TI1, TI2, TI3>;
 
-    public readonly bool Equals(LeviCivita3<TN, TI1, TI2, TI3> value) => true;
+    public readonly bool Equals(LeviCivita3<TN, TB, TI1, TI2, TI3> value) => true;
 #pragma warning restore EPC11
 
     public override readonly int GetHashCode() => HashCode.Combine(s_array);
@@ -141,5 +144,5 @@ public readonly struct LeviCivita3<TN, TI1, TI2, TI3>
     // Implicit Operators
     //
 
-    public static implicit operator LeviCivita3<TN, TI1, TI2, TI3>(Array3x3x3<TN> input) => throw new NotSupportedException();
+    public static implicit operator LeviCivita3<TN, TB, TI1, TI2, TI3>(Array3x3x3<TN, TB> input) => throw new NotSupportedException();
 }

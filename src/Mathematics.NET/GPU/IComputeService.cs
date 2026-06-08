@@ -56,7 +56,7 @@ public interface IComputeService : IDisposable
     /// <param name="localWorkSize">The local work size.</param>
     /// <param name="vector">A vector.</param>
     /// <param name="scalar">A scalar.</param>
-    void CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Complex> vector, in Complex scalar);
+    void CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Complex<double>> vector, in Complex<double> scalar);
 
     /// <summary>Multiply a vector by a scalar.</summary>
     /// <remarks>Padded vectors should have zeros added to their ends.</remarks>
@@ -66,7 +66,7 @@ public interface IComputeService : IDisposable
     /// <param name="vector">A vector.</param>
     /// <param name="scalar">A scalar.</param>
     /// <returns>A new vector.</returns>
-    ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, in Complex scalar);
+    ReadOnlySpan<Complex<double>> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex<double>> vector, in Complex<double> scalar);
 
     /// <summary>Multipy two matrices.</summary>
     /// <remarks>Padded matrices should have zeros added to their right and bottom.</remarks>
@@ -76,14 +76,14 @@ public interface IComputeService : IDisposable
     /// <param name="left">The left matrix.</param>
     /// <param name="right">The right matrix.</param>
     /// <returns>A new matrix.</returns>
-    ReadOnlySpan2D<Complex> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex> left, ReadOnlySpan2D<Complex> right);
+    ReadOnlySpan2D<Complex<double>> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex<double>> left, ReadOnlySpan2D<Complex<double>> right);
 
     /// <inheritdoc cref="CompMatMul(Device, WorkSize2D, WorkSize2D, ReadOnlySpan2D{Complex}, ReadOnlySpan2D{Complex})"/>
-    ReadOnlySpan2D<Real> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real> left, ReadOnlySpan2D<Real> right);
+    ReadOnlySpan2D<Real<double>> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real<double>> left, ReadOnlySpan2D<Real<double>> right);
 
     /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, Span{Complex}, in Complex)"/>
-    void VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Real> vector, in Real scalar);
+    void VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Real<double>> vector, in Real<double> scalar);
 
     /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, ReadOnlySpan{Complex}, in Complex)"/>
-    ReadOnlySpan<Real> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real> vector, Real scalar);
+    ReadOnlySpan<Real<double>> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real<double>> vector, Real<double> scalar);
 }

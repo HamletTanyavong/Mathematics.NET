@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
@@ -35,18 +36,20 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor or a similar mathematical object.</summary>
-/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
 /// <param name="vector">A backing vector.</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<TV, TN, TI>(TV vector)
-    : IRankOneTensor<Tensor<TV, TN, TI>, TV, TN, TI>,
-      IMultiplicationOperation<Tensor<TV, TN, TI>, TN, Tensor<TV, TN, TI>>,
-      IUnaryMinusOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>,
-      IUnaryPlusOperation<Tensor<TV, TN, TI>, Tensor<TV, TN, TI>>
-    where TV : IVector<TV, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public struct Tensor<TV, TN, U, TI>(TV vector)
+    : IRankOneTensor<Tensor<TV, TN, U, TI>, TV, TN, U, U, TI>,
+      IMultiplicationOperation<Tensor<TV, TN, U, TI>, TN, Tensor<TV, TN, U, TI>>,
+      IUnaryMinusOperation<Tensor<TV, TN, U, TI>, Tensor<TV, TN, U, TI>>,
+      IUnaryPlusOperation<Tensor<TV, TN, U, TI>, Tensor<TV, TN, U, TI>>
+    where TV : IVector<TV, TN, U, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI : IIndex
 {
     private TV _vector = vector;
@@ -79,37 +82,37 @@ public struct Tensor<TV, TN, TI>(TV vector)
     // Operators
     //
 
-    public static Tensor<TV, TN, TI> operator -(Tensor<TV, TN, TI> tensor)
+    public static Tensor<TV, TN, U, TI> operator -(Tensor<TV, TN, U, TI> tensor)
         => new(-tensor._vector);
 
-    public static Tensor<TV, TN, TI> operator +(Tensor<TV, TN, TI> tensor)
+    public static Tensor<TV, TN, U, TI> operator +(Tensor<TV, TN, U, TI> tensor)
         => tensor;
 
-    public static Tensor<TV, TN, TI> operator +(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
+    public static Tensor<TV, TN, U, TI> operator +(Tensor<TV, TN, U, TI> left, Tensor<TV, TN, U, TI> right)
         => new(left._vector + right._vector);
 
-    public static Tensor<TV, TN, TI> operator -(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
+    public static Tensor<TV, TN, U, TI> operator -(Tensor<TV, TN, U, TI> left, Tensor<TV, TN, U, TI> right)
         => new(left._vector - right._vector);
 
-    public static Tensor<TV, TN, TI> operator *(TN c, Tensor<TV, TN, TI> tensor)
+    public static Tensor<TV, TN, U, TI> operator *(TN c, Tensor<TV, TN, U, TI> tensor)
         => new(c * tensor._vector);
 
-    public static Tensor<TV, TN, TI> operator *(Tensor<TV, TN, TI> tensor, TN c)
+    public static Tensor<TV, TN, U, TI> operator *(Tensor<TV, TN, U, TI> tensor, TN c)
         => new(tensor._vector * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
+    public static bool operator ==(Tensor<TV, TN, U, TI> left, Tensor<TV, TN, U, TI> right)
         => left._vector == right._vector;
 
-    public static bool operator !=(Tensor<TV, TN, TI> left, Tensor<TV, TN, TI> right)
+    public static bool operator !=(Tensor<TV, TN, U, TI> left, Tensor<TV, TN, U, TI> right)
         => left._vector != right._vector;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TV, TN, TI> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TV, TN, U, TI> other && Equals(other);
 
-    public readonly bool Equals(Tensor<TV, TN, TI> value) => _vector.Equals(value._vector);
+    public readonly bool Equals(Tensor<TV, TN, U, TI> value) => _vector.Equals(value._vector);
 
     public override readonly int GetHashCode() => HashCode.Combine(_vector);
 
@@ -129,13 +132,13 @@ public struct Tensor<TV, TN, TI>(TV vector)
     /// <typeparam name="TNI">An index.</typeparam>
     /// <returns>A tensor with a new index.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TV, TN, TNI> WithIndex<TNI>()
+    public Tensor<TV, TN, U, TNI> WithIndex<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TV, TN, TI>, Tensor<TV, TN, TNI>>(ref this);
+        => Unsafe.As<Tensor<TV, TN, U, TI>, Tensor<TV, TN, U, TNI>>(ref this);
 
     //
     // Implicit Operators
     //
 
-    public static implicit operator Tensor<TV, TN, TI>(TV input) => new(input);
+    public static implicit operator Tensor<TV, TN, U, TI>(TV input) => new(input);
 }

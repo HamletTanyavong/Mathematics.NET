@@ -34,24 +34,24 @@ namespace Mathematics.NET.GPU.OpenCL;
 
 public sealed partial class OpenCLService
 {
-    public unsafe ReadOnlySpan<Complex> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex> vector, in Complex scalar)
+    public unsafe ReadOnlySpan<Complex<double>> CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Complex<double>> vector, in Complex<double> scalar)
     {
         var length = vector.Length;
-        var result = new Complex[length];
+        var result = new Complex<double>[length];
 
         fixed (void* pVector = vector)
         {
             // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * length), pVector, null);
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex<double>) * length), pVector, null);
 
             fixed (void* pResult = result)
             {
-                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * length), pResult, null);
+                nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex<double>) * length), pResult, null);
 
                 // Set kernel arguments.
                 var kernel = _program.Kernels["comp_vec_mul_scalar"].Handle;
                 var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
+                error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex<double>), in scalar);
                 error |= _cl.SetKernelArg(kernel, 2, (nuint)sizeof(nint), &resultBuffer);
                 ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_vec_mul_scalar");
 
@@ -61,7 +61,7 @@ public sealed partial class OpenCLService
                 ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_vec_mul_scalar");
 
                 // Enqueue read buffer.
-                _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * length), pResult, 0, null, null);
+                _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex<double>) * length), pResult, 0, null, null);
 
                 // Release mem objects.
                 _cl.ReleaseMemObject(resultBuffer);

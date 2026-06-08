@@ -25,8 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0051
-
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.Core.Operations;
@@ -36,16 +35,18 @@ namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents a state item with two elements.</summary>
 /// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct StateItem2<TA, TN> : IStateItem<StateItem2<TA, TN>, TA, TN>
+public struct StateItem2<TA, TN, TB> : IStateItem<StateItem2<TA, TN, TB>, TA, TN, TB>
     where TA
-    : I1DArrayRepresentable<TA, TN>,
+    : I1DArrayRepresentable<TA, TN, TB, TB>,
       IAdditionOperation<TA, TA>,
       ISubtractionOperation<TA, TA>,
       IMultiplicationOperation<TA, TN, TA>,
       IUnaryMinusOperation<TA, TA>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
     [InlineArray(2)]
     public struct Buffer
@@ -84,19 +85,19 @@ public struct StateItem2<TA, TN> : IStateItem<StateItem2<TA, TN>, TA, TN>
     // Operators
     //
 
-    public static StateItem2<TA, TN> operator +(StateItem2<TA, TN> value) => value;
+    public static StateItem2<TA, TN, TB> operator +(StateItem2<TA, TN, TB> value) => value;
 
-    public static StateItem2<TA, TN> operator -(StateItem2<TA, TN> value) => new(-value.R1, -value.R2);
+    public static StateItem2<TA, TN, TB> operator -(StateItem2<TA, TN, TB> value) => new(-value.R1, -value.R2);
 
-    public static StateItem2<TA, TN> operator +(StateItem2<TA, TN> left, StateItem2<TA, TN> right)
+    public static StateItem2<TA, TN, TB> operator +(StateItem2<TA, TN, TB> left, StateItem2<TA, TN, TB> right)
         => new(left.R1 + right.R1, left.R2 + right.R2);
 
-    public static StateItem2<TA, TN> operator -(StateItem2<TA, TN> left, StateItem2<TA, TN> right)
+    public static StateItem2<TA, TN, TB> operator -(StateItem2<TA, TN, TB> left, StateItem2<TA, TN, TB> right)
      => new(left.R1 - right.R1, left.R2 - right.R2);
 
-    public static StateItem2<TA, TN> operator *(StateItem2<TA, TN> left, TN right)
+    public static StateItem2<TA, TN, TB> operator *(StateItem2<TA, TN, TB> left, TN right)
         => new(left.R1 * right, left.R2 * right);
 
-    public static StateItem2<TA, TN> operator *(TN left, StateItem2<TA, TN> right)
+    public static StateItem2<TA, TN, TB> operator *(TN left, StateItem2<TA, TN, TB> right)
      => new(left * right.R1, left * right.R2);
 }

@@ -25,15 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a node on a gradient tape.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
-internal readonly record struct GradientNode<T>
-    where T : IComplex<T>
+internal readonly record struct GradientNode<T, U>
+    where T : IComplex<T, U, U>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     /// <summary>The derivative of the left component of the binary operation.</summary>
     public readonly T DX;

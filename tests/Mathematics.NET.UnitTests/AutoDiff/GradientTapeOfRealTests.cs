@@ -35,7 +35,7 @@ namespace Mathematics.NET.UnitTests.AutoDiff;
 [TestCategory("AutoDiff"), TestCategory("Gradient Tape")]
 public sealed class GradientTapeOfRealTests
 {
-    private GradientTape<Real> _tape;
+    private GradientTape<Real<double>, double> _tape;
 
     public GradientTapeOfRealTests()
     {
@@ -52,7 +52,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Acos, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -61,7 +61,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Acos, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -70,7 +70,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Acosh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -79,18 +79,18 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Acosh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [DataRow(1.23, 2.34, 1, 1)]
     public void Add_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Add, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -99,7 +99,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Add, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -112,7 +112,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -123,7 +123,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Add(left, x).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -136,7 +136,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -147,7 +147,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Add(x, right).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -156,7 +156,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Asin, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -165,7 +165,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Asin, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -174,7 +174,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Asinh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -183,7 +183,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Asinh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -192,7 +192,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Atan, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -201,7 +201,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Atan, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -212,11 +212,11 @@ public sealed class GradientTapeOfRealTests
         var x = _tape.CreateVariable(right);
         _ = _tape.Atan2(y, x);
 
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         _tape.ReverseAccumulate(out var actual);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -228,7 +228,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Atan2(y, x).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -237,7 +237,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Atanh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -246,7 +246,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Atanh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -255,7 +255,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Cbrt, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -264,7 +264,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Cbrt, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -273,7 +273,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Cos, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -282,7 +282,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Cos, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -291,7 +291,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Cosh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -300,7 +300,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Cosh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -332,11 +332,11 @@ public sealed class GradientTapeOfRealTests
     [DataRow(1.23, 2.34, 0.4273504273504274, -0.2246329169406093)]
     public void Divide_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Divide, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -345,7 +345,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Divide, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -358,7 +358,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -369,7 +369,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Divide(left, x).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -382,7 +382,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -393,7 +393,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Divide(x, right).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -402,7 +402,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Exp, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -411,7 +411,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Exp, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -420,7 +420,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Exp2, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -429,7 +429,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Exp2, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -438,7 +438,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Exp10, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -447,7 +447,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Exp10, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -456,7 +456,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Ln, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -465,18 +465,18 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Ln, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [DataRow(1.23, 2.34, 0.9563103467806, -0.1224030239537303)]
     public void Log_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Log, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -485,7 +485,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Log, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -494,7 +494,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Log2, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -503,7 +503,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Log2, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -512,7 +512,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Log10, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -521,7 +521,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Log10, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -532,11 +532,11 @@ public sealed class GradientTapeOfRealTests
         var y = _tape.CreateVariable(right);
         _ = _tape.Modulo(x, y);
 
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         _tape.ReverseAccumulate(out var actual);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -548,7 +548,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Modulo(x, y).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -561,7 +561,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -572,7 +572,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Modulo(left, x).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -585,7 +585,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -596,18 +596,18 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Modulo(x, right).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [DataRow(1.23, 2.34, 2.34, 1.23)]
     public void Multiply_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Multiply, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
 
     [TestMethod]
@@ -616,7 +616,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Multiply, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -629,7 +629,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
 
     [TestMethod]
@@ -640,7 +640,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Multiply(left, x).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -653,7 +653,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-16);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-16);
     }
 
     [TestMethod]
@@ -664,7 +664,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Multiply(x, right).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -673,7 +673,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Negate, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -682,7 +682,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Negate, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -691,14 +691,14 @@ public sealed class GradientTapeOfRealTests
     {
         var y = _tape.CreateVariable(left);
         var x = _tape.CreateVariable(right);
-        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
-        _ = _tape.Operation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u);
+        var u = Real<double>.One / (x.Value * x.Value + y.Value * y.Value);
+        _ = _tape.Operation(y, x, Real<double>.Atan2, (y, x) => x * u, (y, x) => -y * u);
 
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         _tape.ReverseAccumulate(out var actual);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -707,11 +707,11 @@ public sealed class GradientTapeOfRealTests
     {
         var y = _tape.CreateVariable(left);
         var x = _tape.CreateVariable(right);
-        var u = Real.One / (x.Value * x.Value + y.Value * y.Value);
+        var u = Real<double>.One / (x.Value * x.Value + y.Value * y.Value);
 
-        var actual = _tape.Operation(y, x, Real.Atan2, (y, x) => x * u, (y, x) => -y * u).Value;
+        var actual = _tape.Operation(y, x, Real<double>.Atan2, (y, x) => x * u, (y, x) => -y * u).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -719,12 +719,12 @@ public sealed class GradientTapeOfRealTests
     public void Operation_Unary_ReturnsGradient(double input, double expected)
     {
         var x = _tape.CreateVariable(input);
-        _ = _tape.Operation(x, Real.Sin, Real.Cos);
+        _ = _tape.Operation(x, Real<double>.Sin, Real<double>.Cos);
         _tape.ReverseAccumulate(out var gradient);
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -733,20 +733,20 @@ public sealed class GradientTapeOfRealTests
     {
         var x = _tape.CreateVariable(input);
 
-        var actual = _tape.Operation(x, Real.Sin, Real.Cos).Value;
+        var actual = _tape.Operation(x, Real<double>.Sin, Real<double>.Cos).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [DataRow(1.23, 2.34, 3.088081166620949, 0.3360299854573856)]
     public void Pow_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Pow, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -755,7 +755,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Pow, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -768,7 +768,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -779,7 +779,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Pow(left, x).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -792,7 +792,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -803,7 +803,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Pow(x, right).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -816,25 +816,25 @@ public sealed class GradientTapeOfRealTests
         var x = _tape.Exp(_tape.Divide(u, _tape.Sqrt(_tape.Multiply(_tape.Multiply(vector.X3, vector.X4), vector.X2))));
         var y = _tape.Add(u, _tape.Multiply(_tape.Ln(_tape.Divide(vector.X3, vector.X4)), _tape.Multiply(v, vector.X1)));
 
-        Real[] expectedX = [1.67479908078448, 0.866325347771631, -0.00950769726936101, -0.04951809751601818];
-        Real[] expectedY = [72675.93346228106, 29314.79027740105, -3824.679197396951, -4208.3704226546];
+        Real<double>[] expectedX = [1.67479908078448, 0.866325347771631, -0.00950769726936101, -0.04951809751601818];
+        Real<double>[] expectedY = [72675.93346228106, 29314.79027740105, -3824.679197396951, -4208.3704226546];
 
         _tape.ReverseAccumulate(out var actualX, x.Index);
         _tape.ReverseAccumulate(out var actualY, y.Index);
 
-        Assert<Real>.AreApproximatelyEqual(expectedX, actualX, 1e-14);
-        Assert<Real>.AreApproximatelyEqual(expectedY, actualY, 1e-14);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expectedX, actualX, 1e-14);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expectedY, actualY, 1e-14);
     }
 
     [TestMethod]
     [DataRow(1.23, 2.34, 0.3795771135606888, -0.04130373687338086)]
     public void Root_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Root, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -843,7 +843,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Root, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -852,7 +852,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Sin, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -861,7 +861,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Sin, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -870,7 +870,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Sinh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -879,7 +879,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Sinh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -888,7 +888,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Sqrt, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -897,18 +897,18 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Sqrt, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [DataRow(1.23, 2.34, 1, -1)]
     public void Subtract_TwoVariables_ReturnsGradient(double left, double right, double expectedLeft, double expectedRight)
     {
-        Real[] expected = [expectedLeft, expectedRight];
+        Real<double>[] expected = [expectedLeft, expectedRight];
 
         var actual = ComputeGradient(_tape.Subtract, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -917,7 +917,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Subtract, left, right);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -930,7 +930,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -941,7 +941,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Subtract(left, x).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -954,7 +954,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = gradient[0];
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     [TestMethod]
@@ -965,7 +965,7 @@ public sealed class GradientTapeOfRealTests
 
         var actual = _tape.Subtract(x, right).Value;
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -974,7 +974,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Tan, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -983,7 +983,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Tan, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -992,7 +992,7 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeGradient(_tape.Tanh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -1001,14 +1001,14 @@ public sealed class GradientTapeOfRealTests
     {
         var actual = ComputeValue(_tape.Tanh, input);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     //
     // Helpers
     //
 
-    private Real ComputeGradient(Func<Variable<Real>, Variable<Real>> function, Real input)
+    private Real<double> ComputeGradient(Func<Variable<Real<double>, double>, Variable<Real<double>, double>> function, Real<double> input)
     {
         var x = _tape.CreateVariable(input);
         _ = function(x);
@@ -1016,7 +1016,7 @@ public sealed class GradientTapeOfRealTests
         return gradient[0];
     }
 
-    private Real[] ComputeGradient(Func<Variable<Real>, Variable<Real>, Variable<Real>> function, Real left, Real right)
+    private Real<double>[] ComputeGradient(Func<Variable<Real<double>, double>, Variable<Real<double>, double>, Variable<Real<double>, double>> function, Real<double> left, Real<double> right)
     {
         var x = _tape.CreateVariable(left);
         var y = _tape.CreateVariable(right);
@@ -1025,13 +1025,13 @@ public sealed class GradientTapeOfRealTests
         return gradient.ToArray();
     }
 
-    private Real ComputeValue(Func<Variable<Real>, Variable<Real>> function, Real input)
+    private Real<double> ComputeValue(Func<Variable<Real<double>, double>, Variable<Real<double>, double>> function, Real<double> input)
     {
         var x = _tape.CreateVariable(input);
         return function(x).Value;
     }
 
-    private Real ComputeValue(Func<Variable<Real>, Variable<Real>, Variable<Real>> function, Real left, Real right)
+    private Real<double> ComputeValue(Func<Variable<Real<double>, double>, Variable<Real<double>, double>, Variable<Real<double>, double>> function, Real<double> left, Real<double> right)
     {
         var x = _tape.CreateVariable(left);
         var y = _tape.CreateVariable(right);

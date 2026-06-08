@@ -33,8 +33,10 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Defines support for real numbers.</summary>
 /// <typeparam name="T">A type that implements the interface.</typeparam>
-public interface IReal<T>
-    : IComplex<T>,
+/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IReal<T, U, V>
+    : IComplex<T, U, V>,
       IModuloOperation<T, T>,
       IInequalityRelations<T, bool>,
       IDecrementOperation<T>,
@@ -42,7 +44,9 @@ public interface IReal<T>
       IComparable,
       IComparable<T>,
       IMinMaxValue<T>
-    where T : IReal<T>
+    where T : IReal<T, U, V>
+    where U : IBinaryNumber<U>
+    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
 {
     /// <summary>Represents the smallest possible positive value for the type.</summary>
     static abstract T Epsilon { get; }
@@ -51,7 +55,7 @@ public interface IReal<T>
     /// <param name="y">The first value.</param>
     /// <param name="x">The second value.</param>
     /// <returns>An angle.</returns>
-    static virtual Real Atan2(T y, T x) => Math.Atan2(T.ToReal(y).AsDouble(), T.ToReal(x).AsDouble());
+    static virtual Real<V> Atan2(Real<V> y, Real<V> x) => Real<V>.Atan2(y, x);
 
     /// <summary>Compute the ceiling function of a value.</summary>
     /// <param name="x">A value.</param>
@@ -128,10 +132,4 @@ public interface IReal<T>
     /// </returns>
     /// <exception cref="ArithmeticException">An overflow or underflow has occurred.</exception>
     static abstract int Sign(T x);
-
-    /// <summary>Create a real number from a type that implements <typeparamref name="T"/>.</summary>
-    /// <param name="x">A type that implements <typeparamref name="T"/>.</param>
-    /// <returns>A real value.</returns>
-    /// <exception cref="OverflowException">Thrown when the value cannot be converted to the type <see cref="Real"/>.</exception>
-    static abstract Real ToReal(T x);
 }

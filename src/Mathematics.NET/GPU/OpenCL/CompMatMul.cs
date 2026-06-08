@@ -34,25 +34,25 @@ namespace Mathematics.NET.GPU.OpenCL;
 
 public sealed partial class OpenCLService
 {
-    public unsafe ReadOnlySpan2D<Complex> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex> left, ReadOnlySpan2D<Complex> right)
+    public unsafe ReadOnlySpan2D<Complex<double>> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex<double>> left, ReadOnlySpan2D<Complex<double>> right)
     {
         var k = left.Width;
         if (k != right.Height)
             throw new MathematicsException("Cannot multiply two matrices with incompatible dimensions.");
-        Span2D<Complex> result = new Complex[left.Height, right.Width];
+        Span2D<Complex<double>> result = new Complex<double>[left.Height, right.Width];
 
         fixed (void* pLeft = left)
         {
             // Create buffers.
-            nint leftBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * left.Length), pLeft, null);
+            nint leftBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex<double>) * left.Length), pLeft, null);
 
             fixed (void* pRight = right)
             {
-                nint rightBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex) * right.Length), pRight, null);
+                nint rightBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadOnly | MemFlags.HostNoAccess, (nuint)(sizeof(Complex<double>) * right.Length), pRight, null);
 
                 fixed (void* pResult = result)
                 {
-                    nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * result.Length), pResult, null);
+                    nint resultBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.WriteOnly | MemFlags.HostReadOnly, (nuint)(sizeof(Complex<double>) * result.Length), pResult, null);
 
                     // Set kernel arguments.
                     var kernel = _program.Kernels["comp_mat_mul"].Handle;
@@ -70,7 +70,7 @@ public sealed partial class OpenCLService
                     ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_mat_mul");
 
                     // Enqueue read buffer.
-                    _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex) * result.Length), pResult, 0, null, null);
+                    _cl.EnqueueReadBuffer(commandQueue.Handle, resultBuffer, true, 0, (nuint)(sizeof(Complex<double>) * result.Length), pResult, 0, null, null);
 
                     // Release mem objects.
                     _cl.ReleaseMemObject(resultBuffer);

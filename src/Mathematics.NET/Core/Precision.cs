@@ -77,14 +77,16 @@ public static class Precision
     ///
     /// If the values are complex, the threshold represents a disk of radius $ \epsilon $ in which the two values must reside.
     /// </summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="left">The left value.</param>
     /// <param name="right">The right value.</param>
     /// <param name="epsilon">The radius of threshold disk.</param>
     /// <returns><see langword="true"/> if the values are approximately equal; otherwise, <see langword="false"/>.</returns>
-    public static bool AreApproximatelyEqual<T>(T left, T right, Real epsilon)
-        where T : IComplex<T>
-        => T.Abs(left - right) <= epsilon * Real.Max(T.Abs(left), T.Abs(right));
+    public static bool AreApproximatelyEqual<T, U>(T left, T right, Real<U> epsilon)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => T.Abs(left - right) <= epsilon * Real<U>.Max(T.Abs(left), T.Abs(right));
 
     /// <summary>Check if two values are essentially equal within a specified threshold.</summary>
     /// <typeparam name="T">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/>.</typeparam>
@@ -101,14 +103,16 @@ public static class Precision
     ///
     /// If the values are complex, the threshold represents a disk of radius $ \epsilon $ in which the two values must reside.
     /// </summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="left">The left value.</param>
     /// <param name="right">The right value.</param>
     /// <param name="epsilon">The radius of threshold disk.</param>
     /// <returns><see langword="true"/> if the values are essentially equal; otherwise, <see langword="false"/>.</returns>
-    public static bool AreEssentiallyEqual<T>(T left, T right, Real epsilon)
-        where T : IComplex<T>
-        => T.Abs(left - right) <= epsilon * Real.Min(T.Abs(left), T.Abs(right));
+    public static bool AreEssentiallyEqual<T, U>(T left, T right, Real<U> epsilon)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => T.Abs(left - right) <= epsilon * Real<U>.Min(T.Abs(left), T.Abs(right));
 
     /// <summary>Check if this value is definitely greater than a specified value.</summary>
     /// <typeparam name="T">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/>.</typeparam>

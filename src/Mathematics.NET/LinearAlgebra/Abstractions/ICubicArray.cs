@@ -25,11 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
+
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for cubic arrays.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface ICubicArray<T, U> : IArray3D<T, U>
-    where T : ICubicArray<T, U>
-    where U : IComplex<U>;
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="W">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface ICubicArray<T, U, V, W> : IArray3D<T, U, V, W>
+    where T : ICubicArray<T, U, V, W>
+    where U : IComplex<U, V, W>
+    where V : IBinaryNumber<V>
+    where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>;

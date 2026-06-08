@@ -39,14 +39,14 @@ public sealed class Matrix4x4Tests
     {
         yield return new[]
         {
-            new Real[4, 4]
+            new Real<double>[4, 4]
             {
                 { 1, 2, 4, 8 },
                 { -1, 7, 3, 5 },
                 { 2, -9, 13, 11 },
                 { -7, -2, 3, 5 }
             },
-            new Real[4, 4]
+            new Real<double>[4, 4]
             {
                 { 0.08856088560885609, -0.04551045510455105, 0.01107011070110701, -0.1205412054120541 },
                 { -0.05904059040590406, 0.1414514145141451, -0.007380073800738007, -0.03075030750307503 },
@@ -60,19 +60,19 @@ public sealed class Matrix4x4Tests
 
     [TestMethod]
     [DynamicData(nameof(GetRealInputAndInverseData))]
-    public void Inverse_MatrixOfReal_ReturnsInverseOfMatrix(Real[,] input, Real[,] expected)
+    public void Inverse_MatrixOfReal_ReturnsInverseOfMatrix(Real<double>[,] input, Real<double>[,] expected)
         => Inverse_Helper_MatrixOfGeneric_ReturnsInverseOfMatrix(input, expected);
 
     public static void Inverse_Helper_MatrixOfGeneric_ReturnsInverseOfMatrix<T>(T[,] inputArray, T[,] expectedArray)
-        where T : IComplex<T>, IDifferentiableFunctions<T>
+        where T : IComplex<T, double, double>, IDifferentiableFunctions<T>
     {
-        Matrix4x4<T> expected = new(
+        Matrix4x4<T, double> expected = new(
             expectedArray[0, 0], expectedArray[0, 1], expectedArray[0, 2], expectedArray[0, 3],
             expectedArray[1, 0], expectedArray[1, 1], expectedArray[1, 2], expectedArray[1, 3],
             expectedArray[2, 0], expectedArray[2, 1], expectedArray[2, 2], expectedArray[2, 3],
             expectedArray[3, 0], expectedArray[3, 1], expectedArray[3, 2], expectedArray[3, 3]);
 
-        Matrix4x4<T> input = new(
+        Matrix4x4<T, double> input = new(
             inputArray[0, 0], inputArray[0, 1], inputArray[0, 2], inputArray[0, 3],
             inputArray[1, 0], inputArray[1, 1], inputArray[1, 2], inputArray[1, 3],
             inputArray[2, 0], inputArray[2, 1], inputArray[2, 2], inputArray[2, 3],
@@ -80,6 +80,6 @@ public sealed class Matrix4x4Tests
 
         var actual = input.Inverse();
 
-        Assert<T>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<T, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 }

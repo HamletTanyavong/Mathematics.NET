@@ -32,9 +32,11 @@ namespace Mathematics.NET.Core;
 /// <summary>Defines support for rational numbers.</summary>
 /// <typeparam name="T">A type that implements the interface.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-public interface IRational<T, U> : IReal<T>
-    where T : IRational<T, U>
+/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IRational<T, U, V> : IReal<T, U, V>
+    where T : IRational<T, U, V>
     where U : IBinaryInteger<U>
+    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
 {
     /// <summary>Get the numerator of the rational number.</summary>
     U Num { get; }
@@ -68,4 +70,12 @@ public interface IRational<T, U> : IReal<T>
     /// <param name="x">A fraction.</param>
     /// <returns>A mixed fraction if the input fraction is improper; otherwise, the original fraction as the remainder.</returns>
     static abstract (U Quotient, T Remainder) ToMixed(T x);
+
+    /// <summary>Convert a value of type <typeparamref name="V"/> to a fraction.</summary>
+    /// <param name="x">The value to convert.</param>
+    static abstract explicit operator T(V x);
+
+    /// <summary>Convert a fraction to one of type <typeparamref name="V"/>.</summary>
+    /// <param name="x">The value to convert.</param>
+    static abstract explicit operator V(T x);
 }

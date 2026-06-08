@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.LinearAlgebra.Operations;
 
@@ -32,13 +33,17 @@ namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for square matrices.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface ISquareMatrix<T, U>
-    : IMatrix<T, U>,
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="W">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface ISquareMatrix<T, U, V, W>
+    : IMatrix<T, U, V, W>,
       IMultiplicationOperation<T, T>,
-      ITransposeOperation<T, U>
-    where T : ISquareMatrix<T, U>
-    where U : IComplex<U>
+      ITransposeOperation<T, U, V, W>
+    where T : ISquareMatrix<T, U, V, W>
+    where U : IComplex<U, V, W>
+    where V : IBinaryNumber<V>
+    where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
 {
     /// <summary>Gets the multiplicative identiy matrix.</summary>
     static abstract T Identity { get; }
@@ -48,7 +53,7 @@ public interface ISquareMatrix<T, U>
     U Determinant();
 
     /// <summary>Compute the inverse of the matrix.</summary>
-    /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="IMatrix{T, U}.NaM"/>.</returns>
+    /// <returns>The inverse if the matrix is invertible; otherwise, <see cref="IMatrix{T, U, V, W}.NaM"/>.</returns>
     T Inverse();
 
     /// <summary>Compute the trace of the matrix.</summary>

@@ -25,17 +25,22 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.Core.Operations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for 4D arrays.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IArray4D<T, U>
-    : I4DArrayRepresentable<T, U>,
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="W">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IArray4D<T, U, V, W>
+    : I4DArrayRepresentable<T, U, V, W>,
       IMultiplicationOperation<T, U, T>,
       IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>
-    where T : IArray4D<T, U>
-    where U : IComplex<U>;
+    where T : IArray4D<T, U, V, W>
+    where U : IComplex<U, V, W>
+    where V : IBinaryNumber<V>
+    where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>;

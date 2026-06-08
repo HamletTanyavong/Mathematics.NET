@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.Core.Operations;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -33,21 +34,23 @@ namespace Mathematics.NET.Solvers;
 /// <summary>Defines support for state items.</summary>
 /// <typeparam name="TSC">The type that implements the interface.</typeparam>
 /// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-public interface IStateItem<TSC, TA, TN>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IStateItem<TSC, TA, TN, TB>
     : IAdditionOperation<TSC, TSC>,
       ISubtractionOperation<TSC, TSC>,
       IMultiplicationOperation<TSC, TN, TSC>,
       IUnaryPlusOperation<TSC, TSC>,
       IUnaryMinusOperation<TSC, TSC>
-    where TSC : IStateItem<TSC, TA, TN>
+    where TSC : IStateItem<TSC, TA, TN, TB>
     where TA
-    : I1DArrayRepresentable<TA, TN>,
+    : I1DArrayRepresentable<TA, TN, TB, TB>,
       IAdditionOperation<TA, TA>,
       ISubtractionOperation<TA, TA>,
       IMultiplicationOperation<TA, TN, TA>,
       IUnaryMinusOperation<TA, TA>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
     /// <summary>The number of <typeparamref name="TA"/> items.</summary>
     static abstract int E1Components { get; }

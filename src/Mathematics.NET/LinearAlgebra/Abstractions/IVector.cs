@@ -25,31 +25,36 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.Core.Operations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for vectors.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IVector<T, U>
-    : I1DArrayRepresentable<T, U>,
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="W">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IVector<T, U, V, W>
+    : I1DArrayRepresentable<T, U, V, W>,
       IAdditionOperation<T, T>,
       ISubtractionOperation<T, T>,
       IHadamardProductOperation<T, T>,
       IMultiplicationOperation<T, U, T>,
       IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>,
-      IInnerProductOperation<T, U>
-    where T : IVector<T, U>
-    where U : IComplex<U>
+      IInnerProductOperation<T, U, V, W>
+    where T : IVector<T, U, V, W>
+    where U : IComplex<U, V, W>
+    where V : IBinaryNumber<V>
+    where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
 {
     /// <summary>Represents zero for the type.</summary>
     static abstract T Zero { get; }
 
     /// <summary>Compute the $ L^2 $-norm of the vector.</summary>
     /// <returns>The norm.</returns>
-    Real Norm();
+    Real<W> Norm();
 
     /// <summary>Normalize the vector.</summary>
     /// <returns>The normalized vector.</returns>

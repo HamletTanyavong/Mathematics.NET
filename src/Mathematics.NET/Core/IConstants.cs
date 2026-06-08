@@ -25,12 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
+
 namespace Mathematics.NET.Core;
 
 /// <summary>Defines support for common mathematical constants.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
-public interface IConstants<T> : IComplex<T>
-    where T : IConstants<T>
+/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="W">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IConstants<T, U, W> : IComplex<T, U, W>
+    where T : IConstants<T, U, W>
+    where U : IBinaryNumber<U>
+    where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
 {
     /// <inheritdoc cref="Constants.E" />
     static abstract T E { get; }

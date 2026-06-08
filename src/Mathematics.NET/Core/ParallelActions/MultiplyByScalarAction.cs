@@ -25,16 +25,21 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Helpers;
 
 namespace Mathematics.NET.Core.ParallelActions;
 
 /// <summary>An action for multiplying items by a scalar.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <param name="factor">The factor by which to multiply items.</param>
-public readonly struct MultiplyByScalarAction<T>(T factor) : IRefAction<T>
-    where T : IComplex<T>
+public readonly struct MultiplyByScalarAction<T, U, V>(T factor) : IRefAction<T>
+    where T : IComplex<T, U, V>
+    where U : IBinaryNumber<U>
+    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
 {
     private readonly T _factor = factor;
 

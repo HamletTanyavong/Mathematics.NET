@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
@@ -32,12 +33,14 @@ using Mathematics.NET.LinearAlgebra;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a 2x2 metric tensor field.</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class RMMetricTensorField2x2<TT, TN, TPI> : RMTensorField2x2<TT, TN, Lower, Lower, TPI>
-    where TT : ITape<TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public class RMMetricTensorField2x2<TT, TN, U, TPI> : RMTensorField2x2<TT, TN, U, Lower, Lower, TPI>
+    where TT : ITape<TN, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TPI : IIndex
 {
     public RMMetricTensorField2x2() { }
@@ -48,24 +51,24 @@ public class RMMetricTensorField2x2<TT, TN, TPI> : RMTensorField2x2<TT, TN, Lowe
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="point">A point on the manifold.</param>
     /// <returns>A metric tensor.</returns>
-    public new MetricTensor<Matrix2x2<TN>, TN, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
+    public new MetricTensor<Matrix2x2<TN, U>, TN, U, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, U, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
         tape.IsTracking = false;
 
-        Matrix2x2<TN> result = new();
+        Matrix2x2<TN, U> result = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> function)
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> function)
                     result[i, j] = function(tape, point).Value;
             }
         }
 
         tape.IsTracking = true;
-        return new MetricTensor<Matrix2x2<TN>, TN, Lower, TI1N, TI2N>(result);
+        return new MetricTensor<Matrix2x2<TN, U>, TN, U, Lower, TI1N, TI2N>(result);
     }
 
     /// <summary>Compute the value of the inverse metric tensor at a specific point on the manifold.</summary>
@@ -74,11 +77,11 @@ public class RMMetricTensorField2x2<TT, TN, TPI> : RMTensorField2x2<TT, TN, Lowe
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="point">A point on the manifold.</param>
     /// <returns>An inverse metric tensor.</returns>
-    public MetricTensor<Matrix2x2<TN>, TN, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
+    public MetricTensor<Matrix2x2<TN, U>, TN, U, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, U, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
         var value = Compute<TI1N, TI2N>(tape, point);
-        return value.Inverse();
+        return value.Inverse<TI1N, TI2N>();
     }
 }

@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.AutoDiff;
@@ -33,12 +34,14 @@ using Mathematics.NET.AutoDiff;
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a vector of two dual numbers for use in forward-mode automatic differentiation.</summary>
-/// <typeparam name="T">A type that implements <see cref="IDual{T, U}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IDual{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public record struct AutoDiffVector2<T, U>
-    where T : IDual<T, U>
-    where U : IComplex<U>, IDifferentiableFunctions<U>
+public record struct AutoDiffVector2<T, U, V>
+    where T : IDual<T, U, V, V>
+    where U : IComplex<U, V, V>, IDifferentiableFunctions<U>
+    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
 {
     /// <summary>The first element of the vector.</summary>
     public T X1;
@@ -64,7 +67,7 @@ public record struct AutoDiffVector2<T, U>
 
     // Get
 
-    internal static T GetElement(AutoDiffVector2<T, U> vector, int index)
+    internal static T GetElement(AutoDiffVector2<T, U, V> vector, int index)
     {
         if ((uint)index >= 2)
             throw new IndexOutOfRangeException();
@@ -72,28 +75,28 @@ public record struct AutoDiffVector2<T, U>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T GetElementUnsafe(ref AutoDiffVector2<T, U> vector, int index)
+    private static T GetElementUnsafe(ref AutoDiffVector2<T, U, V> vector, int index)
     {
         Debug.Assert(index is >= 0 and < 2);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T, U>, T>(ref vector), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T, U, V>, T>(ref vector), index);
     }
 
     // Set
 
-    internal static AutoDiffVector2<T, U> WithElement(AutoDiffVector2<T, U> vector, int index, T value)
+    internal static AutoDiffVector2<T, U, V> WithElement(AutoDiffVector2<T, U, V> vector, int index, T value)
     {
         if ((uint)index >= 2)
             throw new IndexOutOfRangeException();
-        AutoDiffVector2<T, U> result = vector;
+        AutoDiffVector2<T, U, V> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffVector2<T, U> vector, int index, T value)
+    private static void SetElementUnsafe(ref AutoDiffVector2<T, U, V> vector, int index, T value)
     {
         Debug.Assert(index is >= 0 and < 2);
-        Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T, U>, T>(ref vector), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T, U, V>, T>(ref vector), index) = value;
     }
 
     //
@@ -116,11 +119,11 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="x">The point at which to compute the directional derivative.</param>
     /// <returns>A directional derivative.</returns>
     public static U DirectionalDerivative(
-        Vector2<U> v,
-        Func<AutoDiffVector2<T, U>, T> f,
-        AutoDiffVector2<T, U> x)
+        Vector2<U, V> v,
+        Func<AutoDiffVector2<T, U, V>, T> f,
+        AutoDiffVector2<T, U, V> x)
     {
-        ReadOnlySpan<AutoDiffVector2<T, U>> seeds = [
+        ReadOnlySpan<AutoDiffVector2<T, U, V>> seeds = [
             new(x.X1.WithSeed(v.X1), x.X2.WithSeed(U.Zero)),
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(v.X2))];
 
@@ -133,11 +136,11 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="x">The point at which to compute the divergence.</param>
     /// <returns>The divergence of the vector field.</returns>
     public static U Divergence(
-        Func<AutoDiffVector2<T, U>, T> f1,
-        Func<AutoDiffVector2<T, U>, T> f2,
-        AutoDiffVector2<T, U> x)
+        Func<AutoDiffVector2<T, U, V>, T> f1,
+        Func<AutoDiffVector2<T, U, V>, T> f2,
+        AutoDiffVector2<T, U, V> x)
     {
-        ReadOnlySpan<AutoDiffVector2<T, U>> seeds = [
+        ReadOnlySpan<AutoDiffVector2<T, U, V>> seeds = [
             new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero)),
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One))];
 
@@ -148,9 +151,9 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="f">A scalar function.</param>
     /// <param name="x">The point at which to compute the gradient.</param>
     /// <returns>The gradient of the scalar function.</returns>
-    public static Vector2<U> Gradient(Func<AutoDiffVector2<T, U>, T> f, AutoDiffVector2<T, U> x)
+    public static Vector2<U, V> Gradient(Func<AutoDiffVector2<T, U, V>, T> f, AutoDiffVector2<T, U, V> x)
     {
-        ReadOnlySpan<AutoDiffVector2<T, U>> seeds = [
+        ReadOnlySpan<AutoDiffVector2<T, U, V>> seeds = [
             new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero)),
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One))];
 
@@ -161,9 +164,9 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="f">A scalar function.</param>
     /// <param name="x">The point at which to compute the gradient.</param>
     /// <returns>The Hessian of the scalar function.</returns>
-    public static Matrix2x2<U> Hessian(Func<AutoDiffVector2<HyperDual<U>, U>, HyperDual<U>> f, AutoDiffVector2<HyperDual<U>, U> x)
+    public static Matrix2x2<U, V> Hessian(Func<AutoDiffVector2<HyperDual<U, V>, U, V>, HyperDual<U, V>> f, AutoDiffVector2<HyperDual<U, V>, U, V> x)
     {
-        Matrix2x2<U> result = new();
+        Matrix2x2<U, V> result = new();
 
         result[0, 0] = f(new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero))).D3;
         result[1, 1] = f(new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One, U.One))).D3;
@@ -179,16 +182,16 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="f2">The second function.</param>
     /// <param name="x">The point at which to compute the Jacobian.</param>
     /// <returns>The Jacobian of the vector function.</returns>
-    public static Matrix2x2<U> Jacobian(
-        Func<AutoDiffVector2<T, U>, T> f1,
-        Func<AutoDiffVector2<T, U>, T> f2,
-        AutoDiffVector2<T, U> x)
+    public static Matrix2x2<U, V> Jacobian(
+        Func<AutoDiffVector2<T, U, V>, T> f1,
+        Func<AutoDiffVector2<T, U, V>, T> f2,
+        AutoDiffVector2<T, U, V> x)
     {
-        ReadOnlySpan<AutoDiffVector2<T, U>> seeds = [
+        ReadOnlySpan<AutoDiffVector2<T, U, V>> seeds = [
             new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero)),
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One))];
 
-        Matrix2x2<U> result = new();
+        Matrix2x2<U, V> result = new();
 
         result[0, 0] = f1(seeds[0]).D1; result[0, 1] = f1(seeds[1]).D1;
         result[1, 0] = f2(seeds[0]).D1; result[1, 1] = f2(seeds[1]).D1;
@@ -202,13 +205,13 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="x">The point at which to compute the Jacobian-vector product.</param>
     /// <param name="v">A vector.</param>
     /// <returns>The Jacobian-vector product of the vector function and vector.</returns>
-    public static Vector2<U> JVP(
-        Func<AutoDiffVector2<T, U>, T> f1,
-        Func<AutoDiffVector2<T, U>, T> f2,
-        AutoDiffVector2<T, U> x,
-        Vector2<U> v)
+    public static Vector2<U, V> JVP(
+        Func<AutoDiffVector2<T, U, V>, T> f1,
+        Func<AutoDiffVector2<T, U, V>, T> f2,
+        AutoDiffVector2<T, U, V> x,
+        Vector2<U, V> v)
     {
-        AutoDiffVector2<T, U> seed = new(x.X1.WithSeed(v.X1), x.X2.WithSeed(v.X2));
+        AutoDiffVector2<T, U, V> seed = new(x.X1.WithSeed(v.X1), x.X2.WithSeed(v.X2));
         return new(f1(seed).D1, f2(seed).D1);
     }
 
@@ -216,9 +219,9 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="f">A scalar function.</param>
     /// <param name="x">The point at which to compute the gradient.</param>
     /// <returns>The gradient of the scalar function.</returns>
-    public static U Laplacian(Func<AutoDiffVector2<HyperDual<U>, U>, HyperDual<U>> f, AutoDiffVector2<HyperDual<U>, U> x)
+    public static U Laplacian(Func<AutoDiffVector2<HyperDual<U, V>, U, V>, HyperDual<U, V>> f, AutoDiffVector2<HyperDual<U, V>, U, V> x)
     {
-        ReadOnlySpan<AutoDiffVector2<HyperDual<U>, U>> seeds = [
+        ReadOnlySpan<AutoDiffVector2<HyperDual<U, V>, U, V>> seeds = [
             new(x.X1.WithSeed(U.One, U.One), x.X2.WithSeed(U.Zero)),
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One, U.One))];
 
@@ -231,17 +234,17 @@ public record struct AutoDiffVector2<T, U>
     /// <param name="f2">The second function.</param>
     /// <param name="x">The point at which to compute the vector-Jacobian product.</param>
     /// <returns>The vector-Jacobian product of the vector and vector-function.</returns>
-    public static Vector2<U> VJP(
-        Vector2<U> v,
-        Func<AutoDiffVector2<T, U>, T> f1,
-        Func<AutoDiffVector2<T, U>, T> f2,
-        AutoDiffVector2<T, U> x)
+    public static Vector2<U, V> VJP(
+        Vector2<U, V> v,
+        Func<AutoDiffVector2<T, U, V>, T> f1,
+        Func<AutoDiffVector2<T, U, V>, T> f2,
+        AutoDiffVector2<T, U, V> x)
     {
-        ReadOnlySpan<AutoDiffVector2<T, U>> seeds = [
+        ReadOnlySpan<AutoDiffVector2<T, U, V>> seeds = [
             new(x.X1.WithSeed(U.One), x.X2.WithSeed(U.Zero)),
             new(x.X1.WithSeed(U.Zero), x.X2.WithSeed(U.One))];
 
-        Vector2<U> result = new();
+        Vector2<U, V> result = new();
 
         result[0] = v.X1 * f1(seeds[0]).D1 + v.X2 * f2(seeds[0]).D1;
         result[1] = v.X1 * f1(seeds[1]).D1 + v.X2 * f2(seeds[1]).D1;

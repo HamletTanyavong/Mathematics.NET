@@ -30,6 +30,7 @@ namespace Mathematics.NET.DifferentialGeometry.IndexNames;
 internal readonly struct Index2 : IIndexName
 {
     /// <inheritdoc cref="IIndexName.DisplayString"/>
-    public const string DisplayString = "Index2";
+    public const string DisplayString = nameof(Index2);
+
     static string IIndexName.DisplayString => DisplayString;
 }

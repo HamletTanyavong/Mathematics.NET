@@ -25,18 +25,23 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.Core.Relations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for mathematical objects that can be represented by arrays.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IArrayRepresentable<T, U>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="W">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IArrayRepresentable<T, U, V, W>
     : IEqualityRelation<T, bool>,
       IFormattable
-    where T : IArrayRepresentable<T, U>
-    where U : IComplex<U>
+    where T : IArrayRepresentable<T, U, V, W>
+    where U : IComplex<U, V, W>
+    where V : IBinaryNumber<V>
+    where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
 {
     /// <summary>The total number of components in the array.</summary>
     static abstract int Components { get; }

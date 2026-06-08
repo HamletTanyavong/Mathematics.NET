@@ -1,4 +1,4 @@
-// <copyright file="Extensions.cs" company="Mathematics.NET">
+// <copyright file="UnsafeTests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,34 +25,32 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Text;
+using System.Runtime.CompilerServices;
+using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.LinearAlgebra;
+using Mathematics.NET.UnitTests.DifferentialGeometry;
 
-namespace Mathematics.NET;
+namespace Mathematics.NET.UnitTests;
 
-/// <summary>A class containing extension methods for external .NET objects.</summary>
-public static class Extensions
+[TestClass]
+[TestCategory("Unsafe")]
+public sealed class UnsafeTests
 {
-    /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
-    /// <param name="builder">A string builder instance.</param>
-    /// <param name="unwantedChars">An array of characters to trim.</param>
-    /// <returns>The same string builder with characters removed.</returns>
-    internal static StringBuilder TrimEnd(this StringBuilder builder, params ReadOnlySpan<char> unwantedChars)
+    [TestMethod]
+    public void SizeOf_Matrix4x4AndRankTwoTensorOfRealOfDouble_AreEqual()
     {
-        if (builder.Length == 0 || unwantedChars.Length == 0)
-            return builder;
+        var sizeOfMatrix = Unsafe.SizeOf<Matrix4x4<Real<double>, double>>();
+        var sizeOfRankTwoTensor = Unsafe.SizeOf<MetricTensor<Matrix4x4<Real<double>, double>, Real<double>, double, Upper, Alpha, Beta>>();
 
-        int i = builder.Length - 1;
-        while (i >= 0)
-        {
-#pragma warning disable EPS06
-            if (!unwantedChars.Contains(builder[i]))
-#pragma warning restore EPS06
-                break;
-            i--;
-        }
-        if (i < builder.Length - 1)
-            builder.Length = ++i;
+        Assert.AreEqual(sizeOfMatrix, sizeOfRankTwoTensor);
+    }
 
-        return builder;
+    [TestMethod]
+    public void SizeOf_Matrix4x4AndRankTwoTensorOfRealOfSingle_AreEqual()
+    {
+        var sizeOfMatrix = Unsafe.SizeOf<Matrix4x4<Real<float>, float>>();
+        var sizeOfRankTwoTensor = Unsafe.SizeOf<MetricTensor<Matrix4x4<Real<float>, float>, Real<float>, float, Upper, Alpha, Beta>>();
+
+        Assert.AreEqual(sizeOfMatrix, sizeOfRankTwoTensor);
     }
 }

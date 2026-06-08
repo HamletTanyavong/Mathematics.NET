@@ -80,9 +80,9 @@ public sealed class PAdicTests
     [DataRow(5, 140, 297, 1, 5)]
     public void Norm_RationalNumber_ReturnsPAdicNorm(int p, int num, int den, int expectedNum, int expectedDen)
     {
-        Rational<int> input = new(num, den);
+        Rational<int, double> input = new(num, den);
 
-        Rational<int> expected = new(expectedNum, expectedDen);
+        Rational<int, double> expected = new(expectedNum, expectedDen);
 
         var actual = PAdic.Norm(p, input);
 
@@ -105,7 +105,7 @@ public sealed class PAdicTests
     [DataRow(3, 9, 8, 2)]
     public void Valuation_Rational_ReturnsValuation(int p, int num, int den, int expected)
     {
-        Rational<int> input = new(num, den);
+        Rational<int, double> input = new(num, den);
 
         var actual = PAdic.Valuation(p, input);
 

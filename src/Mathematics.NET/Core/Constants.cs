@@ -30,9 +30,6 @@ namespace Mathematics.NET.Core;
 /// <summary>Common mathematical constants.</summary>
 public static class Constants
 {
-    /// <summary>Represents the imaginary unit, <c>i</c>.</summary>
-    public static Complex Im => new(Real.Zero, Real.One);
-
     /// <summary>Represents the natural logarithmic base, <c>e</c>.</summary>
     public const double E = 2.71828182845904523;
     /// <summary>Represents the ratio of the circumference of a circle to its diameter, <c>π</c>.</summary>

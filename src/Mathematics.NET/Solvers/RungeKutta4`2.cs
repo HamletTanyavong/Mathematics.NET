@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Helpers;
 using Mathematics.NET.LinearAlgebra.Abstractions;
@@ -32,12 +33,14 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents a fourth-order Runge-Kutta solver.</summary>
-/// <typeparam name="TV">A type that implements <see cref="IVector{T, U}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TV">A type that implements <see cref="IVector{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <param name="function">A vector function to use for the integration step.</param>
-public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
-    where TV : IVector<TV, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public sealed class RungeKutta4<TV, TN, TB>(Func<TN, TV, TV> function)
+    where TV : IVector<TV, TN, TB, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
     private readonly struct RK4IntegrateAction(Func<TN, TV, TV> function, TN time, TN dt) : IRefAction<TV>
     {
@@ -49,17 +52,17 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
         public void Invoke(ref TV value)
         {
             var k1 = _function(_time, value);
-            var k2 = _function(_time + 0.5 * _dt, value + 0.5 * k1 * _dt);
-            var k3 = _function(_time + 0.5 * _dt, value + 0.5 * k2 * _dt);
+            var k2 = _function(_time + IBinaryFloatingPointIeee754<TB>.Half * _dt, value + IBinaryFloatingPointIeee754<TB>.Half * k1 * _dt);
+            var k3 = _function(_time + IBinaryFloatingPointIeee754<TB>.Half * _dt, value + IBinaryFloatingPointIeee754<TB>.Half * k2 * _dt);
             var k4 = _function(_time + _dt, value + k3 * _dt);
-            value += _dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
+            value += _dt / IBinaryFloatingPointIeee754<TB>.Six * (k1 + IBinaryFloatingPointIeee754<TB>.Two * (k2 + k3) + k4);
         }
     }
 
     private readonly Func<TN, TV, TV> _function = function;
 
-    /// <inheritdoc cref="RungeKutta4{T}.Integrate(State{T}, T)"/>
-    public void Integrate(State<TV, TN> state, TN dt)
+    /// <inheritdoc cref="RungeKutta4{T, U}.Integrate(State{T, U}, T)"/>
+    public void Integrate(State<TV, TN, TB> state, TN dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -67,16 +70,16 @@ public sealed class RungeKutta4<TV, TN>(Func<TN, TV, TV> function)
         {
             ref var value = ref system[i];
             var k1 = _function(time, value);
-            var k2 = _function(time + 0.5 * dt, value + 0.5 * k1 * dt);
-            var k3 = _function(time + 0.5 * dt, value + 0.5 * k2 * dt);
+            var k2 = _function(time + IBinaryFloatingPointIeee754<TB>.Half * dt, value + IBinaryFloatingPointIeee754<TB>.Half * k1 * dt);
+            var k3 = _function(time + IBinaryFloatingPointIeee754<TB>.Half * dt, value + IBinaryFloatingPointIeee754<TB>.Half * k2 * dt);
             var k4 = _function(time + dt, value + k3 * dt);
-            value += dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
+            value += dt / IBinaryFloatingPointIeee754<TB>.Six * (k1 + IBinaryFloatingPointIeee754<TB>.Two * (k2 + k3) + k4);
         }
         state.Time += dt;
     }
 
-    /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(State{T}, T)"/>
-    public void IntegrateParallel(State<TV, TN> state, TN dt)
+    /// <inheritdoc cref="RungeKutta4{T, U}.IntegrateParallel(State{T, U}, T)"/>
+    public void IntegrateParallel(State<TV, TN, TB> state, TN dt)
     {
         ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;

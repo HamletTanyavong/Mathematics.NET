@@ -37,7 +37,7 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Christoffel")]
 public sealed class ChristoffelSymbolTests
 {
-    public static RMMetricTensorField4x4<GradientTape<Real>, Real, Index<Upper, PIN>> Tensor { get; set; } = new();
+    public static RMMetricTensorField4x4<GradientTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
@@ -68,7 +68,7 @@ public sealed class ChristoffelSymbolTests
         Tape = new();
     }
 
-    public GradientTape<Real> Tape { get; set; }
+    public GradientTape<Real<double>, double> Tape { get; set; }
 
     //
     // Tests
@@ -80,12 +80,12 @@ public sealed class ChristoffelSymbolTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,])values[0];
+        var expected = (Real<double>[,,])values[0];
 
-        DifGeo.Christoffel(Tape, Tensor, point, out Christoffel<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Beta, Gamma> result);
+        DifGeo.Christoffel(Tape, Tensor, point, out Christoffel<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Beta, Gamma> result);
         var actual = result.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -94,12 +94,12 @@ public sealed class ChristoffelSymbolTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,])values[0];
+        var expected = (Real<double>[,,])values[0];
 
-        DifGeo.Christoffel(Tape, Tensor, point, out Christoffel<Array4x4x4<Real>, Real, Index<Upper, Alpha>, Beta, Gamma> result);
+        DifGeo.Christoffel(Tape, Tensor, point, out Christoffel<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Upper, Alpha>, Beta, Gamma> result);
         var actual = result.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-14);
     }
 
     //
@@ -113,7 +113,7 @@ public sealed class ChristoffelSymbolTests
             [1.23, 2.46, 3.14, 7.13],
             new object[]
             {
-                new Real[,,]
+                new Real<double>[,,]
                 {
                     {
                         { 0.1671188635622513, 0,                  0,                 0                  },
@@ -151,7 +151,7 @@ public sealed class ChristoffelSymbolTests
             [1.23, 2.46, 3.14, 7.13],
             new object[]
             {
-                new Real[,,]
+                new Real<double>[,,]
                 {
                     {
                         { 2.239350609791927,  0.01461934253211735, 12.12758273782715,  3.529703641587461 },

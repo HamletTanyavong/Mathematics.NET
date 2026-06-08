@@ -67,13 +67,14 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace())
+                    UsingDirective("System.Numerics".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(
                                     Comment("// Auto-generated code")),
                                 SyntaxKind.UsingKeyword,
                                 TriviaList())),
+                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace()),
                     UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
                     UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace())]))
             .WithMembers(
@@ -192,8 +193,8 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         var leftParam = paramList.Parameters[0];
         var rightParam = paramList.Parameters[1];
 
-        var leftRank = leftParam.TypeArgumentList()!.Arguments.Count - 3;
-        var rightRank = rightParam.TypeArgumentList()!.Arguments.Count - 3;
+        var leftRank = leftParam.TypeArgumentList()!.Arguments.Count - Constants.IndexOfFirstIndex;
+        var rightRank = rightParam.TypeArgumentList()!.Arguments.Count - Constants.IndexOfFirstIndex;
 
         return new(leftRank, rightRank);
     }
@@ -238,7 +239,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
             .First();
 
         var newArgs = args.RemoveNode(args.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
-        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_rightIndex]);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[Constants.IndexOfFirstIndex - 1], [s_rightIndex]);
 
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
@@ -249,7 +250,7 @@ internal sealed class TensorContractionBuilder : TensorContractionBuilderBase
         var args = param.TypeArgumentList()!;
 
         var newArgs = args.RemoveNode(args.Arguments.Last(), SyntaxRemoveOptions.KeepNoTrivia);
-        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[2], [s_rightIndex]);
+        newArgs = newArgs!.InsertNodesAfter(newArgs!.Arguments[Constants.IndexOfFirstIndex - 1], [s_rightIndex]);
         return memberDeclaration.ReplaceNode(args, newArgs);
     }
 

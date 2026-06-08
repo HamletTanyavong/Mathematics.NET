@@ -37,7 +37,7 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo")]
 public sealed class RMTensorField4Tests
 {
-    public static RMTensorField4<HessianTape<Real>, Real, Upper, Index<Upper, Alpha>> Tensor { get; set; } = new();
+    public static RMTensorField4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, Alpha>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
@@ -53,7 +53,7 @@ public sealed class RMTensorField4Tests
         Tape = new();
     }
 
-    public HessianTape<Real> Tape { get; set; }
+    public HessianTape<Real<double>, double> Tape { get; set; }
 
     //
     // Tests
@@ -65,10 +65,10 @@ public sealed class RMTensorField4Tests
     {
         var x = Tape.CreateAutoDiffTensor<Index<Upper, Alpha>>(x0, x1, x2, x3);
 
-        Tensor<Vector4<Real>, Real, Index<Upper, Alpha>> expected = new(new Vector4<Real>(expectedX0, expectedX1, expectedX2, expectedX3));
+        Tensor<Vector4<Real<double>, double>, Real<double>, double, Index<Upper, Alpha>> expected = new(new Vector4<Real<double>, double>(expectedX0, expectedX1, expectedX2, expectedX3));
 
         var actual = Tensor.Compute<Alpha>(Tape, x);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 }

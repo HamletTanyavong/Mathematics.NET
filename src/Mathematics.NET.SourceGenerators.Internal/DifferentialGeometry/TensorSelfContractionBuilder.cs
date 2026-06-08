@@ -52,13 +52,14 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace())
+                    UsingDirective("System.Numerics".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(
                                     Comment("// Auto-generated code")),
                                 SyntaxKind.UsingKeyword,
                                 TriviaList())),
+                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace()),
                     UsingDirective("Mathematics.NET.LinearAlgebra".CreateNameSyntaxFromNamespace()),
                     UsingDirective("Mathematics.NET.LinearAlgebra.Abstractions".CreateNameSyntaxFromNamespace())]))
             .WithMembers(
@@ -166,7 +167,7 @@ internal sealed class TensorSelfContractionBuilder : TensorContractionBuilderBas
     private static int GetTensorRank(MemberDeclarationSyntax memberDeclaration)
     {
         var paramList = memberDeclaration.ParameterList()!;
-        return paramList.Parameters[0].TypeArgumentList()!.Arguments.Count - 3;
+        return paramList.Parameters[0].TypeArgumentList()!.Arguments.Count - Constants.IndexOfFirstIndex;
     }
 
     private static MemberDeclarationSyntax ResetIndices(MemberDeclarationSyntax memberDeclaration)

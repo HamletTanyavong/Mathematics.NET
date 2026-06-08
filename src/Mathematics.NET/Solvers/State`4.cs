@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
@@ -33,19 +34,21 @@ namespace Mathematics.NET.Solvers;
 /// <summary>Represents the state of a system.</summary>
 /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
 /// <typeparam name="TV">The backing type of the tensor.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">The index of the tensor.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class State<TR1T, TV, TN, TI>(Memory<TR1T> system, TN time)
-    where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
-    where TV : IVector<TV, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public sealed class State<TR1T, TV, TN, TB, TI>(Memory<TR1T> system, TN time)
+    where TR1T : IRankOneTensor<TR1T, TV, TN, TB, TB, TI>
+    where TV : IVector<TV, TN, TB, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TI : IIndex
 {
-    /// <inheritdoc cref="State{T}.System"/>
+    /// <inheritdoc cref="State{T, U}.System"/>
     public Memory<TR1T> System = system;
 
-    /// <inheritdoc cref="State{T}.Time"/>
+    /// <inheritdoc cref="State{T, U}.Time"/>
     public TN Time = time;
 }

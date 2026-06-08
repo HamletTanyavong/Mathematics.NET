@@ -35,21 +35,23 @@ namespace Mathematics.NET.Core;
 
 /// <summary>Represents a rational number.</summary>
 /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/> and <see cref="ISignedNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential), Serializable]
-public readonly struct Rational<T> : IRational<Rational<T>, T>
+public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     where T : IBinaryInteger<T>, ISignedNumber<T>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
-    public static readonly Rational<T> Zero = T.Zero;
-    public static readonly Rational<T> One = T.One;
-    public static readonly Rational<T> NegativeOne = T.NegativeOne;
+    public static readonly Rational<T, U> Zero = T.Zero;
+    public static readonly Rational<T, U> One = T.One;
+    public static readonly Rational<T, U> NegativeOne = T.NegativeOne;
 
-    public static readonly Rational<T> MaxValue = T.CreateSaturating(double.MaxValue);
-    public static readonly Rational<T> MinValue = T.CreateSaturating(double.MinValue);
-    public static readonly Rational<T> Epsilon = new(T.One, T.CreateSaturating(double.MaxValue));
+    public static readonly Rational<T, U> MaxValue = T.CreateSaturating(U.MaxValue);
+    public static readonly Rational<T, U> MinValue = T.CreateSaturating(U.MinValue);
+    public static readonly Rational<T, U> Epsilon = new(T.One, T.CreateSaturating(U.MaxValue));
 
-    public static readonly Rational<T> NaN = new(T.Zero, T.Zero);
-    public static readonly Rational<T> NegativeInfinity = new(-T.One, T.Zero);
-    public static readonly Rational<T> PositiveInfinity = new(T.One, T.Zero);
+    public static readonly Rational<T, U> NaN = new(T.Zero, T.Zero);
+    public static readonly Rational<T, U> NegativeInfinity = new(-T.One, T.Zero);
+    public static readonly Rational<T, U> PositiveInfinity = new(T.One, T.Zero);
 
     private readonly T _numerator;
     private readonly T _denominator;
@@ -103,33 +105,33 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     public T Num => _numerator;
     public T Den => _denominator;
 
-    public Real Re => ToReal(this);
+    public Real<U> Re => ToReal(this);
 
     //
     // Constants
     //
 
-    static Rational<T> IComplex<Rational<T>>.Zero => Zero;
-    static Rational<T> IComplex<Rational<T>>.One => One;
-    static Rational<T> IComplex<Rational<T>>.NaN => NaN;
-    static int IComplex<Rational<T>>.Radix => 2;
-    static Rational<T> IMinMaxValue<Rational<T>>.MaxValue => MaxValue;
-    static Rational<T> IMinMaxValue<Rational<T>>.MinValue => MinValue;
-    static Rational<T> IReal<Rational<T>>.Epsilon => Epsilon;
+    static Rational<T, U> IComplex<Rational<T, U>, T, U>.Zero => Zero;
+    static Rational<T, U> IComplex<Rational<T, U>, T, U>.One => One;
+    static Rational<T, U> IComplex<Rational<T, U>, T, U>.NaN => NaN;
+    static int IComplex<Rational<T, U>, T, U>.Radix => 2;
+    static Rational<T, U> IMinMaxValue<Rational<T, U>>.MaxValue => MaxValue;
+    static Rational<T, U> IMinMaxValue<Rational<T, U>>.MinValue => MinValue;
+    static Rational<T, U> IReal<Rational<T, U>, T, U>.Epsilon => Epsilon;
 
     //
     // Operators
     //
 
-    public static Rational<T> operator +(Rational<T> x) => x;
+    public static Rational<T, U> operator +(Rational<T, U> x) => x;
 
-    public static Rational<T> operator -(Rational<T> x) => new(-x._numerator, x._denominator);
+    public static Rational<T, U> operator -(Rational<T, U> x) => new(-x._numerator, x._denominator);
 
-    public static Rational<T> operator --(Rational<T> x) => Reduce(new(x._numerator - x._denominator, x._denominator));
+    public static Rational<T, U> operator --(Rational<T, U> x) => Reduce(new(x._numerator - x._denominator, x._denominator));
 
-    public static Rational<T> operator ++(Rational<T> x) => Reduce(new(x._numerator + x._denominator, x._denominator));
+    public static Rational<T, U> operator ++(Rational<T, U> x) => Reduce(new(x._numerator + x._denominator, x._denominator));
 
-    public static Rational<T> operator +(Rational<T> x, Rational<T> y)
+    public static Rational<T, U> operator +(Rational<T, U> x, Rational<T, U> y)
     {
         var lcm = LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator + lcm / y._denominator * y._numerator;
@@ -137,7 +139,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(num / gcd, lcm / gcd);
     }
 
-    public static Rational<T> operator -(Rational<T> x, Rational<T> y)
+    public static Rational<T, U> operator -(Rational<T, U> x, Rational<T, U> y)
     {
         var lcm = LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator - lcm / y._denominator * y._numerator;
@@ -145,7 +147,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(num / gcd, lcm / gcd);
     }
 
-    public static Rational<T> operator *(Rational<T> x, Rational<T> y)
+    public static Rational<T, U> operator *(Rational<T, U> x, Rational<T, U> y)
     {
         var num = x._numerator * y._numerator;
         var den = x._denominator * y._denominator;
@@ -153,7 +155,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(num / gcd, den / gcd);
     }
 
-    public static Rational<T> operator /(Rational<T> x, Rational<T> y)
+    public static Rational<T, U> operator /(Rational<T, U> x, Rational<T, U> y)
     {
         if (y._numerator == T.Zero)
             return NaN;
@@ -164,7 +166,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(num / gcd, den / gcd);
     }
 
-    public static Rational<T> operator %(Rational<T> x, Rational<T> y)
+    public static Rational<T, U> operator %(Rational<T, U> x, Rational<T, U> y)
     {
         if (y._denominator == T.Zero)
             return NaN;
@@ -177,15 +179,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Equality
     //
 
-    public static bool operator ==(Rational<T> left, Rational<T> right)
+    public static bool operator ==(Rational<T, U> left, Rational<T, U> right)
         => left._numerator == right._numerator && left._denominator == right._denominator;
 
-    public static bool operator !=(Rational<T> left, Rational<T> right)
+    public static bool operator !=(Rational<T, U> left, Rational<T, U> right)
         => left._numerator != right._numerator || left._denominator != right._denominator;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Rational<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Rational<T, U> other && Equals(other);
 
-    public bool Equals(Rational<T> value)
+    public bool Equals(Rational<T, U> value)
         => _numerator.Equals(value._numerator) && _denominator.Equals(value._denominator);
 
     public override int GetHashCode() => HashCode.Combine(_numerator, _denominator);
@@ -194,24 +196,24 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Comparison
     //
 
-    public static bool operator <(Rational<T> x, Rational<T> y) => x._numerator * y._denominator < y._numerator * x._denominator;
+    public static bool operator <(Rational<T, U> x, Rational<T, U> y) => x._numerator * y._denominator < y._numerator * x._denominator;
 
-    public static bool operator >(Rational<T> x, Rational<T> y) => x._numerator * y._denominator > y._numerator * x._denominator;
+    public static bool operator >(Rational<T, U> x, Rational<T, U> y) => x._numerator * y._denominator > y._numerator * x._denominator;
 
-    public static bool operator <=(Rational<T> x, Rational<T> y) => x._numerator * y._denominator <= y._numerator * x._denominator;
+    public static bool operator <=(Rational<T, U> x, Rational<T, U> y) => x._numerator * y._denominator <= y._numerator * x._denominator;
 
-    public static bool operator >=(Rational<T> x, Rational<T> y) => x._numerator * y._denominator >= y._numerator * x._denominator;
+    public static bool operator >=(Rational<T, U> x, Rational<T, U> y) => x._numerator * y._denominator >= y._numerator * x._denominator;
 
     public int CompareTo(object? obj)
     {
         if (obj is null)
             return 1;
-        if (obj is Rational<T> other)
+        if (obj is Rational<T, U> other)
             return CompareTo(other);
         throw new ArgumentException("The argument is not a rational number.");
     }
 
-    public int CompareTo(Rational<T> value)
+    public int CompareTo(Rational<T, U> value)
     {
         if (this < value)
             return -1;
@@ -385,33 +387,33 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Parsing
     //
 
-    public static Rational<T> Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+    public static Rational<T, U> Parse(string s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-    public static Rational<T> Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
+    public static Rational<T, U> Parse(ReadOnlySpan<char> s, IFormatProvider? provider) => Parse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider);
 
-    public static Rational<T> Parse(string s, NumberStyles style, IFormatProvider? provider)
+    public static Rational<T, U> Parse(string s, NumberStyles style, IFormatProvider? provider)
     {
         ArgumentNullException.ThrowIfNull(s);
         return Parse((ReadOnlySpan<char>)s, style, provider);
     }
 
-    public static Rational<T> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
+    public static Rational<T, U> Parse(ReadOnlySpan<char> s, NumberStyles style = NumberStyles.Float | NumberStyles.AllowThousands, IFormatProvider? provider = null)
     {
-        if (!TryParse(s, style, provider, out Rational<T> result))
+        if (!TryParse(s, style, provider, out Rational<T, U> result))
             return NaN;
         return result;
     }
 
-    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Rational<T> result)
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Rational<T, U> result)
         => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Rational<T> result)
+    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Rational<T, U> result)
         => TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, provider, out result);
 
-    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Rational<T> result)
+    public static bool TryParse([NotNullWhen(true)] string? s, NumberStyles style, IFormatProvider? provider, out Rational<T, U> result)
         => TryParse((ReadOnlySpan<char>)s, style, provider, out result);
 
-    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Rational<T> result)
+    public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out Rational<T, U> result)
     {
 #pragma warning disable EPS06
         s = s.Trim();
@@ -447,16 +449,16 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Methods
     //
 
-    public static Rational<T> Abs(Rational<T> x) => new(T.Abs(x._numerator), x._denominator);
+    public static Rational<T, U> Abs(Rational<T, U> x) => new(T.Abs(x._numerator), x._denominator);
 
-    public static Rational<T> Ceiling(Rational<T> x)
+    public static Rational<T, U> Ceiling(Rational<T, U> x)
     {
         var (quotient, remainder) = T.DivRem(x._numerator, x._denominator);
         return remainder == T.Zero ? quotient : quotient + T.One;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Rational<T> Clamp(Rational<T> value, Rational<T> min, Rational<T> max)
+    public static Rational<T, U> Clamp(Rational<T, U> value, Rational<T, U> min, Rational<T, U> max)
     {
         if (min > max)
             throw new ArgumentException("The minimum value must be less than or equal to maximum value.");
@@ -469,46 +471,46 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return value;
     }
 
-    public static Rational<T> Conjugate(Rational<T> x) => x;
+    public static Rational<T, U> Conjugate(Rational<T, U> x) => x;
 
-    public static (T Quotient, Rational<T> Remainder) QuoRem(Rational<T> dividend, Rational<T> divisor)
+    public static (T Quotient, Rational<T, U> Remainder) QuoRem(Rational<T, U> dividend, Rational<T, U> divisor)
         => ToMixed(dividend / divisor);
 
-    public static Rational<T> Floor(Rational<T> x) => T.DivRem(x._numerator, x._denominator).Quotient;
+    public static Rational<T, U> Floor(Rational<T, U> x) => T.DivRem(x._numerator, x._denominator).Quotient;
 
-    /// <summary>Create an instance of type rational of <typeparamref name="T"/> from one of type <see cref="double"/>.</summary>
-    /// <param name="x">A value of type <see cref="double"/>.</param>
+    /// <summary>Create an instance of type rational of <typeparamref name="T"/> from one of type <typeparamref name="U"/>.</summary>
+    /// <param name="x">A value of type <typeparamref name="U"/>.</param>
     /// <returns>An instance of type rational of <typeparamref name="T"/> created from <paramref name="x"/>.</returns>
     /// <exception cref="OverflowException">Thrown when <paramref name="x"/> cannot be represented as a rational of <typeparamref name="T"/>.</exception>
-    public static Rational<T> FromDouble(double x)
+    public static Rational<T, U> FromFloat(U x)
     {
-        if (double.IsNaN(x))
+        if (U.IsNaN(x))
             return NaN;
-        if (double.IsPositiveInfinity(x))
+        if (U.IsPositiveInfinity(x))
             return PositiveInfinity;
-        if (double.IsNegativeInfinity(x))
+        if (U.IsNegativeInfinity(x))
             return NegativeInfinity;
 
         checked
         {
-            var n = 0;
+            var n = U.Zero;
 
             // We are comparing floats here, but it is okay in just this case.
-            while (x != Math.Floor(x))
+            while (x != U.Floor(x))
             {
-                x *= 10.0;
+                x *= IBinaryFloatingPointIeee754<U>.Ten;
                 n++;
             }
 
             T num = T.CreateChecked(x);
-            T den = T.CreateChecked(Math.Pow(10.0, n));
+            T den = T.CreateChecked(U.Pow(IBinaryFloatingPointIeee754<U>.Ten, n));
             T gcd = GCD(num, den);
 
             return new(num / gcd, den / gcd);
         }
     }
 
-    public static Rational<T> FromReal(Real x) => FromDouble(x.AsDouble());
+    public static Rational<T, U> FromReal(Real<U> x) => FromFloat(x.AsBackingType());
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T GCD(T p, T q)
@@ -525,34 +527,34 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return p | q;
     }
 
-    public static Rational<T> InverseLerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * end + weight * start;
+    public static Rational<T, U> InverseLerp(Rational<T, U> start, Rational<T, U> end, Rational<T, U> weight) => (One - weight) * end + weight * start;
 
-    // T.IsPositive will return false for -0 so we check again using T.Zero; we accept a zero in the denominator for Rational<T>.NaN;
-    public static bool IsCanonical(Rational<T> x) => T.IsPositive(x._denominator) || T.IsZero(x._denominator);
+    // T.IsPositive will return false for -0 so we check again using T.Zero; we accept a zero in the denominator for Rational<T, U>.NaN;
+    public static bool IsCanonical(Rational<T, U> x) => T.IsPositive(x._denominator) || T.IsZero(x._denominator);
 
-    public static bool IsComplex(Rational<T> x) => false;
+    public static bool IsComplex(Rational<T, U> x) => false;
 
-    public static bool IsFinite(Rational<T> x) => !T.IsZero(x._denominator);
+    public static bool IsFinite(Rational<T, U> x) => !T.IsZero(x._denominator);
 
-    public static bool IsImaginary(Rational<T> x) => false;
+    public static bool IsImaginary(Rational<T, U> x) => false;
 
-    public static bool IsInfinity(Rational<T> x) => T.IsZero(x._denominator);
+    public static bool IsInfinity(Rational<T, U> x) => T.IsZero(x._denominator);
 
-    public static bool IsInteger(Rational<T> x) => x._denominator == T.One;
+    public static bool IsInteger(Rational<T, U> x) => x._denominator == T.One;
 
-    public static bool IsNaN(Rational<T> x) => T.IsZero(x._numerator) && T.IsZero(x._denominator);
+    public static bool IsNaN(Rational<T, U> x) => T.IsZero(x._numerator) && T.IsZero(x._denominator);
 
-    public static bool IsReal(Rational<T> x) => true;
+    public static bool IsReal(Rational<T, U> x) => true;
 
-    public static bool IsZero(Rational<T> x) => T.IsZero(x._numerator) && x._denominator == T.One;
+    public static bool IsZero(Rational<T, U> x) => T.IsZero(x._numerator) && x._denominator == T.One;
 
-    public static bool IsNegative(Rational<T> x) => T.IsNegative(x._numerator);
+    public static bool IsNegative(Rational<T, U> x) => T.IsNegative(x._numerator);
 
-    public static bool IsNegativeInfinity(Rational<T> x) => x._numerator == -T.One && T.IsZero(x._denominator);
+    public static bool IsNegativeInfinity(Rational<T, U> x) => x._numerator == -T.One && T.IsZero(x._denominator);
 
-    public static bool IsPositive(Rational<T> x) => T.IsPositive(x._numerator);
+    public static bool IsPositive(Rational<T, U> x) => T.IsPositive(x._numerator);
 
-    public static bool IsPositiveInfinity(Rational<T> x) => x._numerator == T.One && T.IsZero(x._denominator);
+    public static bool IsPositiveInfinity(Rational<T, U> x) => x._numerator == T.One && T.IsZero(x._denominator);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static T LCM(T p, T q)
@@ -571,9 +573,9 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return holdP / (p | q) * holdQ;
     }
 
-    public static Rational<T> Lerp(Rational<T> start, Rational<T> end, Rational<T> weight) => (One - weight) * start + weight * end;
+    public static Rational<T, U> Lerp(Rational<T, U> start, Rational<T, U> end, Rational<T, U> weight) => (One - weight) * start + weight * end;
 
-    public static Rational<T> Max(Rational<T> x, Rational<T> y)
+    public static Rational<T, U> Max(Rational<T, U> x, Rational<T, U> y)
     {
         var u = x.Reduce();
         var v = y.Reduce();
@@ -581,11 +583,11 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return u._numerator * v._denominator >= v._numerator * u._denominator ? x : y;
     }
 
-    public static Rational<T> MaxMagnitude(Rational<T> x, Rational<T> y) => x > y || IsNaN(x) ? x : y;
+    public static Rational<T, U> MaxMagnitude(Rational<T, U> x, Rational<T, U> y) => x > y || IsNaN(x) ? x : y;
 
-    static Rational<T> IComplex<Rational<T>>.MaxMagnitudeNumber(Rational<T> x, Rational<T> y) => x > y || IsNaN(y) ? x : y;
+    static Rational<T, U> IComplex<Rational<T, U>, T, U>.MaxMagnitudeNumber(Rational<T, U> x, Rational<T, U> y) => x > y || IsNaN(y) ? x : y;
 
-    public static Rational<T> Min(Rational<T> x, Rational<T> y)
+    public static Rational<T, U> Min(Rational<T, U> x, Rational<T, U> y)
     {
         var u = x.Reduce();
         var v = y.Reduce();
@@ -593,15 +595,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return u._numerator * v._denominator <= v._numerator * u._denominator ? x : y;
     }
 
-    public static Rational<T> MinMagnitude(Rational<T> x, Rational<T> y) => x < y || IsNaN(x) ? x : y;
+    public static Rational<T, U> MinMagnitude(Rational<T, U> x, Rational<T, U> y) => x < y || IsNaN(x) ? x : y;
 
-    static Rational<T> IComplex<Rational<T>>.MinMagnitudeNumber(Rational<T> x, Rational<T> y) => x < y || IsNaN(y) ? x : y;
+    static Rational<T, U> IComplex<Rational<T, U>, T, U>.MinMagnitudeNumber(Rational<T, U> x, Rational<T, U> y) => x < y || IsNaN(y) ? x : y;
 
     /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
     /// <param name="x">The base.</param>
     /// <param name="n">The exponent.</param>
     /// <returns><paramref name="x"/> raised to the power of <paramref name="n"/>.</returns>
-    public static Rational<T> Pow(T x, T n)
+    public static Rational<T, U> Pow(T x, T n)
     {
         if (T.IsZero(n))
             return T.One;
@@ -641,16 +643,16 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
-    public static Rational<T> Pow(Rational<T> x, T y) => Pow(x.Num, y) / Pow(x.Den, y);
+    public static Rational<T, U> Pow(Rational<T, U> x, T y) => Pow(x.Num, y) / Pow(x.Den, y);
 
-    public static Rational<T> Reciprocate(Rational<T> x)
+    public static Rational<T, U> Reciprocate(Rational<T, U> x)
     {
         if (x._numerator == T.Zero)
             return NaN;
         return new(x._denominator, x._numerator);
     }
 
-    public static Rational<T> Reduce(Rational<T> x)
+    public static Rational<T, U> Reduce(Rational<T, U> x)
     {
         var gcd = GCD(x._numerator, x._denominator);
         if (gcd == T.One)
@@ -658,28 +660,28 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         return new(x._numerator / gcd, x._denominator / gcd);
     }
 
-    public static int Sign(Rational<T> x)
+    public static int Sign(Rational<T, U> x)
     {
         if (x == Zero)
             return 0;
         return x._numerator > T.Zero ? 1 : -1;
     }
 
-    public static Rational<T> ToImproper(T quotient, Rational<T> remainder) => quotient + remainder;
+    public static Rational<T, U> ToImproper(T quotient, Rational<T, U> remainder) => quotient + remainder;
 
-    public static (T Quotient, Rational<T> Remainder) ToMixed(Rational<T> x)
+    public static (T Quotient, Rational<T, U> Remainder) ToMixed(Rational<T, U> x)
     {
         var (quotient, remainder) = T.DivRem(x._numerator, x._denominator);
         return new(quotient, new(remainder, x._denominator));
     }
 
-    public static Real ToReal(Rational<T> x)
-        => double.CreateChecked(x._numerator) / double.CreateChecked(x._denominator);
+    public static Real<U> ToReal(Rational<T, U> x)
+        => U.CreateChecked(x._numerator) / U.CreateChecked(x._denominator);
 
-    public static bool TryConvertFromChecked<U>(U value, out Rational<T> result)
-        where U : INumberBase<U>
+    public static bool TryConvertFromChecked<V>(V value, out Rational<T, U> result)
+        where V : INumberBase<V>
     {
-        if (Real.TryConvertFromChecked(value, out var intermediateResult))
+        if (Real<U>.TryConvertFromChecked(value, out var intermediateResult))
         {
             result = FromReal(intermediateResult);
             return true;
@@ -698,7 +700,7 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     /// <param name="result">The result of the conversion if successful; otherwise <see cref="NaN"/>.</param>
     /// <returns><see langword="true"/> if the conversion was successful; otherwise <see langword="false"/>.</returns>
     [Experimental("CORE0001", UrlFormat = "https://mathematics.hamlettanyavong.com/diagnostic-messages/experimental/core0001")]
-    public static bool TryConvertFromDouble(double value, double tolerance, T max, out Rational<T> result)
+    public static bool TryConvertFromDouble(double value, double tolerance, T max, out Rational<T, U> result)
     {
         if (double.IsNaN(value))
         {
@@ -763,10 +765,10 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
-    public static bool TryConvertFromSaturating<U>(U value, out Rational<T> result)
-        where U : INumberBase<U>
+    public static bool TryConvertFromSaturating<V>(V value, out Rational<T, U> result)
+        where V : INumberBase<V>
     {
-        if (Real.TryConvertFromSaturating(value, out var intermediateResult))
+        if (Real<U>.TryConvertFromSaturating(value, out var intermediateResult))
         {
             result = FromReal(intermediateResult);
             return true;
@@ -778,10 +780,10 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
-    public static bool TryConvertFromTruncating<U>(U value, out Rational<T> result)
-        where U : INumberBase<U>
+    public static bool TryConvertFromTruncating<V>(V value, out Rational<T, U> result)
+        where V : INumberBase<V>
     {
-        if (Real.TryConvertFromTruncating(value, out var intermediateResult))
+        if (Real<U>.TryConvertFromTruncating(value, out var intermediateResult))
         {
             result = FromReal(intermediateResult);
             return true;
@@ -793,27 +795,27 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
         }
     }
 
-    public static bool TryConvertToChecked<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
-        where U : INumberBase<U>
+    public static bool TryConvertToChecked<V>(Rational<T, U> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
     {
-        value = Rational<T>.Reduce(value);
-        result = checked(U.CreateChecked(value._numerator) / U.CreateChecked(value._denominator));
+        value = Rational<T, U>.Reduce(value);
+        result = checked(V.CreateChecked(value._numerator) / V.CreateChecked(value._denominator));
         return true;
     }
 
-    public static bool TryConvertToSaturating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
-        where U : INumberBase<U>
+    public static bool TryConvertToSaturating<V>(Rational<T, U> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
     {
-        value = Rational<T>.Reduce(value);
-        result = checked(U.CreateSaturating(value._numerator) / U.CreateSaturating(value._denominator));
+        value = Rational<T, U>.Reduce(value);
+        result = checked(V.CreateSaturating(value._numerator) / V.CreateSaturating(value._denominator));
         return true;
     }
 
-    public static bool TryConvertToTruncating<U>(Rational<T> value, [MaybeNullWhen(false)] out U result)
-        where U : INumberBase<U>
+    public static bool TryConvertToTruncating<V>(Rational<T, U> value, [MaybeNullWhen(false)] out V result)
+        where V : INumberBase<V>
     {
-        value = Rational<T>.Reduce(value);
-        result = checked(U.CreateTruncating(value._numerator) / U.CreateTruncating(value._denominator));
+        value = Rational<T, U>.Reduce(value);
+        result = checked(V.CreateTruncating(value._numerator) / V.CreateTruncating(value._denominator));
         return true;
     }
 
@@ -821,5 +823,15 @@ public readonly struct Rational<T> : IRational<Rational<T>, T>
     // Implicit Operators
     //
 
-    public static implicit operator Rational<T>(T p) => new(p);
+    public static implicit operator Rational<T, U>(T p) => new(p);
+
+    //
+    // Explicit Operators
+    //
+
+    public static explicit operator T(Rational<T, U> x) => T.DivRem(x._numerator, x._denominator).Quotient;
+
+    public static explicit operator Rational<T, U>(U p) => T.CreateChecked(p);
+
+    public static explicit operator U(Rational<T, U> x) => checked(U.CreateChecked(x._numerator) / U.CreateChecked(x._denominator));
 }

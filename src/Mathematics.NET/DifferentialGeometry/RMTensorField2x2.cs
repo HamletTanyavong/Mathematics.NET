@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -34,23 +35,25 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-two tensor field with 4 elements.</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
 /// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class RMTensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
-    where TT : ITape<TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public class RMTensorField2x2<TT, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
+    where TT : ITape<TN, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI1P : IIndexPosition
     where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private protected RMTensor2Buffer2x2<TT, TN, TPI> _buffer;
+    private protected RMTensor2Buffer2x2<TT, TN, U, TPI> _buffer;
 
     public RMTensorField2x2() { }
 
-    public Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> this[int i, int j]
+    public Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i][j];
@@ -65,35 +68,36 @@ public class RMTensorField2x2<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="point">A point on the manifold.</param>
     /// <returns>A rank-two tensor.</returns>
-    public Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TPI> point)
+    public Tensor<Matrix2x2<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, U, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
         tape.IsTracking = false;
 
-        Matrix2x2<TN> result = new();
+        Matrix2x2<TN, U> result = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, TPI>, Variable<TN>> function)
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> function)
                     result[i, j] = function(tape, point).Value;
             }
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix2x2<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Matrix2x2<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
 
 internal static partial class Buffers
 {
     [InlineArray(2)]
-    internal struct RMTensor2Buffer2x2<TT, TN, TPI>
-        where TT : ITape<TN>
-        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    internal struct RMTensor2Buffer2x2<TT, TN, U, TPI>
+        where TT : ITape<TN, U>
+        where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private RMTensor2Buffer2<TT, TN, TPI> _element;
+        private RMTensor2Buffer2<TT, TN, U, TPI> _element;
     }
 }

@@ -25,22 +25,25 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents the state of a system.</summary>
-/// <typeparam name="TV">A type that implements <see cref="IVector{T, U}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TV">A type that implements <see cref="IVector{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class State<TV, TN>(Memory<TV> system, TN time)
-    where TV : IVector<TV, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public sealed class State<TV, TN, TB>(Memory<TV> system, TN time)
+    where TV : IVector<TV, TN, TB, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
-    /// <inheritdoc cref="State{T}.System"/>
+    /// <inheritdoc cref="State{T, U}.System"/>
     public Memory<TV> System = system;
 
-    /// <inheritdoc cref="State{T}.Time"/>
+    /// <inheritdoc cref="State{T, U}.Time"/>
     public TN Time = time;
 }

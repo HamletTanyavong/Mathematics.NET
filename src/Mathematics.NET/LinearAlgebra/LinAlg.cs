@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Enumerables;
 using CommunityToolkit.HighPerformance.Helpers;
@@ -37,7 +38,9 @@ namespace Mathematics.NET.LinearAlgebra;
 public static class LinAlg
 {
     /// <summary>Compute the eigenvalues of a matrix using a QR decomposition method.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="matrix">A matrix.</param>
     /// <param name="method">A QR decomposition method.</param>
     /// <param name="iterations">The number of iterations.</param>
@@ -58,16 +61,18 @@ public static class LinAlg
     /// Console.WriteLine(eigvals.ToDisplayString());
     /// </code>
     /// </example>
-    public static Span<T> EigVals<T>(Span2D<T> matrix, QRDecompositionMethod<T> method, int iterations = 10)
-        where T : IComplex<T>
+    public static Span<T> EigVals<T, U, V>(Span2D<T> matrix, QRDecompositionMethod<T, U, V> method, int iterations = 10)
+        where T : IComplex<T, U, V>
+        where U : IBinaryNumber<U>
+        where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
     {
-        // TODO: Implement shifted QR algorithm for faster convergence and dynamically determine how many iterations should be run
-        // TODO: Check to make sure new arrays are not being created every iteration
+        // TODO: Implement shifted QR algorithm for faster convergence and dynamically determine how many iterations should be run.
+        // TODO: Check to make sure new arrays are not being created every iteration.
         Span2D<T> rq = matrix;
         for (int i = 0; i < iterations; i++)
         {
             method(rq, out Span2D<T> Q, out Span2D<T> R);
-            rq = MatMul(R, Q);
+            rq = MatMul<T, U, V>(R, Q);
         }
 
         Span<T> result = new T[matrix.Height];
@@ -79,13 +84,17 @@ public static class LinAlg
     }
 
     /// <summary>Multiply two matrices.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="left">The left matrix.</param>
     /// <param name="right">The right matrix.</param>
     /// <returns>The result of the operation if the dimensions of the matrices are valid; otherwise, throw an exception.</returns>
     /// <exception cref="ArgumentException">Cannot multiply matrices of incompatible dimensions.</exception>
-    public static Span2D<T> MatMul<T>(Span2D<T> left, Span2D<T> right)
-        where T : IComplex<T>
+    public static Span2D<T> MatMul<T, U, V>(Span2D<T> left, Span2D<T> right)
+        where T : IComplex<T, U, V>
+        where U : IBinaryNumber<U>
+        where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
     {
         if (left.Width != right.Height)
             throw new ArgumentException("Cannot multiply matrices of incompatible dimensions.");
@@ -105,23 +114,28 @@ public static class LinAlg
     }
 
     /// <summary>Multiply a matrix by a scalar in parallel.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="scalar">A scalar.</param>
     /// <param name="matrix">A matrix.</param>
     /// <remarks>This process overwrites the original matrix.</remarks>
-    public static void MatMulByScalarParallel<T>(T scalar, Memory2D<T> matrix)
-        where T : IComplex<T>
-        => ParallelHelper.ForEach(matrix, new MultiplyByScalarAction<T>(scalar));
+    public static void MatMulByScalarParallel<T, U, V>(T scalar, Memory2D<T> matrix)
+        where T : IComplex<T, U, V>
+        where U : IBinaryNumber<U>
+        where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
+        => ParallelHelper.ForEach(matrix, new MultiplyByScalarAction<T, U, V>(scalar));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Real Norm<T>(RefEnumerable<T> vector)
-        where T : IComplex<T>
+    private static Real<U> Norm<T, U>(RefEnumerable<T> vector)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     {
-        Span<Real> components = new Real[vector.Length];
+        Span<Real<U>> components = new Real<U>[vector.Length];
         for (int i = 0; i < vector.Length; i++)
         {
             components[i] = (vector[i] * T.Conjugate(vector[i])).Re;
-            Debug.Assert(components[i] >= Real.Zero, "Components must be greater than zero.");
+            Debug.Assert(components[i] >= Real<U>.Zero, "Components must be greater than zero.");
         }
 
         var max = components[0];
@@ -131,35 +145,41 @@ public static class LinAlg
                 max = components[i];
         }
 
-        if (max == Real.Zero)
-            return Real.Zero;
+        if (max == Real<U>.Zero)
+            return Real<U>.Zero;
 
-        var partialSum = Real.Zero;
-        var scale = Real.One / (max * max);
+        var partialSum = Real<U>.Zero;
+        var scale = Real<U>.One / (max * max);
         foreach (var component in components)
         {
             partialSum += scale * component;
         }
 
-        return max * Real.Sqrt(partialSum);
+        return max * Real<U>.Sqrt(partialSum);
     }
 
     /// <summary>Encapsulates a QR decomposition method with one input and two out parameters.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+    /// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="matrix">An input matrix.</param>
     /// <param name="Q">The resulting orthogonal matrix.</param>
     /// <param name="R">The resulting upper triangular matrix.</param>
-    public delegate void QRDecompositionMethod<T>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
-        where T : IComplex<T>;
+    public delegate void QRDecompositionMethod<T, U, V>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
+        where T : IComplex<T, U, V>
+        where U : IBinaryNumber<U>
+        where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>;
 
     /// <summary>Perform QR decomposition on a matrix using the modified Gram-Schmidt process.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="matrix">An input matrix.</param>
     /// <param name="Q">The resulting orthogonal matrix.</param>
     /// <param name="R">The resulting upper triangular matrix.</param>
     /// <exception cref="DivideByZeroException">One of the columns is not linearly independent from one or more of the others.</exception>
-    public static void QRGramSchmidt<T>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
-        where T : IComplex<T>
+    public static void QRGramSchmidt<T, U>(Span2D<T> matrix, out Span2D<T> Q, out Span2D<T> R)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     {
         var height = matrix.Height;
         var width = matrix.Width;
@@ -187,13 +207,13 @@ public static class LinAlg
             }
 
             // TODO: Check to see if using this RefEnumerable<T>, named column, in Norm() is permitted.
-            var norm = Norm(column);
-            if (norm != Real.Zero)
+            var norm = Norm<T, U>(column);
+            if (norm != Real<U>.Zero)
             {
-                R[i, i] = norm;
+                R[i, i] = (U)norm;
                 foreach (ref var element in column)
                 {
-                    element /= norm;
+                    element /= (U)norm;
                 }
             }
             else
