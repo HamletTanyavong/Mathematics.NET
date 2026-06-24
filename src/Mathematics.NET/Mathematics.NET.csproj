@@ -60,7 +60,6 @@
 
   <ItemGroup>
     <Using Include="CommunityToolkit.HighPerformance" />
-    <Using Include="Mathematics.NET.Core" />
     <Using Include="Mathematics.NET.Exceptions" />
   </ItemGroup>
 

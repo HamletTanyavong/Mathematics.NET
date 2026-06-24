@@ -28,9 +28,9 @@
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Helpers;
-using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
+using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.Solvers;
 

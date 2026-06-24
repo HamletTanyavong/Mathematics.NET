@@ -30,10 +30,10 @@
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.LinearAlgebra;
-using static Mathematics.NET.AutoDiff.HyperDual<Mathematics.NET.Core.Real<double>, double>;
+using static Mathematics.NET.AutoDiff.HyperDual<Mathematics.NET.Real<double>, double>;
 using static Mathematics.NET.DifferentialGeometry.AutoDiffTensor4<
-    Mathematics.NET.AutoDiff.HyperDual<Mathematics.NET.Core.Real<double>, double>,
-    Mathematics.NET.Core.Real<double>,
+    Mathematics.NET.AutoDiff.HyperDual<Mathematics.NET.Real<double>, double>,
+    Mathematics.NET.Real<double>,
     double,
     Mathematics.NET.DifferentialGeometry.NoIndex>;
 
@@ -120,7 +120,6 @@ public sealed class DifGeoForwardModeTests
     [DynamicData(nameof(GetR2TensorDerivativeData))]
     public void Derivative_RankTwoTensor_ReturnsRankThreeTensor(object[] input, object[] values)
     {
-        //var point = Create<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
         var point = Create<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
         var expected = (Real<double>[,,])values[0];

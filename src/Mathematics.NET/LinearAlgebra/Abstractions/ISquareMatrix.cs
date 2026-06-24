@@ -26,8 +26,8 @@
 // </copyright>
 
 using System.Numerics;
-using Mathematics.NET.Core.Operations;
 using Mathematics.NET.LinearAlgebra.Operations;
+using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 

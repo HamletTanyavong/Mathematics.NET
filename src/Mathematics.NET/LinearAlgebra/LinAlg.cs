@@ -30,7 +30,7 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Enumerables;
 using CommunityToolkit.HighPerformance.Helpers;
-using Mathematics.NET.Core.ParallelActions;
+using Mathematics.NET.ParallelActions;
 
 namespace Mathematics.NET.LinearAlgebra;
 

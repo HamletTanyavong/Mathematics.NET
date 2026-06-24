@@ -26,8 +26,8 @@
 // </copyright>
 
 using System.Numerics;
-using Mathematics.NET.Core.Operations;
-using Mathematics.NET.Core.Relations;
+using Mathematics.NET.Operations;
+using Mathematics.NET.Relations;
 
 namespace Mathematics.NET.AutoDiff;
 

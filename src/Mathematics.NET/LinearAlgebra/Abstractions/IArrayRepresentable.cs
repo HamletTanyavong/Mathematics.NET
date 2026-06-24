@@ -26,7 +26,7 @@
 // </copyright>
 
 using System.Numerics;
-using Mathematics.NET.Core.Relations;
+using Mathematics.NET.Relations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 

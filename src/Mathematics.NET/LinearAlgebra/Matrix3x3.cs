@@ -54,15 +54,15 @@ public struct Matrix3x3<T, U> : ISquareMatrix<Matrix3x3<T, U>, T, U, U>
     public Vector3<T, U> X3;
 
     /// <summary>Create a 3x3 matrix given a set of 9 values.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e12">The $ e_{12} $ component.</param>
-    /// <param name="e13">The $ e_{13} $ component.</param>
-    /// <param name="e21">The $ e_{21} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
-    /// <param name="e23">The $ e_{23} $ component.</param>
-    /// <param name="e31">The $ e_{31} $ component.</param>
-    /// <param name="e32">The $ e_{32} $ component.</param>
-    /// <param name="e33">The $ e_{33} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e12">The <c>e_{12}</c> component.</param>
+    /// <param name="e13">The <c>e_{13}</c> component.</param>
+    /// <param name="e21">The <c>e_{21}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
+    /// <param name="e23">The <c>e_{23}</c> component.</param>
+    /// <param name="e31">The <c>e_{31}</c> component.</param>
+    /// <param name="e32">The <c>e_{32}</c> component.</param>
+    /// <param name="e33">The <c>e_{33}</c> component.</param>
     public Matrix3x3(
         T e11, T e12, T e13,
         T e21, T e22, T e23,

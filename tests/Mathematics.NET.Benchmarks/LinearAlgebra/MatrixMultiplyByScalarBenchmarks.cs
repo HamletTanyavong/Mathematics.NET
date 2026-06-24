@@ -27,7 +27,7 @@
 
 using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Helpers;
-using Mathematics.NET.Core.ParallelActions;
+using Mathematics.NET.ParallelActions;
 
 namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 

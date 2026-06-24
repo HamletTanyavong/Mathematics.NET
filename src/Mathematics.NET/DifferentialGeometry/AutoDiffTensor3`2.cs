@@ -110,4 +110,12 @@ public record struct AutoDiffTensor3<TN, U, TI>
     //
 
     public override readonly string ToString() => $"({X0}, {X1}, {X2})";
+
+    //
+    // Methods
+    //
+
+    public static AutoDiffTensor3<TN, U, TNI> Create<TNI>(Variable<TN, U> x0, Variable<TN, U> x1, Variable<TN, U> x2)
+        where TNI : IIndex
+        => new(x0, x1, x2);
 }
