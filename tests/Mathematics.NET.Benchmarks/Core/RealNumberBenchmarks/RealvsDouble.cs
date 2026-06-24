@@ -32,7 +32,7 @@ namespace Mathematics.NET.Benchmarks.Core.RealNumberBenchmarks;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class RealvsDouble
 {
-    public Real XReal { get; set; }
+    public Real<double> XReal { get; set; }
     public double XDouble { get; set; }
 
     [GlobalSetup]
@@ -54,9 +54,9 @@ public class RealvsDouble
     }
 
     [Benchmark]
-    public Real AdditionsWithReal()
+    public Real<double> AdditionsWithReal()
     {
-        Real result = 0.0;
+        Real<double> result = 0.0;
         for (int i = 0; i < 100_000; i++)
         {
             result += XReal;

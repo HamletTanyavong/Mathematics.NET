@@ -35,9 +35,9 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class Vector2AdditionBenchmarks
 {
-    public Vector2<Real> U { get; set; }
+    public Vector2<Real<double>, double> U { get; set; }
 
-    public Vector2<Real> V { get; set; }
+    public Vector2<Real<double>, double> V { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -47,8 +47,8 @@ public class Vector2AdditionBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Vector2<Real> AddNaive() => Vector2Impl.AddNaive(U, V);
+    public Vector2<Real<double>, double> AddNaive() => Vector2Impl.AddNaive(U, V);
 
     [Benchmark]
-    public Vector2<Real> AddSimd() => Vector2Impl.AddSimd(U, V);
+    public Vector2<Real<double>, double> AddSimd() => Vector2Impl.AddSimd(U, V);
 }

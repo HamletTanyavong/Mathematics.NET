@@ -35,9 +35,9 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class Vector4EqualityBenchmarks
 {
-    public Vector4<Real> U { get; set; }
+    public Vector4<Real<double>, double> U { get; set; }
 
-    public Vector4<Real> V { get; set; }
+    public Vector4<Real<double>, double> V { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()

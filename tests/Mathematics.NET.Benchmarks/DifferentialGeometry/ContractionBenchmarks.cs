@@ -37,20 +37,20 @@ namespace Mathematics.NET.Benchmarks.DifferentialGeometry;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class ContractionBenchmarks
 {
-    public Tensor<Vector4<Real>, Real, Index<Lower, Alpha>> RankOneTensorA;
-    public Tensor<Vector4<Real>, Real, Index<Upper, Alpha>> RankOneTensorB;
+    public Tensor<Vector4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>> RankOneTensorA;
+    public Tensor<Vector4<Real<double>, double>, Real<double>, double, Index<Upper, Alpha>> RankOneTensorB;
 
-    public Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> RankThreeTensorA;
-    public Tensor<Array4x4x4<Real>, Real, Index<Lower, Delta>, Index<Upper, Beta>, Index<Lower, Epsilon>> RankThreeTensorB;
+    public Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> RankThreeTensorA;
+    public Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Delta>, Index<Upper, Beta>, Index<Lower, Epsilon>> RankThreeTensorB;
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        RankOneTensorA = new Vector4<Real>(1.23, 2.34, 3.45, 4.56);
-        RankOneTensorB = new Vector4<Real>(0.44, -4.5, 2.13, -0.2);
+        RankOneTensorA = new Vector4<Real<double>, double>(1.23, 2.34, 3.45, 4.56);
+        RankOneTensorB = new Vector4<Real<double>, double>(0.44, -4.5, 2.13, -0.2);
 
-        Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> tensorA = new();
-        Tensor<Array4x4x4<Real>, Real, Index<Lower, Delta>, Index<Upper, Beta>, Index<Lower, Epsilon>> tensorB = new();
+        Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> tensorA = new();
+        Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Delta>, Index<Upper, Beta>, Index<Lower, Epsilon>> tensorB = new();
 
         for (int i = 0; i < 4; i++)
         {
@@ -69,31 +69,31 @@ public class ContractionBenchmarks
     }
 
     [Benchmark]
-    public Real ContractRankOneTensorsWithNoInKeyword()
+    public Real<double> ContractRankOneTensorsWithNoInKeyword()
     {
         return DifGeoImpl.ContractRankOneTensorWithNoInKeyword(RankOneTensorA, RankOneTensorB);
     }
 
     [Benchmark]
-    public Real ContractRankOneTensorsWithInKeyword()
+    public Real<double> ContractRankOneTensorsWithInKeyword()
     {
         return DifGeoImpl.ContractRankOneTensorWithInKeyword(RankOneTensorA, RankOneTensorB);
     }
 
     [Benchmark]
-    public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithNoInKeyword()
+    public Tensor<Array4x4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithNoInKeyword()
     {
         return DifGeoImpl.ContractRankThreeTensorWithNoInKeyword(RankThreeTensorA, RankThreeTensorB);
     }
 
     [Benchmark]
-    public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithInKeyword()
+    public Tensor<Array4x4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithInKeyword()
     {
         return DifGeoImpl.ContractRankThreeTensorWithInKeyword(RankThreeTensorA, RankThreeTensorB);
     }
 
     [Benchmark]
-    public Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithRefReadonlyKeyword()
+    public Tensor<Array4x4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Gamma>, Index<Lower, Delta>, Index<Lower, Epsilon>> ContractRankThreeTensorsWithRefReadonlyKeyword()
     {
         return DifGeoImpl.ContractRankThreeTensorWithRefReadonlyKeyword(in RankThreeTensorA, in RankThreeTensorB);
     }

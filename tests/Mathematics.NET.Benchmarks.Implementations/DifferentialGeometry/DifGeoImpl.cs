@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -36,11 +37,12 @@ namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry;
 public static class DifGeoImpl
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static W ContractRankOneTensorWithNoInKeyword<T, U, V, W, IC>(IRankOneTensor<T, V, W, Index<Lower, IC>> a, IRankOneTensor<U, V, W, Index<Upper, IC>> b)
-        where T : IRankOneTensor<T, V, W, Index<Lower, IC>>
-        where U : IRankOneTensor<U, V, W, Index<Upper, IC>>
-        where V : IVector<V, W>
-        where W : IComplex<W>, IDifferentiableFunctions<W>
+    public static W ContractRankOneTensorWithNoInKeyword<T, U, V, W, X, IC>(IRankOneTensor<T, V, W, X, X, Index<Lower, IC>> a, IRankOneTensor<U, V, W, X, X, Index<Upper, IC>> b)
+        where T : IRankOneTensor<T, V, W, X, X, Index<Lower, IC>>
+        where U : IRankOneTensor<U, V, W, X, X, Index<Upper, IC>>
+        where V : IVector<V, W, X, X>
+        where W : IComplex<W, X, X>, IDifferentiableFunctions<W>
+        where X : IBinaryFloatingPointIeee754<X>, IMinMaxValue<X>
         where IC : IIndexName
     {
         var result = W.Zero;
@@ -52,11 +54,12 @@ public static class DifGeoImpl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static W ContractRankOneTensorWithInKeyword<T, U, V, W, IC>(in IRankOneTensor<T, V, W, Index<Lower, IC>> a, in IRankOneTensor<U, V, W, Index<Upper, IC>> b)
-        where T : IRankOneTensor<T, V, W, Index<Lower, IC>>
-        where U : IRankOneTensor<U, V, W, Index<Upper, IC>>
-        where V : IVector<V, W>
-        where W : IComplex<W>, IDifferentiableFunctions<W>
+    public static W ContractRankOneTensorWithInKeyword<T, U, V, X, W, IC>(in IRankOneTensor<T, V, W, X, X, Index<Lower, IC>> a, in IRankOneTensor<U, V, W, X, X, Index<Upper, IC>> b)
+        where T : IRankOneTensor<T, V, W, X, X, Index<Lower, IC>>
+        where U : IRankOneTensor<U, V, W, X, X, Index<Upper, IC>>
+        where V : IVector<V, W, X, X>
+        where W : IComplex<W, X, X>, IDifferentiableFunctions<W>
+        where X : IBinaryFloatingPointIeee754<X>, IMinMaxValue<X>
         where IC : IIndexName
     {
         var result = W.Zero;
@@ -68,19 +71,20 @@ public static class DifGeoImpl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> ContractRankThreeTensorWithNoInKeyword<T, U, V, IC, I1, I2, I3, I4>(
-        IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
-        IRankThreeTensor<U, Array4x4x4<V>, V, I3, Index<Upper, IC>, I4> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I3, Index<Upper, IC>, I4>
-        where V : IComplex<V>, IDifferentiableFunctions<V>
+    public static Tensor<Array4x4x4x4<V, W>, V, W, I1, I2, I3, I4> ContractRankThreeTensorWithNoInKeyword<T, U, V, W, IC, I1, I2, I3, I4>(
+        IRankThreeTensor<T, Array4x4x4<V, W>, V, W, W, I1, Index<Lower, IC>, I2> a,
+        IRankThreeTensor<U, Array4x4x4<V, W>, V, W, W, I3, Index<Upper, IC>, I4> b)
+        where T : IRankThreeTensor<T, Array4x4x4<V, W>, V, W, W, I1, Index<Lower, IC>, I2>
+        where U : IRankThreeTensor<U, Array4x4x4<V, W>, V, W, W, I3, Index<Upper, IC>, I4>
+        where V : IComplex<V, W, W>, IDifferentiableFunctions<V>
+        where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
         where IC : IIndexName
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
         where I4 : IIndex
     {
-        Array4x4x4x4<V> array = new();
+        Array4x4x4x4<V, W> array = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -101,19 +105,20 @@ public static class DifGeoImpl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> ContractRankThreeTensorWithInKeyword<T, U, V, IC, I1, I2, I3, I4>(
-        in IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
-        in IRankThreeTensor<U, Array4x4x4<V>, V, I3, Index<Upper, IC>, I4> b)
-        where T : IRankThreeTensor<T, Array4x4x4<V>, V, I1, Index<Lower, IC>, I2>
-        where U : IRankThreeTensor<U, Array4x4x4<V>, V, I3, Index<Upper, IC>, I4>
-        where V : IComplex<V>, IDifferentiableFunctions<V>
+    public static Tensor<Array4x4x4x4<V, W>, V, W, I1, I2, I3, I4> ContractRankThreeTensorWithInKeyword<T, U, V, W, IC, I1, I2, I3, I4>(
+        in IRankThreeTensor<T, Array4x4x4<V, W>, V, W, W, I1, Index<Lower, IC>, I2> a,
+        in IRankThreeTensor<U, Array4x4x4<V, W>, V, W, W, I3, Index<Upper, IC>, I4> b)
+        where T : IRankThreeTensor<T, Array4x4x4<V, W>, V, W, W, I1, Index<Lower, IC>, I2>
+        where U : IRankThreeTensor<U, Array4x4x4<V, W>, V, W, W, I3, Index<Upper, IC>, I4>
+        where V : IComplex<V, W, W>, IDifferentiableFunctions<V>
+        where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
         where IC : IIndexName
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
         where I4 : IIndex
     {
-        Array4x4x4x4<V> array = new();
+        Array4x4x4x4<V, W> array = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -134,17 +139,18 @@ public static class DifGeoImpl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Tensor<Array4x4x4x4<V>, V, I1, I2, I3, I4> ContractRankThreeTensorWithRefReadonlyKeyword<V, IC, I1, I2, I3, I4>(
-        ref readonly Tensor<Array4x4x4<V>, V, I1, Index<Lower, IC>, I2> a,
-        ref readonly Tensor<Array4x4x4<V>, V, I3, Index<Upper, IC>, I4> b)
-        where V : IComplex<V>, IDifferentiableFunctions<V>
+    public static Tensor<Array4x4x4x4<V, W>, V, W, I1, I2, I3, I4> ContractRankThreeTensorWithRefReadonlyKeyword<V, W, IC, I1, I2, I3, I4>(
+        ref readonly Tensor<Array4x4x4<V, W>, V, W, I1, Index<Lower, IC>, I2> a,
+        ref readonly Tensor<Array4x4x4<V, W>, V, W, I3, Index<Upper, IC>, I4> b)
+        where V : IComplex<V, W, W>, IDifferentiableFunctions<V>
+        where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
         where IC : IIndexName
         where I1 : IIndex
         where I2 : IIndex
         where I3 : IIndex
         where I4 : IIndex
     {
-        Array4x4x4x4<V> array = new();
+        Array4x4x4x4<V, W> array = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)

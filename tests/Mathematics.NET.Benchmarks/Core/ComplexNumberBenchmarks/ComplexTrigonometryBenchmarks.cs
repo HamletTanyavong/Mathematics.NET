@@ -32,8 +32,8 @@ namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class ComplexTrigonometryBenchmarks
 {
-    public Complex Z { get; set; }
-    public Complex ImOverTwo { get; set; }
+    public Complex<double> Z { get; set; }
+    public Complex<double> ImOverTwo { get; set; }
 
     public SystemComplex W { get; set; }
 
@@ -41,7 +41,7 @@ public class ComplexTrigonometryBenchmarks
     public void GlobalSetup()
     {
         Z = new(1.23, 2.34);
-        ImOverTwo = Constants.Im / 2.0;
+        ImOverTwo = Complex<double>.ImUnit / 2.0;
 
         W = new(1.23, 2.34);
     }
@@ -53,20 +53,20 @@ public class ComplexTrigonometryBenchmarks
     }
 
     [Benchmark]
-    public Complex Atan_MathNET()
+    public Complex<double> Atan_MathNET()
     {
-        return Complex.Atan(Z);
+        return Complex<double>.Atan(Z);
     }
 
     //[Benchmark]
-    public Complex Atan_WithoutConstImOverTwo()
+    public Complex<double> Atan_WithoutConstImOverTwo()
     {
-        return Constants.Im / 2.0 * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
+        return Complex<double>.ImUnit / 2.0 * Complex<double>.Ln((Complex<double>.ImUnit + Z) / (Complex<double>.ImUnit - Z));
     }
 
     //[Benchmark]
-    public Complex Atan_WithConstImOverTwo()
+    public Complex<double> Atan_WithConstImOverTwo()
     {
-        return ImOverTwo * Complex.Ln((Constants.Im + Z) / (Constants.Im - Z));
+        return ImOverTwo * Complex<double>.Ln((Complex<double>.ImUnit + Z) / (Complex<double>.ImUnit - Z));
     }
 }

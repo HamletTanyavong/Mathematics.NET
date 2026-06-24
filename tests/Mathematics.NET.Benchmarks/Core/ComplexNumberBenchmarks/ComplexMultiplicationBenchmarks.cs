@@ -34,8 +34,8 @@ namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class ComplexMultiplicationBenchmarks
 {
-    public Complex Z { get; set; }
-    public Complex W { get; set; }
+    public Complex<double> Z { get; set; }
+    public Complex<double> W { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -45,8 +45,8 @@ public class ComplexMultiplicationBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Complex MultiplyNaive() => ComplexImpl.MultiplyNaive(Z, W);
+    public Complex<double> MultiplyNaive() => ComplexImpl.MultiplyNaive(Z, W);
 
     [Benchmark]
-    public Complex MultiplySimd() => ComplexImpl.MultiplySimd(Z, W);
+    public Complex<double> MultiplySimd() => ComplexImpl.MultiplySimd(Z, W);
 }

@@ -38,8 +38,8 @@ public class MatrixMultiplyByScalarBenchmarks
 {
     public int Rows { get; set; }
     public int Cols { get; set; }
-    public required Complex[,] MatrixOne { get; set; }
-    public required Complex[,] MatrixTwo { get; set; }
+    public required Complex<double>[,] MatrixOne { get; set; }
+    public required Complex<double>[,] MatrixTwo { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -47,7 +47,7 @@ public class MatrixMultiplyByScalarBenchmarks
         Rows = 100;
         Cols = 100;
 
-        MatrixOne = new Complex[Rows, Cols];
+        MatrixOne = new Complex<double>[Rows, Cols];
 
         for (int i = 0; i < Rows; i++)
         {
@@ -67,7 +67,7 @@ public class MatrixMultiplyByScalarBenchmarks
         {
             for (int j = 0; j < Cols; j++)
             {
-                matrixAsSpan[i, j] *= Real.Pi;
+                matrixAsSpan[i, j] *= Real<double>.Pi;
             }
         }
     }
@@ -75,7 +75,7 @@ public class MatrixMultiplyByScalarBenchmarks
     [Benchmark]
     public void MultiplyByScalarParallel()
     {
-        Memory2D<Complex> matrixAsMemory = MatrixTwo;
-        ParallelHelper.ForEach(matrixAsMemory, new MultiplyByScalarAction<Complex>(Real.Pi));
+        Memory2D<Complex<double>> matrixAsMemory = MatrixTwo;
+        ParallelHelper.ForEach(matrixAsMemory, new MultiplyByScalarAction<Complex<double>, double, double>(Real<double>.Pi));
     }
 }

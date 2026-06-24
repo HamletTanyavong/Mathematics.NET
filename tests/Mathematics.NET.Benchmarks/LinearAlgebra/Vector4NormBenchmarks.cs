@@ -35,7 +35,7 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class Vector4NormBenchmarks
 {
-    public Vector4<Real> U { get; set; }
+    public Vector4<Real<double>, double> U { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -44,8 +44,8 @@ public class Vector4NormBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Real NormNaive() => U.NormNaive();
+    public Real<double> NormNaive() => U.NormNaive();
 
     [Benchmark]
-    public Real NormSimd() => U.NormSimd();
+    public Real<double> NormSimd() => U.NormSimd();
 }
