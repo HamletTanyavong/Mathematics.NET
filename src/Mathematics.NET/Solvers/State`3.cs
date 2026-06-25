@@ -1,4 +1,4 @@
-// <copyright file="State`3.cs" company="Mathematics.NET">
+// <copyright file="State`2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -27,30 +27,22 @@
 
 using System.Numerics;
 using Mathematics.NET.LinearAlgebra.Abstractions;
-using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents the state of a system.</summary>
-/// <typeparam name="TSI">A type that implements <see cref="IStateItem{TSC, TA, TN, TB}"/>.</typeparam>
-/// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
+/// <typeparam name="TV">A type that implements <see cref="IVector{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class State<TSI, TA, TN, TB>(Memory<TSI> system, TN time)
-    where TSI : IStateItem<TSI, TA, TN, TB>
-    where TA
-    : I1DArrayRepresentable<TA, TN, TB, TB>,
-      IAdditionOperation<TA, TA>,
-      ISubtractionOperation<TA, TA>,
-      IMultiplicationOperation<TA, TN, TA>,
-      IUnaryMinusOperation<TA, TA>
+public sealed class State<TV, TN, TB>(Memory<TV> system, TN time)
+    where TV : IVector<TV, TN, TB, TB>
     where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
     where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
     /// <inheritdoc cref="State{T, U}.System"/>
-    public Memory<TSI> System = system;
+    public Memory<TV> System = system;
 
     /// <inheritdoc cref="State{T, U}.Time"/>
     public TN Time = time;

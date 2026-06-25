@@ -1,4 +1,4 @@
-// <copyright file="AutoDiffVector2`1.cs" company="Mathematics.NET">
+// <copyright file="AutoDiffTensor2`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,35 +28,39 @@
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using Mathematics.NET.AutoDiff;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 
-namespace Mathematics.NET.LinearAlgebra;
+namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a vector of two variables for use in reverse-mode automatic differentiation.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <summary>Represents a rank-one tensor of two variables for use in forward-mode automatic differentiation.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-[StructLayout(LayoutKind.Sequential)]
-public record struct AutoDiffVector2<T, U>
-    where T : IComplex<T, U, U>
+/// <typeparam name="TI">An index.</typeparam>
+public record struct AutoDiffTensor2<TDN, TN, U, TI>
+    where TDN : IDual<TDN, TN, U, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+    where TI : IIndex
 {
-    /// <summary>The first element of the vector.</summary>
-    public Variable<T, U> X1;
+    /// <summary>The zeroth element of the rank-one tensor.</summary>
+    public TDN X0;
 
-    /// <summary>The second element of the vector.</summary>
-    public Variable<T, U> X2;
+    /// <summary>The first element of the rank-one tensor.</summary>
+    public TDN X1;
 
-    public AutoDiffVector2(Variable<T, U> x1, Variable<T, U> x2)
+    public AutoDiffTensor2(TDN x0, TDN x1)
     {
+        X0 = x0;
         X1 = x1;
-        X2 = x2;
     }
 
-    /// <summary>Get the element at the specified index.</summary>
-    /// <param name="index">An index.</param>
-    /// <returns>The element at the index.</returns>
-    public Variable<T, U> this[int index]
+    //
+    // Indexer
+    //
+
+    public TDN this[int index]
     {
         readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
@@ -64,41 +68,55 @@ public record struct AutoDiffVector2<T, U>
 
     // Get
 
-    internal static Variable<T, U> GetElement(AutoDiffVector2<T, U> vector, int index)
+    internal static TDN GetElement(AutoDiffTensor2<TDN, TN, U, TI> tensor, int index)
     {
         if ((uint)index >= 2)
             throw new IndexOutOfRangeException();
-        return GetElementUnsafe(ref vector, index);
+        return GetElementUnsafe(ref tensor, index);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Variable<T, U> GetElementUnsafe(ref AutoDiffVector2<T, U> vector, int index)
+    private static TDN GetElementUnsafe(ref AutoDiffTensor2<TDN, TN, U, TI> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 2);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T, U>, Variable<T, U>>(ref vector), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<TDN, TN, U, TI>, TDN>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffVector2<T, U> WithElement(AutoDiffVector2<T, U> vector, int index, Variable<T, U> value)
+    internal static AutoDiffTensor2<TDN, TN, U, TI> WithElement(AutoDiffTensor2<TDN, TN, U, TI> tensor, int index, TDN value)
     {
         if ((uint)index >= 2)
             throw new IndexOutOfRangeException();
-        AutoDiffVector2<T, U> result = vector;
+        AutoDiffTensor2<TDN, TN, U, TI> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffVector2<T, U> vector, int index, Variable<T, U> value)
+    private static void SetElementUnsafe(ref AutoDiffTensor2<TDN, TN, U, TI> tensor, int index, TDN value)
     {
         Debug.Assert(index is >= 0 and < 2);
-        Unsafe.Add(ref Unsafe.As<AutoDiffVector2<T, U>, Variable<T, U>>(ref vector), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor2<TDN, TN, U, TI>, TDN>(ref tensor), index) = value;
     }
+
+    //
+    // Methods
+    //
+
+    public static AutoDiffTensor2<TDN, TN, U, TI> Create(TN x0, TN x1) => new(x0, x1);
 
     //
     // Formatting
     //
 
-    public override readonly string ToString() => $"({X1}, {X2})";
+    public override readonly string ToString() => $"({X0}, {X1})";
+
+    //
+    // Methods
+    //
+
+    public static AutoDiffTensor2<TDN, TN, U, TNI> Create<TNI>(TDN x0, TDN x1)
+        where TNI : IIndex
+        => new(x0, x1);
 }

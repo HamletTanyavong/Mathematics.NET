@@ -34,9 +34,9 @@ namespace Mathematics.NET.AutoDiff;
 /// <summary>Defines support for dual numbers.</summary>
 /// <typeparam name="TDN">The type that implements the interface.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
-/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-public interface IDual<TDN, TN, U, V>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IDual<TDN, TN, TB, TR>
     : IAdditionOperation<TDN, TDN>,
       IDivisionOperation<TDN, TDN>,
       IMultiplicationOperation<TDN, TDN>,
@@ -47,10 +47,10 @@ public interface IDual<TDN, TN, U, V>
       IEquatable<TDN>,
       IFormattable,
       IDifferentiableFunctions<TDN>
-    where TDN : IDual<TDN, TN, U, V>
-    where TN : IComplex<TN, U, V>, IDifferentiableFunctions<TN>
-    where U : IBinaryNumber<U>
-    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
+    where TDN : IDual<TDN, TN, TB, TR>
+    where TN : IComplex<TN, TB, TR>, IDifferentiableFunctions<TN>
+    where TB : IBinaryNumber<TB>
+    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
 {
     /// <summary>Represents the primal part of the dual number.</summary>
     TN D0 { get; }
@@ -92,5 +92,5 @@ public interface IDual<TDN, TN, U, V>
     /// <summary>Convert a backing number into a dual number.</summary>
     /// <remarks>The tangent parts of the dual number will be zero.</remarks>
     /// <param name="value">A number.</param>
-    static abstract implicit operator TDN(V value);
+    static abstract implicit operator TDN(TR value);
 }

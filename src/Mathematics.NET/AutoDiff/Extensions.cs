@@ -37,7 +37,7 @@ public static class Extensions
     // Vector Calculus
     //
 
-    /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation: $ (\nabla\times\textbf{F})(\textbf{x}) $.</summary>
+    /// <summary>Compute the curl of a vector field using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -70,7 +70,7 @@ public static class Extensions
             df2[0] - df1[1]);
     }
 
-    /// <summary>Compute the derivative of a scalar function along a particular direction using reverse-mode automatic differentiation: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
+    /// <summary>Compute the derivative of a scalar function along a particular direction using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -113,7 +113,7 @@ public static class Extensions
         return gradient[0] * v.X1 + gradient[1] * v.X2 + gradient[2] * v.X3 + gradient[3] * v.X4;
     }
 
-    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
+    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -142,7 +142,7 @@ public static class Extensions
         return partialSum;
     }
 
-    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
+    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -177,7 +177,7 @@ public static class Extensions
         return partialSum;
     }
 
-    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
+    /// <summary>Compute the divergence of a vector field using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -218,7 +218,7 @@ public static class Extensions
         return partialSum;
     }
 
-    /// <summary>Compute the gradient of a scalar function using reverse-mode automatic differentiation: $ \nabla f(\textbf{x}) $.</summary>
+    /// <summary>Compute the gradient of a scalar function using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -311,7 +311,7 @@ public static class Extensions
             hessian[3, 0], hessian[3, 1], hessian[3, 2], hessian[3, 3]);
     }
 
-    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -340,7 +340,7 @@ public static class Extensions
         return result;
     }
 
-    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -375,7 +375,7 @@ public static class Extensions
         return result;
     }
 
-    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <summary>Compute the Jacobian of a vector function using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>
@@ -527,7 +527,7 @@ public static class Extensions
         return result;
     }
 
-    /// <summary>Compute the Laplacian of a scalar function using reverse-mode automatic differentiation: $ \nabla^2f $.</summary>
+    /// <summary>Compute the Laplacian of a scalar function using reverse-mode automatic differentiation.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="tape">A gradient or Hessian tape.</param>

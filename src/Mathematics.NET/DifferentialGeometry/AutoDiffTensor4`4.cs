@@ -1,4 +1,4 @@
-// <copyright file="AutoDiffTensor4`2.cs" company="Mathematics.NET">
+// <copyright file="AutoDiffTensor4`4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -33,28 +33,30 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor of four variables for use in reverse-mode automatic differentiation.</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <summary>Represents a rank-one tensor of four variables for use in forward-mode automatic differentiation.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
-public record struct AutoDiffTensor4<TN, U, TI>
-    where TN : IComplex<TN, U, U>
+public record struct AutoDiffTensor4<TDN, TN, U, TI>
+    where TDN : IDual<TDN, TN, U, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI : IIndex
 {
     /// <summary>The zeroth element of the rank-one tensor.</summary>
-    public Variable<TN, U> X0;
+    public TDN X0;
 
     /// <summary>The first element of the rank-one tensor.</summary>
-    public Variable<TN, U> X1;
+    public TDN X1;
 
     /// <summary>The second element of the rank-one tensor.</summary>
-    public Variable<TN, U> X2;
+    public TDN X2;
 
     /// <summary>The third element of the rank-one tensor.</summary>
-    public Variable<TN, U> X3;
+    public TDN X3;
 
-    public AutoDiffTensor4(Variable<TN, U> x0, Variable<TN, U> x1, Variable<TN, U> x2, Variable<TN, U> x3)
+    public AutoDiffTensor4(TDN x0, TDN x1, TDN x2, TDN x3)
     {
         X0 = x0;
         X1 = x1;
@@ -66,10 +68,7 @@ public record struct AutoDiffTensor4<TN, U, TI>
     // Indexer
     //
 
-    /// <summary>Get the element at the specified index.</summary>
-    /// <param name="index">An index.</param>
-    /// <returns>The element at the index.</returns>
-    public Variable<TN, U> this[int index]
+    public TDN this[int index]
     {
         readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
@@ -77,7 +76,7 @@ public record struct AutoDiffTensor4<TN, U, TI>
 
     // Get
 
-    internal static Variable<TN, U> GetElement(AutoDiffTensor4<TN, U, TI> tensor, int index)
+    internal static TDN GetElement(AutoDiffTensor4<TDN, TN, U, TI> tensor, int index)
     {
         if ((uint)index >= 4)
             throw new IndexOutOfRangeException();
@@ -85,29 +84,35 @@ public record struct AutoDiffTensor4<TN, U, TI>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Variable<TN, U> GetElementUnsafe(ref AutoDiffTensor4<TN, U, TI> tensor, int index)
+    private static TDN GetElementUnsafe(ref AutoDiffTensor4<TDN, TN, U, TI> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 4);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<TN, U, TI>, Variable<TN, U>>(ref tensor), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<TDN, TN, U, TI>, TDN>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor4<TN, U, TI> WithElement(AutoDiffTensor4<TN, U, TI> tensor, int index, Variable<TN, U> value)
+    internal static AutoDiffTensor4<TDN, TN, U, TI> WithElement(AutoDiffTensor4<TDN, TN, U, TI> tensor, int index, TDN value)
     {
         if ((uint)index >= 4)
             throw new IndexOutOfRangeException();
-        AutoDiffTensor4<TN, U, TI> result = tensor;
+        AutoDiffTensor4<TDN, TN, U, TI> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor4<TN, U, TI> tensor, int index, Variable<TN, U> value)
+    private static void SetElementUnsafe(ref AutoDiffTensor4<TDN, TN, U, TI> tensor, int index, TDN value)
     {
         Debug.Assert(index is >= 0 and < 4);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<TN, U, TI>, Variable<TN, U>>(ref tensor), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor4<TDN, TN, U, TI>, TDN>(ref tensor), index) = value;
     }
+
+    //
+    // Methods
+    //
+
+    public static AutoDiffTensor4<TDN, TN, U, TI> Create(TN x0, TN x1, TN x2, TN x3) => new(x0, x1, x2, x3);
 
     //
     // Formatting
@@ -119,7 +124,7 @@ public record struct AutoDiffTensor4<TN, U, TI>
     // Methods
     //
 
-    public static AutoDiffTensor4<TN, U, TNI> Create<TNI>(Variable<TN, U> x0, Variable<TN, U> x1, Variable<TN, U> x2, Variable<TN, U> x3)
+    public static AutoDiffTensor4<TDN, TN, U, TNI> Create<TNI>(TDN x0, TDN x1, TDN x2, TDN x3)
         where TNI : IIndex
         => new(x0, x1, x2, x3);
 }

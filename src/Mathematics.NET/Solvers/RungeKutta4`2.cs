@@ -1,4 +1,4 @@
-// <copyright file="RungeKutta4`2.cs" company="Mathematics.NET">
+// <copyright file="RungeKutta4`1.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -28,41 +28,40 @@
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Helpers;
-using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents a fourth-order Runge-Kutta solver.</summary>
-/// <typeparam name="TV">A type that implements <see cref="IVector{T, U, V, W}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <param name="function">A vector function to use for the integration step.</param>
-public sealed class RungeKutta4<TV, TN, TB>(Func<TN, TV, TV> function)
-    where TV : IVector<TV, TN, TB, TB>
-    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
-    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <param name="function">A function to use for the integration step.</param>
+public sealed class RungeKutta4<T, U>(Func<T, T, T> function)
+    where T : IComplex<T, U, U>, IDifferentiableFunctions<T>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
-    private readonly struct RK4IntegrateAction(Func<TN, TV, TV> function, TN time, TN dt) : IRefAction<TV>
+    private readonly struct RK4IntegrateAction(Func<T, T, T> function, T time, T dt) : IRefAction<T>
     {
-        private readonly Func<TN, TV, TV> _function = function;
-        private readonly TN _time = time;
-        private readonly TN _dt = dt;
+        private readonly Func<T, T, T> _function = function;
+        private readonly T _time = time;
+        private readonly T _dt = dt;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invoke(ref TV value)
+        public void Invoke(ref T value)
         {
             var k1 = _function(_time, value);
-            var k2 = _function(_time + IBinaryFloatingPointIeee754<TB>.Half * _dt, value + IBinaryFloatingPointIeee754<TB>.Half * k1 * _dt);
-            var k3 = _function(_time + IBinaryFloatingPointIeee754<TB>.Half * _dt, value + IBinaryFloatingPointIeee754<TB>.Half * k2 * _dt);
+            var k2 = _function(_time + IBinaryFloatingPointIeee754<U>.Half * _dt, value + IBinaryFloatingPointIeee754<U>.Half * k1 * _dt);
+            var k3 = _function(_time + IBinaryFloatingPointIeee754<U>.Half * _dt, value + IBinaryFloatingPointIeee754<U>.Half * k2 * _dt);
             var k4 = _function(_time + _dt, value + k3 * _dt);
-            value += _dt / IBinaryFloatingPointIeee754<TB>.Six * (k1 + IBinaryFloatingPointIeee754<TB>.Two * (k2 + k3) + k4);
+            value += _dt / IBinaryFloatingPointIeee754<U>.Six * (k1 + IBinaryFloatingPointIeee754<U>.Two * (k2 + k3) + k4);
         }
     }
 
-    private readonly Func<TN, TV, TV> _function = function;
+    private readonly Func<T, T, T> _function = function;
 
-    /// <inheritdoc cref="RungeKutta4{T, U}.Integrate(State{T, U}, T)"/>
-    public void Integrate(State<TV, TN, TB> state, TN dt)
+    /// <summary>Solve for the system state.</summary>
+    /// <param name="state">The system state.</param>
+    /// <param name="dt">The time step.</param>
+    public void Integrate(State<T, U> state, T dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -70,16 +69,18 @@ public sealed class RungeKutta4<TV, TN, TB>(Func<TN, TV, TV> function)
         {
             ref var value = ref system[i];
             var k1 = _function(time, value);
-            var k2 = _function(time + IBinaryFloatingPointIeee754<TB>.Half * dt, value + IBinaryFloatingPointIeee754<TB>.Half * k1 * dt);
-            var k3 = _function(time + IBinaryFloatingPointIeee754<TB>.Half * dt, value + IBinaryFloatingPointIeee754<TB>.Half * k2 * dt);
+            var k2 = _function(time + IBinaryFloatingPointIeee754<U>.Half * dt, value + IBinaryFloatingPointIeee754<U>.Half * k1 * dt);
+            var k3 = _function(time + IBinaryFloatingPointIeee754<U>.Half * dt, value + IBinaryFloatingPointIeee754<U>.Half * k2 * dt);
             var k4 = _function(time + dt, value + k3 * dt);
-            value += dt / IBinaryFloatingPointIeee754<TB>.Six * (k1 + IBinaryFloatingPointIeee754<TB>.Two * (k2 + k3) + k4);
+            value += dt / IBinaryFloatingPointIeee754<U>.Six * (k1 + IBinaryFloatingPointIeee754<U>.Two * (k2 + k3) + k4);
         }
         state.Time += dt;
     }
 
-    /// <inheritdoc cref="RungeKutta4{T, U}.IntegrateParallel(State{T, U}, T)"/>
-    public void IntegrateParallel(State<TV, TN, TB> state, TN dt)
+    /// <summary>Solve for the system state in parallel.</summary>
+    /// <param name="state">The system state.</param>
+    /// <param name="dt">The time step.</param>
+    public void IntegrateParallel(State<T, U> state, T dt)
     {
         ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;
