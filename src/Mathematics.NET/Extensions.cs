@@ -83,6 +83,8 @@ public static class Extensions
         where V : IBinaryFloatingPointIeee754<V>
         => Unsafe.As<T, V>(ref value);
 
+    #endregion
+
     //
     // Rational
     //
@@ -92,8 +94,6 @@ public static class Extensions
         where T : IBinaryInteger<T>, ISignedNumber<T>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         => Rational<T, U>.Reduce(value);
-
-    #endregion
 }
 
 internal static class BinaryFloatingPointExtensionsIeee754
@@ -119,18 +119,8 @@ internal static class BinaryIntegerExtensions
     extension<T>(IBinaryInteger<T> source)
         where T : IBinaryInteger<T>, ISignedNumber<T>
     {
-        // The first 5 prime numbers.
-
         /// <summary>Represents the number 2.</summary>
         public static T Two => T.CreateChecked(2);
-        /// <summary>Represents the number 3.</summary>
-        public static T Three => T.CreateChecked(3);
-        /// <summary>Represents the number 5.</summary>
-        public static T Five => T.CreateChecked(5);
-        /// <summary>Represents the number 7.</summary>
-        public static T Seven => T.CreateChecked(7);
-        /// <summary>Represents the number 11.</summary>
-        public static T Eleven => T.CreateChecked(11);
 
         /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
         /// <param name="x">An integer.</param>
