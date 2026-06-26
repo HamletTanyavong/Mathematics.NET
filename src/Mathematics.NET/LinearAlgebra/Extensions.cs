@@ -66,6 +66,7 @@ public static class Extensions
 
     /// <summary>Reinterprets a <see cref="Matrix4x4{T, U}"/> as a new <see cref="Span2D{T}"/>.</summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="matrix">The matrix to reinterpret.</param>
     /// <returns><paramref name="matrix"/> reinterpreted as a new <see cref="Span2D{T}"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -107,10 +108,12 @@ public static class Extensions
     #region Keep Private
 
     //
-    // Do not make the following methods public.
+    // Do not make the following methods public!
     //
 
+    //
     // To System.Runtime.Intrinsics vectors.
+    //
 
     // Use for Vector4s of Real<float>s.
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -140,14 +143,14 @@ public static class Extensions
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         => Unsafe.As<Vector4<T, U>, Vector512<double>>(ref value);
 
+    // Generic.
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector128<U> AsVector128<T, U>(this Vector4<T, U> value)
         where T : IComplex<T, U, U>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         => Unsafe.As<Vector4<T, U>, Vector128<U>>(ref value);
 
-    // If U is a float, then a Vector256<float> is created that contains 8 floats.
-    // If U is a double, then a Vector256<double> is created that contains 4 doubles.
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector256<U> AsVector256<T, U>(this Vector4<T, U> value)
         where T : IComplex<T, U, U>
@@ -160,25 +163,9 @@ public static class Extensions
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         => Unsafe.As<Vector4<T, U>, Vector512<U>>(ref value);
 
+    //
     // To Mathematics.NET vectors.
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector4<T, U> AsVector4<T, U>(this Vector128<U> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector128<U>, Vector4<T, U>>(ref value);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector4<T, U> AsVector4<T, U>(this Vector256<U> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector256<U>, Vector4<T, U>>(ref value);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector4<T, U> AsVector4<T, U>(this Vector512<U> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector512<U>, Vector4<T, U>>(ref value);
+    //
 
     // Use for Vector4s of Real<float>s.
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -207,6 +194,26 @@ public static class Extensions
         where T : IComplex<T, U, U>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         => Unsafe.As<Vector512<double>, Vector4<T, U>>(ref value);
+
+    // Generic.
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector4<T, U> AsVector4<T, U>(this Vector128<U> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector128<U>, Vector4<T, U>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector4<T, U> AsVector4<T, U>(this Vector256<U> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector256<U>, Vector4<T, U>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static Vector4<T, U> AsVector4<T, U>(this Vector512<U> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector512<U>, Vector4<T, U>>(ref value);
 
     #endregion
 
