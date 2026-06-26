@@ -73,9 +73,9 @@ public static class Precision
         => T.Abs(left - right) <= epsilon * T.Max(T.Abs(left), T.Abs(right));
 
     /// <summary>
-    /// Check if two values are approximately equal within a specified threshold $ \epsilon $.
+    /// Check if two values are approximately equal within a specified threshold <c>\epsilon</c>.
     ///
-    /// If the values are complex, the threshold represents a disk of radius $ \epsilon $ in which the two values must reside.
+    /// If the values are complex, the threshold represents a disk of radius <c>\epsilon</c> in which the two values must reside.
     /// </summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
@@ -99,9 +99,9 @@ public static class Precision
         => T.Abs(left - right) <= epsilon * T.Min(T.Abs(left), T.Abs(right));
 
     /// <summary>
-    /// Check if two values are essentially equal within a specified threshold $ \epsilon $.
+    /// Check if two values are essentially equal within a specified threshold <c>\epsilon</c>.
     ///
-    /// If the values are complex, the threshold represents a disk of radius $ \epsilon $ in which the two values must reside.
+    /// If the values are complex, the threshold represents a disk of radius <c>\epsilon</c> in which the two values must reside.
     /// </summary>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>

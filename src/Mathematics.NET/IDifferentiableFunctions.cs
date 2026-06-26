@@ -36,17 +36,17 @@ public interface IDifferentiableFunctions<T>
     // Exponential functions
     //
 
-    /// <summary>Compute e raised to the power of <paramref name="x"/>: $ e^x $.</summary>
+    /// <summary>Compute e raised to the power of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>e raised to the power of <paramref name="x"/>.</returns>
     static abstract T Exp(T x);
 
-    /// <summary>Compute 2 raised to the power of <paramref name="x"/>: $ 2^x $.</summary>
+    /// <summary>Compute 2 raised to the power of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>2 raised to the power of <paramref name="x"/>.</returns>
     static abstract T Exp2(T x);
 
-    /// <summary>Compute 10 raised to the power of <paramref name="x"/>: $ 10^x $.</summary>
+    /// <summary>Compute 10 raised to the power of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>10 raised to the power of <paramref name="x"/>.</returns>
     static abstract T Exp10(T x);
@@ -55,32 +55,32 @@ public interface IDifferentiableFunctions<T>
     // Hyperbolic functions
     //
 
-    /// <summary>Compute the hyperbolic arccosine of <paramref name="x"/>: $ \cosh^{-1}(x) $.</summary>
+    /// <summary>Compute the hyperbolic arccosine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The hyperbolic arccosine of <paramref name="x"/>.</returns>
     static abstract T Acosh(T x);
 
-    /// <summary>Compute the hyperbolic arcsine of <paramref name="x"/>: $ \sinh^{-1}(x) $.</summary>
+    /// <summary>Compute the hyperbolic arcsine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The hyperbolic arcsine of <paramref name="x"/>.</returns>
     static abstract T Asinh(T x);
 
-    /// <summary>Compute the hyperbolic arctangent of <paramref name="x"/>: $ \tanh^{-1}(x) $.</summary>
+    /// <summary>Compute the hyperbolic arctangent of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The hyperbolic arctangent of <paramref name="x"/>.</returns>
     static abstract T Atanh(T x);
 
-    /// <summary>Compute the hyperbolic cosine of <paramref name="x"/>: $ \cosh(x) $.</summary>
+    /// <summary>Compute the hyperbolic cosine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The hyperbolic cosine of <paramref name="x"/>.</returns>
     static abstract T Cosh(T x);
 
-    /// <summary>Compute the hyperbolic sine of <paramref name="x"/>: $ \sinh(x) $.</summary>
+    /// <summary>Compute the hyperbolic sine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The hyperbolic sine of <paramref name="x"/>.</returns>
     static abstract T Sinh(T x);
 
-    /// <summary>Compute the hyperbolic tangent of <paramref name="x"/>: $ \tanh(x) $.</summary>
+    /// <summary>Compute the hyperbolic tangent of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The hyperbolic tangent of <paramref name="x"/>.</returns>
     static abstract T Tanh(T x);
@@ -89,23 +89,23 @@ public interface IDifferentiableFunctions<T>
     // Logarithmic functions
     //
 
-    /// <summary>Compute the natural logarithm of <paramref name="x"/>: $ \ln(x) $.</summary>
+    /// <summary>Compute the natural logarithm of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The natural logarithm of<paramref name="x"/>.</returns>
     static abstract T Ln(T x);
 
-    /// <summary>Compute the logarithm of <paramref name="x"/> to base <paramref name="b"/>: $ \log_b(x) $.</summary>
+    /// <summary>Compute the logarithm of <paramref name="x"/> to base <paramref name="b"/>.</summary>
     /// <param name="x">A value.</param>
     /// <param name="b">A base.</param>
     /// <returns>The logarithm of <paramref name="x"/> to base b.</returns>
     static abstract T Log(T x, T b);
 
-    /// <summary>Compute the logarithm of <paramref name="x"/> to base 2: $ \log_2(x) $.</summary>
+    /// <summary>Compute the logarithm of <paramref name="x"/> to base 2.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The logarithm of <paramref name="x"/> to base 2.</returns>
     static abstract T Log2(T x);
 
-    /// <summary>Compute the logarithm of <paramref name="x"/> to base 10: $ \log_{10}(x) $.</summary>
+    /// <summary>Compute the logarithm of <paramref name="x"/> to base 10.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The logarithm of <paramref name="x"/> to base 10.</returns>
     static abstract T Log10(T x);
@@ -114,7 +114,7 @@ public interface IDifferentiableFunctions<T>
     // Power functions
     //
 
-    /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>: $ x^y $ </summary>
+    /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
     /// <param name="x">A value.</param>
     /// <param name="n">A power.</param>
     /// <returns><paramref name="x"/> raised to the power of <paramref name="n"/>.</returns>
@@ -124,18 +124,18 @@ public interface IDifferentiableFunctions<T>
     // Root functions
     //
 
-    /// <summary>Compute the cube root of <paramref name="x"/>: $ \sqrt[3]{x} $.</summary>
+    /// <summary>Compute the cube root of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The cube root of <paramref name="x"/>.</returns>
     static abstract T Cbrt(T x);
 
-    /// <summary>Compute the <paramref name="n"/>th root of <paramref name="x"/>: $ \sqrt[n]{x} $.</summary>
+    /// <summary>Compute the <paramref name="n"/>th root of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <param name="n">The root.</param>
     /// <returns>The <paramref name="n"/>th root of <paramref name="x"/>.</returns>
     static abstract T Root(T x, T n);
 
-    /// <summary>Compute the square root of <paramref name="x"/>: $ \sqrt{x} $.</summary>
+    /// <summary>Compute the square root of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The square root of <paramref name="x"/>.</returns>
     static abstract T Sqrt(T x);
@@ -144,32 +144,32 @@ public interface IDifferentiableFunctions<T>
     // Trigonometric functions
     //
 
-    /// <summary>Compute the arccosine of <paramref name="x"/>: $ \cos^{-1}(x) $.</summary>
+    /// <summary>Compute the arccosine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The arccosine of <paramref name="x"/>.</returns>
     static abstract T Acos(T x);
 
-    /// <summary>Compute the arcsine of <paramref name="x"/>: $ \sin^{-1}(x) $.</summary>
+    /// <summary>Compute the arcsine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The arcsine of <paramref name="x"/>.</returns>
     static abstract T Asin(T x);
 
-    /// <summary>Compute the arctangent of <paramref name="x"/>: $ \tan^{-1}(x) $.</summary>
+    /// <summary>Compute the arctangent of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The arctangent of <paramref name="x"/>.</returns>
     static abstract T Atan(T x);
 
-    /// <summary>Compute the cosine of <paramref name="x"/>: $ \cos(x) $.</summary>
+    /// <summary>Compute the cosine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The cosine of <paramref name="x"/>.</returns>
     static abstract T Cos(T x);
 
-    /// <summary>Compute the sine of <paramref name="x"/>: $ \sin(x) $.</summary>
+    /// <summary>Compute the sine of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The sine of <paramref name="x"/>.</returns>
     static abstract T Sin(T x);
 
-    /// <summary>Compute the tangent of <paramref name="x"/>: $ \tan(x) $.</summary>
+    /// <summary>Compute the tangent of <paramref name="x"/>.</summary>
     /// <param name="x">A value.</param>
     /// <returns>The tangent of <paramref name="x"/>.</returns>
     static abstract T Tan(T x);

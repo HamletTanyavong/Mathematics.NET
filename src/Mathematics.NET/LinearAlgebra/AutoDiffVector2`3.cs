@@ -113,7 +113,7 @@ public record struct AutoDiffVector2<T, U, V>
     // Vector Calculus
     //
 
-    /// <summary>Compute the derivative of a scalar function along a particular direction using forward-mode automatic differentiation: $ \nabla_{\textbf{v}}f(\textbf{x}) $.</summary>
+    /// <summary>Compute the derivative of a scalar function along a particular direction using forward-mode automatic differentiation.</summary>
     /// <param name="v">A direction.</param>
     /// <param name="f">A scalar function.</param>
     /// <param name="x">The point at which to compute the directional derivative.</param>
@@ -130,7 +130,7 @@ public record struct AutoDiffVector2<T, U, V>
         return f(seeds[0]).D1 + f(seeds[1]).D1;
     }
 
-    /// <summary>Compute the divergence of a vector field using forward-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
+    /// <summary>Compute the divergence of a vector field using forward-mode automatic differentiation.</summary>
     /// <param name="f1">The first component of the vector field.</param>
     /// <param name="f2">The second component of the vector field.</param>
     /// <param name="x">The point at which to compute the divergence.</param>
@@ -177,7 +177,7 @@ public record struct AutoDiffVector2<T, U, V>
         return result;
     }
 
-    /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation.</summary>
     /// <param name="f1">The first function.</param>
     /// <param name="f2">The second function.</param>
     /// <param name="x">The point at which to compute the Jacobian.</param>
@@ -215,7 +215,7 @@ public record struct AutoDiffVector2<T, U, V>
         return new(f1(seed).D1, f2(seed).D1);
     }
 
-    /// <summary>Compute the Laplacian of a scalar function using forward-mode automatic differentiation:  $ \nabla^2f $.</summary>
+    /// <summary>Compute the Laplacian of a scalar function using forward-mode automatic differentiation.</summary>
     /// <param name="f">A scalar function.</param>
     /// <param name="x">The point at which to compute the gradient.</param>
     /// <returns>The gradient of the scalar function.</returns>

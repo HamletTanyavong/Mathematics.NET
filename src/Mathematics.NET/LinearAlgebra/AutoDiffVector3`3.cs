@@ -130,7 +130,7 @@ public record struct AutoDiffVector3<T, U, V>
     // Vector Calculus
     //
 
-    /// <summary>Compute the curl of a vector field using forward-mode automatic differentiation: $ (\nabla\times\textbf{F})(\textbf{x}) $.</summary>
+    /// <summary>Compute the curl of a vector field using forward-mode automatic differentiation.</summary>
     /// <param name="f1">The first component of the vector field.</param>
     /// <param name="f2">The second component of the vector field.</param>
     /// <param name="f3">The third component of the vector field.</param>
@@ -171,7 +171,7 @@ public record struct AutoDiffVector3<T, U, V>
         return f(seeds[0]).D1 + f(seeds[1]).D1 + f(seeds[2]).D1;
     }
 
-    /// <summary>Compute the divergence of a vector field using forward-mode automatic differentiation: $ (\nabla\cdot\textbf{F})(\textbf{x}) $.</summary>
+    /// <summary>Compute the divergence of a vector field using forward-mode automatic differentiation.</summary>
     /// <param name="f1">The first component of the vector field.</param>
     /// <param name="f2">The second component of the vector field.</param>
     /// <param name="f3">The third component of the vector field.</param>
@@ -223,7 +223,7 @@ public record struct AutoDiffVector3<T, U, V>
         return result;
     }
 
-    /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation: $ \nabla^\text{T}f_i(\textbf{x}) $ for $ i=\left\{1,2,3\right\} $.</summary>
+    /// <summary>Compute the Jacobian of a vector function using forward-mode automatic differentiation.</summary>
     /// <param name="f1">The first function.</param>
     /// <param name="f2">The second function.</param>
     /// <param name="f3">The third function.</param>

@@ -52,7 +52,7 @@ public interface IVector<T, U, V, W>
     /// <summary>Represents zero for the type.</summary>
     static abstract T Zero { get; }
 
-    /// <summary>Compute the $ L^2 $-norm of the vector.</summary>
+    /// <summary>Compute the <c>L^2</c>-norm of the vector.</summary>
     /// <returns>The norm.</returns>
     Real<W> Norm();
 

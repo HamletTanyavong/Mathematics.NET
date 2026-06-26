@@ -217,9 +217,9 @@ public struct Matrix3x3<T, U> : ISquareMatrix<Matrix3x3<T, U>, T, U, U>
     //
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
-    /// <param name="e33">The $ e_{33} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
+    /// <param name="e33">The <c>e_{33}</c> component.</param>
     /// <returns>A diagonal matrix.</returns>
     public static Matrix3x3<T, U> CreateDiagonal(T e11, T e22, T e33)
     {

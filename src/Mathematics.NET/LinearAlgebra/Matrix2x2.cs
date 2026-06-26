@@ -53,10 +53,10 @@ public struct Matrix2x2<T, U> : ISquareMatrix<Matrix2x2<T, U>, T, U, U>
     public Vector2<T, U> X2;
 
     /// <summary>Create a 2x2 matrix given a set of 4 values.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e12">The $ e_{12} $ component.</param>
-    /// <param name="e21">The $ e_{21} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e12">The <c>e_{12}</c> component.</param>
+    /// <param name="e21">The <c>e_{21}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
     public Matrix2x2(T e11, T e12, T e21, T e22)
     {
         X1 = new(e11, e12);
@@ -187,8 +187,8 @@ public struct Matrix2x2<T, U> : ISquareMatrix<Matrix2x2<T, U>, T, U, U>
     //
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
     /// <returns>A diagonal matrix.</returns>
     public static Matrix2x2<T, U> CreateDiagonal(T e11, T e22)
         => new(e11, T.Zero, T.Zero, e22);
