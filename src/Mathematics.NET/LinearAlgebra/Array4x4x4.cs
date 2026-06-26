@@ -149,7 +149,7 @@ public struct Array4x4x4<T, U> : ICubicArray<Array4x4x4<T, U>, T, U, U>
 
     public override string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToDisplayString<T, U, U>(format, provider);
+    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToString<T, U, U>(format, provider);
 
     //
     // Methods

@@ -143,7 +143,7 @@ public struct Array2x2x2x2<T, U> : IHypercubic4DArray<Array2x2x2x2<T, U>, T, U, 
 
     public override string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToDisplayString<T, U, U>(format, provider);
+    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToString<T, U, U>(format, provider);
 
     //
     // Methods

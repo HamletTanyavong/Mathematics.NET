@@ -305,7 +305,7 @@ public static class Extensions
     /// <param name="format">The format to use.</param>
     /// <param name="provider">The provider to use to format the value.</param>
     /// <returns>A string representation of this object.</returns>
-    public static string ToDisplayString<T, U, V>(this ReadOnlySpan<T> readOnlySpan, string? format = null, IFormatProvider? provider = null)
+    public static string ToString<T, U, V>(this ReadOnlySpan<T> readOnlySpan, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T, U, V>
         where U : IBinaryNumber<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
@@ -313,7 +313,7 @@ public static class Extensions
         Span<T> span = new T[readOnlySpan.Length];
         readOnlySpan.CopyTo(span);
 #pragma warning disable EPS06
-        return span.ToDisplayString<T, U, V>(format, provider);
+        return span.ToString<T, U, V>(format, provider);
 #pragma warning restore EPS06
     }
 
@@ -325,7 +325,7 @@ public static class Extensions
     /// <param name="format">The format to use.</param>
     /// <param name="provider">The provider to use to format the value.</param>
     /// <returns>A string representation of this object.</returns>
-    public static string ToDisplayString<T, U, V>(this Span<T> span, string? format = null, IFormatProvider? provider = null)
+    public static string ToString<T, U, V>(this Span<T> span, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T, U, V>
         where U : IBinaryNumber<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
@@ -362,7 +362,7 @@ public static class Extensions
     /// <param name="format">The format to use.</param>
     /// <param name="provider">The provider to use to format the value.</param>
     /// <returns>A string representation of this object.</returns>
-    public static string ToDisplayString<T, U, V>(this ReadOnlySpan2D<T> readOnlySpan2D, string? format = null, IFormatProvider? provider = null)
+    public static string ToString<T, U, V>(this ReadOnlySpan2D<T> readOnlySpan2D, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T, U, V>
         where U : IBinaryNumber<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
@@ -370,7 +370,7 @@ public static class Extensions
         Span2D<T> span = new T[readOnlySpan2D.Height, readOnlySpan2D.Width];
         readOnlySpan2D.CopyTo(span);
 #pragma warning disable EPS06
-        return span.ToDisplayString<T, U, V>(format, provider);
+        return span.ToString<T, U, V>(format, provider);
 #pragma warning restore EPS06
     }
 
@@ -382,7 +382,7 @@ public static class Extensions
     /// <param name="format">The format to use.</param>
     /// <param name="provider">The provider to use to format the value.</param>
     /// <returns>A string representation of this object.</returns>
-    public static string ToDisplayString<T, U, V>(this Span2D<T> span2D, string? format = null, IFormatProvider? provider = null)
+    public static string ToString<T, U, V>(this Span2D<T> span2D, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T, U, V>
         where U : IBinaryNumber<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
@@ -428,7 +428,7 @@ public static class Extensions
     /// <param name="format">The format to use.</param>
     /// <param name="provider">The provider to use to format the value.</param>
     /// <returns>A string representation of this object.</returns>
-    public static string ToDisplayString<T, U, V>(this T[,,] array, string? format = null, IFormatProvider? provider = null)
+    public static string ToString<T, U, V>(this T[,,] array, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T, U, V>
         where U : IBinaryNumber<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
@@ -483,7 +483,7 @@ public static class Extensions
     /// <param name="format">The format to use.</param>
     /// <param name="provider">The provider to use to format the value.</param>
     /// <returns>A string representation of this object.</returns>
-    public static string ToDisplayString<T, U, V>(this T[,,,] array, string? format = null, IFormatProvider? provider = null)
+    public static string ToString<T, U, V>(this T[,,,] array, string? format = null, IFormatProvider? provider = null)
         where T : IComplex<T, U, V>
         where U : IBinaryNumber<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>

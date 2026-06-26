@@ -209,7 +209,7 @@ public struct Matrix3x3<T, U> : ISquareMatrix<Matrix3x3<T, U>, T, U, U>
 
     public string ToString(string? format, IFormatProvider? provider)
 #pragma warning disable EPS06
-        => this.AsSpan2D().ToDisplayString<T, U, U>();
+        => this.AsSpan2D().ToString<T, U, U>();
 #pragma warning restore EPS06
 
     //

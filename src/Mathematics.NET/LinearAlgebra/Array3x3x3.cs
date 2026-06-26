@@ -144,7 +144,7 @@ public struct Array3x3x3<T, U> : ICubicArray<Array3x3x3<T, U>, T, U, U>
 
     public override string ToString() => ToString(null, null);
 
-    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToDisplayString<T, U, U>(format, provider);
+    public string ToString(string? format, IFormatProvider? provider) => ToArray().ToString<T, U, U>(format, provider);
 
     //
     // Methods
