@@ -102,6 +102,7 @@ internal static class BinaryFloatingPointExtensionsIeee754
         where T : IBinaryFloatingPointIeee754<T>
     {
         public static T DblMinPositive => T.CreateChecked(Precision.DblMinPositive);
+        public static T FltMinPositive => T.CreateChecked(Precision.FltMinPositive);
 
         public static T Half => T.CreateChecked(0.5);
         public static T OneAndHalf => T.CreateChecked(1.5);

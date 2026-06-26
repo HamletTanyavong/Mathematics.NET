@@ -298,8 +298,20 @@ public struct Matrix4x4<T, U> : ISquareMatrix<Matrix4x4<T, U>, T, U, U>
         T det = a * a11 + b * a12 + c * a13 + d * a14;
 
         Matrix4x4<T, U> result;
-        if (T.Abs(det) < IBinaryFloatingPointIeee754<U>.DblMinPositive)
-            return NaM;
+
+        switch (typeof(U))
+        {
+            case var t when t == typeof(float):
+                if (T.Abs(det) < IBinaryFloatingPointIeee754<U>.FltMinPositive)
+                    return NaM;
+                break;
+            case var t when t == typeof(double):
+                if (T.Abs(det) < IBinaryFloatingPointIeee754<U>.DblMinPositive)
+                    return NaM;
+                break;
+            default:
+                break;
+        }
         T invDet = T.One / det;
 
         result.X1.X1 = a11 * invDet;
@@ -369,10 +381,12 @@ public struct Matrix4x4<T, U> : ISquareMatrix<Matrix4x4<T, U>, T, U, U>
                         var x3 = X3.AsVector128OfSingle();
                         var x4 = X4.AsVector128OfSingle();
 
+#pragma warning disable IDE0002
                         var l12 = Avx.UnpackLow(x1, x2);
                         var l34 = Avx.UnpackLow(x3, x4);
                         var u12 = Avx.UnpackHigh(x1, x2);
                         var u34 = Avx.UnpackHigh(x3, x4);
+#pragma warning restore IDE0002
 
                         result.X1 = l12.WithUpper(l34.GetLower()).AsVector4FromSingle<T, U>();
                         result.X2 = u12.WithUpper(u34.GetLower()).AsVector4FromSingle<T, U>();
