@@ -25,11 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.DifferentialGeometry;
+namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
 /// <summary>Defines support for index names.</summary>
 public interface IIndexName
 {
     /// <summary>Get a string representation of this index name.</summary>
-    static abstract string DisplayString { get; }
+    static abstract string Name { get; }
 }

@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 
@@ -37,48 +37,48 @@ public static class DifGeoTestHelpers;
 
 public readonly struct PIN : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.Name"/>
     public const string DisplayString = "TestIndex";
 
-    static string IIndexName.DisplayString => DisplayString;
+    static string IIndexName.Name => DisplayString;
 }
 
 public readonly struct Alpha : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.Name"/>
     public const string DisplayString = nameof(Alpha);
 
-    static string IIndexName.DisplayString => DisplayString;
+    static string IIndexName.Name => DisplayString;
 }
 
 public readonly struct Beta : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.Name"/>
     public const string DisplayString = nameof(Beta);
 
-    static string IIndexName.DisplayString => DisplayString;
+    static string IIndexName.Name => DisplayString;
 }
 
 public readonly struct Gamma : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.Name"/>
     public const string DisplayString = nameof(Gamma);
 
-    static string IIndexName.DisplayString => DisplayString;
+    static string IIndexName.Name => DisplayString;
 }
 
 public readonly struct Delta : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.Name"/>
     public const string DisplayString = nameof(Delta);
 
-    static string IIndexName.DisplayString => DisplayString;
+    static string IIndexName.Name => DisplayString;
 }
 
 public readonly struct Epsilon : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
+    /// <inheritdoc cref="IIndexName.Name"/>
     public const string DisplayString = nameof(Epsilon);
 
-    static string IIndexName.DisplayString => DisplayString;
+    static string IIndexName.Name => DisplayString;
 }

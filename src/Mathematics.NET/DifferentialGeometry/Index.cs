@@ -44,5 +44,5 @@ public readonly struct Index<TIP, TIN> : IIndex
 
     public override readonly string ToString() => ToString(null, null);
 
-    public readonly string ToString(string? format, IFormatProvider? provider) => $"{TIP.DisplayString} {TIN.DisplayString}";
+    public readonly string ToString(string? format, IFormatProvider? provider) => $"{TIP.Name} {TIN.Name}";
 }

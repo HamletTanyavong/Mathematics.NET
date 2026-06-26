@@ -31,5 +31,5 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 public interface IIndexPosition
 {
     /// <summary>Get a string representation of the index position.</summary>
-    static abstract string DisplayString { get; }
+    static abstract string Name { get; }
 }

@@ -25,11 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 
 public readonly struct Gamma : IIndexName
 {
-    public static string DisplayString => "Gamma";
+    public static string Name => "Gamma";
 }

@@ -32,8 +32,8 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents a lower index position.</summary>
 public readonly struct Lower : IIndexPosition
 {
-    /// <inheritdoc cref="IIndexPosition.DisplayString"/>
+    /// <inheritdoc cref="IIndexPosition.Name"/>
     public const string DisplayString = nameof(Lower);
 
-    static string IIndexPosition.DisplayString => DisplayString;
+    static string IIndexPosition.Name => DisplayString;
 }
