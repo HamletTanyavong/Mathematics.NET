@@ -78,12 +78,12 @@ public interface IComputeService : IDisposable
     /// <returns>A new matrix.</returns>
     ReadOnlySpan2D<Complex<double>> CompMatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Complex<double>> left, ReadOnlySpan2D<Complex<double>> right);
 
-    /// <inheritdoc cref="CompMatMul(Device, WorkSize2D, WorkSize2D, ReadOnlySpan2D{Complex}, ReadOnlySpan2D{Complex})"/>
+    /// <inheritdoc cref="CompMatMul(Device, WorkSize2D, WorkSize2D, ReadOnlySpan2D{Complex{double}}, ReadOnlySpan2D{Complex{double}})"/>
     ReadOnlySpan2D<Real<double>> MatMul(Device device, WorkSize2D globalWorkSize, WorkSize2D localWorkSize, ReadOnlySpan2D<Real<double>> left, ReadOnlySpan2D<Real<double>> right);
 
-    /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, Span{Complex}, in Complex)"/>
+    /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, Span{Complex{double}}, in Complex{double})"/>
     void VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Real<double>> vector, in Real<double> scalar);
 
-    /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, ReadOnlySpan{Complex}, in Complex)"/>
+    /// <inheritdoc cref="CompVecMulScalar(Device, nuint, nuint, ReadOnlySpan{Complex{double}}, in Complex{double})"/>
     ReadOnlySpan<Real<double>> VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, ReadOnlySpan<Real<double>> vector, Real<double> scalar);
 }
