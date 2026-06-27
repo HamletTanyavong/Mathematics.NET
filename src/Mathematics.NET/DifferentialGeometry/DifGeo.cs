@@ -2350,7 +2350,7 @@ public static partial class DifGeo
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    christoffel[k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                    christoffel[k, i, j] = TB.CreateSaturating(0.5) * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
                 }
             }
         }
@@ -2378,7 +2378,7 @@ public static partial class DifGeo
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    christoffel[k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                    christoffel[k, i, j] = TB.CreateSaturating(0.5) * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
                 }
             }
         }
@@ -2406,7 +2406,7 @@ public static partial class DifGeo
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    christoffel[k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                    christoffel[k, i, j] = TB.CreateSaturating(0.5) * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
                 }
             }
         }
@@ -2523,7 +2523,7 @@ public static partial class DifGeo
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    christoffel[k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                    christoffel[k, i, j] = TB.CreateSaturating(0.5) * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
                 }
             }
         }
@@ -2552,7 +2552,7 @@ public static partial class DifGeo
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    christoffel[k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                    christoffel[k, i, j] = TB.CreateSaturating(0.5) * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
                 }
             }
         }
@@ -2581,7 +2581,7 @@ public static partial class DifGeo
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    christoffel[k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
+                    christoffel[k, i, j] = TB.CreateSaturating(0.5) * (derivative[j, k, i] + derivative[i, k, j] - derivative[k, i, j]);
                 }
             }
         }
@@ -2704,7 +2704,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 2; j++)
                     {
-                        derivative[m, k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                        derivative[m, k, i, j] = TB.CreateSaturating(0.5) * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -2735,7 +2735,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        derivative[m, k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                        derivative[m, k, i, j] = TB.CreateSaturating(0.5) * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -2766,7 +2766,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 4; j++)
                     {
-                        derivative[m, k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                        derivative[m, k, i, j] = TB.CreateSaturating(0.5) * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -2930,7 +2930,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 2; j++)
                     {
-                        derivative[m, k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                        derivative[m, k, i, j] = TB.CreateSaturating(0.5) * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -2962,7 +2962,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        derivative[m, k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                        derivative[m, k, i, j] = TB.CreateSaturating(0.5) * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }
@@ -2994,7 +2994,7 @@ public static partial class DifGeo
                 {
                     for (int j = 0; j < 4; j++)
                     {
-                        derivative[m, k, i, j] = IBinaryFloatingPointIeee754<TB>.Half * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
+                        derivative[m, k, i, j] = TB.CreateSaturating(0.5) * (d2Metric[m, j, k, i] + d2Metric[m, i, k, j] - d2Metric[m, k, i, j]);
                     }
                 }
             }

@@ -49,10 +49,10 @@ public sealed class RungeKutta4<T, U>(Func<T, T, T> function)
         public void Invoke(ref T value)
         {
             var k1 = _function(_time, value);
-            var k2 = _function(_time + IBinaryFloatingPointIeee754<U>.Half * _dt, value + IBinaryFloatingPointIeee754<U>.Half * k1 * _dt);
-            var k3 = _function(_time + IBinaryFloatingPointIeee754<U>.Half * _dt, value + IBinaryFloatingPointIeee754<U>.Half * k2 * _dt);
+            var k2 = _function(_time + U.CreateSaturating(0.5) * _dt, value + U.CreateSaturating(0.5) * k1 * _dt);
+            var k3 = _function(_time + U.CreateSaturating(0.5) * _dt, value + U.CreateSaturating(0.5) * k2 * _dt);
             var k4 = _function(_time + _dt, value + k3 * _dt);
-            value += _dt / IBinaryFloatingPointIeee754<U>.Six * (k1 + IBinaryFloatingPointIeee754<U>.Two * (k2 + k3) + k4);
+            value += _dt / U.CreateSaturating(6) * (k1 + U.CreateSaturating(2) * (k2 + k3) + k4);
         }
     }
 
@@ -69,10 +69,10 @@ public sealed class RungeKutta4<T, U>(Func<T, T, T> function)
         {
             ref var value = ref system[i];
             var k1 = _function(time, value);
-            var k2 = _function(time + IBinaryFloatingPointIeee754<U>.Half * dt, value + IBinaryFloatingPointIeee754<U>.Half * k1 * dt);
-            var k3 = _function(time + IBinaryFloatingPointIeee754<U>.Half * dt, value + IBinaryFloatingPointIeee754<U>.Half * k2 * dt);
+            var k2 = _function(time + U.CreateSaturating(0.5) * dt, value + U.CreateSaturating(0.5) * k1 * dt);
+            var k3 = _function(time + U.CreateSaturating(0.5) * dt, value + U.CreateSaturating(0.5) * k2 * dt);
             var k4 = _function(time + dt, value + k3 * dt);
-            value += dt / IBinaryFloatingPointIeee754<U>.Six * (k1 + IBinaryFloatingPointIeee754<U>.Two * (k2 + k3) + k4);
+            value += dt / U.CreateSaturating(6) * (k1 + U.CreateSaturating(2) * (k2 + k3) + k4);
         }
         state.Time += dt;
     }

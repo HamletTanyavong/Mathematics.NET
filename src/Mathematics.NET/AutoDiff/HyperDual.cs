@@ -222,7 +222,7 @@ public readonly struct HyperDual<T, U>(Dual<T, U> d0, Dual<T, U> d1) : IDual<Hyp
     public static HyperDual<T, U> Cbrt(HyperDual<T, U> x)
     {
         var cbrt = Dual<T, U>.Cbrt(x._d0);
-        return new(cbrt, x._d1 / (IBinaryFloatingPointIeee754<U>.Three * cbrt * cbrt));
+        return new(cbrt, x._d1 / (U.CreateSaturating(3) * cbrt * cbrt));
     }
 
     public static HyperDual<T, U> Root(HyperDual<T, U> x, HyperDual<T, U> n) => Exp(Ln(x) / n);
@@ -230,7 +230,7 @@ public readonly struct HyperDual<T, U>(Dual<T, U> d0, Dual<T, U> d1) : IDual<Hyp
     public static HyperDual<T, U> Sqrt(HyperDual<T, U> x)
     {
         var sqrt = Dual<T, U>.Sqrt(x._d0);
-        return new(sqrt, IBinaryFloatingPointIeee754<U>.Half * x._d1 / sqrt);
+        return new(sqrt, U.CreateSaturating(0.5) * x._d1 / sqrt);
     }
 
     // Trigonometric functions

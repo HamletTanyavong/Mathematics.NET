@@ -52,10 +52,10 @@ public sealed class RungeKutta4<TV, TN, TB>(Func<TN, TV, TV> function)
         public void Invoke(ref TV value)
         {
             var k1 = _function(_time, value);
-            var k2 = _function(_time + IBinaryFloatingPointIeee754<TB>.Half * _dt, value + IBinaryFloatingPointIeee754<TB>.Half * k1 * _dt);
-            var k3 = _function(_time + IBinaryFloatingPointIeee754<TB>.Half * _dt, value + IBinaryFloatingPointIeee754<TB>.Half * k2 * _dt);
+            var k2 = _function(_time + TB.CreateSaturating(0.5) * _dt, value + TB.CreateSaturating(0.5) * k1 * _dt);
+            var k3 = _function(_time + TB.CreateSaturating(0.5) * _dt, value + TB.CreateSaturating(0.5) * k2 * _dt);
             var k4 = _function(_time + _dt, value + k3 * _dt);
-            value += _dt / IBinaryFloatingPointIeee754<TB>.Six * (k1 + IBinaryFloatingPointIeee754<TB>.Two * (k2 + k3) + k4);
+            value += _dt / TB.CreateSaturating(6) * (k1 + TB.CreateSaturating(2) * (k2 + k3) + k4);
         }
     }
 
@@ -70,10 +70,10 @@ public sealed class RungeKutta4<TV, TN, TB>(Func<TN, TV, TV> function)
         {
             ref var value = ref system[i];
             var k1 = _function(time, value);
-            var k2 = _function(time + IBinaryFloatingPointIeee754<TB>.Half * dt, value + IBinaryFloatingPointIeee754<TB>.Half * k1 * dt);
-            var k3 = _function(time + IBinaryFloatingPointIeee754<TB>.Half * dt, value + IBinaryFloatingPointIeee754<TB>.Half * k2 * dt);
+            var k2 = _function(time + TB.CreateSaturating(0.5) * dt, value + TB.CreateSaturating(0.5) * k1 * dt);
+            var k3 = _function(time + TB.CreateSaturating(0.5) * dt, value + TB.CreateSaturating(0.5) * k2 * dt);
             var k4 = _function(time + dt, value + k3 * dt);
-            value += dt / IBinaryFloatingPointIeee754<TB>.Six * (k1 + IBinaryFloatingPointIeee754<TB>.Two * (k2 + k3) + k4);
+            value += dt / TB.CreateSaturating(6) * (k1 + TB.CreateSaturating(2) * (k2 + k3) + k4);
         }
         state.Time += dt;
     }

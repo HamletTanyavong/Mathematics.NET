@@ -302,11 +302,11 @@ public struct Matrix4x4<T, U> : ISquareMatrix<Matrix4x4<T, U>, T, U, U>
         switch (typeof(U))
         {
             case var t when t == typeof(float):
-                if (T.Abs(det) < IBinaryFloatingPointIeee754<U>.FltMinPositive)
+                if (T.Abs(det) < U.CreateSaturating(Precision.FltMinPositive))
                     return NaM;
                 break;
             case var t when t == typeof(double):
-                if (T.Abs(det) < IBinaryFloatingPointIeee754<U>.DblMinPositive)
+                if (T.Abs(det) < U.CreateSaturating(Precision.DblMinPositive))
                     return NaM;
                 break;
             default:

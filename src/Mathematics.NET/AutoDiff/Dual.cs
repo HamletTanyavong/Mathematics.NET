@@ -195,7 +195,7 @@ public readonly struct Dual<T, U>(T d0, T d1) : IDual<Dual<T, U>, T, U, U>
     public static Dual<T, U> Cbrt(Dual<T, U> x)
     {
         var cbrt = T.Cbrt(x._d0);
-        return new(cbrt, x._d1 / (IBinaryFloatingPointIeee754<U>.Three * cbrt * cbrt));
+        return new(cbrt, x._d1 / (U.CreateSaturating(3) * cbrt * cbrt));
     }
 
     public static Dual<T, U> Root(Dual<T, U> x, Dual<T, U> n) => Exp(Ln(x) / n);
@@ -203,7 +203,7 @@ public readonly struct Dual<T, U>(T d0, T d1) : IDual<Dual<T, U>, T, U, U>
     public static Dual<T, U> Sqrt(Dual<T, U> x)
     {
         var sqrt = T.Sqrt(x._d0);
-        return new(sqrt, IBinaryFloatingPointIeee754<U>.Half * x._d1 / sqrt);
+        return new(sqrt, U.CreateSaturating(0.5) * x._d1 / sqrt);
     }
 
     // Trigonometric functions

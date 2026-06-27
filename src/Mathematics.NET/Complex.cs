@@ -44,7 +44,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
     where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
 {
     private static readonly Complex<T> s_im = new(Real<T>.Zero, Real<T>.One);
-    private static readonly Complex<T> s_imOverTwo = new(Real<T>.Zero, Real<T>.One / IBinaryFloatingPointIeee754<T>.Two);
+    private static readonly Complex<T> s_imOverTwo = new(Real<T>.Zero, Real<T>.One / T.CreateSaturating(2));
 
     public static readonly Complex<T> Zero = T.Zero;
     public static readonly Complex<T> One = T.One;
@@ -523,7 +523,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
         if (value._imaginary == Real<T>.Zero)
             throw new OverflowException();
 
-        result = U.CreateChecked(value._real.AsBackingType());
+        result = U.CreateChecked((T)value._real);
         return true;
     }
 
@@ -563,7 +563,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
 
     public static Complex<T> Asinh(Complex<T> z) => Ln(z + Sqrt(z * z + One));
 
-    public static Complex<T> Atanh(Complex<T> z) => T.CreateChecked(0.5) * Ln((One + z) / (One - z));
+    public static Complex<T> Atanh(Complex<T> z) => T.CreateSaturating(0.5) * Ln((One + z) / (One - z));
 
     public static Complex<T> Cosh(Complex<T> z)
         => new(Real<T>.Cosh(z._real) * Real<T>.Cos(z._imaginary), Real<T>.Sinh(z._real) * Real<T>.Sin(z._imaginary));
@@ -589,17 +589,17 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
 
     // Root functions.
 
-    public static Complex<T> Cbrt(Complex<T> z) => Exp(Ln(z) / IBinaryFloatingPointIeee754<T>.Three);
+    public static Complex<T> Cbrt(Complex<T> z) => Exp(Ln(z) / T.CreateSaturating(3));
 
     public static Complex<T> Root(Complex<T> z, Complex<T> w) => Exp(Ln(z) / w);
 
-    public static Complex<T> Sqrt(Complex<T> z) => Exp(IBinaryFloatingPointIeee754<T>.Half * Ln(z));
+    public static Complex<T> Sqrt(Complex<T> z) => Exp(T.CreateSaturating(0.5) * Ln(z));
 
     // Trigonometric functions.
 
     public static Complex<T> Acos(Complex<T> z)
     {
-        AsinInternal(T.Abs(z._real.AsBackingType()), T.Abs(z._imaginary.AsBackingType()), out T b, out T bPrime, out T v);
+        AsinInternal(T.Abs((T)z._real), T.Abs((T)z._imaginary), out T b, out T bPrime, out T v);
 
         T u;
         if (bPrime < T.Zero)
@@ -608,7 +608,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
             u = T.Atan(T.One / bPrime);
 
         if (z._real < T.Zero)
-            u = T.CreateChecked(Constants.Pi) - u;
+            u = T.Pi - u;
         if (z._imaginary > T.Zero)
             v = -v;
 
@@ -617,7 +617,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
 
     public static Complex<T> Asin(Complex<T> z)
     {
-        AsinInternal(T.Abs(z._real.AsBackingType()), T.Abs(z._imaginary.AsBackingType()), out T b, out T bPrime, out T v);
+        AsinInternal(T.Abs((T)z._real), T.Abs((T)z._imaginary), out T b, out T bPrime, out T v);
 
         T u;
         if (bPrime < T.Zero)
@@ -659,26 +659,26 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
                 big = x;
             }
             var ratio = small / big;
-            v = T.CreateChecked(Constants.Ln2) + T.Log(big) + T.CreateChecked(0.5) * Log1P(ratio * ratio);
+            v = T.CreateSaturating(Constants.Ln2) + T.Log(big) + T.CreateSaturating(0.5) * Log1P(ratio * ratio);
         }
         else
         {
             var r = Hypot(x + T.One, y);
             var s = Hypot(x - T.One, y);
 
-            var a = (r + s) * T.CreateChecked(0.5);
+            var a = (r + s) * T.CreateSaturating(0.5);
             b = x / a;
 
-            if (b > T.CreateChecked(0.75))
+            if (b > T.CreateSaturating(0.75))
             {
                 if (x <= T.One)
                 {
-                    var amx = (y * y / (r + (x + T.One)) + (s + (T.One - x))) * T.CreateChecked(0.5);
+                    var amx = (y * y / (r + (x + T.One)) + (s + (T.One - x))) * T.CreateSaturating(0.5);
                     bPrime = x / T.Sqrt((a + x) * amx);
                 }
                 else
                 {
-                    var t = (T.One / (r + (x + T.One)) + T.One / (s + (x - T.One))) * T.CreateChecked(0.5);
+                    var t = (T.One / (r + (x + T.One)) + T.One / (s + (x - T.One))) * T.CreateSaturating(0.5);
                     bPrime = x / y / T.Sqrt((a + x) * t);
                 }
             }
@@ -687,17 +687,17 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
                 bPrime = -T.One;
             }
 
-            if (a < T.CreateChecked(1.5))
+            if (a < T.CreateSaturating(1.5))
             {
                 if (x < T.One)
                 {
-                    var t = (T.One / (r + (x + T.One)) + T.One / (s + (T.One - x))) * T.CreateChecked(0.5);
+                    var t = (T.One / (r + (x + T.One)) + T.One / (s + (T.One - x))) * T.CreateSaturating(0.5);
                     var am1 = y * y * t;
                     v = Log1P(am1 + y * T.Sqrt(t * (a + T.One)));
                 }
                 else
                 {
-                    var am1 = (y * y / (r + (x + T.One)) + (s + (x - T.One))) * T.CreateChecked(0.5);
+                    var am1 = (y * y / (r + (x + T.One)) + (s + (x - T.One))) * T.CreateSaturating(0.5);
                     v = Log1P(am1 + T.Sqrt(am1 * (a + T.One)));
                 }
             }
@@ -713,7 +713,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
         var xp1 = T.One + x;
         if (xp1 == T.One)
             return x;
-        else if (x < T.CreateChecked(0.75))
+        else if (x < T.CreateSaturating(0.75))
             return x * T.Log(xp1) / (xp1 - T.One);
         else
             return T.Log(xp1);
@@ -725,8 +725,8 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
     {
         Real<T> p = Real<T>.Exp(z._imaginary);
         Real<T> q = Real<T>.One / p;
-        Real<T> sinh = (p - q) / IBinaryFloatingPointIeee754<T>.Two;
-        Real<T> cosh = (p + q) / IBinaryFloatingPointIeee754<T>.Two;
+        Real<T> sinh = (p - q) / T.CreateSaturating(2);
+        Real<T> cosh = (p + q) / T.CreateSaturating(2);
         return new(Real<T>.Cos(z._real) * cosh, -Real<T>.Sin(z._real) * sinh);
     }
 
@@ -734,21 +734,21 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
     {
         Real<T> p = Real<T>.Exp(z._imaginary);
         Real<T> q = Real<T>.One / p;
-        Real<T> sinh = (p - q) / IBinaryFloatingPointIeee754<T>.Two;
-        Real<T> cosh = (p + q) / IBinaryFloatingPointIeee754<T>.Two;
+        Real<T> sinh = (p - q) / T.CreateSaturating(2);
+        Real<T> cosh = (p + q) / T.CreateSaturating(2);
         return new(Real<T>.Sin(z._real) * cosh, Real<T>.Cos(z._real) * sinh);
     }
 
     public static Complex<T> Tan(Complex<T> z)
     {
-        Real<T> x2 = IBinaryFloatingPointIeee754<T>.Two * z._real;
-        Real<T> y2 = IBinaryFloatingPointIeee754<T>.Two * z._imaginary;
+        Real<T> x2 = T.CreateSaturating(2) * z._real;
+        Real<T> y2 = T.CreateSaturating(2) * z._imaginary;
         Real<T> p = Real<T>.Exp(y2);
         Real<T> q = Real<T>.One / p;
-        Real<T> cosh = (p + q) / IBinaryFloatingPointIeee754<T>.Two;
-        if (Real<T>.Abs(z._imaginary) <= IBinaryFloatingPointIeee754<T>.Four)
+        Real<T> cosh = (p + q) / T.CreateSaturating(2);
+        if (Real<T>.Abs(z._imaginary) <= T.CreateSaturating(4))
         {
-            Real<T> sinh = (p - q) / IBinaryFloatingPointIeee754<T>.Two;
+            Real<T> sinh = (p - q) / T.CreateSaturating(2);
             Real<T> u = Real<T>.Cos(x2) + cosh;
             return new(Real<T>.Sin(x2) / u, sinh / u);
         }

@@ -498,12 +498,12 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
             // We are comparing floats here, but it is okay in just this case.
             while (x != U.Floor(x))
             {
-                x *= IBinaryFloatingPointIeee754<U>.Ten;
+                x *= U.CreateSaturating(10);
                 n++;
             }
 
             T num = T.CreateChecked(x);
-            T den = T.CreateChecked(U.Pow(IBinaryFloatingPointIeee754<U>.Ten, n));
+            T den = T.CreateChecked(U.Pow(U.CreateSaturating(10), n));
             T gcd = GCD(num, den);
 
             return new(num / gcd, den / gcd);
@@ -637,7 +637,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
                     n--;
                 }
                 x *= x;
-                n /= IBinaryInteger<T>.Two;
+                n /= T.CreateSaturating(2);
             }
             return x * y;
         }

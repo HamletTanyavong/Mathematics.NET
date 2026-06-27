@@ -642,7 +642,7 @@ public record class GradientTape<T, U> : ITape<T, U>
         var cbrt = T.Cbrt(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(T.One / (IBinaryFloatingPointIeee754<U>.Three * cbrt * cbrt), x.Index, _nodes.Count));
+            _nodes.Add(new(T.One / (U.CreateSaturating(3) * cbrt * cbrt), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, cbrt);
         }
         return new(_nodes.Count, cbrt);
@@ -664,7 +664,7 @@ public record class GradientTape<T, U> : ITape<T, U>
         var sqrt = T.Sqrt(x.Value);
         if (_isTracking)
         {
-            _nodes.Add(new(IBinaryFloatingPointIeee754<U>.Half / sqrt, x.Index, _nodes.Count));
+            _nodes.Add(new(U.CreateSaturating(0.5) / sqrt, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, sqrt);
         }
         return new(_nodes.Count, sqrt);
