@@ -55,49 +55,49 @@ public readonly struct Real<T>(T real)
     public static readonly Real<T> PositiveInfinity = T.PositiveInfinity;
 
     /// <inheritdoc cref="Constants.E" />
-    public static readonly Real<T> E = T.CreateChecked(Constants.E);
+    public static readonly Real<T> E = T.CreateSaturating(Constants.E);
 
     /// <inheritdoc cref="Constants.Pi" />
-    public static readonly Real<T> Pi = T.CreateChecked(Constants.Pi);
+    public static readonly Real<T> Pi = T.CreateSaturating(Constants.Pi);
 
     /// <inheritdoc cref="Constants.PiOverTwo" />
-    public static readonly Real<T> PiOverTwo = T.CreateChecked(Constants.PiOverTwo);
+    public static readonly Real<T> PiOverTwo = T.CreateSaturating(Constants.PiOverTwo);
 
     /// <inheritdoc cref="Constants.PiSquared" />
-    public static readonly Real<T> PiSquared = T.CreateChecked(Constants.PiSquared);
+    public static readonly Real<T> PiSquared = T.CreateSaturating(Constants.PiSquared);
 
     /// <inheritdoc cref="Constants.Tau" />
-    public static readonly Real<T> Tau = T.CreateChecked(Constants.Tau);
+    public static readonly Real<T> Tau = T.CreateSaturating(Constants.Tau);
 
     /// <inheritdoc cref="Constants.EulerMascheroni" />
-    public static readonly Real<T> EulerMascheroni = T.CreateChecked(Constants.EulerMascheroni);
+    public static readonly Real<T> EulerMascheroni = T.CreateSaturating(Constants.EulerMascheroni);
 
     /// <inheritdoc cref="Constants.GoldenRatio" />
-    public static readonly Real<T> GoldenRatio = T.CreateChecked(Constants.GoldenRatio);
+    public static readonly Real<T> GoldenRatio = T.CreateSaturating(Constants.GoldenRatio);
 
     /// <inheritdoc cref="Constants.Ln2" />
-    public static readonly Real<T> Ln2 = T.CreateChecked(Constants.Ln2);
+    public static readonly Real<T> Ln2 = T.CreateSaturating(Constants.Ln2);
 
     /// <inheritdoc cref="Constants.Ln10" />
-    public static readonly Real<T> Ln10 = T.CreateChecked(Constants.Ln10);
+    public static readonly Real<T> Ln10 = T.CreateSaturating(Constants.Ln10);
 
     /// <inheritdoc cref="Constants.Sqrt2" />
-    public static readonly Real<T> Sqrt2 = T.CreateChecked(Constants.Sqrt2);
+    public static readonly Real<T> Sqrt2 = T.CreateSaturating(Constants.Sqrt2);
 
     /// <inheritdoc cref="Constants.Sqrt3" />
-    public static readonly Real<T> Sqrt3 = T.CreateChecked(Constants.Sqrt3);
+    public static readonly Real<T> Sqrt3 = T.CreateSaturating(Constants.Sqrt3);
 
     /// <inheritdoc cref="Constants.Sqrt5" />
-    public static readonly Real<T> Sqrt5 = T.CreateChecked(Constants.Sqrt5);
+    public static readonly Real<T> Sqrt5 = T.CreateSaturating(Constants.Sqrt5);
 
     /// <inheritdoc cref="Constants.ZetaOf2" />
-    public static readonly Real<T> ZetaOf2 = T.CreateChecked(Constants.ZetaOf2);
+    public static readonly Real<T> ZetaOf2 = T.CreateSaturating(Constants.ZetaOf2);
 
     /// <inheritdoc cref="Constants.ZetaOf3" />
-    public static readonly Real<T> ZetaOf3 = T.CreateChecked(Constants.ZetaOf3);
+    public static readonly Real<T> ZetaOf3 = T.CreateSaturating(Constants.ZetaOf3);
 
     /// <inheritdoc cref="Constants.ZetaOf4" />
-    public static readonly Real<T> ZetaOf4 = T.CreateChecked(Constants.ZetaOf4);
+    public static readonly Real<T> ZetaOf4 = T.CreateSaturating(Constants.ZetaOf4);
 
     private readonly T _value = real;
 

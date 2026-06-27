@@ -633,6 +633,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
         return new(u, v);
     }
 
+    // This method will not work well for floats.
     private static void AsinInternal(T x, T y, out T b, out T bPrime, out T v)
     {
         // This is the same method described by Hull, Fairgrieve, and Tang in "Implementing the Complex
@@ -640,7 +641,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
         //
         // https://www.researchgate.net/profile/Ping_Tang3/publication/220493330_Implementing_the_Complex_Arcsine_and_Arccosine_Functions_Using_Exception_Handling/links/55b244b208ae9289a085245d.pdf
 
-        T overflowThreshold = T.CreateChecked(6.70390396497129854e153);
+        T overflowThreshold = T.CreateSaturating(6.70390396497129854e153);
 
         if (x > overflowThreshold || y > overflowThreshold)
         {
