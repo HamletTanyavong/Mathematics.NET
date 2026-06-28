@@ -34,12 +34,12 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor of four variables for use in forward-mode automatic differentiation.</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
 public record struct AutoDiffTensor4<TDN, TN, U, TI>
-    where TDN : IDual<TDN, TN, U, U>
+    where TDN : IDual<TDN, TN, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI : IIndex

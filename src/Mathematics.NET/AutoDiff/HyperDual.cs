@@ -37,7 +37,7 @@ namespace Mathematics.NET.AutoDiff;
 /// <param name="d0">The primal part of a hyper-dual number.</param>
 /// <param name="d1">The tangent part of a hyper-dual number.</param>
 [Serializable, StructLayout(LayoutKind.Sequential)]
-public readonly struct HyperDual<T, U>(Dual<T, U> d0, Dual<T, U> d1) : IDual<HyperDual<T, U>, T, U, U>
+public readonly struct HyperDual<T, U>(Dual<T, U> d0, Dual<T, U> d1) : IDual<HyperDual<T, U>, T, U>
     where T : IComplex<T, U, U>, IDifferentiableFunctions<T>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {

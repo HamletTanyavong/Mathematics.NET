@@ -32,53 +32,51 @@ using Mathematics.NET.Relations;
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Defines support for dual numbers.</summary>
-/// <typeparam name="TDN">The type that implements the interface.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
-/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-public interface IDual<TDN, TN, TB, TR>
-    : IAdditionOperation<TDN, TDN>,
-      IDivisionOperation<TDN, TDN>,
-      IMultiplicationOperation<TDN, TDN>,
-      IUnaryMinusOperation<TDN, TDN>,
-      IUnaryPlusOperation<TDN, TDN>,
-      ISubtractionOperation<TDN, TDN>,
-      IEqualityRelation<TDN, bool>,
-      IEquatable<TDN>,
+/// <typeparam name="T">The type that implements the interface.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IDual<T, U, V>
+    : IAdditionOperation<T, T>,
+      IDivisionOperation<T, T>,
+      IMultiplicationOperation<T, T>,
+      IUnaryMinusOperation<T, T>,
+      IUnaryPlusOperation<T, T>,
+      ISubtractionOperation<T, T>,
+      IEqualityRelation<T, bool>,
+      IEquatable<T>,
       IFormattable,
-      IDifferentiableFunctions<TDN>
-    where TDN : IDual<TDN, TN, TB, TR>
-    where TN : IComplex<TN, TB, TR>, IDifferentiableFunctions<TN>
-    where TB : IBinaryNumber<TB>
-    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
+      IDifferentiableFunctions<T>
+    where T : IDual<T, U, V>
+    where U : IComplex<U, V, V>, IDifferentiableFunctions<U>
+    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
 {
     /// <summary>Represents the primal part of the dual number.</summary>
-    TN D0 { get; }
+    U D0 { get; }
 
     /// <summary>Represents the tangent part of the dual number.</summary>
-    TN D1 { get; }
+    U D1 { get; }
 
     /// <summary>Create an instance of the type with a specified value.</summary>
     /// <param name="value">A value.</param>
     /// <returns>An instance of the type.</returns>
-    static abstract TDN CreateVariable(TN value);
+    static abstract T CreateVariable(U value);
 
     /// <summary>Create an instance of the type with a specified value and seed.</summary>
     /// <param name="value">A value.</param>
     /// <param name="seed">A seed.</param>
     /// <returns>An instance of the type.</returns>
-    static abstract TDN CreateVariable(TN value, TN seed);
+    static abstract T CreateVariable(U value, U seed);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    static abstract TDN Pow(TDN x, TN y);
+    static abstract T Pow(T x, U y);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    static abstract TDN Pow(TN x, TDN y);
+    static abstract T Pow(U x, T y);
 
     /// <summary>Create a seeded instance of this type.</summary>
     /// <param name="seed">The seed value.</param>
     /// <returns>A seeded value.</returns>
-    TDN WithSeed(TN seed);
+    T WithSeed(U seed);
 
     //
     // Implicit Operators
@@ -87,10 +85,10 @@ public interface IDual<TDN, TN, TB, TR>
     /// <summary>Convert a number into a dual number.</summary>
     /// <remarks>The tangent parts of the dual number will be zero.</remarks>
     /// <param name="value">A number.</param>
-    static abstract implicit operator TDN(TN value);
+    static abstract implicit operator T(U value);
 
     /// <summary>Convert a backing number into a dual number.</summary>
     /// <remarks>The tangent parts of the dual number will be zero.</remarks>
     /// <param name="value">A number.</param>
-    static abstract implicit operator TDN(TR value);
+    static abstract implicit operator T(V value);
 }

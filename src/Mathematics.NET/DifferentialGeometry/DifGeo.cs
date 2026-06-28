@@ -47,8 +47,8 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -61,7 +61,7 @@ public static partial class DifGeo
         TensorFieldF2<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -87,7 +87,7 @@ public static partial class DifGeo
         TensorFieldF3<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -113,7 +113,7 @@ public static partial class DifGeo
         TensorFieldF4<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -139,7 +139,7 @@ public static partial class DifGeo
         TensorFieldF2<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -165,7 +165,7 @@ public static partial class DifGeo
         TensorFieldF3<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -191,7 +191,7 @@ public static partial class DifGeo
         TensorFieldF4<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -214,8 +214,8 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -230,7 +230,7 @@ public static partial class DifGeo
         TensorFieldF2x2<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -261,7 +261,7 @@ public static partial class DifGeo
         TensorFieldF3x3<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -292,7 +292,7 @@ public static partial class DifGeo
         TensorFieldF4x4<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -323,7 +323,7 @@ public static partial class DifGeo
         TensorFieldF2x2<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -354,7 +354,7 @@ public static partial class DifGeo
         TensorFieldF3x3<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -385,7 +385,7 @@ public static partial class DifGeo
         TensorFieldF4x4<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -414,7 +414,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -599,8 +599,8 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
@@ -613,7 +613,7 @@ public static partial class DifGeo
         MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -633,7 +633,7 @@ public static partial class DifGeo
         MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -653,7 +653,7 @@ public static partial class DifGeo
         MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -673,7 +673,7 @@ public static partial class DifGeo
         MetricTensorFieldF2x2<TDN, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -693,7 +693,7 @@ public static partial class DifGeo
         MetricTensorFieldF3x3<TDN, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -713,7 +713,7 @@ public static partial class DifGeo
         MetricTensorFieldF4x4<TDN, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -731,7 +731,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
@@ -806,7 +806,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
@@ -881,7 +881,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -1100,7 +1100,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -1304,7 +1304,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative of rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
@@ -1533,7 +1533,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -1750,7 +1750,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative or a rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
@@ -1995,8 +1995,8 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute the covariant derivative of a rank-one, contravariant tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2009,7 +2009,7 @@ public static partial class DifGeo
         TensorFieldF2<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2036,7 +2036,7 @@ public static partial class DifGeo
         TensorFieldF3<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2063,7 +2063,7 @@ public static partial class DifGeo
         TensorFieldF4<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2085,8 +2085,8 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the covariant derivative of a rank-one, covariant tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2099,7 +2099,7 @@ public static partial class DifGeo
         TensorFieldF2<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2118,7 +2118,7 @@ public static partial class DifGeo
         TensorFieldF3<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2137,7 +2137,7 @@ public static partial class DifGeo
         TensorFieldF4<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2152,7 +2152,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the covariant derivative of a rank-one, contravariant tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2246,7 +2246,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the covariant derivative of a rank-one, covariant tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2319,8 +2319,8 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2333,7 +2333,7 @@ public static partial class DifGeo
         MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2361,7 +2361,7 @@ public static partial class DifGeo
         MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2389,7 +2389,7 @@ public static partial class DifGeo
         MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2413,8 +2413,8 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2427,7 +2427,7 @@ public static partial class DifGeo
         MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2449,7 +2449,7 @@ public static partial class DifGeo
         MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2471,7 +2471,7 @@ public static partial class DifGeo
         MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2491,7 +2491,7 @@ public static partial class DifGeo
 
     /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2589,7 +2589,7 @@ public static partial class DifGeo
 
     /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2671,7 +2671,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -2774,7 +2774,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -2895,7 +2895,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -3002,7 +3002,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -3131,7 +3131,7 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -3240,7 +3240,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -4574,7 +4574,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of two rank-one tensors.</summary>
     /// <typeparam name="TLR1T">A rank-one tensor.</typeparam>
     /// <typeparam name="TRR1T">A rank-one tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The index of the second tensor.</typeparam>
@@ -4643,7 +4643,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-one tensor and a rank-two tensor.</summary>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
     /// <typeparam name="TR2T">A rank-two tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The first index of the second tensor.</typeparam>
@@ -4731,7 +4731,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-two tensor and a rank-one tensor.</summary>
     /// <typeparam name="TR2T">A rank-two tensor.</typeparam>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The second index of the second tensor.</typeparam>
@@ -4819,7 +4819,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-one tensor and a rank-three tensor.</summary>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
     /// <typeparam name="TR3T">A rank-three tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The first index of the second tensor.</typeparam>
@@ -4920,7 +4920,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-three tensor and a rank-one tensor.</summary>
     /// <typeparam name="TR3T">A rank-three tensor.</typeparam>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The second index of the first tensor.</typeparam>
@@ -5021,7 +5021,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of two rank-two tensors.</summary>
     /// <typeparam name="TLR2T">A rank-two tensors.</typeparam>
     /// <typeparam name="TRR2T">A rank-two tensors.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The second index of the first tensor.</typeparam>

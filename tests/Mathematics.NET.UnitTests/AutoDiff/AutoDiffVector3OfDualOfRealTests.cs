@@ -135,25 +135,25 @@ public sealed class AutoDiffVector3OfDualOfRealTests
     //
 
     private static T F<T, U, V>(AutoDiffVector3<T, U, V> x)
-        where T : IDual<T, U, V, V>
+        where T : IDual<T, U, V>
         where U : IComplex<U, V, V>, IDifferentiableFunctions<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
         => T.Cos(x.X1) / ((x.X1 + x.X2) * T.Sin(x.X3));
 
     private static T FX<T, U, V>(AutoDiffVector3<T, U, V> x)
-        where T : IDual<T, U, V, V>
+        where T : IDual<T, U, V>
         where U : IComplex<U, V, V>, IDifferentiableFunctions<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
         => T.Sin(x.X1) * (T.Cos(x.X2) + T.Sqrt(x.X3));
 
     private static T FY<T, U, V>(AutoDiffVector3<T, U, V> x)
-        where T : IDual<T, U, V, V>
+        where T : IDual<T, U, V>
         where U : IComplex<U, V, V>, IDifferentiableFunctions<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
         => T.Sqrt(x.X1 + x.X2 + x.X3);
 
     private static T FZ<T, U, V>(AutoDiffVector3<T, U, V> x)
-        where T : IDual<T, U, V, V>
+        where T : IDual<T, U, V>
         where U : IComplex<U, V, V>, IDifferentiableFunctions<U>
         where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
         => T.Sinh(T.Exp(x.X1) * x.X2 / x.X3);

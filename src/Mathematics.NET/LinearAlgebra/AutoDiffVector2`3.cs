@@ -34,12 +34,12 @@ using Mathematics.NET.AutoDiff;
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a vector of two dual numbers for use in forward-mode automatic differentiation.</summary>
-/// <typeparam name="T">A type that implements <see cref="IDual{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
 public record struct AutoDiffVector2<T, U, V>
-    where T : IDual<T, U, V, V>
+    where T : IDual<T, U, V>
     where U : IComplex<U, V, V>, IDifferentiableFunctions<U>
     where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
 {

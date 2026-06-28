@@ -33,14 +33,14 @@ using Mathematics.NET.LinearAlgebra;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a 2x2 metric tensor field.</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class MetricTensorFieldF2x2<TDN, TN, U, TPI> : TensorFieldF2x2<TDN, TN, U, Lower, Lower, TPI>
-    where TDN : IDual<TDN, TN, U, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public class MetricTensorFieldF2x2<TDN, TN, TB, TPI> : TensorFieldF2x2<TDN, TN, TB, Lower, Lower, TPI>
+    where TDN : IDual<TDN, TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TPI : IIndex
 {
     /// <summary>Compute the value of the metric tensor at a specific point on the manifold.</summary>
@@ -48,20 +48,20 @@ public class MetricTensorFieldF2x2<TDN, TN, U, TPI> : TensorFieldF2x2<TDN, TN, U
     /// <typeparam name="TI2N">The name of the second index.</typeparam>
     /// <param name="point">A point on the manifold.</param>
     /// <returns>A metric tensor.</returns>
-    public new MetricTensor<Matrix2x2<TN, U>, TN, U, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, U, TPI> point)
+    public new MetricTensor<Matrix2x2<TN, TB>, TN, TB, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, TB, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        Matrix2x2<TN, U> result = new();
+        Matrix2x2<TN, TB> result = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
             {
-                if (_buffer[i][j] is Func<AutoDiffTensor2<TDN, TN, U, TPI>, TDN> function)
+                if (_buffer[i][j] is Func<AutoDiffTensor2<TDN, TN, TB, TPI>, TDN> function)
                     result[i, j] = function(point).D0;
             }
         }
-        return new MetricTensor<Matrix2x2<TN, U>, TN, U, Lower, TI1N, TI2N>(result);
+        return new MetricTensor<Matrix2x2<TN, TB>, TN, TB, Lower, TI1N, TI2N>(result);
     }
 
     /// <summary>Compute the value of the inverse metric tensor at a specific point on the manifold.</summary>
@@ -69,7 +69,7 @@ public class MetricTensorFieldF2x2<TDN, TN, U, TPI> : TensorFieldF2x2<TDN, TN, U
     /// <typeparam name="TI2N">The name of the second index.</typeparam>
     /// <param name="point">A point on the manifold.</param>
     /// <returns>An inverse metric tensor.</returns>
-    public MetricTensor<Matrix2x2<TN, U>, TN, U, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, U, TPI> point)
+    public MetricTensor<Matrix2x2<TN, TB>, TN, TB, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, TB, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
