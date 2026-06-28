@@ -485,7 +485,7 @@ public record class GradientTapeWithLinkedList<T, U> : ITape<T, U>
         var cbrt = T.Cbrt(x.Value);
         if (_isTracking)
         {
-            _nodes.AddLast(new GradientNode<T, U>(T.One / (IBinaryFloatingPointIeee754<U>.Three * cbrt * cbrt), x.Index, _nodes.Count));
+            _nodes.AddLast(new GradientNode<T, U>(T.One / (U.CreateSaturating(3) * cbrt * cbrt), x.Index, _nodes.Count));
             return new(_nodes.Count - 1, cbrt);
         }
         return new(_nodes.Count, cbrt);
@@ -507,7 +507,7 @@ public record class GradientTapeWithLinkedList<T, U> : ITape<T, U>
         var sqrt = T.Sqrt(x.Value);
         if (_isTracking)
         {
-            _nodes.AddLast(new GradientNode<T, U>(IBinaryFloatingPointIeee754<U>.Half / sqrt, x.Index, _nodes.Count));
+            _nodes.AddLast(new GradientNode<T, U>(U.CreateSaturating(0.5) / sqrt, x.Index, _nodes.Count));
             return new(_nodes.Count - 1, sqrt);
         }
         return new(_nodes.Count, sqrt);
