@@ -37,23 +37,23 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents a rank-two tensor field with 4 elements.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
 /// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class TensorFieldR2x2<TT, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
-    where TT : ITape<TN, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public class TensorFieldR2x2<TT, TN, TB, TI1P, TI2P, TPI> : TensorField<TN, TB, TPI>
+    where TT : ITape<TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TI1P : IIndexPosition
     where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private protected RMTensor2Buffer2x2<TT, TN, U, TPI> _buffer;
+    private protected RMTensor2Buffer2x2<TT, TN, TB, TPI> _buffer;
 
     public TensorFieldR2x2() { }
 
-    public Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> this[int i, int j]
+    public Func<TT, AutoDiffTensor2<TN, TB, TPI>, Variable<TN, TB>> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i][j];
@@ -68,24 +68,24 @@ public class TensorFieldR2x2<TT, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TP
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="point">A point on the manifold.</param>
     /// <returns>A rank-two tensor.</returns>
-    public Tensor<Matrix2x2<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, U, TPI> point)
+    public Tensor<Matrix2x2<TN, TB>, TN, TB, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor2<TN, TB, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
         tape.IsTracking = false;
 
-        Matrix2x2<TN, U> result = new();
+        Matrix2x2<TN, TB> result = new();
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 2; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> function)
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor2<TN, TB, TPI>, Variable<TN, TB>> function)
                     result[i, j] = function(tape, point).Value;
             }
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix2x2<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Matrix2x2<TN, TB>, TN, TB, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
 

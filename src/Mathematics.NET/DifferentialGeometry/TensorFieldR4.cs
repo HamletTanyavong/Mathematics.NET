@@ -37,21 +37,21 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents a rank-one tensor field with four elements.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TIP">An index position.</typeparam>
 /// <typeparam name="TPI">An index.</typeparam>
-public class TensorFieldR4<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
-    where TT : ITape<TN, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public class TensorFieldR4<TT, TN, TB, TIP, TPI> : TensorField<TN, TB, TPI>
+    where TT : ITape<TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private RMTensor4Buffer4<TT, TN, U, TPI> _buffer;
+    private RMTensor4Buffer4<TT, TN, TB, TPI> _buffer;
 
     public TensorFieldR4() { }
 
-    public Func<TT, AutoDiffTensor4<TN, U, TPI>, Variable<TN, U>> this[int i]
+    public Func<TT, AutoDiffTensor4<TN, TB, TPI>, Variable<TN, TB>> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i];
@@ -61,16 +61,16 @@ public class TensorFieldR4<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
     }
 
     /// <inheritdoc cref="TensorFieldR2{TT, TN, U, TIP, TPI}.Compute{TIN}(TT, AutoDiffTensor2{TN, U, TPI})"/>
-    public Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor4<TN, U, TPI> point)
+    public Tensor<Vector4<TN, TB>, TN, TB, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor4<TN, TB, TPI> point)
         where TIN : IIndexName
     {
-        Vector4<TN, U> result = new();
+        Vector4<TN, TB> result = new();
         for (int i = 0; i < 4; i++)
         {
-            if (_buffer[i] is Func<TT, AutoDiffTensor4<TN, U, TPI>, Variable<TN, U>> function)
+            if (_buffer[i] is Func<TT, AutoDiffTensor4<TN, TB, TPI>, Variable<TN, TB>> function)
                 result[i] = function(tape, point).Value;
         }
-        return new Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>>(result);
+        return new Tensor<Vector4<TN, TB>, TN, TB, Index<TIP, TIN>>(result);
     }
 }
 

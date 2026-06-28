@@ -37,21 +37,21 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents a rank-one tensor field with two elements.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TIP">An index position.</typeparam>
 /// <typeparam name="TPI">An index.</typeparam>
-public class TensorFieldR2<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
-    where TT : ITape<TN, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public class TensorFieldR2<TT, TN, TB, TIP, TPI> : TensorField<TN, TB, TPI>
+    where TT : ITape<TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private RMTensor2Buffer2<TT, TN, U, TPI> _buffer;
+    private RMTensor2Buffer2<TT, TN, TB, TPI> _buffer;
 
     public TensorFieldR2() { }
 
-    public Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> this[int i]
+    public Func<TT, AutoDiffTensor2<TN, TB, TPI>, Variable<TN, TB>> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i];
@@ -65,16 +65,16 @@ public class TensorFieldR2<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
     /// <param name="tape">A gradient or Hessian tape.</param>
     /// <param name="point">A point.</param>
     /// <returns>The value of the tensor at the specified point.</returns>
-    public Tensor<Vector2<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor2<TN, U, TPI> point)
+    public Tensor<Vector2<TN, TB>, TN, TB, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor2<TN, TB, TPI> point)
         where TIN : IIndexName
     {
-        Vector2<TN, U> result = new();
+        Vector2<TN, TB> result = new();
         for (int i = 0; i < 2; i++)
         {
-            if (_buffer[i] is Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> function)
+            if (_buffer[i] is Func<TT, AutoDiffTensor2<TN, TB, TPI>, Variable<TN, TB>> function)
                 result[i] = function(tape, point).Value;
         }
-        return new Tensor<Vector2<TN, U>, TN, U, Index<TIP, TIN>>(result);
+        return new Tensor<Vector2<TN, TB>, TN, TB, Index<TIP, TIN>>(result);
     }
 }
 

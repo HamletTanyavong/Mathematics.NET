@@ -33,13 +33,13 @@ namespace Mathematics.NET.Operations;
 /// <summary>Defines a mechanism for computing inner products of vectors.</summary>
 /// <typeparam name="TInput">A type that implements <see cref="I1DArrayRepresentable{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TOutput">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
-/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-public interface IInnerProductOperation<in TInput, out TOutput, U, V>
-    where TInput : I1DArrayRepresentable<TInput, TOutput, U, V>
-    where TOutput : IComplex<TOutput, U, V>
-    where U : IBinaryNumber<U>
-    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IInnerProductOperation<in TInput, out TOutput, TB, TR>
+    where TInput : I1DArrayRepresentable<TInput, TOutput, TB, TR>
+    where TOutput : IComplex<TOutput, TB, TR>
+    where TB : IBinaryNumber<TB>
+    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
 {
     /// <summary>Compute the inner product of two vectors.</summary>
     /// <param name="left">A vector of type <typeparamref name="TInput"/>.</param>

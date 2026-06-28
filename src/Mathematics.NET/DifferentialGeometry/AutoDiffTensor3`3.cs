@@ -35,23 +35,23 @@ namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor of three variables for use in reverse-mode automatic differentiation.</summary>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
-public record struct AutoDiffTensor3<TN, U, TI>
-    where TN : IComplex<TN, U, U>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public record struct AutoDiffTensor3<TN, TB, TI>
+    where TN : IComplex<TN, TB, TB>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TI : IIndex
 {
     /// <summary>The zeroth element of the rank-one tensor.</summary>
-    public Variable<TN, U> X0;
+    public Variable<TN, TB> X0;
 
     /// <summary>The first element of the rank-one tensor.</summary>
-    public Variable<TN, U> X1;
+    public Variable<TN, TB> X1;
 
     /// <summary>The second element of the rank-one tensor.</summary>
-    public Variable<TN, U> X2;
+    public Variable<TN, TB> X2;
 
-    public AutoDiffTensor3(Variable<TN, U> x0, Variable<TN, U> x1, Variable<TN, U> x2)
+    public AutoDiffTensor3(Variable<TN, TB> x0, Variable<TN, TB> x1, Variable<TN, TB> x2)
     {
         X0 = x0;
         X1 = x1;
@@ -65,7 +65,7 @@ public record struct AutoDiffTensor3<TN, U, TI>
     /// <summary>Get the element at the specified index.</summary>
     /// <param name="index">An index.</param>
     /// <returns>The element at the index.</returns>
-    public Variable<TN, U> this[int index]
+    public Variable<TN, TB> this[int index]
     {
         readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
@@ -73,7 +73,7 @@ public record struct AutoDiffTensor3<TN, U, TI>
 
     // Get
 
-    internal static Variable<TN, U> GetElement(AutoDiffTensor3<TN, U, TI> tensor, int index)
+    internal static Variable<TN, TB> GetElement(AutoDiffTensor3<TN, TB, TI> tensor, int index)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
@@ -81,28 +81,28 @@ public record struct AutoDiffTensor3<TN, U, TI>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Variable<TN, U> GetElementUnsafe(ref AutoDiffTensor3<TN, U, TI> tensor, int index)
+    private static Variable<TN, TB> GetElementUnsafe(ref AutoDiffTensor3<TN, TB, TI> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 3);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TN, U, TI>, Variable<TN, U>>(ref tensor), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TN, TB, TI>, Variable<TN, TB>>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor3<TN, U, TI> WithElement(AutoDiffTensor3<TN, U, TI> tensor, int index, Variable<TN, U> value)
+    internal static AutoDiffTensor3<TN, TB, TI> WithElement(AutoDiffTensor3<TN, TB, TI> tensor, int index, Variable<TN, TB> value)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
-        AutoDiffTensor3<TN, U, TI> result = tensor;
+        AutoDiffTensor3<TN, TB, TI> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor3<TN, U, TI> tensor, int index, Variable<TN, U> value)
+    private static void SetElementUnsafe(ref AutoDiffTensor3<TN, TB, TI> tensor, int index, Variable<TN, TB> value)
     {
         Debug.Assert(index is >= 0 and < 3);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TN, U, TI>, Variable<TN, U>>(ref tensor), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TN, TB, TI>, Variable<TN, TB>>(ref tensor), index) = value;
     }
 
     //
@@ -115,7 +115,7 @@ public record struct AutoDiffTensor3<TN, U, TI>
     // Methods
     //
 
-    public static AutoDiffTensor3<TN, U, TNI> Create<TNI>(Variable<TN, U> x0, Variable<TN, U> x1, Variable<TN, U> x2)
+    public static AutoDiffTensor3<TN, TB, TNI> Create<TNI>(Variable<TN, TB> x0, Variable<TN, TB> x1, Variable<TN, TB> x2)
         where TNI : IIndex
         => new(x0, x1, x2);
 }

@@ -35,18 +35,18 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TR1T">The type that implements the interface.</typeparam>
 /// <typeparam name="TV">A backing type that implements <see cref="IVector{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
-/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
-public interface IRankOneTensor<TR1T, TV, TN, U, V, TI>
-    : I1DArrayRepresentable<TR1T, TN, U, V>,
+public interface IRankOneTensor<TR1T, TV, TN, TB, TR, TI>
+    : I1DArrayRepresentable<TR1T, TN, TB, TR>,
       IAdditionOperation<TR1T, TR1T>,
       ISubtractionOperation<TR1T, TR1T>
-    where TR1T : IRankOneTensor<TR1T, TV, TN, U, V, TI>
-    where TV : IVector<TV, TN, U, V>
-    where TN : IComplex<TN, U, V>, IDifferentiableFunctions<TN>
-    where U : IBinaryNumber<U>
-    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
+    where TR1T : IRankOneTensor<TR1T, TV, TN, TB, TR, TI>
+    where TV : IVector<TV, TN, TB, TR>
+    where TN : IComplex<TN, TB, TR>, IDifferentiableFunctions<TN>
+    where TB : IBinaryNumber<TB>
+    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
     where TI : IIndex
 {
     /// <summary>Get the index associated with this rank one tensor.</summary>

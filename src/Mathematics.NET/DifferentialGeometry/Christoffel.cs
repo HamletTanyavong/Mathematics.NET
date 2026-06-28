@@ -37,19 +37,19 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents a Christoffel symbol.</summary>
 /// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1">The first index.</typeparam>
 /// <typeparam name="TI2N">The name of the second index.</typeparam>
 /// <typeparam name="TI3N">The name of the third index.</typeparam>
 /// <param name="array">A backing array.</param>
-public struct Christoffel<TCA, TN, U, TI1, TI2N, TI3N>(TCA array)
-    : IRankThreeTensor<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, TCA, TN, U, U, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>,
-      IMultiplicationOperation<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, TN, Tensor<TCA, TN, U, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>>,
-      IUnaryMinusOperation<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, Tensor<TCA, TN, U, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>>,
-      IUnaryPlusOperation<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, Christoffel<TCA, TN, U, TI1, TI2N, TI3N>>
-    where TCA : ICubicArray<TCA, TN, U, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public struct Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>(TCA array)
+    : IRankThreeTensor<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, TCA, TN, TB, TB, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>,
+      IMultiplicationOperation<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, TN, Tensor<TCA, TN, TB, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>>,
+      IUnaryMinusOperation<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, Tensor<TCA, TN, TB, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>>>,
+      IUnaryPlusOperation<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>>
+    where TCA : ICubicArray<TCA, TN, TB, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TI1 : IIndex
     where TI2N : IIndexName
     where TI3N : IIndexName
@@ -92,31 +92,31 @@ public struct Christoffel<TCA, TN, U, TI1, TI2N, TI3N>(TCA array)
     // Operators
     //
 
-    public static Tensor<TCA, TN, U, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator -(Christoffel<TCA, TN, U, TI1, TI2N, TI3N> christoffel)
+    public static Tensor<TCA, TN, TB, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator -(Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> christoffel)
         => new(-christoffel._array);
 
-    public static Christoffel<TCA, TN, U, TI1, TI2N, TI3N> operator +(Christoffel<TCA, TN, U, TI1, TI2N, TI3N> christoffel)
+    public static Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> operator +(Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> christoffel)
         => christoffel;
 
-    public static Tensor<TCA, TN, U, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator *(TN c, Christoffel<TCA, TN, U, TI1, TI2N, TI3N> christoffel)
+    public static Tensor<TCA, TN, TB, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator *(TN c, Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> christoffel)
         => new(c * christoffel._array);
 
-    public static Tensor<TCA, TN, U, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator *(Christoffel<TCA, TN, U, TI1, TI2N, TI3N> christoffel, TN c)
+    public static Tensor<TCA, TN, TB, TI1, Index<Lower, TI2N>, Index<Lower, TI3N>> operator *(Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> christoffel, TN c)
         => new(christoffel._array * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(Christoffel<TCA, TN, U, TI1, TI2N, TI3N> left, Christoffel<TCA, TN, U, TI1, TI2N, TI3N> right)
+    public static bool operator ==(Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> left, Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> right)
         => left._array == right._array;
 
-    public static bool operator !=(Christoffel<TCA, TN, U, TI1, TI2N, TI3N> left, Christoffel<TCA, TN, U, TI1, TI2N, TI3N> right)
+    public static bool operator !=(Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> left, Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> right)
         => left._array != right._array;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Christoffel<TCA, TN, U, TI1, TI2N, TI3N> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> other && Equals(other);
 
-    public readonly bool Equals(Christoffel<TCA, TN, U, TI1, TI2N, TI3N> value) => _array.Equals(value._array);
+    public readonly bool Equals(Christoffel<TCA, TN, TB, TI1, TI2N, TI3N> value) => _array.Equals(value._array);
 
     public override readonly int GetHashCode() => HashCode.Combine(_array);
 
@@ -138,39 +138,39 @@ public struct Christoffel<TCA, TN, U, TI1, TI2N, TI3N>(TCA array)
     /// <typeparam name="TNI3N">A new third index name.</typeparam>
     /// <returns>A Christoffel symbol with a new first index, second index name, and third index name.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Christoffel<TCA, TN, U, TNI1, TNI2N, TNI3N> WithIndices<TNI1, TNI2N, TNI3N>()
+    public Christoffel<TCA, TN, TB, TNI1, TNI2N, TNI3N> WithIndices<TNI1, TNI2N, TNI3N>()
         where TNI1 : IIndex
         where TNI2N : IIndexName
         where TNI3N : IIndexName
-        => Unsafe.As<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, Christoffel<TCA, TN, U, TNI1, TNI2N, TNI3N>>(ref this);
+        => Unsafe.As<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TB, TNI1, TNI2N, TNI3N>>(ref this);
 
     /// <summary>Reinterpret this Christoffel symbol as one with a new index in the first position.</summary>
     /// <typeparam name="TNI1">A new index.</typeparam>
     /// <returns>A Christoffel symbol with a new index in the first position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Christoffel<TCA, TN, U, TNI1, TI2N, TI3N> WithIndex1<TNI1>()
+    public Christoffel<TCA, TN, TB, TNI1, TI2N, TI3N> WithIndex1<TNI1>()
         where TNI1 : IIndex
-        => Unsafe.As<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, Christoffel<TCA, TN, U, TNI1, TI2N, TI3N>>(ref this);
+        => Unsafe.As<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TB, TNI1, TI2N, TI3N>>(ref this);
 
     /// <summary>Reinterpret this Christoffel symbol as one with a new index name in the second position.</summary>
     /// <typeparam name="TNIN">A new index name.</typeparam>
     /// <returns>A Christoffel symbol with a new index name in the second position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Christoffel<TCA, TN, U, TI1, TNIN, TI3N> WithIndex2Name<TNIN>()
+    public Christoffel<TCA, TN, TB, TI1, TNIN, TI3N> WithIndex2Name<TNIN>()
         where TNIN : IIndexName
-        => Unsafe.As<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, Christoffel<TCA, TN, U, TI1, TNIN, TI3N>>(ref this);
+        => Unsafe.As<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TB, TI1, TNIN, TI3N>>(ref this);
 
     /// <summary>Reinterpret this Christoffel symbol as one with a new index name in the third position.</summary>
     /// <typeparam name="TNIN">A new index name.</typeparam>
     /// <returns>A Christoffel symbol with a new index name in the third position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Christoffel<TCA, TN, U, TI1, TI2N, TNIN> WithIndex3Name<TNIN>()
+    public Christoffel<TCA, TN, TB, TI1, TI2N, TNIN> WithIndex3Name<TNIN>()
         where TNIN : IIndexName
-        => Unsafe.As<Christoffel<TCA, TN, U, TI1, TI2N, TI3N>, Christoffel<TCA, TN, U, TI1, TI2N, TNIN>>(ref this);
+        => Unsafe.As<Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>, Christoffel<TCA, TN, TB, TI1, TI2N, TNIN>>(ref this);
 
     //
     // Implicit Operators
     //
 
-    public static implicit operator Christoffel<TCA, TN, U, TI1, TI2N, TI3N>(TCA value) => new(value);
+    public static implicit operator Christoffel<TCA, TN, TB, TI1, TI2N, TI3N>(TCA value) => new(value);
 }
