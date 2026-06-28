@@ -25,15 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Represents a variable used in reverse-mode automatic differentiation.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public readonly unsafe record struct Variable<T>
-    where T : IComplex<T>
+public readonly record struct Variable<T, U>
+    where T : IComplex<T, U, U>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     /// <summary>The index of the variable.</summary>
     public readonly int Index;

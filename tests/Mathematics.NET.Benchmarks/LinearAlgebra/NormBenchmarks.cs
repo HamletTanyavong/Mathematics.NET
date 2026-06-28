@@ -34,7 +34,7 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class NormBenchmarks
 {
-    public Vector4<Real> Vector { get; set; }
+    public Vector4<Real<double>, double> Vector { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -43,16 +43,16 @@ public class NormBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Real NormWithoutLoop()
+    public Real<double> NormWithoutLoop()
     {
-        Span<Real> components = stackalloc Real[4];
+        Span<Real<double>> components = stackalloc Real<double>[4];
 
-        components[0] = (Real.Conjugate(Vector.X1) * Vector.X1).Re;
-        components[1] = (Real.Conjugate(Vector.X2) * Vector.X2).Re;
-        components[2] = (Real.Conjugate(Vector.X3) * Vector.X3).Re;
-        components[3] = (Real.Conjugate(Vector.X4) * Vector.X4).Re;
+        components[0] = (Real<double>.Conjugate(Vector.X1) * Vector.X1).Re;
+        components[1] = (Real<double>.Conjugate(Vector.X2) * Vector.X2).Re;
+        components[2] = (Real<double>.Conjugate(Vector.X3) * Vector.X3).Re;
+        components[3] = (Real<double>.Conjugate(Vector.X4) * Vector.X4).Re;
 
-        Real max = components[0];
+        Real<double> max = components[0];
         for (int i = 1; i < 4; i++)
         {
             if (components[i] > max)
@@ -61,27 +61,27 @@ public class NormBenchmarks
             }
         }
 
-        Real partialSum = Real.Zero;
+        Real<double> partialSum = Real<double>.Zero;
         var maxSquared = max * max;
         partialSum += components[0] / maxSquared;
         partialSum += components[1] / maxSquared;
         partialSum += components[2] / maxSquared;
         partialSum += components[3] / maxSquared;
 
-        return max * Real.Sqrt(partialSum);
+        return max * Real<double>.Sqrt(partialSum);
     }
 
     [Benchmark]
-    public Real NormWithLoop()
+    public Real<double> NormWithLoop()
     {
-        Span<Real> components = stackalloc Real[4];
+        Span<Real<double>> components = stackalloc Real<double>[4];
 
-        components[0] = (Real.Conjugate(Vector.X1) * Vector.X1).Re;
-        components[1] = (Real.Conjugate(Vector.X2) * Vector.X2).Re;
-        components[2] = (Real.Conjugate(Vector.X3) * Vector.X3).Re;
-        components[3] = (Real.Conjugate(Vector.X4) * Vector.X4).Re;
+        components[0] = (Real<double>.Conjugate(Vector.X1) * Vector.X1).Re;
+        components[1] = (Real<double>.Conjugate(Vector.X2) * Vector.X2).Re;
+        components[2] = (Real<double>.Conjugate(Vector.X3) * Vector.X3).Re;
+        components[3] = (Real<double>.Conjugate(Vector.X4) * Vector.X4).Re;
 
-        Real max = components[0];
+        Real<double> max = components[0];
         for (int i = 1; i < 4; i++)
         {
             if (components[i] > max)
@@ -90,13 +90,13 @@ public class NormBenchmarks
             }
         }
 
-        Real partialSum = Real.Zero;
+        Real<double> partialSum = Real<double>.Zero;
         var maxSquared = max * max;
         for (int i = 0; i < 4; i++)
         {
             partialSum += components[i] / maxSquared;
         }
 
-        return max * Real.Sqrt(partialSum);
+        return max * Real<double>.Sqrt(partialSum);
     }
 }

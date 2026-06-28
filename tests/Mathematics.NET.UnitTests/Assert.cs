@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using CommunityToolkit.HighPerformance;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
@@ -32,15 +33,17 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.UnitTests;
 
 /// <summary>Assert helpers for Mathemtics.NET.</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-public sealed class Assert<TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public sealed class Assert<TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
     /// <summary>Assert that two values are approximately equal.</summary>
     /// <param name="expected">The expected value.</param>
     /// <param name="actual">The actual value.</param>
     /// <param name="epsilon">A margin of error.</param>
-    public static void AreApproximatelyEqual(TN expected, TN actual, Real epsilon)
+    public static void AreApproximatelyEqual(TN expected, TN actual, Real<TB> epsilon)
     {
         if (TN.IsNaN(expected) && TN.IsNaN(actual) || TN.IsInfinity(expected) && TN.IsInfinity(actual))
             return;
@@ -61,8 +64,8 @@ public sealed class Assert<TN>
     /// <param name="expected">The expected vector.</param>
     /// <param name="actual">The actual vector.</param>
     /// <param name="epsilon">A margin of error.</param>
-    public static void AreApproximatelyEqual<TV>(IVector<TV, TN> expected, IVector<TV, TN> actual, Real epsilon)
-        where TV : IVector<TV, TN>
+    public static void AreApproximatelyEqual<TV>(IVector<TV, TN, TB, TB> expected, IVector<TV, TN, TB, TB> actual, Real<TB> epsilon)
+        where TV : IVector<TV, TN, TB, TB>
     {
         for (int i = 0; i < TV.E1Components; i++)
         {
@@ -86,11 +89,11 @@ public sealed class Assert<TN>
     /// <param name="actual">The actual tensor.</param>
     /// <param name="epsilon">The margin of error.</param>
     public static void AreApproximatelyEqual<TR1T, TV, TI>(
-        IRankOneTensor<TR1T, TV, TN, TI> expected,
-        IRankOneTensor<TR1T, TV, TN, TI> actual,
-        Real epsilon)
-        where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
-        where TV : IVector<TV, TN>
+        IRankOneTensor<TR1T, TV, TN, TB, TB, TI> expected,
+        IRankOneTensor<TR1T, TV, TN, TB, TB, TI> actual,
+        Real<TB> epsilon)
+        where TR1T : IRankOneTensor<TR1T, TV, TN, TB, TB, TI>
+        where TV : IVector<TV, TN, TB, TB>
         where TI : IIndex
     {
         for (int i = 0; i < TR1T.E1Components; i++)
@@ -111,7 +114,7 @@ public sealed class Assert<TN>
     /// <param name="expected">A read-only span of expected values.</param>
     /// <param name="actual">A read-only span of actual values.</param>
     /// <param name="epsilon">A margin of error.</param>
-    public static void AreApproximatelyEqual(ReadOnlySpan<TN> expected, ReadOnlySpan<TN> actual, Real epsilon)
+    public static void AreApproximatelyEqual(ReadOnlySpan<TN> expected, ReadOnlySpan<TN> actual, Real<TB> epsilon)
     {
         if (expected.Length != actual.Length)
             Assert.Fail($"Length of the actual array, {actual.Length}, does not match the length of the expected array, {expected.Length}");
@@ -138,8 +141,8 @@ public sealed class Assert<TN>
     /// <param name="expected">The expected matrix.</param>
     /// <param name="actual">The actual matrix.</param>
     /// <param name="epsilon">A margin of error.</param>
-    public static void AreApproximatelyEqual<TM>(IMatrix<TM, TN> expected, IMatrix<TM, TN> actual, Real epsilon)
-        where TM : IMatrix<TM, TN>
+    public static void AreApproximatelyEqual<TM>(IMatrix<TM, TN, TB, TB> expected, IMatrix<TM, TN, TB, TB> actual, Real<TB> epsilon)
+        where TM : IMatrix<TM, TN, TB, TB>
     {
         for (int i = 0; i < TM.E1Components; i++)
         {
@@ -167,11 +170,11 @@ public sealed class Assert<TN>
     /// <param name="actual">The actual rank-two tensor.</param>
     /// <param name="epsilon">The margin of error.</param>
     public static void AreApproximatelyEqual<TR2T, TSM, TI1, TI2>(
-        IRankTwoTensor<TR2T, TSM, TN, TI1, TI2> expected,
-        IRankTwoTensor<TR2T, TSM, TN, TI1, TI2> actual,
-        Real epsilon)
-        where TR2T : IRankTwoTensor<TR2T, TSM, TN, TI1, TI2>
-        where TSM : ISquareMatrix<TSM, TN>
+        IRankTwoTensor<TR2T, TSM, TN, TB, TB, TI1, TI2> expected,
+        IRankTwoTensor<TR2T, TSM, TN, TB, TB, TI1, TI2> actual,
+        Real<TB> epsilon)
+        where TR2T : IRankTwoTensor<TR2T, TSM, TN, TB, TB, TI1, TI2>
+        where TSM : ISquareMatrix<TSM, TN, TB, TB>
         where TI1 : IIndex
         where TI2 : IIndex
     {
@@ -196,7 +199,7 @@ public sealed class Assert<TN>
     /// <param name="expected">A 2D, read-only span of expected values.</param>
     /// <param name="actual">A 2D, read-only span of actual values.</param>
     /// <param name="epsilon">A margin of error.</param>
-    public static void AreApproximatelyEqual(ReadOnlySpan2D<TN> expected, ReadOnlySpan2D<TN> actual, Real epsilon)
+    public static void AreApproximatelyEqual(ReadOnlySpan2D<TN> expected, ReadOnlySpan2D<TN> actual, Real<TB> epsilon)
     {
         if (expected.Height != actual.Height || expected.Width != actual.Width)
             Assert.Fail($"Dimensions of the actual matrix, [{actual.Height}, {actual.Width}], does not match the dimensions of the expected matrix, [{expected.Height}, {expected.Width}]");
@@ -225,7 +228,7 @@ public sealed class Assert<TN>
     /// <param name="expected">A 3D array of expected values.</param>
     /// <param name="actual">A 3D array of actual values.</param>
     /// <param name="epsilon">A margin of error.</param>
-    public static void AreApproximatelyEqual(TN[,,] expected, TN[,,] actual, Real epsilon)
+    public static void AreApproximatelyEqual(TN[,,] expected, TN[,,] actual, Real<TB> epsilon)
     {
         if (expected.GetLength(0) != actual.GetLength(0) || expected.GetLength(1) != actual.GetLength(1) || expected.GetLength(2) != actual.GetLength(2))
             Assert.Fail($"Dimensions of the actual array, [{actual.GetLength(0)}, {actual.GetLength(1)}, {actual.GetLength(2)}], does not match the dimensions of the expected matrix, [{expected.GetLength(0)}, {expected.GetLength(1)}, {expected.GetLength(2)}]");
@@ -257,7 +260,7 @@ public sealed class Assert<TN>
     /// <param name="expected">A 4D array of expected values.</param>
     /// <param name="actual">A 4D array of actual values.</param>
     /// <param name="epsilon">A margin of error.</param>
-    public static void AreApproximatelyEqual(TN[,,,] expected, TN[,,,] actual, Real epsilon)
+    public static void AreApproximatelyEqual(TN[,,,] expected, TN[,,,] actual, Real<TB> epsilon)
     {
         if (expected.GetLength(0) != actual.GetLength(0) ||
             expected.GetLength(1) != actual.GetLength(1) ||

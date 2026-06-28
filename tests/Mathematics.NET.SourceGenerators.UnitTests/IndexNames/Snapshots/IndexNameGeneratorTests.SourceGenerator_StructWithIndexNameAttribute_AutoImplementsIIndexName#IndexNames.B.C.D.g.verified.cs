@@ -1,20 +1,20 @@
 //HintName: IndexNames.B.C.D.g.cs
 // Auto-generated code
 
-using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace B.C.D;
 
 public readonly partial struct Zeta : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
-    public const string DisplayString = "Zeta";
-    static string IIndexName.DisplayString => DisplayString;
+    /// <inheritdoc cref="IIndexName.Name"/>
+    public const string Name = "Zeta";
+    static string IIndexName.Name => Name;
 }
 
 public readonly partial struct Eta : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
-    public const string DisplayString = "Eta";
-    static string IIndexName.DisplayString => DisplayString;
+    /// <inheritdoc cref="IIndexName.Name"/>
+    public const string Name = "Eta";
+    static string IIndexName.Name => Name;
 }

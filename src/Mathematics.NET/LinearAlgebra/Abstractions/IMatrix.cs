@@ -25,22 +25,27 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Operations;
+using System.Numerics;
+using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.LinearAlgebra.Abstractions;
 
 /// <summary>Defines support for matrices.</summary>
 /// <typeparam name="T">The type that implements the interface.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-public interface IMatrix<T, U>
-    : I2DArrayRepresentable<T, U>,
+/// <typeparam name="U">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="W">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IMatrix<T, U, V, W>
+    : I2DArrayRepresentable<T, U, V, W>,
       IAdditionOperation<T, T>,
       ISubtractionOperation<T, T>,
       IMultiplicationOperation<T, U, T>,
       IUnaryMinusOperation<T, T>,
       IUnaryPlusOperation<T, T>
-    where T : IMatrix<T, U>
-    where U : IComplex<U>
+    where T : IMatrix<T, U, V, W>
+    where U : IComplex<U, V, W>
+    where V : IBinaryNumber<V>
+    where W : IBinaryFloatingPointIeee754<W>, IMinMaxValue<W>
 {
     /// <summary>Represents a value that is not a matrix.</summary>
     /// <remarks>This will be returned, for instance, when trying to invert a singular matrix.</remarks>

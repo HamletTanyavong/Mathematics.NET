@@ -41,19 +41,20 @@ public sealed class TensorContractionGeneratorTests : VerifyBase
             namespace TestNamespace;
 
             [GenerateTensorContractions]
-            public static Tensor<Array4x4x4x4<TN>, TN, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TCI, TI1, TI2, TI3, TI4>(
-                in IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2> a,
-                in IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4> b)
-                where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN>, TN, Index<Lower, TCI>, TI1, TI2>
-                where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN>, TN, Index<Upper, TCI>, TI3, TI4>
-                where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+            public static Tensor<Array4x4x4x4<TN, TB>, TN, TB, TI1, TI2, TI3, TI4> Contract<TLR3T, TRR3T, TN, TB, TCI, TI1, TI2, TI3, TI4>(
+                in IRankThreeTensor<TLR3T, Array4x4x4<TN, TB>, TN, TB, TB, Index<Lower, TCI>, TI1, TI2> left,
+                in IRankThreeTensor<TRR3T, Array4x4x4<TN, TB>, TN, TB, TB, Index<Upper, TCI>, TI3, TI4> right)
+                where TLR3T : IRankThreeTensor<TLR3T, Array4x4x4<TN, TB>, TN, TB, TB, Index<Lower, TCI>, TI1, TI2>
+                where TRR3T : IRankThreeTensor<TRR3T, Array4x4x4<TN, TB>, TN, TB, TB, Index<Upper, TCI>, TI3, TI4>
+                where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+                where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
                 where TCI : IIndexName
                 where TI1 : IIndex
                 where TI2 : IIndex
                 where TI3 : IIndex
                 where TI4 : IIndex
             {
-                Array4x4x4x4<TN> array = new();
+                Array4x4x4x4<TN, TB> array = new();
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++)
@@ -64,7 +65,7 @@ public sealed class TensorContractionGeneratorTests : VerifyBase
                             {
                                 for (int m = 0; m < 4; m++)
                                 {
-                                    array[i, j, k, l] += a[m, i, j] * b[m, k, l];
+                                    array[i, j, k, l] += left[m, i, j] * right[m, k, l];
                                 }
                             }
                         }

@@ -34,7 +34,7 @@ namespace Mathematics.NET.UnitTests.AutoDiff;
 [TestCategory("AutoDiff"), TestCategory("Real Number")]
 public sealed class TapeExtensionsOfRealTests
 {
-    private GradientTape<Real> _tape;
+    private GradientTape<Real<double>, double> _tape;
 
     public TapeExtensionsOfRealTests()
     {
@@ -47,11 +47,11 @@ public sealed class TapeExtensionsOfRealTests
     public void Curl_VectorField_ReturnsCurl(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
         var u = _tape.CreateAutoDiffVector(x, y, z);
-        Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
+        Vector3<Real<double>, double> expected = new(expectedX, expectedY, expectedZ);
 
         var actual = _tape.Curl(FX, FY, FZ, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -60,11 +60,11 @@ public sealed class TapeExtensionsOfRealTests
     public void DirectionalDerivative_ScalarFunctionAndDirection_ReturnsDirectionalDerivative(double vx, double vy, double vz, double x, double y, double z, double expected)
     {
         var u = _tape.CreateAutoDiffVector(x, y, z);
-        Vector3<Real> v = new(vx, vy, vz);
+        Vector3<Real<double>, double> v = new(vx, vy, vz);
 
         var actual = _tape.DirectionalDerivative(v, F, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -76,7 +76,7 @@ public sealed class TapeExtensionsOfRealTests
 
         var actual = _tape.Divergence(FX, FY, FZ, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -85,27 +85,27 @@ public sealed class TapeExtensionsOfRealTests
     public void Gradient_ScalarFunction_ReturnsGradient(double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
         var u = _tape.CreateAutoDiffVector(x, y, z);
-        Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
+        Vector3<Real<double>, double> expected = new(expectedX, expectedY, expectedZ);
 
         var actual = _tape.Gradient(F, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
     [TestCategory("Vector Calculus")]
     public void Hessian_ScalarFunction_ReturnsHessian()
     {
-        HessianTape<Real> tape = new();
+        HessianTape<Real<double>, double> tape = new();
         var u = tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
-        Matrix3x3<Real> expected = new(
+        Matrix3x3<Real<double>, double> expected = new(
             0.6261461305189455, 0.5050519532842152, -0.7980381386329245,
             0.5050519532842152, 0.1378143881299635, -0.1260832962626385,
             -0.7980381386329245, -0.1260832962626385, 0.707546520412796);
 
         var actual = tape.Hessian(F, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -113,14 +113,14 @@ public sealed class TapeExtensionsOfRealTests
     public void Jacobian_R3VectorFunction_ReturnsJacobian()
     {
         var u = _tape.CreateAutoDiffVector(1.23, 0.66, 2.34);
-        Matrix3x3<Real> expected = new(
+        Matrix3x3<Real<double>, double> expected = new(
             0.775330615737715, -0.5778557672605755, 0.3080621020764366,
             0.2431083191631576, 0.2431083191631576, 0.2431083191631576,
             1.450186648348945, 2.197252497498402, -0.6197378839098056);
 
         var actual = _tape.Jacobian(FX, FY, FZ, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -129,12 +129,12 @@ public sealed class TapeExtensionsOfRealTests
     public void JVP_R3VectorFunctionAndVector_ReturnsJVP(double x, double y, double z, double vx, double vy, double vz, double expectedX, double expectedY, double expectedZ)
     {
         var u = _tape.CreateAutoDiffVector(x, y, z);
-        Vector3<Real> v = new(vx, vy, vz);
-        Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
+        Vector3<Real<double>, double> v = new(vx, vy, vz);
+        Vector3<Real<double>, double> expected = new(expectedX, expectedY, expectedZ);
 
         var actual = _tape.JVP(FX, FY, FZ, u, v);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -142,12 +142,12 @@ public sealed class TapeExtensionsOfRealTests
     [DataRow(1.23, 0.66, 2.34, 1.471507039061705)]
     public void Laplacian_ScalarFunction_ReturnsLaplacian(double x, double y, double z, double expected)
     {
-        HessianTape<Real> tape = new();
+        HessianTape<Real<double>, double> tape = new();
         var u = tape.CreateAutoDiffVector(x, y, z);
 
         var actual = tape.Laplacian(F, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -156,12 +156,12 @@ public sealed class TapeExtensionsOfRealTests
     public void VJP_VectorAndR3VectorFunction_ReturnsVJP(double vx, double vy, double vz, double x, double y, double z, double expectedX, double expectedY, double expectedZ)
     {
         var u = _tape.CreateAutoDiffVector(x, y, z);
-        Vector3<Real> v = new(vx, vy, vz);
-        Vector3<Real> expected = new(expectedX, expectedY, expectedZ);
+        Vector3<Real<double>, double> v = new(vx, vy, vz);
+        Vector3<Real<double>, double> expected = new(expectedX, expectedY, expectedZ);
 
         var actual = _tape.VJP(v, FX, FY, FZ, u);
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     //
@@ -169,7 +169,7 @@ public sealed class TapeExtensionsOfRealTests
     //
 
     // f(x, y, z) = Cos(x) / ((x + y) * Sin(z))
-    private static Variable<Real> F(ITape<Real> tape, AutoDiffVector3<Real> x)
+    private static Variable<Real<double>, double> F(ITape<Real<double>, double> tape, AutoDiffVector3<Real<double>, double> x)
     {
         return tape.Divide(
             tape.Cos(x.X1),
@@ -179,7 +179,7 @@ public sealed class TapeExtensionsOfRealTests
     }
 
     // f(x, y, z) = Sin(x) * (Cos(y) + Sqrt(z))
-    private static Variable<Real> FX(ITape<Real> tape, AutoDiffVector3<Real> x)
+    private static Variable<Real<double>, double> FX(ITape<Real<double>, double> tape, AutoDiffVector3<Real<double>, double> x)
     {
         return tape.Multiply(
             tape.Sin(x.X1),
@@ -189,7 +189,7 @@ public sealed class TapeExtensionsOfRealTests
     }
 
     // f(x, y, z) = Sqrt(x + y + z)
-    private static Variable<Real> FY(ITape<Real> tape, AutoDiffVector3<Real> x)
+    private static Variable<Real<double>, double> FY(ITape<Real<double>, double> tape, AutoDiffVector3<Real<double>, double> x)
     {
         return tape.Sqrt(
             tape.Add(
@@ -200,7 +200,7 @@ public sealed class TapeExtensionsOfRealTests
     }
 
     // f(x, y, z) = Sinh(Exp(x) * y / z)
-    private static Variable<Real> FZ(ITape<Real> tape, AutoDiffVector3<Real> x)
+    private static Variable<Real<double>, double> FZ(ITape<Real<double>, double> tape, AutoDiffVector3<Real<double>, double> x)
     {
         return tape.Sinh(
             tape.Multiply(

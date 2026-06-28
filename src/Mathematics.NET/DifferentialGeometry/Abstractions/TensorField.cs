@@ -25,13 +25,17 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
+
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
 /// <summary>A base class for tensor fields and similar mathematical objects.</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
-public abstract class TensorField<TN, TI>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public abstract class TensorField<TN, U, TI>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI : IIndex
 {
     protected TensorField() { }

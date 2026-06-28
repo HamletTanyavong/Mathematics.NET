@@ -40,5 +40,5 @@ public readonly struct NoIndex : IIndex
 
     public override readonly string ToString() => ToString(null, null);
 
-    public readonly string ToString(string? format, IFormatProvider? formatProvider) => "No index";
+    public readonly string ToString(string? format, IFormatProvider? formatProvider) => nameof(NoIndex);
 }

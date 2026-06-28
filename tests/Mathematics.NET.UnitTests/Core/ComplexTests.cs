@@ -35,11 +35,11 @@ public sealed class ComplexTests
     [DataRow(1.23, 2.34, 1.114564084931578, -1.686112230652994)]
     public void Acos_Complex_ReturnsComplex(double inReal, double inImaginary, double expectedRe, double expectedIm)
     {
-        Complex input = new(inReal, inImaginary);
+        Complex<double> input = new(inReal, inImaginary);
 
-        var actualResult = Complex.Acos(input);
-        var actualRe = actualResult.Re.AsDouble();
-        var actualIm = actualResult.Im.AsDouble();
+        var actualResult = Complex<double>.Acos(input);
+        var actualRe = (double)actualResult.Re;
+        var actualIm = (double)actualResult.Im;
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -49,11 +49,11 @@ public sealed class ComplexTests
     [DataRow(1.23, 2.34, 4.562322418633185e-1, 1.686112230652994)]
     public void Asin_Complex_ReturnsComplex(double inReal, double inImaginary, double expectedRe, double expectedIm)
     {
-        Complex input = new(inReal, inImaginary);
+        Complex<double> input = new(inReal, inImaginary);
 
-        var actualResult = Complex.Asin(input);
-        var actualRe = actualResult.Re.AsDouble();
-        var actualIm = actualResult.Im.AsDouble();
+        var actualResult = Complex<double>.Asin(input);
+        var actualRe = (double)actualResult.Re;
+        var actualIm = (double)actualResult.Im;
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -63,11 +63,11 @@ public sealed class ComplexTests
     [DataRow(1.23, 2.34, 1.37591078602063, 3.356559207392595e-1)]
     public void Atan_Complex_ReturnsComplex(double inReal, double inImaginary, double expectedRe, double expectedIm)
     {
-        Complex input = new(inReal, inImaginary);
+        Complex<double> input = new(inReal, inImaginary);
 
-        var actualResult = Complex.Atan(input);
-        var actualRe = actualResult.Re.AsDouble();
-        var actualIm = actualResult.Im.AsDouble();
+        var actualResult = Complex<double>.Atan(input);
+        var actualRe = (double)actualResult.Re;
+        var actualIm = (double)actualResult.Im;
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -77,10 +77,10 @@ public sealed class ComplexTests
     [DataRow(1.2, 2.3, 1.2, -2.3)]
     public void Conjugate_Complex_ReturnsConjugate(double inReal, double inImaginary, double outReal, double outImaginary)
     {
-        Complex input = new(inReal, inImaginary);
-        Complex expected = new(outReal, outImaginary);
+        Complex<double> input = new(inReal, inImaginary);
+        Complex<double> expected = new(outReal, outImaginary);
 
-        var actual = Complex.Conjugate(input);
+        var actual = Complex<double>.Conjugate(input);
 
         Assert.AreEqual(expected, actual);
     }
@@ -92,12 +92,12 @@ public sealed class ComplexTests
     [DataRow(5, 3.5, 7, 0, 0.7142857142857142, 0.5)]
     public void Division_Complex_ReturnsComplex(double dividendRe, double dividendIm, double divisorRe, double divisorIm, double expectedRe, double expectedIm)
     {
-        Complex dividend = new(dividendRe, dividendIm);
-        Complex divisor = new(divisorRe, divisorIm);
+        Complex<double> dividend = new(dividendRe, dividendIm);
+        Complex<double> divisor = new(divisorRe, divisorIm);
 
         var actualResult = dividend / divisor;
-        var actualRe = actualResult.Re.AsDouble();
-        var actualIm = actualResult.Im.AsDouble();
+        var actualRe = (double)actualResult.Re;
+        var actualIm = (double)actualResult.Im;
 
         Assert.AreEqual(expectedRe, actualRe, 1e-15);
         Assert.AreEqual(expectedIm, actualIm, 1e-15);
@@ -106,9 +106,9 @@ public sealed class ComplexTests
     [TestMethod]
     public void IsNaN_ImaginaryPartNaN_ReturnsTrue()
     {
-        Complex input = new(0, double.NaN);
+        Complex<double> input = new(0, double.NaN);
 
-        var actual = Complex.IsNaN(input);
+        var actual = Complex<double>.IsNaN(input);
 
         Assert.IsTrue(actual);
     }
@@ -116,9 +116,9 @@ public sealed class ComplexTests
     [TestMethod]
     public void IsNaN_RealAndImaginaryPartsNaN_ReturnsTrue()
     {
-        Complex input = new(double.NaN, double.NaN);
+        Complex<double> input = new(double.NaN, double.NaN);
 
-        var actual = Complex.IsNaN(input);
+        var actual = Complex<double>.IsNaN(input);
 
         Assert.IsTrue(actual);
     }
@@ -126,9 +126,9 @@ public sealed class ComplexTests
     [TestMethod]
     public void IsNaN_RealPartNaN_ReturnsTrue()
     {
-        Complex input = new(double.NaN, 0);
+        Complex<double> input = new(double.NaN, 0);
 
-        var actual = Complex.IsNaN(input);
+        var actual = Complex<double>.IsNaN(input);
 
         Assert.IsTrue(actual);
     }
@@ -137,9 +137,9 @@ public sealed class ComplexTests
     [DataRow(3, 4, 5)]
     public void Magnitude_Complex_ReturnsMagnitude(double inReal, double inImaginary, double expected)
     {
-        Complex z = new(inReal, inImaginary);
+        Complex<double> z = new(inReal, inImaginary);
 
-        var actual = z.Magnitude.AsDouble();
+        var actual = z.Magnitude;
 
         Assert.AreEqual(expected, actual);
     }
@@ -151,9 +151,9 @@ public sealed class ComplexTests
     [DataRow(-1, -1, -Math.PI, -Math.PI / 2)]
     public void Phase_Complex_ReturnsAngleInCorrectQuadrant(double inReal, double inImaginary, double expectedMin, double expectedMax)
     {
-        Complex z = new(inReal, inImaginary);
+        Complex<double> z = new(inReal, inImaginary);
 
-        var actual = z.Phase.AsDouble();
+        var actual = z.Phase;
 
         Assert.IsTrue(expectedMin <= actual && actual <= expectedMax);
     }
@@ -163,10 +163,10 @@ public sealed class ComplexTests
     [DataRow(1.5, 2.5, 1.76470588235294117e-1, -2.94117647058823529e-1)]
     public void Reciprocate_Complex_ReturnsReciprocal(double inReal, double inImaginary, double expectedRe, double expectedIm)
     {
-        Complex z = new(inReal, inImaginary);
-        Complex expected = new(expectedRe, expectedIm);
+        Complex<double> z = new(inReal, inImaginary);
+        Complex<double> expected = new(expectedRe, expectedIm);
 
-        var actual = Complex.Reciprocate(z);
+        var actual = Complex<double>.Reciprocate(z);
 
         Assert.AreEqual(expected, actual);
     }
@@ -178,7 +178,7 @@ public sealed class ComplexTests
     [DataRow(7.345, 124.841, "IM", "124.841")]
     public void ToString_Complex_ReturnsString(double inReal, double inImaginary, string? format, string expected)
     {
-        Complex z = new(inReal, inImaginary);
+        Complex<double> z = new(inReal, inImaginary);
 
         var actual = z.ToString(format, null);
 
@@ -190,7 +190,7 @@ public sealed class ComplexTests
     [DataRow(1.23, 2.34, 12)]
     public void TryFormat_ComplexWithAdequateDestinationLength_ReturnsTrue(double inReal, double inImaginary, int length)
     {
-        Complex z = new(inReal, inImaginary);
+        Complex<double> z = new(inReal, inImaginary);
 
         Span<char> span = new char[length];
         var actual = z.TryFormat(span, out int _, null, null);
@@ -203,7 +203,7 @@ public sealed class ComplexTests
     [DataRow(1.23, 2.34, 11)]
     public void TryFormat_ComplexWithInadequateDestinationLength_ReturnsFalse(double inReal, double inImaginary, int length)
     {
-        Complex z = new(inReal, inImaginary);
+        Complex<double> z = new(inReal, inImaginary);
 
         Span<char> span = new char[length];
         var actual = z.TryFormat(span, out int _, null, null);
@@ -218,9 +218,9 @@ public sealed class ComplexTests
     [DataRow("( 1.23 , 3.45 )", 1.23, 3.45)]
     public void TryParse_SpanOfChar_ReturnsComplex(string s, double expectedRe, double expectedIm)
     {
-        Complex expected = new(expectedRe, expectedIm);
+        Complex<double> expected = new(expectedRe, expectedIm);
 
-        _ = Complex.TryParse(s.AsSpan(), null, out Complex actual);
+        _ = Complex<double>.TryParse(s.AsSpan(), null, out Complex<double> actual);
 
         Assert.AreEqual(expected, actual);
     }
@@ -232,7 +232,7 @@ public sealed class ComplexTests
     [DataRow("(0,0")]
     public void TryParse_SpanOfChar_ReturnsFalse(string s)
     {
-        var actual = Complex.TryParse(s.AsSpan(), null, out _);
+        var actual = Complex<double>.TryParse(s.AsSpan(), null, out _);
 
         Assert.IsFalse(actual);
     }
@@ -250,7 +250,7 @@ public sealed class ComplexTests
     [DataRow(1.2345, 0, 8, 8)]
     public void TryFormat_ComplexWithInadequateDestinationLength_ReturnsCorrectNumberOfCharsWritten(double inReal, double inImaginary, int length, int expected)
     {
-        Complex z = new(inReal, inImaginary);
+        Complex<double> z = new(inReal, inImaginary);
 
         Span<char> span = new char[length];
         _ = z.TryFormat(span, out int actual, null, null);
@@ -265,7 +265,7 @@ public sealed class ComplexTests
     [DataRow(1.2, 7, 1, "IM", "7")]
     public void TryFormat_Complex_ReturnsSpanOfCharacters(double inReal, double inImaginary, int length, string? format, string expected)
     {
-        Complex z = new(inReal, inImaginary);
+        Complex<double> z = new(inReal, inImaginary);
 
         Span<char> actual = new char[length];
         _ = z.TryFormat(actual, out int _, format, null);

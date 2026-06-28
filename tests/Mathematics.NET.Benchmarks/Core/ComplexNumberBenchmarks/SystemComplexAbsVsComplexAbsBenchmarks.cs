@@ -33,7 +33,7 @@ namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 public class SystemComplexAbsVsComplexAbsBenchmarks
 {
     public SystemComplex Z { get; set; }
-    public Complex W { get; set; }
+    public Complex<double> W { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -43,14 +43,14 @@ public class SystemComplexAbsVsComplexAbsBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Real SystemComplexAbs()
+    public Real<double> SystemComplexAbs()
     {
         return SystemComplex.Abs(Z);
     }
 
     [Benchmark]
-    public Complex ComplexAbs()
+    public Complex<double> ComplexAbs()
     {
-        return Complex.Abs(W);
+        return Complex<double>.Abs(W);
     }
 }

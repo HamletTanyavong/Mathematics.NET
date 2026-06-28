@@ -27,6 +27,7 @@
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.LinearAlgebra.Abstractions;
@@ -35,27 +36,28 @@ namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 3D vector in cylindrical coordinates.</summary>
 [StructLayout(LayoutKind.Sequential)]
-public struct CylindricalVector : IVector<CylindricalVector, Real>
+public struct CylindricalVector<T> : IVector<CylindricalVector<T>, Real<T>, T, T>
+    where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
 {
-    public static readonly CylindricalVector Zero = new(Real.Zero, Real.Zero, Real.Zero);
+    public static readonly CylindricalVector<T> Zero = new(Real<T>.Zero, Real<T>.Zero, Real<T>.Zero);
 
     /// <summary>The radial distance.</summary>
-    public Real Rho;
+    public Real<T> Rho;
 
     /// <summary>The azimuthal angle.</summary>
-    public Real Phi;
+    public Real<T> Phi;
 
     /// <summary>The axial coordinate.</summary>
-    public Real Z;
+    public Real<T> Z;
 
     /// <summary>Create a 3D vector in cylindrical coordinates.</summary>
     /// <param name="rho">The radial distance.</param>
     /// <param name="phi">The azimuthal angle.</param>
     /// <param name="z">The axial coordinate.</param>
     /// <exception cref="ArgumentException">Thrown when a negative value is supplied for the radial distance.</exception>
-    public CylindricalVector(Real rho, Real phi, Real z)
+    public CylindricalVector(Real<T> rho, Real<T> phi, Real<T> z)
     {
-        if (rho < 0)
+        if (rho < Real<T>.Zero)
             throw new ArgumentException("Rho must not be negative");
 
         Rho = rho;
@@ -75,7 +77,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     // Indexer
     //
 
-    public Real this[int index]
+    public Real<T> this[int index]
     {
         readonly get => GetElement(this, index);
         set => this = WithElement(this, index, value);
@@ -83,7 +85,7 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
 
     // Get
 
-    internal static Real GetElement(CylindricalVector vector, int index)
+    internal static Real<T> GetElement(CylindricalVector<T> vector, int index)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
@@ -91,85 +93,84 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static Real GetElementUnsafe(ref CylindricalVector vector, int index)
+    private static Real<T> GetElementUnsafe(ref CylindricalVector<T> vector, int index)
     {
         Debug.Assert(index is >= 0 and < 3);
-        return Unsafe.Add(ref Unsafe.As<CylindricalVector, Real>(ref vector), index);
+        return Unsafe.Add(ref Unsafe.As<CylindricalVector<T>, Real<T>>(ref vector), index);
     }
 
     // Set
 
-    internal static CylindricalVector WithElement(CylindricalVector vector, int index, Real value)
+    internal static CylindricalVector<T> WithElement(CylindricalVector<T> vector, int index, Real<T> value)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
-        CylindricalVector result = vector;
+        CylindricalVector<T> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref CylindricalVector vector, int index, Real value)
+    private static void SetElementUnsafe(ref CylindricalVector<T> vector, int index, Real<T> value)
     {
         Debug.Assert(index is >= 0 and < 3);
-        Unsafe.Add(ref Unsafe.As<CylindricalVector, Real>(ref vector), index) = value;
+        Unsafe.Add(ref Unsafe.As<CylindricalVector<T>, Real<T>>(ref vector), index) = value;
     }
 
     //
     // Constants
     //
 
-    static CylindricalVector IVector<CylindricalVector, Real>.Zero => Zero;
-
+    static CylindricalVector<T> IVector<CylindricalVector<T>, Real<T>, T, T>.Zero => Zero;
 
     //
     // Operators
     //
 
-    public static CylindricalVector operator -(CylindricalVector vector)
+    public static CylindricalVector<T> operator -(CylindricalVector<T> vector)
         => new(-vector.Rho, vector.Phi, -vector.Z);
 
-    public static CylindricalVector operator +(CylindricalVector vector)
+    public static CylindricalVector<T> operator +(CylindricalVector<T> vector)
         => vector;
 
-    public static CylindricalVector operator +(CylindricalVector left, CylindricalVector right)
+    public static CylindricalVector<T> operator +(CylindricalVector<T> left, CylindricalVector<T> right)
     {
-        var x = left.Rho * Real.Cos(left.Phi) + right.Rho * Real.Cos(right.Phi);
-        var y = left.Rho * Real.Sin(left.Phi) + right.Rho * Real.Sin(right.Phi);
+        var x = left.Rho * Real<T>.Cos(left.Phi) + right.Rho * Real<T>.Cos(right.Phi);
+        var y = left.Rho * Real<T>.Sin(left.Phi) + right.Rho * Real<T>.Sin(right.Phi);
         var z = left.Z + right.Z;
 
-        return new(Real.Hypot(x, y), Real.Atan2(y, x), z);
+        return new(Real<T>.Hypot(x, y), Real<T>.Atan2(y, x), z);
     }
 
-    public static CylindricalVector operator -(CylindricalVector left, CylindricalVector right)
+    public static CylindricalVector<T> operator -(CylindricalVector<T> left, CylindricalVector<T> right)
     {
-        var x = left.Rho * Real.Cos(left.Phi) - right.Rho * Real.Cos(right.Phi);
-        var y = left.Rho * Real.Sin(left.Phi) - right.Rho * Real.Sin(right.Phi);
+        var x = left.Rho * Real<T>.Cos(left.Phi) - right.Rho * Real<T>.Cos(right.Phi);
+        var y = left.Rho * Real<T>.Sin(left.Phi) - right.Rho * Real<T>.Sin(right.Phi);
         var z = left.Z - right.Z;
 
-        return new(Real.Hypot(x, y), Real.Atan2(y, x), z);
+        return new(Real<T>.Hypot(x, y), Real<T>.Atan2(y, x), z);
     }
 
-    public static CylindricalVector operator *(CylindricalVector left, CylindricalVector right)
+    public static CylindricalVector<T> operator *(CylindricalVector<T> left, CylindricalVector<T> right)
         => new(left.Rho * right.Rho, left.Phi * right.Phi, left.Z * right.Z);
 
-    public static CylindricalVector operator *(Real left, CylindricalVector right) => new(left * right.Rho, right.Phi, left * right.Z);
+    public static CylindricalVector<T> operator *(Real<T> left, CylindricalVector<T> right) => new(left * right.Rho, right.Phi, left * right.Z);
 
-    public static CylindricalVector operator *(CylindricalVector left, Real right) => new(left.Rho * right, left.Phi, left.Z * right);
+    public static CylindricalVector<T> operator *(CylindricalVector<T> left, Real<T> right) => new(left.Rho * right, left.Phi, left.Z * right);
 
     //
     // Equality
     //
 
-    public static bool operator ==(CylindricalVector left, CylindricalVector right)
+    public static bool operator ==(CylindricalVector<T> left, CylindricalVector<T> right)
         => left.Rho == right.Rho && left.Phi == right.Phi && left.Z == right.Z;
 
-    public static bool operator !=(CylindricalVector left, CylindricalVector right)
+    public static bool operator !=(CylindricalVector<T> left, CylindricalVector<T> right)
         => left.Rho != right.Rho || left.Phi != right.Phi || left.Z != right.Z;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is CylindricalVector other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is CylindricalVector<T> other && Equals(other);
 
-    public readonly bool Equals(CylindricalVector other)
+    public readonly bool Equals(CylindricalVector<T> other)
         => Rho.Equals(other.Rho) && Phi.Equals(other.Phi) && Z.Equals(other.Z);
 
     public override readonly int GetHashCode() => HashCode.Combine(Rho, Phi, Z);
@@ -187,14 +188,14 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     // Methods
     //
 
-    /// <inheritdoc cref="Vector3{T}.Cross(Vector3{T}, Vector3{T})"/>
-    public static CylindricalVector Cross(CylindricalVector left, CylindricalVector right)
+    /// <inheritdoc cref="Vector3{T, U}.Cross(Vector3{T, U}, Vector3{T, U})"/>
+    public static CylindricalVector<T> Cross(CylindricalVector<T> left, CylindricalVector<T> right)
     {
-        var x = left.Rho * Real.Sin(left.Phi) * right.Z - right.Rho * Real.Sin(right.Phi) * left.Z;
-        var y = right.Rho * Real.Cos(right.Phi) * left.Z - left.Rho * Real.Cos(left.Phi) * right.Z;
-        var z = -left.Rho * right.Rho * Real.Sin(left.Phi - right.Phi);
+        var x = left.Rho * Real<T>.Sin(left.Phi) * right.Z - right.Rho * Real<T>.Sin(right.Phi) * left.Z;
+        var y = right.Rho * Real<T>.Cos(right.Phi) * left.Z - left.Rho * Real<T>.Cos(left.Phi) * right.Z;
+        var z = -left.Rho * right.Rho * Real<T>.Sin(left.Phi - right.Phi);
 
-        return new(Real.Hypot(x, y), Real.Atan2(y, x), z);
+        return new(Real<T>.Hypot(x, y), Real<T>.Atan2(y, x), z);
     }
 
     /// <summary>Convert a vector in cartesian cordinates to one in cylindrical coordinates.</summary>
@@ -202,23 +203,23 @@ public struct CylindricalVector : IVector<CylindricalVector, Real>
     /// <param name="x">The vector to convert.</param>
     /// <returns>A cylindrical vector.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static CylindricalVector FromCartesian(Vector3<Real> x) => new(Real.Hypot(x.X1, x.X2), Real.Atan2(x.X2, x.X1), x.X3);
+    public static CylindricalVector<T> FromCartesian(Vector3<Real<T>, T> x) => new(Real<T>.Hypot(x.X1, x.X2), Real<T>.Atan2(x.X2, x.X1), x.X3);
 
-    public static Real InnerProduct(CylindricalVector left, CylindricalVector right)
-        => left.Rho * right.Rho * Real.Cos(left.Phi - right.Phi) + left.Z * right.Z;
+    public static Real<T> InnerProduct(CylindricalVector<T> left, CylindricalVector<T> right)
+        => left.Rho * right.Rho * Real<T>.Cos(left.Phi - right.Phi) + left.Z * right.Z;
 
-    public readonly Real Norm() => Real.Hypot(Rho, Z);
+    public readonly Real<T> Norm() => Real<T>.Hypot(Rho, Z);
 
-    public readonly CylindricalVector Normalize()
+    public readonly CylindricalVector<T> Normalize()
     {
-        var norm = Real.Hypot(Rho, Z);
+        var norm = Real<T>.Hypot(Rho, Z);
         return new(Rho / norm, Phi, Z / norm);
     }
 
-    public readonly Real[] ToArray() => [Rho, Phi, Z];
+    public readonly Real<T>[] ToArray() => [Rho, Phi, Z];
 
     /// <summary>Convert a vector in cylindrical coordinates to one in Cartesian coordinates.</summary>
     /// <returns>A vector in Cylindrical coordinates.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public readonly Vector3<Real> ToCartesian() => new(Rho * Real.Cos(Phi), Rho * Real.Sin(Phi), Z);
+    public readonly Vector3<Real<T>, T> ToCartesian() => new(Rho * Real<T>.Cos(Phi), Rho * Real<T>.Sin(Phi), Z);
 }

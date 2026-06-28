@@ -34,21 +34,21 @@ namespace Mathematics.NET.Benchmarks.Solvers;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class RK4IntegrationBenchmarks
 {
-    public State<Real>? SystemStateA;
-    public State<Real>? SystemStateB;
-    public RungeKutta4<Real> RK4 = new((t, x) => Real.Pow(Real.Sin(t), 2) * x);
+    public State<Real<double>, double>? SystemStateA;
+    public State<Real<double>, double>? SystemStateB;
+    public RungeKutta4<Real<double>, double> RK4 = new((t, x) => Real<double>.Pow(Real<double>.Sin(t), 2) * x);
 
     [GlobalSetup]
     public void GlobalSetup()
     {
-        var arrayA = new Real[100_000];
-        var arrayB = new Real[100_000];
+        var arrayA = new Real<double>[100_000];
+        var arrayB = new Real<double>[100_000];
 
         Array.Fill(arrayA, 2);
         Array.Fill(arrayB, 2);
 
-        Memory<Real> memoryA = arrayA;
-        Memory<Real> memoryB = arrayB;
+        Memory<Real<double>> memoryA = arrayA;
+        Memory<Real<double>> memoryB = arrayB;
 
         SystemStateA = new(memoryA, 0);
         SystemStateB = new(memoryB, 0);

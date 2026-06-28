@@ -25,49 +25,44 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.HighPerformance.Helpers;
-using Mathematics.NET.Core.Operations;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents a fourth-order Runge-Kutta solver.</summary>
-/// <typeparam name="TSI">A type that implements <see cref="IStateItem{TSC, TA, TN}"/>.</typeparam>
-/// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <param name="function">A function to use for the integration step.</param>
-public sealed class RungeKutta4<TSI, TA, TN>(Func<TN, TSI, TSI> function)
-    where TSI : IStateItem<TSI, TA, TN>
-    where TA
-    : I1DArrayRepresentable<TA, TN>,
-      IAdditionOperation<TA, TA>,
-      ISubtractionOperation<TA, TA>,
-      IMultiplicationOperation<TA, TN, TA>,
-      IUnaryMinusOperation<TA, TA>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+/// <typeparam name="TV">A type that implements <see cref="IVector{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <param name="function">A vector function to use for the integration step.</param>
+public sealed class RungeKutta4<TV, TN, TB>(Func<TN, TV, TV> function)
+    where TV : IVector<TV, TN, TB, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
-    private readonly struct RK4IntegrateAction(Func<TN, TSI, TSI> function, TN time, TN dt) : IRefAction<TSI>
+    private readonly struct RK4IntegrateAction(Func<TN, TV, TV> function, TN time, TN dt) : IRefAction<TV>
     {
-        private readonly Func<TN, TSI, TSI> _function = function;
+        private readonly Func<TN, TV, TV> _function = function;
         private readonly TN _time = time;
         private readonly TN _dt = dt;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invoke(ref TSI value)
+        public void Invoke(ref TV value)
         {
             var k1 = _function(_time, value);
-            var k2 = _function(_time + 0.5 * _dt, value + 0.5 * k1 * _dt);
-            var k3 = _function(_time + 0.5 * _dt, value + 0.5 * k2 * _dt);
+            var k2 = _function(_time + TB.CreateSaturating(0.5) * _dt, value + TB.CreateSaturating(0.5) * k1 * _dt);
+            var k3 = _function(_time + TB.CreateSaturating(0.5) * _dt, value + TB.CreateSaturating(0.5) * k2 * _dt);
             var k4 = _function(_time + _dt, value + k3 * _dt);
-            value += _dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
+            value += _dt / TB.CreateSaturating(6) * (k1 + TB.CreateSaturating(2) * (k2 + k3) + k4);
         }
     }
 
-    private readonly Func<TN, TSI, TSI> _function = function;
+    private readonly Func<TN, TV, TV> _function = function;
 
-    /// <inheritdoc cref="RungeKutta4{T}.Integrate(State{T}, T)"/>
-    public void Integrate(State<TSI, TA, TN> state, TN dt)
+    /// <inheritdoc cref="RungeKutta4{T, U}.Integrate(State{T, U}, T)"/>
+    public void Integrate(State<TV, TN, TB> state, TN dt)
     {
         var system = state.System.Span;
         var time = state.Time;
@@ -75,16 +70,16 @@ public sealed class RungeKutta4<TSI, TA, TN>(Func<TN, TSI, TSI> function)
         {
             ref var value = ref system[i];
             var k1 = _function(time, value);
-            var k2 = _function(time + 0.5 * dt, value + 0.5 * k1 * dt);
-            var k3 = _function(time + 0.5 * dt, value + 0.5 * k2 * dt);
+            var k2 = _function(time + TB.CreateSaturating(0.5) * dt, value + TB.CreateSaturating(0.5) * k1 * dt);
+            var k3 = _function(time + TB.CreateSaturating(0.5) * dt, value + TB.CreateSaturating(0.5) * k2 * dt);
             var k4 = _function(time + dt, value + k3 * dt);
-            value += dt / 6.0 * (k1 + 2 * (k2 + k3) + k4);
+            value += dt / TB.CreateSaturating(6) * (k1 + TB.CreateSaturating(2) * (k2 + k3) + k4);
         }
         state.Time += dt;
     }
 
-    /// <inheritdoc cref="RungeKutta4{T}.IntegrateParallel(State{T}, T)"/>
-    public void IntegrateParallel(State<TSI, TA, TN> state, TN dt)
+    /// <inheritdoc cref="RungeKutta4{T, U}.IntegrateParallel(State{T, U}, T)"/>
+    public void IntegrateParallel(State<TV, TN, TB> state, TN dt)
     {
         ParallelHelper.ForEach(state.System, new RK4IntegrateAction(_function, state.Time, dt));
         state.Time += dt;

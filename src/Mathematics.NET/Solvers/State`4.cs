@@ -25,27 +25,33 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry.Abstractions;
+using System.Numerics;
 using Mathematics.NET.LinearAlgebra.Abstractions;
+using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.Solvers;
 
 /// <summary>Represents the state of a system.</summary>
-/// <typeparam name="TR1T">A rank-one tensor.</typeparam>
-/// <typeparam name="TV">The backing type of the tensor.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="TI">The index of the tensor.</typeparam>
+/// <typeparam name="TSI">A type that implements <see cref="IStateItem{TSC, TA, TN, TB}"/>.</typeparam>
+/// <typeparam name="TA">An array-like object that supports addition and multiplication on its elements.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <param name="system">The system.</param>
 /// <param name="time">The time.</param>
-public sealed class State<TR1T, TV, TN, TI>(Memory<TR1T> system, TN time)
-    where TR1T : IRankOneTensor<TR1T, TV, TN, TI>
-    where TV : IVector<TV, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
-    where TI : IIndex
+public sealed class State<TSI, TA, TN, TB>(Memory<TSI> system, TN time)
+    where TSI : IStateItem<TSI, TA, TN, TB>
+    where TA
+    : I1DArrayRepresentable<TA, TN, TB, TB>,
+      IAdditionOperation<TA, TA>,
+      ISubtractionOperation<TA, TA>,
+      IMultiplicationOperation<TA, TN, TA>,
+      IUnaryMinusOperation<TA, TA>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
 {
-    /// <inheritdoc cref="State{T}.System"/>
-    public Memory<TR1T> System = system;
+    /// <inheritdoc cref="State{T, U}.System"/>
+    public Memory<TSI> System = system;
 
-    /// <inheritdoc cref="State{T}.Time"/>
+    /// <inheritdoc cref="State{T, U}.Time"/>
     public TN Time = time;
 }

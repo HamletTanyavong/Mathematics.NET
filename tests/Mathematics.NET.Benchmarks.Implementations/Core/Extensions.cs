@@ -33,10 +33,10 @@ namespace Mathematics.NET.Benchmarks.Implementations.Core;
 public static class Extensions
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Complex AsComplex(this Vector128<double> value)
-        => Unsafe.As<Vector128<double>, Complex>(ref value);
+    internal static Complex<double> AsComplex(this Vector128<double> value)
+        => Unsafe.As<Vector128<double>, Complex<double>>(ref value);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector128<double> AsVector128(this Complex value)
-        => Unsafe.As<Complex, Vector128<double>>(ref value);
+    internal static Vector128<double> AsVector128(this Complex<double> value)
+        => Unsafe.As<Complex<double>, Vector128<double>>(ref value);
 }

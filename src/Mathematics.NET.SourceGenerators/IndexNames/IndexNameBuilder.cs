@@ -59,7 +59,7 @@ internal sealed class IndexNameBuilder
         return CompilationUnit()
             .WithUsings(
                 List([
-                    UsingDirective("Mathematics.NET.DifferentialGeometry".CreateNameSyntaxFromNamespace())
+                    UsingDirective("Mathematics.NET.DifferentialGeometry.Abstractions".CreateNameSyntaxFromNamespace())
                         .WithUsingKeyword(
                             Token(
                                 TriviaList(
@@ -170,7 +170,7 @@ internal sealed class IndexNameBuilder
                         VariableDeclarator(
                             Identifier(
                                 TriviaList(),
-                                "DisplayString",
+                                "Name",
                                 TriviaList(Space)))
                             .WithInitializer(
                                 EqualsValueClause(
@@ -212,7 +212,7 @@ internal sealed class IndexNameBuilder
                     TriviaList(Space))),
             Identifier(
                 TriviaList(),
-                "DisplayString",
+                "Name",
                 TriviaList(Space)))
             .WithModifiers(
                 TokenList(
@@ -226,7 +226,7 @@ internal sealed class IndexNameBuilder
                     IdentifierName("IIndexName")))
             .WithExpressionBody(
                 ArrowExpressionClause(
-                    IdentifierName("DisplayString"))
+                    IdentifierName("Name"))
                     .WithArrowToken(
                         Token(
                             TriviaList(),
@@ -263,7 +263,7 @@ internal sealed class IndexNameBuilder
                                 QualifiedCref(
                                     IdentifierName("IIndexName"),
                                     NameMemberCref(
-                                        IdentifierName("DisplayString")))))),
+                                        IdentifierName("Name")))))),
                 XmlText()
                     .WithTextTokens(
                         TokenList(

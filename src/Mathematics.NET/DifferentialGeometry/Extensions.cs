@@ -25,7 +25,9 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry;
@@ -38,36 +40,40 @@ public static class Extensions
     //
 
     /// <summary>Compute the inverse of a metric tensor with lower indices.</summary>
-    /// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U, V, W}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1N">The first index of the metric tensor.</typeparam>
     /// <typeparam name="TI2N">The second index of the metric tensor.</typeparam>
     /// <param name="metric">The metric tensor.</param>
     /// <returns>A metric tensor with upper indices.</returns>
-    public static MetricTensor<TSM, TN, Upper, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, Lower, TI1N, TI2N> metric)
-        where TSM : ISquareMatrix<TSM, TN>
-        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    public static MetricTensor<TSM, TN, TB, Upper, TI1N, TI2N> Inverse<TSM, TN, TB, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, TB, Lower, TI1N, TI2N> metric)
+        where TSM : ISquareMatrix<TSM, TN, TB, TB>
+        where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+        where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        var inverse = Unsafe.As<MetricTensor<TSM, TN, Lower, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
-        return Unsafe.As<TSM, MetricTensor<TSM, TN, Upper, TI1N, TI2N>>(ref inverse);
+        var inverse = Unsafe.As<MetricTensor<TSM, TN, TB, Lower, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
+        return Unsafe.As<TSM, MetricTensor<TSM, TN, TB, Upper, TI1N, TI2N>>(ref inverse);
     }
 
     /// <summary>Compute the inverse of a metric tensor with upper indices.</summary>
-    /// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TSM">A type that implements <see cref="ISquareMatrix{T, U, V, W}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1N">The first index of the metric tensor.</typeparam>
     /// <typeparam name="TI2N">The second index of the metric tensor.</typeparam>
     /// <param name="metric">The metric tensor.</param>
     /// <returns>A metric tensor with lower indices.</returns>
-    public static MetricTensor<TSM, TN, Lower, TI1N, TI2N> Inverse<TSM, TN, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, Upper, TI1N, TI2N> metric)
-        where TSM : ISquareMatrix<TSM, TN>
-        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    public static MetricTensor<TSM, TN, TB, Lower, TI1N, TI2N> Inverse<TSM, TN, TB, TI1N, TI2N>(this ref readonly MetricTensor<TSM, TN, TB, Upper, TI1N, TI2N> metric)
+        where TSM : ISquareMatrix<TSM, TN, TB, TB>
+        where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+        where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        var inverse = Unsafe.As<MetricTensor<TSM, TN, Upper, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
-        return Unsafe.As<TSM, MetricTensor<TSM, TN, Lower, TI1N, TI2N>>(ref inverse);
+        var inverse = Unsafe.As<MetricTensor<TSM, TN, TB, Upper, TI1N, TI2N>, TSM>(ref Unsafe.AsRef(in metric)).Inverse();
+        return Unsafe.As<TSM, MetricTensor<TSM, TN, TB, Lower, TI1N, TI2N>>(ref inverse);
     }
 }

@@ -34,8 +34,8 @@ namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 public static class Vector4Impl
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector4<T> AddNaive<T>(Vector4<T> left, Vector4<T> right)
-        where T : IComplex<T>
+    public static Vector4<T, double> AddNaive<T>(Vector4<T, double> left, Vector4<T, double> right)
+        where T : IComplex<T, double, double>
     {
         return new(
             left.X1 + right.X1,
@@ -45,14 +45,14 @@ public static class Vector4Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector4<T> AddSimd<T>(Vector4<T> left, Vector4<T> right)
-        where T : IComplex<T>
+    public static Vector4<T, double> AddSimd<T>(Vector4<T, double> left, Vector4<T, double> right)
+        where T : IComplex<T, double, double>
     {
-        if (typeof(T) == typeof(Real))
+        if (typeof(T) == typeof(Real<double>))
         {
             return Vector256.Add(left.AsVector256(), right.AsVector256()).AsVector4<T>();
         }
-        else if (typeof(T) == typeof(Complex))
+        else if (typeof(T) == typeof(Complex<double>))
         {
             return Vector512.Add(left.AsVector512(), right.AsVector512()).AsVector4<T>();
         }
@@ -67,8 +67,8 @@ public static class Vector4Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool EqualsNaive<T>(Vector4<T> left, Vector4<T> right)
-        where T : IComplex<T>
+    public static bool EqualsNaive<T>(Vector4<T, double> left, Vector4<T, double> right)
+        where T : IComplex<T, double, double>
     {
         return left.X1 == right.X1
             && left.X2 == right.X2
@@ -77,14 +77,14 @@ public static class Vector4Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool EqualsSimd<T>(Vector4<T> left, Vector4<T> right)
-        where T : IComplex<T>
+    public static bool EqualsSimd<T>(Vector4<T, double> left, Vector4<T, double> right)
+        where T : IComplex<T, double, double>
     {
-        if (typeof(T) == typeof(Real))
+        if (typeof(T) == typeof(Real<double>))
         {
             return Vector256.EqualsAll(left.AsVector256(), right.AsVector256());
         }
-        else if (typeof(T) == typeof(Complex))
+        else if (typeof(T) == typeof(Complex<double>))
         {
             return Vector512.EqualsAll(left.AsVector512(), right.AsVector512());
         }
@@ -98,8 +98,8 @@ public static class Vector4Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector4<T> MultiplyNaive<T>(Vector4<T> left, Vector4<T> right)
-        where T : IComplex<T>
+    public static Vector4<T, double> MultiplyNaive<T>(Vector4<T, double> left, Vector4<T, double> right)
+        where T : IComplex<T, double, double>
     {
         return new(
             left.X1 * right.X1,
@@ -109,10 +109,10 @@ public static class Vector4Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector4<T> MultiplySimd<T>(Vector4<T> left, Vector4<T> right)
-        where T : IComplex<T>
+    public static Vector4<T, double> MultiplySimd<T>(Vector4<T, double> left, Vector4<T, double> right)
+        where T : IComplex<T, double, double>
     {
-        if (typeof(T) == typeof(Real))
+        if (typeof(T) == typeof(Real<double>))
         {
             return Vector256.Multiply(left.AsVector256(), right.AsVector256()).AsVector4<T>();
         }
@@ -127,14 +127,14 @@ public static class Vector4Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Real NormNaive<T>(this Vector4<T> vector)
-        where T : IComplex<T>
+    public static Real<double> NormNaive<T>(this Vector4<T, double> vector)
+        where T : IComplex<T, double, double>
     {
         Span<double> components = [
-            (vector.X1 * T.Conjugate(vector.X1)).Re.AsDouble(),
-            (vector.X2 * T.Conjugate(vector.X2)).Re.AsDouble(),
-            (vector.X3 * T.Conjugate(vector.X3)).Re.AsDouble(),
-            (vector.X4 * T.Conjugate(vector.X4)).Re.AsDouble()];
+            (vector.X1 * T.Conjugate(vector.X1)).Re.AsBackingType(),
+            (vector.X2 * T.Conjugate(vector.X2)).Re.AsBackingType(),
+            (vector.X3 * T.Conjugate(vector.X3)).Re.AsBackingType(),
+            (vector.X4 * T.Conjugate(vector.X4)).Re.AsBackingType()];
 
         var max = components[0];
         for (int i = 1; i < 4; i++)
@@ -156,14 +156,14 @@ public static class Vector4Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Real NormSimd<T>(this Vector4<T> vector)
-        where T : IComplex<T>
+    public static Real<double> NormSimd<T>(this Vector4<T, double> vector)
+        where T : IComplex<T, double, double>
     {
         var vec = Vector256<double>.Zero
-            .WithElement(0, (vector.X1 * T.Conjugate(vector.X1)).Re.AsDouble())
-            .WithElement(1, (vector.X2 * T.Conjugate(vector.X2)).Re.AsDouble())
-            .WithElement(2, (vector.X3 * T.Conjugate(vector.X3)).Re.AsDouble())
-            .WithElement(3, (vector.X4 * T.Conjugate(vector.X4)).Re.AsDouble());
+            .WithElement(0, (vector.X1 * T.Conjugate(vector.X1)).Re.AsBackingType())
+            .WithElement(1, (vector.X2 * T.Conjugate(vector.X2)).Re.AsBackingType())
+            .WithElement(2, (vector.X3 * T.Conjugate(vector.X3)).Re.AsBackingType())
+            .WithElement(3, (vector.X4 * T.Conjugate(vector.X4)).Re.AsBackingType());
 
         var max = vec[0];
         for (int i = 1; i < 4; i++)
@@ -174,6 +174,6 @@ public static class Vector4Impl
             }
         }
 
-        return max * Real.Sqrt(Vector256.Sum(Vector256.Divide(vec, max * max)));
+        return max * Real<double>.Sqrt(Vector256.Sum(Vector256.Divide(vec, max * max)));
     }
 }

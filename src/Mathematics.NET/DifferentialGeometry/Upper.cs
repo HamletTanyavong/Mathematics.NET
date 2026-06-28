@@ -32,8 +32,8 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents an upper index position.</summary>
 public readonly struct Upper : IIndexPosition
 {
-    /// <inheritdoc cref="IIndexPosition.DisplayString"/>
-    public const string DisplayString = "Upper";
+    /// <inheritdoc cref="IIndexPosition.Name"/>
+    public const string DisplayString = nameof(Upper);
 
-    static string IIndexPosition.DisplayString => DisplayString;
+    static string IIndexPosition.Name => DisplayString;
 }

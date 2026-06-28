@@ -35,7 +35,7 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class Matrix4x4TransposeBenchmarks
 {
-    public Matrix4x4<Real> A { get; set; }
+    public Matrix4x4<Real<double>, double> A { get; set; }
 
     public void GlobalSetup()
     {
@@ -47,8 +47,8 @@ public class Matrix4x4TransposeBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Matrix4x4<Real> TransposeNaive() => A.TransposeNaive();
+    public Matrix4x4<Real<double>, double> TransposeNaive() => A.TransposeNaive();
 
     [Benchmark]
-    public Matrix4x4<Real> TransposeSimdV1() => A.TransposeSimdV1();
+    public Matrix4x4<Real<double>, double> TransposeSimdV1() => A.TransposeSimdV1();
 }

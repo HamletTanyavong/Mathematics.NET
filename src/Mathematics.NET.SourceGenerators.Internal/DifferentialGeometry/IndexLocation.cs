@@ -29,6 +29,6 @@ namespace Mathematics.NET.SourceGenerators.Internal.DifferentialGeometry;
 
 public enum IndexLocation : byte
 {
-    First = 3,
-    Second = 4
+    First = Constants.IndexOfFirstIndex,
+    Second = Constants.IndexOfFirstIndex + 1
 }

@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.LinearAlgebra.Abstractions;
@@ -33,33 +34,35 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 3x3 matrix.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
-    where T : IComplex<T>
+public struct Matrix3x3<T, U> : ISquareMatrix<Matrix3x3<T, U>, T, U, U>
+    where T : IComplex<T, U, U>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
-    private static readonly Matrix3x3<T> s_identity = CreateDiagonal(T.One, T.One, T.One);
+    private static readonly Matrix3x3<T, U> s_identity = CreateDiagonal(T.One, T.One, T.One);
 
     public const int Components = 9;
     public const int E1Components = 3;
     public const int E2Components = 3;
 
-    public static readonly Matrix3x3<T> NaM = CreateDiagonal(T.NaN, T.NaN, T.NaN);
+    public static readonly Matrix3x3<T, U> NaM = CreateDiagonal(T.NaN, T.NaN, T.NaN);
 
-    public Vector3<T> X1;
-    public Vector3<T> X2;
-    public Vector3<T> X3;
+    public Vector3<T, U> X1;
+    public Vector3<T, U> X2;
+    public Vector3<T, U> X3;
 
     /// <summary>Create a 3x3 matrix given a set of 9 values.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e12">The $ e_{12} $ component.</param>
-    /// <param name="e13">The $ e_{13} $ component.</param>
-    /// <param name="e21">The $ e_{21} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
-    /// <param name="e23">The $ e_{23} $ component.</param>
-    /// <param name="e31">The $ e_{31} $ component.</param>
-    /// <param name="e32">The $ e_{32} $ component.</param>
-    /// <param name="e33">The $ e_{33} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e12">The <c>e_{12}</c> component.</param>
+    /// <param name="e13">The <c>e_{13}</c> component.</param>
+    /// <param name="e21">The <c>e_{21}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
+    /// <param name="e23">The <c>e_{23}</c> component.</param>
+    /// <param name="e31">The <c>e_{31}</c> component.</param>
+    /// <param name="e32">The <c>e_{32}</c> component.</param>
+    /// <param name="e33">The <c>e_{33}</c> component.</param>
     public Matrix3x3(
         T e11, T e12, T e13,
         T e21, T e22, T e23,
@@ -74,11 +77,11 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     // Constants
     //
 
-    static int IArrayRepresentable<Matrix3x3<T>, T>.Components => Components;
-    static int I2DArrayRepresentable<Matrix3x3<T>, T>.E1Components => E1Components;
-    static int I2DArrayRepresentable<Matrix3x3<T>, T>.E2Components => E2Components;
-    static Matrix3x3<T> ISquareMatrix<Matrix3x3<T>, T>.Identity => s_identity;
-    static Matrix3x3<T> IMatrix<Matrix3x3<T>, T>.NaM => NaM;
+    static int IArrayRepresentable<Matrix3x3<T, U>, T, U, U>.Components => Components;
+    static int I2DArrayRepresentable<Matrix3x3<T, U>, T, U, U>.E1Components => E1Components;
+    static int I2DArrayRepresentable<Matrix3x3<T, U>, T, U, U>.E2Components => E2Components;
+    static Matrix3x3<T, U> ISquareMatrix<Matrix3x3<T, U>, T, U, U>.Identity => s_identity;
+    static Matrix3x3<T, U> IMatrix<Matrix3x3<T, U>, T, U, U>.NaM => NaM;
 
     //
     // Indexer
@@ -107,9 +110,9 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     // Operators
     //
 
-    public static Matrix3x3<T> operator -(Matrix3x3<T> matrix)
+    public static Matrix3x3<T, U> operator -(Matrix3x3<T, U> matrix)
     {
-        Unsafe.SkipInit(out Matrix3x3<T> result);
+        Unsafe.SkipInit(out Matrix3x3<T, U> result);
 
         result.X1 = -matrix.X1;
         result.X2 = -matrix.X2;
@@ -118,11 +121,11 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static Matrix3x3<T> operator +(Matrix3x3<T> matrix) => matrix;
+    public static Matrix3x3<T, U> operator +(Matrix3x3<T, U> matrix) => matrix;
 
-    public static Matrix3x3<T> operator +(Matrix3x3<T> left, Matrix3x3<T> right)
+    public static Matrix3x3<T, U> operator +(Matrix3x3<T, U> left, Matrix3x3<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix3x3<T> result);
+        Unsafe.SkipInit(out Matrix3x3<T, U> result);
 
         result.X1 = left.X1 + left.X1;
         result.X2 = left.X2 + left.X2;
@@ -131,9 +134,9 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static Matrix3x3<T> operator -(Matrix3x3<T> left, Matrix3x3<T> right)
+    public static Matrix3x3<T, U> operator -(Matrix3x3<T, U> left, Matrix3x3<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix3x3<T> result);
+        Unsafe.SkipInit(out Matrix3x3<T, U> result);
 
         result.X1 = left.X1 - left.X1;
         result.X2 = left.X2 - left.X2;
@@ -142,9 +145,9 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static Matrix3x3<T> operator *(Matrix3x3<T> left, Matrix3x3<T> right)
+    public static Matrix3x3<T, U> operator *(Matrix3x3<T, U> left, Matrix3x3<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix3x3<T> result);
+        Unsafe.SkipInit(out Matrix3x3<T, U> result);
 
         result.X1 = right.X1 * left.X1.X1;
         result.X1 += right.X2 * left.X1.X2;
@@ -161,9 +164,9 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static Matrix3x3<T> operator *(T left, Matrix3x3<T> right)
+    public static Matrix3x3<T, U> operator *(T left, Matrix3x3<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix3x3<T> result);
+        Unsafe.SkipInit(out Matrix3x3<T, U> result);
 
         result.X1 = left * right.X1;
         result.X2 = left * right.X2;
@@ -172,9 +175,9 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static Matrix3x3<T> operator *(Matrix3x3<T> left, T right)
+    public static Matrix3x3<T, U> operator *(Matrix3x3<T, U> left, T right)
     {
-        Unsafe.SkipInit(out Matrix3x3<T> result);
+        Unsafe.SkipInit(out Matrix3x3<T, U> result);
 
         result.X1 = left.X1 * right;
         result.X2 = left.X2 * right;
@@ -187,15 +190,15 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     // Equality
     //
 
-    public static bool operator ==(Matrix3x3<T> left, Matrix3x3<T> right)
+    public static bool operator ==(Matrix3x3<T, U> left, Matrix3x3<T, U> right)
         => left.X1 == right.X1 && left.X2 == right.X2 && left.X3 == right.X3;
 
-    public static bool operator !=(Matrix3x3<T> left, Matrix3x3<T> right)
+    public static bool operator !=(Matrix3x3<T, U> left, Matrix3x3<T, U> right)
         => left.X1 != right.X1 || left.X2 != right.X2 || left.X3 != right.X3;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Matrix3x3<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Matrix3x3<T, U> other && Equals(other);
 
-    public bool Equals(Matrix3x3<T> value)
+    public bool Equals(Matrix3x3<T, U> value)
         => X1.Equals(value.X1) && X2.Equals(value.X2) && X3.Equals(value.X3);
 
     public override readonly int GetHashCode() => HashCode.Combine(X1, X2, X3);
@@ -206,7 +209,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
 
     public string ToString(string? format, IFormatProvider? provider)
 #pragma warning disable EPS06
-        => this.AsSpan2D().ToDisplayString();
+        => this.AsSpan2D().ToString<T, U, U>();
 #pragma warning restore EPS06
 
     //
@@ -214,11 +217,11 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
     //
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
-    /// <param name="e33">The $ e_{33} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
+    /// <param name="e33">The <c>e_{33}</c> component.</param>
     /// <returns>A diagonal matrix.</returns>
-    public static Matrix3x3<T> CreateDiagonal(T e11, T e22, T e33)
+    public static Matrix3x3<T, U> CreateDiagonal(T e11, T e22, T e33)
     {
         return new(
             e11, T.Zero, T.Zero,
@@ -239,7 +242,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return a * ei_fh - b * di_fg + c * dh_eg;
     }
 
-    public readonly Matrix3x3<T> Inverse()
+    public readonly Matrix3x3<T, U> Inverse()
     {
         T a = X1.X1, b = X1.X2, c = X1.X3;
         T d = X2.X1, e = X2.X2, f = X2.X3;
@@ -254,7 +257,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
             return NaM;
         var invDet = T.One / det;
 
-        Matrix3x3<T> result;
+        Matrix3x3<T, U> result;
 
         result.X1.X1 = ei_fh * invDet;
         result.X2.X1 = -di_fg * invDet;
@@ -279,7 +282,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
         return result;
     }
 
-    public static bool IsNaM(Matrix3x3<T> matrix)
+    public static bool IsNaM(Matrix3x3<T, U> matrix)
         => T.IsNaN(matrix.X1.X1) && T.IsNaN(matrix.X2.X2) && T.IsNaN(matrix.X3.X3);
 
     public unsafe T[,] ToArray()
@@ -294,7 +297,7 @@ public struct Matrix3x3<T> : ISquareMatrix<Matrix3x3<T>, T>
 
     public readonly T Trace() => X1.X1 + X2.X2 + X3.X3;
 
-    public readonly Matrix3x3<T> Transpose()
+    public readonly Matrix3x3<T, U> Transpose()
     {
         return new(
             X1.X1, X2.X1, X3.X1,

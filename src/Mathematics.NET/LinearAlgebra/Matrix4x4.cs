@@ -26,6 +26,7 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
@@ -35,41 +36,43 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a 4x4 matrix.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 [StructLayout(LayoutKind.Sequential)]
-public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
-    where T : IComplex<T>
+public struct Matrix4x4<T, U> : ISquareMatrix<Matrix4x4<T, U>, T, U, U>
+    where T : IComplex<T, U, U>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
-    private static readonly Matrix4x4<T> s_identity = CreateDiagonal(T.One, T.One, T.One, T.One);
+    private static readonly Matrix4x4<T, U> s_identity = CreateDiagonal(T.One, T.One, T.One, T.One);
 
     public const int Components = 16;
     public const int E1Components = 4;
     public const int E2Components = 4;
 
-    public static readonly Matrix4x4<T> NaM = CreateDiagonal(T.NaN, T.NaN, T.NaN, T.NaN);
+    public static readonly Matrix4x4<T, U> NaM = CreateDiagonal(T.NaN, T.NaN, T.NaN, T.NaN);
 
-    public Vector4<T> X1;
-    public Vector4<T> X2;
-    public Vector4<T> X3;
-    public Vector4<T> X4;
+    public Vector4<T, U> X1;
+    public Vector4<T, U> X2;
+    public Vector4<T, U> X3;
+    public Vector4<T, U> X4;
 
     /// <summary>Create a 4x4 matrix given a set of 16 values.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e12">The $ e_{12} $ component.</param>
-    /// <param name="e13">The $ e_{13} $ component.</param>
-    /// <param name="e14">The $ e_{14} $ component.</param>
-    /// <param name="e21">The $ e_{21} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
-    /// <param name="e23">The $ e_{23} $ component.</param>
-    /// <param name="e24">The $ e_{24} $ component.</param>
-    /// <param name="e31">The $ e_{31} $ component.</param>
-    /// <param name="e32">The $ e_{32} $ component.</param>
-    /// <param name="e33">The $ e_{33} $ component.</param>
-    /// <param name="e34">The $ e_{34} $ component.</param>
-    /// <param name="e41">The $ e_{41} $ component.</param>
-    /// <param name="e42">The $ e_{42} $ component.</param>
-    /// <param name="e43">The $ e_{43} $ component.</param>
-    /// <param name="e44">The $ e_{44} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e12">The <c>e_{12}</c> component.</param>
+    /// <param name="e13">The <c>e_{13}</c> component.</param>
+    /// <param name="e14">The <c>e_{14}</c> component.</param>
+    /// <param name="e21">The <c>e_{21}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
+    /// <param name="e23">The <c>e_{23}</c> component.</param>
+    /// <param name="e24">The <c>e_{24}</c> component.</param>
+    /// <param name="e31">The <c>e_{31}</c> component.</param>
+    /// <param name="e32">The <c>e_{32}</c> component.</param>
+    /// <param name="e33">The <c>e_{33}</c> component.</param>
+    /// <param name="e34">The <c>e_{34}</c> component.</param>
+    /// <param name="e41">The <c>e_{41}</c> component.</param>
+    /// <param name="e42">The <c>e_{42}</c> component.</param>
+    /// <param name="e43">The <c>e_{43}</c> component.</param>
+    /// <param name="e44">The <c>e_{44}</c> component.</param>
     public Matrix4x4(
         T e11, T e12, T e13, T e14,
         T e21, T e22, T e23, T e24,
@@ -86,11 +89,11 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     // Constants
     //
 
-    static int IArrayRepresentable<Matrix4x4<T>, T>.Components => Components;
-    static int I2DArrayRepresentable<Matrix4x4<T>, T>.E1Components => E1Components;
-    static int I2DArrayRepresentable<Matrix4x4<T>, T>.E2Components => E2Components;
-    static Matrix4x4<T> ISquareMatrix<Matrix4x4<T>, T>.Identity => s_identity;
-    static Matrix4x4<T> IMatrix<Matrix4x4<T>, T>.NaM => NaM;
+    static int IArrayRepresentable<Matrix4x4<T, U>, T, U, U>.Components => Components;
+    static int I2DArrayRepresentable<Matrix4x4<T, U>, T, U, U>.E1Components => E1Components;
+    static int I2DArrayRepresentable<Matrix4x4<T, U>, T, U, U>.E2Components => E2Components;
+    static Matrix4x4<T, U> ISquareMatrix<Matrix4x4<T, U>, T, U, U>.Identity => s_identity;
+    static Matrix4x4<T, U> IMatrix<Matrix4x4<T, U>, T, U, U>.NaM => NaM;
 
     //
     // Indexer
@@ -119,9 +122,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     // Operators
     //
 
-    public static Matrix4x4<T> operator -(Matrix4x4<T> matrix)
+    public static Matrix4x4<T, U> operator -(Matrix4x4<T, U> matrix)
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, U> result);
 
         result.X1 = -matrix.X1;
         result.X2 = -matrix.X2;
@@ -131,11 +134,11 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static Matrix4x4<T> operator +(Matrix4x4<T> matrix) => matrix;
+    public static Matrix4x4<T, U> operator +(Matrix4x4<T, U> matrix) => matrix;
 
-    public static Matrix4x4<T> operator +(Matrix4x4<T> left, Matrix4x4<T> right)
+    public static Matrix4x4<T, U> operator +(Matrix4x4<T, U> left, Matrix4x4<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, U> result);
 
         result.X1 = left.X1 + right.X1;
         result.X2 = left.X2 + right.X2;
@@ -145,9 +148,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static Matrix4x4<T> operator -(Matrix4x4<T> left, Matrix4x4<T> right)
+    public static Matrix4x4<T, U> operator -(Matrix4x4<T, U> left, Matrix4x4<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, U> result);
 
         result.X1 = left.X1 - right.X1;
         result.X2 = left.X2 - right.X2;
@@ -157,9 +160,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static Matrix4x4<T> operator *(Matrix4x4<T> left, Matrix4x4<T> right)
+    public static Matrix4x4<T, U> operator *(Matrix4x4<T, U> left, Matrix4x4<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, U> result);
 
         result.X1 = right.X1 * left.X1.X1;
         result.X1 += right.X2 * left.X1.X2;
@@ -184,9 +187,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static Matrix4x4<T> operator *(T left, Matrix4x4<T> right)
+    public static Matrix4x4<T, U> operator *(T left, Matrix4x4<T, U> right)
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, U> result);
 
         result.X1 = left * right.X1;
         result.X2 = left * right.X2;
@@ -196,9 +199,9 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static Matrix4x4<T> operator *(Matrix4x4<T> left, T right)
+    public static Matrix4x4<T, U> operator *(Matrix4x4<T, U> left, T right)
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, U> result);
 
         result.X1 = left.X1 * right;
         result.X2 = left.X2 * right;
@@ -212,15 +215,15 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     // Equality
     //
 
-    public static bool operator ==(Matrix4x4<T> left, Matrix4x4<T> right)
+    public static bool operator ==(Matrix4x4<T, U> left, Matrix4x4<T, U> right)
         => left.X1 == right.X1 && left.X2 == right.X2 && left.X3 == right.X3 && left.X4 == right.X4;
 
-    public static bool operator !=(Matrix4x4<T> left, Matrix4x4<T> right)
+    public static bool operator !=(Matrix4x4<T, U> left, Matrix4x4<T, U> right)
         => left.X1 != right.X1 || left.X2 != right.X2 || left.X3 != right.X3 || left.X4 != right.X4;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Matrix4x4<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Matrix4x4<T, U> other && Equals(other);
 
-    public bool Equals(Matrix4x4<T> value)
+    public bool Equals(Matrix4x4<T, U> value)
         => X1.Equals(value.X1) && X2.Equals(value.X2) && X3.Equals(value.X3) && X4.Equals(value.X4);
 
     public override readonly int GetHashCode() => HashCode.Combine(X1, X2, X3, X4);
@@ -231,7 +234,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
 
     public string ToString(string? format, IFormatProvider? provider)
 #pragma warning disable EPS06
-        => this.AsSpan2D().ToDisplayString(format, provider);
+        => this.AsSpan2D().ToString<T, U, U>(format, provider);
 #pragma warning restore EPS06
 
     //
@@ -239,12 +242,12 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
     //
 
     /// <summary>Create a diagonal matrix from specified values along the diagonal.</summary>
-    /// <param name="e11">The $ e_{11} $ component.</param>
-    /// <param name="e22">The $ e_{22} $ component.</param>
-    /// <param name="e33">The $ e_{33} $ component.</param>
-    /// <param name="e44">The $ e_{44} $ component.</param>
+    /// <param name="e11">The <c>e_{11}</c> component.</param>
+    /// <param name="e22">The <c>e_{22}</c> component.</param>
+    /// <param name="e33">The <c>e_{33}</c> component.</param>
+    /// <param name="e44">The <c>e_{44}</c> component.</param>
     /// <returns>A diagonal matrix.</returns>
-    public static Matrix4x4<T> CreateDiagonal(T e11, T e22, T e33, T e44)
+    public static Matrix4x4<T, U> CreateDiagonal(T e11, T e22, T e33, T e44)
     {
         return new(
             e11, T.Zero, T.Zero, T.Zero,
@@ -273,7 +276,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
                d * (e * jo_kn - f * io_km + g * in_jm);
     }
 
-    public readonly Matrix4x4<T> Inverse()
+    public readonly Matrix4x4<T, U> Inverse()
     {
         T a = X1.X1, b = X1.X2, c = X1.X3, d = X1.X4;
         T e = X2.X1, f = X2.X2, g = X2.X3, h = X2.X4;
@@ -294,9 +297,21 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
 
         T det = a * a11 + b * a12 + c * a13 + d * a14;
 
-        Matrix4x4<T> result;
-        if (T.Abs(det) < Precision.DblMinPositive)
-            return NaM;
+        Matrix4x4<T, U> result;
+
+        switch (typeof(U))
+        {
+            case var t when t == typeof(float):
+                if (T.Abs(det) < U.CreateSaturating(Precision.FltMinPositive))
+                    return NaM;
+                break;
+            case var t when t == typeof(double):
+                if (T.Abs(det) < U.CreateSaturating(Precision.DblMinPositive))
+                    return NaM;
+                break;
+            default:
+                break;
+        }
         T invDet = T.One / det;
 
         result.X1.X1 = a11 * invDet;
@@ -336,7 +351,7 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
         return result;
     }
 
-    public static bool IsNaM(Matrix4x4<T> matrix)
+    public static bool IsNaM(Matrix4x4<T, U> matrix)
         => T.IsNaN(matrix.X1.X1) && T.IsNaN(matrix.X2.X2) && T.IsNaN(matrix.X3.X3) && T.IsNaN(matrix.X4.X4);
 
     public unsafe T[,] ToArray()
@@ -351,30 +366,56 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
 
     public readonly T Trace() => X1.X1 + X2.X2 + X3.X3 + X3.X4;
 
-    public readonly Matrix4x4<T> Transpose()
+    public readonly Matrix4x4<T, U> Transpose()
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, U> result);
 
-        if (typeof(T) == typeof(Real))
+        if (Avx.IsSupported)
         {
-            if (Avx.IsSupported)
+            switch (typeof(T))
             {
-                var x1 = X1.AsVector256();
-                var x2 = X2.AsVector256();
-                var x3 = X3.AsVector256();
-                var x4 = X4.AsVector256();
+                case var t when t == typeof(Real<float>):
+                    {
+                        var x1 = X1.AsVector128OfSingle();
+                        var x2 = X2.AsVector128OfSingle();
+                        var x3 = X3.AsVector128OfSingle();
+                        var x4 = X4.AsVector128OfSingle();
 
-                var l12 = Avx.UnpackLow(x1, x2);
-                var l34 = Avx.UnpackLow(x3, x4);
-                var u12 = Avx.UnpackHigh(x1, x2);
-                var u34 = Avx.UnpackHigh(x3, x4);
+#pragma warning disable IDE0002
+                        var l12 = Avx.UnpackLow(x1, x2);
+                        var l34 = Avx.UnpackLow(x3, x4);
+                        var u12 = Avx.UnpackHigh(x1, x2);
+                        var u34 = Avx.UnpackHigh(x3, x4);
+#pragma warning restore IDE0002
 
-                result.X1 = l12.WithUpper(l34.GetLower()).AsVector4<T>();
-                result.X2 = u12.WithUpper(u34.GetLower()).AsVector4<T>();
-                result.X3 = l34.WithLower(l12.GetUpper()).AsVector4<T>();
-                result.X4 = u34.WithLower(u12.GetUpper()).AsVector4<T>();
+                        result.X1 = l12.WithUpper(l34.GetLower()).AsVector4FromSingle<T, U>();
+                        result.X2 = u12.WithUpper(u34.GetLower()).AsVector4FromSingle<T, U>();
+                        result.X3 = l34.WithLower(l12.GetUpper()).AsVector4FromSingle<T, U>();
+                        result.X4 = u34.WithLower(u12.GetUpper()).AsVector4FromSingle<T, U>();
 
-                return result;
+                        return result;
+                    }
+                case var t when t == typeof(Real<double>):
+                    {
+                        var x1 = X1.AsVector256OfDouble();
+                        var x2 = X2.AsVector256OfDouble();
+                        var x3 = X3.AsVector256OfDouble();
+                        var x4 = X4.AsVector256OfDouble();
+
+                        var l12 = Avx.UnpackLow(x1, x2);
+                        var l34 = Avx.UnpackLow(x3, x4);
+                        var u12 = Avx.UnpackHigh(x1, x2);
+                        var u34 = Avx.UnpackHigh(x3, x4);
+
+                        result.X1 = l12.WithUpper(l34.GetLower()).AsVector4FromDouble<T, U>();
+                        result.X2 = u12.WithUpper(u34.GetLower()).AsVector4FromDouble<T, U>();
+                        result.X3 = l34.WithLower(l12.GetUpper()).AsVector4FromDouble<T, U>();
+                        result.X4 = u34.WithLower(u12.GetUpper()).AsVector4FromDouble<T, U>();
+
+                        return result;
+                    }
+                default:
+                    break;
             }
         }
 
@@ -385,4 +426,31 @@ public struct Matrix4x4<T> : ISquareMatrix<Matrix4x4<T>, T>
 
         return result;
     }
+}
+
+file static class Extensions
+{
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector128<float> AsVector128OfSingle<T, U>(this Vector4<T, U> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector4<T, U>, Vector128<float>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector256<double> AsVector256OfDouble<T, U>(this Vector4<T, U> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector4<T, U>, Vector256<double>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T, U> AsVector4FromSingle<T, U>(this Vector128<float> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector128<float>, Vector4<T, U>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T, U> AsVector4FromDouble<T, U>(this Vector256<double> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector256<double>, Vector4<T, U>>(ref value);
 }

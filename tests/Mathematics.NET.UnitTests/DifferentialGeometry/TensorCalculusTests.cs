@@ -37,8 +37,8 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Tensor Calculus")]
 public sealed class TensorCalculusTests
 {
-    public static RMMetricTensorField4x4<GradientTape<Real>, Real, Index<Upper, PIN>> Metric { get; set; } = new();
-    public static RMTensorField4<GradientTape<Real>, Real, Upper, Index<Upper, PIN>> Tensor { get; set; } = new();
+    public static RMMetricTensorField4x4<GradientTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Metric { get; set; } = new();
+    public static RMTensorField4<GradientTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
@@ -74,7 +74,7 @@ public sealed class TensorCalculusTests
         Tape = new();
     }
 
-    public GradientTape<Real> Tape { get; set; }
+    public GradientTape<Real<double>, double> Tape { get; set; }
 
     //
     // Tests
@@ -86,12 +86,12 @@ public sealed class TensorCalculusTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,])values[0];
+        var expected = (Real<double>[,])values[0];
 
-        DifGeo.CovariantDerivative(Tape, Metric, Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, PIN>, Index<Upper, Alpha>> derivative);
+        DifGeo.CovariantDerivative(Tape, Metric, Tensor, point, out Tensor<Matrix4x4<Real<double>, double>, Real<double>, double, Index<Lower, PIN>, Index<Upper, Alpha>> derivative);
         var actual = derivative.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-14);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-14);
     }
 
     //
@@ -105,7 +105,7 @@ public sealed class TensorCalculusTests
             [1.23, 2.34, 3.45, 4.56],
             new object[]
             {
-                new Real[,]
+                new Real<double>[,]
                 {
                     { 5.289263063818893,   5.013308424588511,  -0.29788865000129444, 3.8105919037189384 },
                     { -2.4563414493568,    13.25416522566854,  -0.02204745753009399, 3.0134829061941315 },

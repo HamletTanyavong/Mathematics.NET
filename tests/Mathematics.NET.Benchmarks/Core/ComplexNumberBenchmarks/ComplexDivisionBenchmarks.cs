@@ -32,8 +32,8 @@ namespace Mathematics.NET.Benchmarks.Core.ComplexNumberBenchmarks;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class ComplexDivisionBenchmarks
 {
-    public Complex Z { get; set; }
-    public Complex W { get; set; }
+    public Complex<double> Z { get; set; }
+    public Complex<double> W { get; set; }
 
     public SystemComplex X { get; set; }
     public SystemComplex Y { get; set; }
@@ -55,7 +55,7 @@ public class ComplexDivisionBenchmarks
     }
 
     [Benchmark]
-    public Complex ComplexDivision_WithAggressiveInlining()
+    public Complex<double> ComplexDivision_WithAggressiveInlining()
     {
         return Z / W;
     }

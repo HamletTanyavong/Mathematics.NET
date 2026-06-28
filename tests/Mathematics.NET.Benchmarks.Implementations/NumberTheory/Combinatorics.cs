@@ -32,7 +32,7 @@ namespace Mathematics.NET.Benchmarks.Implementations.NumberTheory;
 
 internal class Combinatorics
 {
-    public static Real Binomial(uint n, uint k)
+    public static Real<double> Binomial(uint n, uint k)
     {
         var result = 1.0;
         for (uint i = 0; i < k; i++)
@@ -43,8 +43,8 @@ internal class Combinatorics
     public static T Binomial<T>(T n, T k)
         where T : IBinaryInteger<T>, ISignedNumber<T>
     {
-        Rational<T> num = new(n);
-        Rational<T> result = T.One;
+        Rational<T, double> num = new(n);
+        Rational<T, double> result = T.One;
         for (T i = T.Zero; i < k; i++)
             result *= (num - i) / (i + T.One);
         Debug.Assert(result.Den != T.One, "The result must be a whole number.");

@@ -25,17 +25,18 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.Core.Operations;
-using Mathematics.NET.Core.Relations;
-using Mathematics.NET.DifferentialGeometry;
-using Mathematics.NET.DifferentialGeometry.Abstractions;
+using System.Numerics;
+using Mathematics.NET.Operations;
+using Mathematics.NET.Relations;
 
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Defines support for dual numbers.</summary>
 /// <typeparam name="TDN">The type that implements the interface.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-public interface IDual<TDN, TN>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface IDual<TDN, TN, TB, TR>
     : IAdditionOperation<TDN, TDN>,
       IDivisionOperation<TDN, TDN>,
       IMultiplicationOperation<TDN, TDN>,
@@ -46,8 +47,10 @@ public interface IDual<TDN, TN>
       IEquatable<TDN>,
       IFormattable,
       IDifferentiableFunctions<TDN>
-    where TDN : IDual<TDN, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    where TDN : IDual<TDN, TN, TB, TR>
+    where TN : IComplex<TN, TB, TR>, IDifferentiableFunctions<TN>
+    where TB : IBinaryNumber<TB>
+    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
 {
     /// <summary>Represents the primal part of the dual number.</summary>
     TN D0 { get; }
@@ -86,46 +89,8 @@ public interface IDual<TDN, TN>
     /// <param name="value">A number.</param>
     static abstract implicit operator TDN(TN value);
 
-    //
-    // DifGeo
-    //
-
-    /// <summary>Create an autodiff, rank-one tensor from initial and seed values.</summary>
-    /// <typeparam name="TI">An index.</typeparam>
-    /// <param name="x0">The zeroth value.</param>
-    /// <param name="x1">The first value.</param>
-    /// <returns>A rank-one tensor of two initial and seed values.</returns>
-    static abstract AutoDiffTensor2<TDN, TN, TI> CreateAutoDiffTensor<TI>(TN x0, TN x1)
-        where TI : IIndex;
-
-    /// <summary>Create an autodiff, rank-one tensor from initial and seed values.</summary>
-    /// <typeparam name="TI">An index.</typeparam>
-    /// <param name="x0">The zeroth value.</param>
-    /// <param name="x1">The first value.</param>
-    /// <param name="x2">The second value.</param>
-    /// <returns>A rank-one tensor of two initial and seed values.</returns>
-    static abstract AutoDiffTensor3<TDN, TN, TI> CreateAutoDiffTensor<TI>(TN x0, TN x1, TN x2)
-        where TI : IIndex;
-
-    /// <summary>Create an autodiff, rank-one tensor from initial and seed values.</summary>
-    /// <typeparam name="TI">An index.</typeparam>
-    /// <param name="x0">The zeroth value.</param>
-    /// <param name="x1">The first value.</param>
-    /// <param name="x2">The second value.</param>
-    /// <param name="x3">The third value.</param>
-    /// <returns>A rank-one tensor of two initial and seed values.</returns>
-    static abstract AutoDiffTensor4<TDN, TN, TI> CreateAutoDiffTensor<TI>(TN x0, TN x1, TN x2, TN x3)
-        where TI : IIndex;
-
-    /// <inheritdoc cref="CreateAutoDiffTensor{TI}(TN, TN)"/>
-    static abstract AutoDiffTensor2<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1)
-        where TI : IIndex;
-
-    /// <inheritdoc cref="CreateAutoDiffTensor{TI}(TN, TN, TN)"/>
-    static abstract AutoDiffTensor3<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1, in Dual<TN> x2)
-        where TI : IIndex;
-
-    /// <inheritdoc cref="CreateAutoDiffTensor{TI}(TN, TN, TN, TN)"/>
-    static abstract AutoDiffTensor4<TDN, TN, TI> CreateAutoDiffTensor<TI>(in Dual<TN> x0, in Dual<TN> x1, in Dual<TN> x2, in Dual<TN> x3)
-        where TI : IIndex;
+    /// <summary>Convert a backing number into a dual number.</summary>
+    /// <remarks>The tangent parts of the dual number will be zero.</remarks>
+    /// <param name="value">A number.</param>
+    static abstract implicit operator TDN(TR value);
 }

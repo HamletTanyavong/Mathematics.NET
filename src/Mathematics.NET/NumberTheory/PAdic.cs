@@ -130,13 +130,15 @@ public static class PAdic
     }
 
     /// <summary>Compute the <paramref name="p"/>-adic norm, also known as the <paramref name="p"/>-adic absolute value, of <paramref name="q"/>.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="p">A prime number.</param>
     /// <param name="q">A rational number.</param>
     /// <returns>The <paramref name="p"/>-adic norm of <paramref name="q"/>.</returns>
-    public static Rational<int> Norm(int p, Rational<int> q)
+    public static Rational<int, T> Norm<T>(int p, Rational<int, T> q)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
     {
         var v = Valuation(p, q);
-        return Rational<int>.Pow(p, -v);
+        return Rational<int, T>.Pow(p, -v);
     }
 
     /// <summary>Calculate the <paramref name="p"/>-adic valuation of an integer <paramref name="n"/>.</summary>
@@ -156,8 +158,11 @@ public static class PAdic
     }
 
     /// <summary>Calculate the <paramref name="p"/>-adic valuation of a rational number <paramref name="q"/>.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="p">A prime number.</param>
     /// <param name="q">A rational number.</param>
     /// <returns>The exponent of the largest power of <paramref name="p"/> that divides <paramref name="q"/>.</returns>
-    public static int Valuation(int p, Rational<int> q) => Valuation(p, q.Num) - Valuation(p, q.Den);
+    public static int Valuation<T>(int p, Rational<int, T> q)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Valuation(p, q.Num) - Valuation(p, q.Den);
 }

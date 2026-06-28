@@ -25,11 +25,11 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET.DifferentialGeometry;
+using Mathematics.NET.DifferentialGeometry.Abstractions;
 
 namespace Mathematics.NET.Benchmarks.Implementations.DifferentialGeometry.Symbols;
 
 public readonly struct Delta : IIndexName
 {
-    public static string DisplayString => "Delta";
+    public static string Name => "Delta";
 }

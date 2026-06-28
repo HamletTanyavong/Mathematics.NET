@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -34,23 +35,25 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-two tensor with 16 elements.</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
 /// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class FMTensorField4x4<TDN, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
-    where TDN : IDual<TDN, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public class FMTensorField4x4<TDN, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
+    where TDN : IDual<TDN, TN, U, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI1P : IIndexPosition
     where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private protected FMTensor4Buffer4x4<TDN, TN, TPI> _buffer;
+    private protected FMTensor4Buffer4x4<TDN, TN, U, TPI> _buffer;
 
     public FMTensorField4x4() { }
 
-    public Func<AutoDiffTensor4<TDN, TN, TPI>, TDN> this[int i, int j]
+    public Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i][j];
@@ -59,32 +62,33 @@ public class FMTensorField4x4<TDN, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         set => _buffer[i][j] = value;
     }
 
-    /// <inheritdoc cref="FMTensorField2x2{TDN, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, TPI})"/>
-    public Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(AutoDiffTensor4<TDN, TN, TPI> point)
+    /// <inheritdoc cref="FMTensorField2x2{TDN, TN, U, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
+    public Tensor<Matrix4x4<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(AutoDiffTensor4<TDN, TN, U, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        Matrix4x4<TN> result = new();
+        Matrix4x4<TN, U> result = new();
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (_buffer[i][j] is Func<AutoDiffTensor4<TDN, TN, TPI>, TDN> function)
+                if (_buffer[i][j] is Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> function)
                     result[i, j] = function(point).D0;
             }
         }
-        return new Tensor<Matrix4x4<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Matrix4x4<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
 
 internal static partial class Buffers
 {
     [InlineArray(4)]
-    public struct FMTensor4Buffer4x4<TDN, TN, TPI>
-        where TDN : IDual<TDN, TN>
-        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    public struct FMTensor4Buffer4x4<TDN, TN, U, TPI>
+        where TDN : IDual<TDN, TN, U, U>
+        where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private FMTensor4Buffer4<TDN, TN, TPI> _element;
+        private FMTensor4Buffer4<TDN, TN, U, TPI> _element;
     }
 }

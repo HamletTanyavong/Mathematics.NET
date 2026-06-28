@@ -34,17 +34,17 @@ namespace Mathematics.NET.GPU.OpenCL;
 
 public sealed partial class OpenCLService
 {
-    public unsafe void CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Complex> vector, in Complex scalar)
+    public unsafe void CompVecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Complex<double>> vector, in Complex<double> scalar)
     {
         fixed (void* pVector = vector)
         {
             // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Complex) * vector.Length), pVector, null);
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Complex<double>) * vector.Length), pVector, null);
 
             // Set kernel arguments.
             var kernel = _program.Kernels["comp_vec_mul_scalar_overwrite"].Handle;
             var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex), in scalar);
+            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Complex<double>), in scalar);
             ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "comp_vec_mul_scalar_overwrite");
 
             // Enqueue NDRange kernel.
@@ -53,7 +53,7 @@ public sealed partial class OpenCLService
             ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "comp_vec_mul_scalar_overwrite");
 
             // Enqueue read buffer.
-            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Complex) * vector.Length), pVector, 0, null, null);
+            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Complex<double>) * vector.Length), pVector, 0, null, null);
 
             // Release mem objects.
             _cl.ReleaseMemObject(vectorBuffer);

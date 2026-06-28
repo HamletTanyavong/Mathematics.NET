@@ -25,22 +25,27 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.LinearAlgebra.Abstractions;
 
 namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 
 /// <summary>Defines support for rank-four tensors and similar mathematical objects.</summary>
 /// <typeparam name="TR4T">The type that implements the interface.</typeparam>
-/// <typeparam name="TH4DA">A backing type that implements <see cref="IHypercubic4DArray{T, U}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <typeparam name="TH4DA">A backing type that implements <see cref="IHypercubic4DArray{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1">An index.</typeparam>
 /// <typeparam name="TI2">An index.</typeparam>
 /// <typeparam name="TI3">An index.</typeparam>
 /// <typeparam name="TI4">An index.</typeparam>
-public interface IRankFourTensor<TR4T, TH4DA, TN, TI1, TI2, TI3, TI4> : I4DArrayRepresentable<TR4T, TN>
-    where TR4T : IRankFourTensor<TR4T, TH4DA, TN, TI1, TI2, TI3, TI4>
-    where TH4DA : IHypercubic4DArray<TH4DA, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public interface IRankFourTensor<TR4T, TH4DA, TN, U, V, TI1, TI2, TI3, TI4> : I4DArrayRepresentable<TR4T, TN, U, V>
+    where TR4T : IRankFourTensor<TR4T, TH4DA, TN, U, V, TI1, TI2, TI3, TI4>
+    where TH4DA : IHypercubic4DArray<TH4DA, TN, U, V>
+    where TN : IComplex<TN, U, V>, IDifferentiableFunctions<TN>
+    where U : IBinaryNumber<U>
+    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
     where TI1 : IIndex
     where TI2 : IIndex
     where TI3 : IIndex
@@ -58,7 +63,7 @@ public interface IRankFourTensor<TR4T, TH4DA, TN, TI1, TI2, TI3, TI4> : I4DArray
     /// <summary>The fourth index.</summary>
     IIndex I4 { get; }
 
-    /// <summary>Convert a value that implements <see cref="IHypercubic4DArray{T, U}"/> to one of type <typeparamref name="TR4T"/>.</summary>
+    /// <summary>Convert a value that implements <see cref="IHypercubic4DArray{T, U, V, W}"/> to one of type <typeparamref name="TR4T"/>.</summary>
     /// <param name="value">The value to convert.</param>
     static abstract implicit operator TR4T(TH4DA value);
 }

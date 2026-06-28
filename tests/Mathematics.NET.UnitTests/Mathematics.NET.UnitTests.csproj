@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Mathematics.NET.Core" />
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 

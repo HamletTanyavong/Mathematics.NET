@@ -27,6 +27,7 @@
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Mathematics.NET.LinearAlgebra.Abstractions;
@@ -34,15 +35,17 @@ using Mathematics.NET.LinearAlgebra.Abstractions;
 namespace Mathematics.NET.LinearAlgebra;
 
 /// <summary>Represents a vector with three components.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/>.</typeparam>
-/// <param name="x1">The $ x_1 $ component.</param>
-/// <param name="x2">The $ x_2 $ component.</param>
-/// <param name="x3">The $ x_3 $ component.</param>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <param name="x1">The <c>x_1</c> component.</param>
+/// <param name="x2">The <c>x_2</c> component.</param>
+/// <param name="x3">The <c>x_3</c> component.</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
-    where T : IComplex<T>
+public struct Vector3<T, U>(T x1, T x2, T x3) : IVector<Vector3<T, U>, T, U, U>
+    where T : IComplex<T, U, U>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
-    public static readonly Vector3<T> Zero = new(T.Zero, T.Zero, T.Zero);
+    public static readonly Vector3<T, U> Zero = new(T.Zero, T.Zero, T.Zero);
 
     /// <summary>The first element of the vector.</summary>
     public T X1 = x1;
@@ -73,7 +76,7 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
 
     // Get
 
-    internal static T GetElement(Vector3<T> vector, int index)
+    internal static T GetElement(Vector3<T, U> vector, int index)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
@@ -81,50 +84,50 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T GetElementUnsafe(ref Vector3<T> vector, int index)
+    private static T GetElementUnsafe(ref Vector3<T, U> vector, int index)
     {
         Debug.Assert(index is >= 0 and < 3);
-        return Unsafe.Add(ref Unsafe.As<Vector3<T>, T>(ref vector), index);
+        return Unsafe.Add(ref Unsafe.As<Vector3<T, U>, T>(ref vector), index);
     }
 
     // Set
 
-    internal static Vector3<T> WithElement(Vector3<T> vector, int index, T value)
+    internal static Vector3<T, U> WithElement(Vector3<T, U> vector, int index, T value)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
-        Vector3<T> result = vector;
+        Vector3<T, U> result = vector;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref Vector3<T> vector, int index, T value)
+    private static void SetElementUnsafe(ref Vector3<T, U> vector, int index, T value)
     {
         Debug.Assert(index is >= 0 and < 3);
-        Unsafe.Add(ref Unsafe.As<Vector3<T>, T>(ref vector), index) = value;
+        Unsafe.Add(ref Unsafe.As<Vector3<T, U>, T>(ref vector), index) = value;
     }
 
     //
     // Constants
     //
 
-    static Vector3<T> IVector<Vector3<T>, T>.Zero => Zero;
+    static Vector3<T, U> IVector<Vector3<T, U>, T, U, U>.Zero => Zero;
 
     //
     // Operators
     //
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector3<T> operator -(Vector3<T> vector)
+    public static Vector3<T, U> operator -(Vector3<T, U> vector)
         => new(-vector.X1, -vector.X2, -vector.X3);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector3<T> operator +(Vector3<T> vector)
+    public static Vector3<T, U> operator +(Vector3<T, U> vector)
         => vector;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector3<T> operator +(Vector3<T> left, Vector3<T> right)
+    public static Vector3<T, U> operator +(Vector3<T, U> left, Vector3<T, U> right)
     {
         return new(
             left.X1 + right.X1,
@@ -133,7 +136,7 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector3<T> operator -(Vector3<T> left, Vector3<T> right)
+    public static Vector3<T, U> operator -(Vector3<T, U> left, Vector3<T, U> right)
     {
         return new(
             left.X1 - right.X1,
@@ -142,15 +145,15 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector3<T> operator *(Vector3<T> left, Vector3<T> right)
+    public static Vector3<T, U> operator *(Vector3<T, U> left, Vector3<T, U> right)
         => new(left.X1 * right.X1, left.X2 * right.X2, left.X3 * right.X3);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector3<T> operator *(T c, Vector3<T> vector)
+    public static Vector3<T, U> operator *(T c, Vector3<T, U> vector)
         => new(c * vector.X1, c * vector.X2, c * vector.X3);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector3<T> operator *(Vector3<T> vector, T c)
+    public static Vector3<T, U> operator *(Vector3<T, U> vector, T c)
         => new(vector.X1 * c, vector.X2 * c, vector.X3 * c);
 
     //
@@ -158,20 +161,20 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     //
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator ==(Vector3<T> left, Vector3<T> right)
+    public static bool operator ==(Vector3<T, U> left, Vector3<T, U> right)
         => left.X1 == right.X1
         && left.X2 == right.X2
         && left.X3 == right.X3;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool operator !=(Vector3<T> left, Vector3<T> right)
+    public static bool operator !=(Vector3<T, U> left, Vector3<T, U> right)
         => left.X1 != right.X1
         || left.X2 != right.X2
         || left.X3 != right.X3;
 
-    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Vector3<T> other && Equals(other);
+    public override bool Equals([NotNullWhen(true)] object? obj) => obj is Vector3<T, U> other && Equals(other);
 
-    public bool Equals(Vector3<T> value)
+    public bool Equals(Vector3<T, U> value)
         => X1.Equals(value.X1)
         && X2.Equals(value.X2)
         && X3.Equals(value.X3);
@@ -196,7 +199,7 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
     /// <param name="left">The first vector.</param>
     /// <param name="right">The second vector.</param>
     /// <returns>The cross product.</returns>
-    public static Vector3<T> Cross(Vector3<T> left, Vector3<T> right)
+    public static Vector3<T, U> Cross(Vector3<T, U> left, Vector3<T, U> right)
     {
         return new(
             left.X2 * right.X3 - left.X3 * right.X2,
@@ -204,17 +207,17 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
             left.X1 * right.X2 - left.X2 * right.X1);
     }
 
-    public static T InnerProduct(Vector3<T> left, Vector3<T> right)
+    public static T InnerProduct(Vector3<T, U> left, Vector3<T, U> right)
         => T.Conjugate(left.X1) * right.X1 + T.Conjugate(left.X2) * right.X2 + T.Conjugate(left.X3) * right.X3;
 
-    public readonly Real Norm()
+    public readonly Real<U> Norm()
     {
-        Span<Real> components = [
+        Span<Real<U>> components = [
             (X1 * T.Conjugate(X1)).Re,
             (X2 * T.Conjugate(X2)).Re,
             (X3 * T.Conjugate(X3)).Re];
 
-        Real max = components[0];
+        Real<U> max = components[0];
         for (int i = 1; i < 3; i++)
         {
             if (components[i] > max)
@@ -223,19 +226,19 @@ public struct Vector3<T>(T x1, T x2, T x3) : IVector<Vector3<T>, T>
             }
         }
 
-        var partialSum = Real.Zero;
+        var partialSum = Real<U>.Zero;
         var maxSquared = max * max;
         partialSum += components[0] / maxSquared;
         partialSum += components[1] / maxSquared;
         partialSum += components[2] / maxSquared;
 
-        return max * Real.Sqrt(partialSum);
+        return max * Real<U>.Sqrt(partialSum);
     }
 
-    public readonly Vector3<T> Normalize()
+    public readonly Vector3<T, U> Normalize()
     {
         var norm = Norm();
-        return new(X1 / norm, X2 / norm, X3 / norm);
+        return new(X1 / (U)norm, X2 / (U)norm, X3 / (U)norm);
     }
 
     public readonly T[] ToArray() => [X1, X2];

@@ -34,10 +34,10 @@ namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 
 public static class Matrix4x4Impl
 {
-    public static Matrix4x4<T> TransposeNaive<T>(this Matrix4x4<T> matrix)
-        where T : IComplex<T>
+    public static Matrix4x4<T, double> TransposeNaive<T>(this Matrix4x4<T, double> matrix)
+        where T : IComplex<T, double, double>
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, double> result);
 
         result.X1 = new(matrix.X1.X1, matrix.X2.X1, matrix.X3.X1, matrix.X4.X1);
         result.X2 = new(matrix.X1.X2, matrix.X2.X2, matrix.X3.X2, matrix.X4.X2);
@@ -47,12 +47,12 @@ public static class Matrix4x4Impl
         return result;
     }
 
-    public static Matrix4x4<T> TransposeSimdV1<T>(this Matrix4x4<T> matrix)
-        where T : IComplex<T>
+    public static Matrix4x4<T, double> TransposeSimdV1<T>(this Matrix4x4<T, double> matrix)
+        where T : IComplex<T, double, double>
     {
-        Unsafe.SkipInit(out Matrix4x4<T> result);
+        Unsafe.SkipInit(out Matrix4x4<T, double> result);
 
-        if (typeof(T) == typeof(Real))
+        if (typeof(T) == typeof(Real<double>))
         {
             if (Avx.IsSupported)
             {

@@ -26,39 +26,40 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Mathematics.NET.Core.Operations;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra.Abstractions;
+using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-four tensor or a similar mathematical object.</summary>
-/// <typeparam name="TH4DA">A backing type that implements <see cref="IHypercubic4DArray{T, U}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/>.</typeparam>
+/// <summary>Represents a rank-three tensor or a similar mathematical object.</summary>
+/// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1">The first index.</typeparam>
 /// <typeparam name="TI2">The second index.</typeparam>
 /// <typeparam name="TI3">The third index.</typeparam>
-/// <typeparam name="TI4">The fourth index.</typeparam>
 /// <param name="array">A backing array.</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
-    : IRankFourTensor<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, TH4DA, TN, TI1, TI2, TI3, TI4>,
-      IMultiplicationOperation<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, TN, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>>,
-      IUnaryMinusOperation<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>>,
-      IUnaryPlusOperation<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>>
-    where TH4DA : IHypercubic4DArray<TH4DA, TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public struct Tensor<TCA, TN, U, TI1, TI2, TI3>(TCA array)
+    : IRankThreeTensor<Tensor<TCA, TN, U, TI1, TI2, TI3>, TCA, TN, U, U, TI1, TI2, TI3>,
+      IMultiplicationOperation<Tensor<TCA, TN, U, TI1, TI2, TI3>, TN, Tensor<TCA, TN, U, TI1, TI2, TI3>>,
+      IUnaryMinusOperation<Tensor<TCA, TN, U, TI1, TI2, TI3>, Tensor<TCA, TN, U, TI1, TI2, TI3>>,
+      IUnaryPlusOperation<Tensor<TCA, TN, U, TI1, TI2, TI3>, Tensor<TCA, TN, U, TI1, TI2, TI3>>
+    where TCA : ICubicArray<TCA, TN, U, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI1 : IIndex
     where TI2 : IIndex
     where TI3 : IIndex
-    where TI4 : IIndex
 {
-    private TH4DA _array = array;
+    private TCA _array = array;
 
     //
-    // IRankFourTensor Interface
+    // IRankThreeTensor Interface
     //
 
     public readonly IIndex I1 => TI1.Instance;
@@ -67,61 +68,57 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
 
     public readonly IIndex I3 => TI3.Instance;
 
-    public readonly IIndex I4 => TI4.Instance;
-
     //
     // IArrayRepresentable & Relevant Interfaces
     //
 
-    public static int Components => TH4DA.Components;
+    public static int Components => TCA.Components;
 
-    public static int E1Components => TH4DA.E1Components;
+    public static int E1Components => TCA.E1Components;
 
-    public static int E2Components => TH4DA.E2Components;
+    public static int E2Components => TCA.E2Components;
 
-    public static int E3Components => TH4DA.E3Components;
-
-    public static int E4Components => TH4DA.E4Components;
+    public static int E3Components => TCA.E3Components;
 
     //
     // Indexer
     //
 
-    public TN this[int i, int j, int k, int l]
+    public TN this[int i, int j, int k]
     {
-        get => _array[i, j, k, l];
-        set => _array[i, j, k, l] = value;
+        get => _array[i, j, k];
+        set => _array[i, j, k] = value;
     }
 
     //
     // Operators
     //
 
-    public static Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> operator -(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> tensor)
+    public static Tensor<TCA, TN, U, TI1, TI2, TI3> operator -(Tensor<TCA, TN, U, TI1, TI2, TI3> tensor)
         => new(-tensor._array);
 
-    public static Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> operator +(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> tensor)
+    public static Tensor<TCA, TN, U, TI1, TI2, TI3> operator +(Tensor<TCA, TN, U, TI1, TI2, TI3> tensor)
         => tensor;
 
-    public static Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> operator *(TN c, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> tensor)
+    public static Tensor<TCA, TN, U, TI1, TI2, TI3> operator *(TN c, Tensor<TCA, TN, U, TI1, TI2, TI3> tensor)
         => new(c * tensor._array);
 
-    public static Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> operator *(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> tensor, TN c)
+    public static Tensor<TCA, TN, U, TI1, TI2, TI3> operator *(Tensor<TCA, TN, U, TI1, TI2, TI3> tensor, TN c)
         => new(tensor._array * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> left, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> right)
+    public static bool operator ==(Tensor<TCA, TN, U, TI1, TI2, TI3> left, Tensor<TCA, TN, U, TI1, TI2, TI3> right)
         => left._array == right._array;
 
-    public static bool operator !=(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> left, Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> right)
+    public static bool operator !=(Tensor<TCA, TN, U, TI1, TI2, TI3> left, Tensor<TCA, TN, U, TI1, TI2, TI3> right)
         => left._array != right._array;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Tensor<TCA, TN, U, TI1, TI2, TI3> other && Equals(other);
 
-    public readonly bool Equals(Tensor<TH4DA, TN, TI1, TI2, TI3, TI4> value) => _array.Equals(value._array);
+    public readonly bool Equals(Tensor<TCA, TN, U, TI1, TI2, TI3> value) => _array.Equals(value._array);
 
     public override readonly int GetHashCode() => HashCode.Combine(_array);
 
@@ -135,57 +132,47 @@ public struct Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA array)
     // Methods
     //
 
-    public TN[,,,] ToArray() => _array.ToArray();
+    public TN[,,] ToArray() => _array.ToArray();
 
     /// <summary>Reinterpret this tensor as one with new indices.</summary>
     /// <typeparam name="TNI1">A new first index.</typeparam>
     /// <typeparam name="TNI2">A new second index.</typeparam>
     /// <typeparam name="TNI3">A new third index.</typeparam>
-    /// <typeparam name="TNI4">A new fourth index.</typeparam>
     /// <returns>A tensor with new indices.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TNI1, TNI2, TNI3, TNI4> WithIndices<TNI1, TNI2, TNI3, TNI4>()
+    public Tensor<TCA, TN, U, TNI1, TNI2, TNI3> WithIndices<TNI1, TNI2, TNI3>()
         where TNI1 : IIndex
         where TNI2 : IIndex
         where TNI3 : IIndex
-        where TNI4 : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TNI1, TNI2, TNI3, TNI4>>(ref this);
+        => Unsafe.As<Tensor<TCA, TN, U, TI1, TI2, TI3>, Tensor<TCA, TN, U, TNI1, TNI2, TNI3>>(ref this);
 
     /// <summary>Reinterpret this tensor as one with a new index in the first position.</summary>
     /// <typeparam name="TNI">A new index.</typeparam>
     /// <returns>A tensor with a new index in the first position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TNI, TI2, TI3, TI4> WithIndex1<TNI>()
+    public Tensor<TCA, TN, U, TNI, TI2, TI3> WithIndex1<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TNI, TI2, TI3, TI4>>(ref this);
+        => Unsafe.As<Tensor<TCA, TN, U, TI1, TI2, TI3>, Tensor<TCA, TN, U, TNI, TI2, TI3>>(ref this);
 
     /// <summary>Reinterpret this tensor as one with a new index in the second position.</summary>
     /// <typeparam name="TNI">A new index.</typeparam>
     /// <returns>A tensor with a new index in the second position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TI1, TNI, TI3, TI4> WithIndex2<TNI>()
+    public Tensor<TCA, TN, U, TI1, TNI, TI3> WithIndex2<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TNI, TI3, TI4>>(ref this);
+        => Unsafe.As<Tensor<TCA, TN, U, TI1, TI2, TI3>, Tensor<TCA, TN, U, TI1, TNI, TI3>>(ref this);
 
     /// <summary>Reinterpret this tensor as one with a new index in the third position.</summary>
     /// <typeparam name="TNI">A new index.</typeparam>
     /// <returns>A tensor with a new index in the third position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TI1, TI2, TNI, TI4> WithIndex3<TNI>()
+    public Tensor<TCA, TN, U, TI1, TI2, TNI> WithIndex3<TNI>()
         where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TNI, TI4>>(ref this);
-
-    /// <summary>Reinterpret this tensor as one with a new index in the fourth position.</summary>
-    /// <typeparam name="TNI">A new index.</typeparam>
-    /// <returns>A tensor with a new index in the fourth position.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Tensor<TH4DA, TN, TI1, TI2, TI3, TNI> WithIndex4<TNI>()
-        where TNI : IIndex
-        => Unsafe.As<Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>, Tensor<TH4DA, TN, TI1, TI2, TI3, TNI>>(ref this);
+        => Unsafe.As<Tensor<TCA, TN, U, TI1, TI2, TI3>, Tensor<TCA, TN, U, TI1, TI2, TNI>>(ref this);
 
     //
     // Implicit Operators
     //
 
-    public static implicit operator Tensor<TH4DA, TN, TI1, TI2, TI3, TI4>(TH4DA value) => new(value);
+    public static implicit operator Tensor<TCA, TN, U, TI1, TI2, TI3>(TCA value) => new(value);
 }

@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
@@ -35,8 +36,8 @@ namespace Mathematics.NET.Benchmarks.Implementations.LinearAlgebra;
 public static class Vector2Impl
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector2<T> AddNaive<T>(Vector2<T> left, Vector2<T> right)
-        where T : IComplex<T>
+    public static Vector2<T, double> AddNaive<T>(Vector2<T, double> left, Vector2<T, double> right)
+        where T : IComplex<T, double, double>
     {
         return new(
             left.X1 + right.X1,
@@ -44,11 +45,13 @@ public static class Vector2Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector2<T> AddSimd<T>(Vector2<T> left, Vector2<T> right)
-        where T : IComplex<T>
+    public static Vector2<T, double> AddSimd<T>(Vector2<T, double> left, Vector2<T, double> right)
+        where T : IComplex<T, double, double>
     {
-        if (typeof(T) == typeof(Real))
+        if (typeof(T) == typeof(Real<double>))
+        {
             return Vector128.Add(left.AsVector128(), right.AsVector128()).AsVector2<T>();
+        }
         else if (typeof(T) == typeof(Complex))
         {
             return Vector256.Add(left.AsVector256(), right.AsVector256()).AsVector2<T>();
@@ -62,8 +65,8 @@ public static class Vector2Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector2<T> MultiplyNaive<T>(Vector2<T> left, Vector2<T> right)
-        where T : IComplex<T>
+    public static Vector2<T, double> MultiplyNaive<T>(Vector2<T, double> left, Vector2<T, double> right)
+        where T : IComplex<T, double, double>
     {
         return new(
             left.X1 * right.X1,
@@ -71,11 +74,13 @@ public static class Vector2Impl
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Vector2<T> MultiplySimd<T>(Vector2<T> left, Vector2<T> right)
-        where T : IComplex<T>
+    public static Vector2<T, double> MultiplySimd<T>(Vector2<T, double> left, Vector2<T, double> right)
+        where T : IComplex<T, double, double>
     {
-        if (typeof(T) == typeof(Real))
+        if (typeof(T) == typeof(Real<double>))
+        {
             return Sse2.Multiply(left.AsVector128(), right.AsVector128()).AsVector2<T>();
+        }
         else if (typeof(T) == typeof(Complex))
         {
             return Vector256.Multiply(left.AsVector256(), right.AsVector256()).AsVector2<T>();

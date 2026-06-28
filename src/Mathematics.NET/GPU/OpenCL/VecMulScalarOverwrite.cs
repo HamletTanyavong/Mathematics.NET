@@ -34,17 +34,17 @@ namespace Mathematics.NET.GPU.OpenCL;
 
 public sealed partial class OpenCLService
 {
-    public unsafe void VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Real> vector, in Real scalar)
+    public unsafe void VecMulScalar(Device device, nuint globalWorkSize, nuint localWorkSize, Span<Real<double>> vector, in Real<double> scalar)
     {
         fixed (void* pVector = vector)
         {
             // Create buffers.
-            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Real) * vector.Length), pVector, null);
+            nint vectorBuffer = _cl.CreateBuffer(_context.Handle, MemFlags.UseHostPtr | MemFlags.ReadWrite | MemFlags.HostReadOnly, (nuint)(sizeof(Real<double>) * vector.Length), pVector, null);
 
             // Set kernel arguments.
             var kernel = _program.Kernels["vec_mul_scalar_overwrite"].Handle;
             var error = _cl.SetKernelArg(kernel, 0, (nuint)sizeof(nint), &vectorBuffer);
-            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real), in scalar);
+            error |= _cl.SetKernelArg(kernel, 1, (nuint)sizeof(Real<double>), in scalar);
             ComputeServiceException.ThrowIfCouldNotSetKernelArguments(error, device.Name, "vec_mul_scalar_overwrite");
 
             // Enqueue NDRange kernel.
@@ -53,7 +53,7 @@ public sealed partial class OpenCLService
             ComputeServiceException.ThrowIfCouldNotEnqueueNDRangeKernel(error, device.Name, "vec_mul_scalar_overwrite");
 
             // Enqueue read buffer.
-            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Real) * vector.Length), pVector, 0, null, null);
+            _cl.EnqueueReadBuffer(commandQueue.Handle, vectorBuffer, true, 0, (nuint)(sizeof(Real<double>) * vector.Length), pVector, 0, null, null);
 
             // Release mem objects.
             _cl.ReleaseMemObject(vectorBuffer);

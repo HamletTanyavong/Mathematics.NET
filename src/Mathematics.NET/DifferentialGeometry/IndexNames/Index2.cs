@@ -25,11 +25,13 @@
 // SOFTWARE.
 // </copyright>
 
+using Mathematics.NET.DifferentialGeometry.Abstractions;
+
 namespace Mathematics.NET.DifferentialGeometry.IndexNames;
 
 internal readonly struct Index2 : IIndexName
 {
-    /// <inheritdoc cref="IIndexName.DisplayString"/>
-    public const string DisplayString = "Index2";
-    static string IIndexName.DisplayString => DisplayString;
+    /// <inheritdoc cref="IIndexName.Name"/>
+    public const string Name = nameof(Index2);
+    static string IIndexName.Name => Name;
 }

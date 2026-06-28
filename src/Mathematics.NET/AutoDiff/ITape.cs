@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using Mathematics.NET.DifferentialGeometry;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
@@ -33,9 +34,11 @@ using Microsoft.Extensions.Logging;
 namespace Mathematics.NET.AutoDiff;
 
 /// <summary>Defines support for tapes used in reverse-mode automatic differentiation.</summary>
-/// <typeparam name="T">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-public interface ITape<T>
-    where T : IComplex<T>, IDifferentiableFunctions<T>
+/// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface ITape<T, U>
+    where T : IComplex<T, U, U>, IDifferentiableFunctions<T>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
     /// <summary>This property indicates whether or not the tape is currently tracking nodes.</summary>
     bool IsTracking { get; set; }
@@ -49,13 +52,13 @@ public interface ITape<T>
     /// <summary>Create a variable for the gradient tape to track.</summary>
     /// <param name="value">An initial value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> CreateVariable(T value);
+    Variable<T, U> CreateVariable(T value);
 
     /// <summary>Log nodes tracked by the tape.</summary>
     /// <param name="logger">A logger.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <param name="limit">The total number of nodes to log.</param>
-    void LogNodes(ILogger<ITape<T>> logger, CancellationToken cancellationToken, int limit = 100);
+    void LogNodes(ILogger<ITape<T, U>> logger, CancellationToken cancellationToken, int limit = 100);
 
     /// <summary>Perform reverse accumulation on the gradient or Hessian tape and output the result.</summary>
     /// <param name="gradient">The gradient.</param>
@@ -73,7 +76,7 @@ public interface ITape<T>
     /// <param name="index">The index of the starting node.</param>
     /// <exception cref="AutoDiffException">The gradient tape does not have any tracked variables.</exception>
     /// <exception cref="IndexOutOfRangeException">The index does not refer to a valid starting node.</exception>
-    public void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index);
+    void ReverseAccumulate(out ReadOnlySpan<T> gradient, int index);
 
     /// <summary>Perform reverse accumulation on the gradient or Hessian tape starting at a specific node and output the result.</summary>
     /// <param name="gradient">The gradient.</param>
@@ -91,91 +94,91 @@ public interface ITape<T>
     /// <param name="x">The first variable.</param>
     /// <param name="y">The second variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Add(Variable<T> x, Variable<T> y);
+    Variable<T, U> Add(Variable<T, U> x, Variable<T, U> y);
 
     /// <summary>Add a constant value and a variable.</summary>
     /// <param name="x">A constant value.</param>
     /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Add(T x, Variable<T> y);
+    Variable<T, U> Add(T x, Variable<T, U> y);
 
     /// <summary>Add a variable and a constant value.</summary>
     /// <param name="x">A variable.</param>
     /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Add(Variable<T> x, T y);
+    Variable<T, U> Add(Variable<T, U> x, T y);
 
     /// <summary>Divide two variables.</summary>
     /// <param name="x">A dividend.</param>
     /// <param name="y">A divisor.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Divide(Variable<T> x, Variable<T> y);
+    Variable<T, U> Divide(Variable<T, U> x, Variable<T, U> y);
 
     /// <summary>Divide a constant value by a variable.</summary>
     /// <param name="x">A constant dividend.</param>
     /// <param name="y">A variable divisor.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Divide(T x, Variable<T> y);
+    Variable<T, U> Divide(T x, Variable<T, U> y);
 
     /// <summary>Divide a variable by a constant value.</summary>
     /// <param name="x">A variable dividend.</param>
     /// <param name="y">A constant divisor.</param>
     /// <returns>A variabl.</returns>
-    Variable<T> Divide(Variable<T> x, T y);
+    Variable<T, U> Divide(Variable<T, U> x, T y);
 
     /// <summary>Compute the modulo of a variable given a divisor.</summary>
     /// <param name="x">A dividend.</param>
     /// <param name="y">A divisor.</param>
     /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
-    Variable<Real> Modulo(in Variable<Real> x, in Variable<Real> y);
+    Variable<Real<U>, U> Modulo(in Variable<Real<U>, U> x, in Variable<Real<U>, U> y);
 
     /// <summary>Compute the modulo of a real value given a divisor.</summary>
     /// <param name="x">A real dividend.</param>
     /// <param name="y">A variable divisor.</param>
     /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
-    Variable<Real> Modulo(Real x, in Variable<Real> y);
+    Variable<Real<U>, U> Modulo(Real<U> x, in Variable<Real<U>, U> y);
 
     /// <summary>Compute the modulo of a variable given a divisor.</summary>
     /// <param name="x">A variable dividend.</param>
     /// <param name="y">A real divisor.</param>
     /// <returns><paramref name="x"/> mod <paramref name="y"/>.</returns>
-    Variable<Real> Modulo(in Variable<Real> x, Real y);
+    Variable<Real<U>, U> Modulo(in Variable<Real<U>, U> x, Real<U> y);
 
     /// <summary>Multiply two variables.</summary>
     /// <param name="x">The first variable.</param>
     /// <param name="y">The second variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Multiply(Variable<T> x, Variable<T> y);
+    Variable<T, U> Multiply(Variable<T, U> x, Variable<T, U> y);
 
     /// <summary>Multiply a constant value by a variable.</summary>
     /// <param name="x">A constant value.</param>
     /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Multiply(T x, Variable<T> y);
+    Variable<T, U> Multiply(T x, Variable<T, U> y);
 
     /// <summary>Multiply a variable by a constant value.</summary>
     /// <param name="x">A variable.</param>
     /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Multiply(Variable<T> x, T y);
+    Variable<T, U> Multiply(Variable<T, U> x, T y);
 
     /// <summary>Subract two variables.</summary>
     /// <param name="x">The first variable.</param>
     /// <param name="y">The second variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Subtract(Variable<T> x, Variable<T> y);
+    Variable<T, U> Subtract(Variable<T, U> x, Variable<T, U> y);
 
     /// <summary>Subtract a variable from a constant value.</summary>
     /// <param name="x">A constant value.</param>
     /// <param name="y">A variable.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Subtract(T x, Variable<T> y);
+    Variable<T, U> Subtract(T x, Variable<T, U> y);
 
     /// <summary>Subtract a constant value from a variable.</summary>
     /// <param name="x">A variable.</param>
     /// <param name="y">A constant value.</param>
     /// <returns>A variable.</returns>
-    Variable<T> Subtract(Variable<T> x, T y);
+    Variable<T, U> Subtract(Variable<T, U> x, T y);
 
     //
     // Other Operations
@@ -184,147 +187,147 @@ public interface ITape<T>
     /// <summary>Negate a variable.</summary>
     /// <param name="x">A variable.</param>
     /// <returns>Minus one times the variable.</returns>
-    Variable<T> Negate(Variable<T> x);
+    Variable<T, U> Negate(Variable<T, U> x);
 
     // Exponential functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp(T)"/>
-    Variable<T> Exp(Variable<T> x);
+    Variable<T, U> Exp(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp2(T)"/>
-    Variable<T> Exp2(Variable<T> x);
+    Variable<T, U> Exp2(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Exp10(T)"/>
-    Variable<T> Exp10(Variable<T> x);
+    Variable<T, U> Exp10(Variable<T, U> x);
 
     // Hyperbolic functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Acosh(T)"/>
-    Variable<T> Acosh(Variable<T> x);
+    Variable<T, U> Acosh(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Asinh(T)"/>
-    Variable<T> Asinh(Variable<T> x);
+    Variable<T, U> Asinh(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Atanh(T)"/>
-    Variable<T> Atanh(Variable<T> x);
+    Variable<T, U> Atanh(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Cosh(T)"/>
-    Variable<T> Cosh(Variable<T> x);
+    Variable<T, U> Cosh(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Sinh(T)"/>
-    Variable<T> Sinh(Variable<T> x);
+    Variable<T, U> Sinh(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Tanh(T)"/>
-    Variable<T> Tanh(Variable<T> x);
+    Variable<T, U> Tanh(Variable<T, U> x);
 
     // Logarithmic functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Ln(T)"/>
-    Variable<T> Ln(Variable<T> x);
+    Variable<T, U> Ln(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Log(T, T)"/>
-    Variable<T> Log(Variable<T> x, Variable<T> b);
+    Variable<T, U> Log(Variable<T, U> x, Variable<T, U> b);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Log2(T)"/>
-    Variable<T> Log2(Variable<T> x);
+    Variable<T, U> Log2(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Log10(T)"/>
-    Variable<T> Log10(Variable<T> x);
+    Variable<T, U> Log10(Variable<T, U> x);
 
     // Power functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(Variable<T> x, Variable<T> n);
+    Variable<T, U> Pow(Variable<T, U> x, Variable<T, U> n);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(Variable<T> x, T n);
+    Variable<T, U> Pow(Variable<T, U> x, T n);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Pow(T, T)"/>
-    Variable<T> Pow(T x, Variable<T> n);
+    Variable<T, U> Pow(T x, Variable<T, U> n);
 
     // Root functions.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Cbrt(T)"/>
-    Variable<T> Cbrt(Variable<T> x);
+    Variable<T, U> Cbrt(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Root(T, T)"/>
-    Variable<T> Root(Variable<T> x, Variable<T> n);
+    Variable<T, U> Root(Variable<T, U> x, Variable<T, U> n);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Sqrt(T)"/>
-    Variable<T> Sqrt(Variable<T> x);
+    Variable<T, U> Sqrt(Variable<T, U> x);
 
     // Trigonometric function.
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Acos(T)"/>
-    Variable<T> Acos(Variable<T> x);
+    Variable<T, U> Acos(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Asin(T)"/>
-    Variable<T> Asin(Variable<T> x);
+    Variable<T, U> Asin(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Atan(T)"/>
-    Variable<T> Atan(Variable<T> x);
+    Variable<T, U> Atan(Variable<T, U> x);
 
-    /// <inheritdoc cref="IReal{T}.Atan2(T, T)"/>
-    Variable<Real> Atan2(in Variable<Real> y, in Variable<Real> x);
+    /// <inheritdoc cref="IReal{T, U, V}.Atan2(Real{V}, Real{V})"/>
+    Variable<Real<U>, U> Atan2(in Variable<Real<U>, U> y, in Variable<Real<U>, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Cos(T)"/>
-    Variable<T> Cos(Variable<T> x);
+    Variable<T, U> Cos(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Sin(T)"/>
-    Variable<T> Sin(Variable<T> x);
+    Variable<T, U> Sin(Variable<T, U> x);
 
     /// <inheritdoc cref="IDifferentiableFunctions{T}.Tan(T)"/>
-    Variable<T> Tan(Variable<T> x);
+    Variable<T, U> Tan(Variable<T, U> x);
 
     //
     // DifGeo
     //
 
     /// <summary>Create an autodiff, rank-one tensor from a vector of initial values.</summary>
-    /// <typeparam name="U">An index.</typeparam>
+    /// <typeparam name="V">An index.</typeparam>
     /// <param name="x">A vector of initial values.</param>
     /// <returns>A rank-one tensor of two variables.</returns>
-    AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in Vector2<T> x)
-        where U : IIndex;
+    AutoDiffTensor2<T, U, V> CreateAutoDiffTensor<V>(in Vector2<T, U> x)
+        where V : IIndex;
 
     /// <summary>Create an autodiff, rank-one tensor from initial values.</summary>
-    /// <typeparam name="U">An index.</typeparam>
+    /// <typeparam name="V">An index.</typeparam>
     /// <param name="x0">The zeroth value.</param>
     /// <param name="x1">The first value.</param>
     /// <returns>A rank-one tensor of two variables.</returns>
-    AutoDiffTensor2<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1)
-        where U : IIndex;
+    AutoDiffTensor2<T, U, V> CreateAutoDiffTensor<V>(in T x0, in T x1)
+        where V : IIndex;
 
     /// <summary>Create an autodiff, rank-one tensor from a vector of initial values.</summary>
-    /// <typeparam name="U">An index.</typeparam>
+    /// <typeparam name="V">An index.</typeparam>
     /// <param name="x">A vector of initial values.</param>
     /// <returns>A rank-one tensor of three variables.</returns>
-    AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in Vector3<T> x)
-        where U : IIndex;
+    AutoDiffTensor3<T, U, V> CreateAutoDiffTensor<V>(in Vector3<T, U> x)
+        where V : IIndex;
 
     /// <summary>Create an autodiff, rank-one tensor from initial values.</summary>
-    /// <typeparam name="U">An index.</typeparam>
+    /// <typeparam name="V">An index.</typeparam>
     /// <param name="x0">The zeroth value.</param>
     /// <param name="x1">The first value.</param>
     /// <param name="x2">The second value.</param>
     /// <returns>A rank-one tensor of three variables.</returns>
-    AutoDiffTensor3<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2)
-        where U : IIndex;
+    AutoDiffTensor3<T, U, V> CreateAutoDiffTensor<V>(in T x0, in T x1, in T x2)
+        where V : IIndex;
 
     /// <summary>Create an autodiff, rank-one tensor from a vector of initial values.</summary>
-    /// <typeparam name="U">An index.</typeparam>
+    /// <typeparam name="V">An index.</typeparam>
     /// <param name="x">A vector of initial values.</param>
     /// <returns>A rank-one tensor of four variables.</returns>
-    AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in Vector4<T> x)
-        where U : IIndex;
+    AutoDiffTensor4<T, U, V> CreateAutoDiffTensor<V>(in Vector4<T, U> x)
+        where V : IIndex;
 
     /// <summary>Create an autodiff, rank-one tensor from initial values.</summary>
-    /// <typeparam name="U">An index.</typeparam>
+    /// <typeparam name="V">An index.</typeparam>
     /// <param name="x0">The zeroth value.</param>
     /// <param name="x1">The first value.</param>
     /// <param name="x2">The second value.</param>
     /// <param name="x3">The third value.</param>
     /// <returns>A rank-one tensor of four variables.</returns>
-    AutoDiffTensor4<T, U> CreateAutoDiffTensor<U>(in T x0, in T x1, in T x2, in T x3)
-        where U : IIndex;
+    AutoDiffTensor4<T, U, V> CreateAutoDiffTensor<V>(in T x0, in T x1, in T x2, in T x3)
+        where V : IIndex;
 }

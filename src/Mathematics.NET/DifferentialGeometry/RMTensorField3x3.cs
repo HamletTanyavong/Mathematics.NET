@@ -25,6 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
@@ -34,23 +35,25 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-two tensor field with 9 elements.</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T}"/>.</typeparam>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
 /// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class RMTensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
-    where TT : ITape<TN>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public class RMTensorField3x3<TT, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
+    where TT : ITape<TN, U>
+    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TI1P : IIndexPosition
     where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private protected RMTensor3Buffer3x3<TT, TN, TPI> _buffer;
+    private protected RMTensor3Buffer3x3<TT, TN, U, TPI> _buffer;
 
     public RMTensorField3x3() { }
 
-    public Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> this[int i, int j]
+    public Func<TT, AutoDiffTensor3<TN, U, TPI>, Variable<TN, U>> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i][j];
@@ -59,36 +62,37 @@ public class RMTensorField3x3<TT, TN, TI1P, TI2P, TPI> : TensorField<TN, TPI>
         set => _buffer[i][j] = value;
     }
 
-    /// <inheritdoc cref="RMTensorField2x2{TT, TN, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, TPI})"/>
-    public Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, TPI> x)
+    /// <inheritdoc cref="RMTensorField2x2{TT, TN, U, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, U, TPI})"/>
+    public Tensor<Matrix3x3<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, U, TPI> x)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
         tape.IsTracking = false;
 
-        Matrix3x3<TN> result = new();
+        Matrix3x3<TN, U> result = new();
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor3<TN, TPI>, Variable<TN>> function)
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor3<TN, U, TPI>, Variable<TN, U>> function)
                     result[i, j] = function(tape, x).Value;
             }
         }
 
         tape.IsTracking = true;
-        return new Tensor<Matrix3x3<TN>, TN, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Matrix3x3<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
 
 internal static partial class Buffers
 {
     [InlineArray(3)]
-    internal struct RMTensor3Buffer3x3<TT, TN, TPI>
-        where TT : ITape<TN>
-        where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+    internal struct RMTensor3Buffer3x3<TT, TN, U, TPI>
+        where TT : ITape<TN, U>
+        where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private RMTensor3Buffer3<TT, TN, TPI> _element;
+        private RMTensor3Buffer3<TT, TN, U, TPI> _element;
     }
 }

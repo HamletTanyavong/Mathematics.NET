@@ -40,7 +40,7 @@ public sealed class LinAlgTests
     {
         yield return new[]
         {
-            new Complex[2, 2]
+            new Complex<double>[2, 2]
             {
                 { new(1, 2), new(2, 3) },
                 { new(1, -2), new(3, 5) }
@@ -52,7 +52,7 @@ public sealed class LinAlgTests
     {
         yield return new[]
         {
-            new Real[3, 3]
+            new Real<double>[3, 3]
             {
                 { -1, 2.424, 3 },
                 { 4, 5, 6.74241 },
@@ -65,22 +65,22 @@ public sealed class LinAlgTests
 
     [TestMethod]
     [DynamicData(nameof(GetComplexInputData))]
-    public void QRGramSchmidt_MatrixOfComplex_ReturnsQRDecompositionOfMatrix(Complex[,] matrix)
+    public void QRGramSchmidt_MatrixOfComplex_ReturnsQRDecompositionOfMatrix(Complex<double>[,] matrix)
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 
     [TestMethod]
     [DynamicData(nameof(GetRealInputData))]
-    public void QRGramSchmidt_MatrixOfReal_ReturnsQRDecompositionOfMatrix(Real[,] matrix)
+    public void QRGramSchmidt_MatrixOfReal_ReturnsQRDecompositionOfMatrix(Real<double>[,] matrix)
         => QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix(matrix);
 
     public static void QRGramSchmidt_Helper_MatrixOfGeneric_ReturnsQRDecompositionOfMatrix<T>(T[,] matrix)
-        where T : IComplex<T>, IDifferentiableFunctions<T>
+        where T : IComplex<T, double, double>, IDifferentiableFunctions<T>
     {
         var expected = matrix.AsSpan2D();
-        LinAlg.QRGramSchmidt(expected, out var Q, out var R);
+        LinAlg.QRGramSchmidt<T, double>(expected, out var Q, out var R);
 
-        var actual = LinAlg.MatMul(Q, R);
+        var actual = LinAlg.MatMul<T, double, double>(Q, R);
 
-        Assert<T>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<T, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 }

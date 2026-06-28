@@ -35,9 +35,9 @@ namespace Mathematics.NET.Benchmarks.AutoDiff;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class GradientTapeBenchmarks
 {
-    public Real X { get; set; }
-    public Real Y { get; set; }
-    public Real Z { get; set; }
+    public Real<double> X { get; set; }
+    public Real<double> Y { get; set; }
+    public Real<double> Z { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -48,9 +48,9 @@ public class GradientTapeBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Real GradientTapeWithList()
+    public Real<double> GradientTapeWithList()
     {
-        GradientTape<Real> tape = new();
+        GradientTape<Real<double>, double> tape = new();
 
         var x = tape.CreateVariable(1.23);
         var y = tape.CreateVariable(2.34);
@@ -68,9 +68,9 @@ public class GradientTapeBenchmarks
     }
 
     [Benchmark]
-    public Real GradientTapeWithLinkedList()
+    public Real<double> GradientTapeWithLinkedList()
     {
-        GradientTapeWithLinkedList<Real> tape = new();
+        GradientTapeWithLinkedList<Real<double>, double> tape = new();
 
         var x = tape.CreateVariable(1.23);
         var y = tape.CreateVariable(2.34);

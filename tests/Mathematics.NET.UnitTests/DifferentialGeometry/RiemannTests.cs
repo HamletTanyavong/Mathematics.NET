@@ -37,7 +37,7 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Riemann")]
 public sealed class RiemannTests
 {
-    public static RMMetricTensorField2x2<HessianTape<Real>, Real, Index<Upper, PIN>> Tensor { get; set; } = new();
+    public static RMMetricTensorField2x2<HessianTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
@@ -53,7 +53,7 @@ public sealed class RiemannTests
         Tape = new();
     }
 
-    public HessianTape<Real> Tape { get; set; }
+    public HessianTape<Real<double>, double> Tape { get; set; }
 
     //
     // Tests
@@ -65,12 +65,12 @@ public sealed class RiemannTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1]);
 
-        var expected = (Real[,,,])values[0];
+        var expected = (Real<double>[,,,])values[0];
 
-        DifGeo.Riemann(Tape, Tensor, point, out Tensor<Array2x2x2x2<Real>, Real, Index<Upper, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> result);
+        DifGeo.Riemann(Tape, Tensor, point, out Tensor<Array2x2x2x2<Real<double>, double>, Real<double>, double, Index<Upper, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> result);
         var actual = result.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, Real.Zero);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, Real<double>.Zero);
     }
 
     //
@@ -84,7 +84,7 @@ public sealed class RiemannTests
             [1.0, 2.0],
             new object[]
             {
-                new Real[,,,]
+                new Real<double>[,,,]
                 {
                     {
                         {

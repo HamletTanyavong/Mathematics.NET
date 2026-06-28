@@ -35,9 +35,9 @@ namespace Mathematics.NET.Benchmarks.LinearAlgebra;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class Vector4MultiplicationBenchmarks
 {
-    public Vector4<Real> U { get; set; }
+    public Vector4<Real<double>, double> U { get; set; }
 
-    public Vector4<Real> V { get; set; }
+    public Vector4<Real<double>, double> V { get; set; }
 
     [GlobalSetup]
     public void GlobalSetup()
@@ -47,8 +47,8 @@ public class Vector4MultiplicationBenchmarks
     }
 
     [Benchmark(Baseline = true)]
-    public Vector4<Real> MultiplyNaive() => Vector4Impl.MultiplyNaive(U, V);
+    public Vector4<Real<double>, double> MultiplyNaive() => Vector4Impl.MultiplyNaive(U, V);
 
     [Benchmark]
-    public Vector4<Real> MultiplySimd() => Vector4Impl.MultiplySimd(U, V);
+    public Vector4<Real<double>, double> MultiplySimd() => Vector4Impl.MultiplySimd(U, V);
 }

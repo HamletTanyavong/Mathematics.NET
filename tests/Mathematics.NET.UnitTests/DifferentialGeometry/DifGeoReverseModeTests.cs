@@ -37,11 +37,11 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo")]
 public sealed class DifGeoReverseModeTests
 {
-    public static RMTensorField4<HessianTape<Real>, Real, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
+    public static RMTensorField4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
 
-    public static RMTensorField4x4<HessianTape<Real>, Real, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
+    public static RMTensorField4x4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
 
-    public static RMMetricTensorField4x4<HessianTape<Real>, Real, Index<Upper, PIN>> MetricTensor { get; set; } = new();
+    public static RMMetricTensorField4x4<HessianTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> MetricTensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
@@ -97,7 +97,7 @@ public sealed class DifGeoReverseModeTests
         Tape = new();
     }
 
-    public HessianTape<Real> Tape { get; set; }
+    public HessianTape<Real<double>, double> Tape { get; set; }
 
     //
     // Tests
@@ -109,12 +109,12 @@ public sealed class DifGeoReverseModeTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,])values[0];
+        var expected = (Real<double>[,])values[0];
 
-        DifGeo.Derivative(Tape, R1Tensor, point, out Tensor<Matrix4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
+        DifGeo.Derivative(Tape, R1Tensor, point, out Tensor<Matrix4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
         var actual = dTensor.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -123,12 +123,12 @@ public sealed class DifGeoReverseModeTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,])values[0];
+        var expected = (Real<double>[,,])values[0];
 
-        DifGeo.Derivative(Tape, R2Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
+        DifGeo.Derivative(Tape, R2Tensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
         var actual = dTensor.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -137,12 +137,12 @@ public sealed class DifGeoReverseModeTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,])values[0];
+        var expected = (Real<double>[,,])values[0];
 
-        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> dTensor);
+        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> dTensor);
         var actual = dTensor.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -151,12 +151,12 @@ public sealed class DifGeoReverseModeTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,])values[0];
+        var expected = (Real<double>[,,])values[0];
 
-        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
+        DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
         var actual = dTensor.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-13);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-13);
     }
 
     [TestMethod]
@@ -165,12 +165,12 @@ public sealed class DifGeoReverseModeTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,])values[0];
+        var expected = (Real<double>[,,])values[0];
 
-        DifGeo.SecondDerivative(Tape, R1Tensor, point, out Tensor<Array4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
+        DifGeo.SecondDerivative(Tape, R1Tensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
         var actual = d2Tensor.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -179,12 +179,12 @@ public sealed class DifGeoReverseModeTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,,])values[0];
+        var expected = (Real<double>[,,,])values[0];
 
-        DifGeo.SecondDerivative(Tape, R2Tensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Upper, Gamma>, Index<Upper, Delta>> d2Tensor);
+        DifGeo.SecondDerivative(Tape, R2Tensor, point, out Tensor<Array4x4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Upper, Gamma>, Index<Upper, Delta>> d2Tensor);
         var actual = d2Tensor.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     [TestMethod]
@@ -193,12 +193,12 @@ public sealed class DifGeoReverseModeTests
     {
         var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
 
-        var expected = (Real[,,,])values[0];
+        var expected = (Real<double>[,,,])values[0];
 
-        DifGeo.SecondDerivative(Tape, MetricTensor, point, out Tensor<Array4x4x4x4<Real>, Real, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> d2Tensor);
+        DifGeo.SecondDerivative(Tape, MetricTensor, point, out Tensor<Array4x4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> d2Tensor);
         var actual = d2Tensor.ToArray();
 
-        Assert<Real>.AreApproximatelyEqual(expected, actual, 1e-15);
+        Assert<Real<double>, double>.AreApproximatelyEqual(expected, actual, 1e-15);
     }
 
     //
@@ -212,7 +212,7 @@ public sealed class DifGeoReverseModeTests
             [1.23, 2.34, 3.45, 4.56],
             new object[]
             {
-                new Real[,]
+                new Real<double>[,]
                 {
                     { -0.9096285273579445, 0,                   0,                  0.2077929087308457 },
                     { -0.9096285273579445, 0.47343399708193507, 0,                  0                  },
@@ -230,7 +230,7 @@ public sealed class DifGeoReverseModeTests
             [1.23, 2.46, 3.14, 7.13],
             new object[]
             {
-                new Real[,,]
+                new Real<double>[,,]
                 {
                     {
                         { 0.3342377271245026, 0, 0,     0                  },
@@ -268,7 +268,7 @@ public sealed class DifGeoReverseModeTests
             [1.23, 2.46, 3.14, 7.13],
             new object[]
             {
-                new Real[,,]
+                new Real<double>[,,]
                 {
                     {
                         { 0.3342377271245026, 0, 0,     0                  },
@@ -306,7 +306,7 @@ public sealed class DifGeoReverseModeTests
             [1.23, 2.46, 3.14, 7.13],
             new object[]
             {
-                new Real[,,]
+                new Real<double>[,,]
                 {
                     {
                         { -2.290881032398611,  0.04970311612889121,  -2.57956167734756,   0.001486381669295939   },
@@ -344,7 +344,7 @@ public sealed class DifGeoReverseModeTests
             [1.23, 2.34, 3.45, 4.56],
             new object[]
             {
-                new Real[,,]
+                new Real<double>[,,]
                 {
                     {
                         { 0.4154226067712459, 0, 0, -0.017944119924943498 },
@@ -382,7 +382,7 @@ public sealed class DifGeoReverseModeTests
             [1.23, 2.46, 3.14, 7.13],
             new object[]
             {
-                new Real[,,,]
+                new Real<double>[,,,]
                 {
                     {
                         {
@@ -500,7 +500,7 @@ public sealed class DifGeoReverseModeTests
             [1.23, 2.46, 3.14, 7.13],
             new object[]
             {
-                new Real[,,,]
+                new Real<double>[,,,]
                 {
                     {
                         {

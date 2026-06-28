@@ -25,34 +25,109 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Text;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Mathematics.NET;
 
-/// <summary>A class containing extension methods for external .NET objects.</summary>
+/// <summary>Core extension methods for Mathematics.NET.</summary>
 public static class Extensions
 {
-    /// <summary>Remove specified characters from the end of a string being built by a string builder.</summary>
-    /// <param name="builder">A string builder instance.</param>
-    /// <param name="unwantedChars">An array of characters to trim.</param>
-    /// <returns>The same string builder with characters removed.</returns>
-    internal static StringBuilder TrimEnd(this StringBuilder builder, params ReadOnlySpan<char> unwantedChars)
+    //
+    // Casts and Reinterprets
+    //
+
+    /// <summary>Reinterprets a <see cref="Real{T}"/> as a new <typeparamref name="T"/>.</summary>
+    /// <param name="value">The real number to reinterpret.</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <typeparamref name="T"/>.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T AsBackingType<T>(this Real<T> value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<Real<T>, T>(ref value);
+
+    /// <summary>Reinterprets a <typeparamref name="T"/> as a new <see cref="Real{T}"/>.</summary>
+    /// <param name="value">The <typeparamref name="T"/> to reinterpret.</param>
+    /// <returns><paramref name="value"/> reinterpreted as a new <see cref="Real{T}"/>.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Real<T> AsReal<T>(this T value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<T, Real<T>>(ref value);
+
+    #region Keep Private
+
+    //
+    // Do not make the following methods public.
+    //
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static T AsBackingType<T>(this float value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<float, T>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static T AsBackingType<T>(this double value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        => Unsafe.As<double, T>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static U AsFloat<T, U>(this T value)
+        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+        where U : IBinaryFloatingPointIeee754<U>
+        => Unsafe.As<T, U>(ref value);
+
+    // The real part of any type that implements IComplex<T> should be aligned at zero.
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static V AsFloat<T, U, V>(this T value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        where V : IBinaryFloatingPointIeee754<V>
+        => Unsafe.As<T, V>(ref value);
+
+    #endregion
+
+    //
+    // Rational
+    //
+
+    /// <inheritdoc cref="IRational{T, U, V}.Reduce(T)" />
+    public static Rational<T, U> Reduce<T, U>(this Rational<T, U> value)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Rational<T, U>.Reduce(value);
+}
+
+internal static class BinaryIntegerExtensions
+{
+    extension<T>(IBinaryInteger<T> source)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
     {
-        if (builder.Length == 0 || unwantedChars.Length == 0)
-            return builder;
-
-        int i = builder.Length - 1;
-        while (i >= 0)
+        /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
+        /// <param name="x">An integer.</param>
+        /// <param name="n">A positive power.</param>
+        /// <returns><paramref name="x"/> to the power of <paramref name="n"/>.</returns>
+        public static T Pow(T x, T n)
         {
-#pragma warning disable EPS06
-            if (!unwantedChars.Contains(builder[i]))
-#pragma warning restore EPS06
-                break;
-            i--;
-        }
-        if (i < builder.Length - 1)
-            builder.Length = ++i;
+            if (T.IsZero(n))
+                return T.One;
+            if (T.IsZero(x))
+                return T.Zero;
+            if (x == T.One)
+                return T.One;
+            if (x == T.NegativeOne)
+                return T.IsEvenInteger(n) ? T.One : T.NegativeOne;
 
-        return builder;
+            var y = T.One;
+            while (n > T.One)
+            {
+                if (T.IsOddInteger(n))
+                {
+                    y *= x;
+                    n--;
+                }
+                x *= x;
+                n /= T.CreateSaturating(2);
+            }
+            return x * y;
+        }
     }
 }

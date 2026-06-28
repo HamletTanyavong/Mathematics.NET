@@ -31,10 +31,10 @@ namespace Mathematics.NET.Benchmarks.Implementations.Core;
 
 public static class ComplexImpl
 {
-    public static Complex MultiplyNaive(Complex left, Complex right)
+    public static Complex<double> MultiplyNaive(Complex<double> left, Complex<double> right)
         => new(left.Re * right.Re - left.Im * right.Im, left.Re * right.Im + right.Re * left.Im);
 
-    public static Complex MultiplySimd(Complex left, Complex right)
+    public static Complex<double> MultiplySimd(Complex<double> left, Complex<double> right)
     {
         if (Avx.IsSupported)
         {

@@ -26,33 +26,36 @@
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;
-using Mathematics.NET.Core.Operations;
+using System.Numerics;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a two-dimensional Levi-Civita symbol.</summary>
-/// <typeparam name="TN">A type that implements <see cref="IComplex{T}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1">The first index.</typeparam>
 /// <typeparam name="TI2">The second index.</typeparam>
-public readonly struct LeviCivita2<TN, TI1, TI2>
-    : IRankTwoTensor<LeviCivita2<TN, TI1, TI2>, Matrix2x2<TN>, TN, TI1, TI2>,
-      IMultiplicationOperation<LeviCivita2<TN, TI1, TI2>, TN, Tensor<Matrix2x2<TN>, TN, TI1, TI2>>,
-      IUnaryMinusOperation<LeviCivita2<TN, TI1, TI2>, Tensor<Matrix2x2<TN>, TN, TI1, TI2>>,
-      IUnaryPlusOperation<LeviCivita2<TN, TI1, TI2>, LeviCivita2<TN, TI1, TI2>>
-    where TN : IComplex<TN>, IDifferentiableFunctions<TN>
+public readonly struct LeviCivita2<TN, TB, TI1, TI2>
+    : IRankTwoTensor<LeviCivita2<TN, TB, TI1, TI2>, Matrix2x2<TN, TB>, TN, TB, TB, TI1, TI2>,
+      IMultiplicationOperation<LeviCivita2<TN, TB, TI1, TI2>, TN, Tensor<Matrix2x2<TN, TB>, TN, TB, TI1, TI2>>,
+      IUnaryMinusOperation<LeviCivita2<TN, TB, TI1, TI2>, Tensor<Matrix2x2<TN, TB>, TN, TB, TI1, TI2>>,
+      IUnaryPlusOperation<LeviCivita2<TN, TB, TI1, TI2>, LeviCivita2<TN, TB, TI1, TI2>>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TI1 : IIndex
     where TI2 : IIndex
 {
-    private static Matrix2x2<TN> s_matrix;
+    private static Matrix2x2<TN, TB> s_matrix;
 
     static LeviCivita2()
     {
         s_matrix = new();
 
-        s_matrix[0, 1] = +1;
-        s_matrix[1, 0] = -1;
+        s_matrix[0, 1] = +TN.One;
+        s_matrix[1, 0] = -TN.One;
     }
 
     //
@@ -67,11 +70,11 @@ public readonly struct LeviCivita2<TN, TI1, TI2>
     // IArrayRepresentable & Relevant Interfaces
     //
 
-    public static int Components => Matrix2x2<TN>.Components;
+    public static int Components => Matrix2x2<TN, TB>.Components;
 
-    public static int E1Components => Matrix2x2<TN>.E1Components;
+    public static int E1Components => Matrix2x2<TN, TB>.E1Components;
 
-    public static int E2Components => Matrix2x2<TN>.E2Components;
+    public static int E2Components => Matrix2x2<TN, TB>.E2Components;
 
     //
     // Indexer
@@ -87,30 +90,30 @@ public readonly struct LeviCivita2<TN, TI1, TI2>
     // Operators
     //
 
-    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> operator -(LeviCivita2<TN, TI1, TI2> tensor)
+    public static Tensor<Matrix2x2<TN, TB>, TN, TB, TI1, TI2> operator -(LeviCivita2<TN, TB, TI1, TI2> tensor)
         => new(-s_matrix);
 
-    public static LeviCivita2<TN, TI1, TI2> operator +(LeviCivita2<TN, TI1, TI2> tensor)
+    public static LeviCivita2<TN, TB, TI1, TI2> operator +(LeviCivita2<TN, TB, TI1, TI2> tensor)
         => tensor;
 
-    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> operator *(TN c, LeviCivita2<TN, TI1, TI2> tensor)
+    public static Tensor<Matrix2x2<TN, TB>, TN, TB, TI1, TI2> operator *(TN c, LeviCivita2<TN, TB, TI1, TI2> tensor)
         => new(c * s_matrix);
 
-    public static Tensor<Matrix2x2<TN>, TN, TI1, TI2> operator *(LeviCivita2<TN, TI1, TI2> tensor, TN c)
+    public static Tensor<Matrix2x2<TN, TB>, TN, TB, TI1, TI2> operator *(LeviCivita2<TN, TB, TI1, TI2> tensor, TN c)
         => new(s_matrix * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(LeviCivita2<TN, TI1, TI2> left, LeviCivita2<TN, TI1, TI2> right) => true;
+    public static bool operator ==(LeviCivita2<TN, TB, TI1, TI2> left, LeviCivita2<TN, TB, TI1, TI2> right) => true;
 
-    public static bool operator !=(LeviCivita2<TN, TI1, TI2> left, LeviCivita2<TN, TI1, TI2> right) => false;
+    public static bool operator !=(LeviCivita2<TN, TB, TI1, TI2> left, LeviCivita2<TN, TB, TI1, TI2> right) => false;
 
 #pragma warning disable EPC11
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is LeviCivita2<TN, TI1, TI2>;
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is LeviCivita2<TN, TB, TI1, TI2>;
 
-    public readonly bool Equals(LeviCivita2<TN, TI1, TI2> value) => true;
+    public readonly bool Equals(LeviCivita2<TN, TB, TI1, TI2> value) => true;
 #pragma warning restore EPC11
 
     public override readonly int GetHashCode() => HashCode.Combine(s_matrix);
@@ -131,5 +134,5 @@ public readonly struct LeviCivita2<TN, TI1, TI2>
     // Implicit Operators
     //
 
-    public static implicit operator LeviCivita2<TN, TI1, TI2>(Matrix2x2<TN> input) => throw new NotSupportedException();
+    public static implicit operator LeviCivita2<TN, TB, TI1, TI2>(Matrix2x2<TN, TB> input) => throw new NotSupportedException();
 }
