@@ -339,10 +339,10 @@ public struct Vector4<T, U>(T x1, T x2, T x3, T x4) : IVector<Vector4<T, U>, T, 
         var norm = (U)Norm();
         return typeof(T) switch
         {
-            var t when t == typeof(Real<float>) => Vector128.Divide(this.AsVector128OfSingle(), norm.AsFloat<U, float>()).AsVector4FromSingle<T, U>(),
-            var t when t == typeof(Real<double>) => Vector256.Divide(this.AsVector256OfDouble(), norm.AsFloat<U, double>()).AsVector4FromDouble<T, U>(),
-            var t when t == typeof(Complex<float>) => Vector256.Divide(this.AsVector256OfSingle(), norm.AsFloat<U, float>()).AsVector4FromSingle<T, U>(),
-            var t when t == typeof(Complex<double>) => Vector512.Divide(this.AsVector512OfDouble(), norm.AsFloat<U, double>()).AsVector4FromDouble<T, U>(),
+            var t when t == typeof(Real<float>) => Vector128.Divide(this.AsVector128(), norm).AsVector4<T, U>(),
+            var t when t == typeof(Real<double>) => Vector256.Divide(this.AsVector256(), norm).AsVector4<T, U>(),
+            var t when t == typeof(Complex<float>) => Vector256.Divide(this.AsVector256(), norm).AsVector4<T, U>(),
+            var t when t == typeof(Complex<double>) => Vector512.Divide(this.AsVector512(), norm).AsVector4<T, U>(),
             _ => new(X1 / norm, X2 / norm, X3 / norm, X4 / norm)
         };
     }

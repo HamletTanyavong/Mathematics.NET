@@ -427,3 +427,30 @@ public struct Matrix4x4<T, U> : ISquareMatrix<Matrix4x4<T, U>, T, U, U>
         return result;
     }
 }
+
+file static class Extensions
+{
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector128<float> AsVector128OfSingle<T, U>(this Vector4<T, U> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector4<T, U>, Vector128<float>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector256<double> AsVector256OfDouble<T, U>(this Vector4<T, U> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector4<T, U>, Vector256<double>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T, U> AsVector4FromSingle<T, U>(this Vector128<float> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector128<float>, Vector4<T, U>>(ref value);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector4<T, U> AsVector4FromDouble<T, U>(this Vector256<double> value)
+        where T : IComplex<T, U, U>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        => Unsafe.As<Vector256<double>, Vector4<T, U>>(ref value);
+}

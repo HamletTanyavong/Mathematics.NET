@@ -111,39 +111,7 @@ public static class Extensions
     // Do not make the following methods public!
     //
 
-    //
     // To System.Runtime.Intrinsics vectors.
-    //
-
-    // Use for Vector4s of Real<float>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector128<float> AsVector128OfSingle<T, U>(this Vector4<T, U> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector4<T, U>, Vector128<float>>(ref value);
-
-    // Use for Vector4s of Real<doubles>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector256<double> AsVector256OfDouble<T, U>(this Vector4<T, U> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector4<T, U>, Vector256<double>>(ref value);
-
-    // Use for Vector4s of Complex<float>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector256<float> AsVector256OfSingle<T, U>(this Vector4<T, U> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector4<T, U>, Vector256<float>>(ref value);
-
-    // Use for Vector4s of Complex<double>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector512<double> AsVector512OfDouble<T, U>(this Vector4<T, U> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector4<T, U>, Vector512<double>>(ref value);
-
-    // Generic.
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector128<U> AsVector128<T, U>(this Vector4<T, U> value)
@@ -163,39 +131,7 @@ public static class Extensions
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         => Unsafe.As<Vector4<T, U>, Vector512<U>>(ref value);
 
-    //
     // To Mathematics.NET vectors.
-    //
-
-    // Use for Vector4s of Real<float>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector4<T, U> AsVector4FromSingle<T, U>(this Vector128<float> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector128<float>, Vector4<T, U>>(ref value);
-
-    // Use for Vector4s of Real<double>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector4<T, U> AsVector4FromDouble<T, U>(this Vector256<double> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector256<double>, Vector4<T, U>>(ref value);
-
-    // Use for Vector4s of Complex<float>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector4<T, U> AsVector4FromSingle<T, U>(this Vector256<float> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector256<float>, Vector4<T, U>>(ref value);
-
-    // Use for Vector4s of Complex<double>s.
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static Vector4<T, U> AsVector4FromDouble<T, U>(this Vector512<double> value)
-        where T : IComplex<T, U, U>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        => Unsafe.As<Vector512<double>, Vector4<T, U>>(ref value);
-
-    // Generic.
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static Vector4<T, U> AsVector4<T, U>(this Vector128<U> value)
