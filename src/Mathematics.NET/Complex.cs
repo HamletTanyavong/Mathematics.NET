@@ -523,7 +523,7 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
         if (value._imaginary == Real<T>.Zero)
             throw new OverflowException();
 
-        result = U.CreateChecked((T)value._real);
+        result = U.CreateChecked(value._real.AsBackingType());
         return true;
     }
 
@@ -599,38 +599,48 @@ public readonly struct Complex<T>(Real<T> real, Real<T> imaginary)
 
     public static Complex<T> Acos(Complex<T> z)
     {
-        AsinInternal(T.Abs((T)z._real), T.Abs((T)z._imaginary), out T b, out T bPrime, out T v);
+        if (typeof(T) == typeof(double))
+        {
+            AsinInternal(T.Abs(z._real.AsBackingType()), T.Abs(z._imaginary.AsBackingType()), out T b, out T bPrime, out T v);
 
-        T u;
-        if (bPrime < T.Zero)
-            u = T.Acos(b);
-        else
-            u = T.Atan(T.One / bPrime);
+            T u;
+            if (bPrime < T.Zero)
+                u = T.Acos(b);
+            else
+                u = T.Atan(T.One / bPrime);
 
-        if (z._real < T.Zero)
-            u = T.Pi - u;
-        if (z._imaginary > T.Zero)
-            v = -v;
+            if (z._real < T.Zero)
+                u = T.Pi - u;
+            if (z._imaginary > T.Zero)
+                v = -v;
 
-        return new(u, v);
+            return new(u, v);
+        }
+
+        return s_im * Ln(z - s_im * Sqrt(One - z * z));
     }
 
     public static Complex<T> Asin(Complex<T> z)
     {
-        AsinInternal(T.Abs((T)z._real), T.Abs((T)z._imaginary), out T b, out T bPrime, out T v);
+        if (typeof(T) == typeof(double))
+        {
+            AsinInternal(T.Abs(z._real.AsBackingType()), T.Abs(z._imaginary.AsBackingType()), out T b, out T bPrime, out T v);
 
-        T u;
-        if (bPrime < T.Zero)
-            u = T.Asin(b);
-        else
-            u = T.Atan(bPrime);
+            T u;
+            if (bPrime < T.Zero)
+                u = T.Asin(b);
+            else
+                u = T.Atan(bPrime);
 
-        if (z._real < T.Zero)
-            u = -u;
-        if (z._imaginary < T.Zero)
-            v = -v;
+            if (z._real < T.Zero)
+                u = -u;
+            if (z._imaginary < T.Zero)
+                v = -v;
 
-        return new(u, v);
+            return new(u, v);
+        }
+
+        return s_im * Ln(Sqrt(One - z * z) - s_im * z);
     }
 
     // This method will not work well for floats.
