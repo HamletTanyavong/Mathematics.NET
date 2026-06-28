@@ -37,8 +37,8 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Tensor Calculus")]
 public sealed class TensorCalculusTests
 {
-    public static RMMetricTensorField4x4<GradientTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Metric { get; set; } = new();
-    public static RMTensorField4<GradientTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> Tensor { get; set; } = new();
+    public static MetricTensorFieldR4x4<GradientTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Metric { get; set; } = new();
+    public static TensorFieldR4<GradientTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)

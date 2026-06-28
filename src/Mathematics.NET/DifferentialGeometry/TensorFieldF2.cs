@@ -1,4 +1,4 @@
-// <copyright file="FMTensorField3.cs" company="Mathematics.NET">
+// <copyright file="TensorFieldF2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,24 +34,24 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor field with three elements.</summary>
+/// <summary>Represents a rank-one tensor field with two elements.</summary>
 /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TIP">The position of the index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class FMTensorField3<TDN, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
+public class TensorFieldF2<TDN, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
     where TDN : IDual<TDN, TN, U, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private protected FMTensor3Buffer3<TDN, TN, U, TPI> _buffer;
+    private protected FMTensor2Buffer2<TDN, TN, U, TPI> _buffer;
 
-    public FMTensorField3() { }
+    public TensorFieldF2() { }
 
-    public Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> this[int i]
+    public Func<AutoDiffTensor2<TDN, TN, U, TPI>, TDN> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i];
@@ -60,29 +60,32 @@ public class FMTensorField3<TDN, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
         set => _buffer[i] = value;
     }
 
-    /// <inheritdoc cref="FMTensorField2{TDN, TN, U, TIP, TPI}.Compute{TIN}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
-    public Tensor<Vector3<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor3<TDN, TN, U, TPI> point)
+    /// <summary>Compute the value of the tensor at a specified point.</summary>
+    /// <typeparam name="TIN">An index name.</typeparam>
+    /// <param name="point">A point.</param>
+    /// <returns>The value of the tensor at the specified point.</returns>
+    public Tensor<Vector2<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor2<TDN, TN, U, TPI> point)
         where TIN : IIndexName
     {
-        Vector3<TN, U> result = new();
-        for (int i = 0; i < 3; i++)
+        Vector2<TN, U> result = new();
+        for (int i = 0; i < 2; i++)
         {
-            if (_buffer[i] is Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> function)
+            if (_buffer[i] is Func<AutoDiffTensor2<TDN, TN, U, TPI>, TDN> function)
                 result[i] = function(point).D0;
         }
-        return new Tensor<Vector3<TN, U>, TN, U, Index<TIP, TIN>>(result);
+        return new Tensor<Vector2<TN, U>, TN, U, Index<TIP, TIN>>(result);
     }
 }
 
 internal static partial class Buffers
 {
-    [InlineArray(3)]
-    internal struct FMTensor3Buffer3<TDN, TN, U, TPI>
+    [InlineArray(2)]
+    public struct FMTensor2Buffer2<TDN, TN, U, TPI>
         where TDN : IDual<TDN, TN, U, U>
         where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> _element;
+        private Func<AutoDiffTensor2<TDN, TN, U, TPI>, TDN> _element;
     }
 }

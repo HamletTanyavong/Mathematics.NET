@@ -1,4 +1,4 @@
-// <copyright file="FMTensorField4x4.cs" company="Mathematics.NET">
+// <copyright file="TensorFieldF4.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,61 +34,55 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensor with 16 elements.</summary>
+/// <summary>Represents a rank-one tensor field with four elements.</summary>
 /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
-/// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
+/// <typeparam name="TIP">The position of the index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class FMTensorField4x4<TDN, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
+public class TensorFieldF4<TDN, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
     where TDN : IDual<TDN, TN, U, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-    where TI1P : IIndexPosition
-    where TI2P : IIndexPosition
+    where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private protected FMTensor4Buffer4x4<TDN, TN, U, TPI> _buffer;
+    private protected FMTensor4Buffer4<TDN, TN, U, TPI> _buffer;
 
-    public FMTensorField4x4() { }
+    public TensorFieldF4() { }
 
-    public Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> this[int i, int j]
+    public Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[i][j];
+        get => _buffer[i];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[i][j] = value;
+        set => _buffer[i] = value;
     }
 
-    /// <inheritdoc cref="FMTensorField2x2{TDN, TN, U, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
-    public Tensor<Matrix4x4<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(AutoDiffTensor4<TDN, TN, U, TPI> point)
-        where TI1N : IIndexName
-        where TI2N : IIndexName
+    /// <inheritdoc cref="TensorFieldF2{TDN, TN, U, TIP, TPI}.Compute{TIN}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
+    public Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor4<TDN, TN, U, TPI> point)
+        where TIN : IIndexName
     {
-        Matrix4x4<TN, U> result = new();
+        Vector4<TN, U> result = new();
         for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 4; j++)
-            {
-                if (_buffer[i][j] is Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> function)
-                    result[i, j] = function(point).D0;
-            }
+            if (_buffer[i] is Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> function)
+                result[i] = function(point).D0;
         }
-        return new Tensor<Matrix4x4<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>>(result);
     }
 }
 
 internal static partial class Buffers
 {
     [InlineArray(4)]
-    public struct FMTensor4Buffer4x4<TDN, TN, U, TPI>
+    internal struct FMTensor4Buffer4<TDN, TN, U, TPI>
         where TDN : IDual<TDN, TN, U, U>
         where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private FMTensor4Buffer4<TDN, TN, U, TPI> _element;
+        private Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> _element;
     }
 }

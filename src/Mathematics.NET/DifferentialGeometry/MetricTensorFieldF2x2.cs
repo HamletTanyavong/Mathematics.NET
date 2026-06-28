@@ -1,4 +1,4 @@
-// <copyright file="RMMetricTensorField4x4.cs" company="Mathematics.NET">
+// <copyright file="MetricTensorFieldF2x2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -32,46 +32,48 @@ using Mathematics.NET.LinearAlgebra;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a 4x4 metric tensor field.</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
+/// <summary>Represents a 2x2 metric tensor field.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class RMMetricTensorField4x4<TT, TN, U, TPI> : RMTensorField4x4<TT, TN, U, Lower, Lower, TPI>
-    where TT : ITape<TN, U>
+public class MetricTensorFieldF2x2<TDN, TN, U, TPI> : TensorFieldF2x2<TDN, TN, U, Lower, Lower, TPI>
+    where TDN : IDual<TDN, TN, U, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     where TPI : IIndex
 {
-    public RMMetricTensorField4x4() { }
-
-    /// <inheritdoc cref="RMMetricTensorField2x2{TT, TN, U, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, U, TPI})"/>
-    public new MetricTensor<Matrix4x4<TN, U>, TN, U, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, U, TPI> point)
+    /// <summary>Compute the value of the metric tensor at a specific point on the manifold.</summary>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <param name="point">A point on the manifold.</param>
+    /// <returns>A metric tensor.</returns>
+    public new MetricTensor<Matrix2x2<TN, U>, TN, U, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, U, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        tape.IsTracking = false;
-
-        Matrix4x4<TN, U> result = new();
-        for (int i = 0; i < 4; i++)
+        Matrix2x2<TN, U> result = new();
+        for (int i = 0; i < 2; i++)
         {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 2; j++)
             {
-                if (_buffer[i][j] is Func<TT, AutoDiffTensor4<TN, U, TPI>, Variable<TN, U>> function)
-                    result[i, j] = function(tape, point).Value;
+                if (_buffer[i][j] is Func<AutoDiffTensor2<TDN, TN, U, TPI>, TDN> function)
+                    result[i, j] = function(point).D0;
             }
         }
-
-        tape.IsTracking = true;
-        return new MetricTensor<Matrix4x4<TN, U>, TN, U, Lower, TI1N, TI2N>(result);
+        return new MetricTensor<Matrix2x2<TN, U>, TN, U, Lower, TI1N, TI2N>(result);
     }
 
-    /// <inheritdoc cref="RMMetricTensorField2x2{TT, TN, U, TPI}.ComputeInverse{TI1N, TI2N}(TT, AutoDiffTensor2{TN, U, TPI})"/>
-    public MetricTensor<Matrix4x4<TN, U>, TN, U, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor4<TN, U, TPI> point)
+    /// <summary>Compute the value of the inverse metric tensor at a specific point on the manifold.</summary>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <param name="point">A point on the manifold.</param>
+    /// <returns>An inverse metric tensor.</returns>
+    public MetricTensor<Matrix2x2<TN, U>, TN, U, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, U, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
-        var value = Compute<TI1N, TI2N>(tape, point);
+        var value = Compute<TI1N, TI2N>(point);
         return value.Inverse<TI1N, TI2N>();
     }
 }

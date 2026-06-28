@@ -37,7 +37,7 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Christoffel")]
 public sealed class ChristoffelSymbolTests
 {
-    public static RMMetricTensorField4x4<GradientTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Tensor { get; set; } = new();
+    public static MetricTensorFieldR4x4<GradientTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)

@@ -1,4 +1,4 @@
-// <copyright file="RMTensorField2.cs" company="Mathematics.NET">
+// <copyright file="MetricTensorFieldR3x3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -26,67 +26,52 @@
 // </copyright>
 
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
-using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor field with two elements.</summary>
+/// <summary>Represents a 3x3 metric tensor field.</summary>
 /// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <typeparam name="TIP">An index position.</typeparam>
-/// <typeparam name="TPI">An index.</typeparam>
-public class RMTensorField2<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
+public class MetricTensorFieldR3x3<TT, TN, U, TPI> : TensorFieldR3x3<TT, TN, U, Lower, Lower, TPI>
     where TT : ITape<TN, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-    where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private RMTensor2Buffer2<TT, TN, U, TPI> _buffer;
+    public MetricTensorFieldR3x3() { }
 
-    public RMTensorField2() { }
-
-    public Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> this[int i]
+    /// <inheritdoc cref="MetricTensorFieldR2x2{TT, TN, U, TPI}.Compute{TI1N, TI2N}(TT, AutoDiffTensor2{TN, U, TPI})"/>
+    public new MetricTensor<Matrix3x3<TN, U>, TN, U, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, U, TPI> point)
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[i];
+        tape.IsTracking = false;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[i] = value;
-    }
-
-    /// <summary>Compute the value of the tensor at a specified point.</summary>
-    /// <typeparam name="TIN">An index name.</typeparam>
-    /// <param name="tape">A gradient or Hessian tape.</param>
-    /// <param name="point">A point.</param>
-    /// <returns>The value of the tensor at the specified point.</returns>
-    public Tensor<Vector2<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor2<TN, U, TPI> point)
-        where TIN : IIndexName
-    {
-        Vector2<TN, U> result = new();
-        for (int i = 0; i < 2; i++)
+        Matrix3x3<TN, U> result = new();
+        for (int i = 0; i < 3; i++)
         {
-            if (_buffer[i] is Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> function)
-                result[i] = function(tape, point).Value;
+            for (int j = 0; j < 3; j++)
+            {
+                if (_buffer[i][j] is Func<TT, AutoDiffTensor3<TN, U, TPI>, Variable<TN, U>> function)
+                    result[i, j] = function(tape, point).Value;
+            }
         }
-        return new Tensor<Vector2<TN, U>, TN, U, Index<TIP, TIN>>(result);
-    }
-}
 
-internal static partial class Buffers
-{
-    [InlineArray(2)]
-    internal struct RMTensor2Buffer2<TT, TN, U, TPI>
-        where TT : ITape<TN, U>
-        where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        where TPI : IIndex
+        tape.IsTracking = true;
+        return new MetricTensor<Matrix3x3<TN, U>, TN, U, Lower, TI1N, TI2N>(result);
+    }
+
+    /// <inheritdoc cref="MetricTensorFieldR2x2{TT, TN, U, TPI}.ComputeInverse{TI1N, TI2N}(TT, AutoDiffTensor2{TN, U, TPI})"/>
+    public MetricTensor<Matrix3x3<TN, U>, TN, U, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(TT tape, AutoDiffTensor3<TN, U, TPI> point)
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
-        private Func<TT, AutoDiffTensor2<TN, U, TPI>, Variable<TN, U>> _element;
+        var value = Compute<TI1N, TI2N>(tape, point);
+        return value.Inverse<TI1N, TI2N>();
     }
 }

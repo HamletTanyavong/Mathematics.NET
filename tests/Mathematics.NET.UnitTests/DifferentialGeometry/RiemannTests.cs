@@ -37,7 +37,7 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo"), TestCategory("Riemann")]
 public sealed class RiemannTests
 {
-    public static RMMetricTensorField2x2<HessianTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Tensor { get; set; } = new();
+    public static MetricTensorFieldR2x2<HessianTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)

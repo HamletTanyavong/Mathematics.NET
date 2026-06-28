@@ -37,11 +37,11 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo")]
 public sealed class DifGeoReverseModeTests
 {
-    public static RMTensorField4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
+    public static TensorFieldR4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
 
-    public static RMTensorField4x4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
+    public static TensorFieldR4x4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
 
-    public static RMMetricTensorField4x4<HessianTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> MetricTensor { get; set; } = new();
+    public static MetricTensorFieldR4x4<HessianTape<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> MetricTensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)

@@ -1,4 +1,4 @@
-// <copyright file="FMTensorField4.cs" company="Mathematics.NET">
+// <copyright file="MetricTensorFieldF3x3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -26,63 +26,46 @@
 // </copyright>
 
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
-using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor field with four elements.</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
+/// <summary>Represents a 3x3 metric tensor field.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <typeparam name="TIP">The position of the index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class FMTensorField4<TDN, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
+public class MetricTensorFieldF3x3<TDN, TN, U, TPI> : TensorFieldF3x3<TDN, TN, U, Lower, Lower, TPI>
     where TDN : IDual<TDN, TN, U, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-    where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private protected FMTensor4Buffer4<TDN, TN, U, TPI> _buffer;
-
-    public FMTensorField4() { }
-
-    public Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> this[int i]
+    /// <inheritdoc cref="MetricTensorFieldF2x2{TDN, TN, U, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
+    public new MetricTensor<Matrix3x3<TN, U>, TN, U, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, U, TPI> point)
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[i];
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[i] = value;
-    }
-
-    /// <inheritdoc cref="FMTensorField2{TDN, TN, U, TIP, TPI}.Compute{TIN}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
-    public Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor4<TDN, TN, U, TPI> point)
-        where TIN : IIndexName
-    {
-        Vector4<TN, U> result = new();
-        for (int i = 0; i < 4; i++)
+        Matrix3x3<TN, U> result = new();
+        for (int i = 0; i < 3; i++)
         {
-            if (_buffer[i] is Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> function)
-                result[i] = function(point).D0;
+            for (int j = 0; j < 3; j++)
+            {
+                if (_buffer[i][j] is Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> function)
+                    result[i, j] = function(point).D0;
+            }
         }
-        return new Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>>(result);
+        return new MetricTensor<Matrix3x3<TN, U>, TN, U, Lower, TI1N, TI2N>(result);
     }
-}
 
-internal static partial class Buffers
-{
-    [InlineArray(4)]
-    internal struct FMTensor4Buffer4<TDN, TN, U, TPI>
-        where TDN : IDual<TDN, TN, U, U>
-        where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-        where TPI : IIndex
+    /// <inheritdoc cref="MetricTensorFieldF2x2{TDN, TN, U, TPI}.ComputeInverse{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
+    public MetricTensor<Matrix3x3<TN, U>, TN, U, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, U, TPI> point)
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
-        private Func<AutoDiffTensor4<TDN, TN, U, TPI>, TDN> _element;
+        var value = Compute<TI1N, TI2N>(point);
+        return value.Inverse<TI1N, TI2N>();
     }
 }

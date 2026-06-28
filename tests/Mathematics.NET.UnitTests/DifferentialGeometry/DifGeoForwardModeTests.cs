@@ -43,11 +43,11 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 [TestCategory("DifGeo")]
 public sealed class DifGeoForwardModeTests
 {
-    public static FMTensorField4<HyperDual<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
+    public static TensorFieldF4<HyperDual<Real<double>, double>, Real<double>, double, Upper, Index<Upper, PIN>> R1Tensor { get; set; } = new();
 
-    public static FMTensorField4x4<HyperDual<Real<double>, double>, Real<double>, double, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
+    public static TensorFieldF4x4<HyperDual<Real<double>, double>, Real<double>, double, Upper, Upper, Index<Upper, PIN>> R2Tensor { get; set; } = new();
 
-    public static FMMetricTensorField4x4<HyperDual<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> MetricTensor { get; set; } = new();
+    public static MetricTensorFieldF4x4<HyperDual<Real<double>, double>, Real<double>, double, Index<Upper, PIN>> MetricTensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)

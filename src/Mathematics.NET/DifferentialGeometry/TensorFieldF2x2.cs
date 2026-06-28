@@ -1,4 +1,4 @@
-// <copyright file="RMTensorField4.cs" company="Mathematics.NET">
+// <copyright file="TensorFieldF2x2.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,55 +34,65 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-one tensor field with four elements.</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
+/// <summary>Represents a rank-two tensor field with four elements.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <typeparam name="TIP">An index position.</typeparam>
-/// <typeparam name="TPI">An index.</typeparam>
-public class RMTensorField4<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
-    where TT : ITape<TN, U>
+/// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
+/// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
+public class TensorFieldF2x2<TDN, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
+    where TDN : IDual<TDN, TN, U, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-    where TIP : IIndexPosition
+    where TI1P : IIndexPosition
+    where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    private RMTensor4Buffer4<TT, TN, U, TPI> _buffer;
+    private protected FMTensor2Buffer2x2<TDN, TN, U, TPI> _buffer;
 
-    public RMTensorField4() { }
+    public TensorFieldF2x2() { }
 
-    public Func<TT, AutoDiffTensor4<TN, U, TPI>, Variable<TN, U>> this[int i]
+    public Func<AutoDiffTensor2<TDN, TN, U, TPI>, TDN> this[int i, int j]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[i];
+        get => _buffer[i][j];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[i] = value;
+        set => _buffer[i][j] = value;
     }
 
-    /// <inheritdoc cref="RMTensorField2{TT, TN, U, TIP, TPI}.Compute{TIN}(TT, AutoDiffTensor2{TN, U, TPI})"/>
-    public Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor4<TN, U, TPI> point)
-        where TIN : IIndexName
+    /// <summary>Compute the value of the tensor at a specified point.</summary>
+    /// <typeparam name="TI1N">The name of the first index.</typeparam>
+    /// <typeparam name="TI2N">The name of the second index.</typeparam>
+    /// <param name="point">A point.</param>
+    /// <returns>The value of the tensor at the specified point.</returns>
+    public Tensor<Matrix2x2<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(AutoDiffTensor2<TDN, TN, U, TPI> point)
+        where TI1N : IIndexName
+        where TI2N : IIndexName
     {
-        Vector4<TN, U> result = new();
-        for (int i = 0; i < 4; i++)
+        Matrix2x2<TN, U> result = new();
+        for (int i = 0; i < 2; i++)
         {
-            if (_buffer[i] is Func<TT, AutoDiffTensor4<TN, U, TPI>, Variable<TN, U>> function)
-                result[i] = function(tape, point).Value;
+            for (int j = 0; j < 2; j++)
+            {
+                if (_buffer[i][j] is Func<AutoDiffTensor2<TDN, TN, U, TPI>, TDN> function)
+                    result[i, j] = function(point).D0;
+            }
         }
-        return new Tensor<Vector4<TN, U>, TN, U, Index<TIP, TIN>>(result);
+        return new Tensor<Matrix2x2<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
 }
 
 internal static partial class Buffers
 {
-    [InlineArray(4)]
-    internal struct RMTensor4Buffer4<TT, TN, U, TPI>
-        where TT : ITape<TN, U>
+    [InlineArray(2)]
+    public struct FMTensor2Buffer2x2<TDN, TN, U, TPI>
+        where TDN : IDual<TDN, TN, U, U>
         where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private Func<TT, AutoDiffTensor4<TN, U, TPI>, Variable<TN, U>> _element;
+        private FMTensor2Buffer2<TDN, TN, U, TPI> _element;
     }
 }

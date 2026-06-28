@@ -1,4 +1,4 @@
-// <copyright file="FMMetricTensorField3x3.cs" company="Mathematics.NET">
+// <copyright file="TensorFieldF3x3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -26,25 +26,44 @@
 // </copyright>
 
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using Mathematics.NET.AutoDiff;
 using Mathematics.NET.DifferentialGeometry.Abstractions;
 using Mathematics.NET.LinearAlgebra;
+using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a 3x3 metric tensor field.</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, U}"/>.</typeparam>
+/// <summary>Represents a rank-two tensor with nine elements.</summary>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
 /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
+/// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
 /// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class FMMetricTensorField3x3<TDN, TN, U, TPI> : FMTensorField3x3<TDN, TN, U, Lower, Lower, TPI>
+public class TensorFieldF3x3<TDN, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
     where TDN : IDual<TDN, TN, U, U>
     where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+    where TI1P : IIndexPosition
+    where TI2P : IIndexPosition
     where TPI : IIndex
 {
-    /// <inheritdoc cref="FMMetricTensorField2x2{TDN, TN, U, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
-    public new MetricTensor<Matrix3x3<TN, U>, TN, U, Lower, TI1N, TI2N> Compute<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, U, TPI> point)
+    private protected FMTensor3Buffer3x3<TDN, TN, U, TPI> _buffer;
+
+    public TensorFieldF3x3() { }
+
+    public Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> this[int i, int j]
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => _buffer[i][j];
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        set => _buffer[i][j] = value;
+    }
+
+    /// <inheritdoc cref="TensorFieldF2x2{TDN, TN, U, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
+    public Tensor<Matrix3x3<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, U, TPI> point)
         where TI1N : IIndexName
         where TI2N : IIndexName
     {
@@ -57,15 +76,19 @@ public class FMMetricTensorField3x3<TDN, TN, U, TPI> : FMTensorField3x3<TDN, TN,
                     result[i, j] = function(point).D0;
             }
         }
-        return new MetricTensor<Matrix3x3<TN, U>, TN, U, Lower, TI1N, TI2N>(result);
+        return new Tensor<Matrix3x3<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
     }
+}
 
-    /// <inheritdoc cref="FMMetricTensorField2x2{TDN, TN, U, TPI}.ComputeInverse{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
-    public MetricTensor<Matrix3x3<TN, U>, TN, U, Upper, TI1N, TI2N> ComputeInverse<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, U, TPI> point)
-        where TI1N : IIndexName
-        where TI2N : IIndexName
+internal static partial class Buffers
+{
+    [InlineArray(3)]
+    public struct FMTensor3Buffer3x3<TDN, TN, U, TPI>
+        where TDN : IDual<TDN, TN, U, U>
+        where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+        where TPI : IIndex
     {
-        var value = Compute<TI1N, TI2N>(point);
-        return value.Inverse<TI1N, TI2N>();
+        private FMTensor3Buffer3<TDN, TN, U, TPI> _element;
     }
 }
