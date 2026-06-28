@@ -38,26 +38,26 @@ namespace Mathematics.NET.DifferentialGeometry;
 /// <summary>Represents a metric tensor.</summary>
 /// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TIP">An index position.</typeparam>
 /// <typeparam name="TI1N">The name of the first index.</typeparam>
 /// <typeparam name="TI2N">The name of the second index.</typeparam>
 /// <param name="matrix">A backing matrix.</param>
 [StructLayout(LayoutKind.Sequential)]
-public struct MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>(TSM matrix)
-    : IRankTwoTensor<MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>, TSM, TN, U, U, Index<TIP, TI1N>, Index<TIP, TI2N>>,
-      IAdditionOperation<MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>, Tensor<TSM, TN, U, Index<TIP, TI1N>, Index<TIP, TI2N>>>,
-      ISubtractionOperation<MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>, Tensor<TSM, TN, U, Index<TIP, TI1N>, Index<TIP, TI2N>>>
-    where TSM : ISquareMatrix<TSM, TN, U, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public struct MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>(TSM matrix)
+    : IRankTwoTensor<MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>, TSM, TN, TB, TB, Index<TIP, TI1N>, Index<TIP, TI2N>>,
+      IAdditionOperation<MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>, Tensor<TSM, TN, TB, Index<TIP, TI1N>, Index<TIP, TI2N>>>,
+      ISubtractionOperation<MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>, Tensor<TSM, TN, TB, Index<TIP, TI1N>, Index<TIP, TI2N>>>
+    where TSM : ISquareMatrix<TSM, TN, TB, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TIP : IIndexPosition
     where TI1N : IIndexName
     where TI2N : IIndexName
 {
     private static readonly TN s_trace = TN.CreateChecked(TSM.E1Components);
 
-    public static readonly MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> Euclidean = TSM.Identity;
+    public static readonly MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> Euclidean = TSM.Identity;
 
     private TSM _matrix = matrix;
 
@@ -93,37 +93,37 @@ public struct MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>(TSM matrix)
     // Operators
     //
 
-    public static MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> operator -(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> metric)
+    public static MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> operator -(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> metric)
         => new(-metric._matrix);
 
-    public static MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> operator +(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> metric)
+    public static MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> operator +(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> metric)
         => metric;
 
-    public static Tensor<TSM, TN, U, Index<TIP, TI1N>, Index<TIP, TI2N>> operator +(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> right)
+    public static Tensor<TSM, TN, TB, Index<TIP, TI1N>, Index<TIP, TI2N>> operator +(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> right)
         => left._matrix + right._matrix;
 
-    public static Tensor<TSM, TN, U, Index<TIP, TI1N>, Index<TIP, TI2N>> operator -(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> right)
+    public static Tensor<TSM, TN, TB, Index<TIP, TI1N>, Index<TIP, TI2N>> operator -(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> right)
         => left._matrix - right._matrix;
 
-    public static MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> operator *(TN c, MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> metric)
+    public static MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> operator *(TN c, MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> metric)
         => new(c * metric._matrix);
 
-    public static MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> operator *(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> metric, TN c)
+    public static MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> operator *(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> metric, TN c)
         => new(metric._matrix * c);
 
     //
     // Equality
     //
 
-    public static bool operator ==(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> right)
+    public static bool operator ==(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> right)
         => left._matrix == right._matrix;
 
-    public static bool operator !=(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> right)
+    public static bool operator !=(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> left, MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> right)
         => left._matrix == right._matrix;
 
-    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> other && Equals(other);
+    public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> other && Equals(other);
 
-    public readonly bool Equals(MetricTensor<TSM, TN, U, TIP, TI1N, TI2N> value) => _matrix.Equals(value._matrix);
+    public readonly bool Equals(MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N> value) => _matrix.Equals(value._matrix);
 
     public override readonly int GetHashCode() => HashCode.Combine(_matrix);
 
@@ -146,7 +146,7 @@ public struct MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>(TSM matrix)
     /// <typeparam name="TNI1N">The name of the first index.</typeparam>
     /// <typeparam name="TNI2N">The name of the second index.</typeparam>
     /// <returns>The inverse of this metric tensor with new index names.</returns>
-    public MetricTensor<TSM, TN, U, Upper, TNI1N, TNI2N> Inverse<TNI1N, TNI2N>()
+    public MetricTensor<TSM, TN, TB, Upper, TNI1N, TNI2N> Inverse<TNI1N, TNI2N>()
         where TNI1N : IIndexName
         where TNI2N : IIndexName
         => new(_matrix.Inverse());
@@ -167,30 +167,30 @@ public struct MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>(TSM matrix)
     /// <typeparam name="TNI2N">The name of the second index.</typeparam>
     /// <returns>A tensor with new index names.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public MetricTensor<TSM, TN, U, TIP, TNI1N, TNI2N> WithIndices<TNI1N, TNI2N>()
+    public MetricTensor<TSM, TN, TB, TIP, TNI1N, TNI2N> WithIndices<TNI1N, TNI2N>()
         where TNI1N : IIndexName
         where TNI2N : IIndexName
-        => Unsafe.As<MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, U, TIP, TNI1N, TNI2N>>(ref this);
+        => Unsafe.As<MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TB, TIP, TNI1N, TNI2N>>(ref this);
 
     /// <summary>Reinterpret this metric tensor as one with a new index name in the first position.</summary>
     /// <typeparam name="TNIN">A new index name.</typeparam>
     /// <returns>A tensor with a new index name in the first position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public MetricTensor<TSM, TN, U, TIP, TNIN, TI2N> WithIndex1Name<TNIN>()
+    public MetricTensor<TSM, TN, TB, TIP, TNIN, TI2N> WithIndex1Name<TNIN>()
         where TNIN : IIndexName
-        => Unsafe.As<MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, U, TIP, TNIN, TI2N>>(ref this);
+        => Unsafe.As<MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TB, TIP, TNIN, TI2N>>(ref this);
 
     /// <summary>Reinterpret this metric tensor as one with a new index name in the second position.</summary>
     /// <typeparam name="TNIN">A new index name.</typeparam>
     /// <returns>A tensor with a new index name in the second position.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public MetricTensor<TSM, TN, U, TIP, TI1N, TNIN> WithIndex2Name<TNIN>()
+    public MetricTensor<TSM, TN, TB, TIP, TI1N, TNIN> WithIndex2Name<TNIN>()
         where TNIN : IIndexName
-        => Unsafe.As<MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, U, TIP, TI1N, TNIN>>(ref this);
+        => Unsafe.As<MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>, MetricTensor<TSM, TN, TB, TIP, TI1N, TNIN>>(ref this);
 
     //
     // Implicit operators
     //
 
-    public static implicit operator MetricTensor<TSM, TN, U, TIP, TI1N, TI2N>(TSM input) => new(input);
+    public static implicit operator MetricTensor<TSM, TN, TB, TIP, TI1N, TI2N>(TSM input) => new(input);
 }

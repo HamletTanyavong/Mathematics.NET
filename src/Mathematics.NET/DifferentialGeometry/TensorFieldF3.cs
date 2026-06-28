@@ -1,4 +1,4 @@
-// <copyright file="RMTensorField3.cs" company="Mathematics.NET">
+// <copyright file="TensorFieldF3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -35,23 +35,23 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor field with three elements.</summary>
-/// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <typeparam name="TIP">An index position.</typeparam>
-/// <typeparam name="TPI">An index.</typeparam>
-public class RMTensorField3<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
-    where TT : ITape<TN, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TIP">The position of the index of the tensor.</typeparam>
+/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
+public class TensorFieldF3<TDN, TN, TB, TIP, TPI> : TensorField<TN, TB, TPI>
+    where TDN : IDual<TDN, TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private RMTensor3Buffer3<TT, TN, U, TPI> _buffer;
+    private protected FMTensor3Buffer3<TDN, TN, TB, TPI> _buffer;
 
-    public RMTensorField3() { }
+    public TensorFieldF3() { }
 
-    public Func<TT, AutoDiffTensor3<TN, U, TPI>, Variable<TN, U>> this[int i]
+    public Func<AutoDiffTensor3<TDN, TN, TB, TPI>, TDN> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => _buffer[i];
@@ -60,29 +60,29 @@ public class RMTensorField3<TT, TN, U, TIP, TPI> : TensorField<TN, U, TPI>
         set => _buffer[i] = value;
     }
 
-    /// <inheritdoc cref="RMTensorField2{TT, TN, U, TIP, TPI}.Compute{TIN}(TT, AutoDiffTensor2{TN, U, TPI})"/>
-    public Tensor<Vector3<TN, U>, TN, U, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor3<TN, U, TPI> point)
+    /// <inheritdoc cref="TensorFieldF2{TDN, TN, U, TIP, TPI}.Compute{TIN}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
+    public Tensor<Vector3<TN, TB>, TN, TB, Index<TIP, TIN>> Compute<TIN>(AutoDiffTensor3<TDN, TN, TB, TPI> point)
         where TIN : IIndexName
     {
-        Vector3<TN, U> result = new();
+        Vector3<TN, TB> result = new();
         for (int i = 0; i < 3; i++)
         {
-            if (_buffer[i] is Func<TT, AutoDiffTensor3<TN, U, TPI>, Variable<TN, U>> function)
-                result[i] = function(tape, point).Value;
+            if (_buffer[i] is Func<AutoDiffTensor3<TDN, TN, TB, TPI>, TDN> function)
+                result[i] = function(point).D0;
         }
-        return new Tensor<Vector3<TN, U>, TN, U, Index<TIP, TIN>>(result);
+        return new Tensor<Vector3<TN, TB>, TN, TB, Index<TIP, TIN>>(result);
     }
 }
 
 internal static partial class Buffers
 {
     [InlineArray(3)]
-    internal struct RMTensor3Buffer3<TT, TN, U, TPI>
-        where TT : ITape<TN, U>
+    internal struct FMTensor3Buffer3<TDN, TN, U, TPI>
+        where TDN : IDual<TDN, TN, U>
         where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private Func<TT, AutoDiffTensor3<TN, U, TPI>, Variable<TN, U>> _element;
+        private Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> _element;
     }
 }

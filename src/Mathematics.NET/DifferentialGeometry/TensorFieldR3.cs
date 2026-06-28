@@ -1,4 +1,4 @@
-// <copyright file="FMTensorField3x3.cs" company="Mathematics.NET">
+// <copyright file="TensorFieldR3.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -34,61 +34,55 @@ using static Mathematics.NET.DifferentialGeometry.Buffers;
 
 namespace Mathematics.NET.DifferentialGeometry;
 
-/// <summary>Represents a rank-two tensor with nine elements.</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, U, V}"/>.</typeparam>
+/// <summary>Represents a rank-one tensor field with three elements.</summary>
+/// <typeparam name="TT">A type that implements <see cref="ITape{T, U}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-/// <typeparam name="TI1P">The position of the first index of the tensor.</typeparam>
-/// <typeparam name="TI2P">The position of the second index of the tensor.</typeparam>
-/// <typeparam name="TPI">The index of the point on the manifold.</typeparam>
-public class FMTensorField3x3<TDN, TN, U, TI1P, TI2P, TPI> : TensorField<TN, U, TPI>
-    where TDN : IDual<TDN, TN, U, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
-    where TI1P : IIndexPosition
-    where TI2P : IIndexPosition
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TIP">An index position.</typeparam>
+/// <typeparam name="TPI">An index.</typeparam>
+public class TensorFieldR3<TT, TN, TB, TIP, TPI> : TensorField<TN, TB, TPI>
+    where TT : ITape<TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
+    where TIP : IIndexPosition
     where TPI : IIndex
 {
-    private protected FMTensor3Buffer3x3<TDN, TN, U, TPI> _buffer;
+    private RMTensor3Buffer3<TT, TN, TB, TPI> _buffer;
 
-    public FMTensorField3x3() { }
+    public TensorFieldR3() { }
 
-    public Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> this[int i, int j]
+    public Func<TT, AutoDiffTensor3<TN, TB, TPI>, Variable<TN, TB>> this[int i]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => _buffer[i][j];
+        get => _buffer[i];
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        set => _buffer[i][j] = value;
+        set => _buffer[i] = value;
     }
 
-    /// <inheritdoc cref="FMTensorField2x2{TDN, TN, U, TI1P, TI2P, TPI}.Compute{TI1N, TI2N}(AutoDiffTensor2{TDN, TN, U, TPI})"/>
-    public Tensor<Matrix3x3<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>> Compute<TI1N, TI2N>(AutoDiffTensor3<TDN, TN, U, TPI> point)
-        where TI1N : IIndexName
-        where TI2N : IIndexName
+    /// <inheritdoc cref="TensorFieldR2{TT, TN, U, TIP, TPI}.Compute{TIN}(TT, AutoDiffTensor2{TN, U, TPI})"/>
+    public Tensor<Vector3<TN, TB>, TN, TB, Index<TIP, TIN>> Compute<TIN>(TT tape, AutoDiffTensor3<TN, TB, TPI> point)
+        where TIN : IIndexName
     {
-        Matrix3x3<TN, U> result = new();
+        Vector3<TN, TB> result = new();
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 3; j++)
-            {
-                if (_buffer[i][j] is Func<AutoDiffTensor3<TDN, TN, U, TPI>, TDN> function)
-                    result[i, j] = function(point).D0;
-            }
+            if (_buffer[i] is Func<TT, AutoDiffTensor3<TN, TB, TPI>, Variable<TN, TB>> function)
+                result[i] = function(tape, point).Value;
         }
-        return new Tensor<Matrix3x3<TN, U>, TN, U, Index<TI1P, TI1N>, Index<TI2P, TI2N>>(result);
+        return new Tensor<Vector3<TN, TB>, TN, TB, Index<TIP, TIN>>(result);
     }
 }
 
 internal static partial class Buffers
 {
     [InlineArray(3)]
-    public struct FMTensor3Buffer3x3<TDN, TN, U, TPI>
-        where TDN : IDual<TDN, TN, U, U>
+    internal struct RMTensor3Buffer3<TT, TN, U, TPI>
+        where TT : ITape<TN, U>
         where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         where TPI : IIndex
     {
-        private FMTensor3Buffer3<TDN, TN, U, TPI> _element;
+        private Func<TT, AutoDiffTensor3<TN, U, TPI>, Variable<TN, U>> _element;
     }
 }

@@ -37,7 +37,7 @@ namespace Mathematics.NET.AutoDiff;
 /// <param name="d0">The primal part of the dual number.</param>
 /// <param name="d1">The tangent part of the dual number.</param>
 [Serializable, StructLayout(LayoutKind.Sequential)]
-public readonly struct Dual<T, U>(T d0, T d1) : IDual<Dual<T, U>, T, U, U>
+public readonly struct Dual<T, U>(T d0, T d1) : IDual<Dual<T, U>, T, U>
     where T : IComplex<T, U, U>, IDifferentiableFunctions<T>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {

@@ -34,16 +34,16 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TR2T">The type that implements the interface.</typeparam>
 /// <typeparam name="TSM">A backing type that implements <see cref="ISquareMatrix{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
-/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1">An index.</typeparam>
 /// <typeparam name="TI2">An index.</typeparam>
-public interface IRankTwoTensor<TR2T, TSM, TN, U, V, TI1, TI2> : I2DArrayRepresentable<TR2T, TN, U, V>
-    where TR2T : IRankTwoTensor<TR2T, TSM, TN, U, V, TI1, TI2>
-    where TSM : ISquareMatrix<TSM, TN, U, V>
-    where TN : IComplex<TN, U, V>, IDifferentiableFunctions<TN>
-    where U : IBinaryNumber<U>
-    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
+public interface IRankTwoTensor<TR2T, TSM, TN, TB, TR, TI1, TI2> : I2DArrayRepresentable<TR2T, TN, TB, TR>
+    where TR2T : IRankTwoTensor<TR2T, TSM, TN, TB, TR, TI1, TI2>
+    where TSM : ISquareMatrix<TSM, TN, TB, TR>
+    where TN : IComplex<TN, TB, TR>, IDifferentiableFunctions<TN>
+    where TB : IBinaryNumber<TB>
+    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
     where TI1 : IIndex
     where TI2 : IIndex
 {

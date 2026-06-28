@@ -34,14 +34,14 @@ using Mathematics.NET.DifferentialGeometry.Abstractions;
 namespace Mathematics.NET.DifferentialGeometry;
 
 /// <summary>Represents a rank-one tensor of three variables for use in forward-mode automatic differentiation.</summary>
-/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V, W}"/>.</typeparam>
+/// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI">An index.</typeparam>
-public record struct AutoDiffTensor3<TDN, TN, U, TI>
-    where TDN : IDual<TDN, TN, U, U>
-    where TN : IComplex<TN, U, U>, IDifferentiableFunctions<TN>
-    where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
+public record struct AutoDiffTensor3<TDN, TN, TB, TI>
+    where TDN : IDual<TDN, TN, TB>
+    where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
+    where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
     where TI : IIndex
 {
     /// <summary>The zeroth element of the rank-one tensor.</summary>
@@ -72,7 +72,7 @@ public record struct AutoDiffTensor3<TDN, TN, U, TI>
 
     // Get
 
-    internal static TDN GetElement(AutoDiffTensor3<TDN, TN, U, TI> tensor, int index)
+    internal static TDN GetElement(AutoDiffTensor3<TDN, TN, TB, TI> tensor, int index)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
@@ -80,35 +80,35 @@ public record struct AutoDiffTensor3<TDN, TN, U, TI>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static TDN GetElementUnsafe(ref AutoDiffTensor3<TDN, TN, U, TI> tensor, int index)
+    private static TDN GetElementUnsafe(ref AutoDiffTensor3<TDN, TN, TB, TI> tensor, int index)
     {
         Debug.Assert(index is >= 0 and < 3);
-        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TDN, TN, U, TI>, TDN>(ref tensor), index);
+        return Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TDN, TN, TB, TI>, TDN>(ref tensor), index);
     }
 
     // Set
 
-    internal static AutoDiffTensor3<TDN, TN, U, TI> WithElement(AutoDiffTensor3<TDN, TN, U, TI> tensor, int index, TDN value)
+    internal static AutoDiffTensor3<TDN, TN, TB, TI> WithElement(AutoDiffTensor3<TDN, TN, TB, TI> tensor, int index, TDN value)
     {
         if ((uint)index >= 3)
             throw new IndexOutOfRangeException();
-        AutoDiffTensor3<TDN, TN, U, TI> result = tensor;
+        AutoDiffTensor3<TDN, TN, TB, TI> result = tensor;
         SetElementUnsafe(ref result, index, value);
         return result;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void SetElementUnsafe(ref AutoDiffTensor3<TDN, TN, U, TI> tensor, int index, TDN value)
+    private static void SetElementUnsafe(ref AutoDiffTensor3<TDN, TN, TB, TI> tensor, int index, TDN value)
     {
         Debug.Assert(index is >= 0 and < 3);
-        Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TDN, TN, U, TI>, TDN>(ref tensor), index) = value;
+        Unsafe.Add(ref Unsafe.As<AutoDiffTensor3<TDN, TN, TB, TI>, TDN>(ref tensor), index) = value;
     }
 
     //
     // Methods
     //
 
-    public static AutoDiffTensor3<TDN, TN, U, TI> Create(TN x0, TN x1, TN x3) => new(x0, x1, x3);
+    public static AutoDiffTensor3<TDN, TN, TB, TI> Create(TN x0, TN x1, TN x3) => new(x0, x1, x3);
 
     //
     // Formatting
@@ -120,7 +120,7 @@ public record struct AutoDiffTensor3<TDN, TN, U, TI>
     // Methods
     //
 
-    public static AutoDiffTensor3<TDN, TN, U, TNI> Create<TNI>(TDN x0, TDN x1, TDN x2)
+    public static AutoDiffTensor3<TDN, TN, TB, TNI> Create<TNI>(TDN x0, TDN x1, TDN x2)
         where TNI : IIndex
         => new(x0, x1, x2);
 }

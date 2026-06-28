@@ -33,13 +33,13 @@ namespace Mathematics.NET.LinearAlgebra.Operations;
 /// <summary>Defines support for the matrix transpose operation.</summary>
 /// <typeparam name="TM">A type that implements <see cref="IMatrix{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
-/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
-public interface ITransposeOperation<out TM, TN, U, V>
-    where TM : IMatrix<TM, TN, U, V>
-    where TN : IComplex<TN, U, V>
-    where U : IBinaryNumber<U>
-    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+public interface ITransposeOperation<out TM, TN, TB, TR>
+    where TM : IMatrix<TM, TN, TB, TR>
+    where TN : IComplex<TN, TB, TR>
+    where TB : IBinaryNumber<TB>
+    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
 {
     /// <summary>Compute the transpose of the matrix.</summary>
     /// <returns>The transpose.</returns>

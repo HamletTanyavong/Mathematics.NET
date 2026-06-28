@@ -28,6 +28,7 @@
 #pragma warning disable IDE0058
 
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace Mathematics.NET.GraphTheory;
@@ -35,6 +36,7 @@ namespace Mathematics.NET.GraphTheory;
 /// <summary>Represents a graph.</summary>
 /// <typeparam name="TNode">A type that inherits from <see cref="Node"/>.</typeparam>
 /// <typeparam name="TEdge">A type that inherits from <see cref="Edge"/>.</typeparam>
+[Experimental("GT0001")]
 public class Graph<TNode, TEdge>
     where TNode : Node
     where TEdge : Edge

@@ -34,17 +34,17 @@ namespace Mathematics.NET.DifferentialGeometry.Abstractions;
 /// <typeparam name="TR3T">The type that implements the interface.</typeparam>
 /// <typeparam name="TCA">A backing type that implements <see cref="ICubicArray{T, U, V, W}"/>.</typeparam>
 /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
-/// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
-/// <typeparam name="V">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+/// <typeparam name="TB">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
+/// <typeparam name="TR">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
 /// <typeparam name="TI1">An index.</typeparam>
 /// <typeparam name="TI2">An index.</typeparam>
 /// <typeparam name="TI3">An index.</typeparam>
-public interface IRankThreeTensor<TR3T, TCA, TN, U, V, TI1, TI2, TI3> : I3DArrayRepresentable<TR3T, TN, U, V>
-    where TR3T : IRankThreeTensor<TR3T, TCA, TN, U, V, TI1, TI2, TI3>
-    where TCA : ICubicArray<TCA, TN, U, V>
-    where TN : IComplex<TN, U, V>, IDifferentiableFunctions<TN>
-    where U : IBinaryNumber<U>
-    where V : IBinaryFloatingPointIeee754<V>, IMinMaxValue<V>
+public interface IRankThreeTensor<TR3T, TCA, TN, TB, TR, TI1, TI2, TI3> : I3DArrayRepresentable<TR3T, TN, TB, TR>
+    where TR3T : IRankThreeTensor<TR3T, TCA, TN, TB, TR, TI1, TI2, TI3>
+    where TCA : ICubicArray<TCA, TN, TB, TR>
+    where TN : IComplex<TN, TB, TR>, IDifferentiableFunctions<TN>
+    where TB : IBinaryNumber<TB>
+    where TR : IBinaryFloatingPointIeee754<TR>, IMinMaxValue<TR>
     where TI1 : IIndex
     where TI2 : IIndex
     where TI3 : IIndex

@@ -1,4 +1,4 @@
-// <copyright file="RMTensorField4Tests.cs" company="Mathematics.NET">
+// <copyright file="TensorFieldR4Tests.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -35,9 +35,9 @@ namespace Mathematics.NET.UnitTests.DifferentialGeometry;
 
 [TestClass]
 [TestCategory("DifGeo")]
-public sealed class RMTensorField4Tests
+public sealed class TensorFieldR4Tests
 {
-    public static RMTensorField4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, Alpha>> Tensor { get; set; } = new();
+    public static TensorFieldR4<HessianTape<Real<double>, double>, Real<double>, double, Upper, Index<Upper, Alpha>> Tensor { get; set; } = new();
 
     [ClassInitialize]
     public static void ClassInitialize(TestContext context)
@@ -48,7 +48,7 @@ public sealed class RMTensorField4Tests
         Tensor[3] = (tape, x) => tape.Sqrt(tape.Add(x.X3, x.X0));
     }
 
-    public RMTensorField4Tests()
+    public TensorFieldR4Tests()
     {
         Tape = new();
     }

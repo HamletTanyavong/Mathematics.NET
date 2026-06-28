@@ -33,7 +33,6 @@ namespace Mathematics.NET.DifferentialGeometry;
 public readonly struct Lower : IIndexPosition
 {
     /// <inheritdoc cref="IIndexPosition.Name"/>
-    public const string DisplayString = nameof(Lower);
-
-    static string IIndexPosition.Name => DisplayString;
+    public const string Name = nameof(Lower);
+    static string IIndexPosition.Name => Name;
 }

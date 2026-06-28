@@ -47,8 +47,8 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -58,10 +58,10 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="derivative">A rank-two tensor.</param>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI1N, TI2N>(
-        FMTensorField2<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldF2<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -82,12 +82,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(FMTensorField2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(TensorFieldF2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI1N, TI2N>(
-        FMTensorField3<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldF3<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -108,12 +108,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(FMTensorField2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(TensorFieldF2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI1N, TI2N>(
-        FMTensorField4<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldF4<TDN, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -134,12 +134,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(FMTensorField2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(TensorFieldF2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI1N, TI2N>(
-        FMTensorField2<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldF2<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -160,12 +160,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(FMTensorField2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(TensorFieldF2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI1N, TI2N>(
-        FMTensorField3<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldF3<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -186,12 +186,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(FMTensorField2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI1N, TI2N}(TensorFieldF2{TDN, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI1N, TI2N>(
-        FMTensorField4<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldF4<TDN, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -214,8 +214,8 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -227,10 +227,10 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField2x2<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldF2x2<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -256,12 +256,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField3x3<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldF3x3<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -287,12 +287,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField4x4<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldF4x4<TDN, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -318,12 +318,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField2x2<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldF2x2<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -349,12 +349,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField3x3<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldF3x3<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -380,12 +380,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2x2{TDN, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField4x4<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldF4x4<TDN, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -414,7 +414,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -426,7 +426,7 @@ public static partial class DifGeo
     /// <param name="derivative">A rank-two tensor.</param>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI1N, TI2N>(
         TT tape,
-        RMTensorField2<TT, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldR2<TT, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN, TB>
@@ -452,10 +452,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, RMTensorField2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, TensorFieldR2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI1N, TI2N>(
         TT tape,
-        RMTensorField3<TT, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldR3<TT, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN, TB>
@@ -481,10 +481,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, RMTensorField2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, TensorFieldR2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI1N, TI2N>(
         TT tape,
-        RMTensorField4<TT, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldR4<TT, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN, TB>
@@ -510,10 +510,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, RMTensorField2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, TensorFieldR2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI1N, TI2N>(
         TT tape,
-        RMTensorField2<TT, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldR2<TT, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN, TB>
@@ -539,10 +539,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, RMTensorField2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, TensorFieldR2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI1N, TI2N>(
         TT tape,
-        RMTensorField3<TT, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldR3<TT, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN, TB>
@@ -568,10 +568,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, RMTensorField2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI1N, TI2N}(TT, TensorFieldR2{TT, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI1N, TI2N>(
         TT tape,
-        RMTensorField4<TT, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldR4<TT, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>> derivative)
         where TT : ITape<TN, TB>
@@ -599,8 +599,8 @@ public static partial class DifGeo
 
     /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
@@ -610,10 +610,10 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -628,12 +628,12 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -648,12 +648,12 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -668,12 +668,12 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField2x2<TDN, TN, TB, Index<Lower, TPIN>> metric,
+        MetricTensorFieldF2x2<TDN, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -688,12 +688,12 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField3x3<TDN, TN, TB, Index<Lower, TPIN>> metric,
+        MetricTensorFieldF3x3<TDN, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -708,12 +708,12 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField4x4<TDN, TN, TB, Index<Lower, TPIN>> metric,
+        MetricTensorFieldF4x4<TDN, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -731,7 +731,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of the inverse of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
@@ -743,7 +743,7 @@ public static partial class DifGeo
     /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -761,10 +761,10 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -782,10 +782,10 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -806,7 +806,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of a metric tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI1N">The name of the first index of the tensor.</typeparam>
@@ -818,7 +818,7 @@ public static partial class DifGeo
     /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField2x2<TT, TN, TB, Index<Lower, TPIN>> metric,
+        MetricTensorFieldR2x2<TT, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor2<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -836,10 +836,10 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Lower, TPIN}}, AutoDiffTensor2{TN, TB, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Lower, TPIN}}, AutoDiffTensor2{TN, TB, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField3x3<TT, TN, TB, Index<Lower, TPIN>> metric,
+        MetricTensorFieldR3x3<TT, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor3<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -857,10 +857,10 @@ public static partial class DifGeo
         derivative = -Contract(Contract(dTensor, invMetricL), invMetricR);
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Lower, TPIN}}, AutoDiffTensor2{TN, TB, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Lower, TPIN}}, AutoDiffTensor2{TN, TB, Index{Lower, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Upper, TI2N}, Index{Upper, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField4x4<TT, TN, TB, Index<Lower, TPIN>> metric,
+        MetricTensorFieldR4x4<TT, TN, TB, Index<Lower, TPIN>> metric,
         AutoDiffTensor4<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<Upper, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -881,7 +881,7 @@ public static partial class DifGeo
     /// <summary>Compute the derivative of rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -895,7 +895,7 @@ public static partial class DifGeo
     /// <param name="derivative">A rank-three tensor.</param>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
-        RMTensorField2x2<TT, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldR2x2<TT, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -926,10 +926,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, RMTensorField2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, TensorFieldR2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
-        RMTensorField3x3<TT, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldR3x3<TT, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -960,10 +960,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, RMTensorField2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, TensorFieldR2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
-        RMTensorField4x4<TT, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldR4x4<TT, TN, TB, TI2P, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -994,10 +994,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, RMTensorField2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, TensorFieldR2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
-        RMTensorField2x2<TT, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldR2x2<TT, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -1028,10 +1028,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, RMTensorField2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, TensorFieldR2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
-        RMTensorField3x3<TT, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldR3x3<TT, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -1062,10 +1062,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, RMTensorField2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="Derivative{TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TT, TensorFieldR2x2{TT, TN, TB, TI2P, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void Derivative<TT, TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         TT tape,
-        RMTensorField4x4<TT, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldR4x4<TT, TN, TB, TI2P, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> derivative)
         where TT : ITape<TN, TB>
@@ -1100,7 +1100,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -1112,7 +1112,7 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="secondDerivative">A rank-three tensor.</param>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField2<HyperDual<TN, TB>, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldF2<HyperDual<TN, TB>, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1142,9 +1142,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField3<HyperDual<TN, TB>, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldF3<HyperDual<TN, TB>, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1174,9 +1174,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField4<HyperDual<TN, TB>, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
+        TensorFieldF4<HyperDual<TN, TB>, TN, TB, TI2P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1206,9 +1206,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField2<HyperDual<TN, TB>, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldF2<HyperDual<TN, TB>, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN, TB>, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1238,9 +1238,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField3<HyperDual<TN, TB>, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldF3<HyperDual<TN, TB>, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN, TB>, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1270,9 +1270,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(FMTensorField2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(TensorFieldF2{HyperDual{TN, TB}, TN, TB, TI2P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
-        FMTensorField4<HyperDual<TN, TB>, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
+        TensorFieldF4<HyperDual<TN, TB>, TN, TB, TI2P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN, TB>, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1304,7 +1304,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative of rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
@@ -1317,7 +1317,7 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="secondDerivative">A rank-four tensor.</param>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
-        FMTensorField2x2<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
+        TensorFieldF2x2<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1351,9 +1351,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(FMTensorField2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(TensorFieldF2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
-        FMTensorField3x3<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
+        TensorFieldF3x3<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1387,9 +1387,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(FMTensorField2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(TensorFieldF2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
-        FMTensorField4x4<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
+        TensorFieldF4x4<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1423,9 +1423,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(FMTensorField2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(TensorFieldF2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
-        FMTensorField2x2<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
+        TensorFieldF2x2<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<HyperDual<TN, TB>, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1459,9 +1459,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(FMTensorField2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(TensorFieldF2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
-        FMTensorField3x3<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
+        TensorFieldF3x3<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<HyperDual<TN, TB>, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1495,9 +1495,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(FMTensorField2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(TensorFieldF2x2{HyperDual{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
-        FMTensorField4x4<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
+        TensorFieldF4x4<HyperDual<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<HyperDual<TN, TB>, TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1533,7 +1533,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative of rank-one tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI2P">The index position of the second index of the tensor.</typeparam>
@@ -1547,7 +1547,7 @@ public static partial class DifGeo
     /// <param name="secondDerivative">A rank-two tensor.</param>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN, TB> tape,
-        RMTensorField2<HessianTape<TN, TB>, TN, TB, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldR2<HessianTape<TN, TB>, TN, TB, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1578,10 +1578,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, RMTensorField2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, TensorFieldR2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN, TB> tape,
-        RMTensorField3<HessianTape<TN, TB>, TN, TB, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldR3<HessianTape<TN, TB>, TN, TB, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1612,10 +1612,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, RMTensorField2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, TensorFieldR2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN, TB> tape,
-        RMTensorField4<HessianTape<TN, TB>, TN, TB, TI3P, Index<Upper, TPIN>> tensor,
+        TensorFieldR4<HessianTape<TN, TB>, TN, TB, TI3P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1646,10 +1646,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, RMTensorField2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, TensorFieldR2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN, TB> tape,
-        RMTensorField2<HessianTape<TN, TB>, TN, TB, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldR2<HessianTape<TN, TB>, TN, TB, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1680,10 +1680,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, RMTensorField2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, TensorFieldR2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN, TB> tape,
-        RMTensorField3<HessianTape<TN, TB>, TN, TB, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldR3<HessianTape<TN, TB>, TN, TB, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1714,10 +1714,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, RMTensorField2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N}(HessianTape{TN, TB}, TensorFieldR2{HessianTape{TN, TB}, TN, TB, TI3P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{TI2P, TI2N}, Index{TI3P, TI3N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI2P, TI3P, TI1N, TI2N, TI3N>(
         HessianTape<TN, TB> tape,
-        RMTensorField4<HessianTape<TN, TB>, TN, TB, TI3P, Index<Lower, TPIN>> tensor,
+        TensorFieldR4<HessianTape<TN, TB>, TN, TB, TI3P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<TI2P, TI2N>, Index<TI3P, TI3N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1750,7 +1750,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the second derivative or a rank-two tensor.</summary>
     /// <remarks>Though the result of this operation returns a tensor object, it may not be a tensor in the mathematical sense.</remarks>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
     /// <typeparam name="TI3P">The index position of the third index of the tensor.</typeparam>
@@ -1765,7 +1765,7 @@ public static partial class DifGeo
     /// <param name="secondDerivative">A rank-four tensor.</param>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMTensorField2x2<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
+        TensorFieldR2x2<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1800,10 +1800,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMTensorField2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, TensorFieldR2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMTensorField3x3<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
+        TensorFieldR3x3<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1838,10 +1838,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMTensorField2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, TensorFieldR2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMTensorField4x4<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
+        TensorFieldR4x4<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1876,10 +1876,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMTensorField2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, TensorFieldR2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMTensorField2x2<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
+        TensorFieldR2x2<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1914,10 +1914,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMTensorField2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, TensorFieldR2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMTensorField3x3<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
+        TensorFieldR3x3<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1952,10 +1952,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMTensorField2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
+    /// <inheritdoc cref="SecondDerivative{TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, TensorFieldR2x2{HessianTape{TN, TB}, TN, TB, TI3P, TI4P, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{TI3P, TI3N}, Index{TI4P, TI4N}})"/>
     public static void SecondDerivative<TN, TB, TPIN, TI3P, TI4P, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMTensorField4x4<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
+        TensorFieldR4x4<HessianTape<TN, TB>, TN, TB, TI3P, TI4P, Index<Lower, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Lower, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Upper, TI2N>, Index<TI3P, TI3N>, Index<TI4P, TI4N>> secondDerivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -1995,8 +1995,8 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute the covariant derivative of a rank-one, contravariant tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2005,11 +2005,11 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
     public static void CovariantDerivative<TDN, TN, TB, TIN, TPIN>(
-        FMMetricTensorField2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
-        FMTensorField2<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldF2<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2030,13 +2030,13 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, TensorFieldF2{TDN, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
     public static void CovariantDerivative<TDN, TN, TB, TIN, TPIN>(
-        FMMetricTensorField3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
-        FMTensorField3<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldF3<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2057,13 +2057,13 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, TensorFieldF2{TDN, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
     public static void CovariantDerivative<TDN, TN, TB, TIN, TPIN>(
-        FMMetricTensorField4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
-        FMTensorField4<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldF4<TDN, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2085,8 +2085,8 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the covariant derivative of a rank-one, covariant tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2095,11 +2095,11 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
     public static void CovariantDerivative<TDN, TN, TB, TIN, TPIN>(
-        FMMetricTensorField2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
-        FMTensorField2<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldF2<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2112,13 +2112,13 @@ public static partial class DifGeo
         derivative = dTensor + contraction;
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, TensorFieldF2{TDN, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
     public static void CovariantDerivative<TDN, TN, TB, TIN, TPIN>(
-        FMMetricTensorField3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
-        FMTensorField3<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldF3<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2131,13 +2131,13 @@ public static partial class DifGeo
         derivative = dTensor + contraction;
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, FMTensorField2{TDN, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TDN, TN, TB, TIN, TPIN}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, TensorFieldF2{TDN, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
     public static void CovariantDerivative<TDN, TN, TB, TIN, TPIN>(
-        FMMetricTensorField4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
-        FMTensorField4<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldF4<TDN, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TIN : IIndexName
@@ -2152,7 +2152,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the covariant derivative of a rank-one, contravariant tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2163,8 +2163,8 @@ public static partial class DifGeo
     /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
     public static void CovariantDerivative<TT, TN, TB, TIN, TPIN>(
         TT tape,
-        RMMetricTensorField2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
-        RMTensorField2<TT, TN, TB, Upper, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldR2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldR2<TT, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
         where TT : ITape<TN, TB>
@@ -2188,11 +2188,11 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, RMTensorField2{TT, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, TensorFieldR2{TT, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
     public static void CovariantDerivative<TT, TN, TB, TIN, TPIN>(
         TT tape,
-        RMMetricTensorField3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
-        RMTensorField3<TT, TN, TB, Upper, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldR3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldR3<TT, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
         where TT : ITape<TN, TB>
@@ -2216,11 +2216,11 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, RMTensorField2{TT, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, TensorFieldR2{TT, TN, TB, Upper, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Upper, TIN}})"/>
     public static void CovariantDerivative<TT, TN, TB, TIN, TPIN>(
         TT tape,
-        RMMetricTensorField4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
-        RMTensorField4<TT, TN, TB, Upper, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldR4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldR4<TT, TN, TB, Upper, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Upper, TIN>> derivative)
         where TT : ITape<TN, TB>
@@ -2246,7 +2246,7 @@ public static partial class DifGeo
 
     /// <summary>Compute the covariant derivative of a rank-one, covariant tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TIN">An index name.</typeparam>
     /// <typeparam name="TPIN">The name of the point index.</typeparam>
@@ -2257,8 +2257,8 @@ public static partial class DifGeo
     /// <param name="derivative">The covariant derivative of the rank-one tensor.</param>
     public static void CovariantDerivative<TT, TN, TB, TIN, TPIN>(
         TT tape,
-        RMMetricTensorField2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
-        RMTensorField2<TT, TN, TB, Lower, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldR2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldR2<TT, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix2x2<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
         where TT : ITape<TN, TB>
@@ -2274,11 +2274,11 @@ public static partial class DifGeo
         derivative = dTensor + contraction;
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, RMTensorField2{TT, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, TensorFieldR2{TT, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
     public static void CovariantDerivative<TT, TN, TB, TIN, TPIN>(
         TT tape,
-        RMMetricTensorField3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
-        RMTensorField3<TT, TN, TB, Lower, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldR3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldR3<TT, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix3x3<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
         where TT : ITape<TN, TB>
@@ -2294,11 +2294,11 @@ public static partial class DifGeo
         derivative = dTensor + contraction;
     }
 
-    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, RMTensorField2{TT, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
+    /// <inheritdoc cref="CovariantDerivative{TT, TN, TB, TIN, TPIN}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, TensorFieldR2{TT, TN, TB, Lower, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Matrix2x2{TN, TB}, TN, TB, Index{Lower, TPIN}, Index{Lower, TIN}})"/>
     public static void CovariantDerivative<TT, TN, TB, TIN, TPIN>(
         TT tape,
-        RMMetricTensorField4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
-        RMTensorField4<TT, TN, TB, Lower, Index<Upper, TPIN>> tensor,
+        MetricTensorFieldR4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
+        TensorFieldR4<TT, TN, TB, Lower, Index<Upper, TPIN>> tensor,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Matrix4x4<TN, TB>, TN, TB, Index<Lower, TPIN>, Index<Lower, TIN>> derivative)
         where TT : ITape<TN, TB>
@@ -2319,8 +2319,8 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2330,10 +2330,10 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="christoffel">The result.</param>
     public static void Christoffel<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2356,12 +2356,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Christoffel{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
+    /// <inheritdoc cref="Christoffel{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
     public static void Christoffel<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2384,12 +2384,12 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Christoffel{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(FMMetricTensorField2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
+    /// <inheritdoc cref="Christoffel{TDN, TN, TB, TPIN, TI1N, TI2N, TI3N}(MetricTensorFieldF2x2{TDN, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TDN, TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
     public static void Christoffel<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2413,8 +2413,8 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TDN">A type that implements <see cref="IDual{TDN, TN, TB, V}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TDN">A type that implements <see cref="IDual{T, U, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2424,10 +2424,10 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="christoffel">The result.</param>
     public static void Christoffel<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF2x2<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2446,10 +2446,10 @@ public static partial class DifGeo
     }
 
     public static void Christoffel<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF3x3<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2468,10 +2468,10 @@ public static partial class DifGeo
     }
 
     public static void Christoffel<TDN, TN, TB, TPIN, TI1N, TI2N, TI3N>(
-        FMMetricTensorField4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF4x4<TDN, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TDN, TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
-        where TDN : IDual<TDN, TN, TB, TB>
+        where TDN : IDual<TDN, TN, TB>
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
         where TB : IBinaryFloatingPointIeee754<TB>, IMinMaxValue<TB>
         where TPIN : IIndexName
@@ -2491,7 +2491,7 @@ public static partial class DifGeo
 
     /// <summary>Compute a Christoffel symbol of the first kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2503,7 +2503,7 @@ public static partial class DifGeo
     /// <param name="christoffel">The result.</param>
     public static void Christoffel<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN, TB>
@@ -2529,10 +2529,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
+    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
     public static void Christoffel<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN, TB>
@@ -2558,10 +2558,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
+    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, TI2N, TI3N})"/>
     public static void Christoffel<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN, TB>
@@ -2589,7 +2589,7 @@ public static partial class DifGeo
 
     /// <summary>Compute a Christoffel symbol of the second kind given a metric tensor.</summary>
     /// <typeparam name="TT">A type that implements <see cref="ITape{T, TB}"/>.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The first index of the Christoffel symbol.</typeparam>
@@ -2601,7 +2601,7 @@ public static partial class DifGeo
     /// <param name="christoffel">The result.</param>
     public static void Christoffel<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR2x2<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN, TB>
@@ -2622,10 +2622,10 @@ public static partial class DifGeo
             >(ref result);
     }
 
-    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, TI2N, TI3N})"/>
+    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, TI2N, TI3N})"/>
     public static void Christoffel<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR3x3<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN, TB>
@@ -2646,10 +2646,10 @@ public static partial class DifGeo
             >(ref result);
     }
 
-    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, RMMetricTensorField2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, TI2N, TI3N})"/>
+    /// <inheritdoc cref="Christoffel{TT, TN, TB, TPIN, TI1N, TI2N, TI3N}(TT, MetricTensorFieldR2x2{TT, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Christoffel{Array2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, TI2N, TI3N})"/>
     public static void Christoffel<TT, TN, TB, TPIN, TI1N, TI2N, TI3N>(
         TT tape,
-        RMMetricTensorField4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR4x4<TT, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Christoffel<Array4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, TI2N, TI3N> christoffel)
         where TT : ITape<TN, TB>
@@ -2671,7 +2671,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -2682,7 +2682,7 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="derivative">The result.</param>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField2x2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF2x2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2711,9 +2711,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(MetricTensorFieldF2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField3x3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF3x3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2742,9 +2742,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(MetricTensorFieldF2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField4x4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF4x4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2774,7 +2774,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -2785,7 +2785,7 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="derivative">The result.</param>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField2x2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF2x2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2820,9 +2820,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(MetricTensorFieldF2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField3x3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF3x3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2857,9 +2857,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(MetricTensorFieldF2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField4x4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF4x4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2895,7 +2895,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the first kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -2908,7 +2908,7 @@ public static partial class DifGeo
     /// <param name="derivative">The result.</param>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField2x2<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR2x2<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2937,10 +2937,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMMetricTensorField2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, MetricTensorFieldR2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField3x3<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR3x3<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -2969,10 +2969,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMMetricTensorField2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, MetricTensorFieldR2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField4x4<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR4x4<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3002,7 +3002,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute the derivative of a Christoffel symbol of the second kind given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Christoffel symbol.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -3015,7 +3015,7 @@ public static partial class DifGeo
     /// <param name="derivative">The result.</param>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField2x2<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR2x2<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3050,10 +3050,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMMetricTensorField2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, MetricTensorFieldR2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField3x3<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR3x3<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3088,10 +3088,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMMetricTensorField2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="DerivativeOfChristoffel{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, MetricTensorFieldR2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Lower, TI1N}, Index{Upper, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void DerivativeOfChristoffel<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField4x4<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR4x4<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Lower, TI1N>, Index<Upper, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> derivative)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3131,7 +3131,7 @@ public static partial class DifGeo
     //
 
     /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -3142,7 +3142,7 @@ public static partial class DifGeo
     /// <param name="point">A point on the manifold.</param>
     /// <param name="riemann">The result.</param>
     public static void Riemann<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField2x2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF2x2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3173,9 +3173,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(MetricTensorFieldF2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void Riemann<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField3x3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF3x3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3206,9 +3206,9 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(FMMetricTensorField2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(MetricTensorFieldF2x2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{HyperDual{TN, TB}, TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void Riemann<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
-        FMMetricTensorField4x4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldF4x4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<HyperDual<TN, TB>, TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3240,7 +3240,7 @@ public static partial class DifGeo
     }
 
     /// <summary>Compute a Riemann tensor given a metric tensor.</summary>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/> and <see cref="IDifferentiableFunctions{T}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TPIN">The name of the index of the point at which to compute the Riemann tensor.</typeparam>
     /// <typeparam name="TI1N">The name of the first index.</typeparam>
@@ -3253,7 +3253,7 @@ public static partial class DifGeo
     /// <param name="riemann">The result.</param>
     public static void Riemann<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField2x2<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR2x2<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor2<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array2x2x2x2<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3284,10 +3284,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMMetricTensorField2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, MetricTensorFieldR2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void Riemann<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField3x3<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR3x3<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor3<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array3x3x3x3<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -3318,10 +3318,10 @@ public static partial class DifGeo
         }
     }
 
-    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, RMMetricTensorField2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
+    /// <inheritdoc cref="Riemann{TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N}(HessianTape{TN, TB}, MetricTensorFieldR2x2{HessianTape{TN, TB}, TN, TB, Index{Upper, TPIN}}, AutoDiffTensor2{TN, TB, Index{Upper, TPIN}}, out Tensor{Array2x2x2x2{TN, TB}, TN, TB, Index{Upper, TI1N}, Index{Lower, TI2N}, Index{Lower, TI3N}, Index{Lower, TI4N}})"/>
     public static void Riemann<TN, TB, TPIN, TI1N, TI2N, TI3N, TI4N>(
         HessianTape<TN, TB> tape,
-        RMMetricTensorField4x4<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
+        MetricTensorFieldR4x4<HessianTape<TN, TB>, TN, TB, Index<Upper, TPIN>> metric,
         AutoDiffTensor4<TN, TB, Index<Upper, TPIN>> point,
         out Tensor<Array4x4x4x4<TN, TB>, TN, TB, Index<Upper, TI1N>, Index<Lower, TI2N>, Index<Lower, TI3N>, Index<Lower, TI4N>> riemann)
         where TN : IComplex<TN, TB, TB>, IDifferentiableFunctions<TN>
@@ -4574,7 +4574,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of two rank-one tensors.</summary>
     /// <typeparam name="TLR1T">A rank-one tensor.</typeparam>
     /// <typeparam name="TRR1T">A rank-one tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The index of the second tensor.</typeparam>
@@ -4643,7 +4643,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-one tensor and a rank-two tensor.</summary>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
     /// <typeparam name="TR2T">A rank-two tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The first index of the second tensor.</typeparam>
@@ -4731,7 +4731,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-two tensor and a rank-one tensor.</summary>
     /// <typeparam name="TR2T">A rank-two tensor.</typeparam>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The second index of the second tensor.</typeparam>
@@ -4819,7 +4819,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-one tensor and a rank-three tensor.</summary>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
     /// <typeparam name="TR3T">A rank-three tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The first index of the second tensor.</typeparam>
@@ -4920,7 +4920,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of a rank-three tensor and a rank-one tensor.</summary>
     /// <typeparam name="TR3T">A rank-three tensor.</typeparam>
     /// <typeparam name="TR1T">A rank-one tensor.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The second index of the first tensor.</typeparam>
@@ -5021,7 +5021,7 @@ public static partial class DifGeo
     /// <summary>Compute the tensor product of two rank-two tensors.</summary>
     /// <typeparam name="TLR2T">A rank-two tensors.</typeparam>
     /// <typeparam name="TRR2T">A rank-two tensors.</typeparam>
-    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, TB, V}"/>.</typeparam>
+    /// <typeparam name="TN">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="TB">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <typeparam name="TI1">The first index of the first tensor.</typeparam>
     /// <typeparam name="TI2">The second index of the first tensor.</typeparam>
