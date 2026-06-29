@@ -18,14 +18,14 @@ First-order, forward-mode autodiff can be performed using [dual numbers](https:/
 Forward-mode autodiff can be performed through the use of dual numbers which keep track of derivatives from our calculations. To create a dual number in Mathematics.NET, we provide a *primal* and *tangent* part; if no tangent part is provided, it will automatically be set to zero.
 
 ```csharp
-Dual<Real> x = new(1.23, 1.0);
-Dual<Real> y = new(2.34);
+Dual<Real<double>, double> x = new(1.23, 1.0);
+Dual<Real<double>, double> y = new(2.34);
 ```
 
 The primal part represents the point at which we want to compute our derivative, while the tangent part holds the information about our derivative. When we create a dual number with a tangent part, we specify a value that will be used as the seed. (It is important to know that the value of the derivative changes proportionally with this value.) We can also write, equivalently,
 
 ```csharp
-using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Core.Real>;
+using static Mathematics.NET.AutoDiff.Dual<Mathematics.NET.Real<double>, double>;
 
 var x = CreateVariable(1.23, 1.0);
 var y = CreateVariable(2.34);
@@ -40,8 +40,8 @@ $$
 at the points $ x=1.23 $ and $ y=2.34 $ with respect to $ x $. We write
 
 ```csharp
-Dual<Real> x = CreateVariable(1.23, 1.0);
-Dual<Real> y = CreateVariable(2.34);
+Dual<Real<double>, double> x = CreateVariable(1.23, 1.0);
+Dual<Real<double>, double> y = CreateVariable(2.34);
 
 var result = Sin(x + y) * Exp(-y) / (x * x + y * y + 1);
 
@@ -51,8 +51,8 @@ Console.WriteLine("∂f/∂x: {0}", result);
 Notice that we set the seed for the variable of interest, $ x $, to 1 while the seed for the variable we do not care about, $ y $, was set to 0. If we had set both to 1.0, then we would have computed the total derivative of the function instead. To compute the partial derivative of our function with respect to $ y $, we write
 
 ```csharp
-Dual<Real> x = CreateVariable(1.23);
-Dual<Real> y = CreateVariable(2.34, 1.0);
+Dual<Real<double>, double> x = CreateVariable(1.23);
+Dual<Real<double>, double> y = CreateVariable(2.34, 1.0);
 ```
 
 with the tangent part of the variable of interest set to 1 and the other to 0. Doing this will print the following to the console:
@@ -67,8 +67,8 @@ with the tangent part of the variable of interest set to 1 and the other to 0. D
 To get the total derivate of a function, set the seeds for each variable to `1.0`:
 
 ```csharp
-Dual<Real> x = CreateVariable(1.23, 1.0);
-Dual<Real> y = CreateVariable(2.34, 1.0);
+Dual<Real<double>, double> x = CreateVariable(1.23, 1.0);
+Dual<Real<double>, double> y = CreateVariable(2.34, 1.0);
 // Repeat for each variable present
 ```
 
@@ -77,7 +77,10 @@ Dual<Real> y = CreateVariable(2.34, 1.0);
 We can create autodiff vectors to help us keep track of multiple dual numbers.
 
 ```csharp
-AutoDiffVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
+AutoDiffVector3<Dual<Real<double>, double>, Real<double>, double> x = new(
+  CreateVariable(1.23),
+  CreateVariable(0.66),
+  CreateVariable(2.34));
 ```
 
 We can use this to compute the vector-Jacobian product of the vector functions
@@ -95,10 +98,13 @@ $$
 with the vector $ v=(0.23,1.57,-1.71) $ at our points $ x_1=1.23 $, $ x_2=0.66 $, and $ x_3=2.34 $ by writing
 
 ```csharp
-AutoDiffVector3<Real> x = new(CreateVariable(1.23), CreateVariable(0.66), CreateVariable(2.34));
-Vector3<Real> v = new(0.23, 1.57, -1.71);
+AutoDiffVector3<Dual<Real<double>, double>, Real<double>, double> x = new(
+  CreateVariable(1.23),
+  CreateVariable(0.66),
+  CreateVariable(2.34));
+Vector3<Real<double>, double> v = new(0.23, 1.57, -1.71);
 
-var result = AutoDiffVector3<Real>.VJP(
+var result = AutoDiffVector3<Dual<Real<double>, double>, Real<double>, double>.VJP(
   v,
   x => Sin(x.X1) * (Cos(x.X2) + Sqrt(x.X3)),
   x => Sqrt(x.X1 + x.X2 + x.X3),
@@ -125,9 +131,9 @@ $$
 with respect to $ z $, at the points $ z=1.23+i0.66 $ and $ w=2.34-i0.25 $. We can do so by writing
 
 ```csharp
+using Mathematics.NET;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core;
-using static Mathematics.NET.AutoDiff.HyperDual<Mathematics.NET.Core.Complex>;
+using static Mathematics.NET.AutoDiff.HyperDual<Mathematics.NET.Complex<double>, double>;
 
 var z = CreateVariable(new(1.23, 0.66), 1.0, 1.0);
 var w = CreateVariable(new(2.34, -0.25));

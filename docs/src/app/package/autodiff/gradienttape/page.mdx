@@ -13,20 +13,20 @@ Gradient tapes provide support for performing reverse-mode, automatic differenti
 To use gradient tapes, first add the following using directives:
 
 ```csharp
-using Mathematics.NET.Core;
+using Mathematics.NET;
 using Mathematics.NET.AutoDiff;
 ```
 
 To create a gradient tape, write
 
 ```csharp
-GradientTape<Complex> tape = new();
+GradientTape<Complex<double>, double> tape = new();
 ```
 
 ### Implements
 
 <Properties>
-  <Property name="ITape<T>" type="interface">
+  <Property name="ITape<T, U>" type="interface">
     Defines support for tapes.
   </Property>
 </Properties>
@@ -35,7 +35,10 @@ GradientTape<Complex> tape = new();
 
 <Properties>
   <Property name="T" type="generic type constraint">
-    A type that implements `IComplex<T>` and `IDifferentiableFunctions<T>`.
+    A type that implements `IComplex<T, U, U>` and `IDifferentiableFunctions<T>`.
+  </Property>
+  <Property name="U" type="generic type constraint">
+    A type that implements `IBinaryFloatingPointIeee764<U>` and `IMinMaxValue<U>`.
   </Property>
 </Properties>
 
@@ -63,9 +66,9 @@ GradientTape<Complex> tape = new();
 
     ```csharp
     // No optional parameters.
-    GradientTape<Complex> tape = new();
+    GradientTape<Complex<double>, double> tape = new();
     // With optional parameters.
-    GradientTape<Complex> tape = new(true);
+    GradientTape<Complex<double>, double> tape = new(true);
     ```
 
     </CodeGroup>
@@ -105,9 +108,9 @@ GradientTape<Complex> tape = new();
 
     ```csharp
     // No optional parameters.
-    GradientTape<Complex> tape = new(64);
+    GradientTape<Complex<double>, double> tape = new(64);
     // With optional parameters.
-    GradientTape<Complex> tape = new(64, true);
+    GradientTape<Complex<double>, double> tape = new(64, true);
     ```
 
     </CodeGroup>
@@ -127,7 +130,7 @@ GradientTape<Complex> tape = new();
     ### Required Parameters
 
     <Properties>
-      <Property name="x" type="Variable<T>">
+      <Property name="x" type="Variable<T, U>">
         A variable type used in reverse-mode, autodiff.
       </Property>
     </Properties>
@@ -135,7 +138,7 @@ GradientTape<Complex> tape = new();
     ### Return Type
 
     <Properties>
-      <Property name="x" type="Variable<T>">
+      <Property name="x" type="Variable<T, U>">
         A variable type used in reverse-mode, autodiff.
       </Property>
     </Properties>
@@ -146,7 +149,7 @@ GradientTape<Complex> tape = new();
     <CodeGroup title="Snippet" tag="METHOD" label="CreateCheckpoint">
 
     ```csharp
-    GradientTape<Complex> tape = new();
+    GradientTape<Complex<double>, double> tape = new();
 
     var x = tape.CreateVariable(1.23);
     var y = tape.CreateVariable(4.56);

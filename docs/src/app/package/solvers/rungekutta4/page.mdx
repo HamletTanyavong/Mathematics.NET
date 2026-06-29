@@ -38,29 +38,29 @@ $$
 To solve this with Mathematics.NET, use `RungeKutta4` with `X1`=$ u $ and `X2`=$ x $, then write the following:
 
 ```csharp
-using Mathematics.NET.Core;
+using Mathematics.NET;
 using Mathematics.NET.LinearAlgebra;
 using Mathematics.NET.Solvers;
 using Plotly.NET.CSharp;
 using Chart = Plotly.NET.CSharp.Chart;
 
-State<Vector2<Real>, Real> state = new(new Vector2<Real>[] { new(2.34, 1.23) }, 0);
-RungeKutta4<Vector2<Real>, Real> rk4 = new((t, x) => new(2 * Real.Sin(t) - 4 * x.X1 - x.X2, x.X1));
+State<Vector2<Real<double>, double>, Real<double>, double> state = new(new Vector2<Real<double>, double>[] { new(2.34, 1.23) }, 0);
+RungeKutta4<Vector2<Real<double>, double>, Real<double>, double> rk4 = new((t, x) => new(2 * Real<double>.Sin(t) - 4 * x.X1 - x.X2, x.X1));
 
 var count = 200;
-Vector2<Real>[] points = new Vector2<Real>[count];
+Vector2<Real<double>, double>[] points = new Vector2<Real<double>, double>[count];
 
 for (int i = 0; i < count; i++)
 {
-  rk4.Integrate(state, 0.1);
+    rk4.Integrate(state, 0.1);
 
-  points[i].X1 = state.Time;
-  points[i].X2 = state.System.Span[0].X2;
+    points[i].X1 = state.Time;
+    points[i].X2 = state.System.Span[0].X2;
 }
 
 var chart = Chart.Line<double, double, string>(
-  x: points.Select(x => x.X1.AsDouble()),
-  y: points.Select(x => x.X2.AsDouble()),
+  x: points.Select(x => (double)x.X1),
+  y: points.Select(x => (double)x.X2),
   Name: "X(t)",
   ShowLegend: true);
 chart.Show();
