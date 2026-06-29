@@ -23,7 +23,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
 ### Implements
 
 <Properties>
-  <Property name="IComplex<T>" type="interface">
+  <Property name="IComplex<T, U, U>" type="interface">
     Defines support for complex numbers.
   </Property>
   <Property name="IDifferentiableFunctions<T>" type="interface">
@@ -35,7 +35,10 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
 
 <Properties>
   <Property name="T" type="generic type constraint">
-    A type that implements `IComplex<T>` and `IDifferentiableFunctions<T>`.
+    A type that implements `IComplex<T, U, U>` and `IDifferentiableFunctions<T>`.
+  </Property>
+  <Property name="U" type="generic type constraint">
+    A type that implements `IBinaryFloatingPointIeee764<U>` and `IMinMaxValue<U>`.
   </Property>
 </Properties>
 
@@ -51,7 +54,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     ### Return Type
 
     <Properties>
-      <Property name="result" type="Real">
+      <Property name="result" type="Real<T>">
         A real number.
       </Property>
     </Properties>
@@ -62,7 +65,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     <CodeGroup title="Snippet" tag="PROPERTY" label="Re">
 
     ```csharp
-    Complex z = new(1, 2);
+    Complex<double> z = new(1, 2);
     z.Re;
     ```
 
@@ -87,7 +90,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     ### Return Type
 
     <Properties>
-      <Property name="result" type="Real">
+      <Property name="result" type="Real<T>">
         A real number.
       </Property>
     </Properties>
@@ -98,7 +101,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     <CodeGroup title="Snippet" tag="PROPERTY" label="Re">
 
     ```csharp
-    Complex z = new(1, 2);
+    Complex<double> z = new(1, 2);
     z.Re;
     ```
 
@@ -135,7 +138,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     ### Return Type
 
     <Properties>
-      <Property name="result" type="Real">
+      <Property name="result" type="Real<T>">
         A real number.
       </Property>
     </Properties>
@@ -146,7 +149,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     <CodeGroup title="Snippet" tag="PROPERTY" label="Magnitude">
 
     ```csharp
-    Complex z = new(3, 4);
+    Complex<double> z = new(3, 4);
     z.Magnitude;
     ```
 
@@ -185,7 +188,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     ### Return Type
 
     <Properties>
-      <Property name="result" type="Real">
+      <Property name="result" type="Real<T>">
         A real number.
       </Property>
     </Properties>
@@ -196,7 +199,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     <CodeGroup title="Snippet" tag="PROPERTY" label="Phase">
 
     ```csharp
-    Complex z = new(3, 4);
+    Complex<double> z = new(3, 4);
     z.Phase;
     ```
 
@@ -229,7 +232,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     ### Required Parameters
 
     <Properties>
-      <Property name="z" type="Complex">
+      <Property name="z" type="Complex<T>">
         A complex number.
       </Property>
     </Properties>
@@ -237,7 +240,7 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     ### Return Type
 
     <Properties>
-      <Property name="result" type="Complex">
+      <Property name="result" type="Complex<T>">
         A complex number.
       </Property>
     </Properties>
@@ -248,8 +251,8 @@ where $x$ and $y$ are real numbers and $i$ is the imaginary unit, which has the 
     <CodeGroup title="Snippet" tag="METHOD" label="Conjugate">
 
     ```csharp
-    Complex z = new(1, 2);
-    Complex.Conjugate(z);
+    Complex<double> z = new(1, 2);
+    Complex<double>.Conjugate(z);
     ```
 
     </CodeGroup>

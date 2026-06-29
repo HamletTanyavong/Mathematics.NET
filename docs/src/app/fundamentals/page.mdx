@@ -9,17 +9,15 @@ Learn about the fundamentals of Mathematics.NET below. {{ className: 'lead' }}
 
 ## Numeric Types
 
-All numeric types in Mathematics.NET implement the [`IComplex`](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IComplex.cs) interface. Unlike [`INumberBase`](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), this interface defines the method `Conjugate`, which makes operations that accept either complex or real numbers as parameters more robust.
+All numeric types in Mathematics.NET implement the [`IComplex`](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/IComplex.cs) interface. Unlike [`INumberBase`](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Numerics/INumberBase.cs), this interface defines the method `Conjugate`, which makes operations that accept either complex or real numbers as parameters more robust. To create a numeric type, users must also specify a backing type that implements the `IBinaryNumber` interface. This means `int`, `BigInteger`, and `double` are all valid backing types.
 
 ### Complex Numbers
 
-Because the [complex number type](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs) in this library shares the name with .NET's own implementation, use the following statement to avoid conflicts:
+Complex numbers are represented by the [Complex](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Complex.cs) type. Basic methods and properties made available include `Conjugate`, `Magnitude`, and `Phase`. To create a complex number, write
 
 ```csharp
-using Complex = Mathematics.NET.Core.Complex;
+Complex<double> z = new(1.23, 4.56);
 ```
-
-Basic methods and properties made available include `Conjugate`, `Magnitude`, and `Phase`.
 
 <div className="not-prose">
   <Button href="/resources/core/complex" variant="text" arrow="right">
@@ -29,10 +27,20 @@ Basic methods and properties made available include `Conjugate`, `Magnitude`, an
 
 ### Real Numbers
 
-Real numbers are represented by the [Real](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs) type. It implements the `IReal` interface, which inherits from `IComplex`, and contains additional methods such as `Max` and `Min`.
+Real numbers are represented by the [Real](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Real.cs) type. It implements the `IReal` interface, which inherits from `IComplex`, and contains additional methods such as `Max` and `Min`. To create a real number, write
+
+```csharp
+Real<double> x = new(1.23);
+```
 
 ### Rational Numbers
 
 Rational numbers are represented by the [Rational](https://github.com/HamletTanyavong/Mathematics.NET/blob/main/src/Mathematics.NET/Core/Rational.cs) type. This type implements the `IRational` interface, which inherits from `IReal`, and contains addition methods such as `Reciprocate` and `GCD`. Rationals accept any backing type that implements the `IBinaryInteger` and `ISignedNumber` interfaces. This includes `BigInteger`, which should be used carefully due to its performance implications.
 
-Methods and properties made available include `Num`, `Den`, `Reduce`, and `Reciprocate`.
+Methods and properties made available include `Num`, `Den`, `Reduce`, and `Reciprocate`. To create a rational number, write
+
+```csharp
+Rational<int, double> r = new(1, 2);
+```
+
+Rationals also have a second generic type parameter that accepts any value that implements the `IBinaryFloatingPointIeee754` interface. This allows for methods such as `Norm` to return valid results.

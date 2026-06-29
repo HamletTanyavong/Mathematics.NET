@@ -4,7 +4,7 @@
 #pragma warning disable EXP0001
 
 using CommunityToolkit.HighPerformance;
-using Mathematics.NET.Core;
+using Mathematics.NET;
 using Mathematics.NET.GPU.OpenCL;
 using Mathematics.NET.LinearAlgebra;
 using Microsoft.Extensions.Logging;
@@ -27,7 +27,7 @@ public static class MatMul
         var matB = GetMatB();
 
         var result = openCL.CompMatMul(openCL.Devices[0], new(2, 2), new(2, 2), matA, matB);
-        Console.WriteLine(result.ToDisplayString());
+        Console.WriteLine(result.ToString<Complex<double>, double, double>());
     }
 
     private static ILogger<OpenCLService> CreateLogger()
@@ -39,9 +39,9 @@ public static class MatMul
         return loggerFactory.CreateLogger<OpenCLService>();
     }
 
-    private static Span2D<Complex> GetMatA()
+    private static Span2D<Complex<double>> GetMatA()
     {
-        Span2D<Complex> mat = new Complex[2, 4];
+        Span2D<Complex<double>> mat = new Complex<double>[2, 4];
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -52,9 +52,9 @@ public static class MatMul
         return mat;
     }
 
-    private static Span2D<Complex> GetMatB()
+    private static Span2D<Complex<double>> GetMatB()
     {
-        Span2D<Complex> mat = new Complex[4, 2];
+        Span2D<Complex<double>> mat = new Complex<double>[4, 2];
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 2; j++)
