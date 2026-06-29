@@ -1,9 +1,9 @@
 #:package Mathematics.NET
 
+using Mathematics.NET;
 using Mathematics.NET.AutoDiff;
-using Mathematics.NET.Core;
 
-GradientTape<Real> tape = new();
+GradientTape<Real<double>, double> tape = new();
 
 var x = tape.CreateVariable(1.0);
 var y = tape.CreateVariable(2.0);
