@@ -26,7 +26,7 @@ The examples below highlight some of the features of Mathematics.NET.
 Rational numbers can be created using
 
 ```csharp
-Rational<int> number = new(4, 6);
+Rational<int, double> number = new(4, 6);
 ```
 
 Besides the basic arithmetic operations, operations on rational numbers include, but are not limited to, the following:
@@ -45,7 +45,7 @@ Support for automatic differentiation (autodiff) is provided by gradient tapes, 
 Reverse-mode automatic differentiation can be performed using gradient tapes. To create a gradient tape, use
 
 ```csharp
-GradientTape<Real> tape = new();
+GradientTape<Real<double>, double> tape = new();
 ```
 
 Variables can be created using the `CreateVariable` method. To work with functions of three variables with intial values $x=1.23$, $y=0.66$, and $z=2.34$, write
@@ -96,7 +96,7 @@ Console.WriteLine($"df/dz = {gradient[2]}");
 We can use Hessian tapes to perform second-order, reverse-mode automatic differentiation. To create a Hessian tape, use
 
 ```csharp
-HessianTape<Real> tape = new();
+HessianTape<Real<double>, double> tape = new();
 ```
 
 Then, we can use the `CreateAutoDiffVector` method to create a vector with initial values. Write
@@ -139,11 +139,11 @@ tape.ReverseAccumulate(out var gradient, our var hessian);
 Finally, use those values to compute our Laplacian.
 
 ```csharp
-var u = Real.One / (x.X1.Value * Real.Sin(x.X2.Value)); // 1 / (r * Sin(θ))
+var u = Real<double>.One / (x.X1.Value * Real<double>.Sin(x.X2.Value)); // 1 / (r * Sin(θ))
 var laplacian =
   2.0 * gradient[0] / x.X1.Value +
   hessian[0, 0] +
-  u * Real.Cos(x.X2.Value) * gradient[1] / x.X1.Value +
+  u * Real<double>.Cos(x.X2.Value) * gradient[1] / x.X1.Value +
   hessian[1, 1] / (x.X1.Value * x.X1.Value) +
   u * u * hessian[2, 2];
 
