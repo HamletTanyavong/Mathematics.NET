@@ -25,7 +25,7 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.UnitTests.Core;
+namespace Mathematics.NET.UnitTests;
 
 [TestClass]
 [TestCategory("Core"), TestCategory("Complex Number")]

@@ -27,7 +27,7 @@
 
 #pragma warning disable CORE0001
 
-namespace Mathematics.NET.UnitTests.Core;
+namespace Mathematics.NET.UnitTests;
 
 [TestClass]
 [TestCategory("Core"), TestCategory("Rational Number")]
