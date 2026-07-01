@@ -38,15 +38,15 @@ internal readonly record struct GradientNode<T, U>
     where T : IComplex<T, U, U>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
-    /// <summary>The derivative of the left component of the binary operation.</summary>
-    public readonly T DX;
-    /// <summary>The derivative of the right component of the binary operation.</summary>
-    public readonly T DY;
-
     /// <summary>The parent index of the left node.</summary>
     public readonly int PX;
     /// <summary>The parent index of the right node.</summary>
     public readonly int PY;
+
+    /// <summary>The derivative of the left component of the binary operation.</summary>
+    public readonly T DX;
+    /// <summary>The derivative of the right component of the binary operation.</summary>
+    public readonly T DY;
 
     public GradientNode(int index)
     {

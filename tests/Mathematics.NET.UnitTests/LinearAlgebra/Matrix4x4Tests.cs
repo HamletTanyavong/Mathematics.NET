@@ -33,31 +33,6 @@ namespace Mathematics.NET.UnitTests.LinearAlgebra;
 [TestCategory("Linear Algebra")]
 public sealed class Matrix4x4Tests
 {
-    // Inputs
-
-    public static IEnumerable<object[]> GetRealInputAndInverseData()
-    {
-        yield return new[]
-        {
-            new Real<double>[4, 4]
-            {
-                { 1, 2, 4, 8 },
-                { -1, 7, 3, 5 },
-                { 2, -9, 13, 11 },
-                { -7, -2, 3, 5 }
-            },
-            new Real<double>[4, 4]
-            {
-                { 0.08856088560885609, -0.04551045510455105, 0.01107011070110701, -0.1205412054120541 },
-                { -0.05904059040590406, 0.1414514145141451, -0.007380073800738007, -0.03075030750307503 },
-                { -0.2832103321033210, 0.2253997539975400, 0.1208487084870849, -0.03813038130381304 },
-                { 0.2702952029520295, -0.1423739237392374, -0.05996309963099631, 0.04182041820418204 }
-            }
-        };
-    }
-
-    // Tests
-
     [TestMethod]
     [DynamicData(nameof(GetRealInputAndInverseData))]
     public void Inverse_MatrixOfReal_ReturnsInverseOfMatrix(Real<double>[,] input, Real<double>[,] expected)
@@ -81,5 +56,29 @@ public sealed class Matrix4x4Tests
         var actual = input.Inverse();
 
         Assert<T, double>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    //
+    // Helpers
+    //
+
+    public static IEnumerable<(Real<double>[,] Input, Real<double>[,] Expected)> GetRealInputAndInverseData()
+    {
+        yield return (
+            new Real<double>[4, 4]
+            {
+                { 1, 2, 4, 8 },
+                { -1, 7, 3, 5 },
+                { 2, -9, 13, 11 },
+                { -7, -2, 3, 5 }
+            },
+            new Real<double>[4, 4]
+            {
+                { 0.08856088560885609, -0.04551045510455105, 0.01107011070110701, -0.1205412054120541 },
+                { -0.05904059040590406, 0.1414514145141451, -0.007380073800738007, -0.03075030750307503 },
+                { -0.2832103321033210, 0.2253997539975400, 0.1208487084870849, -0.03813038130381304 },
+                { 0.2702952029520295, -0.1423739237392374, -0.05996309963099631, 0.04182041820418204 }
+            }
+        );
     }
 }

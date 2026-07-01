@@ -105,11 +105,9 @@ public sealed class DifGeoReverseModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetR1TensorDerivativeData))]
-    public void Derivative_RankOneTensor_ReturnsRankTwoTensor(object[] input, object[] values)
+    public void Derivative_RankOneTensor_ReturnsRankTwoTensor(double[] input, Real<double>[,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.Derivative(Tape, R1Tensor, point, out Tensor<Matrix4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>> dTensor);
         var actual = dTensor.ToArray();
@@ -119,11 +117,9 @@ public sealed class DifGeoReverseModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetR2TensorDerivativeData))]
-    public void Derivative_RankTwoTensor_ReturnsRankThreeTensor(object[] input, object[] values)
+    public void Derivative_RankTwoTensor_ReturnsRankThreeTensor(double[] input, Real<double>[,,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.Derivative(Tape, R2Tensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
         var actual = dTensor.ToArray();
@@ -133,11 +129,9 @@ public sealed class DifGeoReverseModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetMetricTensorDerivativeData))]
-    public void Derivative_Metric_ReturnsRankThreeTensor(object[] input, object[] values)
+    public void Derivative_Metric_ReturnsRankThreeTensor(double[] input, Real<double>[,,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>> dTensor);
         var actual = dTensor.ToArray();
@@ -147,11 +141,9 @@ public sealed class DifGeoReverseModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetInverseMetricTensorDerivativeData))]
-    public void Derivative_InverseMetric_ReturnsRankThreeTensor(object[] input, object[] values)
+    public void Derivative_InverseMetric_ReturnsRankThreeTensor(double[] input, Real<double>[,,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.Derivative(Tape, MetricTensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> dTensor);
         var actual = dTensor.ToArray();
@@ -161,11 +153,9 @@ public sealed class DifGeoReverseModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetR1TensorSecondDerivativeData))]
-    public void SecondDerivative_RankOneTensor_ReturnsRankThreeTensor(object[] input, object[] values)
+    public void SecondDerivative_RankOneTensor_ReturnsRankThreeTensor(double[] input, Real<double>[,,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.SecondDerivative(Tape, R1Tensor, point, out Tensor<Array4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Upper, Beta>, Index<Upper, Gamma>> d2Tensor);
         var actual = d2Tensor.ToArray();
@@ -175,11 +165,9 @@ public sealed class DifGeoReverseModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetR2TensorSecondDerivativeData))]
-    public void SecondDerivative_RankTwoTensor_ReturnsRankFourTensor(object[] input, object[] values)
+    public void SecondDerivative_RankTwoTensor_ReturnsRankFourTensor(double[] input, Real<double>[,,,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,,,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.SecondDerivative(Tape, R2Tensor, point, out Tensor<Array4x4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Upper, Gamma>, Index<Upper, Delta>> d2Tensor);
         var actual = d2Tensor.ToArray();
@@ -189,11 +177,9 @@ public sealed class DifGeoReverseModeTests
 
     [TestMethod]
     [DynamicData(nameof(GetMetricTensorSecondDerivativeData))]
-    public void SecondDerivative_MetricTensor_ReturnsRankFourTensor(object[] input, object[] values)
+    public void SecondDerivative_MetricTensor_ReturnsRankFourTensor(double[] input, Real<double>[,,,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,,,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.SecondDerivative(Tape, MetricTensor, point, out Tensor<Array4x4x4x4<Real<double>, double>, Real<double>, double, Index<Lower, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> d2Tensor);
         var actual = d2Tensor.ToArray();
@@ -205,409 +191,381 @@ public sealed class DifGeoReverseModeTests
     // Helpers
     //
 
-    public static IEnumerable<object[]> GetR1TensorDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,] Expected)> GetR1TensorDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.34, 3.45, 4.56],
-            new object[]
+            new Real<double>[,]
             {
-                new Real<double>[,]
-                {
-                    { -0.9096285273579445, 0,                   0,                  0.2077929087308457 },
-                    { -0.9096285273579445, 0.47343399708193507, 0,                  0                  },
-                    { 0,                   0.47343399708193507, 3010.9171128823823, 0                  },
-                    { 0,                   0,                   3010.9171128823823, 0.2077929087308457 }
-                }
+                { -0.9096285273579445, 0,                   0,                  0.2077929087308457 },
+                { -0.9096285273579445, 0.47343399708193507, 0,                  0                  },
+                { 0,                   0.47343399708193507, 3010.9171128823823, 0                  },
+                { 0,                   0,                   3010.9171128823823, 0.2077929087308457 }
             }
-        };
+        );
     }
 
-    public static IEnumerable<object[]> GetR2TensorDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,,] Expected)> GetR2TensorDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.46, 3.14, 7.13],
-            new object[]
+            new Real<double>[,,]
             {
-                new Real<double>[,,]
                 {
-                    {
-                        { 0.3342377271245026, 0, 0,     0                  },
-                        { 0,                  0, 0,     12.515747834435256 },
-                        { 0,                  0, 27.06, 0                  },
-                        { 5426.483385429979,  0, 0,     881.199552         }
-                    },
-                    {
-                        { 0,                  -1.2600612599917844, 0, 0                 },
-                        { 1.5939417826583457, 0,                   0, 0                 },
-                        { 0,                  0,                   0, 2.473473726407499 },
-                        { 0,                  -16.494811289576308, 0, 440.599776        }
-                    },
-                    {
-                        { 0,                   0,                69.31160057616655,  0                  },
-                        { 0,                   6.00001521929848, 0,                  0                  },
-                        { 0.06719043637160116, 0,                0,                  0                  },
-                        { 0,                   0,                -19.79949437654947, 345.18326399999995 }
-                    },
-                    {
-                        { 0,                 0,                   0,                 0.5610098176718092 },
-                        { 0,                 0,                   4371.072186714249, 0                  },
-                        { 0,                 -0.1967075097025979, 0,                 0                  },
-                        { 15301.68323198016, 5.691056910569106,   9.899747188274736, 152.016192         }
-                    }
+                    { 0.3342377271245026, 0, 0,     0                  },
+                    { 0,                  0, 0,     12.515747834435256 },
+                    { 0,                  0, 27.06, 0                  },
+                    { 5426.483385429979,  0, 0,     881.199552         }
+                },
+                {
+                    { 0,                  -1.2600612599917844, 0, 0                 },
+                    { 1.5939417826583457, 0,                   0, 0                 },
+                    { 0,                  0,                   0, 2.473473726407499 },
+                    { 0,                  -16.494811289576308, 0, 440.599776        }
+                },
+                {
+                    { 0,                   0,                69.31160057616655,  0                  },
+                    { 0,                   6.00001521929848, 0,                  0                  },
+                    { 0.06719043637160116, 0,                0,                  0                  },
+                    { 0,                   0,                -19.79949437654947, 345.18326399999995 }
+                },
+                {
+                    { 0,                 0,                   0,                 0.5610098176718092 },
+                    { 0,                 0,                   4371.072186714249, 0                  },
+                    { 0,                 -0.1967075097025979, 0,                 0                  },
+                    { 15301.68323198016, 5.691056910569106,   9.899747188274736, 152.016192         }
                 }
             }
-        };
+        );
     }
 
-    public static IEnumerable<object[]> GetMetricTensorDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,,] Expected)> GetMetricTensorDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.46, 3.14, 7.13],
-            new object[]
+            new Real<double>[,,]
             {
-                new Real<double>[,,]
                 {
-                    {
-                        { 0.3342377271245026, 0, 0,     0                  },
-                        { 0,                  0, 0,     12.515747834435256 },
-                        { 0,                  0, 27.06, 0                  },
-                        { 5426.483385429979,  0, 0,     881.199552         }
-                    },
-                    {
-                        { 0,                  -1.2600612599917844, 0, 0                 },
-                        { 1.5939417826583457, 0,                   0, 0                 },
-                        { 0,                  0,                   0, 2.473473726407499 },
-                        { 0,                  -16.494811289576308, 0, 440.599776        }
-                    },
-                    {
-                        { 0,                   0,                69.31160057616655,  0                  },
-                        { 0,                   6.00001521929848, 0,                  0                  },
-                        { 0.06719043637160116, 0,                0,                  0                  },
-                        { 0,                   0,                -19.79949437654947, 345.18326399999995 }
-                    },
-                    {
-                        { 0,                 0,                   0,                 0.5610098176718092 },
-                        { 0,                 0,                   4371.072186714249, 0                  },
-                        { 0,                 -0.1967075097025979, 0,                 0                  },
-                        { 15301.68323198016, 5.691056910569106,   9.899747188274736, 152.016192         }
-                    }
+                    { 0.3342377271245026, 0, 0,     0                  },
+                    { 0,                  0, 0,     12.515747834435256 },
+                    { 0,                  0, 27.06, 0                  },
+                    { 5426.483385429979,  0, 0,     881.199552         }
+                },
+                {
+                    { 0,                  -1.2600612599917844, 0, 0                 },
+                    { 1.5939417826583457, 0,                   0, 0                 },
+                    { 0,                  0,                   0, 2.473473726407499 },
+                    { 0,                  -16.494811289576308, 0, 440.599776        }
+                },
+                {
+                    { 0,                   0,                69.31160057616655,  0                  },
+                    { 0,                   6.00001521929848, 0,                  0                  },
+                    { 0.06719043637160116, 0,                0,                  0                  },
+                    { 0,                   0,                -19.79949437654947, 345.18326399999995 }
+                },
+                {
+                    { 0,                 0,                   0,                 0.5610098176718092 },
+                    { 0,                 0,                   4371.072186714249, 0                  },
+                    { 0,                 -0.1967075097025979, 0,                 0                  },
+                    { 15301.68323198016, 5.691056910569106,   9.899747188274736, 152.016192         }
                 }
             }
-        };
+        );
     }
 
-    public static IEnumerable<object[]> GetInverseMetricTensorDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,,] Expected)> GetInverseMetricTensorDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.46, 3.14, 7.13],
-            new object[]
+            new Real<double>[,,]
             {
-                new Real<double>[,,]
                 {
-                    {
-                        { -2.290881032398611,  0.04970311612889121,  -2.57956167734756,   0.001486381669295939   },
-                        { 122.3470549435311,   -2.671189795593617,   137.7841717990172,   -0.0800703668815353    },
-                        { -0.0992229855229368, 0.002136384763996471, -0.1117735826697046, 0.00006600657179987652 },
-                        { 25.3560164592145,    -0.553257324188447,   28.5556556030038,    -0.01660628062905417   }
-                    },
-                    {
-                        { -10.82434653066666,  0.2198487580749168,  -12.66746323676432,  0.007975737250463516  },
-                        { 600.4819658384281,   -12.19898568833379,  703.4775791702065,   -0.4428902526371429   },
-                        { -0.4150914591400523, 0.00843166579766857, -0.4860122469444493, 0.0003059696329725992 },
-                        { 128.3031985873712,   -2.606176170864468,  150.2193461522867,   -0.0945783956997469   }
-                    },
-                    {
-                        { -3.39510633610317, 0.07663648051813023,  -3.873666685165675,  0.002442221801832182  },
-                        { 186.9333294862945, -4.235710578197299,   213.3800859077058,   -0.1345243000761476   },
-                        { -0.16578123571062, 0.003663401378359327, -0.1896973978162401, 0.0001195883691042653 },
-                        { 38.99467405573273, -0.884303562122364,   44.51297071480505,   -0.02806208158194548  }
-                    },
-                    {
-                        { 2.204904554703536,  -0.05439983485856153, 2.415399499446983,  -0.001951600569672975  },
-                        { -99.9083713139095,  2.583393035830481,    -108.4372846947553, 0.0894257725193976     },
-                        { 0.0876578722667318, -0.00238146677635786, 0.0960322791258335, -0.0000743715905405725 },
-                        { -21.22135210759896, 0.5469516019661675,   -23.0619674179585,  0.01887653616804277    }
-                    }
+                    { -2.290881032398611,  0.04970311612889121,  -2.57956167734756,   0.001486381669295939   },
+                    { 122.3470549435311,   -2.671189795593617,   137.7841717990172,   -0.0800703668815353    },
+                    { -0.0992229855229368, 0.002136384763996471, -0.1117735826697046, 0.00006600657179987652 },
+                    { 25.3560164592145,    -0.553257324188447,   28.5556556030038,    -0.01660628062905417   }
+                },
+                {
+                    { -10.82434653066666,  0.2198487580749168,  -12.66746323676432,  0.007975737250463516  },
+                    { 600.4819658384281,   -12.19898568833379,  703.4775791702065,   -0.4428902526371429   },
+                    { -0.4150914591400523, 0.00843166579766857, -0.4860122469444493, 0.0003059696329725992 },
+                    { 128.3031985873712,   -2.606176170864468,  150.2193461522867,   -0.0945783956997469   }
+                },
+                {
+                    { -3.39510633610317, 0.07663648051813023,  -3.873666685165675,  0.002442221801832182  },
+                    { 186.9333294862945, -4.235710578197299,   213.3800859077058,   -0.1345243000761476   },
+                    { -0.16578123571062, 0.003663401378359327, -0.1896973978162401, 0.0001195883691042653 },
+                    { 38.99467405573273, -0.884303562122364,   44.51297071480505,   -0.02806208158194548  }
+                },
+                {
+                    { 2.204904554703536,  -0.05439983485856153, 2.415399499446983,  -0.001951600569672975  },
+                    { -99.9083713139095,  2.583393035830481,    -108.4372846947553, 0.0894257725193976     },
+                    { 0.0876578722667318, -0.00238146677635786, 0.0960322791258335, -0.0000743715905405725 },
+                    { -21.22135210759896, 0.5469516019661675,   -23.0619674179585,  0.01887653616804277    }
                 }
             }
-        };
+        );
     }
 
-    public static IEnumerable<object[]> GetR1TensorSecondDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,,] Expected)> GetR1TensorSecondDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.34, 3.45, 4.56],
-            new object[]
+            new Real<double>[,,]
             {
-                new Real<double>[,,]
                 {
-                    {
-                        { 0.4154226067712459, 0, 0, -0.017944119924943498 },
-                        { 0.4154226067712459, 0, 0, 0                     },
-                        { 0,                  0, 0, 0                     },
-                        { 0,                  0, 0, -0.017944119924943498 }
-                    },
-                    {
-                        { 0.4154226067712459, 0,                  0, 0 },
-                        { 0.4154226067712459, -0.880829296973609, 0, 0 },
-                        { 0,                  -0.880829296973609, 0, 0 },
-                        { 0,                  0,                  0, 0 }
-                    },
-                    {
-                        { 0, 0,                  0,                  0 },
-                        { 0, -0.880829296973609, 0,                  0 },
-                        { 0, -0.880829296973609, 3010.9171128823823, 0 },
-                        { 0, 0,                  3010.9171128823823, 0 }
-                    },
-                    {
-                        { 0, 0, 0,                  -0.017944119924943498 },
-                        { 0, 0, 0,                  0                     },
-                        { 0, 0, 3010.9171128823823, 0                     },
-                        { 0, 0, 3010.9171128823823, -0.017944119924943498 }
-                    }
+                    { 0.4154226067712459, 0, 0, -0.017944119924943498 },
+                    { 0.4154226067712459, 0, 0, 0                     },
+                    { 0,                  0, 0, 0                     },
+                    { 0,                  0, 0, -0.017944119924943498 }
+                },
+                {
+                    { 0.4154226067712459, 0,                  0, 0 },
+                    { 0.4154226067712459, -0.880829296973609, 0, 0 },
+                    { 0,                  -0.880829296973609, 0, 0 },
+                    { 0,                  0,                  0, 0 }
+                },
+                {
+                    { 0, 0,                  0,                  0 },
+                    { 0, -0.880829296973609, 0,                  0 },
+                    { 0, -0.880829296973609, 3010.9171128823823, 0 },
+                    { 0, 0,                  3010.9171128823823, 0 }
+                },
+                {
+                    { 0, 0, 0,                  -0.017944119924943498 },
+                    { 0, 0, 0,                  0                     },
+                    { 0, 0, 3010.9171128823823, 0                     },
+                    { 0, 0, 3010.9171128823823, -0.017944119924943498 }
                 }
             }
-        };
+        );
     }
 
-    public static IEnumerable<object[]> GetR2TensorSecondDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,,,] Expected)> GetR2TensorSecondDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.46, 3.14, 7.13],
-            new object[]
+            new Real<double>[,,,]
             {
-                new Real<double>[,,,]
                 {
                     {
-                        {
-                            { -0.942488801931697, 0, 0,  0                 },
-                            { 0,                  0, 0,  14.85408845588213 },
-                            { 0,                  0, 22, 0                 },
-                            { -15301.68323198016, 0, 0,  0                 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 358.2112 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 280.6368 }
-                        },
-                        {
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 5426.483385429979, 0, 0, 123.5904 }
-                        }
+                        { -0.942488801931697, 0, 0,  0                 },
+                        { 0,                  0, 0,  14.85408845588213 },
+                        { 0,                  0, 22, 0                 },
+                        { -15301.68323198016, 0, 0,  0                 }
                     },
                     {
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 358.2112 }
-                        },
-                        {
-                            { 0,                   1.553140567066586, 0, 0                 },
-                            { -0.3239719070443792, 0,                 0, 0                 },
-                            { 0,                   0,                 0, 23.48462711858732 },
-                            { 0,                   13.41041568258237, 0, 0                 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 140.3184 }
-                        },
-                        {
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, -2.313437768524027, 0, 61.7952 }
-                        }
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 358.2112 }
                     },
                     {
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 280.6368 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 140.3184 }
-                        },
-                        {
-                            { 0,                   0,                    69.31160057616656,  0 },
-                            { 0,                   -0.01911190771506838, 0,                  0 },
-                            { -0.1338783158199425, 0,                    0,                  0 },
-                            { 0,                   0,                    -45.07682430841755, 0 }
-                        },
-                        {
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 22.53841215420878, 48.41279999999999 }
-                        }
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 280.6368 }
                     },
                     {
-                        {
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 5426.483385429979, 0, 0, 123.5904 }
-                        },
-                        {
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, -2.313437768524027, 0, 61.7952 }
-                        },
-                        {
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 22.53841215420878, 48.41279999999999 }
-                        },
-                        {
-                            { 0,                 0,                   0,                  -0.07868300388103916 },
-                            { 0,                 0,                   4371.066581678536,  0                    },
-                            { 0,                 0.05517742207646505, 0,                  0                    },
-                            { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
-                        }
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 5426.483385429979, 0, 0, 123.5904 }
+                    }
+                },
+                {
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 358.2112 }
+                    },
+                    {
+                        { 0,                   1.553140567066586, 0, 0                 },
+                        { -0.3239719070443792, 0,                 0, 0                 },
+                        { 0,                   0,                 0, 23.48462711858732 },
+                        { 0,                   13.41041568258237, 0, 0                 }
+                    },
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 140.3184 }
+                    },
+                    {
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, -2.313437768524027, 0, 61.7952 }
+                    }
+                },
+                {
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 280.6368 }
+                    },
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 140.3184 }
+                    },
+                    {
+                        { 0,                   0,                    69.31160057616656,  0 },
+                        { 0,                   -0.01911190771506838, 0,                  0 },
+                        { -0.1338783158199425, 0,                    0,                  0 },
+                        { 0,                   0,                    -45.07682430841755, 0 }
+                    },
+                    {
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 22.53841215420878, 48.41279999999999 }
+                    }
+                },
+                {
+                    {
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 5426.483385429979, 0, 0, 123.5904 }
+                    },
+                    {
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, -2.313437768524027, 0, 61.7952 }
+                    },
+                    {
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 22.53841215420878, 48.41279999999999 }
+                    },
+                    {
+                        { 0,                 0,                   0,                  -0.07868300388103916 },
+                        { 0,                 0,                   4371.066581678536,  0                    },
+                        { 0,                 0.05517742207646505, 0,                  0                    },
+                        { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
                     }
                 }
             }
-        };
+        );
     }
 
-    public static IEnumerable<object[]> GetMetricTensorSecondDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,,,] Expected)> GetMetricTensorSecondDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.46, 3.14, 7.13],
-            new object[]
+            new Real<double>[,,,]
             {
-                new Real<double>[,,,]
                 {
                     {
-                        {
-                            { -0.942488801931697, 0, 0,  0                 },
-                            { 0,                  0, 0,  14.85408845588213 },
-                            { 0,                  0, 22, 0                 },
-                            { -15301.68323198016, 0, 0,  0                 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 358.2112 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 280.6368 }
-                        },
-                        {
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 5426.483385429979, 0, 0, 123.5904 }
-                        }
+                        { -0.942488801931697, 0, 0,  0                 },
+                        { 0,                  0, 0,  14.85408845588213 },
+                        { 0,                  0, 22, 0                 },
+                        { -15301.68323198016, 0, 0,  0                 }
                     },
                     {
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 358.2112 }
-                        },
-                        {
-                            { 0,                   1.553140567066586, 0, 0                 },
-                            { -0.3239719070443792, 0,                 0, 0                 },
-                            { 0,                   0,                 0, 23.48462711858732 },
-                            { 0,                   13.41041568258237, 0, 0                 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 140.3184 }
-                        },
-                        {
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, -2.313437768524027, 0, 61.7952 }
-                        }
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 358.2112 }
                     },
                     {
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 280.6368 }
-                        },
-                        {
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 0        },
-                            { 0, 0, 0, 140.3184 }
-                        },
-                        {
-                            { 0,                   0,                    69.31160057616656,  0 },
-                            { 0,                   -0.01911190771506838, 0,                  0 },
-                            { -0.1338783158199425, 0,                    0,                  0 },
-                            { 0,                   0,                    -45.07682430841755, 0 }
-                        },
-                        {
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 22.53841215420878, 48.41279999999999 }
-                        }
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 280.6368 }
                     },
                     {
-                        {
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 0,                 0, 0, 0        },
-                            { 5426.483385429979, 0, 0, 123.5904 }
-                        },
-                        {
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, 0,                  0, 0       },
-                            { 0, -2.313437768524027, 0, 61.7952 }
-                        },
-                        {
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 0,                 0                 },
-                            { 0, 0, 22.53841215420878, 48.41279999999999 }
-                        },
-                        {
-                            { 0,                 0,                   0,                  -0.07868300388103916 },
-                            { 0,                 0,                   4371.066581678536,  0                    },
-                            { 0,                 0.05517742207646505, 0,                  0                    },
-                            { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
-                        }
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 5426.483385429979, 0, 0, 123.5904 }
+                    }
+                },
+                {
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 358.2112 }
+                    },
+                    {
+                        { 0,                   1.553140567066586, 0, 0                 },
+                        { -0.3239719070443792, 0,                 0, 0                 },
+                        { 0,                   0,                 0, 23.48462711858732 },
+                        { 0,                   13.41041568258237, 0, 0                 }
+                    },
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 140.3184 }
+                    },
+                    {
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, -2.313437768524027, 0, 61.7952 }
+                    }
+                },
+                {
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 280.6368 }
+                    },
+                    {
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 0        },
+                        { 0, 0, 0, 140.3184 }
+                    },
+                    {
+                        { 0,                   0,                    69.31160057616656,  0 },
+                        { 0,                   -0.01911190771506838, 0,                  0 },
+                        { -0.1338783158199425, 0,                    0,                  0 },
+                        { 0,                   0,                    -45.07682430841755, 0 }
+                    },
+                    {
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 22.53841215420878, 48.41279999999999 }
+                    }
+                },
+                {
+                    {
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 0,                 0, 0, 0        },
+                        { 5426.483385429979, 0, 0, 123.5904 }
+                    },
+                    {
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, 0,                  0, 0       },
+                        { 0, -2.313437768524027, 0, 61.7952 }
+                    },
+                    {
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 0,                 0                 },
+                        { 0, 0, 22.53841215420878, 48.41279999999999 }
+                    },
+                    {
+                        { 0,                 0,                   0,                  -0.07868300388103916 },
+                        { 0,                 0,                   4371.066581678536,  0                    },
+                        { 0,                 0.05517742207646505, 0,                  0                    },
+                        { 15301.68323198016, 0,                   -11.26920607710439, 0                    }
                     }
                 }
             }
-        };
+        );
     }
 }

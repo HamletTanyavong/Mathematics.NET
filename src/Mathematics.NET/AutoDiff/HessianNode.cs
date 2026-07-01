@@ -38,6 +38,11 @@ internal readonly record struct HessianNode<T, U>
     where T : IComplex<T, U, U>
     where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
 {
+    /// <summary>The parent index of the left node.</summary>
+    public readonly int PX;
+    /// <summary>The parent index of the right node.</summary>
+    public readonly int PY;
+
     /// <summary>The first derivative of the left component of the binary operation.</summary>
     public readonly T DX;
     /// <summary>The second derivative of the left component of the binary operation.</summary>
@@ -48,11 +53,6 @@ internal readonly record struct HessianNode<T, U>
     public readonly T DY;
     /// <summary>The second derivative of the right component of the binary operation.</summary>
     public readonly T DYY;
-
-    /// <summary>The parent index of the left node.</summary>
-    public readonly int PX;
-    /// <summary>The parent index of the right node.</summary>
-    public readonly int PY;
 
     public HessianNode(int index)
     {
