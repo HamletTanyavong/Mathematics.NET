@@ -82,11 +82,9 @@ public sealed class TensorCalculusTests
 
     [TestMethod]
     [DynamicData(nameof(GetCovariantDerivativeData))]
-    public void CovariantDerivative_WithMetricTensorAndRankOneTensor_ReturnsCovariantDerivative(object[] input, object[] values)
+    public void CovariantDerivative_WithMetricTensorAndRankOneTensor_ReturnsCovariantDerivative(double[] input, Real<double>[,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1], (double)input[2], (double)input[3]);
-
-        var expected = (Real<double>[,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1], input[2], input[3]);
 
         DifGeo.CovariantDerivative(Tape, Metric, Tensor, point, out Tensor<Matrix4x4<Real<double>, double>, Real<double>, double, Index<Lower, PIN>, Index<Upper, Alpha>> derivative);
         var actual = derivative.ToArray();
@@ -98,21 +96,17 @@ public sealed class TensorCalculusTests
     // Helpers
     //
 
-    public static IEnumerable<object[]> GetCovariantDerivativeData()
+    public static IEnumerable<(double[] Input, Real<double>[,] Expected)> GetCovariantDerivativeData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.23, 2.34, 3.45, 4.56],
-            new object[]
+            new Real<double>[,]
             {
-                new Real<double>[,]
-                {
-                    { 5.289263063818893,   5.013308424588511,  -0.29788865000129444, 3.8105919037189384 },
-                    { -2.4563414493568,    13.25416522566854,  -0.02204745753009399, 3.0134829061941315 },
-                    { -3.522275180531237,  61.491449747524356, 0.6855961853286481,   5.711550823511512  },
-                    { -151.09436038088194, 1159.2560019770624, -13.109910390357598,  203.26824800200063 }
-                }
+                { 5.289263063818893,   5.013308424588511,  -0.29788865000129444, 3.8105919037189384 },
+                { -2.4563414493568,    13.25416522566854,  -0.02204745753009399, 3.0134829061941315 },
+                { -3.522275180531237,  61.491449747524356, 0.6855961853286481,   5.711550823511512  },
+                { -151.09436038088194, 1159.2560019770624, -13.109910390357598,  203.26824800200063 }
             }
-        };
+        );
     }
 }

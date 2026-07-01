@@ -34,35 +34,6 @@ namespace Mathematics.NET.UnitTests.LinearAlgebra;
 [TestCategory("Linear Algebra")]
 public sealed class LinAlgTests
 {
-    // Inputs
-
-    public static IEnumerable<object[]> GetComplexInputData()
-    {
-        yield return new[]
-        {
-            new Complex<double>[2, 2]
-            {
-                { new(1, 2), new(2, 3) },
-                { new(1, -2), new(3, 5) }
-            }
-        };
-    }
-
-    public static IEnumerable<object[]> GetRealInputData()
-    {
-        yield return new[]
-        {
-            new Real<double>[3, 3]
-            {
-                { -1, 2.424, 3 },
-                { 4, 5, 6.74241 },
-                { 7, 8, 9.3 }
-            }
-        };
-    }
-
-    // Tests
-
     [TestMethod]
     [DynamicData(nameof(GetComplexInputData))]
     public void QRGramSchmidt_MatrixOfComplex_ReturnsQRDecompositionOfMatrix(Complex<double>[,] matrix)
@@ -82,5 +53,28 @@ public sealed class LinAlgTests
         var actual = LinAlg.MatMul<T, double, double>(Q, R);
 
         Assert<T, double>.AreApproximatelyEqual(expected, actual, 1e-15);
+    }
+
+    //
+    // Helpers
+    //
+
+    public static IEnumerable<Complex<double>[,]> GetComplexInputData()
+    {
+        yield return new Complex<double>[2, 2]
+        {
+            { new(1, 2), new(2, 3) },
+            { new(1, -2), new(3, 5) }
+        };
+    }
+
+    public static IEnumerable<Real<double>[,]> GetRealInputData()
+    {
+        yield return new Real<double>[3, 3]
+        {
+            { -1, 2.424, 3 },
+            { 4, 5, 6.74241 },
+            { 7, 8, 9.3 }
+        };
     }
 }

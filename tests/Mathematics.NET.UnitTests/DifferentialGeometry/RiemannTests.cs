@@ -61,11 +61,9 @@ public sealed class RiemannTests
 
     [TestMethod]
     [DynamicData(nameof(GetRiemannTensorData))]
-    public void Riemann_FromMetricTensor_ReturnsRiemannTensor(object[] input, object[] values)
+    public void Riemann_FromMetricTensor_ReturnsRiemannTensor(double[] input, Real<double>[,,,] expected)
     {
-        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>((double)input[0], (double)input[1]);
-
-        var expected = (Real<double>[,,,])values[0];
+        var point = Tape.CreateAutoDiffTensor<Index<Upper, PIN>>(input[0], input[1]);
 
         DifGeo.Riemann(Tape, Tensor, point, out Tensor<Array2x2x2x2<Real<double>, double>, Real<double>, double, Index<Upper, Alpha>, Index<Lower, Beta>, Index<Lower, Gamma>, Index<Lower, Delta>> result);
         var actual = result.ToArray();
@@ -77,37 +75,33 @@ public sealed class RiemannTests
     // Helpers
     //
 
-    public static IEnumerable<object[]> GetRiemannTensorData()
+    public static IEnumerable<(double[] Input, Real<double>[,,,] Expected)> GetRiemannTensorData()
     {
-        yield return new[]
-        {
+        yield return (
             [1.0, 2.0],
-            new object[]
+            new Real<double>[,,,]
             {
-                new Real<double>[,,,]
                 {
                     {
-                        {
-                            { 0,     -0.125 },
-                            { 0.125, 0      },
-                        },
-                        {
-                            { 0,    -0.25 },
-                            { 0.25, 0     }
-                        },
+                        { 0,     -0.125 },
+                        { 0.125, 0      },
                     },
                     {
-                        {
-                            { 0,      -0.0625 },
-                            { 0.0625, 0       },
-                        },
-                        {
-                            { 0,      0.125 },
-                            { -0.125, 0     },
-                        }
+                        { 0,    -0.25 },
+                        { 0.25, 0     }
+                    },
+                },
+                {
+                    {
+                        { 0,      -0.0625 },
+                        { 0.0625, 0       },
+                    },
+                    {
+                        { 0,      0.125 },
+                        { -0.125, 0     },
                     }
                 }
             }
-        };
+        );
     }
 }
