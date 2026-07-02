@@ -33,7 +33,7 @@ namespace Mathematics.NET.UnitTests.NumberTheory;
 [TestCategory("Prime")]
 public sealed class Wheel2357Tests
 {
-    public Wheel2357 Wheel { get; } = new();
+    public Wheel2357<int> Wheel { get; } = new();
 
     [TestMethod]
     public void Basis_Property_HasCorrectBasis()
@@ -49,7 +49,7 @@ public sealed class Wheel2357Tests
     [DynamicData(nameof(GetSequenceData))]
     public void Indexer_LimitGreaterThanWheelSize_ReturnsCorrectSequence(int _, int count, int[] expected)
     {
-        Wheel2357 wheel = new();
+        Wheel2357<int> wheel = new();
 
         List<int> actual = [];
         for (int i = 0; i < count; i++)
@@ -64,7 +64,7 @@ public sealed class Wheel2357Tests
     [DynamicData(nameof(GetSequenceData))]
     public void Spin_LimitGreaterThanWheelSize_ReturnsCorrectSequence(int limit, int _, int[] expected)
     {
-        Wheel2357 wheel = new();
+        Wheel2357<int> wheel = new();
 
         var actual = wheel.Spin().TakeWhile(x => x < limit).ToArray();
 

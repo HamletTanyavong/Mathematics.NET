@@ -25,8 +25,6 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable NUM0001
-
 using Mathematics.NET.NumberTheory;
 
 namespace Mathematics.NET.UnitTests.NumberTheory;
@@ -43,30 +41,12 @@ public sealed class PrimeTests
     [DataRow(1000000, 999983)]
     public void SieveOfEratosthenes_WithLimit_HasCorrectLargestPrimeUnderLimit(int limit, int expected)
     {
-        Wheel2357 wheel = new();
+        Wheel2357<int> wheel = new();
 
         var actual = Prime
             .SieveOfEratosthenes(wheel, limit)
             .ToList()
             .Last();
-
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod]
-    [DataRow(100, 97)]
-    [DataRow(1000, 997)]
-    [DataRow(25623, 25621)]
-    [DataRow(25621, 25621)]
-    [DataRow(1000000, 999983)]
-    public void SieveOfEratosthenes_UsingPriorityQueue_HasCorrectLargestPrimeUnderLimit(int limit, int expected)
-    {
-        Wheel2357 wheel = new();
-
-        var actual = Prime
-            .SieveOfEratosthenes(wheel)
-            .TakeWhile(x => x <= limit)
-            .LastOrDefault();
 
         Assert.AreEqual(expected, actual);
     }
@@ -82,31 +62,10 @@ public sealed class PrimeTests
     //[DataRow(int.MaxValue, 105097565)]
     public void SieveOfEratosthenes_WithLimit_HasCorrectPrimeCount(int limit, int expected)
     {
-        Wheel2357 wheel = new();
+        Wheel2357<int> wheel = new();
 
         var actual = Prime
             .SieveOfEratosthenes(wheel, limit)
-            .Count();
-
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod]
-    [DataRow(100, 25)]
-    [DataRow(1000, 168)]
-    [DataRow(25623, 2822)]
-    [DataRow(25621, 2822)]
-    [DataRow(1000000, 78498)]
-    //[DataRow(100000000, 5761455)]
-    //[DataRow(1000000000, 50847534)]
-    //[DataRow(int.MaxValue, 105097565)]
-    public void SieveOfEratosthenes_UsingPriorityQueue_HasCorrectPrimeCount(int limit, int expected)
-    {
-        Wheel2357 wheel = new();
-
-        var actual = Prime
-            .SieveOfEratosthenes(wheel)
-            .TakeWhile(x => x <= limit)
             .Count();
 
         Assert.AreEqual(expected, actual);

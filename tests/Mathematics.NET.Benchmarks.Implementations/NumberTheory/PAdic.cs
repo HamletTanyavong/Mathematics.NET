@@ -1,4 +1,4 @@
-// <copyright file="Program.cs" company="Mathematics.NET">
+// <copyright file="PAdic.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,36 +25,25 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Mathematics.NET.NumberTheory;
 
-Console.OutputEncoding = System.Text.Encoding.Unicode;
+namespace Mathematics.NET.Benchmarks.Implementations.NumberTheory;
 
-Console.Title = "Mathematics.NET";
+public class PAdic
+{
+    public static int Legendre_DivideFloorSum(int p, int n)
+    {
+        int value = 0;
+        for (int i = 1; i <= int.FloorLog(n, p); i++)
+        {
+            value += (int)Math.Floor(n / Math.Pow(p, i));
+        }
+        return value;
+    }
 
-Console.WriteLine("Mathematics.NET Development Application");
-Console.WriteLine();
-
-#region Development Application Configuration
-
-var builder = Host.CreateApplicationBuilder();
-
-// Configure services.
-builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
-builder.Services.AddHttpClient();
-
-// Build the application.
-var app = builder.Build();
-
-#endregion
-
-#region Useful Services
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
-
-#endregion
-
-// Run the application and/or add code below for quick testing and verification.
+    public static int Legendre_DigitSum(int p, int n)
+    {
+        n = int.Abs(n);
+        return (n - Number.DigitSum(p, n)) / (p - 1);
+    }
+}

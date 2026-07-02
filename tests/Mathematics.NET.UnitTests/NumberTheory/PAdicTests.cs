@@ -34,17 +34,6 @@ namespace Mathematics.NET.UnitTests.NumberTheory;
 public sealed class PAdicTests
 {
     [TestMethod]
-    [DataRow(2, 8, 1)]
-    [DataRow(3, 57, 3)]
-    [DataRow(5, 18, 6)]
-    public void DigitSum_PositiveInteger_ReturnsDigitSum(int p, int n, int expected)
-    {
-        var actual = PAdic.DigitSum(p, n);
-
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod]
     [DataRow(2, 10, 3, 3)]
     [DataRow(3, 230, 16, 2)]
     [DataRow(5, 312, 13, 2)]
@@ -66,6 +55,7 @@ public sealed class PAdicTests
 
     [TestMethod]
     [DataRow(2, 6, 4)]
+    [DataRow(3, -24, 10)]
     [DataRow(3, 6, 2)]
     [DataRow(5, 6, 1)]
     public void Legendre_Factorial_ReturnsValuation(int p, int input, int expected)

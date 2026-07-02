@@ -1,4 +1,4 @@
-// <copyright file="Algebra.cs" company="Mathematics.NET">
+// <copyright file="SieveOfEratosthenesBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,32 +25,28 @@
 // SOFTWARE.
 // </copyright>
 
-using System.Numerics;
-using System.Runtime.CompilerServices;
+using Mathematics.NET.NumberTheory;
 
-namespace Mathematics.NET;
+namespace Mathematics.NET.Benchmarks.NumberTheory;
 
-/// <summary>A class containing methods for Algebra.</summary>
-public static class Algebra
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
+public class SieveOfEratosthenesBenchmarks
 {
-    /// <summary>Compute the greatest common divisor of two integers.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-    /// <param name="p">An integer.</param>
-    /// <param name="q">An integer.</param>
-    /// <returns>The GCD of the two values.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static T GCD<T>(T p, T q)
-        where T : IBinaryInteger<T>
+    public static int N { get; } = 10_000_000;
+
+    [Benchmark(Baseline = true)]
+    public static IEnumerable<int> SieveOfEratosthenes_Unsafe()
     {
-        p = T.Abs(p);
-        q = T.Abs(q);
-        while (p != T.Zero && q != T.Zero)
-        {
-            if (p > q)
-                p %= q;
-            else
-                q %= p;
-        }
-        return p | q;
+        Wheel2357<int> wheel = new();
+        return Implementations.NumberTheory.Prime.SieveOfEratosthenes_Unsafe(wheel, N);
+    }
+
+    [Benchmark]
+    public static IEnumerable<int> SieveOfEratosthenes_Checked()
+    {
+        Wheel2357<int> wheel = new();
+        return Implementations.NumberTheory.Prime.SieveOfEratosthenes_Checked(wheel, N);
     }
 }
