@@ -512,7 +512,7 @@ public static class Extensions
     // Spans
     //
 
-    /// <summary>Pad a span of numbers with zeros.</summary>
+    /// <summary>Pad the end of a span of numbers with zeros.</summary>
     /// <remarks>This method allocates a new array and its performance impacts should be considered.</remarks>
     /// <typeparam name="T">A type that implements <see cref="IComplex{T, U, V}"/>.</typeparam>
     /// <typeparam name="U">A type that implements <see cref="IBinaryNumber{TSelf}"/>.</typeparam>
@@ -520,6 +520,7 @@ public static class Extensions
     /// <param name="span">The original span.</param>
     /// <param name="length">A new length.</param>
     /// <returns>A padded span.</returns>
+    /// <exception cref="Exception">Thrown when the padded lenth is shorter than the source length.</exception>
     public static ReadOnlySpan<T> Pad<T, U, V>(this ReadOnlySpan<T> span, int length)
         where T : IComplex<T, U, V>
         where U : IBinaryNumber<U>
@@ -531,6 +532,25 @@ public static class Extensions
         var result = new T[length];
         span.CopyTo(result);
         return result;
+    }
+
+    /// <summary>Pad a span of numbers with zeroes.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="span">A span.</param>
+    /// <param name="amountFront">The amount of zeroes in the front.</param>
+    /// <param name="amountBack">The amount of zeroes in the back.</param>
+    /// <returns>A padded span.</returns>
+    /// <exception cref="Exception">Thrown when the amount to pad is negative.</exception>
+    public static ReadOnlySpan<T> Pad<T>(this ReadOnlySpan<T> span, int amountFront, int amountBack)
+        where T : IBinaryInteger<T>
+    {
+        if (amountFront < 0 || amountBack < 0)
+            throw new Exception("The new size of the padded span must be greater or equal than the original size.");
+        if (amountFront == 0 && amountBack == 0)
+            return span;
+        Span<T> padded = new T[span.Length + amountFront + amountBack];
+        span.CopyTo(padded[amountFront..]);
+        return padded;
     }
 
     /// <inheritdoc cref="Pad{T, U, V}(ReadOnlySpan{T}, int)"/>
@@ -545,6 +565,19 @@ public static class Extensions
         var result = new T[length];
         span.CopyTo(result);
         return result;
+    }
+
+    /// <inheritdoc cref="Pad{T}(ReadOnlySpan{T}, int, int)"/>
+    public static Span<T> Pad<T>(this Span<T> span, int amountFront, int amountBack)
+        where T : IBinaryInteger<T>
+    {
+        if (amountFront < 0 || amountBack < 0)
+            throw new Exception("The new size of the padded span must be greater or equal than the original size.");
+        if (amountFront == 0 && amountBack == 0)
+            return span;
+        Span<T> padded = new T[span.Length + amountFront + amountBack];
+        span.CopyTo(padded[amountFront..]);
+        return padded;
     }
 
     /// <summary>Pad a 2D span of numbers with zeros.</summary>

@@ -27,7 +27,6 @@
 
 #pragma warning disable IDE0032
 
-using System.Diagnostics;
 using System.Globalization;
 using System.Numerics;
 using System.Text;
@@ -42,8 +41,7 @@ public readonly struct PAdic<T>
 {
     private readonly T _prime;
 
-    private readonly int _shift;
-    private readonly int _start;
+    private readonly int _valuation;
     private readonly int _period;
 
     private readonly T[] _digits = [];
@@ -51,7 +49,7 @@ public readonly struct PAdic<T>
     public PAdic(T p, T n)
     {
         _prime = p;
-        _start = PAdic.Valuation(p, n).AsInt();
+        _valuation = PAdic.Valuation(_prime, n).AsInt();
         _period = 1;
 
         HashSet<T> coefficients = [];
@@ -68,8 +66,7 @@ public readonly struct PAdic<T>
     {
         _prime = p;
         q = q.Reduce();
-        _shift = PAdic.Valuation(_prime, q.Den).AsInt();
-        _start = PAdic.Valuation(p, q).AsInt();
+        _valuation = PAdic.Valuation(_prime, q).AsInt();
         SetFields(q, out _period, out _digits);
     }
 
@@ -77,12 +74,11 @@ public readonly struct PAdic<T>
     {
         _prime = p;
         q = q.Reduce();
-        _shift = PAdic.Valuation(_prime, q.Den).AsInt();
-        _start = PAdic.Valuation(p, q).AsInt();
+        _valuation = PAdic.Valuation(_prime, q).AsInt();
         SetFields(q, out _period, out _digits);
     }
 
-    public PAdic(T p, T[] digits, int start, int period)
+    public PAdic(T p, T[] digits, int valuation, int period)
     {
         _prime = p;
 
@@ -92,17 +88,20 @@ public readonly struct PAdic<T>
         {
             i++;
         }
-        _shift = i;
 
-        _start = start;
+        _valuation = valuation;
         _period = period;
         _digits = digits;
     }
 
-    public int Start => _start;
+    /// <summary>The p-adic valuation of the number.</summary>
+    /// <remarks>This also represents the shift in the p-adic expansion.</remarks>
+    public int Valuation => _valuation;
 
+    /// <summary>The length of the preperiodic part.</summary>
     public int PrePeriod => _digits.Length - _period;
 
+    /// <summary>The length of the periodic part.</summary>
     public int Period => _period;
 
     private void SetFields<U>(Rational<T, U> q, out int period, out T[] digits)
@@ -111,23 +110,24 @@ public readonly struct PAdic<T>
         var gcd = Number.GCD(_prime, q.Den);
         period = Modular.MultiplicativeOrder(_prime, q.Den / gcd).AsInt();
 
-        var shift = 0;
         if (gcd != T.One)
         {
-            shift = PAdic.Valuation(_prime, q.Den).AsInt();
+            var shift = PAdic.Valuation(_prime, q.Den);
             q = new(q.Num, q.Den / IBinaryInteger<T>.Pow(_prime, shift));
         }
 
         HashSet<Rational<T, U>> coefficients = [];
         List<T> buffer = [];
+        bool started = false;
         while (!coefficients.Contains(q))
         {
             _ = coefficients.Add(q);
-            buffer.Add(Number.ModDivideRemainder(ref q, _prime));
-        }
-        for (int i = 0; i < shift; i++)
-        {
-            buffer.Add(Number.ModDivideRemainder(ref q, _prime));
+            var remainder = Number.ModDivideRemainder(ref q, _prime);
+            if (!started && remainder == T.Zero)
+                continue;
+            else
+                started = true;
+            buffer.Add(remainder);
         }
         digits = [.. buffer];
     }
@@ -193,10 +193,13 @@ public readonly struct PAdic<T>
             _ = builder.Append(_digits[i]);
         }
 
-        _ = builder.Insert(_digits.Length - int.Abs(_start) - (_digits.Length == _period ? 0 : 1), '\'');
+        _ = builder.Insert(_digits.Length - (_digits.Length == _period ? 0 : 1), '\'');
 
+        if (_valuation != 0)
+            _ = builder.Append($"E{(_valuation > 0 ? "+" : "")}{_valuation}");
         if (!string.IsNullOrEmpty(label))
             _ = builder.Append(label);
+
         return builder.ToString();
     }
 
@@ -262,7 +265,7 @@ public readonly struct PAdic<T>
         var isPurelyRepeating = _digits.Length == _period;
         for (int i = _digits.Length - 1; i >= 0; i--)
         {
-            if (!isPurelyRepeating && int.Abs(_start) == i)
+            if (!isPurelyRepeating && _digits.Length - _period - 1 == i)
                 destination[charsCurrentlyWritten++] = '\'';
             bool tryFormatSucceeded = _digits[i].TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
             charsCurrentlyWritten += tryFormatCharsWritten;
@@ -275,6 +278,20 @@ public readonly struct PAdic<T>
 
         if (isPurelyRepeating)
             destination[charsCurrentlyWritten++] = '\'';
+
+        if (_valuation != 0)
+        {
+            destination[charsCurrentlyWritten++] = 'E';
+            if (_valuation > 0)
+                destination[charsCurrentlyWritten++] = '+';
+            bool tryFormatSucceeded = _valuation.TryFormat(destination[charsCurrentlyWritten..], out int tryFormatCharsWritten, null, provider);
+            charsCurrentlyWritten += tryFormatCharsWritten;
+            if (!tryFormatSucceeded || destination.Length < charsCurrentlyWritten + 1)
+            {
+                charsWritten = charsCurrentlyWritten;
+                return false;
+            }
+        }
 
         if (!label.IsEmpty)
         {
@@ -312,6 +329,6 @@ public readonly struct PAdic<T>
         Rational<T, U> periodic = new(b, T.One - IBinaryInteger<T>.Pow(_prime, _period));
         periodic = periodic.Reduce();
 
-        return (a + IBinaryInteger<T>.Pow(_prime, preperiod.Length) * periodic) / IBinaryInteger<T>.Pow(_prime, _shift);
+        return (a + IBinaryInteger<T>.Pow(_prime, preperiod.Length) * periodic) * Rational<T, U>.Pow(_prime, _valuation);
     }
 }

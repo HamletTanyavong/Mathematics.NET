@@ -599,6 +599,46 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
 
     static Rational<T, U> IComplex<Rational<T, U>, T, U>.MinMagnitudeNumber(Rational<T, U> x, Rational<T, U> y) => x < y || IsNaN(y) ? x : y;
 
+    internal static Rational<T, U> Pow(T x, int n)
+    {
+        if (n == 0)
+            return T.One;
+        if (T.IsZero(x))
+            return T.Zero;
+        if (x == T.One)
+            return T.One;
+        if (x == T.NegativeOne)
+            return (n & 1) == 0 ? T.One : T.NegativeOne;
+
+        if (n > 0)
+        {
+            return Compute(ref x, ref n);
+        }
+        else
+        {
+            n = -n;
+            var pow = Compute(ref x, ref n);
+            return new(T.One, pow);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static T Compute(ref T x, ref int n)
+        {
+            var y = T.One;
+            while (n > 1)
+            {
+                if ((n & 1) == 1)
+                {
+                    y *= x;
+                    n--;
+                }
+                x *= x;
+                n /= 2;
+            }
+            return x * y;
+        }
+    }
+
     /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
     /// <param name="x">The base.</param>
     /// <param name="n">The exponent.</param>

@@ -34,14 +34,13 @@ namespace Mathematics.NET.UnitTests.NumberTheory;
 public sealed class PAdicOfGenericTests
 {
     [TestMethod]
-    [DataRow(3, new int[] { 0, 2, 0, 1, 2, 1 }, 1, 4, 3, 5)]
+    [DataRow(3, new int[] { 2, 0, 1, 2, 1 }, 1, 4, 3, 5)]
     [DataRow(3, new int[] { 2, 0, 0, 1, 1 }, 0, 5, -5, 11)]
     [DataRow(3, new int[] { 2, 0, 1, 2, 1 }, 0, 4, 1, 5)]
     [DataRow(3, new int[] { 2, 0, 1, 2, 1, 0 }, -1, 4, 1, 15)]
     [DataRow(5, new int[] { 4, 0, 4, 1, 1, 2 }, 0, 5, 19, 11)]
-    [DataRow(9, new int[] { 0, 3, 1, 5, 2 }, 1, 3, 27, 7)]
-    [DataRow(9, new int[] { 0, 0, 3, 1, 5, 2 }, 2, 3, 243, 7)]
-    [DataRow(9, new int[] { 0, 0, 3, 1, 5, 2, 1 }, 1, 3, 27, 7)]
+    [DataRow(9, new int[] { 3, 1, 5, 2 }, 1, 3, 27, 7)]
+    [DataRow(9, new int[] { 3, 1, 5, 2 }, 2, 3, 243, 7)]
     public void ToRational_EventuallyRepeating_ReturnsCorrectRational(int p, int[] digits, int start, int period, int expectedNum, int expectedDen)
     {
         Rational<int, double> expected = new(expectedNum, expectedDen);
@@ -56,11 +55,11 @@ public sealed class PAdicOfGenericTests
     [DataRow(-5, 11, 3, "11002'₃")]
     [DataRow(-3, 14, 5, "101343'₅")]
     [DataRow(1, 5, 3, "1210'2₃")]
-    [DataRow(1, 15, 3, "0121'02₃")]
-    [DataRow(3, 5, 3, "1210'20₃")]
+    [DataRow(1, 15, 3, "1210'2E-1₃")]
+    [DataRow(3, 5, 3, "1210'2E+1₃")]
     [DataRow(19, 11, 5, "21140'4₅")]
-    [DataRow(243, 7, 9, "251'300₉")]
-    [DataRow(243, 63, 9, "251'30₉")]
+    [DataRow(243, 7, 9, "251'3E+2₉")]
+    [DataRow(243, 63, 9, "251'3E+1₉")]
     public void ToString_EventuallyRepeating_OutputsCorrectString(int n, int d, int p, string expected)
     {
         Rational<int, double> q = new(n, d);
@@ -75,11 +74,11 @@ public sealed class PAdicOfGenericTests
     [DataRow(-5, 11, 3, "11002'₃")]
     [DataRow(-3, 14, 5, "101343'₅")]
     [DataRow(1, 5, 3, "1210'2₃")]
-    [DataRow(1, 15, 3, "0121'02₃")]
-    [DataRow(3, 5, 3, "1210'20₃")]
+    [DataRow(1, 15, 3, "1210'2E-1₃")]
+    [DataRow(3, 5, 3, "1210'2E+1₃")]
     [DataRow(19, 11, 5, "21140'4₅")]
-    [DataRow(243, 7, 9, "251'300₉")]
-    [DataRow(243, 63, 9, "251'30₉")]
+    [DataRow(243, 7, 9, "251'3E+2₉")]
+    [DataRow(243, 63, 9, "251'3E+1₉")]
     public void TryFormat_EventuallyRepeating_OutputsCorrectSpan(int n, int d, int p, string expected)
     {
         Rational<int, double> q = new(n, d);
