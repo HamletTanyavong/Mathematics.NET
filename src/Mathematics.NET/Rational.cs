@@ -30,6 +30,7 @@ using System.Globalization;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.NumberTheory;
 
 namespace Mathematics.NET;
 
@@ -133,7 +134,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
 
     public static Rational<T, U> operator +(Rational<T, U> x, Rational<T, U> y)
     {
-        var lcm = LCM(x._denominator, y._denominator);
+        var lcm = Number.LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator + lcm / y._denominator * y._numerator;
         var gcd = GCD(num, lcm);
         return new(num / gcd, lcm / gcd);
@@ -141,7 +142,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
 
     public static Rational<T, U> operator -(Rational<T, U> x, Rational<T, U> y)
     {
-        var lcm = LCM(x._denominator, y._denominator);
+        var lcm = Number.LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator - lcm / y._denominator * y._numerator;
         var gcd = GCD(num, lcm);
         return new(num / gcd, lcm / gcd);
@@ -555,23 +556,6 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     public static bool IsPositive(Rational<T, U> x) => T.IsPositive(x._numerator);
 
     public static bool IsPositiveInfinity(Rational<T, U> x) => x._numerator == T.One && T.IsZero(x._denominator);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T LCM(T p, T q)
-    {
-        p = T.Abs(p);
-        q = T.Abs(q);
-        T holdP = p;
-        T holdQ = q;
-        while (p != T.Zero && q != T.Zero)
-        {
-            if (p > q)
-                p %= q;
-            else
-                q %= p;
-        }
-        return holdP / (p | q) * holdQ;
-    }
 
     public static Rational<T, U> Lerp(Rational<T, U> start, Rational<T, U> end, Rational<T, U> weight) => (One - weight) * start + weight * end;
 

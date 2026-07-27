@@ -201,6 +201,28 @@ public static class Number
         return T.Abs(a);
     }
 
+    /// <summary>Find the least common multiple of two numbers.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="p">An integer.</param>
+    /// <param name="q">An integer.</param>
+    /// <returns>The LCM of the two values.</returns>
+    public static T LCM<T>(T p, T q)
+        where T : IBinaryInteger<T>
+    {
+        p = T.Abs(p);
+        q = T.Abs(q);
+        T holdP = p;
+        T holdQ = q;
+        while (p != T.Zero && q != T.Zero)
+        {
+            if (p > q)
+                p %= q;
+            else
+                q %= p;
+        }
+        return holdP / (p | q) * holdQ;
+    }
+
     /// <summary>Compute the mod of <paramref name="dividend"/>, divide it by <paramref name="divisor"/>, and return the remainder.</summary>
     /// <remarks>This method is used for base conversions.</remarks>
     /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>

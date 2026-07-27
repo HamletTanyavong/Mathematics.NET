@@ -25,6 +25,8 @@
 // SOFTWARE.
 // </copyright>
 
+#pragma warning disable PAD0001
+
 using Mathematics.NET.NumberTheory;
 
 namespace Mathematics.NET.UnitTests.NumberTheory;
@@ -33,6 +35,22 @@ namespace Mathematics.NET.UnitTests.NumberTheory;
 [TestCategory("PAdic")]
 public sealed class PAdicOfGenericTests
 {
+    //[TestMethod]
+    //[DataRow(5, 2, 3, 3, 4, "24'31₅")]
+    //[DataRow(5, 75, 35, 4, 11, "122132100441334034220013024301'4₅")]
+    //public void Add_TwoValues_ReturnsSumAsString(int p, int aNum, int aDen, int bNum, int bDen, string expected)
+    //{
+    //    Rational<int, double> a = new(aNum, aDen);
+    //    Rational<int, double> b = new(bNum, bDen);
+
+    //    PAdic<int> aPAdic = new(p, a);
+    //    PAdic<int> bPAdic = new(p, b);
+
+    //    var actual = aPAdic + bPAdic;
+
+    //    Assert.AreEqual(expected, actual.ToString());
+    //}
+
     [TestMethod]
     [DataRow(3, new int[] { 2, 0, 1, 2, 1 }, 1, 4, 3, 5)]
     [DataRow(3, new int[] { 2, 0, 0, 1, 1 }, 0, 5, -5, 11)]
@@ -57,6 +75,7 @@ public sealed class PAdicOfGenericTests
     [DataRow(1, 5, 3, "1210'2₃")]
     [DataRow(1, 15, 3, "1210'2E-1₃")]
     [DataRow(3, 5, 3, "1210'2E+1₃")]
+    [DataRow(17, 12, 5, "24'31₅")]
     [DataRow(19, 11, 5, "21140'4₅")]
     [DataRow(243, 7, 9, "251'3E+2₉")]
     [DataRow(243, 63, 9, "251'3E+1₉")]
@@ -76,6 +95,7 @@ public sealed class PAdicOfGenericTests
     [DataRow(1, 5, 3, "1210'2₃")]
     [DataRow(1, 15, 3, "1210'2E-1₃")]
     [DataRow(3, 5, 3, "1210'2E+1₃")]
+    [DataRow(17, 12, 5, "24'31₅")]
     [DataRow(19, 11, 5, "21140'4₅")]
     [DataRow(243, 7, 9, "251'3E+2₉")]
     [DataRow(243, 63, 9, "251'3E+1₉")]

@@ -27,16 +27,22 @@
 
 #pragma warning disable IDE0032
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Mathematics.NET.LinearAlgebra;
+using Mathematics.NET.Operations;
 
 namespace Mathematics.NET.NumberTheory;
 
 /// <summary>Represents a p-adic number.</summary>
 /// <typeparam name="T">A type that implements <see cref=" IBinaryInteger{TSelf}"/> and <see cref="ISignedNumber{TSelf}"/>.</typeparam>
+[Experimental("PAD0001")]
 public readonly struct PAdic<T>
-    : ISpanFormattable
+    : IAdditionOperation<PAdic<T>, PAdic<T>>,
+      ISpanFormattable
     where T : IBinaryInteger<T>, ISignedNumber<T>
 {
     private readonly T _prime;
@@ -81,18 +87,12 @@ public readonly struct PAdic<T>
     public PAdic(T p, T[] digits, int valuation, int period)
     {
         _prime = p;
-
-        ReadOnlySpan<T> span = digits.AsSpan();
-        int i = 0;
-        while (i + period < span.Length && span[^(i + 1)] == span[^(i + period + 1)])
-        {
-            i++;
-        }
-
         _valuation = valuation;
         _period = period;
         _digits = digits;
     }
+
+    public int Length => _digits.Length;
 
     /// <summary>The p-adic valuation of the number.</summary>
     /// <remarks>This also represents the shift in the p-adic expansion.</remarks>
@@ -130,6 +130,67 @@ public readonly struct PAdic<T>
             buffer.Add(remainder);
         }
         digits = [.. buffer];
+    }
+
+    //
+    // Operators
+    //
+
+    // TODO: Determine when to cut off the expansion correctly.
+    // The period of the sum should divide the LCM of the two periods. The length of the
+    // preperiod may not be predictable.
+    public static PAdic<T> operator +(PAdic<T> a, PAdic<T> b)
+    {
+        var valuation = int.Min(a._valuation, b._valuation);
+        var period = Number.LCM(a._period, b._period);
+
+        // TODO: Consider using array pools.
+        var aPadded = a._digits.Pad(a._valuation - valuation, 0);
+        var bPadded = b._digits.Pad(b._valuation - valuation, 0);
+
+        List<T> digits = [];
+        T q = T.Zero;
+        bool started = false;
+        for (int i = 0; i < period + int.Max(a._valuation, b._valuation); i++)
+        {
+            var sum = GetCoefficient(aPadded, a._period, i) + GetCoefficient(bPadded, b._period, i) + q;
+            (q, var r) = T.DivRem(sum, a._prime);
+            if (!started && r == T.Zero)
+                continue;
+            else
+                started = true;
+            digits.Add(r);
+        }
+
+        return new(a._prime, [.. digits], valuation, period);
+    }
+
+    public static PAdic<T> operator checked +(PAdic<T> a, PAdic<T> b)
+    {
+        if (a._prime != b._prime)
+            throw new MathematicsException($"Cannot add {a._prime}-adic and {b._prime}-adic values.");
+
+        var valuation = int.Min(a._valuation, b._valuation);
+        var period = Number.LCM(a._period, b._period);
+
+        var aPadded = a._digits.Pad(a._valuation - valuation, 0);
+        var bPadded = b._digits.Pad(b._valuation - valuation, 0);
+
+        List<T> digits = [];
+        T q = T.Zero;
+        bool started = false;
+        for (int i = 0; i < period + int.Max(a._valuation, b._valuation); i++)
+        {
+            var sum = GetCoefficient(aPadded, a._period, i) + GetCoefficient(bPadded, b._period, i) + q;
+            (q, var r) = T.DivRem(sum, a._prime);
+            if (!started && r == T.Zero)
+                continue;
+            else
+                started = true;
+            digits.Add(r);
+        }
+
+        return new(a._prime, [.. digits], valuation, period);
     }
 
     //
@@ -188,12 +249,16 @@ public readonly struct PAdic<T>
     private string StringHelper(string? label)
     {
         StringBuilder builder = new();
+        var isPurelyRepeating = _digits.Length == _period;
         for (int i = _digits.Length - 1; i >= 0; i--)
         {
+            if (!isPurelyRepeating && _digits.Length - _period - 1 == i)
+                _ = builder.Append('\'');
             _ = builder.Append(_digits[i]);
         }
 
-        _ = builder.Insert(_digits.Length - (_digits.Length == _period ? 0 : 1), '\'');
+        if (isPurelyRepeating)
+            _ = builder.Append('\'');
 
         if (_valuation != 0)
             _ = builder.Append($"E{(_valuation > 0 ? "+" : "")}{_valuation}");
@@ -307,6 +372,18 @@ public readonly struct PAdic<T>
     // Methods
     //
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static T GetCoefficient(ReadOnlySpan<T> coefficients, int period, int index)
+    {
+        var preperiod = coefficients.Length - period;
+        if (index < preperiod)
+        {
+            return coefficients[index];
+        }
+        var periodic = coefficients[preperiod..];
+        return periodic[(index - preperiod) % periodic.Length];
+    }
+
     public Rational<T, U> ToRational<U>()
         where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     {
@@ -330,5 +407,20 @@ public readonly struct PAdic<T>
         periodic = periodic.Reduce();
 
         return (a + IBinaryInteger<T>.Pow(_prime, preperiod.Length) * periodic) * Rational<T, U>.Pow(_prime, _valuation);
+    }
+
+    public readonly T this[int index]
+    {
+        get
+        {
+            ReadOnlySpan<T> span = _digits.AsSpan();
+            var preperiod = span.Length - _period;
+            if (index < preperiod)
+            {
+                return span[index];
+            }
+            var periodic = span[preperiod..];
+            return periodic[(index - preperiod) % periodic.Length];
+        }
     }
 }
