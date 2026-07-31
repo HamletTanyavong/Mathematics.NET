@@ -27,6 +27,7 @@
 
 using System.Diagnostics;
 using System.Numerics;
+using Mathematics.NET.NumberTheory;
 
 namespace Mathematics.NET.Benchmarks.Implementations.NumberTheory;
 
@@ -62,7 +63,7 @@ internal class Combinatorics
             result *= n - i;
             u *= i + T.One;
 
-            var gcd = Algebra.GCD(result, u);
+            var gcd = Number.GCD(result, u);
             if (gcd != T.One)
             {
                 result /= gcd;

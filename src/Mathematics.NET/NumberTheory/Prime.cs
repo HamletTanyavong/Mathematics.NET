@@ -27,11 +27,7 @@
 
 // TODO: Implement the Sieve Of Atkin: <see href="https://www.ams.org/journals/mcom/2004-73-246/S0025-5718-03-01501-1/S0025-5718-03-01501-1.pdf"><i>Prime Sieves Using Binary Quadratic Forms</i></see> by A. O. L. Atkin and D. J. Bernstein.
 
-#pragma warning disable IDE0305
-
 using System.Collections;
-using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
@@ -40,14 +36,6 @@ namespace Mathematics.NET.NumberTheory;
 /// <summary>Provides methods for working with prime numbers.</summary>
 public static class Prime
 {
-    private record struct PrimeIndex
-    {
-        public int Prime;
-        public int Index;
-    }
-
-    private static ImmutableList<int> s_increments = [4, 2, 4, 2, 4, 6, 2, 6];
-
     /// <summary>An upper bound to the prime counting function.</summary>
     /// <remarks>
     /// The inequality used is
@@ -60,15 +48,194 @@ public static class Prime
     /// <returns>An upper bound to the number of prime numbers less than <paramref name="limit"/>.</returns>
     public static Real<T> CountingFunctionUpperBound<T>(Real<T> limit)
         where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
-        => limit / Real<T>.Ln(limit) * T.CreateChecked(1.22506);
+        => limit / Real<T>.Ln(limit) * T.CreateSaturating(1.22506);
+
+    /// <summary>Find the prime factors of a number.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="n">An integer.</param>
+    /// <param name="factors">A list of prime factors.</param>
+    public static void Factor<T>(T n, out List<T> factors)
+        where T : IBinaryInteger<T>
+    {
+        factors = [];
+
+        while (n % T.CreateSaturating(2) == T.Zero)
+        {
+            factors.Add(T.CreateSaturating(2));
+            n /= T.CreateSaturating(2);
+        }
+        while (n % T.CreateSaturating(3) == T.Zero)
+        {
+            factors.Add(T.CreateSaturating(3));
+            n /= T.CreateSaturating(3);
+        }
+        while (n % T.CreateSaturating(5) == T.Zero)
+        {
+            factors.Add(T.CreateSaturating(5));
+            n /= T.CreateSaturating(5);
+        }
+
+        ReadOnlySpan<T> increments = [
+            T.CreateSaturating(4),
+            T.CreateSaturating(2),
+            T.CreateSaturating(4),
+            T.CreateSaturating(2),
+            T.CreateSaturating(4),
+            T.CreateSaturating(6),
+            T.CreateSaturating(2),
+            T.CreateSaturating(6)];
+
+        var i = 0;
+        var j = T.CreateSaturating(7);
+        while (j * j <= n)
+        {
+            if (n % j == T.Zero)
+            {
+                factors.Add(j);
+                n /= j;
+            }
+            else
+            {
+                j += increments[i];
+                if (i < 7)
+                    i++;
+                else
+                    i = 0;
+            }
+        }
+
+        if (n > T.One)
+            factors.Add(n);
+    }
+
+    /// <summary>Find the prime factors of a number.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="n">An integer.</param>
+    /// <param name="factors">A dictionary of prime factors as keys and their count as values.</param>
+    public static void Factor<T>(T n, out Dictionary<T, T> factors)
+        where T : IBinaryInteger<T>
+    {
+        factors = [];
+
+        while (n % T.CreateSaturating(2) == T.Zero)
+        {
+            AddAndIncrement(factors, T.CreateSaturating(2), ref n);
+        }
+        while (n % T.CreateSaturating(3) == T.Zero)
+        {
+            AddAndIncrement(factors, T.CreateSaturating(3), ref n);
+        }
+        while (n % T.CreateSaturating(5) == T.Zero)
+        {
+            AddAndIncrement(factors, T.CreateSaturating(5), ref n);
+        }
+
+        ReadOnlySpan<T> increments = [
+            T.CreateSaturating(4),
+            T.CreateSaturating(2),
+            T.CreateSaturating(4),
+            T.CreateSaturating(2),
+            T.CreateSaturating(4),
+            T.CreateSaturating(6),
+            T.CreateSaturating(2),
+            T.CreateSaturating(6)];
+
+        var i = 0;
+        var j = T.CreateSaturating(7);
+        while (j * j <= n)
+        {
+            if (n % j == T.Zero)
+            {
+                AddAndIncrement(factors, j, ref n);
+            }
+            else
+            {
+                j += increments[i];
+                if (i < 7)
+                    i++;
+                else
+                    i = 0;
+            }
+        }
+
+        if (n > T.One)
+            AddAndIncrement(factors, n, ref n);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static void AddAndIncrement(Dictionary<T, T> factors, T factor, ref T n)
+        {
+            if (!factors.TryAdd(factor, T.One))
+                factors[factor] += T.One;
+            n /= factor;
+        }
+    }
+
+    /// <summary>Find the distinct prime factors of a number.</summary>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
+    /// <param name="n">An integer.</param>
+    /// <param name="factors">A hashset of distinct prime factors.</param>
+    public static void Factor<T>(T n, out HashSet<T> factors)
+        where T : IBinaryInteger<T>
+    {
+        factors = [];
+
+        if (n % T.CreateSaturating(2) == T.Zero)
+            Add(factors, T.CreateSaturating(2), ref n);
+        if (n % T.CreateSaturating(3) == T.Zero)
+            Add(factors, T.CreateSaturating(3), ref n);
+        if (n % T.CreateSaturating(5) == T.Zero)
+            Add(factors, T.CreateSaturating(5), ref n);
+
+        ReadOnlySpan<T> increments = [
+            T.CreateSaturating(4),
+            T.CreateSaturating(2),
+            T.CreateSaturating(4),
+            T.CreateSaturating(2),
+            T.CreateSaturating(4),
+            T.CreateSaturating(6),
+            T.CreateSaturating(2),
+            T.CreateSaturating(6)];
+
+        var i = 0;
+        var j = T.CreateSaturating(7);
+        while (j * j <= n)
+        {
+            if (n % j == T.Zero)
+            {
+                Add(factors, j, ref n);
+            }
+            else
+            {
+                j += increments[i];
+                if (i < 7)
+                    i++;
+                else
+                    i = 0;
+            }
+        }
+
+        if (n > T.One)
+            Add(factors, n, ref n);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static void Add(HashSet<T> factors, T factor, ref T n)
+        {
+            _ = factors.Add(factor);
+            do
+            {
+                n /= factor;
+            } while (n % factor == T.Zero);
+        }
+    }
 
     /// <summary>Use the Sieve of Eratosthenses to generate primes below a certain limit.</summary>
     /// <param name="wheel">A wheel generated by the first n primes.</param>
     /// <param name="limit">The limit.</param>
     /// <returns>A list of primes.</returns>
-    public static IEnumerable<int> SieveOfEratosthenes(Wheel<int> wheel, int limit)
+    public static IEnumerable<T> SieveOfEratosthenes<T>(Wheel<T> wheel, T limit)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
     {
-        if (limit < 2)
+        if (limit <= T.One)
             yield break;
 
         foreach (var prime in wheel.Basis)
@@ -77,173 +244,29 @@ public static class Prime
                 yield return prime;
         }
 
-        BitArray array = new(limit - 1);
-        var bound = (int)Math.Floor(Math.Sqrt(limit));
+        BitArray array = new(limit.AsInt() - 1);
+        var bound = IBinaryInteger<T>.FloorSqrt(limit);
 
         foreach (var candidate in wheel.Spin().TakeWhile(x => x <= limit))
         {
             if (candidate <= bound)
             {
-                if (!array[candidate - 2])
+                if (!array[candidate.AsInt() - 2])
                 {
                     yield return candidate;
                     var j = candidate * candidate;
-                    while (j > 0 && j <= limit)
+                    while (j > T.Zero && j <= limit)
                     {
-                        array[j - 2] = true;
+                        array[j.AsInt() - 2] = true;
                         j += candidate;
                     }
                 }
             }
             else
             {
-                if (!array[candidate - 2])
+                if (!array[candidate.AsInt() - 2])
                     yield return candidate;
             }
         }
-    }
-
-    /// <summary>Use the Sieve of Eratosthenes with a <paramref name="wheel"/> to generate prime numbers lazily.</summary>
-    /// <remarks>See <see href="https://www.cambridge.org/core/journals/journal-of-functional-programming/article/genuine-sieve-of-eratosthenes/FD3E90871269020CA6C64C25AB8A4FBD"><i>The Genuine Sieve of Eratosthenes</i></see> by Melissa E. O'Neill.</remarks>
-    /// <param name="wheel">A wheel generated by the first n primes.</param>
-    /// <returns>Prime numbers in a sequence.</returns>
-    [Experimental("NUM0001", UrlFormat = "https://mathematics.hamlettanyavong.com/diagnostic-messages/experimental/num0001")]
-    public static IEnumerable<int> SieveOfEratosthenes(Wheel<int> wheel)
-    {
-        foreach (var prime in wheel.Basis)
-        {
-            yield return prime;
-        }
-
-        // Consider letting the initial capacity be user-specified.
-        PriorityQueue<PrimeIndex, long> queue = new(128);
-
-        long priority;
-        int i = 1;
-
-        foreach (var candidate in wheel.Spin())
-        {
-            // Remove composites.
-            while (queue.TryPeek(out var _, out priority) && priority < candidate)
-            {
-                Adjust(wheel, queue);
-            }
-
-            if (queue.TryPeek(out var _, out priority) && priority == candidate)
-            {
-                Adjust(wheel, queue);
-            }
-            else
-            {
-                yield return candidate; // The candidate is prime.
-                priority = (long)candidate * candidate;
-                PrimeIndex multiple = new() { Prime = candidate, Index = i };
-                queue.Enqueue(multiple, priority);
-            }
-
-            i++;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void Adjust(Wheel<int> wheel, PriorityQueue<PrimeIndex, long> queue)
-        {
-            var current = queue.Dequeue();
-            PrimeIndex next = current with { Index = current.Index + 1 };
-            queue.Enqueue(next, current.Prime * wheel[current.Index]);
-        }
-    }
-
-    /// <summary>Find the prime factors of a number.</summary>
-    /// <param name="n">The number.</param>
-    /// <returns>A list of factors.</returns>
-    public static ImmutableList<int> Factor(int n)
-    {
-        List<int> factors = [];
-
-        while (n % 2 == 0)
-        {
-            factors.Add(2);
-            n /= 2;
-        }
-        while (n % 3 == 0)
-        {
-            factors.Add(3);
-            n /= 3;
-        }
-        while (n % 5 == 0)
-        {
-            factors.Add(5);
-            n /= 5;
-        }
-
-        var i = 0;
-        var j = 7;
-        while (j * j <= n)
-        {
-            if (n % j == 0)
-            {
-                factors.Add(j);
-                n /= j;
-            }
-            else
-            {
-                j += s_increments[i];
-                if (i < 7)
-                    i++;
-                else
-                    i = 0;
-            }
-        }
-
-        if (n > 1)
-            factors.Add(n);
-
-        return factors.ToImmutableList();
-    }
-
-    /// <inheritdoc cref="Factor(int)"/>
-    public static ImmutableList<long> Factor(long n)
-    {
-        List<long> factors = [];
-
-        while (n % 2 == 0)
-        {
-            factors.Add(2);
-            n /= 2;
-        }
-        while (n % 3 == 0)
-        {
-            factors.Add(3);
-            n /= 3;
-        }
-        while (n % 5 == 0)
-        {
-            factors.Add(5);
-            n /= 5;
-        }
-
-        var i = 0;
-        var j = 7;
-        while (j * j <= n)
-        {
-            if (n % j == 0)
-            {
-                factors.Add(j);
-                n /= j;
-            }
-            else
-            {
-                j += s_increments[i];
-                if (i < 7)
-                    i++;
-                else
-                    i = 0;
-            }
-        }
-
-        if (n > 1)
-            factors.Add(n);
-
-        return factors.ToImmutableList();
     }
 }

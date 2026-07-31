@@ -32,48 +32,6 @@ namespace Mathematics.NET.NumberTheory;
 /// <summary>Perform p-adic analysis.</summary>
 public static class PAdic
 {
-    /// <summary>Compute the digit sum of the <paramref name="p"/>-adic expansion of <paramref name="n"/></summary>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-    /// <param name="p">A prime number.</param>
-    /// <param name="n">An integer.</param>
-    /// <returns>The digit sum.</returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public static T DigitSum<T>(T p, T n)
-        where T : IBinaryInteger<T>
-    {
-        if (n < T.Zero)
-            throw new NotImplementedException("An implementation for negative integers has not been added.");
-        T result = T.Zero;
-        while (n > T.Zero)
-        {
-            T r;
-            (n, r) = T.DivRem(n, p);
-            result += r;
-        }
-        return result;
-    }
-
-    /// <summary>Perform a <paramref name="p"/>-adic expansion of <paramref name="n"/>.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
-    /// <param name="p">A prime number.</param>
-    /// <param name="n">An integer.</param>
-    /// <returns>A list of the digits.</returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public static List<T> Expand<T>(T p, T n)
-        where T : IBinaryInteger<T>
-    {
-        if (n < T.Zero)
-            throw new NotImplementedException("An implementation for negative integers has not been added.");
-        List<T> result = [];
-        while (n > T.Zero)
-        {
-            T r;
-            (n, r) = T.DivRem(n, p);
-            result.Add(r);
-        }
-        return result;
-    }
-
     /// <summary>Compute the <paramref name="p"/>-adic valuation of a binomial coefficient using Kummer's Theorem.</summary>
     /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
     /// <param name="p">A prime number.</param>
@@ -88,7 +46,7 @@ public static class PAdic
             throw new MathematicsException("p must be a prime number.");
         if (T.IsNegative(n) || T.IsNegative(k) || n < k)
             throw new MathematicsException("Invalid n and/or k.");
-        return (DigitSum(p, k) + DigitSum(p, n - k) - DigitSum(p, n)) / (p - T.One);
+        return (Number.DigitSum(p, k) + Number.DigitSum(p, n - k) - Number.DigitSum(p, n)) / (p - T.One);
     }
 
     /// <summary>Compute the <paramref name="p"/>-adic valuation of a multinomial using the generalized Kummer's Theorem.</summary>
@@ -101,7 +59,7 @@ public static class PAdic
         where T : IBinaryInteger<T>
     {
         if (p <= T.One)
-            throw new MathematicsException("p must be a prime number.");
+            throw new MathematicsException("p must be greater than one.");
         T n = T.Zero;
         T sum = T.Zero;
         for (int i = 0; i < k.Length; i++)
@@ -110,59 +68,61 @@ public static class PAdic
             if (j < T.Zero)
                 throw new MathematicsException("Invalid element of k.");
             n += j;
-            sum += DigitSum(p, j);
+            sum += Number.DigitSum(p, j);
         }
-        return (sum - DigitSum(p, n)) / (p - T.One);
+        return (sum - Number.DigitSum(p, n)) / (p - T.One);
     }
 
     /// <summary>Calculate the <paramref name="p"/>-adic valuation of <paramref name="n"/>! using Legendre's Formula.</summary>
     /// <param name="p">A prime number.</param>
     /// <param name="n">An integer.</param>
     /// <returns>The exponent of the largest power of <paramref name="p"/> that divides <paramref name="n"/>!.</returns>
-    public static int Legendre(int p, int n)
+    public static T Legendre<T>(T p, T n)
+        where T : IBinaryInteger<T>
     {
-        int value = 0;
-        for (int i = 1; i <= (int)Math.Floor(Math.Log(n, p)); i++)
-        {
-            value += (int)Math.Floor(n / Math.Pow(p, i));
-        }
-        return value;
+        n = T.Abs(n);
+        return (n - Number.DigitSum(p, n)) / (p - T.One);
     }
 
     /// <summary>Compute the <paramref name="p"/>-adic norm, also known as the <paramref name="p"/>-adic absolute value, of <paramref name="q"/>.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/> and <see cref="ISignedNumber{TSelf}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="p">A prime number.</param>
     /// <param name="q">A rational number.</param>
     /// <returns>The <paramref name="p"/>-adic norm of <paramref name="q"/>.</returns>
-    public static Rational<int, T> Norm<T>(int p, Rational<int, T> q)
-        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+    public static Rational<T, U> Norm<T, U>(T p, Rational<T, U> q)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
     {
         var v = Valuation(p, q);
-        return Rational<int, T>.Pow(p, -v);
+        return Rational<T, U>.Pow(p, -v);
     }
 
     /// <summary>Calculate the <paramref name="p"/>-adic valuation of an integer <paramref name="n"/>.</summary>
     /// <param name="p">A prime number.</param>
     /// <param name="n">An integer.</param>
     /// <returns>The exponent of the largest power of <paramref name="p"/> that divides <paramref name="n"/>.</returns>
-    public static int Valuation(int p, int n)
+    public static T Valuation<T>(T p, T n)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
     {
-        var abs = Math.Abs(n);
-        int value = 0;
-        for (int i = 1; i <= (int)Math.Floor(Math.Log(abs, p)); i++)
+        n = T.Abs(n);
+        var value = T.Zero;
+        for (T i = T.One; i <= IBinaryInteger<T>.FloorLog(n, p); i++)
         {
-            var pow = Math.Pow(p, i);
-            value += (int)Math.Floor(abs / pow) - (int)Math.Floor((abs - 1) / pow);
+            var pow = IBinaryInteger<T>.Pow(p, i);
+            value += n / pow - (n - T.One) / pow;
         }
         return value;
     }
 
     /// <summary>Calculate the <paramref name="p"/>-adic valuation of a rational number <paramref name="q"/>.</summary>
-    /// <typeparam name="T">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
+    /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/> and <see cref="ISignedNumber{TSelf}"/>.</typeparam>
+    /// <typeparam name="U">A type that implements <see cref="IBinaryFloatingPointIeee754{TSelf}"/> and <see cref="IMinMaxValue{TSelf}"/>.</typeparam>
     /// <param name="p">A prime number.</param>
     /// <param name="q">A rational number.</param>
     /// <returns>The exponent of the largest power of <paramref name="p"/> that divides <paramref name="q"/>.</returns>
-    public static int Valuation<T>(int p, Rational<int, T> q)
-        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
+    public static T Valuation<T, U>(T p, Rational<T, U> q)
+        where T : IBinaryInteger<T>, ISignedNumber<T>
+        where U : IBinaryFloatingPointIeee754<U>, IMinMaxValue<U>
         => Valuation(p, q.Num) - Valuation(p, q.Den);
 }

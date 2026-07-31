@@ -37,15 +37,15 @@ public static class Combinatorics
     /// <param name="n">The <paramref name="n"/> in <paramref name="n"/> choose <paramref name="k"/>.</param>
     /// <param name="k">The <paramref name="k"/> in <paramref name="n"/> choose <paramref name="k"/>.</param>
     /// <returns><paramref name="n"/> choose <paramref name="k"/>.</returns>
-    public static T Binomial<T>(int n, int k)
+    public static T Binomial<T>(T n, T k)
         where T : IBinaryInteger<T>, ISignedNumber<T>
     {
-        Wheel2357 wheel = new();
+        Wheel2357<T> wheel = new();
         T result = T.One;
         foreach (var prime in Prime.SieveOfEratosthenes(wheel, n))
         {
             var exponent = PAdic.Kummer(prime, n, k);
-            result *= IBinaryInteger<T>.Pow(T.CreateTruncating(prime), T.CreateTruncating(exponent));
+            result *= IBinaryInteger<T>.Pow(prime, exponent);
         }
         return result;
     }
@@ -54,15 +54,20 @@ public static class Combinatorics
     /// <typeparam name="T">A type that implements <see cref="IBinaryInteger{TSelf}"/>.</typeparam>
     /// <param name="k">An array of positive integers.</param>
     /// <returns>The sum of all elements of <paramref name="k"/> choose the elements of <paramref name="k"/>.</returns>
-    public static T Multinomial<T>(params int[] k)
+    public static T Multinomial<T>(params ReadOnlySpan<T> k)
         where T : IBinaryInteger<T>, ISignedNumber<T>
     {
-        Wheel2357 wheel = new();
+        Wheel2357<T> wheel = new();
         T result = T.One;
-        foreach (var prime in Prime.SieveOfEratosthenes(wheel, k.Sum()))
+        var sum = T.Zero;
+        for (int i = 0; i < k.Length; i++)
+        {
+            sum += k[i];
+        }
+        foreach (var prime in Prime.SieveOfEratosthenes(wheel, sum))
         {
             var exponent = PAdic.Kummer(prime, k);
-            result *= IBinaryInteger<T>.Pow(T.CreateTruncating(prime), T.CreateTruncating(exponent));
+            result *= IBinaryInteger<T>.Pow(prime, exponent);
         }
         return result;
     }

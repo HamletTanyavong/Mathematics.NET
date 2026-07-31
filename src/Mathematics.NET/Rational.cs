@@ -30,6 +30,7 @@ using System.Globalization;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Mathematics.NET.NumberTheory;
 
 namespace Mathematics.NET;
 
@@ -133,7 +134,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
 
     public static Rational<T, U> operator +(Rational<T, U> x, Rational<T, U> y)
     {
-        var lcm = LCM(x._denominator, y._denominator);
+        var lcm = Number.LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator + lcm / y._denominator * y._numerator;
         var gcd = GCD(num, lcm);
         return new(num / gcd, lcm / gcd);
@@ -141,7 +142,7 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
 
     public static Rational<T, U> operator -(Rational<T, U> x, Rational<T, U> y)
     {
-        var lcm = LCM(x._denominator, y._denominator);
+        var lcm = Number.LCM(x._denominator, y._denominator);
         var num = lcm / x._denominator * x._numerator - lcm / y._denominator * y._numerator;
         var gcd = GCD(num, lcm);
         return new(num / gcd, lcm / gcd);
@@ -556,23 +557,6 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
 
     public static bool IsPositiveInfinity(Rational<T, U> x) => x._numerator == T.One && T.IsZero(x._denominator);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static T LCM(T p, T q)
-    {
-        p = T.Abs(p);
-        q = T.Abs(q);
-        T holdP = p;
-        T holdQ = q;
-        while (p != T.Zero && q != T.Zero)
-        {
-            if (p > q)
-                p %= q;
-            else
-                q %= p;
-        }
-        return holdP / (p | q) * holdQ;
-    }
-
     public static Rational<T, U> Lerp(Rational<T, U> start, Rational<T, U> end, Rational<T, U> weight) => (One - weight) * start + weight * end;
 
     public static Rational<T, U> Max(Rational<T, U> x, Rational<T, U> y)
@@ -598,6 +582,46 @@ public readonly struct Rational<T, U> : IRational<Rational<T, U>, T, U>
     public static Rational<T, U> MinMagnitude(Rational<T, U> x, Rational<T, U> y) => x < y || IsNaN(x) ? x : y;
 
     static Rational<T, U> IComplex<Rational<T, U>, T, U>.MinMagnitudeNumber(Rational<T, U> x, Rational<T, U> y) => x < y || IsNaN(y) ? x : y;
+
+    internal static Rational<T, U> Pow(T x, int n)
+    {
+        if (n == 0)
+            return T.One;
+        if (T.IsZero(x))
+            return T.Zero;
+        if (x == T.One)
+            return T.One;
+        if (x == T.NegativeOne)
+            return (n & 1) == 0 ? T.One : T.NegativeOne;
+
+        if (n > 0)
+        {
+            return Compute(ref x, ref n);
+        }
+        else
+        {
+            n = -n;
+            var pow = Compute(ref x, ref n);
+            return new(T.One, pow);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static T Compute(ref T x, ref int n)
+        {
+            var y = T.One;
+            while (n > 1)
+            {
+                if ((n & 1) == 1)
+                {
+                    y *= x;
+                    n--;
+                }
+                x *= x;
+                n /= 2;
+            }
+            return x * y;
+        }
+    }
 
     /// <summary>Compute <paramref name="x"/> raised to the power of <paramref name="n"/>.</summary>
     /// <param name="x">The base.</param>

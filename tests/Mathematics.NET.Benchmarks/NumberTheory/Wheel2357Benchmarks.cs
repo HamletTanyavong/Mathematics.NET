@@ -1,4 +1,4 @@
-// <copyright file="IPrimeList.cs" company="Mathematics.NET">
+// <copyright file="Wheel2357Benchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,13 +25,26 @@
 // SOFTWARE.
 // </copyright>
 
-namespace Mathematics.NET.NumberTheory;
+using Mathematics.NET.Benchmarks.Implementations.NumberTheory;
 
-/// <summary>Defines support for prime number lists and retrieving their values.</summary>
-public interface IPrimeList
+namespace Mathematics.NET.Benchmarks.NumberTheory;
+
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
+public class Wheel2357Benchmarks
 {
-    /// <summary>Get the prime number at a certain index.</summary>
-    /// <param name="index">The index.</param>
-    /// <returns>A prime number.</returns>
-    int GetPrime(int index);
+    [Benchmark(Baseline = true)]
+    public IEnumerable<int> Primes_Wheel2367_Int()
+    {
+        Wheel2357_Int wheel = new();
+        return wheel.Spin().TakeWhile(x => x <= int.MaxValue);
+    }
+
+    [Benchmark]
+    public IEnumerable<int> Primes_Wheel2367_Generic()
+    {
+        Wheel2357_Generic<int> wheel = new();
+        return wheel.Spin().TakeWhile(x => x <= int.MaxValue);
+    }
 }

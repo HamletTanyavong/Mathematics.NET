@@ -1,4 +1,4 @@
-// <copyright file="Program.cs" company="Mathematics.NET">
+// <copyright file="PrimeFactorizationBenchmarks.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,36 +25,20 @@
 // SOFTWARE.
 // </copyright>
 
-using Mathematics.NET;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Mathematics.NET.Benchmarks.Implementations.NumberTheory;
 
-Console.OutputEncoding = System.Text.Encoding.Unicode;
+namespace Mathematics.NET.Benchmarks.NumberTheory;
 
-Console.Title = "Mathematics.NET";
+[MemoryDiagnoser]
+[RankColumn]
+[Orderer(SummaryOrderPolicy.FastestToSlowest)]
+public class PrimeFactorizationBenchmarks
+{
+    public int N { get; set; } = 214316824;
 
-Console.WriteLine("Mathematics.NET Development Application");
-Console.WriteLine();
+    [Benchmark(Baseline = true)]
+    public List<int> Factor_Int() => Prime.Factor(N);
 
-#region Development Application Configuration
-
-var builder = Host.CreateApplicationBuilder();
-
-// Configure services.
-builder.Services.AddSingleton<ILogger<Program>, Logger<Program>>();
-builder.Services.AddHttpClient();
-
-// Build the application.
-var app = builder.Build();
-
-#endregion
-
-#region Useful Services
-
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-var httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
-
-#endregion
-
-// Run the application and/or add code below for quick testing and verification.
+    [Benchmark]
+    public List<int> Factor_Generic() => Prime.Factor<int>(N);
+}

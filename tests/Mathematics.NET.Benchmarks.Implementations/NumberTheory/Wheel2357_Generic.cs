@@ -1,4 +1,4 @@
-// <copyright file="Wheel2357.cs" company="Mathematics.NET">
+// <copyright file="Wheel2357_Generic.cs" company="Mathematics.NET">
 // Mathematics.NET
 // https://github.com/HamletTanyavong/Mathematics.NET
 //
@@ -25,32 +25,26 @@
 // SOFTWARE.
 // </copyright>
 
-#pragma warning disable IDE0305
-
 using System.Numerics;
-using System.Runtime.CompilerServices;
+using Mathematics.NET.NumberTheory;
 
-namespace Mathematics.NET.NumberTheory;
+namespace Mathematics.NET.Benchmarks.Implementations.NumberTheory;
 
-/// <summary>Represents a 2-3-5-7 wheel.</summary>
-public sealed class Wheel2357<T> : Wheel<T>
+public sealed class Wheel2357_Generic<T> : Wheel<T>
     where T : IBinaryInteger<T>
 {
-    private static readonly T s_size = T.CreateSaturating(210);
+    public static readonly T[] s_basis = [.. new int[] { 2, 3, 5, 7 }.Select(x => T.CreateSaturating(x))];
+    public static readonly T[] s_spokes = [.. new int[] { 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 121, 127, 131, 137, 139, 143, 149, 151, 157, 163, 167, 169, 173, 179, 181, 187, 191, 193, 197, 199, 209, 211, 221 }.Select(x => T.CreateSaturating(x))];
+    public static readonly T[] s_increments = [.. new int[] { 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, 6, 4, 6, 8, 4, 2, 4, 2, 4, 8, 6, 4, 6, 2, 4, 6, 2, 6, 6, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 10, 2, 10 }.Select(x => T.CreateSaturating(x))];
 
-    public static readonly T[] s_basis = new int[] { 2, 3, 5, 7 }
-        .Select(x => T.CreateSaturating(x))
-        .ToArray();
-
-    public static readonly T[] s_spokes = new int[] { 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 121, 127, 131, 137, 139, 143, 149, 151, 157, 163, 167, 169, 173, 179, 181, 187, 191, 193, 197, 199, 209, 211, 221 }
-        .Select(x => T.CreateSaturating(x))
-        .ToArray();
-
-    public static readonly T[] s_increments = new int[] { 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, 6, 4, 6, 8, 4, 2, 4, 2, 4, 8, 6, 4, 6, 2, 4, 6, 2, 6, 6, 4, 2, 4, 6, 2, 6, 4, 2, 4, 2, 10, 2, 10 }
-        .Select(x => T.CreateSaturating(x))
-        .ToArray();
-
-    public Wheel2357() { }
+    public Wheel2357_Generic()
+    {
+        Size = T.One;
+        for (int i = 0; i < s_basis.Length; i++)
+        {
+            Size *= s_basis[i];
+        }
+    }
 
     public override T[] Basis => s_basis;
 
@@ -58,7 +52,7 @@ public sealed class Wheel2357<T> : Wheel<T>
 
     public override T[] Increments => s_increments;
 
-    public override T Size => s_size;
+    public override T Size { get; }
 
     public override int SpokeCount => s_spokes.Length;
 
@@ -77,7 +71,6 @@ public sealed class Wheel2357<T> : Wheel<T>
 
     public override T this[int i]
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
         {
             var (quotient, remainder) = int.DivRem(i, IncrementCount);
