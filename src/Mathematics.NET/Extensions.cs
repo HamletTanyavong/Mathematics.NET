@@ -115,12 +115,6 @@ public static class Extensions
         where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
         => Unsafe.As<double, T>(ref value);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static U AsFloat<T, U>(this T value)
-        where T : IBinaryFloatingPointIeee754<T>, IMinMaxValue<T>
-        where U : IBinaryFloatingPointIeee754<U>
-        => Unsafe.As<T, U>(ref value);
-
     // The real part of any type that implements IComplex<T> should be aligned at zero.
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static V AsFloat<T, U, V>(this T value)
