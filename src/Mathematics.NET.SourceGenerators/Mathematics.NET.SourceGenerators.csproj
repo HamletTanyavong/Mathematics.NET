@@ -12,7 +12,6 @@
     <PackageTags>autodiff; complex; math; mathematics; physics; rational; source generators; tensors;</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>This project is in alpha and is not yet ready for release.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

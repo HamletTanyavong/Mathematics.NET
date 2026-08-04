@@ -13,7 +13,6 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-    <PackageReleaseNotes>This project is in alpha and is not yet ready for release.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
