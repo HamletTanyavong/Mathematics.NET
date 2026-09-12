@@ -158,6 +158,23 @@ public static class Extensions
         }
         return builder.ToString();
     }
+
+    //
+    // Math Extensions
+    //
+
+    extension(Math)
+    {
+        /// <summary>Convert from radians to degrees.</summary>
+        /// <param name="x">An angle in radians.</param>
+        /// <returns>An angle in degrees.</returns>
+        public static double ToDegrees(double x) => x / Math.PI * 180;
+
+        /// <summary>Convert from degrees to radians.</summary>
+        /// <param name="x">An angle in degrees.</param>
+        /// <returns>An angle in radians.</returns>
+        public static double ToRadians(double x) => x / 180 * Math.PI;
+    }
 }
 
 /// <summary>Extensions for integers.</summary>
