@@ -20,5 +20,8 @@
     <!-- Documentation file -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
+
+    <!-- Verify Package Sponsorship -->
+    <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
   </PropertyGroup>
 </Project>

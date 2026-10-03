@@ -60,7 +60,7 @@ public static class Extensions
         { '6', '\u2076' },
         { '7', '\u2077' },
         { '8', '\u2078' },
-        { '9', '\u2079' },
+        { '9', '\u2079' }
     }.ToImmutableDictionary();
 
     //
