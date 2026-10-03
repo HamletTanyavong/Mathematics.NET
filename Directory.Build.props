@@ -21,7 +21,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
 
-    <!-- Verify Package Sponsorship -->
+    <!-- Exemptions for Verify Sponsorship (Update the date if it fails.) -->
     <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
+    <Verify_SponsorshipExemptionUntil>2027-10</Verify_SponsorshipExemptionUntil>
   </PropertyGroup>
 </Project>
